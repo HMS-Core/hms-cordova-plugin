@@ -1,0 +1,14 @@
+.vscode
+.idea
+build
+.gradle
+.project
+.classpath
+dist
+
+logcat.log
+
+node_modules
+plugins
+.settings
+local.properties

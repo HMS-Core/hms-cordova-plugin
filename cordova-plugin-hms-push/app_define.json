@@ -1,0 +1,8 @@
+{
+    "fileVersion": "1",
+    "name": "Cordova-Hms-Push",
+    "description": "",
+    "version": "4.0.4",
+    "type": "microService",
+    "processes": {}
+}

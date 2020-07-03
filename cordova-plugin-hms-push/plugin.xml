@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-hms-push" 
+        version="4.0.4" 
+        xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Cordova Plugin HMS Push</name>
+
+    <description>Cordova Plugin HMS Push</description>
+    <license>Apache 2.0</license>
+    <keywords>android, toast</keywords>
+
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module name="HMSPush" src="www/HMSPush.js">
+        <clobbers target="HMSPush" />
+    </js-module>
+
+    <platform name="android">
+
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_prepare" src="hooks/after_prepare.js" />
+
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+			<uses-permission android:name="android.permission.WAKE_LOCK" />
+		</config-file>
+        <config-file target="AndroidManifest.xml" parent="application">
+            <service android:name="com.huawei.cordova.hms.push.CordovaHmsMessageService" android:exported="true">
+                <intent-filter>
+                    <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+                </intent-filter>
+            </service>
+        </config-file>
+
+      <framework src="com.huawei.hms:push:4.0.2.300" />
+      <framework src="resources/plugin.gradle" custom="true" type="gradleReference"/>
+    
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSPush">
+                <param name="android-package" value="com.huawei.cordova.hms.push.HMSPush" />
+            </feature>
+        </config-file>
+        
+
+        <source-file src="src/main/java/com/huawei/cordova/hms/push/HMSPush.java" target-dir="src/com/huawei/cordova/hms/push" />
+        <source-file src="src/main/java/com/huawei/cordova/hms/push/Constants.java" target-dir="src/com/huawei/cordova/hms/push" />
+        <source-file src="src/main/java/com/huawei/cordova/hms/push/CordovaHmsMessageService.java" target-dir="src/com/huawei/cordova/hms/push" />
+        <source-file src="src/main/java/com/huawei/cordova/hms/push/CordovaHmsMessageReceiver.java" target-dir="src/com/huawei/cordova/hms/push" />
+		<source-file src="src/main/java/com/huawei/cordova/hms/push/CordovaHmsMessageReceiverManager.java" target-dir="src/com/huawei/cordova/hms/push" />
+    </platform>
+</plugin>

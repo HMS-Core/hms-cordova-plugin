@@ -1,0 +1,29 @@
+{
+  "name": "cordova-plugin-hms-push",
+  "version": "4.0.3",
+  "description": "cordova-plugin-hms-push",
+  "cordova": {
+    "id": "cordova-plugin-hms-push",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "push",
+    "hmspush",
+    "huaweipush",
+    "ecosystem:cordova"
+  ],
+  "author": "",
+  "files": [
+    "hooks/**",
+    "resources/**",
+    "src/**",
+    "www/**",
+    "LICENCE",
+    "package.json",
+    "plugin.xml",
+    "README.md"
+  ]
+}
