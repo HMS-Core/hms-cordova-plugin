@@ -1,0 +1,16 @@
+{
+  "android": {
+      "release": {
+        "keystore": "<keystore_file>",
+        "storePassword": "<keystore_password>",
+        "alias": "<key_alias>",
+        "password" : "<key_password>"
+      },
+      "debug": {
+        "keystore": "<keystore_file>",
+        "storePassword": "<keystore_password>",
+        "alias": "<key_alias>",
+        "password" : "<key_password>"
+    }
+  }
+}

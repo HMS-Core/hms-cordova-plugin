@@ -1,0 +1,79 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+body {
+  background-color: rgba(228, 228, 228, 0.9);
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.event {
+  text-align: center;
+  padding: 2em;
+  font-weight: bold;
+}
+
+.event.listening {
+  background-color: #333333;
+  display: block;
+}
+
+.event.received {
+  background-color: #4b946a;
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.button {
+  flex-grow: 1;
+  border: none;
+  height: 3em;
+  background-color: #4ea5ff;
+  color: white;
+  font-weight: bold;
+}
+
+.seperator {
+  margin-top: 1.5em;
+}
+
+.input {
+  width: 100%;
+  height: 2em;
+  text-align: center;
+}
+
+.logs {
+  height: 300px;
+  overflow: scroll;
+  padding: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  text-transform: none;
+}
