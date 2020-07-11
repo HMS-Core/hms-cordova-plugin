@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-hms-ads"
+    version="4.0.4">
+
+    <name>cordova-plugin-hms-ads</name>
+    <description>cordova-plugin-hms-ads</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,hms</keywords>
+
+    <!-- JS Files -->
+    <js-module src="www/utils.js" name="utils" />
+    <js-module src="www/HMSAds.js" name="HMSAds">
+        <clobbers target="HMSAds" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <!-- Hooks for resouces and dependencies -->
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_prepare" src="hooks/after_prepare.js" />
+
+        <!-- Android dependencies -->
+        <framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
+        <framework src="com.huawei.hms:ads-lite:13.4.29.303" />
+        <framework src="com.huawei.hms:ads-identifier:3.4.29.301" />
+        <framework src="com.huawei.hms:ads-installreferrer:3.4.28.305" />
+        <framework src="com.huawei.hms:ads-consent:3.4.29.303" />
+
+        <!-- Manifest permissions -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+        </config-file>
+
+        <!-- Manifest configurations -->
+        <edit-config file="AndroidManifest.xml" target="/manifest/application" mode="merge">
+          <application android:usesCleartextTraffic="true" />
+        </edit-config>
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSAds">
+                <param name="android-package" value="com.huawei.hms.cordova.ads.HMSAds"/>
+            </feature>
+        </config-file>
+
+        <!-- Java files -->
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/HMSAds.java" target-dir="src/com/huawei/hms/cordova/ads" />
+
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/HwAdsUtils.java"           target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/AdUtils.java"              target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/BannerUtils.java"          target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/RewardUtils.java"          target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/SplashUtils.java"          target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/NativeUtils.java"          target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/ConsentUtils.java"         target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/CordovaUtils.java"         target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/JavaUtils.java"            target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/InstallReferrerUtils.java" target-dir="src/com/huawei/hms/cordova/ads/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/utils/OaidUtils.java"            target-dir="src/com/huawei/hms/cordova/ads/utils" />
+
+
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/Consumer.java"           target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/BiConsumer.java"         target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/QuadConsumer.java"       target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/Mapper.java"             target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/JSONMapper.java"         target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/JSONBiMapper.java"       target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/JSONBiConsumer.java"     target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/JSONRunnable.java"       target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/HMSCordovaPlugin.java"   target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/NativeViewProps.java"    target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/ads/helpers/Position.java"           target-dir="src/com/huawei/hms/cordova/ads/helpers" />
+
+        <!-- Resources -->
+        <resource-file src="res/layout/splash_ad.xml"                 target="res/layout/splash_ad.xml" />
+        <resource-file src="res/layout/native_ad_banner_template.xml" target="res/layout/native_ad_banner_template.xml" />
+        <resource-file src="res/layout/native_ad_full_template.xml"   target="res/layout/native_ad_full_template.xml" />
+        <resource-file src="res/layout/native_ad_small_template.xml"  target="res/layout/native_ad_small_template.xml" />
+        <resource-file src="res/layout/native_ad_video_template.xml"  target="res/layout/native_ad_video_template.xml" />
+
+        <resource-file src="res/drawable/native_flag_rounded_corners_shape.xml"   target="res/drawable/native_flag_rounded_corners_shape.xml" />
+        <resource-file src="res/drawable/native_button_rounded_corners_shape.xml" target="res/drawable/native_button_rounded_corners_shape.xml" />
+        <resource-file src="res/drawable/ic_launcher_background.xml"              target="res/drawable/ic_launcher_background.xml" />
+        <resource-file src="res/drawable/emui_button_select.xml"                  target="res/drawable/emui_button_select.xml" />
+        <resource-file src="res/drawable/detail_checkbox_selector.xml"            target="res/drawable/detail_checkbox_selector.xml" />
+        <resource-file src="res/drawable/btn_check_on_pressed_emui.png"           target="res/drawable/btn_check_on_pressed_emui.png" />
+        <resource-file src="res/drawable/btn_check_on_emui.png"                   target="res/drawable/btn_check_on_emui.png" />
+        <resource-file src="res/drawable/btn_check_off_emui.png"                  target="res/drawable/btn_check_off_emui.png" />
+
+        <resource-file src="res/drawable-land-xhdpi/btn_check_off_emui.png"        target="res/drawable-land-xhdpi/btn_check_off_emui.png" />
+        <resource-file src="res/drawable-land-xhdpi/btn_check_on_emui.png"         target="res/drawable-land-xhdpi/btn_check_on_emui.png" />
+        <resource-file src="res/drawable-land-xhdpi/ic_sb_cancel_gray.png"         target="res/drawable-land-xhdpi/ic_sb_cancel_gray.png" />
+        <resource-file src="res/drawable-land-xhdpi/btn_check_on_pressed_emui.png" target="res/drawable-land-xhdpi/btn_check_on_pressed_emui.png" />
+        <resource-file src="res/drawable-land-xhdpi/popup_full_bright_emui.9.png"  target="res/drawable-land-xhdpi/popup_full_bright_emui.9.png" />
+
+        <resource-file src="res/drawable-land-xxhdpi/btn_default_disabled_emui.9.png" target="res/drawable-land-xxhdpi/btn_default_disabled_emui.9.png" />
+        <resource-file src="res/drawable-land-xxhdpi/btn_default_normal_emui.9.png"   target="res/drawable-land-xxhdpi/btn_default_normal_emui.9.png" />
+        <resource-file src="res/drawable-land-xxhdpi/btn_default_pressed_emui.9.png"  target="res/drawable-land-xxhdpi/btn_default_pressed_emui.9.png" />
+
+    </platform>
+
+</plugin>
