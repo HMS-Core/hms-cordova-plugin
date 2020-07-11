@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-hms-map"
+    version="1.0.0">
+
+    <name>cordova-plugin-hms-map</name>
+    <description>cordova-plugin-hms-map</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,hms</keywords>
+
+    <!-- JS source files -->
+    <js-module src="www/utils.js" name="utils" />
+
+    <js-module src="www/HMSMap.js" name="HMSMap">
+        <clobbers target="HMSMap" />
+    </js-module>
+
+    <!-- Android configuration -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSMap">
+                <param name="android-package" value="com.huawei.hms.cordova.map.HMSMap"/>
+            </feature>
+        </config-file>
+
+        <!-- Hooks -->
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_prepare" src="hooks/after_prepare.js" />
+
+        <!-- Source files -->
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/HMSMap.java" target-dir="src/com/huawei/hms/cordova/map" />
+
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/MapUtils.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/JavaUtils.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/CordovaUtils.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/PermissionUtils.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/ActionPack.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/DispatcherPack.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/EventPack.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/utils/ErrorCodes.java" target-dir="src/com/huawei/hms/cordova/map/utils" />
+
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/Consumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/BiConsumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/TriConsumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/HMSCordovaPlugin.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/JSONConsumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/JSONBiConsumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/JSONTriConsumer.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/JSONMapper.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/JSONTriMapper.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/Mapper.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/TriMapper.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/MapViewProps.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/Padding.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/Position.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/map/helpers/Constants.java" target-dir="src/com/huawei/hms/cordova/map/helpers" />
+
+        <!-- Android dependencies -->
+        <framework src="res/android/plugin.gradle" custom="true" type="gradleReference" />
+        <framework src="com.huawei.hms:maps:4.0.1.301" />
+
+        <!-- Android permissions -->
+        <config-file target="AndroidManifest.xml" parent="/*">
+          <uses-permission android:name="android.permission.INTERNET" />
+          <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+          <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+          <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+          <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+        </config-file>
+
+    </platform>
+
+</plugin>
