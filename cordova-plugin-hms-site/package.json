@@ -1,0 +1,37 @@
+{
+  "name": "cordova-plugin-hms-site",
+  "title": "HMS Cordova Site Plugin",
+  "description": "Huawei Site Cordova Plugin",
+  "packagename": "cordova-site",
+  "packageversion": "4.0.4.300",
+  "version": "4.0.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+    "directory": "cordova-plugin-hms-site"
+  },
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "cordova": {
+    "id": "cordova-plugin-hms-site",
+    "platforms": []
+  },
+  "keywords": [
+    "cordova",
+    "huaweisite",
+    "site",
+    "ecosystem:cordova"
+  ],
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "files": [
+    "hooks/**",
+    "resources/**",
+    "src/**",
+    "www/**",
+    "LICENCE",
+    "package.json",
+    "plugin.xml",
+    "README.md"
+  ]
+}

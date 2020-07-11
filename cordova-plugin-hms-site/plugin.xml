@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-hms-site" version="4.0.4" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-plugin-hms-site</name>
+
+    <js-module name="cordova-plugin-hms-site" src="www/HMSSite.js">
+        <clobbers target="HMSSite" />
+    </js-module>
+
+
+    <platform name="android">
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+        <hook type="after_prepare" src="hooks/after_prepare.js" />
+
+        <framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
+        <framework src="com.huawei.hms:site:4.0.3.300" />
+
+
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="cordova-plugin-hms-site">
+                <param name="android-package" value="com.huawei.hms.cordova.site.HMSSitePlugin" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSitePlugin.java" target-dir="src/com/huawei/hms/cordova/site" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSiteService.java" target-dir="src/com/huawei/hms/cordova/site" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSiteUtils.java" target-dir="src/com/huawei/hms/cordova/site" />
+    </platform>
+</plugin>
