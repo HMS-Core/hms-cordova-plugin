@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-hms-inapppurchases"
+    version="1.0.0">
+
+    <name>cordova-plugin-hms-inapppurchases</name>
+    <description>cordova-plugin-hms-inapppurchases</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,hms</keywords>
+
+    <repo>https://github.com/huawei/cordova-plugin-hms-inapppurchases.git</repo>
+    <issue>https://github.com/huawei/cordova-plugin-hms-inapppurchases/issues</issue>
+
+    <js-module src="www/utils.js" name="utils" />
+
+    <js-module src="www/HMSInAppPurchases.js" name="HMSInAppPurchases">
+        <clobbers target="HMSInAppPurchases" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_prepare" src="hooks/after_prepare.js" />
+
+        <!-- Android dependencies -->
+        <framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
+        <framework src="com.huawei.hms:iap:4.0.2.300" />
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSInAppPurchases" >
+                <param name="android-package" value="com.huawei.hms.cordova.inapppurchases.HMSInAppPurchases"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/main/java/com/huawei/hms/cordova/inapppurchases/HMSInAppPurchases.java" target-dir="src/com/huawei/hms/cordova/inapppurchases" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/inapppurchases/utils/JSONUtils.java" target-dir="src/com/huawei/hms/cordova/inapppurchases/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/inapppurchases/utils/Constants.java" target-dir="src/com/huawei/hms/cordova/inapppurchases/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/inapppurchases/utils/HMSCordovaPlugin.java" target-dir="src/com/huawei/hms/cordova/inapppurchases/utils" />
+    </platform>
+
+</plugin>

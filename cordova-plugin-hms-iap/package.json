@@ -1,0 +1,55 @@
+{
+  "name": "@hmscore/cordova-plugin-hms-iap",
+  "title": "Cordova HMS IAP Kit",
+  "description": "Cordova HMS IAP Kit",
+  "packagename": "cordova-iap",
+  "packageversion": "4.0.3.300",
+  "version": "4.0.3-300",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+    "directory": "cordova-plugin-hms-inapppurchases"
+  },
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "cordova",
+    "cordova-iap",
+    "hms-iap",
+    "huawei-iap",
+    "ecosystem:cordova"
+  ],
+  "types": "./types/index.d.ts",
+  "cordova": {
+    "id": "cordova-plugin-hms-inapppurchases",
+    "platforms": [
+      "android"
+    ]
+  },
+  "engines": [{
+    "name": "cordova",
+    "version": ">=3.0.0"
+  }],
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-semistandard": "^11.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "files": [
+    "hooks/**",
+    "resources/**",
+    "src/**",
+    "www/**",
+    "LICENCE",
+    "package.json",
+    "plugin.xml",
+    "README.md"
+  ]
+
+}
