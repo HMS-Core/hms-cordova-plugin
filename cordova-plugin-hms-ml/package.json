@@ -1,7 +1,7 @@
 {
-  "name": "cordova-plugin-hms-ml",
-  "title": "HMS Cordova ML Plugin",
-  "description": "Huawei ML Cordova Plugin",
+  "name": "@hmscore/cordova-plugin-hms-ml",
+  "title": "Cordova HMS ML Kit",
+  "description": "Cordova HMS ML Kit", 
   "packagename": "cordova-ml",
   "packageversion": "5.0.0.300",
   "version": "5.0.0",
@@ -11,26 +11,21 @@
     "directory": "cordova-plugin-hms-ml"
   },
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "cordova",
+    "cordova-ml",
+    "hms-ml",
+    "huawei-ml"
+  ],
   "cordova": {
     "id": "cordova-plugin-hms-ml",
     "platforms": [
       "android"
     ]
   },
-  "keywords": [
-    "cordova",
-    "ecosystem:cordova",
-    "cordova-android",
-    "hms",
-    "huawei-ml"
-  ],
-  "scripts": {
-    "test": "npm run eslint",
-    "eslint": "node node_modules/eslint/bin/eslint www && node node_modules/eslint/bin/eslint src && node node_modules/eslint/bin/eslint tests"
-  },
-  "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
-  "readmeFilename": "README.md",
   "engines": [{
     "name": "cordova",
     "version": ">=3.0.0"

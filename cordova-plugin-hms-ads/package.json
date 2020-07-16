@@ -1,7 +1,7 @@
 {
-  "name": "cordova-plugin-hms-ads",
-  "title": "HMS Cordova Ads Plugin",
-  "description": "Huawei Ads Cordova Plugin",
+  "name": "@hmscore/cordova-plugin-hms-ads",
+  "title": "Cordova HMS Ads Kit",
+  "description": "Cordova HMS Ads Kit", 
   "packagename": "cordova-ads",
   "packageversion": "4.0.4.300",
   "version": "4.0.4",
@@ -11,23 +11,21 @@
     "directory": "cordova-plugin-hms-ads"
   },
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "cordova",
+    "cordova-ads",
+    "hms-ads",
+    "huawei-ads"
+  ],
   "cordova": {
     "id": "cordova-plugin-hms-ads",
     "platforms": [
       "android"
     ]
   },
-  "keywords": [
-    "cordova",
-    "ecosystem:cordova",
-    "cordova-android"
-  ],
-  "scripts": {
-    "test": "npm run eslint",
-    "eslint": "node node_modules/eslint/bin/eslint www && node node_modules/eslint/bin/eslint src && node node_modules/eslint/bin/eslint tests"
-  },
-  "author": "Apache Software Foundation",
-  "license": "Apache-2.0",
   "engines": [{
     "name": "cordova",
     "version": ">=3.0.0"

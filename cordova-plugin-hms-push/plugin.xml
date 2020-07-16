@@ -7,7 +7,7 @@
 
     <description>Cordova Plugin HMS Push</description>
     <license>Apache 2.0</license>
-    <keywords>android, toast</keywords>
+    <keywords>android</keywords>
 
     <engines>
       <engine name="cordova" version=">=3.0.0" />

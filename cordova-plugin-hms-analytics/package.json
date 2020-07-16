@@ -1,7 +1,7 @@
 {
-  "name": "cordova-plugin-hms-analytics",
-  "title": "HMS Cordova Analytics Plugin",
-  "description": "Huawei Analytics Cordova Plugin",
+  "name": "@hmscore/cordova-plugin-hms-analytics",
+  "title": "Cordova HMS Analytics Kit",
+  "description": "Cordova HMS Analytics Kit", 
   "packagename": "cordova-analytics",
   "packageversion": "4.0.3.300",
   "version": "4.0.3",
@@ -11,21 +11,22 @@
     "directory": "cordova-plugin-hms-analytics"
   },
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "keywords": [
+    "cordova",
+    "cordova-analytics",
+    "hms-analytics",
+    "huawei-analytics",
+    "hianalytics"
+  ],
   "cordova": {
     "id": "cordova-plugin-hms-analytics",
     "platforms": [
       "android"
     ]
   },
-  "keywords": [
-    "cordova",
-    "huaweianalytics",
-    "hianalytics",
-    "ecosystem:cordova"
-  ],
-  "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
-  "readmeFilename": "README.md",
   "files": [
     "hooks/**",
     "resources/**",
