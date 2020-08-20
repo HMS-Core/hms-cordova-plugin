@@ -19,7 +19,7 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 var FSUtils = require('./FSUtils');
 
 var ROOT_GRADLE_FILE = 'platforms/android/build.gradle';
-var COMMENT = '//This line is added by cordova-plugin-hms-analytics plugin'
+var COMMENT = '//This line is added by cordova-plugin-hms-map plugin'
 var NEW_LINE = '\n';
 
 module.exports = function (context) {

@@ -1,10 +1,10 @@
 {
   "name": "@hmscore/cordova-plugin-hms-map",
   "title": "Cordova HMS Map Kit",
-  "description": "Cordova HMS Map Kit", 
+  "description": "Cordova HMS Map Kit",
   "packagename": "cordova-map",
-  "packageversion": "4.0.4.300",
-  "version": "4.0.4",
+  "packageversion": "5.0.0-300",
+  "version": "5.0.0-300",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
@@ -16,8 +16,10 @@
   "readmeFilename": "README.md",
   "keywords": [
     "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
     "cordova-map",
-    "hms-map",
+    "map",
     "huawei-map"
   ],
   "cordova": {
@@ -26,10 +28,27 @@
       "android"
     ]
   },
-  "engines": [{
-    "name": "cordova",
-    "version": ">=3.0.0"
-  }],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "files": [
+    "hooks",
+    "res",
+    "src",
+    "www",
+    "LICENCE",
+    "package.json",
+    "plugin.xml",
+    "README.md",
+    "ionic",
+    "scripts",
+    "types",
+    "wrapper",
+    "tsconfig.json"
+  ],
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-semistandard": "^11.0.0",
@@ -39,14 +58,11 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
   },
-  "files": [
-    "res/**",
-    "src/**",
-    "www/**",
-    "hooks/**",
-    "LICENCE",
-    "package.json",
-    "plugin.xml",
-    "README.md"
-  ]
+  "dependencies": {
+    "@types/cordova": "0.0.34"
+  },
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "node node_modules/eslint/bin/eslint www && node node_modules/eslint/bin/eslint src && node node_modules/eslint/bin/eslint tests"
+  }
 }

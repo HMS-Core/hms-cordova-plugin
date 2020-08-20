@@ -23,6 +23,7 @@ import android.webkit.ValueCallback;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaInterface;
 
+import org.apache.cordova.CordovaWebViewEngine;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -67,10 +68,21 @@ public class CordovaUtils {
 
     public static void runJS(final CordovaInterface cordova, final CordovaWebView webView, String jsCode, Consumer<String> onFinished) {
         Log.d(TAG, JavaUtils.format("runJS :: jsCode=%s, onFinished=%s", jsCode, onFinished));
-        cordova.getActivity().runOnUiThread(() -> webView.getEngine().evaluateJavascript(jsCode, (rtVal) -> {
-            if (onFinished != null)
-                onFinished.run(rtVal);
-        }));
+
+        cordova.getActivity().runOnUiThread(() -> {
+            // WORKAROUND: Ionic with capacitor backend returns the engine as null, handle that
+            CordovaWebViewEngine engine = webView.getEngine();
+            if (engine == null) {
+                webView.loadUrl("javascript:" + jsCode);
+                if(onFinished != null) onFinished.run("");
+            } else {
+                engine.evaluateJavascript(jsCode, (result) -> {
+                    if (onFinished != null) {
+                        onFinished.run(result);
+                    }
+                });
+            }
+        });
     }
 
     public static JSONObject basicMap(String... args) {

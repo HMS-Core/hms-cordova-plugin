@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Copyright 2020 Huawei Technologies Co., Ltd.
  *
@@ -14,48 +13,72 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncExec = exports.isObject = exports.isString = void 0;
-const cordova_1 = require("cordova");
+
+import {exec} from 'cordova'
+
 // /////////////////////////////////////////////////////////
 // GENERAL UTILS
 // /////////////////////////////////////////////////////////
-exports.isString = (it) => typeof it === 'string' || it instanceof String;
-exports.isObject = (obj) => typeof obj === 'object' && obj !== null;
-function asyncExec(clazz, func, args = []) {
+
+export const isString = (it: any) => typeof it === 'string' || it instanceof String;
+export const isObject = (obj: any) => typeof obj === 'object' && obj !== null;
+
+export function asyncExec (clazz: string, func: string, args: any[]=[]) : Promise<any>{
     return new Promise((resolve, reject) => {
-        cordova_1.exec(resolve, reject, clazz, func, args);
+        exec(resolve, reject, clazz, func, args);
     });
+};
+
+// /////////////////////////////////////////////////////////
+// Event system
+// /////////////////////////////////////////////////////////
+
+export type Handler = (data: any, data2?: any) => void;
+
+declare global {
+    interface Window {
+        hmsEventHandlers: {
+            [key: string]: Handler[]
+        },
+        hmsEventHandler: (eventName: string, data: any) => void,
+        registerHMSEvent: (eventName: string, handler: Handler) => void
+        unregisterHMSEvent: (eventName: string, handler: Handler) => void
+        hmsSetConstants: (objName: string, constans: any) => void,
+        [key: string]: any
+    }
 }
-exports.asyncExec = asyncExec;
-;
+
 function initHms() {
     console.log('hms :: init called.');
     initEventHandler();
     initConstantSetter();
 }
+
 function initEventHandler() {
     if (window.hmsEventHandler != null) {
         return;
     }
+
     console.log('hms-map :: window.hmsEventHandler');
     window.hmsEventHandlers = {};
+
     window.hmsEventHandler = (eventName, data) => {
         console.log('eventReceived: ' + eventName + ' with data: ', data);
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
-            window.hmsEventHandlers[eventName].forEach((handler) => {
+            window.hmsEventHandlers[eventName].forEach((handler: Handler) => {
                 handler(data);
             });
         }
     };
+
     window.registerHMSEvent = (eventName, handler) => {
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].push(handler);
-        }
-        else {
+        } else {
             window.hmsEventHandlers[eventName] = [handler];
         }
     };
+
     window.unregisterHMSEvent = (eventName, handler) => {
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             if (handler) {
@@ -63,31 +86,35 @@ function initEventHandler() {
                 if (idx > -1) {
                     window.hmsEventHandlers[eventName].splice(idx, 1);
                 }
-            }
-            else { // if no specific handler is specified, remove all
+            } else { // if no specific handler is specified, remove all
                 window.hmsEventHandlers[eventName] = [];
             }
         }
     };
 }
+
 function initConstantSetter() {
     if (window.hmsSetConstants != null) {
         return;
     }
+
     console.log('hms-map :: window.hmsSetConstants');
-    window.hmsSetConstants = (objName, constants) => {
+    window.hmsSetConstants = (objName: string, constants) => {
         console.log('hms-map :: initializing constants for', objName, 'with', constants);
+
         if (window[objName] == null) {
             console.log('hms-map :: uninitialized obj');
             return;
         }
+
         Object.keys(constants).forEach(key => {
-            Object.defineProperty(window[objName], key, { value: constants[key] });
+            Object.defineProperty(window[objName], key, {value: constants[key]});
         });
     };
 }
+
 // /////////////////////////////////////////////////////////
 // EXPORT
 // /////////////////////////////////////////////////////////
-initHms();
-//# sourceMappingURL=utils.js.map
+
+initHms()

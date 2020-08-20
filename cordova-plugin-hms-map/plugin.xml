@@ -4,7 +4,7 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-hms-map"
-    version="1.0.0">
+    version="5.0.0">
 
     <name>cordova-plugin-hms-map</name>
     <description>cordova-plugin-hms-map</description>
@@ -61,7 +61,7 @@
 
         <!-- Android dependencies -->
         <framework src="res/android/plugin.gradle" custom="true" type="gradleReference" />
-        <framework src="com.huawei.hms:maps:4.0.1.301" />
+        <framework src="com.huawei.hms:maps:5.0.0.300" />
 
         <!-- Android permissions -->
         <config-file target="AndroidManifest.xml" parent="/*">

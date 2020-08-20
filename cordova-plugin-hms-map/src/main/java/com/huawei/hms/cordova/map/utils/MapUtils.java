@@ -520,6 +520,7 @@ public class MapUtils {
         events.put("cameraMoveStarted", pack -> pack.huaweiMap.setOnCameraMoveStartedListener(reason -> pack.sendEvent(reason, CordovaUtils.keyValPair("reason", reason))));
         events.put("polygonClick", pack -> pack.huaweiMap.setOnPolygonClickListener(polygon -> pack.sendEvent(polygon, fromPolygonToJSONObject.map(polygon))));
         events.put("polylineClick", pack -> pack.huaweiMap.setOnPolylineClickListener(polyline -> pack.sendEvent(polyline, fromPolylineToJSONObject.map(polyline))));
+        events.put("groundOverlayClick", pack -> pack.huaweiMap.setOnGroundOverlayClickListener(groundOverlay -> pack.sendEvent(groundOverlay, fromGroundOverlayToJSONObject.map(groundOverlay))));
         events.put("cameraMove", pack -> pack.huaweiMap.setOnCameraMoveListener(pack::sendEvent));
         events.put("cameraIdle", pack -> pack.huaweiMap.setOnCameraIdleListener(pack::sendEvent));
         events.put("mapLoaded", pack -> pack.huaweiMap.setOnMapLoadedCallback(pack::sendEvent));

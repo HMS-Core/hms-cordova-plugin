@@ -24,14 +24,15 @@ import org.json.JSONObject;
 
 import android.graphics.Color;
 import android.util.Pair;
-import android.view.Gravity;
 import android.util.Log;
 import android.content.pm.PackageManager;
 
-import android.widget.FrameLayout;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.huawei.hms.api.ConnectionResult;
 import com.huawei.hms.api.HuaweiApiAvailability;
+
 import com.huawei.hms.cordova.map.helpers.Constants;
 import com.huawei.hms.cordova.map.helpers.Consumer;
 import com.huawei.hms.cordova.map.helpers.HMSCordovaPlugin;
@@ -44,10 +45,12 @@ import com.huawei.hms.cordova.map.utils.EventPack;
 import com.huawei.hms.cordova.map.helpers.MapViewProps;
 import com.huawei.hms.cordova.map.utils.JavaUtils;
 import com.huawei.hms.cordova.map.utils.MapUtils;
+
 import com.huawei.hms.maps.HuaweiMap;
 import com.huawei.hms.maps.HuaweiMapOptions;
 import com.huawei.hms.maps.MapView;
 import com.huawei.hms.maps.OnMapReadyCallback;
+import com.huawei.hms.maps.MapsInitializer;
 import com.huawei.hms.maps.model.BitmapDescriptorFactory;
 import com.huawei.hms.maps.model.Cap;
 import com.huawei.hms.maps.model.JointType;
@@ -89,6 +92,16 @@ public class HMSMap extends HMSCordovaPlugin {
 
         if ("initMap".equals(action)) {
             initMap(args.getString(0), args.getJSONObject(1), callbackContext);
+        } else if("reInitializeMap".equals(action)){
+            reInitializeMapViewProps(args.getString(0), args.getJSONObject(1), callbackContext);
+        } else if("showMap".equals(action)){
+            showMap(args.getString(0), callbackContext);
+        } else if("hideMap".equals(action)) {
+            hideMap(args.getString(0), callbackContext);
+        } else if("destroyMap".equals(action)){
+            destroyMap(args.getString(0), callbackContext);
+        } else if ("setApiKey".equals(action)) {
+            setApiKey(args.getString(0), callbackContext);
         } else if ("setMapViewProps".equals(action)) {
             setMapViewProps(args.getString(0), args.getJSONObject(1), callbackContext);
         } else if ("setProps".equals(action)) {
@@ -134,11 +147,73 @@ public class HMSMap extends HMSCordovaPlugin {
     // Exposed functions
     // /////////////////////////////////////////////////////////////////////////////////////////////
 
-    private void initMap(String id, JSONObject json, final CallbackContext callbackContext) {
+    private void setApiKey(String apiKey, final CallbackContext callbackContext) {
+        Log.d(TAG, "Setting api key :: " + apiKey);
+        cordova.getActivity().runOnUiThread(() -> {
+            if (this.cordova.getContext() == null) {
+                Log.d(TAG, "Cordova context null");
+                callbackContext.error("Cordova context null.");
+            } else {
+                MapsInitializer.initialize(this.cordova.getContext());
+                MapsInitializer.setApiKey(apiKey);
+                callbackContext.success(apiKey);
+            }
+
+        });
+    }
+
+
+    private void destroyMap(String id, final CallbackContext callbackContext){
+        Log.d(TAG, "destroying map :: "+ id);
+
+        if(!mapViews.containsKey(id)){
+            callbackContext.error("Map with the given id not exists.");
+            return;
+        }
+        MapView mapView = mapViews.get(id).first;
+        mapViews.remove(id);
+
+        cordova.getActivity().runOnUiThread(() -> {
+            getLayout().removeView(mapView);
+            callbackContext.success();
+        });
+    }
+
+    private void hideMap(String mapId, final CallbackContext callbackContext){
+        Log.d(TAG, "Hide map :: "+ mapId);
+
+        if(!mapViews.containsKey(mapId)){
+            callbackContext.error("Hide map error :: map with the given id not exist.");
+            return;
+        }
+
+        MapView mapView = mapViews.get(mapId).first;
+        cordova.getActivity().runOnUiThread(() -> {
+            mapView.setVisibility(View.INVISIBLE);
+            callbackContext.success();
+        });
+    }
+
+    private void showMap(String mapId, final CallbackContext callbackContext){
+        Log.d(TAG, "Show map :: "+ mapId);
+
+        if(!mapViews.containsKey(mapId)){
+            callbackContext.error("Show map error :: map with the given id not exist.");
+            return;
+        }
+        MapView mapView = mapViews.get(mapId).first;
+
+        cordova.getActivity().runOnUiThread(() -> {
+            mapView.setVisibility(View.VISIBLE);
+            callbackContext.success();
+        });
+    }
+
+    private void initMap(String id, JSONObject json, final CallbackContext callbackContext) throws JSONException{
         Log.d(TAG, "initializing map with " + json.toString());
 
-        HuaweiMapOptions huaweiMapOptions = MapUtils.fromJSONObjectToHuaweiMapOptions.map(json);
-        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json);
+        HuaweiMapOptions huaweiMapOptions = MapUtils.fromJSONObjectToHuaweiMapOptions.map(json.getJSONObject("mapOptions"));
+        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json.getJSONObject("mapProps"));
 
         Log.d(TAG, "mapViewProps :: " + mapViewProps.toString());
         Log.d(TAG, "huaweiMapOptions :: " + huaweiMapOptions.toString());
@@ -156,8 +231,7 @@ public class HMSMap extends HMSCordovaPlugin {
             mapView.onCreate(null);
 
             // Put the map somewhere inside the frame
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(mapViewProps.width(), mapViewProps.height());
-            params.gravity = Gravity.TOP;
+            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(mapViewProps.width(), mapViewProps.height());
             params.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
             mapView.setLayoutParams(params);
             getLayout().addView(mapView);
@@ -169,14 +243,36 @@ public class HMSMap extends HMSCordovaPlugin {
         });
     }
 
+    private void reInitializeMapViewProps(String mapId, JSONObject json, final CallbackContext callbackContext){
+        Log.d(TAG, JavaUtils.format("reInitializeMapViewProps :: mapId=%s, props=%s", mapId, json.toString()));
+
+        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json);
+
+        if(!mapViews.containsKey(mapId)){
+            callbackContext.error("Map with the given id not exists. To re-initialize map first you should create a map.");
+            return;
+        }
+
+        MapView mapView = mapViews.get(mapId).first;
+        cordova.getActivity().runOnUiThread(() -> {
+            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(mapViewProps.width(), mapViewProps.height());
+            layoutParams.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
+            getLayout().removeView(mapView);
+            mapView.setLayoutParams(layoutParams);
+            getLayout().addView(mapView);
+            callbackContext.success();
+            Log.d(TAG, "reInitializeMapViewProps ends.");
+        });
+    }
+
     private void setMapViewProps(String mapId, JSONObject json, final CallbackContext callbackContext) {
         Log.d(TAG, JavaUtils.format("setMapViewProps :: mapId=%s, props=%s", mapId, json.toString()));
 
         MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json);
-
         MapView mapView = mapViews.get(mapId).first;
+        if(mapView.getParent() == null) return;
         cordova.getActivity().runOnUiThread(() -> {
-            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mapView.getLayoutParams();
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
             layoutParams.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
             getLayout().updateViewLayout(mapView, layoutParams);
             callbackContext.success();
@@ -279,8 +375,8 @@ public class HMSMap extends HMSCordovaPlugin {
     // Internal stuff
     // /////////////////////////////////////////////////////////////////////////////////////////////
 
-    private FrameLayout getLayout() {
-        return (FrameLayout) webView.getView().getParent();
+    private ViewGroup getLayout() {
+        return (ViewGroup) webView.getView().getParent();
     }
 
     private void runWithMap(String id, OnMapReadyCallback cb) {

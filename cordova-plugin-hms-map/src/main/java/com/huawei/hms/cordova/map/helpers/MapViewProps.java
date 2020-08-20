@@ -90,6 +90,9 @@ public class MapViewProps {
         Position pos = Position.fromJSONObject(json);
         pos.x += paddingLeft + borderLeft;
         pos.y += paddingTop + borderTop;
+        // Whenever we move the layout to left we have to cut layout from right to avoid out of div situations.
+        width = width - (2*paddingLeft) - (2*borderLeft);
+        height = height - (2*paddingTop) - (2*borderTop);
         this.position = pos;
         return this;
     }
