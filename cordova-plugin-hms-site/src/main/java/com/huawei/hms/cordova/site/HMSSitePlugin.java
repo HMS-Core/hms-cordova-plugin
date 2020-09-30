@@ -30,13 +30,8 @@ public class HMSSitePlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         JSONObject params = args.optJSONObject(0);
 
-        if (Actions.ACTION_GET_LOCATION_TYPE.name().equals(action)) {
-            siteService.getLocationType(params, callbackContext);
-            return true;
-        }
-
         if (Actions.ACTION_INITIALIZE_SERVICE.name().equals(action)) {
-            siteService.initializeService(params, this.cordova.getActivity(), callbackContext);
+            siteService.initializeService(params, this.cordova.getActivity(), callbackContext, cordova);
             return true;
         }
 
@@ -59,13 +54,25 @@ public class HMSSitePlugin extends CordovaPlugin {
             siteService.nearbySearch(params, callbackContext);
             return true;
         }
+        if (Actions.ACTION_WIDGET_SEARCH.name().equals(action)) {
+            siteService.widgetSearch(params, callbackContext, cordova);
+            return true;
+        }
+
+        if ("enableLogger".equals(action)) {
+            siteService.enableLogger(callbackContext);
+        }
+
+        if ("disableLogger".equals(action)) {
+            siteService.disableLogger(callbackContext);
+        }
 
         return false;
     }
 
     enum Actions {
         ACTION_INITIALIZE_SERVICE, ACTION_TEXT_SEARCH, ACTION_DETAILED_SEARCH,
-        ACTION_QUERY_SUGGESTION, ACTION_NEARBY_SEARCH, ACTION_GET_LOCATION_TYPE;
+        ACTION_QUERY_SUGGESTION, ACTION_NEARBY_SEARCH, ACTION_WIDGET_SEARCH;
     }
 }
 

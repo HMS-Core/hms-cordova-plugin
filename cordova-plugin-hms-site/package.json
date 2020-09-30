@@ -1,10 +1,8 @@
 {
   "name": "@hmscore/cordova-plugin-hms-site",
   "title": "Cordova HMS Site Kit",
-  "description": "Cordova HMS Site Kit", 
-  "packagename": "cordova-site",
-  "packageversion": "4.0.4.300",
-  "version": "4.0.4",
+  "description": "Cordova HMS Site Kit",
+  "version": "5.0.1-300",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
@@ -14,24 +12,33 @@
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
   "readmeFilename": "README.md",
+  "types": "types/index.d.ts",
   "keywords": [
     "cordova",
+    "huawei-site",
+    "site",
     "cordova-site",
-    "hms-site",
-    "huawei-site"
+    "ecosystem:cordova"
   ],
   "cordova": {
     "id": "cordova-plugin-hms-site",
     "platforms": []
   },
+  "dependencies": {
+    "@types/cordova": "0.0.34"
+  },
   "files": [
-    "hooks/**",
-    "resources/**",
-    "src/**",
-    "www/**",
+    "hooks",
+    "ionic",
+    "resources",
+    "scripts",
+    "src",
+    "types",
+    "www",
     "LICENCE",
     "package.json",
     "plugin.xml",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ]
 }

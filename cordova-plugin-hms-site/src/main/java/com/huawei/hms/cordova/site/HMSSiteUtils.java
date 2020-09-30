@@ -19,11 +19,14 @@ package com.huawei.hms.cordova.site;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.huawei.hms.site.api.model.Coordinate;
+import com.huawei.hms.site.api.model.CoordinateBounds;
 import com.huawei.hms.site.api.model.LocationType;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Locale;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,51 +49,23 @@ public class HMSSiteUtils {
     }
 
     public static <T> T toObject(JSONObject jsonObject, Class<T> clazz) {
-        T instance = gson.fromJson(jsonObject.toString(), clazz);
-
-        //workaround for poiTypes
-        if (jsonObject.has("poiType") && !jsonObject.isNull("poiType")) {
-            try {
-                Field poiTypeField = clazz.getDeclaredField("poiType");
-                AccessController.doPrivileged(new PrivilegedAction<Void>() {
-                    @Override
-                    public Void run() {
-                        poiTypeField.setAccessible(true);
-                        return null;
-                    }
-                });
-                poiTypeField
-                    .set(instance, LocationType.valueOf(jsonObject.optString("poiType").toUpperCase(Locale.ENGLISH)));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                Log.e(TAG, "Can not set poiType. " + e.getMessage());
-            }
-
-        }
-
-        if (jsonObject.has("poiTypes") && !jsonObject.isNull("poiTypes")) {
-            List<LocationType> locationTypes = new ArrayList<>();
-            try {
-                JSONArray poiTypes = jsonObject.getJSONArray("poiTypes");
-                for (int i = 0; i < poiTypes.length(); i++) {
-                    locationTypes.add(LocationType.valueOf(poiTypes.getString(i).toUpperCase(Locale.ENGLISH)));
-                }
-                Field poiTypesField = clazz.getDeclaredField("poiTypes");
-                ;
-                AccessController.doPrivileged(new PrivilegedAction<Void>() {
-                    @Override
-                    public Void run() {
-                        poiTypesField.setAccessible(true);
-                        return null;
-                    }
-                });
-                poiTypesField.set(instance, locationTypes);
-            } catch (NoSuchFieldException | IllegalAccessException | JSONException e) {
-                Log.e(TAG, "Can not set poiTypes. " + e.getMessage());
-            }
-
-        }
-
-        return instance;
+        return gson.fromJson(jsonObject.toString(), clazz);
     }
+
+
+    public static List<LocationType> poiTypesToList(JSONObject jsonObject) {
+        List<LocationType> locationTypes = new ArrayList<>();
+        try {
+            JSONArray poiTypes = jsonObject.optJSONArray("poiTypes");
+            for (int i = 0; i < poiTypes.length(); i++) {
+                locationTypes.add(LocationType.valueOf(poiTypes.getString(i).toUpperCase(Locale.ENGLISH)));
+            }
+            return locationTypes;
+        } catch (Exception e) {
+            Log.e(TAG, "error: " + e.getMessage());
+            return null;
+        }
+    }
+
 
 }

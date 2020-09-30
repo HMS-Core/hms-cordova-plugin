@@ -1,3 +1,4 @@
+"use strict";
 /*
 Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -13,46 +14,41 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-var exec = require("cordova/exec");
-
-var HMSSiteAPI = function () {
-  init();
-};
-
-var init = async () => {
-  //set constants
-  HMSSiteAPI.prototype.LocationType = await asyncExecute("ACTION_GET_LOCATION_TYPE");
-};
-
-var asyncExecute = (action, param) => {
-  return new Promise((resolve, reject) => {
-    exec(resolve, reject, "cordova-plugin-hms-site", action, param === undefined || param === null ? [{}] : [param]);
-  });
-};  
-
-var execute = (success, error, action, param) => {
-  exec(success, error, "cordova-plugin-hms-site", action, param === undefined || param === null ? [{}] : [param]);
-};
-
-HMSSiteAPI.prototype.initializeService = (config, success, error) => {
-  execute(success, error, "ACTION_INITIALIZE_SERVICE", config);
-};
-
-HMSSiteAPI.prototype.textSearch = (textSearchRequest, success, error) => {
-  execute(success, error, "ACTION_TEXT_SEARCH", textSearchRequest);
-};
-
-HMSSiteAPI.prototype.detailSearch = (detailSearchRequest, success, error) => {
-  execute(success, error, "ACTION_DETAILED_SEARCH", detailSearchRequest);
-};
-
-HMSSiteAPI.prototype.querySuggestion = (querySuggestionRequest, success, error) => {
-  execute(success, error, "ACTION_QUERY_SUGGESTION", querySuggestionRequest);
-};
-
-HMSSiteAPI.prototype.nearbySearch = (nearbySearchRequest, success, error) => {
-  execute(success, error, "ACTION_NEARBY_SEARCH", nearbySearchRequest);
-};
-
+const utils_1 = require("./utils");
+const Interfaces_1 = require("./Interfaces");
+let HMSSite = "cordova-plugin-hms-site";
+class HMSSiteAPI {
+    constructor() {
+        this.LocationType = Interfaces_1.LocationType;
+        this.HwLocationType = Interfaces_1.HwLocationType;
+    }
+    initializeService(config) {
+        return run("ACTION_INITIALIZE_SERVICE", config);
+    }
+    textSearch(textSearchRequest) {
+        return run("ACTION_TEXT_SEARCH", textSearchRequest);
+    }
+    detailSearch(detailSearch) {
+        return run("ACTION_DETAILED_SEARCH", detailSearch);
+    }
+    querySuggestion(querySuggestionRequest) {
+        return run("ACTION_QUERY_SUGGESTION", querySuggestionRequest);
+    }
+    nearbySearch(nearbySearchRequest) {
+        return run("ACTION_NEARBY_SEARCH", nearbySearchRequest);
+    }
+    widgetSearch(widgetSearchRequest) {
+        return run("ACTION_WIDGET_SEARCH", widgetSearchRequest);
+    }
+    enableLogger() {
+        return run("enableLogger");
+    }
+    disableLogger() {
+        return run("disableLogger");
+    }
+}
+function run(funcName, args) {
+    return utils_1.asyncExec(HMSSite, funcName, [args]);
+}
 module.exports = new HMSSiteAPI();
+//# sourceMappingURL=HMSSite.js.map
