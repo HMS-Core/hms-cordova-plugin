@@ -14,22 +14,19 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.helpers;
+package com.huawei.hms.cordova.location.backend.helpers;
 
 import android.location.Location;
 import android.util.Log;
 
-import com.huawei.hms.cordova.location.utils.LocationUtils;
-import com.huawei.hms.location.HWLocation;
 import com.huawei.hms.location.LocationAvailability;
 import com.huawei.hms.location.LocationCallback;
 import com.huawei.hms.location.LocationResult;
+import com.huawei.hms.cordova.location.backend.interfaces.ResultHandler;
 
 import java.util.List;
 
-
 public class LocationCallbackWithHandler extends LocationCallback {
-
     private static final String TAG = LocationCallbackWithHandler.class.getSimpleName();
     private ResultHandler mResultHandler;
 
@@ -47,31 +44,17 @@ public class LocationCallbackWithHandler extends LocationCallback {
         Log.i(TAG, "requestLocationUpdatesWithCallback callback  onLocationResult locationResult is not null");
         List<Location> locations = locationResult.getLocations();
         if (!locations.isEmpty()) {
-            Log.i(TAG, "[old]requestLocationUpdatesWithCallback callback onLocationResult location is empty");
+            Log.i(TAG, "requestLocationUpdatesWithCallback callback onLocationResult location is empty");
         }
 
         for (Location location : locations) {
-            Log.i(TAG, "onLocationResult :: Location [Longitude,Latitude,Accuracy]:"
-                + location.getLongitude() + "," + location.getLatitude() + "," + location.getAccuracy());
-
             mResultHandler.handleResult(location);
-        }
-
-        List<HWLocation> hwLocationList = locationResult.getHWLocationList();
-        if (!locations.isEmpty()) {
-            Log.i(TAG, "[new]requestLocationUpdatesWithCallback callback onLocationResult location is empty");
-        }
-
-        // TODO: handle/emit HWLocation?
-        // Maybe create a seperate event for HWLocations
-        for (HWLocation hwLocation : hwLocationList) {
-            Log.i(TAG, "onLocationResult, HWLocation :: " + LocationUtils.hwLocationToString(hwLocation));
         }
     }
 
     @Override
     public void onLocationAvailability(LocationAvailability locationAvailability) {
-        Log.i(TAG, "requestLocationUpdatesWithCallback callback onLocationAvailability print");
+        Log.i(TAG, "requestLocationUpdatesWithCallback onLocationAvailability");
         if (locationAvailability != null) {
             boolean flag = locationAvailability.isLocationAvailable();
             Log.i(TAG, "onLocationAvailability isLocationAvailable:" + flag);

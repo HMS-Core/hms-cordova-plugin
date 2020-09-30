@@ -14,13 +14,15 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.helpers;
+package com.huawei.hms.cordova.location.backend.interfaces;
 
-public class Exceptions {
-    static public class DuplicateIdError extends Exception { }
-    static public class NoPermissionsError extends Exception { }
-    static public class NoFusedLocationProviderError extends Exception { }
-    static public class NoHWLocation extends Exception { }
-    static public class EmptyCallback extends Exception { }
-    static public class NonExistentRequestID extends Exception { }
+import android.app.Activity;
+
+public interface ActivityHolder {
+    /**
+     * Returns the current activity.
+     *
+     * @return Activity
+     */
+    Activity getActivity();
 }

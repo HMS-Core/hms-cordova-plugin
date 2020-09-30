@@ -14,15 +14,16 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.helpers;
+package com.huawei.hms.cordova.location.backend.interfaces;
 
-import android.location.Location;
-
-
-public interface ResultHandler {
+public interface TriMapper<T, U, V, R> {
     /**
-     * A function to handle Location update results.
-     * @param location Location object
+     * A simple mapping from T, U, V to R.
+     *
+     * @param in  T
+     * @param in2 U
+     * @param in3 V
+     * @return R
      */
-    void handleResult(Location location);
+    R map(T in, U in2, V in3);
 }

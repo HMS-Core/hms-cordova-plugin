@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Copyright 2020 Huawei Technologies Co., Ltd.
  *
@@ -14,46 +13,71 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncExec = void 0;
-const cordova_1 = require("cordova");
+
+import {exec} from 'cordova';
+
 initHms();
+
 //
 // Exports
 //
-function asyncExec(clazz, func, args = []) {
+
+export function asyncExec(clazz: string, func: string, args: any[]=[]): Promise<any> {
     return new Promise((resolve, reject) => {
-        cordova_1.exec(resolve, reject, clazz, func, args);
+        exec(resolve, reject, clazz, func, args);
     });
 }
-exports.asyncExec = asyncExec;
+
+//
+// Helpers/Event system
+//
+
+type Handler = (data: any) => void;
+
+declare global {
+    interface Window {
+        hmsEventHandlers: {
+            [key: string]: Handler[]
+        },
+        hmsEventHandler: (eventName: string, data: any) => void,
+        registerHMSEvent: (eventName: string, handler: Handler) => void
+        unregisterHMSEvent: (eventName: string, handler: Handler) => void
+        hmsSetConstants: (objName: string, constans: any) => void,
+        [key: string]: any
+    }
+}
+
 function initHms() {
     console.log('hms :: init called.');
     initEventHandler();
     initConstantSetter();
 }
+
 function initEventHandler() {
     if (window.hmsEventHandler != null) {
         return;
     }
+
     console.log('hms-location :: window.hmsEventHandler');
     window.hmsEventHandlers = {};
+
     window.hmsEventHandler = (eventName, data) => {
         console.log('eventReceived: ' + eventName + ' with data: ', data);
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
-            window.hmsEventHandlers[eventName].forEach((handler) => {
+            window.hmsEventHandlers[eventName].forEach((handler: Handler) => {
                 handler(data);
             });
         }
     };
+
     window.registerHMSEvent = (eventName, handler) => {
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].push(handler);
-        }
-        else {
+        } else {
             window.hmsEventHandlers[eventName] = [handler];
         }
     };
+
     window.unregisterHMSEvent = (eventName, handler) => {
         if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             const idx = window.hmsEventHandlers[eventName].indexOf(handler);
@@ -63,20 +87,23 @@ function initEventHandler() {
         }
     };
 }
+
 function initConstantSetter() {
     if (window.hmsSetConstants != null) {
         return;
     }
+
     console.log('hms-location :: window.hmsSetConstants');
-    window.hmsSetConstants = (objName, constants) => {
+    window.hmsSetConstants = (objName: string, constants) => {
         console.log('hms-location :: initializing constants for', objName, 'with', constants);
+
         if (window[objName] == null) {
             console.log('hms-location :: uninitialized obj');
             return;
         }
+
         Object.keys(constants).forEach(key => {
-            Object.defineProperty(window[objName], key, { value: constants[key] });
+            Object.defineProperty(window[objName], key, {value: constants[key]});
         });
     };
 }
-//# sourceMappingURL=utils.js.map

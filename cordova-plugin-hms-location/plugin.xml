@@ -4,15 +4,12 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-hms-location"
-    version="1.0.0">
+    version="5.0.0">
 
     <name>cordova-plugin-hms-location</name>
     <description>cordova-plugin-hms-location</description>
     <license>Apache 2.0</license>
     <keywords>cordova,hms</keywords>
-
-    <repo>https://github.com/huawei/cordova-plugin-hms-location.git</repo>
-    <issue>https://github.com/huawei/cordova-plugin-hms-location/issues</issue>
 
     <js-module src="www/utils.js" name="utils" />
 
@@ -50,44 +47,38 @@
         </config-file>
 
         <!-- Source files -->
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSLocationKit.java"
-                     target-dir="src/com/huawei/hms/cordova/location" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSFusedLocation.java"
-                     target-dir="src/com/huawei/hms/cordova/location" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSActivityIdentification.java"
-                     target-dir="src/com/huawei/hms/cordova/location" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSGeofence.java"
-                     target-dir="src/com/huawei/hms/cordova/location" />
-
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/utils/CordovaUtils.java"
-                     target-dir="src/com/huawei/hms/cordova/location/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/utils/PermissionUtils.java"
-                     target-dir="src/com/huawei/hms/cordova/location/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/utils/LocationUtils.java"
-                     target-dir="src/com/huawei/hms/cordova/location/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/utils/ActivityUtils.java"
-                     target-dir="src/com/huawei/hms/cordova/location/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/utils/GeofenceUtils.java"
-                     target-dir="src/com/huawei/hms/cordova/location/utils" />
-
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/HMSBroadcastReceiver.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/HMSCordovaPlugin.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/Constants.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/Exceptions.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/LocationCallbackWithHandler.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/Mapper.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/JSONMapper.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/Pair.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/ResultHandler.java"
-                     target-dir="src/com/huawei/hms/cordova/location/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/helpers/Constants.java" target-dir="src/com/huawei/hms/cordova/location/backend/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/helpers/Exceptions.java" target-dir="src/com/huawei/hms/cordova/location/backend/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/helpers/HMSBroadcastReceiver.java" target-dir="src/com/huawei/hms/cordova/location/backend/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/helpers/LocationCallbackWithHandler.java" target-dir="src/com/huawei/hms/cordova/location/backend/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/helpers/Pair.java" target-dir="src/com/huawei/hms/cordova/location/backend/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/ActivityHolder.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/EventSender.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/HMSCallback.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/HMSProvider.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/JSONMapper.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/JSONTriMapper.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/Mapper.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/PermissionHandler.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/ResultHandler.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/interfaces/TriMapper.java" target-dir="src/com/huawei/hms/cordova/location/backend/interfaces" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/logger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/location/backend/logger" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/logger/HMSMethod.java" target-dir="src/com/huawei/hms/cordova/location/backend/logger" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/providers/ActivityIdentificationProvider.java" target-dir="src/com/huawei/hms/cordova/location/backend/providers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/providers/FusedLocationProvider.java" target-dir="src/com/huawei/hms/cordova/location/backend/providers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/providers/GeofenceProvider.java" target-dir="src/com/huawei/hms/cordova/location/backend/providers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/utils/ActivityUtils.java" target-dir="src/com/huawei/hms/cordova/location/backend/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/utils/GeofenceUtils.java" target-dir="src/com/huawei/hms/cordova/location/backend/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/utils/LocationUtils.java" target-dir="src/com/huawei/hms/cordova/location/backend/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/utils/PermissionUtils.java" target-dir="src/com/huawei/hms/cordova/location/backend/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/backend/utils/PlatformUtils.java" target-dir="src/com/huawei/hms/cordova/location/backend/utils" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSActivityIdentification.java" target-dir="src/com/huawei/hms/cordova/location" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSFusedLocation.java" target-dir="src/com/huawei/hms/cordova/location" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSGeofence.java" target-dir="src/com/huawei/hms/cordova/location" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/HMSLocationKit.java" target-dir="src/com/huawei/hms/cordova/location" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/CordovaCallback.java" target-dir="src/com/huawei/hms/cordova/location/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/CordovaUtils.java" target-dir="src/com/huawei/hms/cordova/location/helpers" />
+        <source-file src="src/main/java/com/huawei/hms/cordova/location/helpers/HMSCordovaPlugin.java" target-dir="src/com/huawei/hms/cordova/location/helpers" />
 
         <!-- Android dependencies -->
         <framework src="res/android/plugin.gradle" custom="true" type="gradleReference" />
@@ -101,6 +92,7 @@
           <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
           <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
           <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
           <uses-permission android:name="com.huawei.hms.permission.ACTIVITY_RECOGNITION" />
         </config-file>
 

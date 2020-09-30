@@ -1,36 +1,42 @@
 {
   "name": "@hmscore/cordova-plugin-hms-location",
-  "title": "Cordova HMS Location Kit",
-  "description": "Cordova HMS Location Kit", 
-  "packagename": "cordova-location",
-  "packageversion": "4.0.3.300",
-  "version": "4.0.3",
+  "title": "Cordova HMS Location Plugin",
+  "description": "Cordova HMS Location Plugin",
+  "version": "5.0.0-301",
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
     "directory": "cordova-plugin-hms-location"
   },
-  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
   "readmeFilename": "README.md",
-  "keywords": [
-    "cordova",
-    "cordova-location",
-    "hms-location",
-    "huawei-location"
-  ],
+  "types": "types/index.d.ts",
   "cordova": {
     "id": "cordova-plugin-hms-location",
     "platforms": [
       "android"
     ]
   },
-  "engines": [{
-    "name": "cordova",
-    "version": ">=3.0.0"
-  }],
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "node node_modules/eslint/bin/eslint www && node node_modules/eslint/bin/eslint src && node node_modules/eslint/bin/eslint tests",
+    "compile-ionic": "PLUGIN_DIR=$(pwd); mkdir -p ../ionic-native/src/@ionic-native/plugins/hms-location; cp ionic/wrapper/index.ts ../ionic-native/src/@ionic-native/plugins/hms-location/; cd ../ionic-native; npm run build; cd \"$PLUGIN_DIR\"; cp ../ionic-native/dist/@ionic-native/plugins/hms-location/ ionic/dist -r"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
   "devDependencies": {
+    "@types/cordova": "0.0.34",
     "eslint": "^3.19.0",
     "eslint-config-semistandard": "^11.0.0",
     "eslint-config-standard": "^10.2.1",
@@ -40,12 +46,16 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "files": [
-    "res/**",
-    "src/**",
-    "www/**",
+    "ionic",
+    "res",
+    "scripts",
+    "src",
+    "types",
+    "www",
     "LICENCE",
     "package.json",
     "plugin.xml",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ]
 }

@@ -14,34 +14,39 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.utils;
+package com.huawei.hms.cordova.location.backend.utils;
 
 import android.location.Location;
 import android.os.Build;
 import android.util.Log;
 
-import com.huawei.hms.cordova.location.helpers.Exceptions;
-import com.huawei.hms.cordova.location.helpers.JSONMapper;
 import com.huawei.hms.location.FusedLocationProviderClient;
 import com.huawei.hms.location.HWLocation;
+import com.huawei.hms.location.LocationAvailability;
 import com.huawei.hms.location.LocationRequest;
 import com.huawei.hms.location.LocationSettingsRequest;
+import com.huawei.hms.location.LocationSettingsResponse;
 import com.huawei.hms.location.LocationSettingsStates;
+import com.huawei.hms.location.NavigationResult;
+import com.huawei.hms.cordova.location.backend.helpers.Exceptions;
+import com.huawei.hms.cordova.location.backend.interfaces.HMSCallback;
+import com.huawei.hms.cordova.location.backend.interfaces.HMSProvider;
+import com.huawei.hms.cordova.location.backend.interfaces.Mapper;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
+import static com.huawei.hms.cordova.location.backend.helpers.Exceptions.ERR_NO_FUSED_LOCATION_PROVIDER;
+import static com.huawei.hms.cordova.location.backend.helpers.Exceptions.ERR_NO_PERMISSION;
+import static com.huawei.hms.cordova.location.backend.utils.PlatformUtils.mapperWrapper;
 
 public class LocationUtils {
-
     private static final String TAG = LocationUtils.class.getSimpleName();
 
-    public static final JSONMapper<JSONObject, LocationRequest> fromJSONObjectToLocationRequest = readableMap -> LocationRequest.create()
+    public static final Mapper<JSONObject, LocationRequest> FROM_JSON_OBJECT_TO_LOCATION_REQUEST =
+            mapperWrapper((JSONObject readableMap) -> LocationRequest.create()
             .setPriority(readableMap.getInt("priority"))
             .setInterval((long) readableMap.getDouble("interval"))
             .setNumUpdates(readableMap.getInt("numUpdates"))
@@ -52,20 +57,23 @@ public class LocationUtils {
             .setMaxWaitTime((long) readableMap.getDouble("maxWaitTime"))
             .setNeedAddress(readableMap.getBoolean("needAddress"))
             .setLanguage(readableMap.getString("language"))
-            .setCountryCode(readableMap.getString("countryCode"));
+            .setCountryCode(readableMap.getString("countryCode")));
 
-    public static final JSONMapper<JSONObject, LocationSettingsRequest> fromJSONObjectToLocationSettingsRequest = locationRequestMap -> {
+    public static final Mapper<JSONObject, LocationSettingsRequest> FROM_JSON_OBJECT_TO_LOCATION_SETTINGS_REQUEST =
+            mapperWrapper((JSONObject locationRequestMap) -> {
         JSONArray locationRequestsArray = locationRequestMap.getJSONArray("locationRequests");
-        List<LocationRequest> locationRequestList = CordovaUtils.mapJSONArray(locationRequestsArray, fromJSONObjectToLocationRequest);
+        List<LocationRequest> locationRequestList = PlatformUtils.mapJSONArray(locationRequestsArray,
+                FROM_JSON_OBJECT_TO_LOCATION_REQUEST);
 
         LocationSettingsRequest.Builder locationRequest = new LocationSettingsRequest.Builder();
         return locationRequest.addAllLocationRequests(locationRequestList)
                 .setAlwaysShow(locationRequestMap.getBoolean("alwaysShow"))
                 .setNeedBle(locationRequestMap.getBoolean("needBle"))
                 .build();
-    };
+    });
 
-    public static JSONObject fromLocationToJSONObject(Location location) throws JSONException {
+    public static final Mapper<Location, JSONObject> FROM_LOCATION_TO_JSON_OBJECT =
+            mapperWrapper((Location location) -> {
         JSONObject map = new JSONObject();
 
         map.put("latitude", location.getLatitude());
@@ -89,50 +97,14 @@ public class LocationUtils {
         map.put("fromMockProvider", location.isFromMockProvider());
 
         return map;
-    }
+    }, new JSONObject());
 
-    public static boolean checkForObstacles(CordovaInterface cordova, FusedLocationProviderClient fused) {
-        return checkForObstacles(cordova, fused, null);
-    }
-
-    public static boolean checkForObstacles(CordovaInterface cordova, FusedLocationProviderClient fused, final CallbackContext cordovaCallback) {
-        if (!PermissionUtils.hasLocationPermission(cordova)) {
-            Log.i(TAG, "checkForObstacles -> no permissions");
-            if (cordovaCallback != null) {
-                cordovaCallback.error(new Exceptions.NoPermissionsError().getMessage());
-            }
-            return true;
-        }
-
-        if (fused == null) {
-            Log.i(TAG, "checkForObstacles -> fusedLocationProviderClient is null");
-            if (cordovaCallback != null) {
-                cordovaCallback.error(new Exceptions.NoFusedLocationProviderError().getMessage());
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    public static String hwLocationToString(HWLocation hwLocation) {
-        return "HWLocation ["
-            + "longitude=" + hwLocation.getLongitude()
-            + ",latitude=" + hwLocation.getLatitude()
-            + ",accuracy=" + hwLocation.getAccuracy()
-            + ",countryName=" + hwLocation.getCountryName()
-            + ",state=" + hwLocation.getState()
-            + ",city=" + hwLocation.getCity()
-            + ",county=" + hwLocation.getCounty()
-            + ",featureName=" + hwLocation.getFeatureName()
-            + "]";
-    }
-
-    public static JSONObject fromHWLocationToJSONObject(HWLocation hwLocation) throws JSONException {
+    public static final Mapper<HWLocation, JSONObject> FROM_HW_LOCATION_TO_JSON_OBJECT =
+            mapperWrapper((HWLocation hwLocation) -> {
         JSONObject result = new JSONObject();
         result.put("latitude", hwLocation.getLatitude());
         result.put("longitude", hwLocation.getLongitude());
-        result.put("altitude", hwLocation.getAltitude ());
+        result.put("altitude", hwLocation.getAltitude());
         result.put("speed", hwLocation.getSpeed());
         result.put("bearing", hwLocation.getBearing());
         result.put("accuracy", hwLocation.getAccuracy());
@@ -149,7 +121,7 @@ public class LocationUtils {
         result.put("postalCode", hwLocation.getPostalCode());
         result.put("phone", hwLocation.getPhone());
         result.put("url", hwLocation.getUrl());
-        result.put("extraInfo", CordovaUtils.fromMapToJSONObject(hwLocation.getExtraInfo()));
+        result.put("extraInfo", PlatformUtils.fromMapToJSONObject(hwLocation.getExtraInfo()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             result.put("verticalAccuracyMeters", hwLocation.getVerticalAccuracyMeters());
@@ -162,9 +134,10 @@ public class LocationUtils {
         }
 
         return result;
-    }
+    }, new JSONObject());
 
-    public static JSONObject fromLocationSettingsStatesResponseToJSONObject(LocationSettingsStates locationSettingsStates) throws JSONException {
+    public static final Mapper<LocationSettingsStates, JSONObject> FROM_LOCATION_SETTINGS_STATES_TO_JSON_OBJECT =
+            mapperWrapper((LocationSettingsStates locationSettingsStates) -> {
         JSONObject result = new JSONObject();
         result.put("isBlePresent", locationSettingsStates.isBlePresent());
         result.put("isBleUsable", locationSettingsStates.isBleUsable());
@@ -175,8 +148,50 @@ public class LocationUtils {
         result.put("isNetworkLocationPresent", locationSettingsStates.isNetworkLocationPresent());
         result.put("isNetworkLocationUsable", locationSettingsStates.isNetworkLocationUsable());
 
-        // TODO: result.put("status", fromStatusToJSONObject(locationSettingsStates.getStatus()))
         return result;
+    }, new JSONObject());
+
+    public static final Mapper<LocationAvailability, JSONObject> FROM_LOCATION_AVAILABILITY_TO_JSON_OBJECT =
+            mapperWrapper((LocationAvailability locationAvailability) -> {
+        JSONObject result = new JSONObject();
+        result.put("isLocationAvailable", locationAvailability.isLocationAvailable());
+        return result;
+    });
+
+    public static final Mapper<LocationSettingsResponse, JSONObject> FROM_LOCATION_SETTINGS_STATES_RESPONSE_TO_JSON_OBJECT = mapperWrapper((LocationSettingsResponse locationSettingsResponse) -> {
+        JSONObject result = new JSONObject();
+        result.put("locationSettingsStates",
+                FROM_LOCATION_SETTINGS_STATES_TO_JSON_OBJECT.map(locationSettingsResponse.getLocationSettingsStates()));
+        return result;
+    });
+
+    public static boolean checkForObstacles(HMSProvider provider, FusedLocationProviderClient fused,
+                                            final HMSCallback callback) {
+        if (!PermissionUtils.hasLocationPermission(provider)) {
+            Log.i(TAG, "checkForObstacles -> no permissions");
+            if (callback != null) {
+                callback.error(Exceptions.toErrorJSON(ERR_NO_PERMISSION));
+            }
+            return true;
+        }
+
+        if (fused == null) {
+            Log.i(TAG, "checkForObstacles -> fusedLocationProviderClient is null");
+            if (callback != null) {
+                callback.error(Exceptions.toErrorJSON(ERR_NO_FUSED_LOCATION_PROVIDER));
+            }
+            return true;
+        }
+
+        return false;
     }
 
+    public static final Mapper<NavigationResult, JSONObject> FROM_NAVIGATION_RESULT_TO_JSON_OBJECT =
+            mapperWrapper((NavigationResult navigationResult) -> {
+        JSONObject result = new JSONObject();
+        result.put("state", navigationResult.getState());
+        result.put("possibility", navigationResult.getPossibility());
+
+        return result;
+    }, new JSONObject());
 }

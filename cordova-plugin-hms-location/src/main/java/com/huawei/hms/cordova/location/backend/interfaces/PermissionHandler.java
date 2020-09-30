@@ -14,17 +14,14 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.helpers;
+package com.huawei.hms.cordova.location.backend.interfaces;
 
-import org.json.JSONException;
-
-
-public interface JSONMapper<T, R> {
+public interface PermissionHandler {
     /**
-     * A simple transformation operation.
-     * @param in T
-     * @return R
-     * @throws JSONException
+     * Request given permissions.
+     *
+     * @param requestNo   int
+     * @param permissions permission list
      */
-    public R map(T in) throws JSONException;
+    void requestPermissions(int requestNo, String[] permissions);
 }

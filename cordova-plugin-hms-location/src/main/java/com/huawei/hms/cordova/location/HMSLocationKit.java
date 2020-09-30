@@ -18,28 +18,35 @@ package com.huawei.hms.cordova.location;
 
 import android.util.Log;
 
-import com.huawei.hms.cordova.location.helpers.HMSBroadcastReceiver;
+import com.huawei.hms.cordova.location.backend.helpers.HMSBroadcastReceiver;
+import com.huawei.hms.cordova.location.backend.logger.HMSMethod;
+import com.huawei.hms.cordova.location.helpers.CordovaUtils;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
-import org.json.JSONException;
-
 
 public class HMSLocationKit extends CordovaPlugin {
     private final static String TAG = HMSLocationKit.class.getSimpleName();
-
-    public HMSLocationKit() {}
 
     public void pluginInitialize() {
         super.pluginInitialize();
     }
 
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
         Log.d(TAG, action + " is called.");
         if (action.equals("init")) {
             Log.d(TAG, "init called.");
-            HMSBroadcastReceiver.init(cordova, webView);
+            HMSBroadcastReceiver.init(cordova.getActivity(), (eventName, value) -> CordovaUtils.sendEvent(this,
+                    eventName, value));
+            callbackContext.success();
+        } else if (action.equals("disableLogger")) {
+            Log.d(TAG, "disableLogger called.");
+            HMSMethod.disableLogger(cordova.getActivity());
+            callbackContext.success();
+        } else if (action.equals("enableLogger")) {
+            Log.d(TAG, "enableLogger called.");
+            HMSMethod.enableLogger(cordova.getActivity());
             callbackContext.success();
         }
         return false;

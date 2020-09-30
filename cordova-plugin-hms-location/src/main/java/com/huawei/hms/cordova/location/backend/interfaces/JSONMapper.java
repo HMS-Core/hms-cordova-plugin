@@ -14,32 +14,17 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.helpers;
+package com.huawei.hms.cordova.location.backend.interfaces;
 
-public class Constants {
+import org.json.JSONException;
 
-    public enum Event {
-
-        SCANNING_RESULT("onScanningResult"),
-        ACTIVITY_IDENTIFICATION_RESULT("onActivityIdentificationResult"),
-        ACTIVITY_CONVERSION_RESULT("onActivityConversionResult"),
-        GEOFENCE_RESULT("onGeofenceResult");
-
-        private String val;
-
-        Event(String val) {
-            this.val = val;
-        }
-
-        public String getVal() {
-            return this.val;
-        }
-
-        @Override
-        public String toString() {
-            return this.val;
-        }
-
-    }
-
+public interface JSONMapper<T, R> {
+    /**
+     * A simple transformation operation.
+     *
+     * @param in T
+     * @return R
+     * @throws JSONException
+     */
+    R map(T in) throws JSONException;
 }

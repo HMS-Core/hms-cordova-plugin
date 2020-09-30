@@ -14,29 +14,31 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.location.utils;
+package com.huawei.hms.cordova.location.backend.utils;
 
 import android.util.Log;
 
-import com.huawei.hms.cordova.location.helpers.JSONMapper;
 import com.huawei.hms.location.Geofence;
 import com.huawei.hms.location.GeofenceData;
 import com.huawei.hms.location.GeofenceErrorCodes;
 import com.huawei.hms.location.GeofenceRequest;
+import com.huawei.hms.cordova.location.backend.interfaces.Mapper;
+import com.huawei.hms.cordova.location.backend.interfaces.TriMapper;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
+import static com.huawei.hms.cordova.location.backend.utils.PlatformUtils.mapperWrapper;
+import static com.huawei.hms.cordova.location.backend.utils.PlatformUtils.triMapperWrapper;
 
 public class GeofenceUtils {
-
     private static final String TAG = GeofenceUtils.class.getSimpleName();
 
-    public static final JSONMapper<JSONObject, Geofence> fromJSONObjectToGeofence = readableMap -> {
-        Log.i(TAG, "fromJSONObjectToGeofence: " + readableMap.toString());
+    public static final Mapper<JSONObject, Geofence> FROM_JSON_OBJECT_TO_GEOFENCE =
+            mapperWrapper((JSONObject readableMap) -> {
+        Log.i(TAG, "FROM_JSON_OBJECT_TO_GEOFENCE: " + readableMap.toString());
         Geofence.Builder builder = new Geofence.Builder();
         builder
                 .setRoundArea(readableMap.getDouble("latitude"),
@@ -49,17 +51,20 @@ public class GeofenceUtils {
                 .setNotificationInterval(readableMap.getInt("notificationInterval"));
 
         return builder.build();
-    };
+    });
 
-    public static final JSONMapper<Geofence, JSONObject> fromGeofenceToJSONObject = geofence -> {
+    public static final Mapper<Geofence, JSONObject> FROM_GEOFENCE_TO_JSON_OBJECT =
+            mapperWrapper((Geofence geofence) -> {
         JSONObject result = new JSONObject();
         result.put("uniqueId", geofence.getUniqueId());
         return result;
-    };
+    }, new JSONObject());
 
-    public static GeofenceRequest fromJSONArrayToGeofences(final JSONArray arrayGeofences, int initConversions, int coordinateType) throws JSONException {
+    public static final TriMapper<JSONArray, Integer, Integer, GeofenceRequest> FROM_JSON_ARRAY_TO_GEOFENCE =
+            triMapperWrapper((arrayGeofences, initConversions, coordinateType) -> {
         Log.i(TAG, "buildGeofenceRequest start");
-        List<Geofence> geofences = CordovaUtils.mapJSONArray(arrayGeofences, fromJSONObjectToGeofence);
+        List<Geofence> geofences = PlatformUtils.mapJSONArray(arrayGeofences,
+                GeofenceUtils.FROM_JSON_OBJECT_TO_GEOFENCE);
 
         GeofenceRequest.Builder request = new GeofenceRequest.Builder();
         request.createGeofenceList(geofences)
@@ -68,20 +73,22 @@ public class GeofenceUtils {
 
         Log.i(TAG, "buildGeofenceRequest end");
         return request.build();
-    }
+    });
 
-    public static JSONObject fromGeofenceDataToJSONObject(GeofenceData geofenceData) throws JSONException {
+    public static final Mapper<GeofenceData, JSONObject> FROM_GEOFENCE_DATA_TO_JSON_OBJECT =
+            mapperWrapper((GeofenceData geofenceData) -> {
         JSONObject result = new JSONObject();
 
         // Add convertingGeofenceList
-        result.put("convertingGeofenceList", CordovaUtils.mapList(geofenceData.getConvertingGeofenceList(), fromGeofenceToJSONObject));
+        result.put("convertingGeofenceList", PlatformUtils.mapList(geofenceData.getConvertingGeofenceList(),
+                GeofenceUtils.FROM_GEOFENCE_TO_JSON_OBJECT));
 
         result.put("conversion", geofenceData.getConversion());
-        result.put("convertingLocation", LocationUtils.fromLocationToJSONObject(geofenceData.getConvertingLocation()));
+        result.put("convertingLocation",
+                LocationUtils.FROM_LOCATION_TO_JSON_OBJECT.map(geofenceData.getConvertingLocation()));
         result.put("errorCode", geofenceData.getErrorCode());
         result.put("errorMessage", GeofenceErrorCodes.getErrorMessage(geofenceData.getErrorCode()));
 
         return result;
-    }
-
+    }, new JSONObject());
 }

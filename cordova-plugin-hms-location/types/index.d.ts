@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Copyright 2020 Huawei Technologies Co., Ltd.
  *
@@ -14,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.enableLogger = exports.disableLogger = exports.init = void 0;
-const utils_1 = require("./utils");
-function init() {
-    return utils_1.asyncExec('HMSLocationKit', 'init', []);
-}
-exports.init = init;
-function disableLogger() {
-    return utils_1.asyncExec('HMSLocationKit', 'disableLogger', []);
-}
-exports.disableLogger = disableLogger;
-function enableLogger() {
-    return utils_1.asyncExec('HMSLocationKit', 'enableLogger', []);
-}
-exports.enableLogger = enableLogger;
-//# sourceMappingURL=HMSLocationKit.js.map
+
+import * as HMSLocationKit from "./HMSLocationKit";
+import * as HMSFusedLocation from "./HMSFusedLocation";
+import * as HMSGeofence from "./HMSGeofence";
+import * as HMSActivityIdentification from "./HMSActivityIdentification";
+import * as HMSLocationUtils from "./utils";
+import * as IonicLocation from "../ionic/dist/hms-location";
+import * as IonicLocationNgx from "../ionic/dist/hms-location/ngx";
+
+export {
+    HMSLocationKit,
+    HMSFusedLocation,
+    HMSGeofence,
+    HMSActivityIdentification,
+    HMSLocationUtils,
+    IonicLocationNgx,
+    IonicLocation,
+};

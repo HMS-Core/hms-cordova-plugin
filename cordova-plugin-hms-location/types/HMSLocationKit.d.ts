@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Copyright 2020 Huawei Technologies Co., Ltd.
  *
@@ -14,19 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.enableLogger = exports.disableLogger = exports.init = void 0;
-const utils_1 = require("./utils");
-function init() {
-    return utils_1.asyncExec('HMSLocationKit', 'init', []);
-}
-exports.init = init;
-function disableLogger() {
-    return utils_1.asyncExec('HMSLocationKit', 'disableLogger', []);
-}
-exports.disableLogger = disableLogger;
-function enableLogger() {
-    return utils_1.asyncExec('HMSLocationKit', 'enableLogger', []);
-}
-exports.enableLogger = enableLogger;
-//# sourceMappingURL=HMSLocationKit.js.map
+export declare function init(): Promise<void>;
+export declare function disableLogger(): Promise<void>;
+export declare function enableLogger(): Promise<void>;
