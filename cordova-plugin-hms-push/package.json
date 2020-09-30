@@ -1,10 +1,8 @@
 {
   "name": "@hmscore/cordova-plugin-hms-push",
-  "title": "Cordova HMS Push Kit",
-  "description": "Cordova HMS Push Kit", 
-  "packagename": "cordova-push",
-  "packageversion": "4.0.3.300",
-  "version": "4.0.3",
+  "version": "5.0.2-300",
+  "description": "Huawei Push Cordova Plugin",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
@@ -14,31 +12,35 @@
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
   "readmeFilename": "README.md",
-  "keywords": [
-    "cordova",
-    "cordova-push",
-    "hms-push",
-    "hms-notification",
-    "huawei-push"
-  ],
   "cordova": {
     "id": "cordova-plugin-hms-push",
     "platforms": [
       "android"
     ]
   },
-  "engines": [{
-    "name": "cordova",
-    "version": ">=3.0.0"
-  }],
+  "keywords": [
+    "cordova",
+    "push",
+    "hmspush",
+    "huaweipush",
+    "ecosystem:cordova"
+  ],
   "files": [
-    "hooks/**",
-    "resources/**",
-    "src/**",
-    "www/**",
+    "hooks",
+    "resources",
+    "src",
+    "www",
     "LICENCE",
     "package.json",
     "plugin.xml",
-    "README.md"
-  ]
+    "README.md",
+    "ionic",
+    "scripts",
+    "types",
+    "tsconfig.json",
+    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+  ],
+  "devDependencies": {
+    "@types/cordova": "0.0.34"
+  }
 }
