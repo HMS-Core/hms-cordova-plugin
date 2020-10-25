@@ -73,8 +73,11 @@ public class SplashUtils {
     }
 
     public static SplashView createSplashView(CordovaInterface cordova, CordovaWebView webView, int objectId, JSONObject json) {
-        Display display = cordova.getActivity().getWindowManager().getDefaultDisplay();
-
+        //display is derecated with height and width and change to diplaymetrics:
+        //Display display = cordova.getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        cordova.getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        
         // Dialog
         Dialog splashDialog = new Dialog(cordova.getContext(), android.R.style.Theme_Translucent_NoTitleBar);
         splashDialog.setCancelable(false);
@@ -83,8 +86,11 @@ public class SplashUtils {
         // Layout
         RelativeLayout splashLayout = (RelativeLayout) cordova.getActivity().getLayoutInflater().inflate(rlayout(cordova, "splash_ad"), null);
         splashLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        splashLayout.setMinimumHeight(display.getHeight());
-        splashLayout.setMinimumWidth(display.getWidth());
+        
+        //splashLayout.setMinimumHeight(display.getHeight());
+        //splashLayout.setMinimumWidth(display.getWidth());
+        splashLayout.setMinimumHeight(displaymetrics.heightPixels);
+        splashLayout.setMinimumWidth(displaymetrics.widthPixels);
 
         splashDialog.setContentView(splashLayout);
 
