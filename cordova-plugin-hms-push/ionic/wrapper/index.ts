@@ -1,17 +1,17 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import { Injectable } from '@angular/core';
@@ -48,7 +48,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class HmsPush extends IonicNativePlugin {
 
-  HmsPushResultCode:HmsPushResultCode
+  HmsPushResultCode=HmsPushResultCode
   CordovaRemoteMessage=CordovaRemoteMessage;
 
   @Cordova({ otherPromise: true })
@@ -62,12 +62,12 @@ export class HmsPush extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  enableLogger(): Promise<string> {
+  enableLogger(): Promise<boolean> {
     return;
   }
   
   @Cordova({ otherPromise: true })
-  disableLogger(): Promise<string> {
+  disableLogger(): Promise<boolean> {
     return;
   }
   
@@ -77,7 +77,7 @@ export class HmsPush extends IonicNativePlugin {
     
    * @returns Promise<string> 
    */
-  turnOnPush(): Promise<string> {
+  turnOnPush(): Promise<boolean> {
     return;
   }
 
@@ -86,7 +86,7 @@ export class HmsPush extends IonicNativePlugin {
    * This method is used to enable the display of notification messages. If you want to control the display of notification messages in an app, you can call this method. This method applies to notification messages but not data messages. It is the app that determines whether to enable or disable data messaging.
    * @returns Promise<string>
    */
-  turnOffPush(): Promise<string> {
+  turnOffPush(): Promise<boolean> {
     return;
   }
 
@@ -112,8 +112,9 @@ export class HmsPush extends IonicNativePlugin {
   /**
    * This method is used to obtain a token required for accessing HUAWEI Push Kit. If there is no local AAID, this method will automatically generate an AAID when it is called because the HUAWEI Push Kit server needs to generate a token based on the AAID.
    * @returns Promise<string>
+   * @params scope ? : String
    */
-  getToken(): Promise<string> {
+  getToken(args?:string): Promise<string> {
     return;
   }
 
@@ -131,7 +132,7 @@ export class HmsPush extends IonicNativePlugin {
    * This method is used to delete a local AAID and its generation timestamp.
    * @returns Promise<string>
    */
-  deleteAAID(): Promise<string> {
+  deleteAAID(): Promise<boolean> {
     return;
   }
 
@@ -139,8 +140,9 @@ export class HmsPush extends IonicNativePlugin {
   /**
    * This method is used to delete a token. After a token is deleted, the corresponding AAID will not be deleted. This method is a synchronous method.
    * @returns Promise<string>
+   * @params scope ? : String
    */
-  deleteToken(): Promise<string> {
+  deleteToken(args?:string): Promise<boolean> {
     return;
   }
 
@@ -150,7 +152,7 @@ export class HmsPush extends IonicNativePlugin {
    * @param {string} arg Topic to be subscribed to.
    * @returns Promise<string>
    */
-  subscribe(arg: string): Promise<string> {
+  subscribe(arg: string): Promise<boolean> {
     return;
   }
 
@@ -160,12 +162,12 @@ export class HmsPush extends IonicNativePlugin {
    * @param {string} arg Topic to be unsubscribed to.
    * @returns Promise<string>
    */
-  unsubscribe(arg: string): Promise<string> {
+  unsubscribe(arg: string): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  setAutoInitEnabled(args: string): Promise<string> {
+  setAutoInitEnabled(args: boolean): Promise<boolean> {
     return;
   }
 
@@ -179,15 +181,7 @@ export class HmsPush extends IonicNativePlugin {
    * This method is used to check whether automatic initialization is enabled.  
    * @returns Promise<string>
    */
-  isAutoInitEnabled(): Promise<string> {
-    return;
-  }
-
-  @Cordova({ otherPromise: true })
-  /** This method is used to test.
-   * @returns Promise<string>
-   */
-  test(): Promise<string> {
+  isAutoInitEnabled(): Promise<boolean> {
     return;
   }
 
@@ -197,7 +191,17 @@ export class HmsPush extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  sendRemoteMessage(args: RemoteMessageObject): Promise<any> {
+  setBackgroundAction(callback: (data:any) => void): Promise<any> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  removeBackgroundAction() : Promise<any> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  sendRemoteMessage(args: RemoteMessageObject): Promise<boolean> {
     return;
   }
 
@@ -245,32 +249,32 @@ export class HmsLocalNotification extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  cancelAllNotifications(): Promise<void> {
+  cancelAllNotifications(): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  cancelNotifications(): Promise<void> {
+  cancelNotifications(): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  cancelScheduledNotifications(): Promise<void> {
+  cancelScheduledNotifications(): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  cancelNotificationsWithId(args: any): Promise<void> {
+  cancelNotificationsWithId(args: any): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  cancelNotificationsWithIdTag(args: any): Promise<void> {
+  cancelNotificationsWithIdTag(args: any): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  cancelNotificationsWithTag(args: any): Promise<void> {
+  cancelNotificationsWithTag(args: any): Promise<boolean> {
     return;
   }
 
@@ -290,21 +294,25 @@ export class HmsLocalNotification extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  channelExists(args: string): Promise<string> {
+  channelExists(args: string): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  channelBlocked(args: string): Promise<string> {
+  channelBlocked(args: string): Promise<boolean> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  deleteChannel(args: string): Promise<string> {
+  deleteChannel(args: string): Promise<boolean> {
     return;
   }
 
+  static backgroundLocalNotification(args: string): void {
+    return;
+  }
 
+  
 }
 
 @Plugin({
@@ -340,9 +348,6 @@ onLocalNotificationAction (result:any) {
 onNotificationOpenedApp (result:any) {
   window.registerHMSEvent("NOTIFICATION_OPENED_EVENT",result)
 }
-onCustomIntent (result:any) {
-  window.registerHMSEvent("CUSTOM_INTENT_EVENT",result)
-}
 
 REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED"
 TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT"
@@ -351,154 +356,148 @@ NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT"
 LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT"
 ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT"
 ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR"
-CUSTOM_INTENT_EVENT="CUSTOM_INTENT_EVENT"
 ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED"
-PUSH_ON_START_COMMAND_EVENT = "PUSH_ON_START_COMMAND_EVENT"
 
 }
 
-
-
-
-
-export interface HmsPushResultCode {
+export enum HmsPushResultCode {
   // Success
-  SUCCESS: 0,
+  SUCCESS= "0",
 
   // Error
-  ERROR: -1,
+  ERROR= "-1",
 
   // Bundle is null, exception
-  NULL_BUNDLE: 333,
+  NULL_BUNDLE= "333",
 
   // You do not have a token. Apply for a token.
-  ERROR_NO_TOKEN: 907122030,
+  ERROR_NO_TOKEN= "907122030",
 
   // The current network is unavailable. Check the network connection.
-  ERROR_NO_NETWORK: 907122031,
+  ERROR_NO_NETWORK= "907122031",
 
   // The token has expired. Delete the token and apply for a new one.
-  ERROR_TOKEN_INVALID: 907122032,
+  ERROR_TOKEN_INVALID= "907122032",
 
   // If the Push service is unavailable, contact Huawei technical support.
-  ERROR_SERVICE_NOT_AVAILABLE: 907122046,
+  ERROR_SERVICE_NOT_AVAILABLE= "907122046",
 
   // If the Push server returns an error, contact Huawei technical support.
-  ERROR_PUSH_SERVER: 907122047,
+  ERROR_PUSH_SERVER= "907122047",
 
   // Unknown error. Contact Huawei technical support.
-  ERROR_UNKNOWN: 907122045,
+  ERROR_UNKNOWN= "907122045",
 
   // The number of subscribed topics exceeds 2000.
-  ERROR_TOPIC_EXCEED: 907122034,
+  ERROR_TOPIC_EXCEED= "907122034",
 
   // Failed to send the subscription topic. Contact Huawei technical support.
-  ERROR_TOPIC_SEND: 907122035,
+  ERROR_TOPIC_SEND= "907122035",
 
   // Push rights are not enabled. Enable the service and set push service parameters at AppGallery Connect.
-  ERROR_NO_RIGHT: 907122036,
+  ERROR_NO_RIGHT= "907122036",
 
   // Failed to apply for the token. Contact Huawei technical support.
-  ERROR_GET_TOKEN_ERR: 907122037,
+  ERROR_GET_TOKEN_ERR= "907122037",
 
   // No storage location is selected for the application or the storage location is invalid.
-  ERROR_STORAGE_LOCATION_EMPTY: 907122038,
+  ERROR_STORAGE_LOCATION_EMPTY= "907122038",
 
   // Failed to apply for a token. Cross-region token application is not allowed.
-  ERROR_NOT_ALLOW_CROSS_APPLY: 907122053,
+  ERROR_NOT_ALLOW_CROSS_APPLY= "907122053",
 
   // The message body size exceeds the maximum.
-  ERROR_SIZE: 907122041,
+  ERROR_SIZE= "907122041",
 
   // The message contains invalid parameters.
-  ERROR_INVALID_PARAMETERS: 907122042,
+  ERROR_INVALID_PARAMETERS= "907122042",
 
   // The number of sent messages reaches the upper limit. The messages will be discarded.
-  ERROR_TOO_MANY_MESSAGES: 907122043,
+  ERROR_TOO_MANY_MESSAGES= "907122043",
 
   // The message lifetime expires before the message is successfully sent to the APP server.
-  ERROR_TTL_EXCEEDED: 907122044,
+  ERROR_TTL_EXCEEDED= "907122044",
 
   //  Huawei Mobile Services (APK) can't connect  Huawei Push  Kit.
-  ERROR_HMS_CLIENT_API: 907122048,
+  ERROR_HMS_CLIENT_API= "907122048",
 
   // The current EMUI version is too early to use the capability.
-  ERROR_OPERATION_NOT_SUPPORTED: 907122049,
+  ERROR_OPERATION_NOT_SUPPORTED= "907122049",
 
   // The operation cannot be performed in the main thread.
-  ERROR_MAIN_THREAD: 907122050,
+  ERROR_MAIN_THREAD= "907122050",
 
   // The device certificate authentication fails.
-  ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING: 907122051,
+  ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING= "907122051",
 
   // Failed to bind the service.
-  ERROR_BIND_SERVICE_SELF_MAPPING: 907122052,
+  ERROR_BIND_SERVICE_SELF_MAPPING= "907122052",
 
   // The SDK is being automatically initialized. Try again later.
-  ERROR_AUTO_INITIALIZING: 907122054,
+  ERROR_AUTO_INITIALIZING= "907122054",
 
   /*The input parameter is incorrect. Check whether the related configuration information is correct.
    * Example: app_id in the agconnect - services.json file;
    * Check whether the build.gradle file is configured with the certificate signature.
    */
-  ERROR_ARGUMENTS_INVALID: 907135000,
+  ERROR_ARGUMENTS_INVALID= "907135000",
 
   // Internal Push error. Contact Huawei technical support engineers.
-  ERROR_INTERNAL_ERROR: 907135001,
+  ERROR_INTERNAL_ERROR= "907135001",
 
   // The service does not exist. The invoked interface does not exist.
-  ERROR_NAMING_INVALID: 907135002,
+  ERROR_NAMING_INVALID= "907135002",
 
   // The ApiClient object is invalid.
-  ERROR_CLIENT_API_INVALID: 907135003,
+  ERROR_CLIENT_API_INVALID= "907135003",
 
   // Invoking AIDL times out. Contact Huawei technical support.
-  ERROR_EXECUTE_TIMEOUT: 907135004,
+  ERROR_EXECUTE_TIMEOUT= "907135004",
 
   // The current area does not support this service.
-  ERROR_NOT_IN_SERVICE: 907135005,
+  ERROR_NOT_IN_SERVICE= "907135005",
 
   // If the AIDL connection session is invalid, contact Huawei technical support.
-  ERROR_SESSION_INVALID: 907135006,
+  ERROR_SESSION_INVALID= "907135006",
 
   // An error occurred when invoking an unspecified API.
-  ERROR_API_NOT_SPECIFIED: 1002,
+  ERROR_API_NOT_SPECIFIED= "1002",
 
   /* Failed to invoke the gateway to query the application scope.
    * Check whether the current app has been created and enabled in AppGallery Connect.
    * If yes, contact Huawei technical support.
    */
-  ERROR_GET_SCOPE_ERROR: 907135700,
+  ERROR_GET_SCOPE_ERROR= "907135700",
   /* Scope is not configured on the AppGallery Connect.
    * Check whether the current app has been created and enabled in AppGallery Connect.
    * If yes, contact Huawei technical support.
    */
-  ERROR_SCOPE_LIST_EMPTY: 907135701,
+  ERROR_SCOPE_LIST_EMPTY= "907135701",
 
   /* The certificate fingerprint is not configured on the AppGallery Connect.
    * 1. Check whether your phone can access the Internet.
    * 2. Check whether the correct certificate fingerprint is configured in AppGallery Connect. For details, see AppGallery Connect configuration in Development Preparations.
    * 3. If the check result is correct, contact Huawei technical support.
    */
-  ERROR_CERT_FINGERPRINT_EMPTY: 907135702,
+  ERROR_CERT_FINGERPRINT_EMPTY= "907135702",
 
   //Permission is not configured on the AppGallery Connect.
-  ERROR_PERMISSION_LIST_EMPTY: 907135703,
+  ERROR_PERMISSION_LIST_EMPTY= "907135703",
 
   // The authentication information of the application does not exist.
-  ERROR_AUTH_INFO_NOT_EXIST: 6002,
+  ERROR_AUTH_INFO_NOT_EXIST= "6002",
 
   // An error occurred during certificate fingerprint verification. Check whether the correct certificate fingerprint is configured in AppGallery Connect. For details, see AppGallery Connect configuration in Development Preparations.
-  ERROR_CERT_FINGERPRINT_ERROR: 6003,
+  ERROR_CERT_FINGERPRINT_ERROR= "6003",
 
   // Interface authentication: The permission does not exist and is not applied for in AppGallery Connect.
-  ERROR_PERMISSION_NOT_EXIST: 6004,
+  ERROR_PERMISSION_NOT_EXIST= "6004",
 
   // Interface authentication: unauthorized.
-  ERROR_PERMISSION_NOT_AUTHORIZED: 6005,
+  ERROR_PERMISSION_NOT_AUTHORIZED= "6005",
 
   // Interface authentication: The authorization expires.
-  ERROR_PERMISSION_EXPIRED: 6006,
+  ERROR_PERMISSION_EXPIRED= "6006",
 };
 
 export enum Attr {
@@ -568,9 +567,9 @@ export enum RepeatType {
 };
 
 export enum Visibility {
-  public = "public",
-  secret = "secret",
-  private = "private"
+  PUBLIC = "public",
+  SECRET = "secret",
+  PRIVATE = "private"
 };
 
 export enum RemoteMessageBuilder {

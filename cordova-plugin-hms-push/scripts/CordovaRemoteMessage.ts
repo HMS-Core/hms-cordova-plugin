@@ -1,11 +1,11 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,18 +22,18 @@ export class CordovaRemoteMessage {
     static PRIORITY_HIGH = 1;
     static PRIORITY_NORMAL = 2;
 
-    static COLLAPSEKEY= 'collapseKey';
-    static DATA= 'data';
-    static DATAOFMAP= 'dataOfMap';
-    static MESSAGEID= 'messageId';
-    static MESSAGETYPE= 'messageType';
-    static ORIGINALURGENCY= 'originalUrgency';
-    static URGENCY=  'urgency';
-    static TTL= 'ttl';
-    static SENTTIME=  'sentTime';
-    static TO= 'to';
-    static FROM= 'from';
-    static TOKEN=  'token';
+    static COLLAPSEKEY = 'collapseKey';
+    static DATA = 'data';
+    static DATAOFMAP = 'dataOfMap';
+    static MESSAGEID = 'messageId';
+    static MESSAGETYPE = 'messageType';
+    static ORIGINALURGENCY = 'originalUrgency';
+    static URGENCY = 'urgency';
+    static TTL = 'ttl';
+    static SENTTIME = 'sentTime';
+    static TO = 'to';
+    static FROM = 'from';
+    static TOKEN = 'token';
 
     static NOTIFICATION = {
         TITLE: 'title',
@@ -65,7 +65,7 @@ export class CordovaRemoteMessage {
         ISDEFAULTSOUND: 'isDefaultSound',
         ISDEFAULTVIBRATE: 'isDefaultVibrate',
     };
-    remoteMsg:any;
+    remoteMsg: any;
 
     constructor(options = {}) {
         this.remoteMsg = options;
@@ -186,7 +186,7 @@ export class CordovaRemoteMessage {
     getTitleLocalizationArgs() {
         return this.remoteMsg[
             CordovaRemoteMessage.NOTIFICATION.TITLELOCALIZATIONARGS
-            ];
+        ];
     }
 
     /*

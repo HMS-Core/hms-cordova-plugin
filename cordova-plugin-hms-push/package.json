@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-push",
-  "version": "5.0.2-300",
   "description": "Huawei Push Cordova Plugin",
+  "version": "5.0.2-301",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "ionic",
     "scripts",
     "types",
+    "wrapper",
     "tsconfig.json",
     "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
   ],

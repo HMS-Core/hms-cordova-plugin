@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,10 +32,11 @@ public class MapUtils {
 
     public static JSONObject fromBundle(Bundle bundle) throws JSONException {
         JSONObject map = new JSONObject();
-        for (String key: bundle.keySet()) {
+        if (bundle == null) return map;
+        for (String key : bundle.keySet()) {
             Object value = bundle.get(key);
             if (value == null) {
-                map.put(key,null);
+                map.put(key, null);
             } else if (value.getClass().isArray()) {
                 map.put(key, fromArray(value));
             } else if (value instanceof String) {
@@ -70,21 +71,26 @@ public class MapUtils {
         Bundle bundle = new Bundle();
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
-            Object value = jsonObject.get(key);
-                if(value == null) {
-                    bundle.putString(key, null);
-                }else if(value instanceof Boolean) {
-                    bundle.putBoolean(key, jsonObject.getBoolean(key));
-                }else if(value instanceof Number) {
-                    bundle.putDouble(key, jsonObject.getDouble(key));
-                }else if(value instanceof String) {
-                    bundle.putString(key, jsonObject.getString(key));
-                }else if(value instanceof JSONObject) {
-                    bundle.putBundle(key, toBundle(jsonObject.getJSONObject(key)));
-                }else {
-                    throw new IllegalArgumentException("Could not convert object with key: " + key + ".");
-                }
+            Object value;
+            if(!jsonObject.isNull(key)){
+                value = jsonObject.get(key);
+            }else{
+                value=null;
             }
+            if (value == null) {
+                bundle.putString(key, null);
+            } else if (value instanceof Boolean) {
+                bundle.putBoolean(key, jsonObject.getBoolean(key));
+            } else if (value instanceof Number) {
+                bundle.putDouble(key, jsonObject.getDouble(key));
+            } else if (value instanceof String) {
+                bundle.putString(key, jsonObject.getString(key));
+            } else if (value instanceof JSONObject) {
+                bundle.putBundle(key, toBundle(jsonObject.getJSONObject(key)));
+            } else {
+                throw new IllegalArgumentException("Could not convert object with key: " + key + ".");
+            }
+        }
 
         return bundle;
     }
@@ -134,7 +140,7 @@ public class MapUtils {
             Object value = pair.getValue();
 
             if (value == null) {
-                jsonObject.put((String) pair.getKey(),null);
+                jsonObject.put((String) pair.getKey(), null);
             } else if (value instanceof Boolean) {
                 jsonObject.put((String) pair.getKey(), (Boolean) value);
             } else if (value instanceof Double) {
@@ -143,7 +149,10 @@ public class MapUtils {
                 jsonObject.put((String) pair.getKey(), (Integer) value);
             } else if (value instanceof String) {
                 jsonObject.put((String) pair.getKey(), (String) value);
-            } else if (value instanceof Map) {
+            }else if (value instanceof JSONObject) {
+                jsonObject.put((String) pair.getKey(),value);
+            }
+            else if (value instanceof Map) {
                 jsonObject.put((String) pair.getKey(), MapUtils.toJSONObject((Map<String, Object>) value));
             } else {
                 value.getClass();

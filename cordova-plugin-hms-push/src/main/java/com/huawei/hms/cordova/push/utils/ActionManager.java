@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.push.utils;
 
 import android.util.Log;
@@ -40,36 +41,35 @@ public class ActionManager {
     public ActionManager(CordovaPlugin plugin) {
         this.plugin = plugin;
 
-        //register actions
         registerActions();
     }
 
-    public void executeAction(String actionName, JSONArray params, CallbackContext cb) {
+    public void executeAction(String actionName, JSONArray params, CallbackContext callbackContext) {
         try {
             Action action = actionMap.get(Actions.valueOf(actionName));
             if (action != null) {
-                action.execute(params.getString(0),params, cb);
+                action.execute(params.getString(0), params, callbackContext);
             }
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Action is not registered. actionName : " + actionName);
-            cb.error("Action is not registered. actionName : " + actionName);
+            callbackContext.error("Action is not registered. actionName : " + actionName);
         } catch (Exception e) {
             Log.e(TAG, "An error occurred while executing action. Err : " + e);
-            cb.error("An error occurred while executing action. Action Name : " + actionName);
+            callbackContext.error("An error occurred while executing action. Action Name : " + actionName);
         }
     }
 
 
     private void registerActions() {
 
-        actionMap.put(Actions.ACTION_HMS_PUSH_MESSAGING,new HmsPushMessaging(plugin));
-        actionMap.put(Actions.ACTION_HMS_PUSH_INSTANCE_ID,new HmsPushInstanceId(plugin));
-        actionMap.put(Actions.ACTION_HMS_LOCAL_NOTIFICATION,new HmsLocalNotification(plugin.cordova.getActivity().getApplication()));
+        actionMap.put(Actions.ACTION_HMS_PUSH_MESSAGING, new HmsPushMessaging(plugin));
+        actionMap.put(Actions.ACTION_HMS_PUSH_INSTANCE_ID, new HmsPushInstanceId(plugin.cordova.getContext()));
+        actionMap.put(Actions.ACTION_HMS_LOCAL_NOTIFICATION, new HmsLocalNotification(plugin.cordova.getActivity().getApplication()));
 
     }
 
-    public enum Actions{
-        ACTION_HMS_PUSH_MESSAGING,ACTION_HMS_PUSH_INSTANCE_ID,ACTION_HMS_LOCAL_NOTIFICATION
+    public enum Actions {
+        ACTION_HMS_PUSH_MESSAGING, ACTION_HMS_PUSH_INSTANCE_ID, ACTION_HMS_LOCAL_NOTIFICATION
     }
 
 }

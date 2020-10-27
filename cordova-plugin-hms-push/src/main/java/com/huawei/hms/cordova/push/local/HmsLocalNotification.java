@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,10 +31,10 @@ import com.huawei.hms.cordova.push.utils.NotificationConfigUtils;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 
 public class HmsLocalNotification implements Action {
@@ -44,7 +44,6 @@ public class HmsLocalNotification implements Action {
     public CordovaPlugin plugin;
 
 
-
     public HmsLocalNotification(Application application) {
 
         hmsLocalNotificationController = new HmsLocalNotificationController(application);
@@ -52,11 +51,10 @@ public class HmsLocalNotification implements Action {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    public void execute(String action, final JSONArray args, final CallbackContext callbackContext)
-        throws JSONException {
+    public void execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         switch (action) {
             case "localNotification":
-                localNotification(args.getJSONObject(1), callbackContext);
+                localNotification(args, callbackContext);
                 break;
             case "localNotificationSchedule":
                 localNotificationSchedule(args.getJSONObject(1), callbackContext);
@@ -71,14 +69,14 @@ public class HmsLocalNotification implements Action {
                 cancelScheduledNotifications(callbackContext);
                 break;
             case "cancelNotificationsWithId":
-                cancelNotificationsWithId(args.getJSONArray(1),callbackContext);
+                cancelNotificationsWithId(args.getJSONArray(1), callbackContext);
                 break;
             case "cancelNotificationsWithIdTag":
-                cancelNotificationsWithIdTag(args.getJSONArray(1),callbackContext);
+                cancelNotificationsWithIdTag(args.getJSONArray(1), callbackContext);
                 break;
             case "cancelNotificationsWithTag":
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    cancelNotificationsWithTag(args.getString(1),callbackContext);
+                    cancelNotificationsWithTag(args.getString(1), callbackContext);
                 }
                 break;
             case "getNotifications":
@@ -107,33 +105,47 @@ public class HmsLocalNotification implements Action {
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    public void localNotification(JSONObject details, CallbackContext callback) throws JSONException {
+    public void localNotification(JSONArray args, CallbackContext callbackContext) {
+        try {
+            JSONObject details;
+            if (args.length() > 1){
+                details = args.getJSONObject(1);
+            }
+            else {
+                details = args.getJSONObject(0);
+            }
+            Bundle bundle = MapUtils.toBundle(details);
+            if (bundle == null) {
+                if (callbackContext != null)
+                    callbackContext.error(ResultCode.NULL_BUNDLE);
+                return;
+            }
+            NotificationConfigUtils.configId(bundle);
 
-        Bundle bundle = MapUtils.toBundle(details);
-        if (bundle == null) {
-            callback.error(ResultCode.NULL_BUNDLE);
-            return;
+            hmsLocalNotificationController.localNotificationNow(bundle, callbackContext);
+        } catch (Exception e) {
+            callbackContext.error(e.getLocalizedMessage());
         }
-        NotificationConfigUtils.configId(bundle);
-
-        hmsLocalNotificationController.localNotificationNow(bundle, callback);
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    public void localNotificationSchedule(JSONObject details, CallbackContext callback) throws JSONException {
+    public void localNotificationSchedule(JSONObject details, CallbackContext callbackContext) {
 
-        Bundle bundle = MapUtils.toBundle(details);
-        if (bundle == null) {
-            callback.error(ResultCode.NULL_BUNDLE);
-            return;
+        try {
+            Bundle bundle = MapUtils.toBundle(details);
+
+            if (bundle == null) {
+                callbackContext.error(ResultCode.NULL_BUNDLE);
+                return;
+            }
+            NotificationConfigUtils.configId(bundle);
+
+            hmsLocalNotificationController.localNotificationSchedule(bundle, callbackContext);
+        } catch (Exception e) {
+            callbackContext.error(e.getLocalizedMessage());
         }
-        NotificationConfigUtils.configId(bundle);
-
-        hmsLocalNotificationController.localNotificationSchedule(bundle, callback);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -141,109 +153,103 @@ public class HmsLocalNotification implements Action {
 
         hmsLocalNotificationController.cancelScheduledNotifications();
         hmsLocalNotificationController.cancelNotifications();
-        callbackContext.success("true");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
     }
 
     public void cancelNotifications(CallbackContext callbackContext) {
+
         hmsLocalNotificationController.cancelNotifications();
-        callbackContext.success("true");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void cancelScheduledNotifications(CallbackContext callbackContext) {
 
         hmsLocalNotificationController.cancelScheduledNotifications();
-        callbackContext.success("true");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
     }
 
-    public void cancelNotificationsWithId(JSONArray idArr, CallbackContext callbackContext) throws JSONException {
+    public void cancelNotificationsWithId(JSONArray idArr, CallbackContext callbackContext) {
 
-        hmsLocalNotificationController.cancelNotificationsWithId(idArr);
-        callbackContext.success("true");
+        try {
+            hmsLocalNotificationController.cancelNotificationsWithId(idArr);
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
+        } catch (Exception e) {
+            callbackContext.error(e.getLocalizedMessage());
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
-    public void cancelNotificationsWithIdTag(JSONArray idTagArr, CallbackContext callbackContext) throws JSONException {
+    public void cancelNotificationsWithIdTag(JSONArray idTagArr, CallbackContext callbackContext) {
 
-        hmsLocalNotificationController.cancelNotificationsWithIdTag(idTagArr);
-        callbackContext.success("true");
+        try {
+            hmsLocalNotificationController.cancelNotificationsWithIdTag(idTagArr);
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
+        } catch (Exception e) {
+            callbackContext.error(e.getLocalizedMessage());
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void cancelNotificationsWithTag(String tag, CallbackContext callbackContext) {
 
         hmsLocalNotificationController.cancelNotificationsWithTag(tag);
-        callbackContext.success("true");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
 
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void getNotifications(CallbackContext callback)  {
-        try{
-        JSONArray result = hmsLocalNotificationController.getNotifications();
-        callback.success(result);
-        } catch (Exception ex){
-            callback.error(ex.getMessage());
+    public void getNotifications(CallbackContext callbackContext) {
+
+        try {
+            JSONArray result = hmsLocalNotificationController.getNotifications();
+            callbackContext.success(result);
+        } catch (Exception ex) {
+            callbackContext.error(ex.getLocalizedMessage());
         }
 
     }
 
-    public void getScheduledNotifications(CallbackContext callback) {
-        try{
+    public void getScheduledNotifications(CallbackContext callbackContext) {
+
         JSONArray result = hmsLocalNotificationController.getScheduledNotifications();
-        callback.success(result);
-        } catch (Exception ex){
-            callback.error(ex.getMessage());
-        }
+        callbackContext.success(result);
 
     }
 
 
+    public void getChannels(CallbackContext callbackContext) {
 
-    public void getChannels(CallbackContext callback) {
-        try{
+        try {
             JSONArray result = ArrayUtil.fromList(hmsLocalNotificationController.listChannels());
-            callback.success(result);
-        } catch (Exception ex){
-            callback.error(ex.getMessage());
-        }
-
-
-    }
-
-
-    public void channelExists(String channelId, CallbackContext callback) {
-        try{
-            String channelExist  = hmsLocalNotificationController.channelExists(channelId)+ "";
-            callback.success(channelExist);
-        }
-        catch(Exception ex) {
-            callback.error(ex.getMessage());
-        }
-    }
-
-
-    public void channelBlocked(String channelId, CallbackContext callback) {
-    try{
-        String channelBlocked  = hmsLocalNotificationController.isChannelBlocked(channelId)+ "";
-        callback.success(channelBlocked);
-    }
-    catch(Exception ex) {
-            callback.error(ex.getMessage());
+            callbackContext.success(result);
+        } catch (Exception ex) {
+            callbackContext.error(ex.getLocalizedMessage());
         }
 
     }
 
 
-    public void deleteChannel(String channelId,CallbackContext callbackContext) {
-        try{
-            hmsLocalNotificationController.deleteChannel(channelId);
-            callbackContext.success("true");
-        }
-        catch (Exception ex){
-            callbackContext.error(ex.getMessage());
-        }
+    public void channelExists(String channelId, CallbackContext callbackContext) {
+
+        hmsLocalNotificationController.channelExists(channelId, callbackContext);
+
+    }
+
+
+    public void channelBlocked(String channelId, CallbackContext callbackContext) {
+
+        hmsLocalNotificationController.isChannelBlocked(channelId, callbackContext);
+
+    }
+
+
+    public void deleteChannel(String channelId, CallbackContext callbackContext) {
+
+        hmsLocalNotificationController.deleteChannel(channelId, callbackContext);
+
     }
 
 }

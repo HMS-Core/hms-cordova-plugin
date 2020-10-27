@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,7 @@ public interface Core {
     String HCM = "HCM";
     String RAW = "raw";
 
-    String REMOTE_MESSAGE_UPLINK_TO= "push.hcm.upstream";
+    String REMOTE_MESSAGE_UPLINK_TO = "push.hcm.upstream";
 
     String PREFERENCE_NAME = "huawei_hms_cordova_push";
 
@@ -42,13 +42,14 @@ public interface Core {
         String ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED";
         String NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT";
         String ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT";
-        String CUSTOM_INTENT_EVENT="CUSTOM_INTENT_EVENT";
+        String CUSTOM_INTENT_EVENT = "CUSTOM_INTENT_EVENT";
         String PUSH_ON_START_COMMAND_EVENT = "PUSH_ON_START_COMMAND_EVENT";
 
 
         interface Result {
             String DATA_JSON = "dataJSON";
             String RESULT = "result";
+            String RESULT_CODE = "resultCode";
             String MSG_ID = "msgId";
             String RESULT_INFO = "resultInfo";
             String TOKEN = "token";

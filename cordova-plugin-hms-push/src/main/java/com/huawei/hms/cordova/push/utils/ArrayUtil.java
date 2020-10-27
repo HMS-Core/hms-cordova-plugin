@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,27 +52,27 @@ public class ArrayUtil {
     public static JSONArray fromArray(Object array) throws JSONException {
         JSONArray catalystArray = new JSONArray();
         if (array instanceof String[]) {
-            for (String v: (String[]) array) {
+            for (String v : (String[]) array) {
                 catalystArray.put(v);
             }
         } else if (array instanceof Bundle[]) {
-            for (Bundle v: (Bundle[]) array) {
+            for (Bundle v : (Bundle[]) array) {
                 catalystArray.put(fromBundle(v));
             }
         } else if (array instanceof int[]) {
-            for (int v: (int[]) array) {
+            for (int v : (int[]) array) {
                 catalystArray.put(v);
             }
         } else if (array instanceof float[]) {
-            for (float v: (float[]) array) {
+            for (float v : (float[]) array) {
                 catalystArray.put(v);
             }
         } else if (array instanceof double[]) {
-            for (double v: (double[]) array) {
+            for (double v : (double[]) array) {
                 catalystArray.put(v);
             }
         } else if (array instanceof boolean[]) {
-            for (boolean v: (boolean[]) array) {
+            for (boolean v : (boolean[]) array) {
                 catalystArray.put(v);
             }
         } else {
@@ -119,6 +119,7 @@ public class ArrayUtil {
 
         return jsonArray;
     }
+
     public static JSONArray fromList(List list) throws JSONException {
         JSONArray catalystArray = new JSONArray();
         for (Object obj : list) {

@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -49,6 +49,7 @@ import com.huawei.hms.cordova.push.utils.MapUtils;
 import com.huawei.hms.cordova.push.utils.NotificationConfigUtils;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.PluginResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,7 +94,7 @@ public class HmsLocalNotificationController {
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            Log.w(TAG, "getMainActivityClass: "+e.getLocalizedMessage() );
+            Log.w(TAG, "getMainActivityClass: " + e.getLocalizedMessage());
             return null;
         }
     }
@@ -137,9 +138,9 @@ public class HmsLocalNotificationController {
 
         if (soundUri != null) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build();
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build();
 
             notificationChannel.setSound(soundUri, audioAttributes);
         } else {
@@ -154,7 +155,7 @@ public class HmsLocalNotificationController {
     public void localNotificationNow(final Bundle bundle, final CallbackContext callback) {
 
         HmsLocalNotificationPicturesLoader notificationPicturesLoader = new HmsLocalNotificationPicturesLoader(
-            (largeIconImage, bigPictureImage, cordovaCallback) -> localNotificationNowPicture(bundle, largeIconImage, bigPictureImage, cordovaCallback));
+                (largeIconImage, bigPictureImage, cordovaCallback) -> localNotificationNowPicture(bundle, largeIconImage, bigPictureImage, cordovaCallback));
 
         notificationPicturesLoader.setCordovaCallBack(callback);
         notificationPicturesLoader.setLargeIconUrl(context, BundleUtils.get(bundle, NotificationConstants.LARGE_ICON_URL));
@@ -206,7 +207,7 @@ public class HmsLocalNotificationController {
         if (type.equals(Core.NotificationType.SCHEDULED)) {
             if (BundleUtils.getD(bundle, NotificationConstants.FIRE_DATE) == 0) {
                 if (callback != null)
-                    callback.error( "FireDate is null");
+                    callback.error("FireDate is null");
             }
         }
     }
@@ -225,13 +226,13 @@ public class HmsLocalNotificationController {
             String channelId = Core.NOTIFICATION_CHANNEL_ID + "-" + importance;
 
             NotificationCompat.Builder notification = new NotificationCompat.Builder(context, "")
-                .setChannelId(channelId)
-                .setContentTitle(title)
-                .setTicker(BundleUtils.get(bundle, NotificationConstants.TICKER))
-                .setVisibility(visibility)
-                .setPriority(priority)
-                .setAutoCancel(BundleUtils.getB(bundle, NotificationConstants.AUTO_CANCEL, true))
-                .setOnlyAlertOnce(BundleUtils.getB(bundle, NotificationConstants.ONLY_ALERT_ONCE, false));
+                    .setChannelId(channelId)
+                    .setContentTitle(title)
+                    .setTicker(BundleUtils.get(bundle, NotificationConstants.TICKER))
+                    .setVisibility(visibility)
+                    .setPriority(priority)
+                    .setAutoCancel(BundleUtils.getB(bundle, NotificationConstants.AUTO_CANCEL, true))
+                    .setOnlyAlertOnce(BundleUtils.getB(bundle, NotificationConstants.ONLY_ALERT_ONCE, false));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 boolean showWhen = BundleUtils.getB(bundle, NotificationConstants.SHOW_WHEN, true);
@@ -283,9 +284,9 @@ public class HmsLocalNotificationController {
 
             if (bigPictureBitmap != null) {
                 style = new NotificationCompat.BigPictureStyle()
-                    .bigPicture(bigPictureBitmap)
-                    .setBigContentTitle(title)
-                    .setSummaryText(message);
+                        .bigPicture(bigPictureBitmap)
+                        .setBigContentTitle(title)
+                        .setSummaryText(message);
             } else {
                 style = new NotificationCompat.BigTextStyle().bigText(bigText);
             }
@@ -347,7 +348,7 @@ public class HmsLocalNotificationController {
             int notificationID = Integer.parseInt(BundleUtils.get(bundle, NotificationConstants.ID));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationManager notificationManager = notificationManager();
 
@@ -391,7 +392,7 @@ public class HmsLocalNotificationController {
                 actionArr = BundleUtils.get(bundle, NotificationConstants.ACTIONS) != null ? new JSONArray(BundleUtils.get(bundle, NotificationConstants.ACTIONS)) : null;
             } catch (Exception e) {
                 if (callback != null)
-                    callback.error(e.getMessage());
+                    callback.error(e.getLocalizedMessage());
             }
 
             if (actionArr != null) {
@@ -415,7 +416,7 @@ public class HmsLocalNotificationController {
                     actionIntent.setPackage(context.getPackageName());
 
                     PendingIntent pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent.FLAG_UPDATE_CURRENT);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         notification.addAction(new NotificationCompat.Action.Builder(icon, action, pendingActionIntent).build());
@@ -425,7 +426,6 @@ public class HmsLocalNotificationController {
                 }
             }
 
-            //Override notification
             if (sharedPreferences.getString(BundleUtils.get(bundle, NotificationConstants.ID), null) != null) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.remove(BundleUtils.get(bundle, NotificationConstants.ID));
@@ -449,13 +449,13 @@ public class HmsLocalNotificationController {
             this.localNotificationRepeat(bundle);
         } catch (NullPointerException | IllegalArgumentException | IllegalStateException | JSONException e) {
             if (callback != null)
-                callback.error(e.getMessage());
+                callback.error(e.getLocalizedMessage());
         }
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private void localNotificationRepeat(Bundle bundle) throws JSONException {
+    private void localNotificationRepeat(Bundle bundle) {
 
         long newFireDate = NotificationConfigUtils.configNextFireDate(bundle);
 
@@ -467,7 +467,7 @@ public class HmsLocalNotificationController {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    public void localNotificationSchedule(Bundle bundle, CallbackContext callback) throws JSONException {
+    public void localNotificationSchedule(Bundle bundle, CallbackContext callback) {
 
         checkRequiredParams(bundle, callback, Core.NotificationType.SCHEDULED);
 
@@ -482,8 +482,13 @@ public class HmsLocalNotificationController {
             localNotificationScheduleSetAlarm(bundle);
         }
 
-        if (callback != null)
-            callback.success(MapUtils.fromBundle(bundle));
+        if (callback != null) {
+            try {
+                callback.success(MapUtils.fromBundle(bundle));
+            } catch (Exception e) {
+                callback.error(e.getLocalizedMessage());
+            }
+        }
 
     }
 
@@ -501,11 +506,16 @@ public class HmsLocalNotificationController {
 
         if (pendingIntent == null) return;
 
-
-        if (allowWhileIdle && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            getAlarmManager().set(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
         } else {
-            getAlarmManager().setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent); // Doze Mode
+            if (allowWhileIdle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getAlarmManager().setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent); // Doze Mode
+
+            } else {
+                getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
+
+            }
         }
 
     }
@@ -529,50 +539,64 @@ public class HmsLocalNotificationController {
     }
 
 
-    public boolean isChannelBlocked(String channelId) {
+    public void isChannelBlocked(String channelId, CallbackContext callback) {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-            return false;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            callback.error("requires API level 24");
+            return;
+        }
 
-        if (channelId == null) return false;
+        if (channelId == null) {
+            callback.error("invalid channelId");
+            return;
+        }
 
-        try {
+    
             NotificationChannel channel = notificationManager().getNotificationChannel(channelId);
 
             if (channel == null)
-                return false;
+                callback.error("invalid channelId");
 
-            return NotificationManager.IMPORTANCE_NONE == channel.getImportance();
-        } catch (Exception e) {
-            return false;
-        }
-
+            boolean res = NotificationManager.IMPORTANCE_NONE == channel.getImportance();
+            callback.sendPluginResult(new PluginResult(PluginResult.Status.OK,res));
+    
     }
 
-    public boolean channelExists(String channelId) {
+    public void channelExists(String channelId, CallbackContext callback) {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
-            return false;
-
-        try {
-            NotificationChannel channel = notificationManager().getNotificationChannel(channelId);
-
-            return channel != null;
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
-    public void deleteChannel(String channelId) {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            callback.error("requires API level 26");
             return;
+        }
+
+        if (channelId == null) {
+            callback.error("invalid channelId");
+            return;
+        }
+
+        NotificationChannel channel = notificationManager().getNotificationChannel(channelId);
+
+        if (channel == null)
+        callback.error("invalid channelId");
+
+        boolean result = channel != null;
+        callback.sendPluginResult(new PluginResult(PluginResult.Status.OK,result));
+
+    }
+
+    public void deleteChannel(String channelId, CallbackContext callbackContext) {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            callbackContext.error("requires API level 26");
+            return;
+        }
 
         try {
             notificationManager().deleteNotificationChannel(channelId);
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK,true));
         } catch (Exception e) {
             Log.e(TAG, ResultCode.ERROR, e);
+            callbackContext.error(e.getLocalizedMessage());
         }
 
     }
@@ -644,7 +668,7 @@ public class HmsLocalNotificationController {
 
                 result.put(notificationMap);
             } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
+                Log.e(TAG, e.getLocalizedMessage());
             }
         }
 

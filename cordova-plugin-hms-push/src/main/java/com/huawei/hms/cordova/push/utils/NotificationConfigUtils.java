@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -77,7 +77,7 @@ public class NotificationConfigUtils {
         String value = BundleUtils.get(bundle, NotificationConstants.SMALL_ICON);
 
         resourceId = value != null ? res.getIdentifier(value, Core.Resource.MIPMAP, packageName)
-            : res.getIdentifier(Core.Resource.NOTIFICATION, Core.Resource.MIPMAP, packageName);
+                : res.getIdentifier(Core.Resource.NOTIFICATION, Core.Resource.MIPMAP, packageName);
 
         if (resourceId == 0) {
             resourceId = res.getIdentifier(Core.Resource.LAUNCHER, Core.Resource.MIPMAP, packageName);
@@ -96,7 +96,7 @@ public class NotificationConfigUtils {
 
         if (bitmap == null) {
 
-            int resourceId=0;
+            int resourceId = 0;
 
             String value = BundleUtils.get(bundle, NotificationConstants.LARGE_ICON);
 
@@ -107,7 +107,7 @@ public class NotificationConfigUtils {
             if (resourceId != 0 && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)) {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
-                bitmap = BitmapFactory.decodeResource(res, resourceId,options);
+                bitmap = BitmapFactory.decodeResource(res, resourceId, options);
             }
         }
         return bitmap;

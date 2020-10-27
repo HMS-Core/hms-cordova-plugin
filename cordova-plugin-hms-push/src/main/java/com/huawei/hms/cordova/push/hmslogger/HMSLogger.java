@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,6 +15,7 @@
 */
 
 package com.huawei.hms.cordova.push.hmslogger;
+
 import static android.os.Build.DEVICE;
 
 import android.content.Context;
@@ -36,9 +37,8 @@ import java.util.Objects;
 public final class HMSLogger {
     private static final String TAG = "HMSLogger";
 
-    private static final String VERSION = "5.0.2.300";
+    private static final String VERSION = "5.0.2.301";
     private static final String SERVICE = "CordovaPush";
-
     private static final String SUCCESS = "0";
     private static final String UNKNOWN = "UNKNOWN";
     private static final String NOT_AVAILABLE = "NOT_AVAILABLE";
@@ -242,7 +242,7 @@ public final class HMSLogger {
      */
     private String getNetworkType() {
         final ConnectivityManager cm = objectCast(getContext().getSystemService(Context.CONNECTIVITY_SERVICE),
-            ConnectivityManager.class);
+                ConnectivityManager.class);
         if (cm != null) {
             if (cm.getActiveNetworkInfo() == null || !cm.getActiveNetworkInfo().isConnected()) {
                 return NOT_AVAILABLE;

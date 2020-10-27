@@ -1,59 +1,52 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
-export function onRemoteMessageReceived (result:any) {
-    window.registerHMSEvent(HmsPushEvent.REMOTE_DATA_MESSAGE_RECEIVED,result)
+export function onRemoteMessageReceived(result: any) {
+    window.registerHMSEvent(REMOTE_DATA_MESSAGE_RECEIVED, result)
 }
-export function onTokenReceived (result:any) {
-    window.registerHMSEvent(HmsPushEvent.TOKEN_RECEIVED_EVENT,result)
+export function onTokenReceived(result: any) {
+    window.registerHMSEvent(TOKEN_RECEIVED_EVENT, result)
 }
-export function onTokenError (result:any) {
-    window.registerHMSEvent(HmsPushEvent.ON_TOKEN_ERROR_EVENT,result)
+export function onTokenError(result: any) {
+    window.registerHMSEvent(ON_TOKEN_ERROR_EVENT, result)
 }
-export function onPushMessageSent (result:any) {
-    window.registerHMSEvent(HmsPushEvent.ON_PUSH_MESSAGE_SENT,result)
+export function onPushMessageSent(result: any) {
+    window.registerHMSEvent(ON_PUSH_MESSAGE_SENT, result)
 }
-export function onPushMessageSentError (result:any) {
-    window.registerHMSEvent(HmsPushEvent.ON_PUSH_MESSAGE_SENT_ERROR,result)
+export function onPushMessageSentError(result: any) {
+    window.registerHMSEvent(ON_PUSH_MESSAGE_SENT_ERROR, result)
 }
-export function onPushMessageSentDelivered (result:any) {
-    window.registerHMSEvent(HmsPushEvent.ON_PUSH_MESSAGE_SENT_DELIVERED,result)
+export function onPushMessageSentDelivered(result: any) {
+    window.registerHMSEvent(ON_PUSH_MESSAGE_SENT_DELIVERED, result)
 }
-export function onLocalNotificationAction (result:any) {
-    window.registerHMSEvent(HmsPushEvent.LOCAL_NOTIFICATION_ACTION_EVENT,result)
+export function onLocalNotificationAction(result: any) {
+    window.registerHMSEvent(LOCAL_NOTIFICATION_ACTION_EVENT, result)
 }
-export function onNotificationOpenedApp (result:any) {
-    window.registerHMSEvent(HmsPushEvent.NOTIFICATION_OPENED_EVENT,result)
-}
-export function onCustomIntent (result:any) {
-    window.registerHMSEvent(HmsPushEvent.CUSTOM_INTENT_EVENT,result)
+export function onNotificationOpenedApp(result: any) {
+    window.registerHMSEvent(NOTIFICATION_OPENED_EVENT, result)
 }
 
- export enum  HmsPushEvent  {
-    REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED",
-    TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT",
-    ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT",
-    NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT",
-    LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT",
-    ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT",
-    ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR",
-    ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED",
-    CUSTOM_INTENT_EVENT="CUSTOM_INTENT_EVENT",
-    PUSH_ON_START_COMMAND_EVENT="PUSH_ON_START_COMMAND_EVENT"
- };
+export const REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED"
+export const TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT"
+export const ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT"
+export const NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT"
+export const LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT"
+export const ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT"
+export const ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR"
+export const ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED"
 
 
 type Handler = (data: any) => void;

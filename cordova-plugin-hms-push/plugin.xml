@@ -16,6 +16,10 @@
         <clobbers target="HmsPush" />
     </js-module>
 
+    <js-module name="HmsPushResultCode" src="www/HmsPushResultCode.js">
+        <clobbers target="HmsPushResultCode" />
+    </js-module>
+
     <js-module name="HmsPushEvent" src="www/HmsPushEvent.js">
         <clobbers target="HmsPushEvent" />
     </js-module>
@@ -27,7 +31,6 @@
 
     <js-module name="Interfaces" src="www/Interfaces.js"/>
     <js-module name="CordovaRemoteMessage" src="www/CordovaRemoteMessage.js"/>
-    <js-module name="HmsPushResultCode" src="www/HmsPushResultCode.js"/>
     <js-module name="RemoteMessageBuilder" src="www/RemoteMessageBuilder.js"/>
     <js-module name="utils" src="www/utils.js"/>
     
@@ -109,6 +112,7 @@
         <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationBootEventReceiver.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
         <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationScheduledPublisher.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
         <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/NotificationActionHandler.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
+         <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/BackgroundJavaScriptInterface.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
         <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsMessagePublisher.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
         <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsPushInstanceId.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
         <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessageService.java" target-dir="src/com/huawei/hms/cordova/push/remote" />

@@ -1,17 +1,17 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 import { IonicNativePlugin } from '@ionic-native/core';
@@ -37,7 +37,7 @@ import { IonicNativePlugin } from '@ionic-native/core';
  * ```
  */
 export declare class HmsPush extends IonicNativePlugin {
-    HmsPushResultCode: HmsPushResultCode;
+    HmsPushResultCode: typeof HmsPushResultCode;
     CordovaRemoteMessage: typeof CordovaRemoteMessage;
     /**
      * This method  initialized HmsPush.
@@ -45,19 +45,19 @@ export declare class HmsPush extends IonicNativePlugin {
      * @returns Promise<void>
      */
     init(): Promise<void>;
-    enableLogger(): Promise<string>;
-    disableLogger(): Promise<string>;
+    enableLogger(): Promise<boolean>;
+    disableLogger(): Promise<boolean>;
     /**
      * This method is used to disable the display of notification messages. If you want to control the display of notification messages in an app, you can call this method. This method applies to notification messages but not data messages. It is the app that determines whether to enable or disable data messaging.
       
      * @returns Promise<string>
      */
-    turnOnPush(): Promise<string>;
+    turnOnPush(): Promise<boolean>;
     /**
      * This method is used to enable the display of notification messages. If you want to control the display of notification messages in an app, you can call this method. This method applies to notification messages but not data messages. It is the app that determines whether to enable or disable data messaging.
      * @returns Promise<string>
      */
-    turnOffPush(): Promise<string>;
+    turnOffPush(): Promise<boolean>;
     /**
      * This method is used to obtain an AAID in synchronous mode. Before applying for a token, an app calls this method to obtain its unique AAID. The HUAWEI Push server generates a token for the app based on the AAID. If the AAID of the app changes, a new token will be generated next time when the app applies for a token. If an app needs to report statistics events, it must carry the AAID as its unique ID.
      * @returns Promise<string>
@@ -71,8 +71,9 @@ export declare class HmsPush extends IonicNativePlugin {
     /**
      * This method is used to obtain a token required for accessing HUAWEI Push Kit. If there is no local AAID, this method will automatically generate an AAID when it is called because the HUAWEI Push Kit server needs to generate a token based on the AAID.
      * @returns Promise<string>
+     * @params scope ? : String
      */
-    getToken(): Promise<string>;
+    getToken(args?: string): Promise<string>;
     /**
      * This method is used to obtain the generation timestamp of an AAID.
      * @returns Promise<string>
@@ -82,37 +83,36 @@ export declare class HmsPush extends IonicNativePlugin {
      * This method is used to delete a local AAID and its generation timestamp.
      * @returns Promise<string>
      */
-    deleteAAID(): Promise<string>;
+    deleteAAID(): Promise<boolean>;
     /**
      * This method is used to delete a token. After a token is deleted, the corresponding AAID will not be deleted. This method is a synchronous method.
      * @returns Promise<string>
+     * @params scope ? : String
      */
-    deleteToken(): Promise<string>;
+    deleteToken(args?: string): Promise<boolean>;
     /**
      * This method is used to subscribe to topics in asynchronous mode. The HUAWEI Push Kit topic messaging function allows you to send messages to multiple devices whose users have subscribed to a specific topic. You can write messages about the topic as required, and HUAWEI Push Kit determines the release path and sends messages to the correct devices in a reliable manner.
      * @param {string} arg Topic to be subscribed to.
      * @returns Promise<string>
      */
-    subscribe(arg: string): Promise<string>;
+    subscribe(arg: string): Promise<boolean>;
     /**
      * This method is used to unsubscribe from topics that are subscribed to through the subscribe method.
      * @param {string} arg Topic to be unsubscribed to.
      * @returns Promise<string>
      */
-    unsubscribe(arg: string): Promise<string>;
-    setAutoInitEnabled(args: string): Promise<string>;
+    unsubscribe(arg: string): Promise<boolean>;
+    setAutoInitEnabled(args: boolean): Promise<boolean>;
     getOdid(): Promise<string>;
     /**
      * This method is used to check whether automatic initialization is enabled.
      * @returns Promise<string>
      */
-    isAutoInitEnabled(): Promise<string>;
-    /** This method is used to test.
-     * @returns Promise<string>
-     */
-    test(): Promise<string>;
+    isAutoInitEnabled(): Promise<boolean>;
     getInitialNotification(): Promise<any>;
-    sendRemoteMessage(args: RemoteMessageObject): Promise<any>;
+    setBackgroundAction(callback: (data: any) => void): Promise<any>;
+    removeBackgroundAction(): Promise<any>;
+    sendRemoteMessage(args: RemoteMessageObject): Promise<boolean>;
 }
 declare type Handler = (data: any) => void;
 declare global {
@@ -135,18 +135,19 @@ export declare class HmsLocalNotification extends IonicNativePlugin {
     Visibility: typeof Visibility;
     localNotification(args: LocalNotificationObject): Promise<any>;
     localNotificationSchedule(args: LocalNotificationObject): Promise<any>;
-    cancelAllNotifications(): Promise<void>;
-    cancelNotifications(): Promise<void>;
-    cancelScheduledNotifications(): Promise<void>;
-    cancelNotificationsWithId(args: any): Promise<void>;
-    cancelNotificationsWithIdTag(args: any): Promise<void>;
-    cancelNotificationsWithTag(args: any): Promise<void>;
+    cancelAllNotifications(): Promise<boolean>;
+    cancelNotifications(): Promise<boolean>;
+    cancelScheduledNotifications(): Promise<boolean>;
+    cancelNotificationsWithId(args: any): Promise<boolean>;
+    cancelNotificationsWithIdTag(args: any): Promise<boolean>;
+    cancelNotificationsWithTag(args: any): Promise<boolean>;
     getNotifications(): Promise<any>;
     getScheduledNotifications(): Promise<any>;
     getChannels(): Promise<any>;
-    channelExists(args: string): Promise<string>;
-    channelBlocked(args: string): Promise<string>;
-    deleteChannel(args: string): Promise<string>;
+    channelExists(args: string): Promise<boolean>;
+    channelBlocked(args: string): Promise<boolean>;
+    deleteChannel(args: string): Promise<boolean>;
+    static backgroundLocalNotification(args: string): void;
 }
 export declare class HmsPushEvent extends IonicNativePlugin {
     onRemoteMessageReceived(result: any): void;
@@ -157,7 +158,6 @@ export declare class HmsPushEvent extends IonicNativePlugin {
     onPushMessageSentDelivered(result: any): void;
     onLocalNotificationAction(result: any): void;
     onNotificationOpenedApp(result: any): void;
-    onCustomIntent(result: any): void;
     REMOTE_DATA_MESSAGE_RECEIVED: string;
     TOKEN_RECEIVED_EVENT: string;
     ON_TOKEN_ERROR_EVENT: string;
@@ -165,53 +165,51 @@ export declare class HmsPushEvent extends IonicNativePlugin {
     LOCAL_NOTIFICATION_ACTION_EVENT: string;
     ON_PUSH_MESSAGE_SENT: string;
     ON_PUSH_MESSAGE_SENT_ERROR: string;
-    CUSTOM_INTENT_EVENT: string;
     ON_PUSH_MESSAGE_SENT_DELIVERED: string;
-    PUSH_ON_START_COMMAND_EVENT: string;
 }
-export interface HmsPushResultCode {
-    SUCCESS: 0;
-    ERROR: -1;
-    NULL_BUNDLE: 333;
-    ERROR_NO_TOKEN: 907122030;
-    ERROR_NO_NETWORK: 907122031;
-    ERROR_TOKEN_INVALID: 907122032;
-    ERROR_SERVICE_NOT_AVAILABLE: 907122046;
-    ERROR_PUSH_SERVER: 907122047;
-    ERROR_UNKNOWN: 907122045;
-    ERROR_TOPIC_EXCEED: 907122034;
-    ERROR_TOPIC_SEND: 907122035;
-    ERROR_NO_RIGHT: 907122036;
-    ERROR_GET_TOKEN_ERR: 907122037;
-    ERROR_STORAGE_LOCATION_EMPTY: 907122038;
-    ERROR_NOT_ALLOW_CROSS_APPLY: 907122053;
-    ERROR_SIZE: 907122041;
-    ERROR_INVALID_PARAMETERS: 907122042;
-    ERROR_TOO_MANY_MESSAGES: 907122043;
-    ERROR_TTL_EXCEEDED: 907122044;
-    ERROR_HMS_CLIENT_API: 907122048;
-    ERROR_OPERATION_NOT_SUPPORTED: 907122049;
-    ERROR_MAIN_THREAD: 907122050;
-    ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING: 907122051;
-    ERROR_BIND_SERVICE_SELF_MAPPING: 907122052;
-    ERROR_AUTO_INITIALIZING: 907122054;
-    ERROR_ARGUMENTS_INVALID: 907135000;
-    ERROR_INTERNAL_ERROR: 907135001;
-    ERROR_NAMING_INVALID: 907135002;
-    ERROR_CLIENT_API_INVALID: 907135003;
-    ERROR_EXECUTE_TIMEOUT: 907135004;
-    ERROR_NOT_IN_SERVICE: 907135005;
-    ERROR_SESSION_INVALID: 907135006;
-    ERROR_API_NOT_SPECIFIED: 1002;
-    ERROR_GET_SCOPE_ERROR: 907135700;
-    ERROR_SCOPE_LIST_EMPTY: 907135701;
-    ERROR_CERT_FINGERPRINT_EMPTY: 907135702;
-    ERROR_PERMISSION_LIST_EMPTY: 907135703;
-    ERROR_AUTH_INFO_NOT_EXIST: 6002;
-    ERROR_CERT_FINGERPRINT_ERROR: 6003;
-    ERROR_PERMISSION_NOT_EXIST: 6004;
-    ERROR_PERMISSION_NOT_AUTHORIZED: 6005;
-    ERROR_PERMISSION_EXPIRED: 6006;
+export declare enum HmsPushResultCode {
+    SUCCESS = "0",
+    ERROR = "-1",
+    NULL_BUNDLE = "333",
+    ERROR_NO_TOKEN = "907122030",
+    ERROR_NO_NETWORK = "907122031",
+    ERROR_TOKEN_INVALID = "907122032",
+    ERROR_SERVICE_NOT_AVAILABLE = "907122046",
+    ERROR_PUSH_SERVER = "907122047",
+    ERROR_UNKNOWN = "907122045",
+    ERROR_TOPIC_EXCEED = "907122034",
+    ERROR_TOPIC_SEND = "907122035",
+    ERROR_NO_RIGHT = "907122036",
+    ERROR_GET_TOKEN_ERR = "907122037",
+    ERROR_STORAGE_LOCATION_EMPTY = "907122038",
+    ERROR_NOT_ALLOW_CROSS_APPLY = "907122053",
+    ERROR_SIZE = "907122041",
+    ERROR_INVALID_PARAMETERS = "907122042",
+    ERROR_TOO_MANY_MESSAGES = "907122043",
+    ERROR_TTL_EXCEEDED = "907122044",
+    ERROR_HMS_CLIENT_API = "907122048",
+    ERROR_OPERATION_NOT_SUPPORTED = "907122049",
+    ERROR_MAIN_THREAD = "907122050",
+    ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING = "907122051",
+    ERROR_BIND_SERVICE_SELF_MAPPING = "907122052",
+    ERROR_AUTO_INITIALIZING = "907122054",
+    ERROR_ARGUMENTS_INVALID = "907135000",
+    ERROR_INTERNAL_ERROR = "907135001",
+    ERROR_NAMING_INVALID = "907135002",
+    ERROR_CLIENT_API_INVALID = "907135003",
+    ERROR_EXECUTE_TIMEOUT = "907135004",
+    ERROR_NOT_IN_SERVICE = "907135005",
+    ERROR_SESSION_INVALID = "907135006",
+    ERROR_API_NOT_SPECIFIED = "1002",
+    ERROR_GET_SCOPE_ERROR = "907135700",
+    ERROR_SCOPE_LIST_EMPTY = "907135701",
+    ERROR_CERT_FINGERPRINT_EMPTY = "907135702",
+    ERROR_PERMISSION_LIST_EMPTY = "907135703",
+    ERROR_AUTH_INFO_NOT_EXIST = "6002",
+    ERROR_CERT_FINGERPRINT_ERROR = "6003",
+    ERROR_PERMISSION_NOT_EXIST = "6004",
+    ERROR_PERMISSION_NOT_AUTHORIZED = "6005",
+    ERROR_PERMISSION_EXPIRED = "6006"
 }
 export declare enum Attr {
     id = "id",
@@ -275,9 +273,9 @@ export declare enum RepeatType {
     CUSTOM_TIME = "custom_time"
 }
 export declare enum Visibility {
-    public = "public",
-    secret = "secret",
-    private = "private"
+    PUBLIC = "public",
+    SECRET = "secret",
+    PRIVATE = "private"
 }
 export declare enum RemoteMessageBuilder {
     TO = "to",

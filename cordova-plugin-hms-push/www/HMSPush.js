@@ -1,21 +1,21 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOdid = exports.disableLogger = exports.enableLogger = exports.getInitialNotification = exports.sendRemoteMessage = exports.isAutoInitEnabled = exports.setAutoInitEnabled = exports.unsubscribe = exports.subscribe = exports.deleteToken = exports.deleteAAID = exports.getCreationTime = exports.getToken = exports.getAAID = exports.getId = exports.turnOffPush = exports.turnOnPush = exports.init = exports.RemoteMessageBuilder = void 0;
 /*
-  Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
-  */
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.removeBackgroundAction = exports.setBackgroundAction = exports.getOdid = exports.disableLogger = exports.enableLogger = exports.getInitialNotification = exports.sendRemoteMessage = exports.isAutoInitEnabled = exports.setAutoInitEnabled = exports.unsubscribe = exports.subscribe = exports.deleteToken = exports.deleteAAID = exports.getCreationTime = exports.getToken = exports.getAAID = exports.getId = exports.turnOffPush = exports.turnOnPush = exports.init = exports.RemoteMessageBuilder = void 0;
 const utils_1 = require("./utils");
 const RemoteMessageBuilder_1 = require("./RemoteMessageBuilder");
 Object.defineProperty(exports, "RemoteMessageBuilder", { enumerable: true, get: function () { return RemoteMessageBuilder_1.RemoteMessageBuilder; } });
@@ -42,8 +42,8 @@ function getAAID() {
     return runHmsInstance("getAAID");
 }
 exports.getAAID = getAAID;
-function getToken() {
-    return runHmsInstance("getToken");
+function getToken(args) {
+    return runHmsInstance("getToken", args);
 }
 exports.getToken = getToken;
 function getCreationTime() {
@@ -54,8 +54,8 @@ function deleteAAID() {
     return runHmsInstance("deleteAAID");
 }
 exports.deleteAAID = deleteAAID;
-function deleteToken() {
-    return runHmsInstance("deleteToken");
+function deleteToken(args) {
+    return runHmsInstance("deleteToken", args);
 }
 exports.deleteToken = deleteToken;
 function subscribe(args) {
@@ -94,10 +94,18 @@ function getOdid() {
     return runHmsInstance("getOdid");
 }
 exports.getOdid = getOdid;
+function setBackgroundAction(callback) {
+    return runHmsMessaging("setBackgroundAction", callback.toString());
+}
+exports.setBackgroundAction = setBackgroundAction;
+function removeBackgroundAction() {
+    return runHmsMessaging("removeBackgroundAction");
+}
+exports.removeBackgroundAction = removeBackgroundAction;
 function runHmsMessaging(funcName, args) {
     return utils_1.asyncExec(HMSPush, 'ACTION_HMS_PUSH_MESSAGING', [funcName, args]);
 }
 function runHmsInstance(funcName, args) {
     return utils_1.asyncExec(HMSPush, 'ACTION_HMS_PUSH_INSTANCE_ID', [funcName, args]);
 }
-//# sourceMappingURL=HMSPush.js.map
+//# sourceMappingURL=HmsPush.js.map

@@ -1,11 +1,11 @@
 /*
     Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,6 +16,7 @@
 
 package com.huawei.hms.cordova.push.remote;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.huawei.agconnect.config.AGConnectServicesConfig;
@@ -33,36 +34,37 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.PluginResult.Status;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 public class HmsPushInstanceId implements Action {
     private final String TAG = HmsPushInstanceId.class.getSimpleName();
     private HMSLogger hmsLogger;
-    private CordovaInterface cordova;
-    private CordovaWebView webView;
+    private Context context;
 
-    public HmsPushInstanceId(CordovaPlugin plugin){
-        this.webView=plugin.webView;
-        this.cordova=plugin.cordova;
-        hmsLogger= HMSLogger.getInstance(cordova.getContext());
+    public HmsPushInstanceId(Context context) {
+        this.context = context;
+        hmsLogger = HMSLogger.getInstance(context);
     }
 
-    public void execute(String action, JSONArray args, CallbackContext callbackContext) {
-        if(!action.equals("init"))
-        hmsLogger.startMethodExecutionTimer(action);
+    public void execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if (!action.equals("init"))
+            hmsLogger.startMethodExecutionTimer(action);
 
         switch (action) {
             case "init":
                 Log.i("HMSPush", "HMSPush initialized ");
                 break;
             case "enableLogger":
-                enableLogger();
+                enableLogger(callbackContext);
                 break;
             case "disableLogger":
-                disableLogger();
+                disableLogger(callbackContext);
                 break;
             case "getToken":
-                getToken(callbackContext);
+                getToken(args.length() > 1 ? args.getString(1) : Core.HCM, callbackContext);
                 break;
             case "getAAID":
                 getAAID(callbackContext);
@@ -77,7 +79,7 @@ public class HmsPushInstanceId implements Action {
                 deleteAAID(callbackContext);
                 break;
             case "deleteToken":
-                deleteToken(callbackContext);
+                deleteToken(args.length() > 1 ? args.getString(1) : Core.HCM, callbackContext);
                 break;
             case "getOdid":
                 getOdid(callbackContext);
@@ -87,83 +89,88 @@ public class HmsPushInstanceId implements Action {
         }
     }
 
-    private void disableLogger() {
+    private void disableLogger(CallbackContext callback) {
         hmsLogger.disableLogger();
+        callback.sendPluginResult(new PluginResult(Status.OK,true));
     }
 
-    private void enableLogger() {
+    private void enableLogger(CallbackContext callback) {
         hmsLogger.enableLogger();
+        callback.sendPluginResult(new PluginResult(Status.OK,true));
     }
 
 
-    private void getToken(CallbackContext callback) {
+    private void getToken(String scope, CallbackContext callback) {
 
         try {
-            String appId = AGConnectServicesConfig.fromContext(cordova.getContext()).getString(Core.CLIENT_APP_ID);
-            String token = HmsInstanceId.getInstance(cordova.getContext()).getToken(appId, Core.HCM);
+            scope = scope.equals("null") ? Core.HCM : scope;
+            if (scope.trim().isEmpty()) {
+                scope = Core.HCM;
+            }
+            String appId = AGConnectServicesConfig.fromContext(context).getString(Core.CLIENT_APP_ID);
+            String token = HmsInstanceId.getInstance(context).getToken(appId, scope);
             hmsLogger.sendSingleEvent("getToken");
+            Log.d(TAG, "Token Received");
             callback.success(token);
         } catch (ApiException e) {
-            hmsLogger.sendSingleEvent("getToken","500");
+            hmsLogger.sendSingleEvent("getToken", e.getLocalizedMessage());
             callback.error(e.getStatusCode());
         }
 
     }
 
-
     private void getId(CallbackContext callback) {
 
         try {
-            String instanceId = HmsInstanceId.getInstance(cordova.getContext()).getId();
+            String instanceId = HmsInstanceId.getInstance(context).getId();
             hmsLogger.sendSingleEvent("getId");
             callback.success(instanceId);
         } catch (Exception e) {
-            hmsLogger.sendSingleEvent("getId","500");
-            callback.error(e.getMessage());
+            hmsLogger.sendSingleEvent("getId", e.getLocalizedMessage());
+            callback.error(e.getLocalizedMessage());
         }
     }
 
 
     private void getAAID(final CallbackContext callback) {
 
-        Task<AAIDResult> idResult = HmsInstanceId.getInstance(cordova.getContext()).getAAID();
+        Task<AAIDResult> idResult = HmsInstanceId.getInstance(context).getAAID();
         idResult
-            .addOnSuccessListener(aaidResult -> {
-
-                hmsLogger.sendSingleEvent("getAAID");
-                callback.success(aaidResult.getId());
-                }
-            )
-            .addOnFailureListener(e -> {
-                hmsLogger.sendSingleEvent("getAAID","500");
-                callback.error(e.getMessage());
-            });
+                .addOnSuccessListener(aaidResult -> {
+                            hmsLogger.sendSingleEvent("getAAID");
+                            callback.success(aaidResult.getId());
+                        }
+                )
+                .addOnFailureListener(e -> {
+                    hmsLogger.sendSingleEvent("getAAID", e.getLocalizedMessage());
+                    callback.error(e.getLocalizedMessage());
+                });
 
     }
 
     private void getOdid(CallbackContext callback) {
-        Task<OdidResult> idResult = OpenDevice.getOpenDeviceClient(cordova.getContext()).getOdid();
+        Task<OdidResult> idResult = OpenDevice.getOpenDeviceClient(context).getOdid();
         idResult
-            .addOnSuccessListener(aaidResult -> {
-                hmsLogger.sendSingleEvent("getOdid");
-                callback.success(aaidResult.getId());
-                }
-            )
-            .addOnFailureListener(e -> {
-                hmsLogger.sendSingleEvent("getOdid","500");
-                callback.error(e.getMessage());
-            });
+                .addOnSuccessListener(aaidResult -> {
+                            hmsLogger.sendSingleEvent("getOdid");
+                            callback.success(aaidResult.getId());
+                        }
+                )
+                .addOnFailureListener(e -> {
+                    hmsLogger.sendSingleEvent("getOdid", e.getLocalizedMessage());
+                    callback.error(e.getLocalizedMessage());
+                });
     }
 
     private void getCreationTime(CallbackContext callback) {
 
         try {
-            String createTime = HmsInstanceId.getInstance(cordova.getContext()).getCreationTime() + "";
+            long createTime = HmsInstanceId.getInstance(context).getCreationTime();
             hmsLogger.sendSingleEvent("getCreationTime");
-            callback.success(createTime);
+            callback.success(createTime + "");
         } catch (Exception e) {
-            hmsLogger.sendSingleEvent("getCreationTime","500");
-            callback.error(e.getMessage());
+            hmsLogger.sendSingleEvent("getCreationTime", e.getLocalizedMessage());
+            callback.error(e.getLocalizedMessage());
         }
     }
 
@@ -171,26 +178,31 @@ public class HmsPushInstanceId implements Action {
     private void deleteAAID(CallbackContext callback) {
 
         try {
-            HmsInstanceId.getInstance(cordova.getContext()).deleteAAID();
+            HmsInstanceId.getInstance(context).deleteAAID();
             hmsLogger.sendSingleEvent("deleteAAID");
-            callback.success();
+            callback.sendPluginResult(new PluginResult(Status.OK,true));
         } catch (ApiException e) {
-            hmsLogger.sendSingleEvent("deleteAAID","500");
-            callback.error(e.getMessage());
+            hmsLogger.sendSingleEvent("deleteAAID", e.getLocalizedMessage());
+            callback.error(e.getLocalizedMessage());
         }
     }
 
 
-    private void deleteToken(CallbackContext callback) {
+    private void deleteToken(String scope, CallbackContext callback) {
 
         try {
-            String appId = AGConnectServicesConfig.fromContext(cordova.getContext()).getString(Core.CLIENT_APP_ID);
-            HmsInstanceId.getInstance(cordova.getContext()).deleteToken(appId, Core.HCM);
+            scope = scope.equals("null") ? Core.HCM : scope;
+            if (scope.trim().isEmpty()) {
+                scope = Core.HCM;
+            }
+
+            String appId = AGConnectServicesConfig.fromContext(context).getString(Core.CLIENT_APP_ID);
+            HmsInstanceId.getInstance(context).deleteToken(appId, scope);
             hmsLogger.sendSingleEvent("deleteToken");
-            callback.success();
+            callback.sendPluginResult(new PluginResult(Status.OK,true));
         } catch (ApiException e) {
-            hmsLogger.sendSingleEvent("deleteToken","500");
-            callback.error(e.getMessage());
+            hmsLogger.sendSingleEvent("deleteToken", e.getLocalizedMessage());
+            callback.error(e.getLocalizedMessage());
         }
     }
 }
