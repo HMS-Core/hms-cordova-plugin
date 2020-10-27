@@ -1,0 +1,53 @@
+{
+  "name": "@hmscore/cordova-plugin-hms-scan",
+  "description": "Cordova HMS Scan Plugin",
+  "version": "1.2.3-300",
+  "types": "types/index.d.ts",
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+    "directory": "cordova-plugin-hms-scan"
+  },
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "cordova": {
+    "id": "com.huawei.hms.cordova.scan",
+    "platforms": []
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "scan",
+    "huawei-scan",
+    "hms-scan",
+    "huawei",
+    "hms"
+  ],
+    "files": [
+    "hooks",
+    "ionic",
+    "resources",
+    "scripts",
+    "src",
+    "types",
+    "www",
+    "LICENCE",
+    "package.json",
+    "plugin.xml",
+    "README.md",
+    "tsconfig.json"
+  ],
+  "devDependencies": {
+    "@types/cordova": "0.0.34",
+    "eslint": ">=4.18.2",
+    "eslint-config-semistandard": "^11.0.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^5.0.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
