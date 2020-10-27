@@ -1,9 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-hms-analytics" version="1.0.0" 
+<plugin id="cordova-plugin-hms-analytics" version="5.0.3-300" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/main">
     <name>cordova-plugin-hms-analytics</name>
+    <description>cordova-plugin-hms-analytics</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, android, ios, plugin, huawei, hms, analytics</keywords>
 
+    <repo>git+https://github.com/HMS-Core/hms-cordova-plugin.git</repo>
+    <issue>https://github.com/HMS-Core/hms-cordova-plugin/issues</issue>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+    
     <js-module name="cordova-plugin-hms-analytics" src="www/HMSAnalytics.js">
         <clobbers target="HMSAnalytics" />
     </js-module>
@@ -12,17 +22,15 @@
 
         <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
         <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
-        <hook type="after_prepare" src="hooks/after_prepare.js" /> 
 
-        <framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
-        <framework src="com.huawei.hms:hianalytics:4.0.2.300" />
+        <framework src="resources/android/plugin.gradle" custom="true" type="gradleReference" />
+        <framework src="com.huawei.hms:hianalytics:5.0.3.300" />
 
-        <config-file target="AndroidManifest.xml" parent="/manifest">
+        <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
             <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
         </config-file>
-
 
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="cordova-plugin-hms-analytics">
@@ -30,30 +38,31 @@
             </feature>
         </config-file>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <provider android:authorities="${applicationId}.HMSContentProvider" android:exported="false" android:name="com.huawei.hms.cordova.analytics.HMSContentProvider" />
+            <provider android:authorities="${applicationId}.hmsAnalyticsProvider" android:name="com.huawei.hms.cordova.analytics.HMSContentProvider" android:exported="false" />
         </config-file>
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsPlugin.java" target-dir="src/com/huawei/hms/cordova/analytics" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/HMSContentProvider.java" target-dir="src/com/huawei/hms/cordova/analytics" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/utils/HMSAnalyticsUtils.java" target-dir="src/com/huawei/hms/cordova/analytics/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionManager.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/Action.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionClearCachedData.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionEnableAnalytics.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionEnableAutoCollection.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionEnableLog.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionEnableLogWithLevel.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionGetAAID.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionGetUserProfiles.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionOnEvent.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionRegHmsSvcEvent.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetCurrentActivity.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetMinActivitySessions.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetPushToken.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetSessionDuration.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetUserId.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionSetUserProfile.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionUnRegHmsSvcEvent.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionGetHAParamType.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/analytics/actions/ActionGetHAEventType.java" target-dir="src/com/huawei/hms/cordova/analytics/actions" />
+        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsPlugin.java" target-dir="src/com/huawei/hms/cordova/analytics" />
+        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsWrapper.java" target-dir="src/com/huawei/hms/cordova/analytics" />
+        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSContentProvider.java" target-dir="src/com/huawei/hms/cordova/analytics" />
+       <source-file  src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/logger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/analytics/logger" />
+    </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="cordova-plugin-hms-analytics">
+                <param name="ios-package" value="HMSAnalyticsPlugin" />
+            </feature>
+        </config-file>
+        <source-file src="platforms/ios/HMSAnalyticsPlugin.swift" />
+        <source-file src="platforms/ios/Logger.swift" />
+        <source-file src="platforms/ios/AnalyticsViewModel.swift" />
+
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git"/>
+            </config>
+            <pods use-frameworks="true">
+                <pod name="HiAnalytics" spec="5.0.4.300" />
+            </pods>
+        </podspec>
     </platform>
 </plugin>
