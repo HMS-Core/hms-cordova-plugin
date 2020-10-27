@@ -14,29 +14,13 @@
     limitations under the License.
 */
 
-'use strict';
+package com.huawei.hms.cordova.inapppurchases.utils;
 
-var fs = require('fs');
-
-var FSUtils = (function () {
-    var api = {};
-
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path)
-        } catch (err) {/*NOPE*/ }
-        return false;
+public final class ObjectUtils {
+    private ObjectUtils() {
     }
 
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
+    public static int safeUnboxInteger(final Integer integer, final int defaultValue) {
+        return integer != null ? integer : defaultValue;
     }
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    }
-
-    return api;
-})();
-
-module.exports = FSUtils;
+}

@@ -1,11 +1,11 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -40,345 +40,337 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONUtils {
+public final class JSONUtils {
     private static final String TAG = JSONUtils.class.getSimpleName();
 
-    private static <T> String convertString(T j) {
-        return j.toString();
+    private JSONUtils() {
     }
 
-    public interface Mapper<T, R> {
-        /**
-         * Used to map classes.
-         *
-         * @param in T.
-         * @return R
-         */
-        R map(T in);
+    private static <T, R> JSONArray mapList(final List<T> list, final Mapper<T, R> mapper) {
+        final JSONArray jsonArray = new JSONArray();
+        for (final T item : list) {
+            jsonArray.put(mapper.map(item));
+        }
+        return jsonArray;
     }
 
-    private static <T, R> JSONArray mapList(List<T> list, Mapper<T, R> mapper) {
-        JSONArray array = new JSONArray();
-        for (T item : list) array.put(mapper.map(item));
-        return array;
-    }
+    private static List<String> mapJSONArray(final JSONArray jsonArray) {
+        final List<String> list = new ArrayList<>();
 
-    private static <T, R> List<T> mapJSONArray(JSONArray jsonArray, Mapper<R, T> mapper) {
-        List<T> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                list.add(mapper.map((R) jsonArray.get(i)));
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
+                list.add(jsonArray.getString(i));
+            } catch (final JSONException e) {
+                Log.e(TAG, e.toString());
             }
         }
         return list;
     }
 
-    public static JSONObject getJSONFromStatus(Status obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromStatus(final Status obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("errorString", obj.getErrorString());
-            j.put("statusCode", obj.getStatusCode());
-            j.put("statusMessage", obj.getStatusMessage());
-            j.put("hasResolution", obj.hasResolution());
-            j.put("isCanceled", obj.isCanceled());
-            j.put("isInterrupted", obj.isInterrupted());
-            j.put("isSuccess", obj.isSuccess());
-            j.put("hasResolution", obj.hasResolution());
-            j.put("describeContents", obj.describeContents());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("errorString", obj.getErrorString());
+            jsonObject.put("statusCode", obj.getStatusCode());
+            jsonObject.put("statusMessage", obj.getStatusMessage());
+            jsonObject.put("hasResolution", obj.hasResolution());
+            jsonObject.put("isCanceled", obj.isCanceled());
+            jsonObject.put("isInterrupted", obj.isInterrupted());
+            jsonObject.put("isSuccess", obj.isSuccess());
+            jsonObject.put("describeContents", obj.describeContents());
+            jsonObject.put("hashCode", obj.hashCode());
+            jsonObject.put("toString", obj.toString());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromConsumeOwnedPurchaseReq(ConsumeOwnedPurchaseReq obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromConsumeOwnedPurchaseReq(final ConsumeOwnedPurchaseReq obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("developerChallenge", obj.getDeveloperChallenge());
-            j.put("purchaseToken", obj.getPurchaseToken());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("developerChallenge", obj.getDeveloperChallenge());
+            jsonObject.put("purchaseToken", obj.getPurchaseToken());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static ConsumeOwnedPurchaseReq getConsumeOwnedPurchaseReqFromJSON(JSONObject j) {
-        ConsumeOwnedPurchaseReq obj = new ConsumeOwnedPurchaseReq();
+    public static ConsumeOwnedPurchaseReq getConsumeOwnedPurchaseReqFromJSON(final JSONObject jsonObject) {
+        final ConsumeOwnedPurchaseReq consumeOwnedPurchaseReq = new ConsumeOwnedPurchaseReq();
         try {
-            obj.setDeveloperChallenge(j.getString("developerChallenge"));
-            obj.setPurchaseToken(getInAppPurchaseDataFromJSON(j).getPurchaseToken());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            consumeOwnedPurchaseReq.setDeveloperChallenge(jsonObject.getString("developerChallenge"));
+            consumeOwnedPurchaseReq.setPurchaseToken(getInAppPurchaseDataFromJSON(jsonObject).getPurchaseToken());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return obj;
+        return consumeOwnedPurchaseReq;
     }
 
-    public static JSONObject getJSONFromConsumeOwnedPurchaseResult(ConsumeOwnedPurchaseResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromConsumeOwnedPurchaseResult(final ConsumeOwnedPurchaseResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("consumePurchaseData", obj.getConsumePurchaseData());
-            j.put("dataSignature", obj.getDataSignature());
-            j.put("errMsg", obj.getErrMsg());
-            j.put("returnCode", obj.getReturnCode());
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("consumePurchaseData", obj.getConsumePurchaseData());
+            jsonObject.put("dataSignature", obj.getDataSignature());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromInAppPurchaseData(InAppPurchaseData obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromInAppPurchaseData(final InAppPurchaseData obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("appInfo", obj.getAppInfo());
-            j.put("applicationId", obj.getApplicationId());
-            j.put("cancelledSubKeepDays", obj.getCancelledSubKeepDays());
-            j.put("cancelReason", obj.getCancelReason());
-            j.put("cancelTime", obj.getCancelTime());
-            j.put("country", obj.getCountry());
-            j.put("currency", obj.getCurrency());
-            j.put("daysLasted", obj.getDaysLasted());
-            j.put("developerPayload", obj.getDeveloperPayload());
-            j.put("expirationDate", obj.getExpirationDate());
-            j.put("expirationIntent", obj.getExpirationIntent());
-            j.put("introductoryFlag", obj.getIntroductoryFlag());
-            j.put("lastOrderId", obj.getLastOrderId());
-            j.put("notifyClosed", obj.getNotifyClosed());
-            j.put("numOfDiscount", obj.getNumOfDiscount());
-            j.put("numOfPeriods", obj.getNumOfPeriods());
-            j.put("orderID", obj.getOrderID());
-            j.put("oriPurchaseTime", obj.getOriPurchaseTime());
-            j.put("packageName", obj.getPackageName());
-            j.put("price", obj.getPrice());
-            j.put("priceConsentStatus", obj.getPriceConsentStatus());
-            j.put("productGroup", obj.getProductGroup());
-            j.put("productId", obj.getProductId());
-            j.put("productName", obj.getProductName());
-            j.put("purchaseState", obj.getPurchaseState());
-            j.put("purchaseTime", obj.getPurchaseTime());
-            j.put("purchaseToken", obj.getPurchaseToken());
-            j.put("purchaseType", obj.getPurchaseType());
-            j.put("quantity", obj.getQuantity());
-            j.put("renewPrice", obj.getRenewPrice());
-            j.put("renewStatus", obj.getRenewStatus());
-            j.put("retryFlag", obj.getRetryFlag());
-            j.put("subscriptionId", obj.getSubscriptionId());
-            j.put("trialFlag", obj.getTrialFlag());
-            j.put("isAutoRenewing", obj.isAutoRenewing());
-            j.put("isSubValid", obj.isSubValid());
-            j.put("cancelledSubKeepDays", obj.getCancelledSubKeepDays());
-            j.put("kind", obj.getKind());
-            j.put("developerChallenge", obj.getDeveloperChallenge());
-            j.put("consumptionState", obj.getConsumptionState());
-            j.put("payOrderId", obj.getPayOrderId());
-            j.put("payType", obj.getPayType());
-            j.put("deferFlag", obj.getDeferFlag());
-            j.put("oriSubscriptionId", obj.getOriSubscriptionId());
-            j.put("cancelWay", obj.getCancelWay());
-            j.put("cancellationTime", obj.getCancellationTime());
-            j.put("resumeTime", obj.getResumeTime());
-
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("appInfo", obj.getAppInfo());
+            jsonObject.put("applicationId", obj.getApplicationId());
+            jsonObject.put("cancelledSubKeepDays", obj.getCancelledSubKeepDays());
+            jsonObject.put("cancelReason", obj.getCancelReason());
+            jsonObject.put("cancelTime", obj.getCancelTime());
+            jsonObject.put("country", obj.getCountry());
+            jsonObject.put("currency", obj.getCurrency());
+            jsonObject.put("daysLasted", obj.getDaysLasted());
+            jsonObject.put("developerPayload", obj.getDeveloperPayload());
+            jsonObject.put("expirationDate", obj.getExpirationDate());
+            jsonObject.put("expirationIntent", obj.getExpirationIntent());
+            jsonObject.put("introductoryFlag", obj.getIntroductoryFlag());
+            jsonObject.put("lastOrderId", obj.getLastOrderId());
+            jsonObject.put("notifyClosed", obj.getNotifyClosed());
+            jsonObject.put("numOfDiscount", obj.getNumOfDiscount());
+            jsonObject.put("numOfPeriods", obj.getNumOfPeriods());
+            jsonObject.put("orderID", obj.getOrderID());
+            jsonObject.put("oriPurchaseTime", obj.getOriPurchaseTime());
+            jsonObject.put("packageName", obj.getPackageName());
+            jsonObject.put("price", obj.getPrice());
+            jsonObject.put("priceConsentStatus", obj.getPriceConsentStatus());
+            jsonObject.put("productGroup", obj.getProductGroup());
+            jsonObject.put("productId", obj.getProductId());
+            jsonObject.put("productName", obj.getProductName());
+            jsonObject.put("purchaseState", obj.getPurchaseState());
+            jsonObject.put("purchaseTime", obj.getPurchaseTime());
+            jsonObject.put("purchaseToken", obj.getPurchaseToken());
+            jsonObject.put("purchaseType", obj.getPurchaseType());
+            jsonObject.put("quantity", obj.getQuantity());
+            jsonObject.put("renewPrice", obj.getRenewPrice());
+            jsonObject.put("renewStatus", obj.getRenewStatus());
+            jsonObject.put("retryFlag", obj.getRetryFlag());
+            jsonObject.put("subscriptionId", obj.getSubscriptionId());
+            jsonObject.put("trialFlag", obj.getTrialFlag());
+            jsonObject.put("isAutoRenewing", obj.isAutoRenewing());
+            jsonObject.put("isSubValid", obj.isSubValid());
+            jsonObject.put("cancelledSubKeepDays", obj.getCancelledSubKeepDays());
+            jsonObject.put("kind", obj.getKind());
+            jsonObject.put("developerChallenge", obj.getDeveloperChallenge());
+            jsonObject.put("consumptionState", obj.getConsumptionState());
+            jsonObject.put("payOrderId", obj.getPayOrderId());
+            jsonObject.put("payType", obj.getPayType());
+            jsonObject.put("deferFlag", obj.getDeferFlag());
+            jsonObject.put("oriSubscriptionId", obj.getOriSubscriptionId());
+            jsonObject.put("cancelWay", obj.getCancelWay());
+            jsonObject.put("cancellationTime", obj.getCancellationTime());
+            jsonObject.put("resumeTime", obj.getResumeTime());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static InAppPurchaseData getInAppPurchaseDataFromJSON(JSONObject j) throws JSONException {
-        return new InAppPurchaseData(j.getString("inAppPurchaseData"));
+    public static InAppPurchaseData getInAppPurchaseDataFromJSON(final JSONObject jsonObject) throws JSONException {
+        return new InAppPurchaseData(jsonObject.getString("inAppPurchaseData"));
     }
 
-    public static JSONObject getJSONFromIsEnvReadyResult(IsEnvReadyResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromIsEnvReadyResult(final IsEnvReadyResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("returnCode", obj.getReturnCode());
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromIsSandboxActivatedResult(IsSandboxActivatedResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromIsSandboxActivatedResult(final IsSandboxActivatedResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("errMsg", obj.getErrMsg());
-            j.put("isSandboxApk", obj.getIsSandboxApk());
-            j.put("isSandboxUser", obj.getIsSandboxUser());
-            j.put("returnCode", obj.getReturnCode());
-            j.put("versionFrMarket", obj.getVersionFrMarket());
-            j.put("versionInApk", obj.getVersionInApk());
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("isSandboxApk", obj.getIsSandboxApk());
+            jsonObject.put("isSandboxUser", obj.getIsSandboxUser());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("versionFrMarket", obj.getVersionFrMarket());
+            jsonObject.put("versionInApk", obj.getVersionInApk());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromOwnedPurchasesReq(OwnedPurchasesReq obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromOwnedPurchasesReq(final OwnedPurchasesReq obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("continuationToken", obj.getContinuationToken());
-            j.put("priceType", obj.getPriceType());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("continuationToken", obj.getContinuationToken());
+            jsonObject.put("priceType", obj.getPriceType());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static OwnedPurchasesReq getOwnedPurchasesReqFromJSON(JSONObject j) {
-        OwnedPurchasesReq obj = new OwnedPurchasesReq();
+    public static OwnedPurchasesReq getOwnedPurchasesReqFromJSON(final JSONObject jsonObject) {
+        final OwnedPurchasesReq ownedPurchasesReq = new OwnedPurchasesReq();
         try {
-            obj.setPriceType(j.getInt("priceType"));
-            if (j.has("continuationToken")) {
-                obj.setContinuationToken(j.getString("continuationToken"));
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            ownedPurchasesReq.setPriceType(jsonObject.getInt("priceType"));
+            ownedPurchasesReq.setContinuationToken(jsonObject.optString("continuationToken"));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return obj;
+        return ownedPurchasesReq;
     }
 
-    public static JSONObject getJSONFromOwnedPurchasesResult(OwnedPurchasesResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromOwnedPurchasesResult(final OwnedPurchasesResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("continuationToken", obj.getContinuationToken());
-            j.put("errMsg", obj.getErrMsg());
-            j.put("itemList", new JSONArray(obj.getItemList()));
-            j.put("inAppPurchaseDataList", new JSONArray(obj.getInAppPurchaseDataList()));
-            j.put("inAppSignature", new JSONArray(obj.getInAppSignature()));
-            j.put("placedInappPurchaseDataList", new JSONArray(obj.getPlacedInappPurchaseDataList()));
-            j.put("placedInappSignatureList", new JSONArray(obj.getPlacedInappSignatureList()));
-            j.put("returnCode", obj.getReturnCode());
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("continuationToken", obj.getContinuationToken());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("itemList", new JSONArray(obj.getItemList()));
+            jsonObject.put("inAppPurchaseDataList", new JSONArray(obj.getInAppPurchaseDataList()));
+            jsonObject.put("inAppSignature", new JSONArray(obj.getInAppSignature()));
+            jsonObject.put("placedInappPurchaseDataList", new JSONArray(obj.getPlacedInappPurchaseDataList()));
+            jsonObject.put("placedInappSignatureList", new JSONArray(obj.getPlacedInappSignatureList()));
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromProductInfo(ProductInfo obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromProductInfo(final ProductInfo obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("productId", obj.getProductId());
-            j.put("priceType", obj.getPriceType());
-            j.put("price", obj.getPrice());
-            j.put("microsPrice", obj.getMicrosPrice());
-            j.put("originalLocalPrice", obj.getOriginalLocalPrice());
-            j.put("originalMicroPrice", obj.getOriginalMicroPrice());
-            j.put("currency", obj.getCurrency());
-            j.put("productName", obj.getProductName());
-            j.put("productDesc", obj.getProductDesc());
-            j.put("subPeriod", obj.getSubPeriod());
-            j.put("subSpecialPrice", obj.getSubSpecialPrice());
-            j.put("subSpecialPriceMicros", obj.getSubSpecialPriceMicros());
-            j.put("subSpecialPeriod", obj.getSubSpecialPeriod());
-            j.put("subSpecialPeriodCycles", obj.getSubSpecialPeriodCycles());
-            j.put("subFreeTrialPeriod", obj.getSubFreeTrialPeriod());
-            j.put("subGroupId", obj.getSubGroupId());
-            j.put("subGroupTitle", obj.getSubGroupTitle());
-            j.put("subProductLevel", obj.getSubProductLevel());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("productId", obj.getProductId());
+            jsonObject.put("priceType", obj.getPriceType());
+            jsonObject.put("price", obj.getPrice());
+            jsonObject.put("microsPrice", obj.getMicrosPrice());
+            jsonObject.put("originalLocalPrice", obj.getOriginalLocalPrice());
+            jsonObject.put("originalMicroPrice", obj.getOriginalMicroPrice());
+            jsonObject.put("currency", obj.getCurrency());
+            jsonObject.put("productName", obj.getProductName());
+            jsonObject.put("productDesc", obj.getProductDesc());
+            jsonObject.put("status", obj.getStatus());
+            jsonObject.put("subPeriod", obj.getSubPeriod());
+            jsonObject.put("subSpecialPrice", obj.getSubSpecialPrice());
+            jsonObject.put("subSpecialPriceMicros", obj.getSubSpecialPriceMicros());
+            jsonObject.put("subSpecialPeriod", obj.getSubSpecialPeriod());
+            jsonObject.put("subSpecialPeriodCycles", obj.getSubSpecialPeriodCycles());
+            jsonObject.put("subFreeTrialPeriod", obj.getSubFreeTrialPeriod());
+            jsonObject.put("subGroupId", obj.getSubGroupId());
+            jsonObject.put("subGroupTitle", obj.getSubGroupTitle());
+            jsonObject.put("subProductLevel", obj.getSubProductLevel());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromProductInfoReq(ProductInfoReq obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromProductInfoReq(final ProductInfoReq obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("priceType", obj.getPriceType());
-            j.put("productIds", new JSONArray(obj.getProductIds()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("priceType", obj.getPriceType());
+            jsonObject.put("productIds", new JSONArray(obj.getProductIds()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static ProductInfoReq getProductInfoReqFromJSON(JSONObject j) {
-        ProductInfoReq obj = new ProductInfoReq();
+    public static ProductInfoReq getProductInfoReqFromJSON(final JSONObject jsonObject) {
+        final ProductInfoReq productInfoReq = new ProductInfoReq();
         try {
-            obj.setPriceType(j.getInt("priceType"));
-            obj.setProductIds(mapJSONArray(j.getJSONArray("productList"), JSONUtils::convertString));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            productInfoReq.setPriceType(jsonObject.getInt("priceType"));
+            productInfoReq.setProductIds(mapJSONArray(jsonObject.getJSONArray("productList")));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return obj;
+        return productInfoReq;
     }
 
-    public static JSONObject getJSONFromProductInfoResult(ProductInfoResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromProductInfoResult(final ProductInfoResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("returnCode", obj.getReturnCode());
-            j.put("errMsg", obj.getErrMsg());
-            j.put("productInfoList", mapList(obj.getProductInfoList(), JSONUtils::getJSONFromProductInfo));
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("productInfoList", mapList(obj.getProductInfoList(), JSONUtils::getJSONFromProductInfo));
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromPurchaseIntentReq(PurchaseIntentReq obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromPurchaseIntentReq(final PurchaseIntentReq obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("priceType", obj.getPriceType());
-            j.put("productId", obj.getProductId());
-            j.put("developerPayload", obj.getDeveloperPayload());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("priceType", obj.getPriceType());
+            jsonObject.put("productId", obj.getProductId());
+            jsonObject.put("developerPayload", obj.getDeveloperPayload());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static PurchaseIntentReq getPurchaseIntentReqFromJSON(JSONObject j) {
-        PurchaseIntentReq obj = new PurchaseIntentReq();
+    public static PurchaseIntentReq getPurchaseIntentReqFromJSON(final JSONObject jsonObject) {
+        final PurchaseIntentReq purchaseIntentReq = new PurchaseIntentReq();
         try {
-            obj.setPriceType(j.getInt("priceType"));
-            obj.setProductId(j.getString("productId"));
-            obj.setDeveloperPayload(j.getString("developerPayload"));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            purchaseIntentReq.setPriceType(jsonObject.getInt("priceType"));
+            purchaseIntentReq.setProductId(jsonObject.getString("productId"));
+            purchaseIntentReq.setDeveloperPayload(jsonObject.getString("developerPayload"));
+            purchaseIntentReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return obj;
+        return purchaseIntentReq;
     }
 
-    public static JSONObject getJSONFromPurchaseIntentResult(PurchaseIntentResult obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromPurchaseIntentResult(final PurchaseIntentResult obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("returnCode", obj.getReturnCode());
-            j.put("errMsg", obj.getErrMsg());
-            j.put("paymentData", obj.getPaymentData());
-            j.put("paymentSignature", obj.getPaymentSignature());
-            j.put("status", getJSONFromStatus(obj.getStatus()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("paymentData", obj.getPaymentData());
+            jsonObject.put("paymentSignature", obj.getPaymentSignature());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject getJSONFromPurchaseResultInfo(PurchaseResultInfo obj) {
-        JSONObject j = new JSONObject();
+    public static JSONObject getJSONFromPurchaseResultInfo(final PurchaseResultInfo obj) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("returnCode", obj.getReturnCode());
-            j.put("errMsg", obj.getErrMsg());
-            j.put("inAppPurchaseData", obj.getInAppPurchaseData());
-            j.put("inAppDataSignature", obj.getInAppDataSignature());
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("returnCode", obj.getReturnCode());
+            jsonObject.put("errMsg", obj.getErrMsg());
+            jsonObject.put("inAppPurchaseData", obj.getInAppPurchaseData());
+            jsonObject.put("inAppDataSignature", obj.getInAppDataSignature());
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 
-    public static JSONObject error(int errorCode) {
-        JSONObject j = new JSONObject();
+    public static JSONObject error(final int errorCode) {
+        final JSONObject jsonObject = new JSONObject();
         try {
-            j.put("errorCode", errorCode);
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            jsonObject.put("errorCode", errorCode);
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
         }
-        return j;
+        return jsonObject;
     }
 }

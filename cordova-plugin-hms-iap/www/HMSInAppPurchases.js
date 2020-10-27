@@ -1,3 +1,4 @@
+"use strict";
 /*
 Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -13,63 +14,56 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-const argscheck = require('cordova/argscheck');
-const exec = require('cordova/exec');
-const cordova = require('cordova');
-const utils = require('./utils');
-
-const HMSInAppPurchases = function () {
-    console.log("HMSInAppPurchases instanced");
-};
-
-// /////////////////////////////////////////////////////////
-// DATA TYPES
-// /////////////////////////////////////////////////////////
-
-const TypeObtainOwnedPurchases = {
-    'priceType!': 'integer',
-};
-const TypeObtainProductInfo = {
-    'priceType!': 'integer',
-    'productList!': utils.arrayOf('string'),
-};
-const TypeCreatePurchaseIntent = {
-    'priceType!': 'integer',
-    'productId!': 'string',
-    'developerPayload': 'string',
-};
-const TypeConsumeOwnedPurchase = {
-    'inAppPurchaseData!': 'string',
-    'developerChallenge': 'string',
-};
-const TypeObtainOwnedPurchaseRecord = {
-    'priceType!': 'integer',
-    'continuationToken': 'string'
-};
-const TypeUriParams = {
-    'appId': 'string',
-    'package': 'string',
-    'sku': 'string'
-};
-
-// /////////////////////////////////////////////////////////
-// INIT FUNCTIONS
-// /////////////////////////////////////////////////////////
-
-const exportedFunctions = [
-    {name: 'init', type: []},
-    {name: 'isSandboxReady', type: []},
-    {name: 'isEnvironmentReady', type: []},
-    {name: 'obtainOwnedPurchases', type: [TypeObtainOwnedPurchases]},
-    {name: 'obtainProductInfo', type: [TypeObtainProductInfo]},
-    {name: 'createPurchaseIntent', type: [TypeCreatePurchaseIntent]},
-    {name: 'consumeOwnedPurchase', type: [TypeConsumeOwnedPurchase]},
-    {name: 'obtainOwnedPurchaseRecord', type: [TypeObtainOwnedPurchaseRecord]},
-    {name: 'startActivityWithUri', type: ['string']},
-    {name: 'showSubscriptionsActivity', type: [TypeUriParams]},
-];
-
-utils.generateFunctionVariations(exportedFunctions, HMSInAppPurchases, 'HMSInAppPurchases');
-
-module.exports = new HMSInAppPurchases();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.disableLogger = exports.enableLogger = exports.startIapActivity = exports.obtainOwnedPurchaseRecord = exports.consumeOwnedPurchase = exports.createPurchaseIntent = exports.obtainProductInfo = exports.obtainOwnedPurchases = exports.isSandboxActivated = exports.isEnvReady = void 0;
+const utils_1 = require("./utils");
+function isEnvReady() {
+    return run('isEnvReady');
+}
+exports.isEnvReady = isEnvReady;
+function isSandboxActivated() {
+    return run('isSandboxActivated');
+}
+exports.isSandboxActivated = isSandboxActivated;
+function obtainOwnedPurchases(priceType) {
+    return run('obtainOwnedPurchases', [priceType]);
+}
+exports.obtainOwnedPurchases = obtainOwnedPurchases;
+function obtainProductInfo(product) {
+    return run('obtainProductInfo', [product]);
+}
+exports.obtainProductInfo = obtainProductInfo;
+function createPurchaseIntent(purchaseIntent) {
+    return run('createPurchaseIntent', [purchaseIntent]);
+}
+exports.createPurchaseIntent = createPurchaseIntent;
+function consumeOwnedPurchase(ownedPurchase) {
+    return run('consumeOwnedPurchase', [ownedPurchase]);
+}
+exports.consumeOwnedPurchase = consumeOwnedPurchase;
+function obtainOwnedPurchaseRecord(ownedPurchaseRecord) {
+    return run('obtainOwnedPurchaseRecord', [ownedPurchaseRecord]);
+}
+exports.obtainOwnedPurchaseRecord = obtainOwnedPurchaseRecord;
+function startIapActivity(productId = "") {
+    return run('startIapActivity', [productId]);
+}
+exports.startIapActivity = startIapActivity;
+function enableLogger() {
+    return run('enableLogger');
+}
+exports.enableLogger = enableLogger;
+function disableLogger() {
+    return run('disableLogger');
+}
+exports.disableLogger = disableLogger;
+;
+;
+;
+/**
+ * HELPERS
+ */
+function run(funcName, args = []) {
+    return utils_1.asyncExec('HMSInAppPurchases', funcName, args);
+}
+//# sourceMappingURL=HMSInAppPurchases.js.map

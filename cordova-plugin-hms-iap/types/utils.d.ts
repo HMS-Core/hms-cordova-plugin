@@ -14,29 +14,18 @@
     limitations under the License.
 */
 
-'use strict';
-
-var fs = require('fs');
-
-var FSUtils = (function () {
-    var api = {};
-
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path)
-        } catch (err) {/*NOPE*/ }
-        return false;
+export declare function asyncExec(clazz: string, func: string, args?: any[]): Promise<any>;
+declare type Handler = (data: any) => void;
+declare global {
+    interface Window {
+        hmsEventHandlers: {
+            [key: string]: Handler[];
+        };
+        hmsEventHandler: (eventName: string, data: any) => void;
+        registerHMSEvent: (eventName: string, handler: Handler) => void;
+        unregisterHMSEvent: (eventName: string, handler: Handler) => void;
+        hmsSetConstants: (objName: string, constans: any) => void;
+        [key: string]: any;
     }
-
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
-    }
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    }
-
-    return api;
-})();
-
-module.exports = FSUtils;
+}
+export {};

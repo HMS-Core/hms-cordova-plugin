@@ -14,29 +14,16 @@
     limitations under the License.
 */
 
-'use strict';
+package com.huawei.hms.cordova.inapppurchases.utils;
 
-var fs = require('fs');
-
-var FSUtils = (function () {
-    var api = {};
-
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path)
-        } catch (err) {/*NOPE*/ }
-        return false;
-    }
-
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
-    }
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    }
-
-    return api;
-})();
-
-module.exports = FSUtils;
+@FunctionalInterface
+public interface Mapper<T, R> {
+    /**
+     * Used to map classes.
+     *
+     * @param in T.
+     *
+     * @return R
+     */
+    R map(T in);
+}

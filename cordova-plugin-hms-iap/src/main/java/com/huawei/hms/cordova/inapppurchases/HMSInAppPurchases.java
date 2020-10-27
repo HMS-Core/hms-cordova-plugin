@@ -1,11 +1,11 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,28 +16,20 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
 package com.huawei.hms.cordova.inapppurchases;
 
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.content.IntentSender;
 import android.util.Log;
-import android.util.Pair;
-import android.net.Uri;
-import android.content.ActivityNotFoundException;
 
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.cordova.inapppurchases.logger.HMSLogger;
+import com.huawei.hms.cordova.inapppurchases.utils.Constants;
+import com.huawei.hms.cordova.inapppurchases.utils.JSONUtils;
+import com.huawei.hms.cordova.inapppurchases.utils.ObjectUtils;
 import com.huawei.hms.iap.Iap;
 import com.huawei.hms.iap.IapApiException;
 import com.huawei.hms.iap.IapClient;
 import com.huawei.hms.iap.entity.ConsumeOwnedPurchaseReq;
 import com.huawei.hms.iap.entity.ConsumeOwnedPurchaseResult;
-import com.huawei.hms.iap.entity.InAppPurchaseData;
 import com.huawei.hms.iap.entity.IsEnvReadyResult;
 import com.huawei.hms.iap.entity.IsSandboxActivatedReq;
 import com.huawei.hms.iap.entity.IsSandboxActivatedResult;
@@ -49,299 +41,301 @@ import com.huawei.hms.iap.entity.ProductInfoResult;
 import com.huawei.hms.iap.entity.PurchaseIntentReq;
 import com.huawei.hms.iap.entity.PurchaseIntentResult;
 import com.huawei.hms.iap.entity.PurchaseResultInfo;
+import com.huawei.hms.iap.entity.StartIapActivityReq;
+import com.huawei.hms.iap.entity.StartIapActivityResult;
 import com.huawei.hms.support.api.client.Status;
 
-import com.huawei.hms.cordova.inapppurchases.utils.JSONUtils;
-import com.huawei.hms.cordova.inapppurchases.utils.Constants;
-import com.huawei.hms.cordova.inapppurchases.utils.HMSCordovaPlugin;
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class HMSInAppPurchases extends HMSCordovaPlugin {
+public final class HMSInAppPurchases extends CordovaPlugin {
     private static final String TAG = HMSInAppPurchases.class.getSimpleName();
 
-    private static final Integer REQUEST_IS_ENVIRONMENT_READY = 111;
-    private static final Integer REQUEST_CREATE_PURCHASE_INTENT = 222;
+    private final Map<Integer, Integer> typesForRequests = new HashMap<>();
 
+    private int requestNumber;
     private IapClient iapClient;
-    private Map<Integer, Pair<CallbackContext, Integer>> callbacksForRequests;
-    private int requestNumber = 0;
+    private CallbackContext callbackContext;
+    private HMSLogger hmsLogger;
 
-    public HMSInAppPurchases() {}
-
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-
-        callbacksForRequests = new HashMap<>();
+    @Override
+    public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
         iapClient = Iap.getIapClient(cordova.getActivity());
-
+        hmsLogger = HMSLogger.getInstance(cordova.getContext());
     }
 
     @Override
-    public boolean executer(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("isSandboxReady".equals(action))
-            isSandboxReady(callbackContext);
-        else if ("isEnvironmentReady".equals(action))
-            isEnvironmentReady(callbackContext);
-        else if ("obtainOwnedPurchases".equals(action))
-            obtainOwnedPurchases(args.getJSONObject(0), callbackContext);
-        else if ("obtainProductInfo".equals(action))
-            obtainProductInfo(args.getJSONObject(0), callbackContext);
-        else if ("createPurchaseIntent".equals(action))
-            createPurchaseIntent(args.getJSONObject(0), callbackContext);
-        else if ("consumeOwnedPurchase".equals(action))
-            consumeOwnedPurchase(args.getJSONObject(0), callbackContext);
-        else if ("obtainOwnedPurchaseRecord".equals(action))
-            obtainOwnedPurchaseRecord(args.getJSONObject(0), callbackContext);
-        else if ("startActivityWithUri".equals(action))
-            startActivityWithUri(args.getString(0), callbackContext);
-        else if ("showSubscriptionsActivity".equals(action))
-            showSubscriptionsActivity(args.getJSONObject(0), callbackContext);
-        else
-            return false;
+    public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext)
+        throws JSONException {
+        this.callbackContext = callbackContext;
+        hmsLogger.startMethodExecutionTimer(action);
 
+        if ("init".equals(action)) {
+            init(callbackContext::success);
+        } else if ("isEnvReady".equals(action)) {
+            isEnvReady(callbackContext);
+        } else if ("isSandboxActivated".equals(action)) {
+            isSandboxActivated(callbackContext);
+        } else if ("obtainOwnedPurchases".equals(action)) {
+            obtainOwnedPurchases(args.getJSONObject(0), callbackContext);
+        } else if ("obtainProductInfo".equals(action)) {
+            obtainProductInfo(args.getJSONObject(0), callbackContext);
+        } else if ("createPurchaseIntent".equals(action)) {
+            createPurchaseIntent(args.getJSONObject(0), callbackContext);
+        } else if ("consumeOwnedPurchase".equals(action)) {
+            consumeOwnedPurchase(args.getJSONObject(0), callbackContext);
+        } else if ("obtainOwnedPurchaseRecord".equals(action)) {
+            obtainOwnedPurchaseRecord(args.getJSONObject(0), callbackContext);
+        } else if ("startIapActivity".equals(action)) {
+            startIapActivity(args.getString(0), callbackContext);
+        } else if ("enableLogger".equals(action)) {
+            hmsLogger.enableLogger();
+            callbackContext.success();
+        } else if ("disableLogger".equals(action)) {
+            hmsLogger.disableLogger();
+            callbackContext.success();
+        } else {
+            return false;
+        }
         return true;
     }
 
     @Override
-    public JSONObject getConstants() throws JSONException {
-        JSONObject constants = new JSONObject();
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        Log.d(TAG, "new onActivityResult, requestCode=" + requestCode + ", resultCode=" + resultCode);
 
-        // OrderStatusCode
-        constants.put("ORDER_ACCOUNT_AREA_NOT_SUPPORTED", OrderStatusCode.ORDER_ACCOUNT_AREA_NOT_SUPPORTED);
-        constants.put("ORDER_HIGH_RISK_OPERATIONS", OrderStatusCode.ORDER_HIGH_RISK_OPERATIONS);
-        constants.put("ORDER_HWID_NOT_LOGIN", OrderStatusCode.ORDER_HWID_NOT_LOGIN);
-        constants.put("ORDER_NOT_ACCEPT_AGREEMENT", OrderStatusCode.ORDER_NOT_ACCEPT_AGREEMENT);
-        constants.put("ORDER_PRODUCT_CONSUMED", OrderStatusCode.ORDER_PRODUCT_CONSUMED);
-        constants.put("ORDER_PRODUCT_NOT_OWNED", OrderStatusCode.ORDER_PRODUCT_NOT_OWNED);
-        constants.put("ORDER_PRODUCT_OWNED", OrderStatusCode.ORDER_PRODUCT_OWNED);
-        constants.put("ORDER_STATE_CANCEL", OrderStatusCode.ORDER_STATE_CANCEL);
-        constants.put("ORDER_STATE_FAILED", OrderStatusCode.ORDER_STATE_FAILED);
-        constants.put("ORDER_STATE_NET_ERROR", OrderStatusCode.ORDER_STATE_NET_ERROR);
-        constants.put("ORDER_STATE_PARAM_ERROR", OrderStatusCode.ORDER_STATE_PARAM_ERROR);
-        constants.put("ORDER_STATE_SUCCESS", OrderStatusCode.ORDER_STATE_SUCCESS);
-        constants.put("ORDER_VR_UNINSTALL_ERROR", OrderStatusCode.ORDER_VR_UNINSTALL_ERROR);
+        final CallbackContext inComingCallbackContext = callbackContext;
+        callbackContext = null;
 
-        // InAppPurchaseData
-        constants.put("PURCHASE_DATA_NOT_PRESENT", InAppPurchaseData.NOT_PRESENT);
+        if (inComingCallbackContext != null && typesForRequests.containsKey(requestCode)) {
+            if (data == null) {
+                Log.e("onActivityResult", "data is null");
+                inComingCallbackContext.error(JSONUtils.error(Constants.ERR_INTENT_DATA_EMPTY));
+            } else {
+                final int requestType = ObjectUtils.safeUnboxInteger(typesForRequests.get(requestCode), -1);
 
-        // PurchaseState
-        constants.put("PURCHASE_STATE_CANCELED", InAppPurchaseData.PurchaseState.CANCELED);
-        constants.put("PURCHASE_STATE_INITIALIZED", InAppPurchaseData.PurchaseState.INITIALIZED);
-        constants.put("PURCHASE_STATE_PURCHASED", InAppPurchaseData.PurchaseState.PURCHASED);
-        constants.put("PURCHASE_STATE_REFUNDED", InAppPurchaseData.PurchaseState.REFUNDED);
+                if (requestType == Constants.REQUEST_IS_ENVIRONMENT_READY) {
+                    Log.i(TAG, "onActivityResult from isEnvReady");
+                    final int returnCode = data.getIntExtra("returnCode", 1);
 
-        // PriceType
-        constants.put("PRICE_TYPE_IN_APP_CONSUMABLE", IapClient.PriceType.IN_APP_CONSUMABLE);
-        constants.put("PRICE_TYPE_IN_APP_NONCONSUMABLE", IapClient.PriceType.IN_APP_NONCONSUMABLE);
-        constants.put("PRICE_TYPE_IN_APP_SUBSCRIPTION", IapClient.PriceType.IN_APP_SUBSCRIPTION);
-
-        // Errors
-        constants.put("ERR_CAN_NOT_LOG_IN", Constants.ERR_CAN_NOT_LOG_IN);
-        constants.put("ERR_INTENT_DATA_EMPTY", Constants.ERR_INTENT_DATA_EMPTY);
-
-        return constants;
+                    if (returnCode == 0) {
+                        isEnvReady(inComingCallbackContext);
+                    } else {
+                        inComingCallbackContext.error(JSONUtils.error(Constants.ERR_CAN_NOT_LOG_IN));
+                    }
+                }
+                if (requestType == Constants.REQUEST_CREATE_PURCHASE_INTENT) {
+                    Log.i(TAG, "onActivityResult from createPurchaseIntent");
+                    final PurchaseResultInfo purchaseResultInfo = iapClient.parsePurchaseResultInfoFromIntent(data);
+                    inComingCallbackContext.success(JSONUtils.getJSONFromPurchaseResultInfo(purchaseResultInfo));
+                }
+                typesForRequests.remove(requestCode);
+            }
+        }
     }
 
-    private void isSandboxReady(final CallbackContext callbackContext) {
-        Task<IsSandboxActivatedResult> task = iapClient.isSandboxActivated(new IsSandboxActivatedReq());
+    private void runJS(final CordovaInterface cordova, final CordovaWebView webView, final String jsCode,
+        final Runnable onFinished) {
+        Log.d(TAG, "runJS() start");
+
+        cordova.getActivity().runOnUiThread(() -> webView.getEngine().evaluateJavascript(jsCode, result -> {
+            if (onFinished != null) {
+                onFinished.run();
+            }
+        }));
+    }
+
+    private void init(final Runnable onFinished) {
+        try {
+            runJS(cordova, webView,
+                "hmsSetConstants('" + getServiceName() + "', " + Constants.getConstantsAsJsonString() + ")",
+                onFinished);
+        } catch (final JSONException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+    private void isSandboxActivated(final CallbackContext callbackContext) {
+        final Task<IsSandboxActivatedResult> task = iapClient.isSandboxActivated(new IsSandboxActivatedReq());
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("isSandboxActivated");
             Log.i(TAG, "isSandboxActivated success");
             callbackContext.success(JSONUtils.getJSONFromIsSandboxActivatedResult(result));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("isSandboxActivated", e.getMessage());
             Log.e(TAG, "isSandboxActivated fail");
             handleError(e, callbackContext);
         });
     }
 
-    private void isEnvironmentReady(final CallbackContext callbackContext) {
+    private void isEnvReady(final CallbackContext callbackContext) {
         cordova.setActivityResultCallback(this);
-        Task<IsEnvReadyResult> task = iapClient.isEnvReady();
+        final Task<IsEnvReadyResult> task = iapClient.isEnvReady();
         task.addOnSuccessListener(result -> {
-            Log.i(TAG, "isEnvironmentReady success");
+            hmsLogger.sendSingleEvent("isEnvReady");
+            Log.i(TAG, "isEnvReady success");
             callbackContext.success(JSONUtils.getJSONFromIsEnvReadyResult(result));
         }).addOnFailureListener(e -> {
-            Log.i(TAG, "isEnvironmentReady fail");
-            handleError(e, callbackContext, REQUEST_IS_ENVIRONMENT_READY, new Integer[]{OrderStatusCode.ORDER_HWID_NOT_LOGIN});
+            hmsLogger.sendSingleEvent("isEnvReady", e.getMessage());
+            Log.i(TAG, "isEnvReady fail");
+            handleError(e, callbackContext, Constants.REQUEST_IS_ENVIRONMENT_READY,
+                new Integer[] {OrderStatusCode.ORDER_HWID_NOT_LOGIN});
         });
     }
 
-    private void obtainOwnedPurchases(final JSONObject ownedPurchasesRequestJSON, final CallbackContext callbackContext) {
-        OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequestJSON);
-        Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchases(req);
+    private void obtainOwnedPurchases(final JSONObject ownedPurchasesRequestJSON,
+        final CallbackContext callbackContext) {
+        final OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequestJSON);
+        final Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchases(req);
 
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("obtainOwnedPurchases");
             Log.i(TAG, "obtainOwnedPurchases success");
             callbackContext.success(JSONUtils.getJSONFromOwnedPurchasesResult(result));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("obtainOwnedPurchases", e.getMessage());
             Log.i(TAG, "obtainOwnedPurchases fail");
             handleError(e, callbackContext);
         });
     }
 
     private void obtainProductInfo(final JSONObject productInfoRequestJSON, final CallbackContext callbackContext) {
-        ProductInfoReq req = JSONUtils.getProductInfoReqFromJSON(productInfoRequestJSON);
-        Task<ProductInfoResult> task = iapClient.obtainProductInfo(req);
+        final ProductInfoReq req = JSONUtils.getProductInfoReqFromJSON(productInfoRequestJSON);
+        final Task<ProductInfoResult> task = iapClient.obtainProductInfo(req);
 
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("obtainProductInfo");
             Log.i(TAG, "obtainProductInfo success");
             callbackContext.success(JSONUtils.getJSONFromProductInfoResult(result));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("obtainProductInfo", e.getMessage());
             Log.i(TAG, "obtainProductInfo fail");
             handleError(e, callbackContext);
         });
     }
 
-    private void createPurchaseIntent(final JSONObject purchaseIntentRequestJSON, final CallbackContext callbackContext) {
+    private void createPurchaseIntent(final JSONObject purchaseIntentRequestJSON,
+        final CallbackContext callbackContext) {
         cordova.setActivityResultCallback(this);
-        PurchaseIntentReq req = JSONUtils.getPurchaseIntentReqFromJSON(purchaseIntentRequestJSON);
-        Task<PurchaseIntentResult> task = iapClient.createPurchaseIntent(req);
+        final PurchaseIntentReq req = JSONUtils.getPurchaseIntentReqFromJSON(purchaseIntentRequestJSON);
+        final Task<PurchaseIntentResult> task = iapClient.createPurchaseIntent(req);
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("createPurchaseIntent");
             Log.i(TAG, "createPurchaseIntent success");
 
             Status status = result.getStatus();
             if (status.hasResolution()) {
-                handleResolution(status, callbackContext, REQUEST_CREATE_PURCHASE_INTENT);
+                handleResolution(status, callbackContext, Constants.REQUEST_CREATE_PURCHASE_INTENT);
                 return;
             }
 
             callbackContext.success(JSONUtils.getJSONFromStatus(status));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("createPurchaseIntent", e.getMessage());
             Log.e(TAG, "createPurchaseIntent fail");
             handleError(e, callbackContext);
         });
     }
 
-    private void consumeOwnedPurchase(final JSONObject consumeOwnedPurchaseRequestJSON, final CallbackContext callbackContext) {
-        ConsumeOwnedPurchaseReq req = JSONUtils.getConsumeOwnedPurchaseReqFromJSON(consumeOwnedPurchaseRequestJSON);
-        Task<ConsumeOwnedPurchaseResult> task = iapClient.consumeOwnedPurchase(req);
+    private void consumeOwnedPurchase(final JSONObject consumeOwnedPurchaseRequestJSON,
+        final CallbackContext callbackContext) {
+        final ConsumeOwnedPurchaseReq req = JSONUtils.getConsumeOwnedPurchaseReqFromJSON(
+            consumeOwnedPurchaseRequestJSON);
+        final Task<ConsumeOwnedPurchaseResult> task = iapClient.consumeOwnedPurchase(req);
 
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("consumeOwnedPurchase");
             Log.i(TAG, "consumeOwnedPurchase success");
             callbackContext.success(JSONUtils.getJSONFromConsumeOwnedPurchaseResult(result));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("consumeOwnedPurchase", e.getMessage());
             Log.e(TAG, "consumeOwnedPurchase fail");
             handleError(e, callbackContext);
         });
     }
 
-    private void obtainOwnedPurchaseRecord(final JSONObject ownedPurchasesRequestJSON, final CallbackContext callbackContext) {
-        OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequestJSON);
-        Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchaseRecord(req);
+    private void obtainOwnedPurchaseRecord(final JSONObject ownedPurchasesRequestJSON,
+        final CallbackContext callbackContext) {
+        final OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequestJSON);
+        final Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchaseRecord(req);
 
         task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("obtainOwnedPurchaseRecord");
             Log.i(TAG, "obtainOwnedPurchaseRecord success");
             callbackContext.success(JSONUtils.getJSONFromOwnedPurchasesResult(result));
         }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("obtainOwnedPurchaseRecord", e.getMessage());
             Log.e(TAG, "obtainOwnedPurchaseRecord fail");
             handleError(e, callbackContext);
         });
     }
 
-    private void startActivityWithUri(final String uri, final CallbackContext callbackContext) {
-        Log.d(TAG, "startActivityWithUri");
+    private void startIapActivity(final String productId, final CallbackContext callbackContext) {
+        final StartIapActivityReq req = new StartIapActivityReq();
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(Uri.parse(uri));
-        try {
-            cordova.getActivity().getApplicationContext().startActivity(intent);
+        if (productId.equals("")) {
+            req.setType(StartIapActivityReq.TYPE_SUBSCRIBE_MANAGER_ACTIVITY);
+        } else {
+            req.setSubscribeProductId(productId);
+            req.setType(StartIapActivityReq.TYPE_SUBSCRIBE_EDIT_ACTIVITY);
+        }
+
+        final Task<StartIapActivityResult> task = iapClient.startIapActivity(req);
+
+        task.addOnSuccessListener(result -> {
+            hmsLogger.sendSingleEvent("startIapActivity");
+            Log.e(TAG, "startIapActivity success");
+            result.startActivity(cordova.getActivity());
             callbackContext.success();
-        } catch (ActivityNotFoundException e) {
-            Log.e(TAG, "startActivityWithUri() :: ActivityNotFound, " + e.getMessage());
-            callbackContext.error(Constants.ERR_ACTIVITY_NOT_FOUND);
-        }
+        }).addOnFailureListener(e -> {
+            hmsLogger.sendSingleEvent("startIapActivity", e.getMessage());
+            Log.e(TAG, "startIapActivity fail");
+            handleError(e, callbackContext);
+        });
     }
 
-    private void showSubscriptionsActivity(final JSONObject params, final CallbackContext callbackContext) throws JSONException  {
-        Uri.Builder uriBuilder = Uri.parse("pay://com.huawei.hwid.external/subscriptions").buildUpon();
-
-        if (params.has("appId"))
-            uriBuilder.appendQueryParameter("appid", params.getString("appId"));
-        if (params.has("package"))
-            uriBuilder.appendQueryParameter("package", params.getString("package"));
-        if (params.has("sku"))
-            uriBuilder.appendQueryParameter("sku", params.getString("sku"));
-
-        startActivityWithUri(uriBuilder.build().toString(), callbackContext);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "new onActivityResult, requestCode=" + requestCode + ", resultCode=" + resultCode);
-
-        if (!callbacksForRequests.containsKey(requestCode)) {
-            Log.e(TAG, "No callbacks for given request!");
-            return;
-        }
-
-        CallbackContext callbackContext = callbacksForRequests.get(requestCode).first;
-        int requestType = callbacksForRequests.get(requestCode).second;
-
-        if (data == null) {
-            Log.e("onActivityResult", "data is null");
-            callbackContext.error(JSONUtils.error(Constants.ERR_INTENT_DATA_EMPTY));
-            return;
-        }
-
-        if (requestType == REQUEST_IS_ENVIRONMENT_READY) {
-            Log.i(TAG, "onActivityResult from isEnvironmentReady");
-
-            int returnCode = data.getIntExtra("returnCode", 1);
-            if (returnCode == 0) {
-                isEnvironmentReady(callbackContext);
-            } else {
-                callbackContext.error(JSONUtils.error(Constants.ERR_CAN_NOT_LOG_IN));
-            }
-        } else if (requestType == REQUEST_CREATE_PURCHASE_INTENT) {
-            Log.i(TAG, "onActivityResult from createPurchaseIntent");
-
-            PurchaseResultInfo purchaseResultInfo = iapClient.parsePurchaseResultInfoFromIntent(data);
-            callbackContext.success(JSONUtils.getJSONFromPurchaseResultInfo(purchaseResultInfo));
-        }
-
-        callbacksForRequests.remove(requestCode);
-    }
-
-    private synchronized void handleResolution(final Status status, final CallbackContext callbackContext, final Integer requestType) {
-        requestNumber++;
-        callbacksForRequests.put(requestNumber, Pair.create(callbackContext, requestType));
-
+    private synchronized void handleResolution(final Status status, final CallbackContext callbackContext,
+        final int requestType) {
+        typesForRequests.put(++requestNumber, requestType);
         Log.d(TAG, "handleResolution with reqType=" + requestType + ", reqNumber=" + requestNumber);
 
         try {
             Log.d(TAG, "startResolutionForResult");
             status.startResolutionForResult(cordova.getActivity(), requestNumber);
-        } catch (IntentSender.SendIntentException exp) {
+        } catch (final IntentSender.SendIntentException e) {
             Log.d(TAG, "error while handleResolution, startResolutionForResult");
-            callbacksForRequests.remove(requestNumber);
-            callbackContext.error(exp.getMessage());
+            typesForRequests.remove(requestNumber);
+            callbackContext.error(e.getMessage());
         }
     }
 
     private void handleError(final Exception e, final CallbackContext callbackContext) {
-        handleError(e, callbackContext, null, new Integer[]{});
+        handleError(e, callbackContext, null, new Integer[] {});
     }
 
-    private void handleError(final Exception e, final CallbackContext callbackContext, final Integer requestType, Integer[] statusCodes) {
+    private void handleError(final Exception e, final CallbackContext callbackContext, final Integer requestType,
+        final Integer[] statusCodes) {
         if (e instanceof IapApiException) {
-            IapApiException apiException = (IapApiException) e;
-            Status status = apiException.getStatus();
+            final IapApiException apiException = (IapApiException) e;
+            final Status status = apiException.getStatus();
 
-            if (requestType != null &&
-                    ((statusCodes.length == 0 && status.hasResolution()) || Arrays.asList(statusCodes).contains(status.getStatusCode()))) {
+            if (requestType != null && ((statusCodes.length == 0 && status.hasResolution()) || Arrays.asList(
+                statusCodes).contains(status.getStatusCode()))) {
                 handleResolution(status, callbackContext, requestType);
-                return;
+            } else {
+                callbackContext.error(JSONUtils.getJSONFromStatus(status));
             }
-
-            callbackContext.error(JSONUtils.getJSONFromStatus(status));
-            return;
+        } else {
+            callbackContext.error(e.getMessage());
         }
-
-        callbackContext.error(e.getMessage());
     }
 }

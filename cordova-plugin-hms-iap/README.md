@@ -1,401 +1,678 @@
-
-# CORDOVA PLUGIN HMS IAP
+# Cordova Plugin HMS IAP
 
 ## Contents
 
-1. Introduction
+- [1. Introduction](#1-introduction)
+- [2. Installation Guide](#2-installation-guide)
+  - [2.1. Creating a Project in AppGallery Connect](#21-creating-a-project-in-appgallery-connect)
+  - [2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json](#22-configuring-the-signing-certificate-fingerprint-and-obtaining-agconnect-servicesjson)
+  - [2.3. Enabling Required Services](#23-enabling-required-services)
+  - [2.4. Cordova](#24-cordova)
+  - [2.5. Ionic](#25-ionic)
+    - [2.5.1. With Cordova Runtime](#251-with-cordova-runtime)
+    - [2.5.2. With Capacitor Runtime](#252-with-capacitor-runtime)
+- [3. API Reference](#3-api-reference)
+  - [Public Methods](#public-methods)
+  - [Example Usage of the Methods](#example-usage-of-the-methods)
+  - [Data Types](#data-types)
+- [4. Configuration and Description](#4-configuration-and-description)
+- [5. Sample Project](#5-sample-project)
+- [6. Questions or Issues](#6-questions-or-issues)
+- [7. Licencing and Terms](#7-licencing-and-terms)
 
-2. Installation Guide
-
-3. Cordova Plugin API Method Definition
-
-4. Configure Description
-
-5. Licensing and Terms
+---
 
 ## 1. Introduction
 
-The Cordova Plugin code encapsulates the Huawei in-app purchases client interface. It provides many APIs for your reference or use.
+**Huawei In-App Purchases (IAP) Kit** allows you to offer in-app purchases and facilitates in-app payment. Users can purchase a variety of virtual products, including one-time virtual products and subscriptions, directly within your app.
 
-The Cordova Plugin code package is described as follows:  
+This module enables communication between Huawei IAP SDK and Cordova platform. It exposes all functionality provided by Huawei IAP SDK.
 
-**src/main/com/huawei/hms/cordova/inapppurchases**: core layer, bridging InAppPurchasesSDK bottom-layer code;
-
-**www/HMSInAppPurchases.js**: external interface definition layer, which is used to define interface classes or reference files.
+---
 
 ## 2. Installation Guide
 
-1. Download the Cordova In-App Purchases Plugin.
+Before you get started, you must register as a HUAWEI Developer and complete identity verification on the [HUAWEI Developer](https://developer.huawei.com/consumer/en/) website. For details, please refer to [Register a HUAWEI ID](https://developer.huawei.com/consumer/en/doc/10104).
 
-2. Add Platform To Project.
+### 2.1. Creating a Project in AppGallery Connect
 
-   ***`cordova platform add android`***
+Creating an app in AppGallery Connect is required in order to communicate with the Huawei services. To create an app, perform the following steps:
 
-3. Run the following command in the root directory of the Cordova project:
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html)  and select **My projects**.
+2. Select your project from the project list or create a new one by clicking the **Add Project** button.
+3. Go to **Project Setting** > **General information**, and click **Add app**.
+If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+4. On the **Add app** page, enter the app information, and click **OK**.
 
-   ***`cordova plugin add PATH_TO_CORDOVA_INAPP_PURCHASES_PLUGIN`***
+### 2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json
 
-4. Check whether the Cordova In-App Purchases Plugin is successfully added to Plugin folder in the root directory of the Cordova project.
+A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial for the certificate generation. Perform the following steps after you have generated the certificate.
 
-5. Add agconnect-services.json and jks file to root directory. You can see how to create jks file in this [link](https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/iap-configuring-appGallery-connect).
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html) and select your project from **My Projects**. Then go to **Project Setting** > **General information**. In the **App information** field, click the  icon next to SHA-256 certificate fingerprint, and enter the obtained **SHA-256 certificate fingerprint**.
+2. After completing the configuration, click **OK** to save the changes. (Check mark icon)
+3. In the same page, click **agconnect-services.json** button to download the configuration file.
 
-6. Add build.json file to your project's root.
+### 2.3. Enabling Required Services
 
-7. Enable In-App Purchases API on AppGallery Connect.
+To use HUAWEI IAP, you first need to **[enable the IAP service](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-enable_service#h1-1574822945685)** and also **[set IAP parameters](https://developer.huawei.com/consumer/en/doc/distribution/app/agc-enable_service#h1-1587376818335)**.
 
-8. Add some products on AppGallery Connect.
+> **NOTE:** Please save the public key obtained during the process of enabling the IAP service. It will be used for verifying the signature of data returned by the IAP SDK, ensuring that the data is not tampered with.
 
-9. Then run the Cordova app.
+### 2.4. Cordova
 
-    ***`cordova run android`***
+1. Install Cordova CLI.
 
-## 3. Cordova Plugin API method definition
+    ```bash
+    npm install -g cordova
+    ```
 
-|Method(using Promise) |Method(using Callback) |Definition |
-|----------------------------|------------------------------|--------------------------------------------------------------|
-[`isSandboxReady`](#issandboxready-or-cbissandboxreadysuccess-error)             |[`cbIsSandboxReady`](#issandboxready-or-cbissandboxreadysuccess-error)            |This API is called to check whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing(sandbox testing is not available for individual developers outside of China). |
-[`isEnvironmentReady`](#isenvironmentready-or-cbisenvironmentreadysuccess-error) |[`cbIsEnvironmentReady`](#isenvironmentready-or-cbisenvironmentreadysuccess-error)        |This API is called to check whether the currently signed-in HUAWEI ID is located in a country or region where HUAWEI IAP is available. |
-[`obtainOwnedPurchases`](#obtainownedpurchasesownedpurchasesrequest-or-cbobtainownedpurchasesownedpurchasesrequest-success-error)       |[`cbObtainOwnedPurchases`](#obtainownedpurchasesownedpurchasesrequest-or-cbobtainownedpurchasesownedpurchasesrequest-success-error)      |This API is called to query information about all purchased in-app products, including consumables, non-consumables, and auto-renewable subscriptions. |
-[`obtainProductInfo`](#obtainproductinfoproductinforequest-or-cbobtainproductinfoproductinforequestsuccess-error)          |[`cbObtainProductInfo`](#obtainproductinfoproductinforequest-or-cbobtainproductinfoproductinforequestsuccess-error)          |This API is called to obtain in-app product details configured in AppGallery Connect. |
-[`createPurchaseIntent`](#createpurchaseintentpurchaseintentrequest-or-cbcreatepurchaseintentpurchaseintentrequestsuccess-error)       |[`cbCreatePurchaseIntent`](#createpurchaseintentpurchaseintentrequest-or-cbcreatepurchaseintentpurchaseintentrequestsuccess-error)      |This API is called to create orders for PMS products, including consumables, non-consumables, and subscriptions. |
-[`consumeOwnedPurchase`](#consumeownedpurchaseconsumeownedpurchaserequest-or-cbconsumeownedpurchaseconsumeownedpurchaserequestsuccess-error)       |[`cbConsumeOwnedPurchase`](#consumeownedpurchaseconsumeownedpurchaserequest-or-cbconsumeownedpurchaseconsumeownedpurchaserequestsuccess-error)      |This API is called to consume a consumable after the consumable is delivered to a user who has completed payment. |
-[`obtainOwnedPurchaseRecord`](#obtainownedpurchaserecordownedpurchasesrequest-or-cbobtainownedpurchaserecordownedpurchasesrequest-success-error)  |[`cbObtainOwnedPurchaseRecord`](#obtainownedpurchaserecordownedpurchasesrequest-or-cbobtainownedpurchaserecordownedpurchasesrequest-success-error) |This API is called to obtain the historical consumption information about a consumable or all subscription receipts of a subscription. |
+2. Create a new Cordova project or use existing Cordova project.
 
-## Public Functions
+    - To create new Cordova project, you can use **`cordova create path [id [name [config]]] [options]`** command. For more details please follow [CLI Reference - Apache Cordova](https://cordova.apache.org/docs/en/latest/reference/cordova-cli/index.html#cordova-create-command).
 
-### **`isSandboxReady()`** or **`cbIsSandboxReady(success, error)`**
+3. Update the widget **`id`** property which is specified in the **`config.xml`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
 
-This API is called to check whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing(sandbox testing is not available for individual developers outside of China).
+4. Add the **Android platform** to the project if haven't done before.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`success` | Function | A callback function. It is called when function is executed successfully.|
-|`error`| Function | A callback function. It is called when function is failed.|
+    ```bash
+    cordova platform add android
+    ```
+
+5. Install `HMS IAP plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+
+    a. Run the following command in the root directory of your project to install it through **npm**.
+
+    ```bash
+    cordova plugin add @hmscore/cordova-plugin-hms-iap
+    ```
+
+    b. Or download the plugin from [Plugin > In-App Purchases > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+
+    ```bash
+    cordova plugin add <hms_cordova_iap_plugin_path>
+    ```
+
+6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory.
+
+7. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
+
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
+    - Fill **`build.json`** file according to your keystore information. For example:
+
+    ```json
+    {
+        "android": {
+            "debug": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            },
+            "release": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            }
+        }
+    }
+    ```
+
+8. Run the application.
+
+    ```bash
+    cordova run android --device
+    ```
 
 ---
 
-### **`isEnvironmentReady()`** or **`cbIsEnvironmentReady(success, error)`**
+### 2.5. Ionic
+
+1. Install Ionic CLI.
+
+    ```bash
+    npm install -g @ionic/cli
+    ```
+
+2. Create a new Ionic project or use existing Ionic project.
+
+    - To create a new Ionic project, you can use **`ionic start <name> <template> [options]`** command. For more details please follow [ionic start - Ionic Documentation](https://ionicframework.com/docs/cli/commands/start).
+
+#### 2.5.1. With Cordova Runtime
+
+1. Enable the **Cordova integration** if haven't done before.
+
+    ```bash
+    ionic integrations enable cordova
+    ```
+
+2. Update the widget **`id`** property which is specified in the **`config.xml`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
+
+3. Add the **Android platform** to the project if haven't done before.
+
+    ```bash
+    ionic cordova platform add android
+    ```
+
+4. Install `HMS IAP plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+
+    a. Run the following command in the root directory of your project to install it through **npm**.
+
+    ```bash
+    ionic cordova plugin add @hmscore/cordova-plugin-hms-iap
+    ```
+
+    b. Or download the plugin from [Plugin > In-App Purchases > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+
+    ```bash
+    ionic cordova plugin add <hms_cordova_iap_plugin_path>
+    ```
+
+5. Copy **hms-in-app-purchases** folder from **`node_modules/@hmscore/cordova-plugin-hms-iap/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
+
+6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory.
+
+7. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
+
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
+
+    - Fill **`build.json`** file according to your keystore information. For example:
+
+    ```json
+    {
+        "android": {
+            "debug": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            },
+            "release": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            }
+        }
+    }
+    ```
+
+8. Run the application.
+
+   ```bash
+   ionic cordova run android --device
+   ```
+
+#### 2.5.2. With Capacitor Runtime
+
+1. Enable the **Capacitor integration** if haven't done before.
+
+   ```bash
+   ionic integrations enable capacitor
+   ```
+
+2. Update the widget **`appId`** property which is specified in the **`capacitor.config.json`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
+
+3. Install `HMS IAP plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+
+   a. Run the following command in the root directory of your project to install it through **npm**.
+
+    ```bash
+    npm install @hmscore/cordova-plugin-hms-iap
+    ```
+
+   b. Or download the plugin from [Plugin > In-App Purchases > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+
+    ```bash
+    npm install <hms_cordova_iap_plugin_path>
+    ```
+
+4. Copy **hms-in-app-purchases** folder from **`node_modules/@hmscore/cordova-plugin-hms-iap/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
+
+5. Build Ionic app to generate resource files.
+
+    ```bash
+    ionic build
+    ```
+
+6. Add the **Android platform** to the project if haven't done before.
+
+    ```bash
+    npx cap add android
+    ```
+
+7. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory.
+
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
+
+8. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
+
+    - Add `signingConfigs` entry to **android** according to your keystore information.
+    - Enable `signingConfig` configuration to **debug** and **release** flavors.
+    - Apply `com.huawei.agconnect` plugin.
+
+    ```groovy
+    ...
+
+    android {
+
+        ...
+
+        // Add signingConfigs according to your keystore information
+        signingConfigs {
+            config {
+                storeFile file('<keystore_file>.jks')
+                storePassword '<keystore_password>'
+                keyAlias '<key_alias>'
+                keyPassword '<key_password>'
+            }
+        }
+        buildTypes {
+            debug {
+                signingConfig signingConfigs.config // Enable signingConfig in debug flavor
+            }
+            release {
+                signingConfig signingConfigs.config // Enable signingConfig in release flavor
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+
+    ...
+
+    apply plugin: 'com.huawei.agconnect' // Apply com.huawei.agconnect plugin. This line must be added to the end of the file.
+    ```
+
+9. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
+
+    ```groovy
+    buildscript {
+        repositories {
+            /*
+                <Other repositories>
+            */
+            maven { url 'https://developer.huawei.com/repo/' }
+        }
+        dependencies {
+            /*
+                <Other dependencies>
+            */
+            classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+        }
+    }
+
+    /*
+        <Other build.gradle entries>
+    */
+
+    allprojects {
+        repositories {
+            /*
+                <Other repositories>
+            */
+            maven { url 'https://developer.huawei.com/repo/' }
+        }
+    }
+    ```
+
+10. Open the project in Android Studio and run it.
+
+    ```bash
+    npx cap open android
+    ```
+
+---
+
+## 3. API Reference
+
+| Method                                                                         | Definition                                                                                                                                                                                                |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`isEnvReady`](#isenvready)                                                    | This API is called to check whether the currently signed-in HUAWEI ID is located in a country or region where HUAWEI IAP is available.                                                                    |
+| [`isSandboxActivated`](#issandboxactivated)                                    | This API is called to check whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing(sandbox testing is not available for individual developers outside of China). |
+| [`obtainOwnedPurchases`](#obtainownedpurchasesownedpurchasesrequest)           | This API is called to query information about all purchased in-app products, including consumables, non-consumables, and auto-renewable subscriptions.                                                    |
+| [`obtainProductInfo`](#obtainproductinfoproductinforequest)                    | This API is called to obtain in-app product details configured in AppGallery Connect.                                                                                                                     |
+| [`createPurchaseIntent`](#createpurchaseintentpurchaseintentrequest)           | This API is called to create orders for PMS products, including consumables, non-consumables, and subscriptions.                                                                                          |
+| [`consumeOwnedPurchase`](#consumeownedpurchaseconsumeownedpurchaserequest)     | This API is called to consume a consumable after the consumable is delivered to a user who has completed payment.                                                                                         |
+| [`obtainOwnedPurchaseRecord`](#obtainownedpurchaserecordownedpurchasesrequest) | This API is called to obtain the historical consumption information about a consumable or all subscription receipts of a subscription.                                                                    |
+| [`startIapActivity`](#obtainownedpurchaserecordownedpurchasesrequest)          | Brings up in-app payment pages, including Subscription Editing Page and Subscription Management Page.                                                                                                     |
+| [`enableLogger`](#enablelogger)                                                | This API is called to enables the HMSLogger for sends some statistics for the development of functions in the cordova-plugin-hms-location plugin.                                                         |
+| [`disableLogger`](#disablelogger)                                              | This method is called to disables the HMSLogger for stops sending some statistics for the development of functions in the cordova-plugin-hms-location plugin.                                             |
+
+### Public Methods
+
+#### isEnvReady()
 
 This API is called to check whether the currently signed-in HUAWEI ID is located in a country or region where HUAWEI IAP is available.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`IsEnvReadyResult`](#isenvreadyresult) object|
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Return                      | Description                                                                                           |
+| --------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `Promise<IsEnvReadyResult>` | If the operation is successful, promise resolves to a [`IsEnvReadyResult`](#isenvreadyresult) object. |
 
----
+#### isSandboxActivated()
 
-### **`obtainOwnedPurchases(ownedPurchasesRequest)`** or **`cbObtainOwnedPurchases(ownedPurchasesRequest, success, error)`**
+This API is called to check whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing(sandbox testing is not available for individual developers outside of China).
+
+| Return                              | Description                                                                                                                                         |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<IsSandboxActivatedResult>` | If the operation is successful, promise resolves to a [`IsSandboxActivatedResult`](#issandboxactivatedresult) object. Otherwise it throws an error. |
+
+#### obtainOwnedPurchases(ownedPurchasesRequest)
 
 This API is called to query information about all purchased in-app products, including consumables, non-consumables, and auto-renewable subscriptions.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`ownedPurchasesRequest` |[`OwnedPurchasesReq`](#ownedpurchasesreq) | Request object that must have `priceType` as key and integer(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. Ex: `{ 'priceType': 1 }`|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`OwnedPurchasesResult`](#ownedpurchasesresult) object|
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Parameter               | Type                                      | Definition                                                                                                                                                                            |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ownedPurchasesRequest` | [`OwnedPurchasesReq`](#ownedpurchasesreq) | Request object that must have `priceType` as key and number(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. Ex: `{ 'priceType': 1 }` |
 
----
+| Return                          | Description                                                                                                                                 |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<OwnedPurchasesResult>` | If the operation is successful, promise resolves to a [`OwnedPurchasesResult`](#ownedpurchasesresult) object. Otherwise it throws an error. |
 
-### **`obtainProductInfo(productInfoRequest)`** or **`cbObtainProductInfo(productInfoRequest,success, error)`**
+#### obtainProductInfo(productInfoRequest)
 
 This API is called to obtain in-app product details configured in AppGallery Connect.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`productInfoRequest` | [`ProductInfoReq`](#productinforeq) | Request object that must have `priceType` as key and integer(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. and `productList` as key and list of strings of ids of products as value. Ex: `{ 'priceType': 0, 'productList': ['consumable_1','consumable_2'] }`|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`ProductInfoResult`](#productinforesult) object|
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Parameter            | Type                                | Definition                                                                                                                                                                                                                                                                                                      |
+| -------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `productInfoRequest` | [`ProductInfoReq`](#productinforeq) | Request object that must have `priceType` as key and number(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. and `productList` as key and list of strings of ids of products as value. Ex: `{ 'priceType': 0, 'productList': ['consumable_1','consumable_2'] }` |
 
----
+| Return                       | Description                                                                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Promise<ProductInfoResult>` | If the operation is successful, promise resolves to a [`ProductInfoResult`](#productinforesult) object and obtains in-app product details. Otherwise it throws an error. |
 
-### **`createPurchaseIntent(purchaseIntentRequest)`** or **`cbCreatePurchaseIntent(purchaseIntentRequest,success, error)`**
+#### createPurchaseIntent(purchaseIntentRequest)
 
 This API is called to create orders for PMS products, including consumables, non-consumables, and subscriptions.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`purchaseIntentRequest` | [`PurchaseIntentReq`](#purchaseintentreq) | Request object that must have `priceType` as key and integer(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value, and `productId` as key and string of id of the product to be purchased as value, may have `developerPayload` as key and string decided by developer as value  Ex: `{ 'priceType': 0, 'productId': 'consumable_1', 'developerPayload': 'HMSDevPayload'}`|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`PurchaseResultInfo`](#purchaseresultinfo) object|
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Parameter               | Type                                      | Definition                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `purchaseIntentRequest` | [`PurchaseIntentReq`](#purchaseintentreq) | Request object that must have `priceType` as key and number(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value, and `productId` as key and string of id of the product to be purchased as value, may have `developerPayload` as key and string decided by developer as value  Ex: `{ 'priceType': 0, 'productId': 'consumable_1', 'developerPayload': 'HMSDevPayload'}` |
 
----
+| Return                          | Description                                                                                                                                                                      |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<PurchaseIntentResult>` | If the operation is successful, promise resolves to a [`PurchaseIntentResult`](#purchaseintentresult) object and creating orders for PMS products. Otherwise it throws an error. |
 
-### **`consumeOwnedPurchase(consumeOwnedPurchaseRequest)`** or **`cbConsumeOwnedPurchase(consumeOwnedPurchaseRequest,success, error)`**
+#### consumeOwnedPurchase(consumeOwnedPurchaseRequest)
 
 This API is called to consume a consumable after the consumable is delivered to a user who has completed payment.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`consumeOwnedPurchaseRequest` | [`ConsumeOwnedPurchaseReq`](#consumeOwnedPurchaseReq) | Request object that must have `inAppPurchaseData` as key and JSON string that contains purchase order details of the product to be consumed(it can be obtained by using result object of `createPurchaseIntent`  or `obtainOwnedPurchases` functions ) as value, may have `developerChallenge` as key and string decided by developer as value  Ex: `{ 'inAppPurchaseData': "{'autoRenewing':false,'orderId':'0000.000','packageName':'com.mycompany.aa.bb.cc.yy.demo','applicationId':000000,'kind':0,'productId':'consumable_1','productName':'Consumable Product 1','purchaseTime':000000,'purchaseTimeMillis':000000,'purchaseState':0,'developerPayload':'HMSDevPayload','purchaseToken':'012345678cdef.1.0123bcdef','developerChallenge':'HMSDevChallenge','responseCode':'0','consumptionState':1,'confirmed':1,'currency':'TRY','price':6,'country':'TR','payOrderId':'WPXXXXX','payType':'24'}, 'developerChallenge': 'HMSDevChallenge'}`|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`ConsumeOwnedPurchaseResult`](#consumeownedpurchaseresult) object|
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Parameter                     | Type                                                  | Definition                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ----------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `consumeOwnedPurchaseRequest` | [`ConsumeOwnedPurchaseReq`](#consumeOwnedPurchaseReq) | Request object that must have `inAppPurchaseData` as key and JSON string that contains purchase order details of the product to be consumed(it can be obtained by using result object of `createPurchaseIntent`  or `obtainOwnedPurchases` functions ) as value, may have `developerChallenge` as key and string decided by developer as value  Ex: `{ 'inAppPurchaseData': "{'autoRenewing':false,'orderId':'0000.000','packageName':'com.mycompany.aa.bb.cc.yy.demo','applicationId':000000,'kind':0,'productId':'consumable_1','productName':'Consumable Product 1','purchaseTime':000000,'purchaseTimeMillis':000000,'purchaseState':0,'developerPayload':'HMSDevPayload','purchaseToken':'012345678cdef.1.0123bcdef','developerChallenge':'HMSDevChallenge','responseCode':'0','consumptionState':1,'confirmed':1,'currency':'TRY','price':6,'country':'TR','payOrderId':'WPXXXXX','payType':'24'}, 'developerChallenge': 'HMSDevChallenge'}` |
 
----
+| Return                                | Description                                                                                                                                                                               |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<ConsumeOwnedPurchaseResult>` | If the operation is successful, promise resolves to a [`ConsumeOwnedPurchaseResult`](#consumeownedpurchaseresult) object and consumes a consumable product. Otherwise it throws an error. |
 
-### **`obtainOwnedPurchaseRecord(ownedPurchasesRequest)`** or **`cbObtainOwnedPurchaseRecord(ownedPurchasesRequest, success, error)`**
+#### obtainOwnedPurchaseRecord(ownedPurchasesRequest)
 
 This API is called to obtain the historical consumption information about a consumable or all subscription receipts of a subscription.
 
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`ownedPurchasesRequest` | [`OwnedPurchasesReq`](#ownedpurchasesreq) | Request object that must have `priceType` as key and integer(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. Ex: `{ 'priceType': 1 }`|
-|`success` | Function | A callback function. It is called when function is executed successfully. It gets an argument of [`OwnedPurchasesResult`](#ownedpurchasesresult) object |
-|`error`| Function | A callback function. It is called when function is failed. It gets an argument of [`Status`](#status) object|
+| Parameter               | Type                                      | Definition                                                                                                                                                                            |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ownedPurchasesRequest` | [`OwnedPurchasesReq`](#ownedpurchasesreq) | Request object that must have `priceType` as key and number(`0` for Consumable or `1` for Non-Consumable or `2` for Subscription type of product) as value. Ex: `{ 'priceType': 1 }` |
 
----
+| Return                          | Description                                                                                                                                                                                    |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<OwnedPurchasesResult>` | If the operation is successful, promise resolves to an [`OwnedPurchasesResult`](#ownedpurchasesresult) object and obtain the historical consumption information. Otherwise it throws an error. |
 
-### Example usage of the functions
+#### startIapActivity()
 
-#### Using Callback
+Brings up in-app payment pages, including Subscription Editing Page and Subscription Management Page.
 
-```javascript
-HMSInAppPurchases.cbObtainOwnedPurchases({
-   priceType:1,
-   },
-   (successMessage)=>{ //Success callback
-      console.log(successMessage);
-   },
-   (errorMessage)=>{ //Error callback
-      console.log(errorMessage);
-   }
-)
-```
+| Parameter   | Type     | Definition                                                                                                                                                                   |
+| ----------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `productId` | `string` | `productId` is an optional parameter that allows you to open the subscription editing page. If you do not pass the parameter, it brings up the subscription management page. |
 
-#### Using Promise
+| Return          | Description                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<void>` | If the operation is successful, promise resolves to a void and brings the subscription page. Otherwise it throws an error. |
+
+#### enableLogger()
+
+This API is called to enables the HMSLogger for sends some statistics for the development of functions in the cordova-plugin-hms-iap plugin.
+
+| Return          | Description                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<void>` | If the operation is successful, promise resolves to a void and brings the subscription page. Otherwise it throws an error. |
+
+#### disableLogger()
+
+This method is called to disables the HMSLogger for stops sending some statistics for the development of functions in the cordova-plugin-hms-iap plugin.
+
+| Return          | Description                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `Promise<void>` | If the operation is successful, promise resolves to a void and brings the subscription page. Otherwise it throws an error. |
+
+### Example Usage of the Methods
 
 ```javascript
 try {
-   let message = await HMSInAppPurchases.obtainOwnedPurchases({
-      priceType: 1
-   });
-   console.log(message);
+    let message = await HMSInAppPurchases.obtainOwnedPurchases({
+        priceType: 1
+    });
+    console.log(message);
 } catch (err) {
-   defaultErrorHandler(err);
+    defaultErrorHandler(err);
 }
 ```
 
+### Data Types
+
+#### Status
+
+| Parameter       | Type      | Definition                                                                                        |
+| --------------- | --------- | ------------------------------------------------------------------------------------------------- |
+| `errorString`   | `string`  | The error description.                                                                            |
+| `statusCode`    | `number` | The status code. `0`: success, `1`: failure, `404`: no resource found, and `500`: internal error. |
+| `statusMessage` | `string`  | The status description.                                                                           |
+| `hasResolution` | `boolean` | True if whether there is a pending intent that will resolve the issue.                            |
+| `isCanceled`    | `boolean` | True if the process cancelled.                                                                    |
+| `isInterrupted` | `boolean` | True if the process interrupted.                                                                  |
+| `isSuccess`     | `boolean` | True if the process succeeded.                                                                    |
+
+#### OwnedPurchasesReq
+
+| Parameter   | Type      | Definition             |
+| ----------- | --------- | ---------------------- |
+| `priceType` | `number` | The type of a product. |
+
+#### ProductInfoReq
+
+| Parameter     | Type       | Definition                             |
+| ------------- | ---------- | -------------------------------------- |
+| `priceType`   | `number`  | The type of a product to be queried.   |
+| `productList` | `string[]` | The ID list of products to be queried. |
+
+#### PurchaseIntentReq
+
+| Parameter          | Type      | Definition                                   |
+| ------------------ | --------- | -------------------------------------------- |
+| `priceType`        | `number` | The type of a product.                       |
+| `productId`        | `string`  | The ID of the product to be paid.            |
+| `developerPayload` | `string`  | The information stored on the merchant side. |
+| `reservedInfor`    | `string`  | Extended field set by a merchant.            |
+
+#### ConsumeOwnedPurchaseReq
+
+| Parameter            | Type     | Definition                                                       |
+| -------------------- | -------- | ---------------------------------------------------------------- |
+| `inAppPurchaseData`  | `string` | JSON string of [`InAppPurchaseData`](#inapppurchasedata) object. |
+| `developerChallenge` | `string` | The challenge customized by a developer.                         |
+
+#### IsSandboxActivatedResult
+
+| Parameter         | Type                | Definition                                                                                |
+| ----------------- | ------------------- | ----------------------------------------------------------------------------------------- |
+| `returnCode`      | `number`           | Query result code.                                                                        |
+| `errMsg`          | `string`            | Result code description.                                                                  |
+| `isSandboxUser`   | `boolean`           | True if A sandbox account is used.                                                        |
+| `isSandboxApk`    | `boolean`           | True if the app APK version meets the requirements of the sandbox testing.                |
+| `versionInApk`    | `string`            | App version information.                                                                  |
+| `versionFrMarket` | `string`            | The information about the app version that is last released in HUAWEI AppGallery Connect. |
+| `status`          | [`Status`](#status) | Status based on the task processing result.                                               |
+
+#### IsEnvReadyResult
+
+| Parameter    | Type                | Definition                                  |
+| ------------ | ------------------- | ------------------------------------------- |
+| `returnCode` | `number`           | Query result code.                          |
+| `status`     | [`Status`](#status) | Status based on the task processing result. |
+
+#### OwnedPurchasesResult
+
+| Parameter                     | Type                | Definition                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ----------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `continuationToken`           | `string`            | Data location flag.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `errMsg`                      | `string`            | Result code description.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `itemList`                    | `string[]`          | The ID list of found products.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `inAppPurchaseDataList`       | `string[]`          | The information about products that have been purchased but not consumed or about all existing subscription relationships of users, which is returned using the [`obtainOwnedPurchases`](#obtainownedpurchasesownedpurchasesrequest-or-cbobtainownedpurchasesownedpurchasesrequest-success-error) method or the historical consumable information or all subscription receipts, which are returned using the [`obtainOwnedPurchaseRecord`](#obtainownedpurchaserecordownedpurchasesrequest-or-cbobtainownedpurchaserecordownedpurchasesrequest-success-error) method. The value is an array of JSON string of [`InAppPurchaseData`](#inapppurchasedata) |
+| `inAppSignature`              | `string[]`          | a signature character string of each character string in `inAppPurchaseDataList`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `placedInappPurchaseDataList` | `string[]`          | Subscription relationship information about a user who has performed subscription switchover. The value is an array of JSON string of [`InAppPurchaseData`](#inapppurchasedata) object                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `placedInappSignatureList`    | `string[]`          | The signature character string of each character string in `placedInappPurchaseDataList`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `returnCode`                  | `number`           | Query result code.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `status`                      | [`Status`](#status) | Status based on the task processing result.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+
+#### ProductInfoResult
+
+| Parameter         | Type                            | Definition                                               |
+| ----------------- | ------------------------------- | -------------------------------------------------------- |
+| `returnCode`      | `number`                       | Query result code.                                       |
+| `errMsg`          | `string`                        | Result code description.                                 |
+| `productInfoList` | [`ProductInfo[]`](#productinfo) | The list of in-app products that are successfully found. |
+| `status`          | [`Status`](#status)             | Status based on the task processing result.              |
+
+#### PurchaseIntentResult
+
+| Parameter            | Type      | Definition                                                                                            |
+| -------------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| `returnCode`         | `number` | Query result code.                                                                                    |
+| `errMsg`             | `string`  | Result code description.                                                                              |
+| `inAppPurchaseData`  | `string`  | JSON string of [`InAppPurchaseData`](#inapppurchasedata) object that contains purchase order details. |
+| `inAppDataSignature` | `string`  | The signed character string generated by signing the purchase data.                                   |
+
+#### ConsumeOwnedPurchaseResult
+
+| Parameter             | Type                | Definition                                                       |
+| --------------------- | ------------------- | ---------------------------------------------------------------- |
+| `consumePurchaseData` | `string`            | JSON string that contains consumption result data.               |
+| `dataSignature`       | `string`            | The signature character string generated after consumption data. |
+| `errMsg`              | `string`            | Result code description.                                         |
+| `returnCode`          | `number`           | Query result code.                                               |
+| `status`              | [`Status`](#status) | Status based on the task processing result.                      |
+
+#### PurchaseResultInfo
+
+| Parameter            | Type      | Definition                                                                                            |
+| -------------------- | --------- | ----------------------------------------------------------------------------------------------------- |
+| `returnCode`         | `number` | Query result code.                                                                                    |
+| `errMsg`             | `string`  | Result code description.                                                                              |
+| `inAppPurchaseData`  | `string`  | JSON string of [`InAppPurchaseData`](#inapppurchasedata) object that contains purchase order details. |
+| `inAppDataSignature` | `string`  | The signed character string generated by signing the purchase data.                                   |
+
+#### ProductInfo
+
+| Parameter                | Type      | Definition                                                             |
+| ------------------------ | --------- | ---------------------------------------------------------------------- |
+| `productId`              | `string`  | ID of the product                                                      |
+| `priceType`              | `number` | The type of the product                                                |
+| `price`                  | `string`  | Displayed price of a product.                                          |
+| `microsPrice`            | `number` | Product price in micro unit.                                           |
+| `originalLocalPrice`     | `string`  | Original price of a product                                            |
+| `originalMicroPrice`     | `number` | Original price of a product in micro unit.                             |
+| `currency`               | `string`  | Product currency                                                       |
+| `productName`            | `string`  | Product name                                                           |
+| `productDesc`            | `string`  | Product description.                                                   |
+| `subPeriod`              | `string`  | Unit of a subscription period.                                         |
+| `subSpecialPrice`        | `string`  | Promotional price of a subscription.                                   |
+| `subSpecialPriceMicros`  | `number` | Promotional price of a subscription in micro unit.                     |
+| `subSpecialPeriod`       | `string`  | Promotion period unit of a subscription                                |
+| `subSpecialPeriodCycles` | `number` | Promotion period unit of a subscription                                |
+| `subFreeTrialPeriod`     | `string`  | Free trial period of a subscription.                                   |
+| `subGroupId`             | `string`  | ID of the subscription group to which a subscription belongs.          |
+| `subGroupTitle`          | `string`  | Description of the subscription group to which a subscription belongs. |
+| `subProductLevel`        | `number` | Level of a subscription in its subscription group.                     |
+
+#### InAppPurchaseData
+
+| Parameter              | Type      | Definition                                                                                                                                                             |
+| ---------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `appInfo`              | `string`  | App information                                                                                                                                                        |
+| `applicationId`        | `number`  | Application ID                                                                                                                                                         |
+| `cancelledSubKeepDays` | `number` | Number of days for retaining a subscription relationship after the subscription is canceled.                                                                           |
+| `cancelReason`         | `number` | Cause of subscription cancellation.                                                                                                                                    |
+| `cancelTime`           | `number`  | Timestamp of the subscription cancellation time.                                                                                                                       |
+| `country`              | `string`  | Country code, which is used to identify a country.                                                                                                                     |
+| `currency`             | `string`  | Currency                                                                                                                                                               |
+| `daysLasted`           | `number`  | Days of paid service, excluding the free trial period and promotion period.                                                                                            |
+| `developerPayload`     | `string`  | The payload provided by developer.                                                                                                                                     |
+| `expirationDate`       | `number`  | Timestamp of the subscription expiration time.                                                                                                                         |
+| `expirationIntent`     | `number` | Reason why a subscription expires.                                                                                                                                     |
+| `introductoryFlag`     | `number` | Indicates whether a subscription is in the promotion period.                                                                                                           |
+| `lastOrderId`          | `string`  | Order ID generated by the payment server during fee deduction on the previous renewal date.                                                                            |
+| `notifyClosed`         | `number` | Indicates whether a user has disabled subscription notifications.                                                                                                      |
+| `numOfDiscount`        | `number`  | Number of successful renewal periods with promotion.                                                                                                                   |
+| `numOfPeriods`         | `number`  | Number of successful standard renewal periods (that is, renewal periods without promotion).                                                                            |
+| `orderID`              | `string`  | Order ID on the Huawei payment server, which uniquely identifies a transaction and is generated by the Huawei payment server during payment.                           |
+| `oriPurchaseTime`      | `number`  | Timestamp of the first fee deduction time, milliseconds since 00:00:00 on January 1, 1970.                                                                             |
+| `packageName`          | `string`  | App installation package name.                                                                                                                                         |
+| `price`                | `number`  | Value after the actual price of an in-app product is multiplied by 100.                                                                                                |
+| `priceConsentStatus`   | `number` | User opinion on the price increase of an in-app product.                                                                                                               |
+| `productGroup`         | `string`  | ID of the subscription group to which a subscription benumbers                                                                                                         |
+| `productId`            | `string`  | In-app product ID.                                                                                                                                                     |
+| `productName`          | `string`  | In-app product name.                                                                                                                                                   |
+| `purchaseState`        | `number` | Transaction status.                                                                                                                                                    |
+| `purchaseTime`         | `number`  | Timestamp of the purchase time, milliseconds since 00:00:00 on January 1, 1970.                                                                                        |
+| `purchaseToken`        | `string`  | Purchase token, which uniquely identifies the mapping between an in-app product and a user and is generated by the Huawei payment server when the payment is complete. |
+| `purchaseType`         | `number` | Purchase type.                                                                                                                                                         |
+| `quantity`             | `number` | Purchase quantity.                                                                                                                                                     |
+| `renewPrice`           | `number`  | Price used upon the next renewal.                                                                                                                                      |
+| `renewStatus`          | `number` | Renewal status.                                                                                                                                                        |
+| `retryFlag`            | `number` | Indicates whether the system still tries to renew an expired subscription.                                                                                             |
+| `subscriptionId`       | `string`  | Subscription ID.                                                                                                                                                       |
+| `trialFlag`            | `number` | Indicates whether a subscription is in the free trial period.                                                                                                          |
+| `isAutoRenewing`       | `boolean` | Purchase auto renewing status.                                                                                                                                         |
+| `isSubValid`           | `boolean` | Valid if a user has been charged for an in-app product, the in-app product has not expired, and no refund has been made.                                               |
+| `cancelledSubKeepDays` | `number` | Number of days for retaining a subscription relationship after the subscription is canceled.                                                                           |
+| `kind`                 | `number` | Product type                                                                                                                                                           |
+| `developerChallenge`   | `string`  | Challenge defined when an app initiates a consumption request, which uniquely identifies the consumption request. This parameter exists only for one-off products.     |
+| `consumptionState`     | `number` | Consumption status, which exists only for one-off products.                                                                                                            |
+| `payOrderId`           | `string`  | Merchant ID, which uniquely identifies a transaction and is generated by the Huawei IAP server during payment.                                                         |
+| `payType`              | `string`  | Payment method.                                                                                                                                                        |
+| `deferFlag`            | `number` | Indicates whether to postpone the settlement date. The value 1 indicates that the settlement date is postponed.                                                        |
+| `oriSubscriptionId`    | `string`  | Original subscription ID.                                                                                                                                              |
+| `cancelWay`            | `number` | Subscription cancellation initiator.                                                                                                                                   |
+| `cancellationTime`     | `number`  | Subscription cancellation time in UTC.                                                                                                                                 |
+| `resumeTime`           | `number`  | Time when a subscription is resumed.                                                                                                                                   |
+
 ---
 
-## Data Types
-
-### **`Status`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`errorString` | `string` | The error description.|
-|`statusCode` | `integer` | The status code. `0`: success, `1`: failure, `404`: no resource found, and `500`: internal error.|
-|`statusMessage` | `string` | The status description.|
-|`hasResolution` | `boolean` | True if whether there is a pending intent that will resolve the issue.|
-|`isCanceled` | `boolean` | True if the process cancelled.|
-|`isInterrupted` | `boolean` | True if the process interrupted.|
-|`isSuccess` | `boolean` | True if the process succeeded.|
-
----
-
-### **`OwnedPurchasesReq`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`priceType` | `integer` | The type of a product.|
-
----
-
-### **`ProductInfoReq`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`priceType` | `integer` | The type of a product to be queried.|
-|`productList` | `string[]` | The ID list of products to be queried.|
-
----
-
-### **`PurchaseIntentReq`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`priceType` | `integer` | The type of a product.|
-|`productId` | `string` | The ID of the product to be paid.|
-|`developerPayload` | `string` | The information stored on the merchant side.|
-
----
-
-### **`ConsumeOwnedPurchaseReq`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`inAppPurchaseData` | `string` | JSON string of [`InAppPurchaseData`](#inapppurchasedata) object.|
-|`developerChallenge` | `string` | The challenge customized by a developer.|
-
----
-
-### **`IsSandboxActivatedResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`returnCode` | `integer` | Query result code.|
-|`errMsg` | `string` | Result code description.|
-|`isSandboxUser` | `boolean` | True if A sandbox account is used.|
-|`isSandboxApk` | `boolean` | True if the app APK version meets the requirements of the sandbox testing.|
-|`versionInApk` | `string` | App version information.|
-|`versionFrMarket` | `string` | The information about the app version that is last released in HUAWEI AppGallery Connect.|
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`IsEnvReadyResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`returnCode` | `integer` | Query result code.|
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`OwnedPurchasesResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`continuationToken` | `string` | Data location flag.|
-|`errMsg` | `string` | Result code description.|
-|`itemList` | `string[]` | The ID list of found products.|
-|`inAppPurchaseDataList` | `string[]` |  The information about products that have been purchased but not consumed or about all existing subscription relationships of users, which is returned using the [`obtainOwnedPurchases`](#obtainownedpurchasesownedpurchasesrequest-or-cbobtainownedpurchasesownedpurchasesrequest-success-error) method or the historical consumable information or all subscription receipts, which are returned using the [`obtainOwnedPurchaseRecord`](#obtainownedpurchaserecordownedpurchasesrequest-or-cbobtainownedpurchaserecordownedpurchasesrequest-success-error) method. The value is an array of JSON string of [`InAppPurchaseData`](#inapppurchasedata)|
-|`inAppSignature` | `string[]` |  a signature character string of each character string in `inAppPurchaseDataList`|
-|`placedInappPurchaseDataList` | `string[]` | Subscription relationship information about a user who has performed subscription switchover. The value is an array of JSON string of [`InAppPurchaseData`](#inapppurchasedata) object |
-|`placedInappSignatureList` | `string[]` | The signature character string of each character string in `placedInappPurchaseDataList`|
-|`returnCode` | `integer` | Query result code.|
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`ProductInfoResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`returnCode` | `integer` | Query result code.|
-|`errMsg` | `string` | Result code description.|
-|`productInfoList` | [`ProductInfo[]`](#productinfo) | The list of in-app products that are successfully found.|
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`PurchaseIntentResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`returnCode` | `integer` | Query result code.|
-|`errMsg` | `string` | Result code description.|
-|`paymentData` | `string` | JSON string that contains purchase order details.|
-|`paymentSignature` | `string` | The signature character string generated after purchase data. |
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`ConsumeOwnedPurchaseResult`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`consumePurchaseData` | `string` | JSON string that contains consumption result data.|
-|`dataSignature` | `string` | The signature character string generated after consumption data. |
-|`errMsg` | `string` | Result code description.|
-|`returnCode` | `integer` | Query result code.|
-|`status` | [`Status`](#status) | Status based on the task processing result.|
-
----
-
-### **`PurchaseResultInfo`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`returnCode` | `integer` | Query result code.|
-|`errMsg` | `string` | Result code description.|
-|`inAppPurchaseData` | `string` | JSON string of [`InAppPurchaseData`](#inapppurchasedata) object that contains purchase order details.|
-|`inAppDataSignature` | `string` |  The signed character string generated by signing the purchase data.|
-
----
-
-### **`ProductInfo`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-|`productId` | `string` | ID of the product |
-|`priceType` | `integer` | The type of the product |
-|`price` | `string` | Displayed price of a product. |
-|`microsPrice` | `integer` | Product price in micro unit. |
-|`originalLocalPrice` | `string` | Original price of a product |
-|`originalMicroPrice` | `integer` | Original price of a product in micro unit. |
-|`currency` | `string` | Product currency |
-|`productName` | `string` | Product name |
-|`productDesc` | `string` | Product description. |
-|`subPeriod` | `string` | Unit of a subscription period. |
-|`subSpecialPrice` | `string` | Promotional price of a subscription. |
-|`subSpecialPriceMicros` | `integer` | Promotional price of a subscription in micro unit. |
-|`subSpecialPeriod` | `string` | Promotion period unit of a subscription |
-|`subSpecialPeriodCycles` | `integer` | Promotion period unit of a subscription |
-|`subFreeTrialPeriod` | `string` | Free trial period of a subscription. |
-|`subGroupId` | `string` | ID of the subscription group to which a subscription belongs. |
-|`subGroupTitle` | `string` | Description of the subscription group to which a subscription belongs. |
-|`subProductLevel` | `integer` | Level of a subscription in its subscription group. |
-
----
-
-### **`InAppPurchaseData`**
-
-| Parameter | Type | Definition |
-|-----------|--------------------|-----------------------------|
-| `appInfo` | `string` | App information |
-| `applicationId` | `number` | Application ID |
-| `cancelledSubKeepDays` | `integer` | Number of days for retaining a subscription relationship after the subscription is canceled. |
-| `cancelReason` | `integer` | Cause of subscription cancellation. |
-| `cancelTime` | `number` | Timestamp of the subscription cancellation time. |
-| `country` | `string` | Country code, which is used to identify a country. |
-| `currency` | `string` | Currency |
-| `daysLasted` | `number` | Days of paid service, excluding the free trial period and promotion period. |
-| `developerPayload` | `string` | The payload provided by developer. |
-| `expirationDate` | `number` | Timestamp of the subscription expiration time. |
-| `expirationIntent` | `integer` | Reason why a subscription expires. |
-| `introductoryFlag` | `integer` | Indicates whether a subscription is in the promotion period. |
-| `lastOrderId` | `string` | Order ID generated by the payment server during fee deduction on the previous renewal date. |
-| `notifyClosed` | `integer` | Indicates whether a user has disabled subscription notifications. |
-| `numOfDiscount` | `number` | Number of successful renewal periods with promotion. |
-| `numOfPeriods` | `number` | Number of successful standard renewal periods (that is, renewal periods without promotion). |
-| `orderID` | `string` | Order ID on the Huawei payment server, which uniquely identifies a transaction and is generated by the Huawei payment server during payment. |
-| `oriPurchaseTime` | `number` | Timestamp of the first fee deduction time, milliseconds since 00:00:00 on January 1, 1970. |
-| `packageName` | `string` | App installation package name. |
-| `price` | `number` | Value after the actual price of an in-app product is multiplied by 100. |
-| `priceConsentStatus` | `integer` | User opinion on the price increase of an in-app product. |
-| `productGroup` | `string` | ID of the subscription group to which a subscription benumbers |
-| `productId` | `string` | In-app product ID. |
-| `productName` | `string` | In-app product name. |
-| `purchaseState` | `integer` | Transaction status. |
-| `purchaseTime` | `number` | Timestamp of the purchase time, milliseconds since 00:00:00 on January 1, 1970. |
-| `purchaseToken` | `string` | Purchase token, which uniquely identifies the mapping between an in-app product and a user and is generated by the Huawei payment server when the payment is complete. |
-| `purchaseType` | `integer` | Purchase type. |
-| `quantity` | `integer` | Purchase quantity. |
-| `renewPrice` | `number` | Price used upon the next renewal. |
-| `renewStatus` | `integer` | Renewal status. |
-| `retryFlag` | `integer` | Indicates whether the system still tries to renew an expired subscription. |
-| `subscriptionId` | `string` | Subscription ID. |
-| `trialFlag` | `integer` | Indicates whether a subscription is in the free trial period. |
-| `isAutoRenewing` | `boolean` | Purchase auto renewing status. |
-| `isSubValid` | `boolean` | Valid if a user has been charged for an in-app product, the in-app product has not expired, and no refund has been made. |
-| `cancelledSubKeepDays` | `integer` | Number of days for retaining a subscription relationship after the subscription is canceled. |
-| `kind` | `integer` | Product type |
-| `developerChallenge` | `string` | Challenge defined when an app initiates a consumption request, which uniquely identifies the consumption request. This parameter exists only for one-off products. |
-| `consumptionState` | `integer` | Consumption status, which exists only for one-off products. |
-| `payOrderId` | `string` | Merchant ID, which uniquely identifies a transaction and is generated by the Huawei IAP server during payment. |
-| `payType` | `string` | Payment method.  |
-| `deferFlag` | `integer` | Indicates whether to postpone the settlement date. The value 1 indicates that the settlement date is postponed. |
-| `oriSubscriptionId` | `string` | Original subscription ID. |
-| `cancelWay` | `integer` | Subscription cancellation initiator. |
-| `cancellationTime` | `number` | Subscription cancellation time in UTC. |
-| `resumeTime` | `number` | Time when a subscription is resumed. |
----
-
-## 4. Configure Description
+## 4. Configuration and Description
 
 No
-  
-## 5. Licensing and Terms
 
-Apache 2.0 license.
+---
+
+## 5. Sample Project
+
+You can find the sample projects on [HMS Core > Examples > In-App Purchases](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page.
+
+---
+
+## 6. Questions or Issues
+
+If you have questions about how to use HMS samples, try the following options:
+
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with huawei-mobile-services.
+- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
+
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+
+---
+
+## 7. Licencing and Terms
+
+Huawei IAP Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
