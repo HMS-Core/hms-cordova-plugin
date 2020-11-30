@@ -1,11 +1,11 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,430 +13,340 @@ Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 package com.huawei.hms.cordova.map;
 
-import org.apache.cordova.CallbackContext;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.huawei.hms.cordova.map.components.CircleCapsule;
+import com.huawei.hms.cordova.map.components.GroundOverlayCapsule;
+import com.huawei.hms.cordova.map.components.MapComponent;
+import com.huawei.hms.cordova.map.components.MapComponentType;
+import com.huawei.hms.cordova.map.components.MarkerCapsule;
+import com.huawei.hms.cordova.map.components.PolygonCapsule;
+import com.huawei.hms.cordova.map.components.PolylineCapsule;
+import com.huawei.hms.cordova.map.components.TileOverlayCapsule;
+import com.huawei.hms.cordova.map.helpers.PluginJSHelper;
+import com.huawei.hms.cordova.map.listeners.ComponentListener;
+import com.huawei.hms.cordova.map.listeners.MapListener;
+import com.huawei.hms.cordova.map.listeners.MarkerListener;
+import com.huawei.hms.cordova.map.maps.MapCapsule;
+import com.huawei.hms.cordova.map.utils.ErrorCodes;
+import com.huawei.hms.cordova.map.utils.MapKitUtils;
+import com.huawei.hms.cordova.map.utils.PluginPermissionUtils;
+import com.huawei.hms.cordova.map.utils.cordova.CordovaUtils;
+import com.huawei.hms.cordova.map.utils.json.JsonToObject;
+import com.huawei.hms.maps.MapsInitializer;
+
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Color;
-import android.util.Pair;
-import android.util.Log;
-import android.content.pm.PackageManager;
-
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.huawei.hms.api.ConnectionResult;
-import com.huawei.hms.api.HuaweiApiAvailability;
-
-import com.huawei.hms.cordova.map.helpers.Constants;
-import com.huawei.hms.cordova.map.helpers.Consumer;
-import com.huawei.hms.cordova.map.helpers.HMSCordovaPlugin;
-import com.huawei.hms.cordova.map.utils.PermissionUtils;
-import com.huawei.hms.cordova.map.utils.ActionPack;
-import com.huawei.hms.cordova.map.utils.CordovaUtils;
-import com.huawei.hms.cordova.map.utils.DispatcherPack;
-import com.huawei.hms.cordova.map.utils.ErrorCodes;
-import com.huawei.hms.cordova.map.utils.EventPack;
-import com.huawei.hms.cordova.map.helpers.MapViewProps;
-import com.huawei.hms.cordova.map.utils.JavaUtils;
-import com.huawei.hms.cordova.map.utils.MapUtils;
-
-import com.huawei.hms.maps.HuaweiMap;
-import com.huawei.hms.maps.HuaweiMapOptions;
-import com.huawei.hms.maps.MapView;
-import com.huawei.hms.maps.OnMapReadyCallback;
-import com.huawei.hms.maps.MapsInitializer;
-import com.huawei.hms.maps.model.BitmapDescriptorFactory;
-import com.huawei.hms.maps.model.Cap;
-import com.huawei.hms.maps.model.JointType;
-import com.huawei.hms.maps.model.PatternItem;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
+public class HMSMap extends CordovaPlugin {
+    private String TAG = HMSMap.class.getSimpleName();
+    private Map<String, MapCapsule> maps;
+    private CordovaUtils cordovaUtils;
+    private HMSLogger hmsLogger;
+/////////////////////////////////////////////////////////PLUGIN SECTION/////////////////////////////////////////////////
+/////////////////////////////////////////////////////////PLUGIN SECTION/////////////////////////////////////////////////
 
-public class HMSMap extends HMSCordovaPlugin {
-    public static final String TAG = HMSMap.class.getSimpleName();
-
-    private Map<String, Pair<MapView, HuaweiMap>> mapViews;
-    private Map<String, Object> elementContainer;
-
-    public HMSMap() { }
-
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-    // Cordova stuff
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void pluginInitialize() {
-        super.pluginInitialize();
-
-        if (HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(webView.getContext()) != ConnectionResult.SUCCESS) {
-            Log.e(TAG, "Huawei API is not available.");
-        }
-
-        // Init
-        mapViews = new HashMap<>();
-        elementContainer = new HashMap<>();
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        MapsInitializer.initialize(cordova.getContext());
+        hmsLogger = HMSLogger.getInstance(cordova.getContext());
+        maps = new HashMap<>();
+        cordovaUtils = CordovaUtils.getInstance(webView);
+        // Set webview scroll listener
+        webView.getView().getViewTreeObserver().addOnScrollChangedListener(() -> {
+            Log.d(TAG, "onScrollChanged: scrolled");
+            for (MapCapsule mapCapsule : maps.values()) {
+                mapCapsule.getCapsuleLayout()
+                        .scrollXAndY(-webView.getView().getScrollX(), -webView.getView().getScrollY());
+            }
+        });
     }
 
     @Override
-    public boolean executer(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Log.d(TAG, JavaUtils.format("executer :: action=%s, args=%s", action, args.toString()));
-
-        if ("initMap".equals(action)) {
-            initMap(args.getString(0), args.getJSONObject(1), callbackContext);
-        } else if("reInitializeMap".equals(action)){
-            reInitializeMapViewProps(args.getString(0), args.getJSONObject(1), callbackContext);
-        } else if("showMap".equals(action)){
-            showMap(args.getString(0), callbackContext);
-        } else if("hideMap".equals(action)) {
-            hideMap(args.getString(0), callbackContext);
-        } else if("destroyMap".equals(action)){
-            destroyMap(args.getString(0), callbackContext);
-        } else if ("setApiKey".equals(action)) {
-            setApiKey(args.getString(0), callbackContext);
-        } else if ("setMapViewProps".equals(action)) {
-            setMapViewProps(args.getString(0), args.getJSONObject(1), callbackContext);
-        } else if ("setProps".equals(action)) {
-            setProps(args.getString(0), args.getJSONObject(1), callbackContext);
-        } else if ("getProps".equals(action)) {
-            getProps(args.getString(0), callbackContext);
-        } else if ("registerEvent".equals(action)) {
-            registerEvent(args.getString(0), args.getString(1), callbackContext);
-        } else if ("runAction".equals(action)) {
-            runAction(args.getString(0), args.getString(1), args.getJSONObject(2), callbackContext);
-        } else if ("dispatchFunction".equals(action)) {
-            dispatchFunction(args.getString(0), args.getString(1), args.getJSONObject(2), args.getJSONObject(3), callbackContext);
-        } else if ("executeStatic".equals(action)) {
-            MapUtils.STATIC_FUNCTIONS.get(args.getString(0)).run(this, args.getJSONObject(1), callbackContext);
-        } else {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
+        try {
+            Method m = this.getClass().getDeclaredMethod(action, JSONArray.class, CallbackContext.class);
+            m.invoke(this, args, callbackContext);
+        } catch (InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
             return false;
         }
         return true;
     }
+/////////////////////////////////////////////////////////HMS_LOGGER SECTION/////////////////////////////////////////////
+/////////////////////////////////////////////////////////HMS_LOGGER SECTION/////////////////////////////////////////////
 
-    @Override
-    public JSONObject getConstants() throws JSONException {
-        JSONObject constants = new JSONObject();
-        JSONObject patternItemTypes = CordovaUtils.extendJSONWith(new JSONObject(), JavaUtils.mapOfConstants(PatternItem.class, "TYPE"));
-        JSONObject jointTypes = CordovaUtils.extendJSONWith(new JSONObject(), JavaUtils.mapOfConstants(JointType.class));
-        JSONObject capTypes = CordovaUtils.extendJSONWith(new JSONObject(), JavaUtils.mapOfConstants(Cap.class, "TYPE"));
-        JSONObject cameraMoveReasons = CordovaUtils.extendJSONWith(new JSONObject(), JavaUtils.mapOfConstants(HuaweiMap.OnCameraMoveStartedListener.class, "REASON"));
-        JSONObject colors = CordovaUtils.extendJSONWith(new JSONObject(), JavaUtils.mapOfConstants(Color.class));
-
-        constants.put("PatternItemTypes", patternItemTypes);
-        constants.put("JointTypes", jointTypes);
-        constants.put("CapTypes", capTypes);
-        constants.put("CameraMoveReasons", cameraMoveReasons);
-        constants.put("Color", colors);
-        CordovaUtils.extendJSONWith(constants, JavaUtils.mapOfConstants(BitmapDescriptorFactory.class));
-        CordovaUtils.extendJSONWith(constants, JavaUtils.mapOfConstants(HuaweiMap.class, "MAP_TYPE"));
-        CordovaUtils.extendJSONWith(constants, JavaUtils.mapOfConstants(Constants.class));
-
-        return constants;
-    }
-
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-    // Exposed functions
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void setApiKey(String apiKey, final CallbackContext callbackContext) {
-        Log.d(TAG, "Setting api key :: " + apiKey);
-        cordova.getActivity().runOnUiThread(() -> {
-            if (this.cordova.getContext() == null) {
-                Log.d(TAG, "Cordova context null");
-                callbackContext.error("Cordova context null.");
-            } else {
-                MapsInitializer.initialize(this.cordova.getContext());
-                MapsInitializer.setApiKey(apiKey);
-                callbackContext.success(apiKey);
-            }
-
-        });
-    }
-
-
-    private void destroyMap(String id, final CallbackContext callbackContext){
-        Log.d(TAG, "destroying map :: "+ id);
-
-        if(!mapViews.containsKey(id)){
-            callbackContext.error("Map with the given id not exists.");
-            return;
-        }
-        MapView mapView = mapViews.get(id).first;
-        mapViews.remove(id);
-
-        cordova.getActivity().runOnUiThread(() -> {
-            getLayout().removeView(mapView);
+    private void enableLogger(JSONArray args, CallbackContext callbackContext) {
+        if (hmsLogger != null) {
+            hmsLogger.enableLogger();
             callbackContext.success();
-        });
+        } else {
+            callbackContext.error(ErrorCodes.HMS_LOGGER_IS_NULL.toString());
+        }
     }
 
-    private void hideMap(String mapId, final CallbackContext callbackContext){
-        Log.d(TAG, "Hide map :: "+ mapId);
-
-        if(!mapViews.containsKey(mapId)){
-            callbackContext.error("Hide map error :: map with the given id not exist.");
-            return;
-        }
-
-        MapView mapView = mapViews.get(mapId).first;
-        cordova.getActivity().runOnUiThread(() -> {
-            mapView.setVisibility(View.INVISIBLE);
+    private void disableLogger(JSONArray args, CallbackContext callbackContext) {
+        if (hmsLogger != null) {
+            hmsLogger.disableLogger();
             callbackContext.success();
+        } else {
+            callbackContext.error(ErrorCodes.HMS_LOGGER_IS_NULL.toString());
+        }
+    }
+/////////////////////////////////////////////////////////MAP SECTION////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////MAP SECTION////////////////////////////////////////////////////
+
+    private void initMap(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final String mapId = args.getString(0);
+        if (maps.containsKey(mapId)) {
+            cordova.getActivity().runOnUiThread(() -> callbackContext.success(mapId));
+            hmsLogger.sendSingleEvent("initMap");
+            return;
+        }
+        cordova.getActivity().runOnUiThread(() -> {
+            MapListener mapListener = MapListener.getInstance(cordovaUtils);
+            MapCapsule mapCapsule = new MapCapsule(webView.getContext(), mapListener, mapId, args.optJSONObject(1));
+            View view = mapCapsule.getCapsuleLayout().getParent();
+            getWebViewRootLayout().addView(view);
+            mapCapsule.getTextureMapView().getMapAsync(huaweiMap -> {
+                mapCapsule.setHuaweiMap(huaweiMap);
+                maps.put(mapId, mapCapsule);
+                callbackContext.success(mapCapsule.getCapsuleId());
+            });
+            hmsLogger.sendSingleEvent("initMap");
         });
     }
 
-    private void showMap(String mapId, final CallbackContext callbackContext){
-        Log.d(TAG, "Show map :: "+ mapId);
-
-        if(!mapViews.containsKey(mapId)){
-            callbackContext.error("Show map error :: map with the given id not exist.");
-            return;
+    private void showMap(JSONArray args, CallbackContext callbackContext) {
+        String divId = args.optString(0);
+        if (maps.containsKey(divId)) {
+            cordova.getActivity().runOnUiThread(() -> {
+                maps.get(divId).getTextureMapView().setVisibility(View.VISIBLE);
+                // Load all listeners of this map
+                PluginJSHelper jsHelper = new PluginJSHelper(webView, maps.get(divId));
+                jsHelper.syncListeners();
+                try {
+                    jsHelper.syncComponents();
+                } catch (JSONException e) {
+                    callbackContext.error(e.getMessage());
+                    return;
+                }
+                maps.get(divId).getTextureMapView().onResume();
+                hmsLogger.sendSingleEvent("showMap");
+                callbackContext.success(maps.get(divId).getCapsuleId());
+            });
+        } else {
+            hmsLogger.sendSingleEvent("showMap", ErrorCodes.NO_MAP_FOUND.toString());
+            callbackContext.error(ErrorCodes.NO_MAP_FOUND.toString());
         }
-        MapView mapView = mapViews.get(mapId).first;
-
-        cordova.getActivity().runOnUiThread(() -> {
-            mapView.setVisibility(View.VISIBLE);
-            callbackContext.success();
-        });
     }
 
-    private void initMap(String id, JSONObject json, final CallbackContext callbackContext) throws JSONException{
-        Log.d(TAG, "initializing map with " + json.toString());
-
-        HuaweiMapOptions huaweiMapOptions = MapUtils.fromJSONObjectToHuaweiMapOptions.map(json.getJSONObject("mapOptions"));
-        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json.getJSONObject("mapProps"));
-
-        Log.d(TAG, "mapViewProps :: " + mapViewProps.toString());
-        Log.d(TAG, "huaweiMapOptions :: " + huaweiMapOptions.toString());
-
-        if (mapViews.containsKey(id)) {
-            Log.d(TAG, ErrorCodes.MAP_WITH_ID_ALREADY_EXISTS.asJSON().toString());
-            callbackContext.error(ErrorCodes.MAP_WITH_ID_ALREADY_EXISTS.asJSON());
-            return;
-        }
-
-        MapView mapView = new MapView(webView.getContext(), huaweiMapOptions);
-        mapViews.put(id, Pair.create(mapView, null));
-
-        cordova.getActivity().runOnUiThread(() -> {
-            mapView.onCreate(null);
-
-            // Put the map somewhere inside the frame
-            ViewGroup.MarginLayoutParams params = new ViewGroup.MarginLayoutParams(mapViewProps.width(), mapViewProps.height());
-            params.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
-            mapView.setLayoutParams(params);
-            getLayout().addView(mapView);
-
-            mapView.getMapAsync(huaweiMap -> {
-                mapViews.put(id, Pair.create(mapView, huaweiMap));
+    private void hideMap(JSONArray args, CallbackContext callbackContext) {
+        String divId = args.optString(0);
+        if (maps.containsKey(divId)) {
+            cordova.getActivity().runOnUiThread(() -> {
+                maps.get(divId).getTextureMapView().setVisibility(View.INVISIBLE);
+                maps.get(divId).getTextureMapView().onPause();
+                hmsLogger.sendSingleEvent("hideMap");
                 callbackContext.success();
             });
-        });
+        } else {
+            hmsLogger.sendSingleEvent("hideMap", ErrorCodes.NO_MAP_FOUND.toString());
+            callbackContext.error(ErrorCodes.NO_MAP_FOUND.toString());
+        }
     }
 
-    private void reInitializeMapViewProps(String mapId, JSONObject json, final CallbackContext callbackContext){
-        Log.d(TAG, JavaUtils.format("reInitializeMapViewProps :: mapId=%s, props=%s", mapId, json.toString()));
+    private void destroyMap(JSONArray args, CallbackContext callbackContext) {
+        String divId = args.optString(0);
+        if (maps.containsKey(divId)) {
+            cordova.getActivity().runOnUiThread(() -> {
+                View parentOfMapView = maps.get(divId).getCapsuleLayout().getParent();
+                getWebViewRootLayout().removeView(parentOfMapView);
+                maps.get(divId).getTextureMapView().onDestroy();
+                maps.get(divId).getComponentMap().clear();
+                maps.remove(divId);
+                hmsLogger.sendSingleEvent("destroyMap");
+                callbackContext.success();
+            });
+        } else {
+            hmsLogger.sendSingleEvent("destroyMap", ErrorCodes.NO_MAP_FOUND.toString());
+            callbackContext.error(ErrorCodes.NO_MAP_FOUND.toString());
+        }
+    }
 
-        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json);
+    private void mapOptions(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final String mapId = args.getString(0);
+        final String optionType = args.getString(1);
+        final String command = args.getString(2);
+        final JSONObject arguments = args.getJSONObject(3);
+        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) return;
+        cordova.getActivity().runOnUiThread(() -> {
+            MapCapsule mapCapsule = maps.get(mapId);
+            try {
+                JSONObject obj = mapCapsule.setMapOptions(optionType, command, arguments);
+                if (obj != null)
+                    callbackContext.success(obj);
+                else callbackContext.success();
+            } catch (Exception e) {
+                // You can catch every error throwed from function here instead of just catching the exception.
+                hmsLogger.sendSingleEvent(command, e.getMessage());
+                callbackContext.error(e.getMessage());
+            }
+        });
+        hmsLogger.sendSingleEvent("mapOptions");
+    }
 
-        if(!mapViews.containsKey(mapId)){
-            callbackContext.error("Map with the given id not exists. To re-initialize map first you should create a map.");
+    private boolean isMapExistsWithTheGivenId(final String mapId, final CallbackContext callbackContext) {
+        if (!maps.containsKey(mapId)) {
+            hmsLogger.sendSingleEvent("isMapExistsWithTheGivenId", ErrorCodes.NO_MAP_FOUND.toString());
+            callbackContext.error(ErrorCodes.NO_MAP_FOUND.toString());
+            return false;
+        }
+        hmsLogger.sendSingleEvent("isMapExistsWithTheGivenId");
+        return true;
+    }
+
+    private ViewGroup getWebViewRootLayout() {
+        return ((ViewGroup) webView.getView().getParent());
+    }
+
+    private void setApiKey(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        if (args.getString(0) == null || args.getString(0).isEmpty()) {
+            hmsLogger.sendSingleEvent("setApiKey", ErrorCodes.INVALID_API_KEY.toString());
+            callbackContext.error(ErrorCodes.INVALID_API_KEY.toString());
             return;
         }
+        MapKitUtils.setApiKey(args.getJSONObject(0));
+        hmsLogger.sendSingleEvent("setApiKey");
+        callbackContext.success();
+    }
 
-        MapView mapView = mapViews.get(mapId).first;
+    private void computeDistanceBetween(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        hmsLogger.sendSingleEvent("computeDistanceBetween");
+        callbackContext.success(MapKitUtils.computeDistanceBetween(args.getJSONObject(0)));
+    }
+
+    private void requestPermission(JSONArray args, final CallbackContext callbackContext) {
+        PluginPermissionUtils.requestLocationPermission(this);
+        callbackContext.success();
+    }
+
+    private void hasPermission(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        JSONObject result = new JSONObject().put("result", PluginPermissionUtils.hasLocationPermission(this));
+        callbackContext.success(result);
+    }
+
+    private void forceUpdateXAndY(JSONArray args, final CallbackContext callbackContext) {
+        String mapId = args.optString(0);
+        int x = args.optInt(1);
+        int y = args.optInt(2);
+        maps.get(mapId).getCapsuleLayout().updateXAndY(x, y);
+        hmsLogger.sendSingleEvent("forceUpdateXAndY");
+        callbackContext.success();
+    }
+/////////////////////////////////////////////////////////COMPONENT SECTION//////////////////////////////////////////////
+/////////////////////////////////////////////////////////COMPONENT SECTION//////////////////////////////////////////////
+
+    private void addComponent(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final String mapId = args.getString(0);
+        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) {
+            hmsLogger.sendSingleEvent("addComponent", ErrorCodes.NO_MAP_FOUND.toString());
+            return;
+        }
         cordova.getActivity().runOnUiThread(() -> {
-            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(mapViewProps.width(), mapViewProps.height());
-            layoutParams.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
-            getLayout().removeView(mapView);
-            mapView.setLayoutParams(layoutParams);
-            getLayout().addView(mapView);
-            callbackContext.success();
-            Log.d(TAG, "reInitializeMapViewProps ends.");
+            MapCapsule mapCapsule = maps.get(mapId);
+            MapComponent component = createComponentToAddOnMap(mapCapsule,
+                    MapComponentType.valueOf(args.optString(1)), args.optJSONObject(2));
+            mapCapsule.addComponent(component);
+            hmsLogger.sendSingleEvent("addComponent");
+            callbackContext.success(component.getId());
         });
     }
 
-    private void setMapViewProps(String mapId, JSONObject json, final CallbackContext callbackContext) {
-        Log.d(TAG, JavaUtils.format("setMapViewProps :: mapId=%s, props=%s", mapId, json.toString()));
-
-        MapViewProps mapViewProps = MapUtils.fromJSONObjectToMapViewProps.map(json);
-        MapView mapView = mapViews.get(mapId).first;
-        if(mapView.getParent() == null) return;
+    private void removeComponent(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final String mapId = args.getString(0);
+        final String componentId = args.getString(1);
+        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) {
+            hmsLogger.sendSingleEvent("removeComponent", ErrorCodes.NO_MAP_FOUND.toString());
+            return;
+        }
         cordova.getActivity().runOnUiThread(() -> {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) mapView.getLayoutParams();
-            layoutParams.setMargins(mapViewProps.position().x, mapViewProps.position().y, 0, 0);
-            getLayout().updateViewLayout(mapView, layoutParams);
-            callbackContext.success();
-            Log.d(TAG, "setMapViewProps ends.");
-        });
-    }
-
-    private void setProps(String mapId, JSONObject json, final CallbackContext callbackContext) {
-        Log.d(TAG, JavaUtils.format("setProps :: mapId=%s, props=%s", mapId, json.toString()));
-
-        runWithMap(mapId, huaweiMap -> {
-            // For each given option, call the corresponding setter
-            for (Iterator<String> it = json.keys(); it.hasNext();) {
-                String key = it.next();
-                if (MapUtils.SETTERS.containsKey(key)) {
-                    MapUtils.SETTERS.get(key).run(huaweiMap, json);
-                    callbackContext.success();
-                }
-            }
-
-            Log.d(TAG, "setProps ends.");
-        });
-    }
-
-    private void getProps(String mapId, final CallbackContext callbackContext) {
-        Log.d(TAG, "getProps :: mapId=" + mapId);
-
-        runWithMap(mapId, huaweiMap -> {
-            callbackContext.success(MapUtils.fromHuaweiMapToJSONObject.map(huaweiMap));
-            Log.d(TAG, "getProps ends.");
-        });
-    }
-
-    private void registerEvent(String mapId, String eventName, final CallbackContext callbackContext) {
-        Log.d(TAG, JavaUtils.format("registerEvent :: mapId=%s, eventName=%s", mapId, eventName));
-
-        runWithMap(mapId, huaweiMap -> {
-            Log.d(TAG, "registering event ...");
-            if (MapUtils.EVENTS.containsKey(eventName)) {
-                Log.d(TAG, "found event....");
-                MapUtils.EVENTS.get(eventName).run(EventPack.create(cordova, webView, huaweiMap, eventName, mapId));
+            MapCapsule mapCapsule = maps.get(mapId);
+            if (mapCapsule.removeComponent(componentId)) {
+                hmsLogger.sendSingleEvent("removeComponent");
                 callbackContext.success();
             } else {
-                callbackContext.error(ErrorCodes.EVENT_DOES_NOT_EXIST.asJSON());
+                hmsLogger.sendSingleEvent("removeComponent", ErrorCodes.COMPONENT_IS_NOT_FOUND.toString());
+                callbackContext.error(ErrorCodes.COMPONENT_IS_NOT_FOUND.toString());
             }
-
-            Log.d(TAG, "registerEvent ends.");
         });
     }
 
-    // TODO: args should be JSONArray, works for now but maybe in future
-    private void runAction(String mapId, String action, JSONObject args, final CallbackContext callbackContext) {
-        Log.d(TAG, JavaUtils.format("runAction :: mapId=%s, action=%s, args=%s", mapId, action, args.toString()));
-
-        runWithMap(mapId, huaweiMap -> {
-            if (MapUtils.ACTIONS.containsKey(action)) {
-                MapUtils.ACTIONS.get(action).run(ActionPack.create(mapId, huaweiMap, elementContainer, args, callbackContext));
-            } else {
-                callbackContext.error(ErrorCodes.ACTION_DOES_NOT_EXIST.asJSON());
-            }
-
-            Log.d(TAG, "runAction ends.");
-        });
-    }
-
-    private void dispatchFunction(String mapId, String funcName, JSONObject incomingObject, JSONObject args, final CallbackContext callbackContext) {
-        Log.d(TAG, JavaUtils.format("dispatchFunction :: mapId=%s, object=%s, args=%s", mapId, incomingObject.toString(), args.toString()));
-
-        runWithMap(mapId, huaweiMap -> {
-            String objectType = incomingObject.optString("__objectType");;
-            String objectId = incomingObject.optString("__objectId");
-
-            if (objectType.isEmpty() || objectId.isEmpty()) {
-                //TODO: handle err
-                callbackContext.error(1);
-                return;
-            }
-
-            Object realObj = elementContainer.get(objectId);
-            DispatcherPack pack = DispatcherPack.create(realObj, incomingObject, args, callbackContext);
-            if (funcName.equals("set")) {
-                for (Iterator<String> it = args.keys(); it.hasNext();) {
-                    String key = it.next();
-                    String accessor = JavaUtils.format("%s[%s][%s]", objectType, funcName, key);
-                    if (MapUtils.DISPATCHER.containsKey(accessor)) {
-                        MapUtils.DISPATCHER.get(accessor).run(pack);
-                    }
-                }
-            } else {
-                String accessor = JavaUtils.format("%s[%s]", objectType, funcName);
-                if (MapUtils.DISPATCHER.containsKey(accessor)) {
-                    MapUtils.DISPATCHER.get(accessor).run(pack);
-                }
-            }
-            Log.d(TAG, "dispatchFunction ends.");
-        });
-    }
-
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-    // Internal stuff
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
-    private ViewGroup getLayout() {
-        return (ViewGroup) webView.getView().getParent();
-    }
-
-    private void runWithMap(String id, OnMapReadyCallback cb) {
+    private void componentOptions(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        // Check if the component with the specified id exists or not.
+        // Because when you remove a component and if user tries to use it still. you have to send an error.
+        final String mapId = args.getString(0);
+        final String componentId = args.getString(1);
+        final String command = args.getString(2);
+        final String methodName = args.getString(3);
+        final JSONObject arg = args.getJSONObject(4);
+        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) {
+            hmsLogger.sendSingleEvent("componentOptions");
+            return;
+        }
         cordova.getActivity().runOnUiThread(() -> {
-            Pair<MapView, HuaweiMap> mapPair = mapViews.get(id);
-            if (mapPair != null && mapPair.second != null) {
-                cb.onMapReady(mapPair.second);
-            } else {
-                Log.e(TAG, JavaUtils.format("runWithMap :: null mapView with id=%s", id));
+            MapCapsule mapCapsule = maps.get(mapId);
+            MapComponent component = mapCapsule.getComponent(componentId);
+            if (component == null) {
+                hmsLogger.sendSingleEvent(methodName, ErrorCodes.COMPONENT_IS_NOT_FOUND.toString());
+                callbackContext.error(ErrorCodes.COMPONENT_IS_NOT_FOUND.toString());
+                return;
             }
+            JSONObject object = null;
+            if (command.equals("set"))
+                component.setProperty(methodName, arg);
+            else
+                object = component.getProperty(methodName);
+            hmsLogger.sendSingleEvent(methodName);
+            if (object != null) callbackContext.success(object);
+            else callbackContext.success();
         });
     }
 
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-    // Map lifecycles
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onStart() {
-        runLifecycleFunc(MapView::onStart);
-    }
-
-    @Override
-    public void onResume(boolean multitasking) {
-        runLifecycleFunc(MapView::onResume);
-    }
-
-    @Override
-    public void onPause(boolean multitasking) {
-        runLifecycleFunc(MapView::onPause);
-    }
-
-    @Override
-    public void onStop() {
-        runLifecycleFunc(MapView::onStop);
-    }
-
-    @Override
-    public void onDestroy() {
-        runLifecycleFunc(MapView::onDestroy);
-    }
-
-    private void runLifecycleFunc(Consumer<MapView> func) {
-        JavaUtils.forEach(mapViews.values(), pair -> cordova.getActivity().runOnUiThread(() -> func.run(pair.first)));
-    }
-
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-    // Handle Permissions
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
-    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
-        for(int r: grantResults) {
-            if (r == PackageManager.PERMISSION_DENIED) {
-                CordovaUtils.sendEvent(cordova, webView, "permissionResult", CordovaUtils.keyValPair("granted", false));
-                return;
-            }
+    private MapComponent createComponentToAddOnMap(MapCapsule map, MapComponentType type, JSONObject json) {
+        MapComponent mapComponent = null;
+        ComponentListener componentListener;
+        try {
+            if (type == MapComponentType.MARKER) {
+                componentListener = MarkerListener.getInstance(cordovaUtils);
+                mapComponent = new MarkerCapsule(map, JsonToObject.constructMarkerOptions(map.getContext(), json), componentListener);
+            } else if (type == MapComponentType.CIRCLE)
+                mapComponent = new CircleCapsule(map, JsonToObject.constructCircleOptions(json), null);
+            else if (type == MapComponentType.GROUND_OVERLAY)
+                mapComponent = new GroundOverlayCapsule(map, JsonToObject.constructGroundOverlayOptions(map.getContext(), json), null);
+            else if (type == MapComponentType.POLYGON)
+                mapComponent = new PolygonCapsule(map, JsonToObject.constructPolygonOptions(json), null);
+            else if (type == MapComponentType.POLYLINE)
+                mapComponent = new PolylineCapsule(map, JsonToObject.constructPolylineOptions(map.getContext(), json), null);
+            else if (type == MapComponentType.TILE_OVERLAY)
+                mapComponent = new TileOverlayCapsule(map, JsonToObject.constructTileOverlayOptions(json,cordova.getContext()), null);
+            hmsLogger.sendSingleEvent("createComponentToAddOnMap");
+        } catch (JSONException e) {
+            hmsLogger.sendSingleEvent("createComponentToAddOnMap", e.getMessage());
         }
-
-        if (requestCode == PermissionUtils.REQUEST_LOCATION) {
-            CordovaUtils.sendEvent(cordova, webView, "permissionResult", CordovaUtils.keyValPair("granted", true));
-        }
+        return mapComponent;
     }
 }

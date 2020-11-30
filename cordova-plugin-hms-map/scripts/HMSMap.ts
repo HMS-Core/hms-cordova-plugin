@@ -1,659 +1,651 @@
-/**
- * Copyright 2020 Huawei Technologies Co., Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-import { asyncExec, isString, isObject } from './utils';
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// State
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-const mapViews = new Map<String, HuaweiMap>();
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// UTILS
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-function handleDisplacement(event: any) {
-    for (let [mapId, huaweiMap] of mapViews) {
-        const mapRect = huaweiMap.element.getBoundingClientRect();
-
-        if (huaweiMap.props.x === mapRect.x && huaweiMap.props.y === mapRect.y) {
-            continue;
-        }
-
-        huaweiMap.props.x = mapRect.x;
-        huaweiMap.props.y = mapRect.y;
-
-        asyncExec('HMSMap', 'setMapViewProps', [mapId, huaweiMap.props]);
-    }
-};
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// Global watchers
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-const mutationObserver = new MutationObserver(handleDisplacement);
-mutationObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
-window.addEventListener('scroll', handleDisplacement, true);
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// CallableObj
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-class CallableObj {
-    mapId: string
-    [key: string]: any
-
-    constructor(mapId: string, obj: any) {
-        this.mapId = mapId;
-
-        // Extend this with all the keys of obj
-        Object.keys(obj).forEach(key => {
-            this[key] = obj[key];
-        });
-
-        // Expose all the functions
-        if (this.__functions) {
-            this.__functions.forEach((funcName: string) => {
-                this[funcName] = (arg: any, arg2: any) => {
-                    let fixedArg = arg;
-                    if (funcName === 'set' && isString(arg)) {
-                        fixedArg = { [arg]: arg2 }
-                    }
-                    return this.call(funcName, fixedArg);
-                }
-            });
-        }
-
-        return this;
-    }
-
-    call(funcName: string, arg?: any) {
-        return asyncExec('HMSMap', 'dispatchFunction', [this.mapId, funcName, this, arg == null ? {} : arg]);
-    };
-}
-
-
-async function dispatcher(mapId: string, promise: Promise<any>) {
-    const result = await promise;
-    if (!isObject(result) || !result.hasOwnProperty("__objectType")) {
-        return result;
-    }
-
-    for (const key of Object.keys(result)) {
-        result[key] = await dispatcher(mapId, result[key]);
-    }
-    return new CallableObj(mapId, result);
-};
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// HuaweiMap
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-class HuaweiMap {
-    id: string;
-    element: HTMLElement | null;
-    props: HuaweiMapProps;
-
-    init(id: string, options: HuaweiMapOptions) {
-        this.id = id;
-        this.element = document.getElementById(id);
-        this.props = {} as HuaweiMapProps;
-        this.props = this.refreshProps();
-
-        const mutationObserver = new MutationObserver(this.handleMutation);
-        mutationObserver.observe(this.element, { attributes: true });
-
-        mapViews.set(id, this);
-        return this.dispatch(asyncExec('HMSMap', 'initMap', [id, { mapOptions: options, mapProps: this.props }]));
-    };
-
-    reInitializeMap(){
-        return this.dispatch(asyncExec('HMSMap', 'reInitializeMap', [this.id, this.refreshProps()]))
-    }
-
-    destroy(){
-        return this.dispatch(asyncExec('HMSMap', 'destroyMap', [this.id]));
-    }
-
-    hide(){
-        return this.dispatch(asyncExec('HMSMap', 'hideMap', [this.id]));
-    }
-
-    show(){
-        return this.dispatch(asyncExec('HMSMap', 'showMap', [this.id]));
-    }
-    /**
-     * Set a property of a map instance.
-     *
-     * This function can be called in two ways:
-     * ```
-     *     mapInstance.set('propName', propValue)
-     * ```
-     * or
-     * ```
-     *     mapInstance.set({propName: propValue, prop2Name: prop2Value})
-     * ```
-     */
-    set(propName: string | object, value?: any): Promise<void> {
-        const isPropStr = isString(propName)
-
-        let propsObj;
-        if (isPropStr) {
-            propsObj = { [propName as string]: value };
-        }
-
-        return this.dispatch(asyncExec('HMSMap', 'setProps', [this.id, isPropStr ? propsObj : propName]));
-    };
-
-
-    /**
-     * Get a property of a map instance.
-     *
-     * This function can be called in two ways:
-     * ```
-     *     mapInstance.get('propName')
-     * ```
-     * or
-     * ```
-     *     const properties = mapInstance.get(); // or mapInstance.get('all')
-     *     properties.propName;
-     * ```
-     * The second example will return an object that contains all the properties of the given map
-     * instance.
-     */
-    async get(propName?: string) {
-        const props = await this.dispatch(asyncExec('HMSMap', 'getProps', [this.id]));
-
-        if (typeof propName === 'undefined' || propName === 'all') {
-            return props;
-        }
-
-        return props[propName];
-    };
-
-    /**
-     * Register a map event.
-     */
-    on(eventName: MapEvent, handler: (data: any, data2?: any) => void) {
-        const instanceEventName = `${eventName}-${this.id}`;
-        window.unregisterHMSEvent(instanceEventName, null); // Remove old handler
-        window.registerHMSEvent(instanceEventName, async (result, result2) => {
-            if (result) {
-                handler(await this.dispatch(result));
-            }
-
-            if (result2) {
-                handler(await this.dispatch(result), await this.dispatch(result2));
-            }
-        });
-        return this.dispatch(asyncExec('HMSMap', 'registerEvent', [this.id, eventName]));
-    };
-
-    // IONIC FRAMEWORK SCROLL EVENT
-    scroll() {
-        const mapRect = this.element.getBoundingClientRect();
-
-        if (this.props.x === mapRect.x && this.props.y === mapRect.y)
-            return;
-
-        this.props.x = mapRect.x;
-        this.props.y = mapRect.y;
-
-        return asyncExec('HMSMap', 'setMapViewProps', [this.id, this.props]);
-    }
-
-    clear() {
-        return this.dispatch(this.runAction('clear'));
-    }
-
-    resetMinMaxZoomPreference() {
-        return this.dispatch(this.runAction('resetMinMaxZoomPreference'));
-    }
-
-    moveCamera(opts: CameraUpdate) {
-        return this.dispatch(this.runAction('moveCamera', opts));
-    }
-
-    animateCamera(opts: CameraUpdate) {
-        return this.dispatch(this.runAction('animateCamera', opts));
-    }
-
-    addPolyline(opts: PolylineOptions): Promise<Polyline> {
-        return this.dispatch(this.runAction('addPolyline', opts));
-    }
-
-    addPolygon(opts: PolygonOptions): Promise<Polygon> {
-        return this.dispatch(this.runAction('addPolygon', opts));
-    }
-
-    addMarker(opts: MarkerOptions): Promise<Marker> {
-        return this.dispatch(this.runAction('addMarker', opts));
-    }
-
-    addGroundOverlay(opts: GroundOverlayOptions): Promise<GroundOverlay> {
-        return this.dispatch(this.runAction('addGroundOverlay', opts));
-    }
-
-    addCircle(opts: CircleOptions): Promise<Circle> {
-        return this.dispatch(this.runAction('addCircle', opts));
-    }
-
-    dispatch(obj: any) {
-        return dispatcher(this.id, obj);
-    };
-
-    runAction(act: string, opts: any = null): Promise<any> {
-        return asyncExec('HMSMap', 'runAction', [this.id, act, opts])
-    }
-
-    private refreshProps() {
-
-        const elemRect = this.element.getBoundingClientRect();
-        const elemStyle = window.getComputedStyle(this.element, null);
-
-        console.log(`ElemRect :: ${JSON.stringify(elemRect)}`);
-
-        this.props.x = elemRect.x; // .x
-        this.props.y = elemRect.y;  // .y
-        this.props.width = elemRect.width;
-        this.props.height = elemRect.height;
-        this.props.paddingLeft = parseInt(elemStyle.getPropertyValue("padding-left"));
-        this.props.paddingTop = parseInt(elemStyle.getPropertyValue("padding-top"));
-        this.props.borderLeft = parseInt(elemStyle.getPropertyValue("border-left-width"));
-        this.props.borderTop = parseInt(elemStyle.getPropertyValue("border-top-width"));
-
-    
-        return this.props;
-    };
-
-    private handleMutation(mutationRecords: any) {
-        return asyncExec('HMSMap', 'setMapViewProps', [this.id, this.refreshProps()]);
-    };
-}
-
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// Type definitions for type checker
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-export interface LatLng {
-    lat: number,
-    lng: number
-};
-
-export interface PatternItem {
-    type?: PatternItemType,
-    length?: number
-};
-
-export interface Anchor {
-    u: number,
-    v: number
-};
-
-export interface Bitmap {
-    hue?: Hue,
-    asset?: string,
-    fileName?: string,
-    path?: string
-};
-
-export interface LatLngBounds {
-    southwest: LatLng,
-    northeast: LatLng
-    center?: LatLng,
-};
-
-// Possible combinations are:
-// - width height latLng
-// - width latLng
-// - latLngBounds
-// No way to check for this for now.
-export interface GroundOverlayPosition {
-    width?: number,
-    height?: number,
-    latLng?: LatLng,
-    latLngBounds?: LatLngBounds
-}
-
-export interface Cap {
-    type?: CapType,
-    // If custom tap these parameters needed.
-    refWidth?: number,
-    bitmapDescriptor?: Bitmap
-}
-
-export interface CircleOptions {
-    center?: LatLng,
-    clickable?: boolean,
-    fillColor?: Color,
-    radius?: number,
-    strokeColor?: Color,
-    strokeWidth?: number,
-    strokePattern?: PatternItem,
-    visible?: boolean,
-    zIndex?: number
-}
-
-// Ground overlay posiiton is different than the others.
-export interface GroundOverlayOptions {
-    anchor?: Anchor,
-    bearing?: number,
-    clickable?: boolean,
-    image?: Bitmap,
-    visible?: boolean,
-    transparency?: number,
-    zIndex?: number,
-    position?: GroundOverlayPosition
-}
-
-export interface MarkerOptions {
-    anchorMarker?: Anchor,
-    infoWindowAnchor?: Anchor,
-    alpha?: number,
-    clusterable?: boolean,
-    draggable?: boolean,
-    icon?: Bitmap,
-    flat?: boolean,
-    position?: LatLng,
-    rotation?: number,
-    snippet?: string,
-    title?: string,
-    visible?: boolean,
-    zIndex?: number
-}
-
-export interface PolygonOptions {
-    points?: LatLng[],
-    holes?: LatLng[][],
-    clickable?: boolean,
-    geodesic?: boolean,
-    fillColor?: Color,
-    strokeColor?: Color,
-    strokeJointType?: JointType,
-    strokePattern?: PatternItem,
-    strokeWidth?: number,
-    visible?: boolean,
-    zIndex?: number
-}
-
-export interface PolylineOptions {
-    points?: LatLng[],
-    clickable?: boolean,
-    color?: Color,
-    endCap?: Cap,
-    startCap?: Cap,
-    geodesic?: boolean,
-    jointType?: JointType,
-    visible?: boolean,
-    zIndex?: number,
-    width?: number
-}
-
-interface HuaweiMapProps {
-    x?: number;
-    y?: number;
-    width?: number;
-    height?: number;
-    paddingLeft?: number;
-    paddingTop?: number;
-    borderLeft?: number;
-    borderTop?: number;
-}
-
-
-// Change this camera position field.
-export interface HuaweiMapOptions {
-    mapType?: MapType;
-    zoomControlsEnabled?: boolean;
-    compassEnabled?: boolean;
-    zoomGesturesEnabled?: boolean;
-    scrollGesturesEnabled?: boolean;
-    rotateGesturesEnabled?: boolean;
-    tiltGesturesEnabled?: boolean;
-    zOrderOnTop?: boolean;
-    liteMode?: boolean;
-    ambientEnabled?: boolean;
-    minZoomPreference?: number;
-    maxZoomPreference?: number;
-    cameraPosition?: CameraPosition;
-    latLngBounds?: LatLngBounds
-}
-
-export interface CameraPosition {
-    target?: LatLng;
-    zoom?: number;
-    bearing?: number;
-    tilt?: number;
-}
-
-export interface LocationPermissionResult {
-    hasLocationPermission: boolean;
-}
-
-export interface ComputeDistanceResult {
-    result: number;
-}
-
-export interface ComputeDistance {
-    from?: LatLng,
-    to?: LatLng,
-}
-
-export interface CameraUpdate {
-    method?: CameraUpdateMethod,
-    [other: string]: any, // ... Other stuff depends on the method
-}
-
-
-interface BaseMapObject<T> {
-    set(propName: string, propValue: any): Promise<any>;
-    set(keyVals: any): Promise<any>;
-    update(): Promise<T>;
-    remove(): Promise<any>;
-
-    [other: string]: any;
-}
-
-interface Polyline extends BaseMapObject<Polyline> {
-}
-
-interface Polygon extends BaseMapObject<Polygon> {
-}
-
-interface Circle extends BaseMapObject<Circle> {
-}
-
-interface GroundOverlay extends BaseMapObject<GroundOverlay> {
-}
-
-interface Marker extends BaseMapObject<Marker> {
-    showInfoWindow(): Promise<void>;
-    hideInfoWindow(): Promise<void>;
-}
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// Public functions
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-export function init(): Promise<void> {
-    return asyncExec('HMSMap', 'init', []);
-}
-
-export function setApiKey(apiKey: string): Promise<void> {
-    return asyncExec('HMSMap', 'setApiKey', [apiKey])
-}
-
-export async function create(divId: string, huaweiMapOptions: HuaweiMapOptions): Promise<HuaweiMap> {
-    const huaweiMap = new HuaweiMap();
-    await huaweiMap.init(divId, huaweiMapOptions);
-    return huaweiMap;
-}
-
-export function computeDistanceBetween(arg: ComputeDistance): Promise<ComputeDistanceResult> {
-    return asyncExec('HMSMap', 'executeStatic', ['computeDistanceBetween', arg]);
-}
-
-export function hasLocationPermission(): Promise<LocationPermissionResult> {
-    return asyncExec('HMSMap', 'executeStatic', ['hasLocationPermission', {}]);
-}
-
-export function requestLocationPermission(): Promise<void> {
-    return asyncExec('HMSMap', 'executeStatic', ['requestLocationPermission', {}])
-}
-
-function temp(element: HTMLElement): HuaweiMapProps{
-    let props : HuaweiMapProps = {} as HuaweiMapProps; 
-    const elemRect = element.getBoundingClientRect();
-    const elemStyle = window.getComputedStyle(element, null);
-
-    console.log(`ElemRect :: ${JSON.stringify(elemRect)}`);
-
-    props.x = elemRect.x; // .x
-    props.y = elemRect.y;  // .y
-    props.width = elemRect.width;
-    props.height = elemRect.height;
-    props.paddingLeft = parseInt(elemStyle.getPropertyValue("padding-left"));
-    props.paddingTop = parseInt(elemStyle.getPropertyValue("padding-top"));
-    props.borderLeft = parseInt(elemStyle.getPropertyValue("border-left-width"));
-    props.borderTop = parseInt(elemStyle.getPropertyValue("border-top-width"));
-
-
+/*
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+import {asyncExec} from './utils';
+import {
+    CameraPosition,
+    CameraUpdate,
+    CancelableCallback,
+    CircleOptions,
+    ComputeDistanceResult,
+    ErrorCodes,
+    GroundOverlayOptions,
+    HuaweiMap,
+    HuaweiMapOptions,
+    InfoWindowAdapter,
+    LatLng,
+    LatLngBounds,
+    LocationSource,
+    MapBounds,
+    MapEvent,
+    MapType,
+    MarkerOptions,
+    Point,
+    PolygonOptions,
+    PolylineOptions,
+    Projection,
+    RepetitiveTile,
+    SnapshotResult,
+    TileOverlayOptions,
+    TileType,
+    UiSettings,
+    URLTile,
+    VisibleRegion
+} from './interfaces';
+import {Circle, CircleImpl} from './circle';
+import {Marker, MarkerImpl} from './marker';
+import {GroundOverlay, GroundOverlayImpl} from './groundOverlay';
+import {TileOverlay, TileOverlayImpl} from './tileOverlay';
+import {Polygon, PolygonImpl} from './polygon';
+import {Polyline, PolylineImpl} from './polyline';
+
+export {Polyline, ButtCap, CustomCap, RoundCap, SquareCap, Cap} from './polyline';
+export {Polygon} from './polygon';
+export {Circle} from './circle';
+export {TileOverlay} from './tileOverlay';
+export {GroundOverlay} from './groundOverlay';
+export {Marker} from './marker';
+export {
+    AnimationSet,
+    RotateAnimation,
+    AlphaAnimation,
+    ScaleAnimation,
+    TranslateAnimation,
+    InterpolatorType,
+    ErrorCodes,
+    CameraMoveStartedReason,
+    Color,
+    MapType,
+    MapEvent,
+    JointType,
+    Hue,
+    PatternItemType,
+    HuaweiMap,
+    CameraUpdate,
+    Tile,
+    URLTile,
+    RepetitiveTile,
+    TileType
+} from './interfaces';
+
+export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
+
+function initialPropsOf(map: HTMLElement) {
+    const clientRect = map.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(map, null);
+    let props: any = {};
+    props['x'] = clientRect.x;
+    props['y'] = clientRect.y;
+    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
+    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
     return props;
 }
 
-export async function loadMap(jsonMap: string): Promise<HuaweiMap>{
-    const parsedMap = JSON.parse(jsonMap);
-    const map: HuaweiMap = new HuaweiMap();
-    const elem = document.getElementById(parsedMap.id);
+export function sync(mapId: number, mapDiv: string, components: any) {
+    console.log(`SYNC_FUNCTION --- mapId = ${mapId},,,  ${JSON.stringify(components)}`);
 
-    map.element = elem;
-    map.props = temp(map.element);
-    map.id = parsedMap.id;
+    if (!maps.has(mapId)) {
+        const huaweiMap: HuaweiMap = new HuaweiMapImpl(mapDiv, mapId);
+        maps.set(mapId, huaweiMap);
+    }
 
-    await asyncExec('HMSMap', 'setMapViewProps', [map.id, map.props]);
-    const mutationObserver = new MutationObserver(map.scroll);
-    mutationObserver.observe(map.element, { attributes: true });
+    const map = maps.get(mapId);
+    const hashMap = (<HuaweiMapImpl>map).components;
 
-    mapViews.set(map.id, map);
-    
-    return map;
+    for (let i = 0; i < components.length; i++) {
+        console.log(`[FOR_LOOP_TAG] -- ${JSON.stringify(components[i])}`);
+
+        if (hashMap.has(components[i]['_id'])) continue;
+
+        let obj = null;
+        let id: string = components[i]['_id'];
+
+        if (components[i]['_type'] === "circle")
+            obj = new CircleImpl(mapDiv, mapId, id);
+        else if (components[i]['_type'] === 'marker')
+            obj = new MarkerImpl(mapDiv, mapId, id);
+        else if (components[i]['_type'] === 'polygon')
+            obj = new PolygonImpl(mapDiv, mapId, id);
+        else if (components[i]['_type'] === 'polyline')
+            obj = new PolylineImpl(mapDiv, mapId, id);
+        else if (components[i]['_type'] === 'groundOverlay')
+            obj = new GroundOverlayImpl(mapDiv, mapId, id);
+        else if (components[i]['_type'] === 'tileOverlay')
+            obj = new TileOverlayImpl(mapDiv, mapId, id);
+
+        hashMap.set(components[i]['_id'], obj);
+    }
 }
 
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-// CONSTANTS
-// ////////////////////////////////////////////////////////////////////////////////////////////////
-
-export enum PatternItemType {
-    TYPE_GAP = 2,
-    TYPE_DOT = 1,
-    TYPE_DASH = 0
+export async function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions, bounds?: MapBounds): Promise<HuaweiMap> {
+    if (!document.getElementById(divId)) return Promise.reject(ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND));
+    const initialProps = initialPropsOf(document.getElementById(divId));
+    if (bounds) {
+        if (bounds.marginTop) initialProps['marginTop'] = bounds.marginTop;
+        if (bounds.marginBottom) initialProps['marginBottom'] = bounds.marginBottom;
+    }
+    const mapId = await asyncExec('HMSMap', 'initMap', [divId,
+        {'mapOptions': huaweiMapOptions, 'initialProps': initialProps}]);
+    const huaweiMap: HuaweiMap = new HuaweiMapImpl(divId, mapId);
+    maps.set(huaweiMap.getId(), huaweiMap);
+    return huaweiMap;
 }
 
-export enum JointType {
-    ROUND = 2,
-    BEVEL = 1,
-    DEFAULT = 0
+export async function showMap(divId: string): Promise<HuaweiMap> {
+    if (!document.getElementById(divId)) return Promise.reject(ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND));
+    const mapId = await asyncExec("HMSMap", "showMap", [divId]);
+    return maps.get(mapId);
 }
 
-export enum CapType {
-    TYPE_BUTT_CAP = 0,
-    TYPE_SQUARE_CAP = 1,
-    TYPE_ROUND_CAP = 2,
-    TYPE_CUSTOM_CAP = 3
+export async function hasPermission(): Promise<boolean> {
+    const json = await asyncExec("HMSMap", "hasPermission", []);
+    return json.result;
 }
 
-export enum CameraMoveReason {
-    REASON_DEVELOPER_ANIMATION = 3,
-    REASON_API_ANIMATION = 2,
-    REASON_GESTURE = 1
+export async function requestPermission(): Promise<void> {
+    return asyncExec("HMSMap", "requestPermission", []);
 }
 
-export enum Color {
-    RED = -65536,
-    DKGRAY = -12303292,
-    GRAY = -7829368,
-    WHITE = -1,
-    BLUE = -16776961,
-    BLACK = -16777216,
-    LTGRAY = -3355444,
-    MAGENTA = -65281,
-    YELLOW = -256,
-    CYAN = -16711681,
-    GREEN = -16711936,
-    TRANSPARENT = 0
+export async function computeDistanceBetween(from: LatLng, to: LatLng): Promise<ComputeDistanceResult> {
+    return asyncExec("HMSMap", "computeDistanceBetween", [{"from": from, "to": to}]);
 }
 
-export enum MapType {
-    MAP_TYPE_NONE = 0,
-    MAP_TYPE_SATELLITE = 2,
-    MAP_TYPE_NORMAL = 1,
-    MAP_TYPE_HYBRID = 4,
-    MAP_TYPE_TERRAIN = 3,
+export async function setApiKey(apiKey: string): Promise<void> {
+    return asyncExec("HMSMap", "setApiKey", [{"apiKey": apiKey}]);
 }
 
-export enum MarkerEvent {
-    MARKER_DRAG = 2,
-    MARKER_DRAG_END = 3,
-    MARKER_DRAG_START = 1
+export function disableLogger(): Promise<void> {
+    return asyncExec('HMSMap', 'disableLogger', []);
 }
 
-export enum Hue {
-    HUE_GREEN = 120,
-    HUE_AZURE = 210,
-    HUE_ROSE = 330,
-    HUE_CYAN = 180,
-    HUE_ORANGE = 30,
-    HUE_MAGENTA = 300,
-    HUE_VIOLET = 270,
-    HUE_YELLOW = 60,
-    HUE_BLUE = 240,
-    HUE_RED = 0,
+export function enableLogger(): Promise<void> {
+    return asyncExec('HMSMap', 'enableLogger', []);
+}
+
+class HuaweiMapImpl implements HuaweiMap {
+
+    public readonly components: Map<string, any> = new Map<string, any>();
+    private readonly id: number;
+    private readonly divId: string;
+    private readonly uiSettings: UiSettings;
+    private readonly projection: Projection;
+    private htmlElement: HTMLElement;
+    private mo: MutationObserver;
+
+    constructor(divId: string, mapId: number) {
+        console.log(`Huawei map constructed with the div id ${divId} :: and the props ${mapId}`);
+
+        this.id = mapId;
+        this.divId = divId;
+        this.projection = new ProjectionImpl(divId);
+        this.uiSettings = new UiSettingsImpl(divId);
+        this.htmlElement = document.getElementById(divId);
+        this.mo = new MutationObserver(() => {
+            const x = document.getElementById(this.divId).getBoundingClientRect().x;
+            const y = document.getElementById(this.divId).getBoundingClientRect().y;
+            this.forceUpdateXAndY(x, y);
+        });
+        const config = {attributes: true, childList: true, subtree: true};
+        this.mo.observe(document.body, config);
+    }
+
+    // IONIC FRAMEWORK SCROLL EVENT
+    scroll(): void {
+        const mapRect = document.getElementById(this.divId).getBoundingClientRect();
+        this.forceUpdateXAndY(mapRect.x, mapRect.y);
+    }
+
+    async destroyMap(): Promise<void> {
+        this.components.clear();
+        maps.delete(this.id);
+        return asyncExec("HMSMap", "destroyMap", [this.divId]);
+    }
+
+    async hideMap(): Promise<void> {
+        return asyncExec("HMSMap", "hideMap", [this.divId]);
+    }
+
+    async on(event: MapEvent, callback: (val: any) => void): Promise<void> {
+        const fixedFunctionNameForJavaScript: string = `${event}_${this.id}`;
+        const fixedFunctionNameForJava: string = `set${event[0].toUpperCase()}${event.substr(1)}Listener`;
+
+        return asyncExec('HMSMap', 'mapOptions', [this.divId, 'setListener', fixedFunctionNameForJava, {'content': callback.toString()}])
+            .then(value => {
+                window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
+            }).catch(err => console.log(err));
+    }
+
+    async addCircle(circleOptions: CircleOptions): Promise<Circle> {
+        if (!circleOptions["center"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.CENTER_PROPERTY_MUST_DEFINED));
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "CIRCLE", circleOptions]);
+        const circle: Circle = new CircleImpl(this.divId, this.id, componentId);
+        this.components.set(circle.getId(), circle);
+        return circle;
+    }
+
+    async addMarker(markerOptions: MarkerOptions): Promise<Marker> {
+        if (!markerOptions["position"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "MARKER", markerOptions]);
+        const marker: Marker = new MarkerImpl(this.divId, this.id, componentId);
+        this.components.set(marker.getId(), marker);
+        return marker;
+    }
+
+    async addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay> {
+        if (!groundOverlayOptions["position"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "GROUND_OVERLAY", groundOverlayOptions]);
+        const groundOverlay: GroundOverlay = new GroundOverlayImpl(this.divId, this.id, componentId);
+        this.components.set(groundOverlay.getId(), groundOverlay);
+        return groundOverlay;
+    }
+
+    async addTileOverlay(tileOverlayOptions: TileOverlayOptions): Promise<TileOverlay> {
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "TILE_OVERLAY", tileOverlayOptions]);
+        const tileOverlay: TileOverlay = new TileOverlayImpl(this.divId, this.id, componentId);
+        this.components.set(tileOverlay.getId(), tileOverlay);
+        return tileOverlay;
+    }
+
+    async addPolygon(polygonOptions: PolygonOptions): Promise<Polygon> {
+        if (!polygonOptions["points"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "POLYGON", polygonOptions]);
+        const polygon: Polygon = new PolygonImpl(this.divId, this.id, componentId);
+        this.components.set(polygon.getId(), polygon);
+        return polygon;
+    }
+
+    async addPolyline(polylineOptions: PolylineOptions): Promise<Polyline> {
+        if (!polylineOptions["points"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
+        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "POLYLINE", polylineOptions]);
+        const polyline: Polyline = new PolylineImpl(this.divId, this.id, componentId);
+        this.components.set(polyline.getId(), polyline);
+        return polyline;
+    }
+
+    animateCamera(cameraUpdate: CameraUpdate): Promise<void>;
+    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback: CancelableCallback): Promise<void>;
+    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback?: CancelableCallback, durationMs?: number): Promise<void> {
+        const onFinishEventForJavascript = `${MapEvent.ON_CANCELABLE_CALLBACK_FINISH}_${this.id}`;
+        const onCancelEventForJavascript = `${MapEvent.ON_CANCELABLE_CALLBACK_CANCEL}_${this.id}`;
+        (<any>window)[onFinishEventForJavascript] = cancelableCallback.onFinish;
+        (<any>window)[onCancelEventForJavascript] = cancelableCallback.onCancel;
+        const props: any = {};
+        if (cancelableCallback.onFinish) props["isOnFinish"] = true;
+        if (cancelableCallback.onCancel) props["isOnCancel"] = true;
+        if (durationMs) props["duration"] = durationMs;
+        return (<CameraUpdateImpl>cameraUpdate).animateCamera(this.divId, props);
+    }
+
+    moveCamera(cameraUpdate: CameraUpdate): Promise<void> {
+        return (<CameraUpdateImpl>cameraUpdate).moveCamera(this.divId);
+    }
+
+    clear(): Promise<void> {
+        this.components.clear();
+        return this.getHuaweiMapOptions('clear');
+    }
+
+    resetMinMaxZoomPreference(): Promise<void> {
+        return this.getHuaweiMapOptions('resetMinMaxZoomPreference');
+    }
+
+    stopAnimation(): Promise<void> {
+        return this.getHuaweiMapOptions('stopAnimation');
+    }
+
+    getCameraPosition(): Promise<CameraPosition> {
+        return this.getHuaweiMapOptions('getCameraPosition');
+    }
+
+    getMapType(): Promise<MapType> {
+        return this.getHuaweiMapOptions('getMapType');
+    }
+
+    getMaxZoomLevel(): Promise<number> {
+        return this.getHuaweiMapOptions('getMaxZoomLevel');
+    }
+
+    getMinZoomLevel(): Promise<number> {
+        return this.getHuaweiMapOptions('getMinZoomLevel');
+    }
+
+    getProjection() {
+        return this.projection;
+    }
+
+    getUiSettings(): UiSettings {
+        return this.uiSettings;
+    }
+
+    isBuildingsEnabled(): Promise<boolean> {
+        return this.getHuaweiMapOptions('isBuildingsEnabled');
+    }
+
+    isMyLocationEnabled(): Promise<boolean> {
+        return this.getHuaweiMapOptions('isMyLocationEnabled');
+    }
+
+    isTrafficEnabled(): Promise<boolean> {
+        return this.getHuaweiMapOptions('isTrafficEnabled');
+    }
+
+    isIndoorEnabled(): Promise<boolean> {
+        return this.getHuaweiMapOptions('isIndoorEnabled');
+    }
+
+    setBuildingsEnabled(buildingsEnabled: boolean): Promise<void> {
+        return this.setHuaweiMapOptions('setBuildingsEnabled', {'buildingsEnabled': buildingsEnabled});
+    }
+
+    setContentDescription(contentDescription: string): Promise<void> {
+        return this.setHuaweiMapOptions('setContentDescription', {'contentDescription': contentDescription});
+    }
+
+    setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void> {
+        return this.setHuaweiMapOptions('setInfoWindowAdapter', {'infoWindowAdapter': infoWindowAdapter})
+    }
+
+    setLatLngBoundsForCameraTarget(latLngBounds: LatLngBounds): Promise<void> {
+        return this.setHuaweiMapOptions('setLatLngBoundsForCameraTarget', {'latLngBounds': latLngBounds});
+    }
+
+    setLocationSource(locationSource: LocationSource): Promise<void> {
+        return this.setHuaweiMapOptions('setLocationSource', {'locationSource': locationSource});
+    }
+
+    setMapStyle(mapStyle: MapStyleOptions): Promise<void> {
+        return this.setHuaweiMapOptions('setMapStyle', {'mapStyle': mapStyle.getResourceId()});
+    }
+
+    setMapType(mapType: MapType): Promise<void> {
+        return this.setHuaweiMapOptions('setMapType', {'mapType': mapType});
+    }
+
+    setMarkersClustering(markersClustering: boolean): Promise<void> {
+        return this.setHuaweiMapOptions('setMarkersClustering', {'markersClustering': markersClustering});
+    }
+
+    setMaxZoomPreference(maxZoomPreference: number): Promise<void> {
+        return this.setHuaweiMapOptions('setMaxZoomPreference', {'maxZoomPreference': maxZoomPreference});
+    }
+
+    setMinZoomPreference(minZoomPreference: number): Promise<void> {
+        return this.setHuaweiMapOptions('setMinZoomPreference', {'minZoomPreference': minZoomPreference});
+    }
+
+    setMyLocationEnabled(myLocationEnabled: boolean): Promise<void> {
+        return this.setHuaweiMapOptions('setMyLocationEnabled', {'myLocationEnabled': myLocationEnabled});
+    }
+
+    setPadding(left: number, top: number, right: number, bottom: number): Promise<void> {
+        return this.setHuaweiMapOptions('setPadding', {'left': left, 'top': top, 'right': right, 'bottom': bottom});
+    }
+
+    setTrafficEnabled(trafficEnabled: boolean): Promise<void> {
+        return this.setHuaweiMapOptions('setTrafficEnabled', {'trafficEnabled': trafficEnabled});
+    }
+
+    getComponent(key: string): any {
+        return this.components.get(key);
+    }
+
+    getId(): number {
+        return this.id;
+    }
+
+    snapshot(onReadyCallback: (snapshot: SnapshotResult) => void): Promise<void> {
+        const eventName = `${MapEvent.ON_SNAPSHOT_READY_CALLBACK}_${this.id}`;
+        (<any>window)[eventName] = onReadyCallback;
+        return this.getHuaweiMapOptions('snapshot');
+    }
+
+    removeComponent(key: string): void {
+        if (this.components.has(key)) {
+            this.components.get(key).remove();
+            this.components.delete(key);
+        } else {
+            throw ErrorCodes.toString(ErrorCodes.NO_COMPONENT_EXISTS_GIVEN_ID);
+        }
+    }
+
+    private forceUpdateXAndY(x: number, y: number): Promise<void> {
+        return asyncExec("HMSMap", "forceUpdateXAndY", [this.divId, x, y]);
+    }
+
+    private setHuaweiMapOptions(func: string, props: any): Promise<void> {
+        return asyncExec("HMSMap", "mapOptions", [this.divId, 'setHuaweiMapOptions', func, props]);
+    }
+
+    private async getHuaweiMapOptions(func: string): Promise<any> {
+        const result = await asyncExec("HMSMap", "mapOptions", [this.divId, 'getHuaweiMapOptions', func, {}]);
+        return result.value;
+    }
 
 }
 
-export enum MapEvent {
-    CIRCLE_CLICK = "circleClick",
-    MAP_CLICK = "mapClick",
-    MAP_LONG_CLICK = "mapLongClick",
-    INFO_WINDOW_CLICK = "infoWindowClick",
-    CAMERA_MOVE_STARTED = "cameraMoveStarted",
-    POLYGON_CLICK = "polygonClick",
-    POLYLINE_CLICK = "polylineClick",
-    GROUND_OVERLAY_CLICK = "groundOverlayClick",
-    CAMERA_MOVE = "cameraMove",
-    CAMERA_IDLE = "cameraIdle",
-    MAP_LOADED = "mapLoaded",
-    MARKER_CLICK = "markerClick",
-    MY_LOCATION_BUTTON_CLICK = "myLocationButtonClick",
-    MY_LOCATION_CLICK = "myLocationClick",
-    MARKER_DRAG = "markerDrag"
+class UiSettingsImpl implements UiSettings {
+
+    private readonly mapDivId: string;
+
+    constructor(mapDivId: string) {
+        this.mapDivId = mapDivId;
+    }
+
+    isCompassEnabled(): Promise<boolean> {
+        return this.getUiSettings('isCompassEnabled');
+    }
+
+    isIndoorLevelPickerEnabled(): Promise<boolean> {
+        return this.getUiSettings('isIndoorLevelPickerEnabled');
+    }
+
+    isMapToolbarEnabled(): Promise<boolean> {
+        return this.getUiSettings('isMapToolbarEnabled');
+    }
+
+    isMyLocationButtonEnabled(): Promise<boolean> {
+        return this.getUiSettings('isMyLocationButtonEnabled');
+    }
+
+    isRotateGesturesEnabled(): Promise<boolean> {
+        return this.getUiSettings('isRotateGesturesEnabled');
+    }
+
+    isScrollGesturesEnabled(): Promise<boolean> {
+        return this.getUiSettings('isScrollGesturesEnabled');
+    }
+
+    isScrollGesturesEnabledDuringRotateOrZoom(): Promise<boolean> {
+        return this.getUiSettings('isScrollGesturesEnabledDuringRotateOrZoom');
+    }
+
+    isTiltGesturesEnabled(): Promise<boolean> {
+        return this.getUiSettings('isTiltGesturesEnabled');
+    }
+
+    isZoomControlsEnabled(): Promise<boolean> {
+        return this.getUiSettings('isZoomControlsEnabled');
+    }
+
+    isZoomGesturesEnabled(): Promise<boolean> {
+        return this.getUiSettings('isZoomGesturesEnabled');
+    }
+
+    setAllGesturesEnabled(allGesturesEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setAllGesturesEnabled', {'allGesturesEnabled': allGesturesEnabled});
+    }
+
+    setCompassEnabled(compassEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setCompassEnabled', {'compassEnabled': compassEnabled});
+
+    }
+
+    setIndoorLevelPickerEnabled(indoorLevelPickerEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setIndoorLevelPickerEnabled', {'indoorLevelPickerEnabled': indoorLevelPickerEnabled});
+    }
+
+    setMapToolbarEnabled(mapToolbarEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setMapToolbarEnabled', {'mapToolbarEnabled': mapToolbarEnabled});
+    }
+
+    setMyLocationButtonEnabled(myLocationButtonEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setMyLocationButtonEnabled', {'myLocationButtonEnabled': myLocationButtonEnabled});
+    }
+
+    setRotateGesturesEnabled(rotateGesturesEnabled: boolean): Promise<void> {
+        return this.setUiSettings("setRotateGesturesEnabled", {'rotateGesturesEnabled': rotateGesturesEnabled});
+    }
+
+    setScrollGesturesEnabled(scrollGesturesEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setScrollGesturesEnabled', {'scrollGesturesEnabled': scrollGesturesEnabled});
+    }
+
+    setScrollGesturesEnabledDuringRotateOrZoom(scrollGesturesEnabledDuringRotateOrZoom: boolean): Promise<void> {
+        return this.setUiSettings('setScrollGesturesEnabledDuringRotateOrZoom', {'scrollGesturesEnabledDuringRotateOrZoom': scrollGesturesEnabledDuringRotateOrZoom});
+    }
+
+    setTiltGesturesEnabled(tiltGesturesEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setTiltGesturesEnabled', {'tiltGesturesEnabled': tiltGesturesEnabled});
+    }
+
+    setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setZoomControlsEnabled', {'zoomControlsEnabled': zoomControlsEnabled});
+    }
+
+    setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void> {
+        return this.setUiSettings('setZoomGesturesEnabled', {'zoomGesturesEnabled': zoomGesturesEnabled});
+    }
+
+    private setUiSettings(func: string, props: any): Promise<void> {
+        return asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
+    }
+
+    private async getUiSettings(func: string) {
+        const result = await asyncExec("HMSMap", "mapOptions", [this.mapDivId, 'getUiSettings', func, {}]);
+        return result.value;
+    }
 }
 
-export enum CameraUpdateMethod {
-    CAMERA_POSITION = "newCameraPosition",
-    LATLNG = "newLatLng",
-    LATLNG_BOUNDS = "newLatLngBounds",
-    LATLNG_ZOOM = "newLatLngZoom",
-    SCROLL_BY = "scrollBy",
-    ZOOM_BY = "zoomBy",
-    ZOOM_IN = "zoomIn",
-    ZOOM_OUT = "zoomOut",
-    ZOOM_TO = "zoomTo"
+class CameraUpdateImpl implements CameraUpdate {
+
+    props: any;
+    event: string;
+
+    moveCamera(mapId: string): Promise<any> {
+        return asyncExec('HMSMap', 'mapOptions', [mapId, "moveCamera", this.event, this.props]);
+    }
+
+    animateCamera(mapId: string, props: any): Promise<any> {
+        return asyncExec('HMSMap', 'mapOptions', [mapId, "animateCamera", this.event, {...this.props, ...props}]);
+    }
+}
+
+export class CameraUpdateFactory {
+    private constructor() {
+    }
+
+    static newCameraPosition(cameraPosition: CameraPosition): CameraUpdate {
+        return this.constructCameraUpdateImpl("newCameraPosition", {'cameraPosition': cameraPosition});
+    }
+
+    static newLatLng(latLng: LatLng): CameraUpdate {
+        return this.constructCameraUpdateImpl("newLatLng", {'latLng': latLng});
+    }
+
+    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number): CameraUpdate;
+
+    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number, width?: number, height?: number): CameraUpdate {
+        let props: any = {};
+        props['bounds'] = latLngBounds;
+        props['padding'] = padding;
+        if (width && height) {
+            props['width'] = width;
+            props['height'] = height;
+        }
+        return this.constructCameraUpdateImpl("newLatLngBounds", props);
+    }
+
+    static newLatLngZoom(latLng: LatLng, zoom: number): CameraUpdate {
+        return this.constructCameraUpdateImpl("newLatLngZoom", {"latLng": latLng, "zoom": zoom});
+    }
+
+    static scrollBy(xPixel: number, yPixel: number): CameraUpdate {
+        return this.constructCameraUpdateImpl("scrollBy", {'xPixel': xPixel, 'yPixel': yPixel});
+    }
+
+    static zoomBy(amount: number): CameraUpdate;
+
+    static zoomBy(amount: number, focus?: Point): CameraUpdate {
+        let props: any = {};
+        props['amount'] = amount;
+        if (focus) props['focus'] = focus;
+        return this.constructCameraUpdateImpl("zoomBy", props);
+    }
+
+    static zoomIn(): CameraUpdate {
+        return this.constructCameraUpdateImpl("zoomIn", {});
+    }
+
+    static zoomOut(): CameraUpdate {
+        return this.constructCameraUpdateImpl("zoomOut", {});
+    }
+
+    static zoomTo(zoom: number): CameraUpdate {
+        return this.constructCameraUpdateImpl("zoomTo", {"zoom": zoom});
+    }
+
+    private static constructCameraUpdateImpl(event: string, props: any): CameraUpdateImpl {
+        let cameraUpdate = new CameraUpdateImpl();
+        cameraUpdate.event = event;
+        cameraUpdate.props = props;
+        return cameraUpdate;
+    }
+}
+
+class ProjectionImpl implements Projection {
+    private readonly divId: string;
+
+    constructor(divId: string) {
+        this.divId = divId;
+    }
+
+    fromScreenLocation(point: Point): Promise<LatLng> {
+        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "fromScreenLocation", {"point": point}]);
+    }
+
+    getVisibleRegion(): Promise<VisibleRegion> {
+        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "getVisibleRegion", {}]);
+    }
+
+    toScreenLocation(latLng: LatLng): Promise<Point> {
+        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "toScreenLocation", {"latLng": latLng}]);
+    }
+}
+
+export class MapStyleOptions {
+    private readonly resourceId: number;
+
+    private constructor(resourceId: number) {
+        this.resourceId = resourceId;
+    }
+
+    public static loadRawResourceStyle(resourceId: number): MapStyleOptions {
+        return new MapStyleOptions(resourceId);
+    }
+
+    getResourceId(): number {
+        return this.resourceId;
+    }
 }
