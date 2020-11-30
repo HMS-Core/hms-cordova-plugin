@@ -1,21 +1,22 @@
 /*
- * Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 
 package com.huawei.hms.cordova.account.utils;
 
 import android.accounts.Account;
-import android.util.Log;
 
 import com.huawei.hms.support.api.entity.auth.Scope;
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParams;
@@ -47,57 +48,65 @@ public class HMSAccountUtils {
         signInJSONObject.put("authorizationCode", authHuaweiId.getAuthorizationCode());
         signInJSONObject.put("unionId", authHuaweiId.getUnionId());
         signInJSONObject.put("ageRange", authHuaweiId.getAgeRange());
-        signInJSONObject.put("unionId", authHuaweiId.getUnionId());
         signInJSONObject.put("countryCode", authHuaweiId.getCountryCode());
         signInJSONObject.put("avatarUriString", authHuaweiId.getAvatarUriString());
         signInJSONObject.put("expressionTimeSecs", authHuaweiId.getExpirationTimeSecs());
         signInJSONObject.put("serviceCountryCode", authHuaweiId.getServiceCountryCode());
-        signInJSONObject.put("uId", authHuaweiId.getUid());
+        signInJSONObject.put("uid", authHuaweiId.getUid());
         signInJSONObject.put("openId", authHuaweiId.getOpenId());
         signInJSONObject.put("gender", authHuaweiId.getGender());
         signInJSONObject.put("describeContentsInAuthHuaweiId", authHuaweiId.describeContents());
         signInJSONObject.put("status", authHuaweiId.getStatus());
+        signInJSONObject.put("account", fromAccountToJSONObject(authHuaweiId.getHuaweiAccount()));
 
-        signInJSONObject.put("authorizedScopes", fromAuthorizedScopesToJsonArray(authHuaweiId.getAuthorizedScopes()));
-
-        signInJSONObject.put("extensionScopes", fromExtensionScopesToJsonArray(authHuaweiId.getExtensionScopes()));
+        signInJSONObject.put("authorizedScopes", fromScopesToJsonArray(authHuaweiId.getAuthorizedScopes()));
+        signInJSONObject.put("extensionScopes", fromScopesToJsonArray(authHuaweiId.getExtensionScopes()));
 
         return signInJSONObject;
 
     }
 
-    public static JSONArray fromAuthorizedScopesToJsonArray(Set<Scope> authorizedScopes) {
-        JSONArray arrayListAuthorizedScopes = new JSONArray();
-        for (Iterator<Scope> it = authorizedScopes.iterator(); it.hasNext(); ) {
-            String f = it.next().toString();
-            arrayListAuthorizedScopes.put(f);
-        }
-        return arrayListAuthorizedScopes;
-    }
 
-    public static JSONArray fromExtensionScopesToJsonArray(Set<Scope> extensionScopes) {
-        JSONArray arrayListExtensionScopes = new JSONArray();
-        for (Iterator<Scope> it = extensionScopes.iterator(); it.hasNext(); ) {
+    public static JSONArray fromScopesToJsonArray(Set<Scope> scopes) {
+        JSONArray arrayListScopes = new JSONArray();
+        for (Iterator<Scope> it = scopes.iterator(); it.hasNext(); ) {
             String f = it.next().toString();
-            arrayListExtensionScopes.put(f);
+            arrayListScopes.put(f);
         }
-        return arrayListExtensionScopes;
+        return arrayListScopes;
     }
 
     public static JSONObject fromAccountToJSONObject(Account account) throws JSONException {
         JSONObject accountJsonObject = new JSONObject();
-        accountJsonObject.put("type", account.type);
-        accountJsonObject.put("name", account.name);
-
+        if (account == null) {
+            return null;
+        } else {
+            accountJsonObject.put("type", account.type);
+            accountJsonObject.put("name", account.name);
+        }
         return accountJsonObject;
     }
 
-    public static HuaweiIdAuthParams fromJSONObjectToHuaweiIdAuthParams(JSONArray authParams) throws JSONException {
-        HuaweiIdAuthParamsHelper builder = new HuaweiIdAuthParamsHelper(HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM);
+    public static HuaweiIdAuthParams fromJSONObjectToHuaweiIdAuthParams(JSONArray scopes, String huaweiIdAuthParams, JSONArray jsonScopeList) throws JSONException {
+        HuaweiIdAuthParamsHelper builder;
+        if (huaweiIdAuthParams.isEmpty()) {
+            builder = new HuaweiIdAuthParamsHelper();
+        } else {
+            if (huaweiIdAuthParams.equals("DEFAULT_AUTH_REQUEST_PARAM")) {
+                builder = new HuaweiIdAuthParamsHelper(HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM);
+            } else if (huaweiIdAuthParams.equals("DEFAULT_AUTH_REQUEST_PARAM_GAME")) {
+                builder = new HuaweiIdAuthParamsHelper(HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM_GAME);
+            } else {
+                return null;
+            }
+        }
+
+
         ArrayList<String> listData = new ArrayList<String>();
-        if (authParams != null) {
-            for (int i = 0; i < authParams.length(); i++) {
-                listData.add(authParams.getString(i));
+        List<Scope> scopeList = fromJSONArrayToScopeList(jsonScopeList);
+        if (scopes != null) {
+            for (int i = 0; i < scopes.length(); i++) {
+                listData.add(scopes.getString(i));
             }
         }
         if (listData.contains("profile")) {
@@ -124,7 +133,7 @@ public class HMSAccountUtils {
             builder.setShippingAddress();
         }
 
-        if (listData.contains("uId")) {
+        if (listData.contains("uid")) {
             builder.setUid();
         }
 
@@ -136,6 +145,9 @@ public class HMSAccountUtils {
             builder.setAuthorizationCode();
         }
 
+        if (scopeList.size() > 0) {
+            builder.setScopeList(scopeList);
+        }
         HuaweiIdAuthParams buildAuthParams = builder.createParams();
 
         return buildAuthParams;
@@ -159,13 +171,13 @@ public class HMSAccountUtils {
 
         account = new Account(accountName, accountType);
 
-        return account; 
+        return account;
     }
 
     public static AuthHuaweiId fromJSONObjectToAuthHuaweiId(JSONObject authHuawei) throws JSONException {
 
         String openId = authHuawei.getString("openId");
-        String uid = authHuawei.getString("uId");
+        String uid = authHuawei.getString("uid");
         String displayName = authHuawei.getString("displayName");
         String photoUrl = authHuawei.getString("photoUrl");
         String accessToken = authHuawei.getString("accessToken");

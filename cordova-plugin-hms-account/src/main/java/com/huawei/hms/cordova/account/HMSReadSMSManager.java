@@ -1,16 +1,18 @@
 /*
- * Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
 
 package com.huawei.hms.cordova.account;
 
@@ -22,28 +24,27 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.cordova.account.exceptions.NullMessageDigestException;
 import com.huawei.hms.cordova.account.helpers.SMSBroadcastReceiver;
-import com.huawei.hms.cordova.account.utils.Error;
 import com.huawei.hms.support.sms.ReadSmsManager;
 import com.huawei.hms.support.sms.common.ReadSmsConstant;
 
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class HMSReadSMSManager extends CordovaPlugin {
+public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
     private static final String TAG = HMSReadSMSManager.class.getSimpleName();
     private static SMSBroadcastReceiver smsBroadcastReceiver;
 
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
         if ("smsVerificationCode".equals(action)) {
+            logger.startMethodExecutionTimer(action);
             smsVerificationCode(callbackContext);
             return true;
         } else if ("obtainHashCode".equals(action)) {
@@ -63,23 +64,22 @@ public class HMSReadSMSManager extends CordovaPlugin {
                 if (smsBroadcastReceiver != null) {
                     cordova.getContext().unregisterReceiver(smsBroadcastReceiver);
                 }
-                smsBroadcastReceiver = new SMSBroadcastReceiver(callbackContext);
+                smsBroadcastReceiver = new SMSBroadcastReceiver(logger, callbackContext);
 
                 Log.i(TAG, "smsVerificationCode onSuccess");
 
                 IntentFilter intentFilter = new IntentFilter(ReadSmsConstant.READ_SMS_BROADCAST_ACTION);
 
                 cordova.getContext().registerReceiver(smsBroadcastReceiver, intentFilter);
-
             }
         });
-        smsVerificationCodeTask.addOnFailureListener(e ->
-                Log.i(TAG, "smsVerificationCode onFailure : " + e.getMessage())
-        );
+        smsVerificationCodeTask.addOnFailureListener(e -> {
+            Log.i(TAG, "smsVerificationCode onFailure : " + exceptions.getErrorMessage(e).toString());
+        });
 
     }
 
-    private void obtainHashCode(CallbackContext callbackContext) throws JSONException {
+    private void obtainHashCode(CallbackContext callbackContext) {
         Log.i(TAG, "obtainHashCode start");
         String packageName = cordova.getContext().getPackageName();
         String signature = getSignature(cordova.getContext(), packageName);
@@ -89,7 +89,7 @@ public class HMSReadSMSManager extends CordovaPlugin {
             String hashCode = getHashCode(packageName, messageDigest, signature);
             callbackContext.success(hashCode);
         } catch (Exception e) {
-            callbackContext.error(Error.getErrorMessage(e));
+            callbackContext.error(exceptions.getErrorMessage(e));
         }
         Log.i(TAG, "obtainHashCode end");
     }
@@ -122,15 +122,20 @@ public class HMSReadSMSManager extends CordovaPlugin {
         return signatureArrs[0].toCharsString();
     }
 
-    private String getHashCode(String packageName, MessageDigest messageDigest, String signature) {
+    private String getHashCode(String packageName, MessageDigest messageDigest, String signature) throws Exception {
         Log.i(TAG, "getHashCode start");
         String appInfo = packageName + " " + signature;
         messageDigest.update(appInfo.getBytes(StandardCharsets.UTF_8));
         byte[] hashSignature = messageDigest.digest();
         hashSignature = Arrays.copyOfRange(hashSignature, 0, 9);
         String base64Hash = Base64.encodeToString(hashSignature, Base64.NO_PADDING | Base64.NO_WRAP);
-        base64Hash = base64Hash.substring(0, 11);
-        return base64Hash;
+        if (base64Hash.length() > 0) {
+            base64Hash = base64Hash.substring(0, 11);
+            return base64Hash;
+        } else {
+            throw new NullMessageDigestException();
+        }
+
     }
 
 

@@ -1,17 +1,17 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 
 'use strict';
@@ -35,11 +35,10 @@ module.exports = function(context) {
     var repoAddedLines = addHuaweiRepo(depAddedLines);
 
     FSUtils.writeFile(ROOT_GRADLE_FILE, repoAddedLines.join(NEW_LINE));
-
 }
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = 'classpath \'com.huawei.agconnect:agcp:1.2.1.301\' ' + COMMENT;
+    var AG_CONNECT_DEPENDENCY = 'classpath \'com.huawei.agconnect:agcp:1.4.1.300\' ' + COMMENT;
 
     var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
 
@@ -55,7 +54,6 @@ function addAGConnectDependency(lines) {
     lines.splice(index + 1, 0, AG_CONNECT_DEPENDENCY);
     return lines;
 }
-
 
 function addHuaweiRepo(lines) {
     var HUAWEI_REPO = 'maven { url \'http://developer.huawei.com/repo/\' } ' + COMMENT
