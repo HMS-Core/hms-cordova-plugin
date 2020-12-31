@@ -13,16 +13,41 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-export declare function isEnvReady(): Promise<IsEnvReadyResult>;
-export declare function isSandboxActivated(): Promise<IsSandboxActivatedResult>;
-export declare function obtainOwnedPurchases(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
-export declare function obtainProductInfo(productInfoRequest: ProductInfoReq): Promise<ProductInfoResult>;
-export declare function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseIntentResult>;
-export declare function consumeOwnedPurchase(consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult>;
-export declare function obtainOwnedPurchaseRecord(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
-export declare function startIapActivity(startIapActivityRequest: StartIapActivityReq): Promise<void>;
-export declare function enableLogger(): Promise<void>;
-export declare function disableLogger(): Promise<void>;
+import { asyncExec } from "./utils";
+
+export function isEnvReady(): Promise<IsEnvReadyResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["isEnvReady"]);
+}
+export function isSandboxActivated(): Promise<IsSandboxActivatedResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["isSandboxActivated"]);
+}
+export function obtainOwnedPurchases(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchases", ownedPurchasesRequest]);
+}
+export function obtainProductInfo(productInfoRequest: ProductInfoReq): Promise<ProductInfoResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainProductInfo", productInfoRequest]);
+}
+export function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseIntentResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["createPurchaseIntent", purchaseIntentRequest]);
+}
+export function consumeOwnedPurchase(
+    consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq
+): Promise<ConsumeOwnedPurchaseResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["consumeOwnedPurchase", consumeOwnedPurchaseRequest]);
+}
+export function obtainOwnedPurchaseRecord(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchaseRecord", ownedPurchasesRequest]);
+}
+export function startIapActivity(startIapActivityRequest: StartIapActivityReq): Promise<void> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["startIapActivity", startIapActivityRequest]);
+}
+export function enableLogger(): Promise<void> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["enableLogger"]);
+}
+export function disableLogger(): Promise<void> {
+    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["disableLogger"]);
+}
+
 /**
  * INTERFACES
  */

@@ -13,7 +13,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-export declare function asyncExec(clazz: string, reference: string, args?: any[]): Promise<any>;
+import { exec } from "cordova";
+
+export function asyncExec(clazz: string, reference: string, args: any[] = []): Promise<any> {
+    return new Promise((resolve, reject) => {
+        exec(resolve, reject, clazz, reference, args);
+    });
+}
+
 declare global {
     interface Window {
         hmsEvents: {
@@ -24,3 +31,16 @@ declare global {
         [key: string]: any;
     }
 }
+
+function initEventHandler() {
+    if (window.hmsEvents != null) return;
+    window.hmsEvents = {};
+    window.runHMSEvent = (eventName, data) => {
+        if (window.hmsEvents.hasOwnProperty(eventName)) window.hmsEvents[eventName](data);
+    };
+    window.subscribeHMSEvent = (eventName, handler) => {
+        window.hmsEvents[eventName] = handler;
+    };
+}
+
+initEventHandler();

@@ -13,31 +13,23 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
-var fs = require("fs");
+package com.huawei.hms.cordova.iap;
 
-var FSUtils = (function () {
-    var api = {};
+import android.content.Intent;
 
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path);
-        } catch (err) {
-            /*NOPE*/
-        }
-        return false;
-    };
-
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
-    };
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    };
-
-    return api;
-})();
-
-module.exports = FSUtils;
+/**
+ * @since 2020-12-25
+ * Interface which contains
+ * onActivityResult method.
+ */
+public interface OnActivityResultCallback {
+    /**
+     * Activity result handler method.
+     *
+     * @param requestCode Request code
+     * @param resultCode  Result code
+     * @param data        Intent that contains data
+     */
+    void onActivityResult(final int requestCode, final int resultCode, final Intent data);
+}

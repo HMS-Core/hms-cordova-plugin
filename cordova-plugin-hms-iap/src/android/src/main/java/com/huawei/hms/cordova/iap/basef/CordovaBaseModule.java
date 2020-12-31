@@ -13,31 +13,23 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
-var fs = require("fs");
+package com.huawei.hms.cordova.iap.basef;
 
-var FSUtils = (function () {
-    var api = {};
+public abstract class CordovaBaseModule {
+    private final String reference;
 
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path);
-        } catch (err) {
-            /*NOPE*/
-        }
-        return false;
-    };
+    public CordovaBaseModule() {
+        this.reference = this.getClass().getSimpleName();
+    }
+    public void onDestroy(){}
+    public void onPause(boolean multitasking){}
+    public void onResume(boolean multitasking){}
+    public void onReset(){}
+    public void onStart(){}
+    public void onStop(){}
 
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
-    };
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    };
-
-    return api;
-})();
-
-module.exports = FSUtils;
+    public String getReference(){
+        return reference;
+    }
+}
