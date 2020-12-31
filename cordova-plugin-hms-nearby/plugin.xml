@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-nearby" version="5.0.4-302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HMS Nearby</name>
+	<description>Cordova HMS Nearby Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,nearby,hms-nearby,huawei-nearby,hms,huawei</keywords>
+
+	<js-module name="HMSNearby" src="www/HMSNearby.js">
+		<clobbers target="HMSNearby"/>
+	</js-module>
+
+	<js-module name="enums" src="www/enums.js"/>
+	<js-module name="index" src="www/index.js"/>
+	<js-module name="interfaces" src="www/interfaces.js"/>
+	<js-module name="utils" src="www/utils.js"/>
+
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSNearby">
+				<param name="android-package" value="com.huawei.hms.cordova.nearby.HMSNearby"/>
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.BLUETOOTH"/>
+			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+			<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+		</config-file>
+
+		<!-- Android services -->
+		<config-file target="AndroidManifest.xml" parent="application">
+			<service android:exported="false" android:name="com.huawei.hms.cordova.nearby.modules.HMSMessage$BackgroundIntentService"/>
+		</config-file>
+
+		<framework src="com.huawei.hms:nearby:5.0.4.302"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/HMSNearby.java" target-dir="src/com/huawei/hms/cordova/nearby/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/nearby/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/modules/HMSDiscovery.java" target-dir="src/com/huawei/hms/cordova/nearby/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/modules/HMSMessage.java" target-dir="src/com/huawei/hms/cordova/nearby/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/modules/HMSNearbyBase.java" target-dir="src/com/huawei/hms/cordova/nearby/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/modules/HMSTransfer.java" target-dir="src/com/huawei/hms/cordova/nearby/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/modules/HMSWifi.java" target-dir="src/com/huawei/hms/cordova/nearby/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/utils/HMSEvents.java" target-dir="src/com/huawei/hms/cordova/nearby/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/utils/HMSMessageUtils.java" target-dir="src/com/huawei/hms/cordova/nearby/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/utils/HMSUtils.java" target-dir="src/com/huawei/hms/cordova/nearby/utils/"/>
+	</platform>
+</plugin>
