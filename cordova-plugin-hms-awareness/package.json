@@ -1,0 +1,56 @@
+{
+    "name": "@hmscore/cordova-plugin-hms-awareness",
+    "description": "Cordova HMS Awareness Plugin",
+    "version": "1.0.7-303",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-awareness"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "readmeFilename": "README.md",
+    "cordova": {
+        "id": "cordova-plugin-hms-awareness",
+        "platforms": [
+            "android"
+        ]
+    },
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "awareness",
+        "hms-awareness",
+        "huawei-awareness",
+        "hms",
+        "huawei"
+    ],
+    "files": [
+        "hooks",
+        "ionic-native",
+        "src",
+        "types",
+        "www",
+        "LICENCE",
+        "package.json",
+        "plugin.xml",
+        "README.md",
+        "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+    ],
+    "dependencies": {
+        "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
+}

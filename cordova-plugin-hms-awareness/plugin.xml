@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-awareness" version="1.0.7-303" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HMS Awareness</name>
+	<description>Cordova HMS Awareness Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,awareness,hms-awareness,huawei-awareness,hms,huawei</keywords>
+
+	<js-module name="AwarenessBarrier" src="www/AwarenessBarrier.js">
+		<clobbers target="AwarenessBarrier"/>
+	</js-module>
+	<js-module name="AwarenessCapture" src="www/AwarenessCapture.js">
+		<clobbers target="AwarenessCapture"/>
+	</js-module>
+	<js-module name="HMSAwareness" src="www/HMSAwareness.js">
+		<clobbers target="HMSAwareness"/>
+	</js-module>
+
+	<js-module name="index" src="www/index.js"/>
+	<js-module name="interfaces" src="www/interfaces.js"/>
+	<js-module name="util" src="www/util.js"/>
+
+	<platform name="android">
+		<dependency id="cordova-plugin-androidx-adapter" version="1.1.3"/>
+		<dependency id="cordova-plugin-androidx" version="3.0.0"/>
+
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSAwareness">
+				<param name="android-package" value="com.huawei.hms.cordova.awareness.HMSAwareness"/>
+			</feature>
+		</config-file>
+
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			<uses-permission android:name="com.huawei.hms.permission.ACTIVITY_RECOGNITION"/>
+			<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+			<uses-permission android:name="android.permission.BLUETOOTH"/>
+			<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+			<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="application">
+			<service android:name="com.huawei.hms.cordova.awareness.BarrierService" android:exported="true"/>
+		</config-file>
+
+		<config-file target="res/xml/config.xml" parent="/*">
+			<preference name="AndroidXEnabled" value="true"/>
+		</config-file>
+
+		<framework src="com.huawei.hms:awareness:1.0.7.303"/>
+		<framework src="com.google.code.gson:gson:2.8.5"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/AwarenessBarriers.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/AwarenessCapture.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/BarrierReceiver.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/BarrierService.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/HMSAwareness.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/HMSAwarenessModule.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/HtmlUtils.java" target-dir="src/com/huawei/hms/cordova/awareness/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/helpers/Constants.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/helpers/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/helpers/Exceptions.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/helpers/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/helpers/Pair.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/helpers/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/interfaces/JSONMapper.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/interfaces/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/providers/BarrierUtils.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/providers/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/utils/JSONUtils.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/backend/utils/Mapper.java" target-dir="src/com/huawei/hms/cordova/awareness/backend/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/awareness/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/awareness/basef/handler/"/>
+	</platform>
+</plugin>
