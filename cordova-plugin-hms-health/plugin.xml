@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-health" version="5.0.5-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HMS Health</name>
+	<description>Cordova HMS Health Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,health,hms-health,huawei-health,hms,huawei</keywords>
+
+	<js-module name="HMSHealth" src="www/HMSHealth.js">
+		<clobbers target="HMSHealth"/>
+	</js-module>
+
+	<js-module name="index" src="www/index.js"/>
+	<js-module name="utils" src="www/utils.js"/>
+
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+			<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+			<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+			<uses-permission android:name="android.permission.BLUETOOTH"/>
+			<uses-permission android:name="android.permission.BODY_SENSORS"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+			<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+			<uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+			<uses-permission android:name="android.permission.WAKE_LOCK"/>
+			<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+		</config-file>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSHealth">
+				<param name="android-package" value="com.huawei.hms.cordova.health.HMSHealth"/>
+			</feature>
+		</config-file>
+
+		<framework src="com.huawei.hms:health:5.0.5.300"/>
+		<framework src="com.huawei.hms:hwid:5.0.1.301"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/HMSHealth.java" target-dir="src/com/huawei/hms/cordova/health/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/OnActivityResultCallback.java" target-dir="src/com/huawei/hms/cordova/health/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/health/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/health/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/health/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/health/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/health/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/constants/Constants.java" target-dir="src/com/huawei/hms/cordova/health/constants/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/ActivityRecordController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/AuthController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/AutoRecorderController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/ConsentsController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/DataController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/modules/SettingsController.java" target-dir="src/com/huawei/hms/cordova/health/modules/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/Constants.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/Error.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/HMSAccountUtils.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/JSONUtils.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/Mapper.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/health/utils/Utils.java" target-dir="src/com/huawei/hms/cordova/health/utils/"/>
+	</platform>
+</plugin>
