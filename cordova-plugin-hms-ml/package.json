@@ -1,52 +1,56 @@
 {
-  "name": "@hmscore/cordova-plugin-hms-ml",
-  "title": "Cordova HMS ML Kit",
-  "description": "Cordova HMS ML Kit", 
-  "packagename": "cordova-ml",
-  "packageversion": "5.0.0.300",
-  "version": "5.0.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
-    "directory": "cordova-plugin-hms-ml"
-  },
-  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
-  "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
-  "readmeFilename": "README.md",
-  "keywords": [
-    "cordova",
-    "cordova-ml",
-    "hms-ml",
-    "huawei-ml"
-  ],
-  "cordova": {
-    "id": "cordova-plugin-hms-ml",
-    "platforms": [
-      "android"
-    ]
-  },
-  "engines": [{
-    "name": "cordova",
-    "version": ">=3.0.0"
-  }],
-  "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-semistandard": "^11.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-node": "^5.0.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
-  },
-  "files": [
-    "resources/**",
-    "hooks/**",
-    "src/**",
-    "www/**",
-    "package.json",
-    "plugin.xml",
-    "README.md",
-    "LICENCE"
-  ]
+    "name": "@hmscore/cordova-plugin-hms-ml",
+    "description": "Cordova HMS ML Plugin",
+    "version": "2.0.5-300",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-ml"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "readmeFilename": "README.md",
+    "cordova": {
+        "id": "cordova-plugin-hms-ml",
+        "platforms": [
+            "android"
+        ]
+    },
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "ml",
+        "hms-ml",
+        "huawei-ml",
+        "hms",
+        "huawei"
+    ],
+    "files": [
+        "hooks",
+        "ionic-native",
+        "src",
+        "types",
+        "www",
+        "LICENCE",
+        "package.json",
+        "plugin.xml",
+        "README.md",
+        "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+    ],
+    "dependencies": {
+        "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
 }
