@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:state_pressed="true" android:drawable="@drawable/btn_default_pressed_emui" />
-	<item android:state_focused="true"  android:state_enabled="false" android:drawable="@drawable/btn_default_disabled_emui" />
-	<item android:state_focused="true"  android:state_enabled="true" android:drawable="@drawable/btn_default_pressed_emui" />
-	<item  android:state_enabled="false"  android:state_focused="false" android:drawable="@drawable/btn_default_disabled_emui" />
-	<item android:drawable="@drawable/btn_default_normal_emui"/>
-</selector>
