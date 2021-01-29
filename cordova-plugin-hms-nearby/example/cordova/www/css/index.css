@@ -1,0 +1,179 @@
+/*
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+    font-size:12px;
+    height:100vh;
+    margin:0px;
+    padding:0px;
+    /* Padding to avoid the "unsafe" areas behind notches in the screen */
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+    text-transform:uppercase;
+    width:100%;
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+    text-align: center;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+
+.tab-container {
+    padding: 0 10px;
+    width: calc(100% - 20px);
+    text-align: center;
+}
+
+.btn-container {
+    text-align: center;
+}
+
+.btn {
+    background-color: #4B946A;
+    color: #FFFFFF;
+    padding: 10px;
+    margin: 2px 5px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #62bccd;
+}
+
+.btn-danger {
+    background-color: #d04c4c;
+}
+
+.btn-tag {
+    display: inline-block;
+    width: calc(25% - 15px);
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page-container {
+    /*background-color: #ffffff;*/
+    width: 100%;
+    height: 80vh;
+    margin: 5px 0;
+    overflow: scroll;
+    text-transform: none;
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+
+#logs-container {
+    padding: 5px 10px;
+    width: calc(100% - 20px);
+    text-align: left;
+    overflow: scroll;
+    background-color: #FFFFFF;
+}
+
+
+.input-container {
+    padding: 5px 10px;
+    width: calc(100% - 20px);
+    text-align: center;
+}
+
+.text-container {
+    display: block;
+    min-height: 300px;
+    height: 300px;
+    width: calc(100% - 20px);
+    margin: 5px 10px;
+    background-color: #FFFFFF;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.msg {
+    width: calc(100% - 20px);
+    padding: 2px 10px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.msg-received {
+    color: #4B946A;
+    text-align: left;
+}
+
+.msg-sent {
+    color: blueviolet;
+    text-align: right;
+}
+
+.msg-system {
+    color: #d04c4c;
+    text-align: center;
+    font-style: italic;
+}

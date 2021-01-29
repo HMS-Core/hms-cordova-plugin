@@ -1,0 +1,38 @@
+{
+  "name": "cordova-hms-scan-demo",
+  "displayName": "HMSScanDemo",
+  "version": "1.2.3-300",
+  "description": "A demo application which shows the usage of HMS Scan Plugin.",
+  "author": "hmscore",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "main": "index.js",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "scan",
+    "huawei-scan",
+    "hms-scan"
+  ],
+  "devDependencies": {
+    "cordova-plugin-filechooser": "^1.2.0",
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-filechooser": {}
+    },
+    "platforms": []
+  },
+  "files": [
+    ".docs",
+    "www",
+    "config.xml",
+    "LICENCE",
+    "package.json",
+    "README.md",
+    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+  ]
+}

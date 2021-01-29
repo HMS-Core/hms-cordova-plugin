@@ -1,0 +1,182 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>HMSLocatationKit Demo</title>
+  </head>
+  <body>
+    <div class="app">
+      <h1>Apache Cordova</h1>
+      <div id="deviceready" class="blink">
+        <p class="event listening">Connecting to Device</p>
+        <p class="event received">Device is Ready</p> <br />
+      </div>
+
+      <h1>Fused Location</h1>
+      <div class="feature-section">
+
+        <div class="feature-single">
+          <button id="hasPermission">Check permission</button>
+          <pre id="hasPermissionResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="requestPermission">Get permission</button>
+          <pre id="requestPermissionResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="getLastLocation">Get last location</button>
+          <pre id="getLastLocationResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="getLocationAvailability">Get location availability</button>
+          <pre id="getLocationAvailabilityResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="flushLocations">Flush locations</button>
+          <pre id="flushLocationsResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="checkLocationSettings">Check location settings</button>
+          <pre id="checkLocationSettingsResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="getNavigationContextState">Get Navigation Context State</button>
+          <pre id="getNavigationContextStateResult" />
+        </div>
+        
+        <div class="feature-single">
+          <button id="getLastLocationWithAddress">Get last location with address</button>
+          <pre id="getLastLocationWithAddressResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="enableMockMode">Enable mock location</button>
+          <pre id="enableMockModeResult" />
+        </div>
+        <div class="feature-single">
+          <button id="disableMockMode">Disable mock location</button>
+          <pre id="disableMockModeResult" />
+        </div>
+
+        <div class="feature-single">
+          <br/>
+          <input id='mockLat' type='text' placeholder="Lat" /> <br />
+          <input id='mockLong' type='text' placeholder="Long" /> <br />
+          <button id="setMockLocation">Set location</button>
+          <pre id="setMockLocationResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="requestLocationUpdates">Request location updates</button>
+          <pre id="requestLocationUpdatesResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="registerLocationUpdates">Register location updates</button>
+          <pre id="locationUpdateResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="removeLocationUpdateRequests">Remove location update requests</button>
+        </div>
+
+      </div>
+
+
+      <h1>Activity Identification</h1>
+      <div class="feature-section">
+
+        <div class="feature-single">
+          <button id="hasActivityPermission">Check permission</button>
+          <pre id="hasActivityPermissionResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="requestActivityIdentificationPermission">Get permission</button>
+          <pre id="requestActivityIdentificationPermissionResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="createActivityConversionUpdates">Create Activity Conversion Updates</button>
+          <pre id="createActivityConversionUpdatesResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="registerActivityConversionUpdates">Register Activity Conversion Updates</button>
+          <pre id="activityConversionUpdateResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="deleteActivityConversionUpdates">Delete activity conversion requests</button>
+          <pre id="deleteActivityConversionResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="createActivityIdentificationUpdates">Create Activity Identification Updates</button>
+          <pre id="createActivityIdentificationUpdatesResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="registerActivityIdentificationUpdates">Register Activity Identification Updates</button>
+          <pre id="activityIdentificationUpdateResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="deleteActivityIdentificationUpdates">Delete activity identification requests</button>
+          <pre id="deleteActivityIdentificationResult" />
+        </div>
+
+      </div>
+
+
+      <div class="feature-section">
+        <h1>Geofences</h1>
+
+        <div class="feature-single">
+          <button id="createGeofenceList">Create Geofence List</button>
+          <pre id="createGeofenceListResult" />
+        </div>
+
+        <div class="feature-single">
+          <input id='geofenceRequestCode' type='text' placeholder="Enter Request Code" />
+          <button id="deleteGeofenceList">Delete Geofence List</button>
+          <pre id="deleteGeofenceListResult" />
+        </div>
+
+        <div class="feature-single">
+          <button id="registerGeofenceUpdates">Register Geofence Updates</button>
+          <pre id="geofenceUpdateResult" />
+        </div>
+
+      </div>
+
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>

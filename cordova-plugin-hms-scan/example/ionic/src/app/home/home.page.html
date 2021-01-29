@@ -1,0 +1,47 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      HMSScan Demo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="text-align: center; margin-top: 5px;">
+    <ion-label class="mllogoText" for="text">Permissions</ion-label>
+  </div>
+  <ion-button expand="block" (click)="checkPermissions()">Check Permissions</ion-button>
+  <ion-button expand="block" (click)="requestPermissions()">Request Permissions</ion-button>
+  <ion-button expand="block" (click)="defaultViewMode()">Default View Mode</ion-button>
+  <ion-button expand="block" (click)="customViewMode()">Custom View Mode</ion-button>
+  <ion-button expand="block" (click)="multiProcessorSynMode()">Multi processor Syn Mode</ion-button>
+  <ion-button expand="block" (click)="multiProcessorAsynMode()">Multi Processor Asyn Mode</ion-button>
+  <ion-button expand="block" (click)="bitmapMode()">Bitmap Mode</ion-button>
+  <div style="text-align: center; margin-top: 5px;">
+    <ion-label class="mllogoText" for="text">Select image for image scan</ion-label>
+  </div>
+  <ion-button expand="block" (click)="getFile()">Select Image</ion-button>
+  <ion-button expand="block" (click)="asynModeWithImage()">Asyn Mode with Image</ion-button>
+  <ion-button expand="block" (click)="synModeWithImage()">Syn Mode with Image</ion-button>
+  <ion-button expand="block" (click)="decodeWithBitmap()">Decode with Bitmap</ion-button>
+  <ion-button expand="block" (click)="generateBarcode()">Generate Barcode</ion-button>
+  <div style="text-align: center;">
+    <ion-img style="height: 300px; width: 300px;" [src]="generateBarcodeImage" alt="Generate Barcode Result"></ion-img>
+  </div>
+</ion-content>

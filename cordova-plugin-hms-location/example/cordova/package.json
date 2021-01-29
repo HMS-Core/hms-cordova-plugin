@@ -1,0 +1,40 @@
+{
+  "name": "cordova-hms-location-demo",
+  "displayName": "cordova-hms-location-demo",
+  "version": "5.0.0-301",
+  "description": "A sample Apache Cordova application that demonstrates the usage of cordova-plugin-hms-location.",
+  "author": "hmscore",
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-location",
+    "location",
+    "hms-location",
+    "huawei-location"
+  ],
+  "devDependencies": {
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    }
+  },
+  "files": [
+    "./www",
+    "config.xml",
+    "LICENCE",
+    "package.json",
+    "README.md"
+  ]
+}

@@ -1,0 +1,91 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>HMSLocationKit Demo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Fused Location</h1>
+  <ion-button (click)="hasPermission()">Check Permission</ion-button>
+  <ion-text>{{ locationHasPermissionResult }}</ion-text>
+  <ion-button (click)="requestLocationPermission()">Get Permission</ion-button>
+  <ion-text>{{ locationRequestPermissionResult }}</ion-text>
+  <ion-button (click)="getLocationAvailability()">Get Location Availability</ion-button>
+  <ion-text>{{ getLocationAvailabilityResult }}</ion-text>
+  <ion-button (click)="getLastLocation()">Get Last Location</ion-button>
+  <ion-text>{{ getLastLocationResult }}</ion-text>
+  <ion-button (click)="getNavigationContextState()">Get Navigation Context State</ion-button>
+  <ion-text>{{ getNavigationContextStateResult }}</ion-text>
+  <ion-button (click)="getLastLocationWithAddress()">Get Last Location With Address</ion-button>
+  <ion-text>{{ getLastLocationWithAddressResult }}</ion-text>
+  <ion-button (click)="flushLocations()">Flush Locations</ion-button>
+  <ion-text>{{ flushLocationsResult }}</ion-text>
+  <ion-button (click)="checkLocationSettings()">Check Location Settings</ion-button>
+  <ion-text>{{ checkLocationSettingsResult }}</ion-text>
+
+
+  <ion-button (click)="enableMockMode()">Enable mock location</ion-button>
+  <ion-text>{{ enableMockModeResult }}</ion-text>
+  <ion-button (click)="disableMockMode()">Disable mock location</ion-button>
+  <ion-text>{{ disableMockModeResult }}</ion-text>
+  <ion-input placeholder="Enter Latitude" id="mockLat" [(ngModel)]="mockLat"></ion-input>
+  <ion-input placeholder="Enter Longitude" id="mockLong" [(ngModel)]="mockLong"></ion-input>
+  <ion-button (click)="setMockLocation()">Set mock location</ion-button>
+  <ion-text>{{ setMockLocationResult }}</ion-text>
+
+  
+  <ion-button (click)="requestLocationUpdates()">Request location updates</ion-button>
+  <ion-text>{{ requestLocationUpdatesResult }}</ion-text>
+  <ion-button (click)="registerLocationUpdates()">Register location updates</ion-button>
+  <ion-text>{{ registerLocationUpdateResult }}</ion-text>
+  <ion-button (click)="removeLocationUpdateRequests()">Remove location update requests</ion-button>
+  <ion-text>{{ removeLocationUpdateResult }}</ion-text>
+
+
+  <h1>Activity Identification</h1>
+  <ion-button (click)="hasActivityPermission()">Check Permission</ion-button>
+  <ion-text>{{ activityHasPermissionResult }}</ion-text>
+  <ion-button (click)="requestAcitvityPermission()">Get Permission</ion-button>
+  <ion-text>{{ acitvityRequestPermissionResult }}</ion-text>
+  <ion-button (click)="createActivityConversionUpdates()">Create Activity Conversion Updates</ion-button>
+  <ion-text>{{ createActivityConversionUpdatesResult }}</ion-text>
+  <ion-button (click)="registerActivityConversionUpdates()">Register Activity Conversion Updates</ion-button>
+  <ion-text>{{ registerActivityConversionUpdatesResult }}</ion-text>
+  <ion-input placeholder="Enter Request Code" id="activityConversionRequestCode" [(ngModel)]="activityConversionRequestCode"></ion-input>
+  <ion-button (click)="deleteActivityConversionUpdates()">Delete activity conversion requests</ion-button>
+  <ion-text>{{ deleteActivityConversionResult }}</ion-text>
+  <ion-button (click)="createActivityIdentificationUpdates()">Create Activity Identification Updates</ion-button>
+  <ion-text>{{ createActivityIdentificationUpdatesResult }}</ion-text>
+  <ion-button (click)="registerActivityIdentificationUpdates()">Register Activity Identification Updates</ion-button>
+  <ion-text>{{ registerActivityIdentificationUpdatesResult }}</ion-text>
+  <ion-input placeholder="Enter Request Code" id="activityIdentificationRequestCode" [(ngModel)]="activityIdentificationRequestCode"></ion-input>
+  <ion-button (click)="deleteActivityIdentificationUpdates()">Delete activity identification requests</ion-button>
+  <ion-text>{{ deleteActivityIdentificationResult }}</ion-text>
+
+  <h1>Geofences</h1>
+  <ion-button (click)="createGeofenceList()">Create Geofence List</ion-button>
+  <ion-text>{{ createGeofenceListResult }}</ion-text>
+  
+  <ion-input placeholder="Enter Request Code" id="geofenceRequestCode" [(ngModel)]="geofenceRequestCode"></ion-input>
+  <ion-button (click)="deleteGeofenceList()">Delete Geofence List</ion-button>
+  <ion-text>{{ deleteGeofenceListResult }}</ion-text>
+  <ion-button (click)="registerGeofenceUpdates()">Register Geofence Updates</ion-button>
+  <ion-text>{{ registerGeofenceUpdatesResult }}</ion-text>
+
+</ion-content>

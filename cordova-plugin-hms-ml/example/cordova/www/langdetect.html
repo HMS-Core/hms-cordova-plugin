@@ -1,0 +1,74 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <title>Cordova MLKit Demo</title>
+
+</head>
+
+<body>
+    <div class="main_div textAlignDiv"><label class="textProp" for="text">Language Detection</label></div>
+    <div style="margin-top: 20px; padding: 5px;"> <input id="sourceLangText"
+            placeholder="Write Something and Detect Language" type="text"></div>
+
+    <div style="margin-top: 30px;" class="main_div textAlignDiv"><label class="textProp" for="text">Probability Detect
+            Result</label></div>
+    <div style="padding: 5px;">
+        <div style="margin-top: 20px;"><input id="langCode" placeholder="Language Code" type="text"></div>
+        <div style="margin-top: 10px;"><input id="probability" placeholder="Probability" type="text"></div>
+    </div>
+    <input style="border-radius: 10px;" type="button" id="probabilityDetect" value="Probability Detect" class="btn">
+
+    <div style="margin-top: 20px;" class="main_div textAlignDiv"><label class="textProp" for="text">First Best Detect
+            Result</label></div>
+
+    <div style="margin-top: 10px; padding: 5px;"><input id="result" placeholder="Result" type="text"></div>
+
+    <input style="border-radius: 10px;" type="button" id="firstBestDetect" value="First Best Detect" class="btn">
+
+
+
+    <input style="margin-top: 30px;" type="button" id="stopLangDetectionService" value="Stop Lang Detect" class="btn">
+
+
+    <div style="margin-top: 10px; padding: 5px;"><input id="localResult" placeholder="Local Lang Detect Result"
+            type="text"></div>
+
+    <input style="margin-top: 30px;" type="button" id="localLangDetect" value="Local Lang Detect" class="btn">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/langdetect.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <title>Cordova Awareness Capture Sample</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <input type="button" id="getHeadsetStatus" value="getHeadsetStatus" class="btn">
+    <input type="button" id="getLocation" value="getLocation" class="btn">
+    <input type="button" id="getBehaviorStatus" value="getBehaviorStatus" class="btn">
+    <input type="button" id="getBluetoothStatus" value="getBluetoothStatus" class="btn">
+    <input type="button" id="getBeaconStatus" value="getBeaconStatus" class="btn">
+    <input type="button" id="getApplicationStatus" value="getApplicationStatus" class="btn">
+    <input type="button" id="getLightIntensity" value="getLightIntensity" class="btn">
+    <input type="button" id="getScreenStatus" value="getScreenStatus" class="btn">
+    <input type="button" id="getCurrentLocation" value="getCurrentLocation" class="btn">
+    <input type="button" id="getDarkModeStatus" value="getDarkModeStatus" class="btn">
+    <input type="button" id="getWifiStatus" value="getWifiStatus" class="btn">
+    <input type="button" id="getWeatherByDevice" value="getWeatherByDevice" class="btn">
+    <input type="button" id="getWeatherByPosition" value="getWeatherByPosition" class="btn">
+    <input type="button" id="querySupportingCapabilities" value="querySupportingCapabilities" class="btn">
+    <input type="button" id="getTimeCategories" value="getTimeCategories" class="btn">
+    <input type="button" id="getTimeCategoriesByCountryCode" value="getTimeCategoriesByCountryCode" class="btn">
+    <input type="button" id="getTimeCategoriesByIP" value="getTimeCategoriesByIP" class="btn">
+    <input type="button" id="getTimeCategoriesByUser" value="getTimeCategoriesByUser" class="btn">
+    <input type="button" id="getTimeCategoriesForFuture" value="getTimeCategoriesForFuture" class="btn">
+    <input type="button" id="enableUpdateWindow" value="enableUpdateWindow" class="btn">
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/capturesample.js"></script>
+</body>
+
+</html>

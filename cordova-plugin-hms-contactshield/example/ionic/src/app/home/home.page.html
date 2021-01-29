@@ -1,0 +1,134 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Ionic Contact Shield Kit
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-body>
+        <hr>
+        <ion-form>
+            <ion-button (click)="hasBluetoothPermission()" class="submit-button" expand="block">Has Bluetooth Permission
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="requestBluetoothPermission()" class="submit-button" expand="block">Request Bluetooth Permission
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="startContactShield()" class="submit-button" expand="block">start Contact Shield
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="clearData()" class="submit-button" expand="block">clear Data
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getContactDetail()" class="submit-button" expand="block">Get Contact Detail
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getContactSketch()" class="submit-button" expand="block">Get Contact Sketch
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getContactWindow()" class="submit-button" expand="block">Get Contact Window
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getPeriodicKey()" class="submit-button" expand="block">Get Periodic Key</ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="handleCallback()" class="submit-button" expand="block">Handle Callback
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="isContactShieldRunning()" class="submit-button" expand="block">is Contact Shield Running
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+
+        <ion-form>
+            <ion-button (click)="putSharedKeyFilesOld()" class="submit-button" expand="block">put Shared Key Files Old
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="putSharedKeyFiles()" class="submit-button" expand="block">Put Shared Key Files
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="startContactShieldOld()" class="submit-button" expand="block">start ContactShield Old
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="startContactShieldNoPersistent()" class="submit-button" expand="block">start Contact Shield No Persistent
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="stopContactShield()" class="submit-button" expand="block">stop Contact Shield
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="unregisterReceiver()" class="submit-button" expand="block">unregister Receiver
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="enableLogger()" class="submit-button" expand="block">enable Logger
+            </ion-button>
+        </ion-form>
+        <hr>
+        <ion-form>
+            <ion-button (click)="disableLogger()" class="submit-button" expand="block">disable Logger
+            </ion-button>
+        </ion-form>
+        <hr>
+    </ion-body>
+</ion-content>

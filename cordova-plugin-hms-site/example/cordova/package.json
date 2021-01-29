@@ -1,0 +1,38 @@
+{
+  "name": "com.huawei.hms.cordova.site.demoapp",
+  "displayName": "HMSSiteDemo",
+  "version": "5.0.1-300",
+  "description": "A sample Apache Cordova application that demonstrates the usage of cordova-plugin-hms-site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cordova",
+    "huaweisite",
+    "site",
+    "ecosystem:cordova"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "cordova-android": "^8.1.0",
+    "cordova-plugin-whitelist": "^1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "files": [
+    "./.docs",
+    "./www",
+    "config.xml",
+    "LICENCE",
+    "package.json",
+    "README.md"
+  ]
+}

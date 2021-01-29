@@ -1,0 +1,97 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <title>HMSNearbyDemo</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>HMS Nearby</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+            <div class="page-container" id="page-container">
+                <div class="page" id="page-connection">
+                    <div class="header">Nearby Connection</div>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" id="btn-broadcast">Start Broadcasting</button>
+                        <button class="btn btn-primary" id="btn-scan">Start Scan</button>
+                        <button class="btn btn-danger" id="btn-broadcast-stop">Stop Broadcasting</button>
+                        <button class="btn btn-danger" id="btn-scan-stop">Stop Scan</button>
+                        <button class="btn btn-danger" id="btn-disconnect-all">Disconnect All</button>
+                    </div>
+                    <div class="input-container">
+                        <input id="input-text" type="text">
+                        <button class="btn" id="btn-send">Send Text</button>
+                        <div class="btn-container">
+                            <button class="btn" id="btn-send-file">Send File</button>
+                        </div>
+                    </div>
+                    <div class="text-container" id="msg-list"></div>
+                </div>
+                <div class="page" id="page-message">
+                    <div class="header">Nearby Message</div>
+                    <div class="input-container">
+                        <input id="input-text2" type="text" style="margin: 5px">
+                        <div class="btn-container">
+                            <button class="btn btn-primary" id="btn-put">Put Message</button>
+                            <button class="btn btn-danger" id="btn-unput">Unput Message</button>
+                        </div>
+                    </div>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" id="btn-get">Get Messages</button>
+                        <button class="btn btn-danger" id="btn-unget">Unget Messages</button>
+                    </div>
+                    <div class="text-container" id="msg-list2"></div>
+                </div>
+                <div class="page" id="page-wifi">
+                    <div class="header">Nearby Wifi</div>
+                    <div class="btn-container">
+                        <button class="btn btn-primary" id="btn-wifi-share">Wifi Share</button>
+                        <button class="btn btn-primary" id="btn-wifi-set">Wifi Set</button>
+                        <button class="btn btn-danger" id="btn-wifi-stop">Stop Share</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-container">
+                <button class="btn btn-tag" id="btn-connection">Connection</button>
+                <button class="btn btn-tag" id="btn-message">Message</button>
+                <button class="btn btn-tag" id="btn-wifi">Wifi</button>
+            </div>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/nearby_connection.js"></script>
+        <script type="text/javascript" src="js/nearby_message.js"></script>
+        <script type="text/javascript" src="js/nearby_wifi.js"></script>
+    </body>
+</html>

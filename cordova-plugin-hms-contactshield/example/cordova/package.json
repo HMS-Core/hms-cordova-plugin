@@ -1,0 +1,38 @@
+{
+    "name": "cordova-hms-contactshield-demo",
+    "displayName": "HMSContactShieldDemo",
+    "version": "5.0.4-302",
+    "description": "A demo application which shows the usage of HMS Contact Shield Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "readmeFilename": "README.md",
+    "main": "./www/js/index.js",
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "contactshield",
+        "huawei-contactshield",
+        "hms-contactshield"
+    ],
+    "devDependencies": {
+        "cordova-plugin-whitelist": "1.3.4",
+        "cordova-plugin-filechooser": "1.2.0"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-filechooser": {}
+        },
+        "platforms": [
+            "android"
+        ]
+    },
+    "files": [
+        "www",
+        "config.xml",
+        "LICENCE",
+        "package.json",
+        "README.md",
+        "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+    ]
+}

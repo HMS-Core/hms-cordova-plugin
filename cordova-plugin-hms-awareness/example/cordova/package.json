@@ -1,0 +1,35 @@
+{
+    "name": "cordova-hms-awareness-demo",
+    "displayName": "HMSAwarenessDemo",
+    "version": "1.0.7-303",
+    "description": "A demo application which shows the usage of HMS Awareness Plugin.",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "readmeFilename": "README.md",
+    "main": "./www/js/index.js",
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "awareness",
+        "huawei-awareness",
+        "hms-awareness"
+    ],
+    "devDependencies": {
+        "cordova-plugin-whitelist": "1.3.4"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {}
+        },
+        "platforms": [
+            "android"
+        ]
+    },
+    "files": [
+        "www",
+        "config.xml",
+        "LICENCE",
+        "package.json",
+        "README.md"
+    ]
+}

@@ -1,0 +1,48 @@
+<!--
+ Copyright 2020 Huawei Technologies Co., Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy"
+            content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <title>HMSSiteDemo</title>
+
+        <style>
+            .btn {
+                margin-top: 5px;
+                display: block;
+                background-color: cornflowerblue;
+                color: white;
+                width: 100%;
+                height: 50px;
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+
+        <input id="btnTextSearch" type="button" value="TEXT SEARCH" class="btn"/>
+        <input id="btnDetailSearch" type="button" value="DETAIL SEARCH" class="btn"/>
+        <input id="btnQuerySuggestion" type="button" value="QUERY SUGGESTION" class="btn"/>
+        <input id="btnNearbySearch" type="button" value="NEARBY SEARCH" class="btn"/>
+        <input id="btnWidgetSearch" type="button" value="WIDGET SEARCH" class="btn"/>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,35 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-content>
+  <div style="text-align: center; margin-top: 10px;">
+    <ion-label style="font-weight: bold;" color="dark">Custom Model</ion-label>
+  </div>
+  <div style="margin-top: 20px;">
+    <div>
+      <p>1- Prepare your local or remote model.</p>
+      <p>2- Configure method settings</p>
+      <p>3- Call exec method to perform inference using input and output configurations and content.</p>
+      <p>4- Call close method to stop an inference task to release resources</p>
+      <p>Note: For details and model preparation please explore Huawei Developer Website</p>
+    </div>
+    <ion-button color="secondary" expand="block" (click)="getFile()">Select Image</ion-button>
+    <ion-button color="tertiary" expand="block" (click)="downloadModel()">Download Custom Model</ion-button>
+    <ion-button expand="block" (click)="getCustomModel()">Start Custom Model</ion-button>
+  </div>
+
+
+
+</ion-content>

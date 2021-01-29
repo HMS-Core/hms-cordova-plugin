@@ -1,0 +1,334 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">HMSML</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+
+    <div style="margin-top: 600px; margin-left: 120px;" class="mllogo">
+      <img class="logoImg" src="assets/ml.png" alt="">
+
+    </div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Text Related Services</label>
+
+    <hr>
+
+  
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="bcrPage()">
+        <ion-img class="" src="assets/bcr.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">BCR</label>
+      </div>
+    </div>
+
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="textPage()">
+        <ion-img class="" src="assets/text.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Text</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="documentPage()">
+        <ion-img class="" src="assets/doc.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Document</label>
+      </div>
+    </div>
+
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="gcrPage()">
+        <ion-img class="" src="assets/gcr.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">General Card</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="formRecogPage()">
+        <ion-img class="" src="assets/productsegment.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Form Recognition</label>
+      </div>
+    </div>
+  
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Language-Voice Related Services</label>
+
+    <hr>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="ttsPage()">
+        <ion-img class="" src="assets/tts.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">TTS</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="translatePage()">
+        <ion-img class="" src="assets/trans.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Translate</label>
+      </div>
+    </div>
+
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="langdetectPage()">
+        <ion-img class="" src="assets/langdetect.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Lang Detect</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="asrPage()">
+        <ion-img class="" src="assets/asr.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">ASR</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="aftPage()">
+        <ion-img class="" src="assets/aft.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">AFT</label>
+      </div>
+    </div>
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="rttPage()">
+        <ion-img class="" src="assets/rtt.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">RTT</label>
+      </div>
+    </div>
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="soundDectPage()">
+        <ion-img class="" src="assets/sounddetect.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Sound Dect</label>
+      </div>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Image Related Services</label>
+
+    <hr>
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="imgsegPage()">
+        <ion-img class="" src="assets/segmentation.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">ImgSeg</label>
+      </div>
+    </div>
+    
+   
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="objectPage()">
+        <ion-img class="" src="assets/object.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Object</label>
+      </div>
+    </div>
+
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="classifyPage()">
+        <ion-img class="" src="assets/class.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Classify</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="landmarkPage()">
+        <ion-img class="" src="assets/landmark.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Landmark</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="documentSkewPage()">
+        <ion-img class="" src="assets/productsegment.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">DocumentSkew</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="stillScenePage()">
+        <ion-img class="" src="assets/scene.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Scene</label>
+      </div>
+    </div>
+    
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="imgSuperresolutionPage()">
+        <ion-img class="" src="assets/ISR.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">ISR</label>
+      </div>
+    </div>
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="textImgSuperresolutionPage()">
+        <ion-img class="" src="assets/TISR.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">TISR</label>
+      </div>
+    </div>
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="productPage()">
+        <ion-img class="" src="assets/productsegment.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Product</label>
+      </div>
+    </div>
+    
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Face-Body Related Services</label>
+
+    <hr>
+
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="facePage()">
+        <ion-img class="" src="assets/face.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Face</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="faceLivePage()">
+        <ion-img class="" src="assets/face.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Live Face</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="liveLivenessPage()">
+        <ion-img class="" src="assets/liveness.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Liveness</label>
+      </div>
+    </div>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="stillHandkeyPage()">
+        <ion-img class="" src="assets/handkey.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Still Handkey</label>
+      </div>
+    </div>
+
+   
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="stillSkeletonPage()">
+        <ion-img class="" src="assets/skeleton.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Still Skeleton</label>
+      </div>
+    </div>
+
+
+
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Custom Model Service</label>
+
+    <hr>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="customModelPage()">
+        <ion-img class="" src="assets/model.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Custom Model</label>
+      </div>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <label class="mllogoText" for="text">ML Natural Language Service</label>
+
+    <hr>
+
+    <div class="newPageHref">
+      <ion-button color="honeydew" class="servicesDiv" (click)="textEmbeddingPage()">
+        <ion-img class="" src="assets/textembed.png" alt=""></ion-img>
+      </ion-button>
+      <div>
+        <label style=" color: black;" class="" for="text">Text Embedding</label>
+      </div>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <div class="main_div textAlignDiv"><label class="textProp" for="text">Permissions</label></div>
+
+    <ion-button expand="block" (click)="requestPermissions()">Request Permissions</ion-button>
+    <ion-button expand="block" (click)="checkPermissions()">Check Permissions</ion-button>
+
+  </div>
+</ion-content>

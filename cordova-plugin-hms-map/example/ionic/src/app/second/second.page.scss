@@ -1,0 +1,64 @@
+/*
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+ion-button{
+  width: 48.5%;
+}
+#navigate{
+  width: 98%;
+}
+#lat-input{
+  display: inline-block;
+  width: 32%;
+  border: #3a7be0 1px solid;
+  margin-right: 4px;
+}
+#lng-input{
+  display: inline-block;
+  width: 32%;
+  border: #3a7be0 1px solid;
+  margin-right: 4px;
+}
+#duration-input{
+  display: inline-block;
+  width: 32%;
+  border: #3a7be0 1px solid;
+}
+#animate-camera{
+  width: 48.5%;
+}
+#move-camera{
+  width: 48.5%;
+}
+#marker-lat{
+  display: inline-block;
+  width: 32.5%;
+  border: #3a7be0 1px solid;
+}
+#marker-lng{
+  display: inline-block;
+  width: 32%;
+  border: #3a7be0 1px solid;
+  margin-right: 3px;
+  margin-left: 3px;
+}
+#add-marker{
+  width: 30%;
+  margin-right: 4px;
+}
+#container1{
+  display: flex;
+  align-items: center;
+}

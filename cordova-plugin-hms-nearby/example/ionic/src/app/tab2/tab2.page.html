@@ -1,0 +1,97 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nearby Message
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <div class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label><strong>Filter</strong></ion-label>
+          <ion-select [(ngModel)]="currentGetOption" placeholder="Filter" interface="popover" [disabled]="currentStatus != Status.IDLE">
+            <ion-select-option *ngFor="let opt of getOptions" [value]="opt.value">{{opt.name}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" size="small" (click)="getMessages()" [hidden]="currentStatus != Status.IDLE" >Get Messages</ion-button>
+          <ion-button expand="block" size="small" color="danger" (click)="ungetMessages()" [hidden]="currentStatus != Status.SEARCHING" >Unget Messages</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-label style="margin-left: 10px;">Status: {{currentStatus}}</ion-label>
+
+  <ion-list lines="none" class="text-pane" >
+    <ion-item *ngFor="let message of messages">
+      <ion-label >
+        <p>{{message.namespace}} - {{message.type}}</p>
+        <h2>{{message.text}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
+
+<!-- Footer without a border -->
+<ion-footer class="ion-no-border" >
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label><strong>Distance Types</strong></ion-label>
+          <ion-select [(ngModel)]="currentDistanceType" placeholder="Distance Type" interface="popover">
+            <ion-select-option *ngFor="let opt of distanceTypes" [value]="opt.value">{{opt.name}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-label><strong>Finding Modes</strong></ion-label>
+          <ion-select [(ngModel)]="currentFindingMode" placeholder="Finding Mode" interface="popover">
+            <ion-select-option *ngFor="let opt of findingModes" [value]="opt.value">{{opt.name}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-label><strong>Ttl Seconds</strong></ion-label>
+          <ion-select [(ngModel)]="currentTtlSeconds" placeholder="Ttl Seconds" interface="popover">
+            <ion-select-option *ngFor="let opt of ttlSeconds" [value]="opt.value">{{opt.name}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none" >
+            <ion-input [(ngModel)]="textMessage" type="text" placeholder="Type Message"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" size="small" (click)="putMessage()" >Put Message</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" size="small" color="danger" (click)="unputMessage()" >Unput Message</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

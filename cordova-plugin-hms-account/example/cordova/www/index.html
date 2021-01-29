@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Cordova Account Demo</title>
+</head>
+
+<body>
+    <div class="app">
+        <h1>Account Kit</h1>
+        <input type="submit" value="Sign In With Id Token" id="btn_sign_in_with_id_token">
+        <input type="submit" value="Sign In With Authorization Code" id="btn_sign_in_with_authorization_code">
+        <input type="submit" value="Sign Out" id="btn_sign_out">
+        <input type="submit" value="Silent Sign In" id="btn_silent_sign_in">
+        <input type="submit" value="Cancel Authorization" id="btn_cancel_authorization">
+        <input type="submit" value="SMS Verification" id="btn_sms_verification_code">
+        <input type="submit" value="Get HuaweiIdAuthButton" id="btn_huawei_id_auth_button"><br><br><br>
+        <div id="btn_auth_button"></div>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

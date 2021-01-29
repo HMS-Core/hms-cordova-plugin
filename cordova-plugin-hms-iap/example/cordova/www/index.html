@@ -1,0 +1,78 @@
+<!--
+Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>CordovaHMSInAppPurchasesDemo</title>
+  </head>
+  <body>
+    <div id="consumables" class="section">
+      <h1>Consumables</h1>
+      <p class="intro">
+        Consumables are used once and depleted, and can be purchased again, for example, in-game currencies. <br><br>
+      </p>
+      <h3>Purchased</h3>
+      <ul id="list-consumable-purchased" class="iap-list">
+      </ul>
+      <h3>Available</h3>
+      <ul id="list-consumable-available" class="iap-list">
+      </ul>
+      <h3>Purchased Record</h3>
+      <ul id="list-consumable-purchased-record" class="iap-list">
+      </ul>
+    </div>
+
+
+    <hr />
+
+    <div id="non-consumables" class="section">
+      <h1>Non-consumables</h1>
+      <p class="intro">
+        Non-consumables are purchased once and do not expire or decrease.<br><br>
+      </p>
+      <h3>Purchased</h3>
+      <ul id="list-nonconsumable-purchased" class="iap-list">
+      </ul>
+      <h3>Available</h3>
+      <ul id="list-nonconsumable-available" class="iap-list">
+      </ul>
+    </div>
+
+    <hr />
+
+    <div id="subscriptions" class="section">
+      <h1>Subscriptions</h1>
+      <p class="intro">
+        Subscriptions are purchased once and renew automatically.<br><br>
+      </p>
+      <h3>Purchased</h3>
+      <ul id="list-subscription-purchased" class="iap-list"> </ul>
+      <h3>Available</h3>
+      <ul id="list-subscription-available" class="iap-list"> </ul>
+      <h3>Purchased Record</h3>
+      <ul id="list-subscription-purchased-record" class="iap-list"> </ul>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>

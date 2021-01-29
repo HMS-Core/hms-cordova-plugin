@@ -1,0 +1,41 @@
+{
+  "name": "cordova-hms-ml-demo",
+  "displayName": "HMSMLDemo",
+  "version": "2.0.5-300",
+  "description": "A sample Apache Cordova application that demonstrates the usage of cordova-plugin-hms-ml",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENCE",
+  "readmeFilename": "README.md",
+  "main": "./www/js/index.js",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "ml",
+    "hms-ml",
+    "huawei-ml",
+    "hms",
+    "huawei"
+  ],
+  "devDependencies": {
+    "cordova-plugin-chooser": "1.2.0",
+    "cordova-plugin-whitelist": "1.3.4"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-chooser": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "files": [
+    ".docs",
+    "www",
+    "config.xml",
+    "LICENCE",
+    "package.json",
+    "README.md",
+    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+  ]
+}

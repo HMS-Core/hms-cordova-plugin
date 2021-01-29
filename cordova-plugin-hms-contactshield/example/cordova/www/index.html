@@ -1,0 +1,55 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Cordova Contact Shield Demo</title>
+</head>
+
+<body>
+    <div class="app">
+        <h1>Contact Shield Kit</h1>
+
+        <input type="submit" value="Has Bluetooth Permission ?" id="btn_has_bluetooth_permission">
+        <input type="submit" value="Request Bluetooth Permission" id="btn_request_bluetooth_permission">
+        <input type="submit" value="Start Contact Shield" id="btn_start_contact_shield">
+        <input type="submit" value="Clear Data" id="btn_clear_data">
+        <input type="submit" value="Get Contact Detail" id="btn_get_contact_detail">
+        <input type="submit" value="Get Contact Sketch" id="btn_get_contact_sketch">
+        <input type="submit" value="Get Contact Window" id="btn_get_contact_window">
+        <input type="submit" value="Get Periodic Key" id="btn_get_periodic_key">
+        <input type="submit" value="Handle Callback" id="btn_handle_callback">
+        <input type="submit" value="Is Contact Shield Running" id="btn_is_contact_shield_running">
+        <input type="submit" value="Put Shared Key Files Old" id="btn_put_shared_key_files_depricated">
+        <input type="submit" value="Put Shared Key Files" id="btn_put_shared_key_files">
+        <input type="submit" value="Start Contact Shield Old" id="btn_start_contact_shield_depricated">
+        <input type="submit" value="Start Contact Shield No Persistent" id="btn_start_contact_shield_no_persistent">
+        <input type="submit" value="Stop Contact Shield" id="btn_stop_contact_shield">
+        <input type="submit" value="Enable Logger" id="btn_enable_logger">
+        <input type="submit" value="Disable Logger" id="btn_disable_logger">
+        <input type="submit" value="unregister Receiver" id="btn_unregister_receiver">
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

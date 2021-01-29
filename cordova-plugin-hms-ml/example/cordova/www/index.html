@@ -1,0 +1,395 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+    <title>Cordova MLKit Demo</title>
+
+    <style>
+        .mllogo {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .imgDiv {
+            margin-bottom: 10px;
+        }
+
+        .mllogoText {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .servicesDiv {
+            margin-left: 20px;
+            height: 80px;
+            width: 90px;
+            border: 1px solid gray;
+            border-radius: 5px;
+            position: relative;
+            background-color: honeydew;
+        }
+
+        .servicesImg {
+            height: 50px;
+            width: 70px;
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .servicesImgText {
+            position: absolute;
+            left: 30px;
+            bottom: 1px;
+        }
+
+        .newPageHref {
+            float: left;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mllogo">
+        <div class="imgDiv">
+            <img src=img/ml.png height="100px" width="100px">
+        </div>
+        <label class="mllogoText" for="text">ML Text Related Services</label>
+    </div>
+    <hr>
+   
+    <a id="bcrHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/bcr.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">BCR</label>
+        </div>
+    </a>
+    <a id="textHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/text.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Text</label>
+        </div>
+    </a>
+    <a id="docHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/doc.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">Document</label>
+        </div>
+    </a>
+    <a id="generalCardHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/gcr.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">General Card</label>
+        </div>
+    </a>
+    <a id="formRecogHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/productsegment.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Form Recognition</label>
+        </div>
+    </a>
+
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Live Lens Engine</label>
+    </div>
+    <hr>
+    <a id="livefaceHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/productsegment.png" alt="">
+            </div>
+            <label style="left: 30px;" class="servicesImgText" for="text">Live Analyser</label>
+        </div>
+    </a>
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Language-Voice Related Services</label>
+    </div>
+    <hr>
+    <a id="ttsHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/tts.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">TTS</label>
+        </div>
+    </a>
+    <a id="translateHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/trans.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">Translate</label>
+        </div>
+    </a>
+
+    <a id="langdetectHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/langdetect.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">Language Detection</label>
+        </div>
+    </a>
+
+    <a id="asrHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/asr.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">ASR</label>
+        </div>
+    </a>
+
+    <a id="aftHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/aft.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">AFT</label>
+        </div>
+    </a>
+    <a id="rttAnalyserHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/rtt.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">RTT Analyser</label>
+        </div>
+    </a>
+    <a id="soundHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/sounddetect.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">Sound Dect</label>
+        </div>
+    </a>
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Image Related Services</label>
+    </div>
+    <hr>
+
+
+    <a id="imgsegHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/segmentation.png" alt="">
+            </div>
+            <label style="left: 20px;" class="servicesImgText" for="text">ImgSeg</label>
+        </div>
+    </a>
+
+
+    <a id="objectHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/object.png" alt="">
+            </div>
+            <label style="left: 20px;" class="servicesImgText" for="text">Object</label>
+        </div>
+    </a>
+  
+
+    <a id="classifyHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/class.png" alt="">
+            </div>
+            <label style="left: 15px;" class="servicesImgText" for="text">Classify</label>
+        </div>
+    </a>
+
+    <a id="landmarkHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/landmark.png" alt="">
+            </div>
+            <label style="left: 10px;" class="servicesImgText" for="text">Landmark</label>
+        </div>
+    </a>
+
+    <a id="imageSuperResolutionHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/ISR.png" alt="">
+            </div>
+            <div style="margin-top: 15px;">
+                <label style="left: 10px;" class="servicesImgText" for="text">Image Resolution</label>
+            </div>
+        </div>
+    </a>
+    <a id="textImageSuperResolutionHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/TISR.png" alt="">
+            </div>
+            <div style="margin-top: 15px;">
+                <label style="left: 10px;" class="servicesImgText" for="text">Text Image Resolution</label>
+            </div>
+        </div>
+    </a>
+    <a id="documentSkewCorrectionHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/doc.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Document Skew</label>
+        </div>
+    </a>
+
+    <a id="sceneHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/scene.png" alt="">
+            </div>
+            <label style="left: 20px;" class="servicesImgText" for="text">Scene</label>
+        </div>
+    </a>
+    
+    <a id="productHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/productsegment.png" alt="">
+            </div>
+            <label style="left: 20px;" class="servicesImgText" for="text">Product</label>
+        </div>
+    </a>
+
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Face-Body Related Services</label>
+    </div>
+    <hr>
+
+    <a id="faceHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/face.png" alt="">
+            </div>
+            <label style="left: 30px;" class="servicesImgText" for="text">Face</label>
+        </div>
+    </a>
+
+    <a id="liveLivenessDetectionHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/liveness.png" alt="">
+            </div>
+            <div style="margin-top: 15px;">
+                <label style="left: 10px;" class="servicesImgText" for="text">Liveness Detect</label>
+            </div>
+        </div>
+    </a>
+    <a id="stillHandHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/handkey.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Still Handey</label>
+        </div>
+    </a>
+    
+    <a id="stillSkeletonHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/skeleton.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Still Skeleton</label>
+        </div>
+    </a>
+    
+
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Custom Model Service</label>
+    </div>
+    <hr>
+    <a id="customModelHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/model.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Custom Model</label>
+        </div>
+    </a>
+
+    <div style="clear: both;"></div>
+    <div class="mllogo">
+        <label class="mllogoText" for="text">ML Natural Language Service</label>
+    </div>
+    <hr>
+    <a id="textEmbeddingHref" class="newPageHref" href="javascript:(void)">
+        <div class="servicesDiv">
+            <div>
+                <img class="servicesImg" src="img/textembed.png" alt="">
+            </div>
+            <label class="servicesImgText" for="text">Text Embedding</label>
+        </div>
+    </a>
+       
+
+
+    <div style="clear: both;"></div>
+    <div style="margin-top: 50px;"></div>
+    <div class="main_div textAlignDiv"><label class="textProp" for="text">Permissions</label></div>
+    <div class="textAlignDiv">
+        <div class=" twoDivProp"><input type="button" id="requestPermissions" value="Request Permissions" class="btn ">
+        </div>
+        <div class=" twoDivProp"><input type="button" id="checkPermissions" value="Check Permissions" class="btn"></div>
+    </div>
+
+    
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

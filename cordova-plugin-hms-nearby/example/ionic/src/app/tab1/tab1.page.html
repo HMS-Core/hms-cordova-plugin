@@ -1,0 +1,64 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nearby Connection
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <ion-item>
+      <ion-label>Your Name</ion-label>
+      <ion-input [(ngModel)]="myName" [disabled]="connectionStatus != ConnectionStatus.IDLE"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Friend's Name</ion-label>
+      <ion-input [(ngModel)]="friendName" [disabled]="connectionStatus != ConnectionStatus.IDLE"></ion-input>
+    </ion-item>
+  </ion-list>
+  <div class="ion-padding">
+    <ion-button expand="block" size="small" (click)="startSearching()" [hidden]="connectionStatus != ConnectionStatus.IDLE" >Start Chat</ion-button>
+    <ion-button expand="block" size="small" color="danger" (click)="stopSearching()" [hidden]="connectionStatus != ConnectionStatus.SEARCHING" >Stop Searching</ion-button>
+    <ion-button expand="block" size="small" color="danger" (click)="endChat()" [hidden]="connectionStatus != ConnectionStatus.CONNECTED"  >End Chat</ion-button>
+  </div>
+  <ion-label style="margin-left: 10px;">Connection Status: {{connectionStatus}}</ion-label>
+  <ion-list lines="none" class="text-pane" >
+    <ion-item *ngFor="let message of messages">
+      <ion-icon [slot]="message.slot" name="person-outline"></ion-icon>
+      <ion-label [style.text-align]="message.align" >
+        <p>{{message.name}}</p>
+        <h2>{{message.text}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
+
+<!-- Footer without a border -->
+<ion-footer class="ion-no-border" [hidden]="connectionStatus != ConnectionStatus.CONNECTED">
+  <ion-toolbar>
+    <ion-item lines="none" >
+      <ion-input [(ngModel)]="textMessage" type="text" placeholder="Type Message"></ion-input>
+      <ion-button item-right color="success" size="small" (click)="sendText()" >Send</ion-button>
+      <ion-button item-right color="success" size="small" (click)="chooseFile()" ><ion-icon name="attach-outline"></ion-icon></ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>
