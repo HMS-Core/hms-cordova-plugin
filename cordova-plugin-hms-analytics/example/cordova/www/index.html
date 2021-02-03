@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,40 +30,39 @@
         <option value="true">True</option>
         <option value="false">False</option>
     </select>
-    <input type="submit" id="btnSetAnalyticsEnabled" value="Set Analytics Enabled" />
+    <input type="submit" id="setAnalyticsEnabled" value="Set Analytics Enabled" />
     <hr>
-    <input type="submit" id="btnConfig" value="Config" />
+    <input type="submit" id="getAAID" value="Get AAID" />
     <hr>
-    <input type="submit" id="btnGetAAID" value="Get AAID" />
+    <input type="submit" id="onEvent" value="On Event">
     <hr>
-    <input type="submit" id="btnOnEvent" value="On Event">
-    <hr>
-    <input type="submit" id="btnsendPredefinedEvent" value="Send Predefined Event" />
+    <input type="submit" id="onPredefinedEvent" value="Send Predefined Event" />
     <hr>
     <input type="text" id="txt_user_id" placeholder="Enter user id please" />
-    <input type="submit" id="btnSetUserId" value="Set User ID" />
+    <input type="submit" id="setUserId" value="Set User ID" />
     <hr>
-    <input type="text" id="user_profile_name" class="user_profile" placeholder="Enter name " required />
-    <input type="text" id="user_profile_value" class="user_profile" placeholder="Enter value " required />
-    <input type="submit" id="btnSetUserProfile" value="Set User Profile" />
+    <input type="text" id="user_profile_name" placeholder="Enter name " required />
+    <input type="text" id="user_profile_value" placeholder="Enter value " required />
+    <input type="submit" id="setUserProfile" value="Set User Profile" />
     <hr>
-    <select id="user_profiles" class="options">
+    <input type="text" id="delete_user_profile_name" placeholder="Enter name " required />
+    <input type="submit" id="deleteUserProfile" value="Delete User Profile" />
+    <hr>
+    <select id="user_profiles_predefined" class="options">
         <option value="true">True</option>
         <option value="false">False</option>
     </select>
-    <input type="submit" id="btnGetUserProfiles" value="Get User Profiles" />
+    <input type="submit" id="getUserProfiles" value="Get User Profiles" />
     <hr>
-    <input type="submit" id="btnSetPushToken" value="Set Push Token" />
+    <input type="submit" id="setPushToken" value="Set Push Token" />
     <hr>
     <input type="number" id="txt_min_activity_sessions" placeholder="Enter milliseconds please" required />
-    <input type="submit" id="btnSetMinActivitySessions" value="Set Min Activity Sessions" />
+    <input type="submit" id="setMinActivitySessions" value="Set Min Activity Sessions" />
     <hr>
     <input type="number" id="txt_session_duration" placeholder="Enter milliseconds please" required />
-    <input type="submit" id="btnSetSessionDuration" value="Set Session Duration" />
+    <input type="submit" id="setSessionDuration" value="Set Session Duration" />
     <hr>
-    <input type="submit" id="btnClearCachedData" value="Clear Cached Data" />
-    <hr>
-    <input type="submit" id="btnEnableLog" value="Enable Log" />
+    <input type="submit" id="clearCachedData" value="Clear Cached Data" />
     <hr>
     <select id="enable_log_with_level" class="options">
         <option value="DEBUG">DEBUG</option>
@@ -71,21 +70,36 @@
         <option value="WARN">WARN</option>
         <option value="ERROR">ERROR</option>
     </select>
-    <input type="submit" id="btnEnableLogWithLevel" value="Enable Log With Level" />
+    <input type="submit" id="enableLog" value="Enable Log With Level" />
     <hr>
-    <input type="text" id="txt_start_page_name" class="page_start" placeholder="Enter Start Page Name" required />
-    <input type="text" id="txt_start_page_class_override" class="page_start"
-        placeholder="Enter Start Page Class Override" required />
-    <input type="submit" id="btnPageStart" value="Page Start">
+    <input type="text" id="txt_start_page_name" placeholder="Enter Start Page Name" required />
+    <input type="text" id="txt_start_page_class_override" placeholder="Enter Start Page Class Override" required />
+    <input type="submit" id="pageStart" value="Page Start">
     <hr>
     <input type="text" id="txt_end_page_name" placeholder="Enter End Page Name" required />
-    <input type="submit" id="btnPageEnd" value="Page End" />
+    <input type="submit" id="pageEnd" value="Page End" />
     <hr>
-    <input type="submit" id="btnshowHAParamType" value="HAParamType" />
+    <input type="submit" id="setReportPolicies" value="Set Report Policies" />
     <hr>
-    <input type="submit" id="btnshowHAEventType" value="HAEventType" />
+    <select id="report_policy_type" class="options">
+        <option value="ON_SCHEDULED_TIME_POLICY">ON_SCHEDULED_TIME_POLICY</option>
+        <option value="ON_APP_LAUNCH_POLICY">ON_APP_LAUNCH_POLICY</option>
+        <option value="ON_MOVE_BACKGROUND_POLICY">ON_MOVE_BACKGROUND_POLICY</option>
+        <option value="ON_CACHE_THRESHOLD_POLICY">ON_CACHE_THRESHOLD_POLICY</option>
+    </select>
+    <input type="submit" id="getReportPolicyThreshold" value="Get Report Policy Threshold" />
     <hr>
-    <input type="submit" id="btnSetReportPolicies" value="SetReportPolicies" />
+    <select id="restriction_is_enabled" class="options">
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    <input type="submit" id="setRestrictionEnabled" value="Set Restriction Enabled" />
+    <hr>
+    <input type="submit" id="isRestrictionEnabled" value="Is Restriction Enabled" />
+    <hr>
+    <input type="submit" id="HAParamType" value="HAParamType" />
+    <hr>
+    <input type="submit" id="HAEventType" value="HAEventType" />
     <hr>
 
     <script type="text/javascript" src="cordova.js"></script>

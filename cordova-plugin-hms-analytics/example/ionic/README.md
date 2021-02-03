@@ -1,16 +1,18 @@
 # HMS Analytics Ionic Demo
 
----
-
 ## Contents
 
 - [1. Introduction](#1-introduction)
 - [2. Installation Guide](#2-installation-guide)
   - [2.1. Creating a Project in AppGallery Connect](#21-creating-a-project-in-appgallery-connect)
-  - [2.2. Configuring the Signing Certificate Fingerprint, Obtaining agconnect-services.json and agconnect-services.plist](#22-configuring-the-signing-certificate-fingerprint-obtaining-agconnect-servicesjson-and-agconnect-servicesplist)
+  - [2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json and agconnect-services.plist](#22-configuring-the-signing-certificate-fingerprint-and-obtaining-agconnect-servicesjson-and-agconnect-servicesplist)
   - [2.3. Ionic](#23-ionic)
     - [2.3.1. With Cordova Runtime](#231-with-cordova-runtime)
+      - [2.3.1.1 iOS App Development](#2311-ios-app-development)
+      - [2.3.1.2 Android App Development](#2312-android-app-development)
     - [2.3.2. With Capacitor Runtime](#232-with-capacitor-runtime)
+      - [2.3.2.1 iOS App Development](#2321-ios-app-development)
+      - [2.3.2.2 Android App Development](#2322-android-app-development)
 - [3. Configuration and Description](#3-configuration-and-description)
 - [4. Questions or Issues](#4-questions-or-issues)
 - [5. Licensing and Terms](#5-licensing-and-terms)
@@ -19,7 +21,7 @@
 
 ## 1. Introduction
 
-This demo application demonstrates the usage of HMS Analytics Kit Cordova plugin.
+This demo application demonstrates the usage of the HMS Analytics Kit Cordova plugin.
 
 ---
 
@@ -34,14 +36,14 @@ Creating an app in AppGallery Connect is required in order to communicate with t
 1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html)  and select **My projects**.
 2. Select your project from the project list or create a new one by clicking the **Add Project** button.
 3. Go to **Project Setting** > **General information**, and click **Add app**.
-If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+    - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
 4. On the **Add app** page, enter the app information, and click **OK**.
 
-### 2.2.  Configuring the Signing Certificate Fingerprint, Obtaining agconnect-services.json and agconnect-services.plist
+### 2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json and agconnect-services.plist
 
 A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial for the certificate generation. Perform the following steps after you have generated the certificate.
 
-1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html) and select your project from **My Projects**. Then go to **Project settings** > **General information**. In the **App information** field, click the  icon next to SHA-256 certificate fingerprint, and enter the obtained **SHA-256 certificate fingerprint**.
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html) and select your Android project from **My Projects**. Then go to **Project Setting** > **General information**. In the **App information** field, click the icon next to SHA-256 certificate fingerprint, and enter the obtained **SHA-256 certificate fingerprint**.
 2. After completing the configuration, click **OK** to save the changes. (Check mark icon)
 3. In the same page,
     - If platform is Android ,click **agconnect-services.json** button to download the configuration file.
@@ -49,13 +51,13 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
 ### 2.3. Ionic
 
-1. Install Ionic CLI.
+1. Install Ionic CLI and other required tools if haven't done before.
 
     ```bash
-    npm install -g @ionic/cli
+    npm install -g @ionic/cli cordova-res native-run
     ```
 
-2. Open the demo project root folder.
+2. Open the demo project's root directory.
 
 3. Install project dependencies.
 
@@ -73,39 +75,65 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
 2. Update the widget **`id`** property which is specified in the **`config.xml`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** and **`agconnect-services.plist`** files.
 
-3. Add the **Android platform** and **iOS platform** to the project.
+3. Set preference in your Ionic project config.xml platform iOS.
 
-    ```bash
-    ionic cordova platform add android
-    ```
+   ```xml
+   <!--platform name="ios"-->
+    <preference name="deployment-target" value="11.0" />
+    <preference name="SwiftVersion" value="5" />
+   ```
 
-    ```bash
-    ionic cordova platform add ios
-    ```
+4. Add the **Android** or **iOS** platform to the project if haven't done before.
 
-4. Install `HMS Analytics plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+   ```bash
+   ionic cordova platform add android
+   ```
 
-    a. Run the following command in the root directory of your project to install it through **npm**.
+   ```bash
+   ionic cordova platform add ios
+   ```
+
+5. Install `HMS Analytics plugin` to the project.
 
     ```bash
     ionic cordova plugin add @hmscore/cordova-plugin-hms-analytics
     ```
 
-    b. Or download the plugin from [Plugin > Analytics Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+6. Install HMS Analytics Ionic Native wrappers.
 
     ```bash
-    ionic cordova plugin add <hms_cordova_analytics_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-analytics
     ```
 
-5. Copy **hms-analytics** folder from **`node_modules/@hmscore/cordova-plugin-hms-analytics/ionic/dist/hms-analytics`** directory to **`node_modules/@ionic-native`** directory.
+7. Build Ionic app to generate resource files.
 
-6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory of your Android project. Copy **`agconnect-services.plist`** file to the app's root directory of your Xcode project.
+    ```bash
+    ionic build
+    ```
 
-7. For Android platform: Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
+> ***NOTE*** <br/>
+> During the development, you can enable the debug mode to view the event records in real time, observe the results, andadjust the event reporting policies. --> [Configuration and Description](#3-configuration-and-description)
+##### 2.3.1.1. iOS App Development
+
+1. Open Xcode project.
+
+2. Add **`agconnect-services.plist`** file to the app's root directory of your Xcode project.
+
+3. Run the application.
+
+   ```bash
+   ionic cordova run ios --device
+   ```
+
+##### 2.3.1.2. Android App Development
+
+1. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory your Android project.
+
+2. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
     - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
-    - Fill **`build.json`** file according to your keystore information. For example:
+    - Fill **`build.json`** file according to your keystore. For example:
 
     ```json
     {
@@ -126,39 +154,10 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
     ```
 
-8. To initialize HMS Core Analytics SDK iOS platform, add the following code:
-
-    - For the iOS platform ->
-        - Check Signing & Capabilities your Xcode project.
-        - Objective C sample code: **(BOOL)Application** method in **AppDelegate.m**
-
-        ```objc
-        // #import <HiAnalytics/HiAnalytics.h>
-        [HiAnalytics config];//Initialization
-        ```
-
-        <img src=".docs/images/objective_c_sample_code.png" width="500" >
-
-        - Swift sample code: **func Application** method in **AppDelegate.swift**
-
-        ```swift
-        // import HiAnalytics
-        HiAnalytics.config();//Initialization
-        ```
-
-        <img src=".docs/images/swift_sample_code.png" width="500" >
-
-9. Run the application.
-
-    > ***NOTE*** <br/>
-    > During the development, you can enable the debug mode to view the event records in real time, observe the results, and adjust the event reporting policies. --> [Configuration and Description](#3-configuration-and-description)
+3. Run the app.
 
    ```bash
    ionic cordova run android --device
-   ```
-
-   ```bash
-   ionic cordova run ios --device
    ```
 
 #### 2.3.2. With Capacitor Runtime
@@ -169,31 +168,35 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
    ionic integrations enable capacitor
    ```
 
-2. Update the widget **`appId`** property which is specified in the **`capacitor.config.json`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** and **`agconnect-services.plist`** files.
+2. Initialize **Capacitor**.
 
-3. Install `HMS Analytics plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+    ```bash
+    npx cap init [appName] [appId]
+    ```
 
-   a. Run the following command in the root directory of your project to install it through **npm**.
+    - For more details please follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information).
+
+3. Update the **`appId`** property which is specified in the **`capacitor.config.json`** file according to your project. It must be same with **client > package_name** value of the **`agconnect-services.json`** and **`agconnect-services.plist`** files.
+
+4. Install `HMS Analytics plugin` to the project.
 
     ```bash
     npm install @hmscore/cordova-plugin-hms-analytics
     ```
 
-   b. Or download the plugin from [Plugin > Analytics Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+5. Install HMS Analytics Ionic Native wrappers.
 
     ```bash
-    npm install <hms_cordova_analytics_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-analytics
     ```
 
-4. Copy **hms-analytics** folder from **`node_modules/@hmscore/cordova-plugin-hms-analytics/ionic/dist/hms-analytics`** directory to **`node_modules/@ionic-native`** directory.
-
-5. Build Ionic app to generate resource files.
+6. Build Ionic app to generate resource files.
 
     ```bash
     ionic build
     ```
 
-6. Add the **Android** or **iOS** platform to the project.
+7. Add the **Android** or **iOS** platform to the project.
 
     ```bash
     npx cap add android
@@ -202,19 +205,42 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     ```bash
     npx cap add ios
     ```
+##### 2.3.2.1. iOS App Development
 
-    > ***NOTE*** <br/>
-    > During the development, you can enable the debug mode to view the event records in real time, observe the results, and adjust the event reporting policies. --> [Configuration and Description](#3-configuration-and-description)
+1. Open the project in Xcode.
 
-7. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory of your Android project. Copy **`agconnect-services.plist`** file to the app's root directory of your Xcode project.
+    ```bash
+    npx cap open ios
+    ```
+
+2. Add **`agconnect-services.plist`** file to the app's root directory of your Xcode project.
+
+3. Initialize HMS Core Analytics SDK iOS platform, add the following code:
+    - Check Signing & Capabilities your Xcode project.
+    - Swift sample code: **didFinishLaunchingWithOptions** method in **AppDelegate.swift**
+
+    ```swift
+    // import HiAnalytics
+    HiAnalytics.config();//Initialization
+    ```
+
+    <img src=".docs/images/swift_sample_code.png" width="500" >
+
+4. Run the app.
+
+##### 2.3.2.2. Android App Development
+
+1. Copy **`agconnect-services.json`** file to **`<project_root>/android/app`** directory your Android project.
+
+2. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory.
 
     - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
-8. For Android platform: Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
+3. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
 
-    - Add `signingConfigs` entry to **android** according to your keystore information.
-    - Enable `signingConfig` configuration to **debug** and **release** flavors.
-    - Apply `com.huawei.agconnect` plugin.
+    - Add `signingConfigs` entry to the **android** section and modify it according to your keystore.
+
+    - Enable `signingConfig` configuration for **debug** and **release** flavors.
 
     ```groovy
     ...
@@ -223,7 +249,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
         ...
 
-        // Add signingConfigs according to your keystore information
+        // Modify signingConfigs according to your keystore
         signingConfigs {
             config {
                 storeFile file('<keystore_file>.jks')
@@ -234,10 +260,10 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
         }
         buildTypes {
             debug {
-                signingConfig signingConfigs.config // Enable signingConfig in debug flavor
+                signingConfig signingConfigs.config // Enable signingConfig for debug flavor
             }
             release {
-                signingConfig signingConfigs.config // Enable signingConfig in release flavor
+                signingConfig signingConfigs.config // Enable signingConfig for release flavor
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
@@ -245,11 +271,9 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
 
     ...
-
-    apply plugin: 'com.huawei.agconnect' // Apply com.huawei.agconnect plugin. This line must be added to the end of the file.
     ```
 
-9. For Android platform: Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
+4. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
 
     ```groovy
     buildscript {
@@ -263,7 +287,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+            classpath 'com.huawei.agconnect:agcp:1.4.2.301'
         }
     }
 
@@ -281,39 +305,19 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
     ```
 
-10. To initialize HMS Core Analytics SDK iOS platform, add the following code:
+5. Updates dependencies, and copy any web assets to your project.
 
-    - For the iOS platform ->
-        - Check Signing & Capabilities your Xcode project.
-        - Objective C sample code: **(BOOL)Application** method in **AppDelegate.m**
+    ```bash
+    npx cap sync
+    ```
 
-        ```objc
-        // #import <HiAnalytics/HiAnalytics.h>
-        [HiAnalytics config];//Initialization
-        ```
-
-        <img src=".docs/images/objective_c_sample_code.png" width="500" >
-
-        - Swift sample code: **func Application** method in **AppDelegate.swift**
-
-        ```swift
-        // import HiAnalytics
-        HiAnalytics.config();//Initialization
-        ```
-
-        <img src=".docs/images/swift_sample_code.png" width="500" >
-
-11. Open the project in Android Studio and run it.
+6. Open the project in Android Studio and run it.
 
     ```bash
     npx cap open android
     ```
 
-12. Open the project in Xcode and run it.
-
-    ```bash
-    npx cap open ios
-    ```
+7. Run the app.
 
 ---
 
@@ -323,7 +327,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
 During the development, you can enable the debug mode to view the event records in real time, observe the results, and adjust the event reporting policies.
 
-**Android Platform:**
+#### Android Platform:
 
 1. Run the following command on an Android device to enable the debug mode:
 
@@ -337,7 +341,7 @@ During the development, you can enable the debug mode to view the event records 
     adb shell setprop debug.huawei.hms.analytics.app .none.
     ```
 
-**iOS Platform:**
+#### iOS Platform:
 
 1. To enable the debug mode: Choose **Product > Scheme > Edit Scheme** from the Xcode menu. On the Arguments page, click + to add the **-HADebugEnabled** parameter. After the parameter is added, click Close to save the setting.
 2. To disable the debug mode: Choose **Product > Scheme > Edit Scheme** from the Xcode menu. On the Arguments page, click + to add the **-HADebugDisabled** parameter. After the parameter is added, click Close to save the setting.
@@ -351,6 +355,26 @@ During the development, you can enable the debug mode to view the event records 
 1. Sign in to AppGallery Connect and click My projects.
 2. Find your project, and click the app for which you want to view analytics data.
 3. Select any menu under HUAWEI Analytics and click Enable Analytics service.
+
+### Configuring Obfuscation Scripts
+
+Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK from being obfuscated.
+
+**NOTE**: This step is required only if you want to minify and obfuscate your app. By default obfuscation is disabled in Cordova and Ionic apps.
+
+The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled. Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard plugins. If ProGuard is enabled in your project, the Huawei Cordova Analytics plugin's ProGuard rules need to be added to your project. These rules are as follows:
+
+```text
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keep class com.huawei.hianalytics.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+-repackageclasses
+```
 
 ---
 

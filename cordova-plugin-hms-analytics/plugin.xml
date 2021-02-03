@@ -1,11 +1,11 @@
-<?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-hms-analytics" version="5.0.3-300" 
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin id="cordova-plugin-hms-analytics" version="5.1.0-300" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/main">
-    <name>cordova-plugin-hms-analytics</name>
-    <description>cordova-plugin-hms-analytics</description>
+    <name>HMS Analytics</name>
+    <description>Cordova HMS Analytics Plugin</description>
     <license>Apache 2.0</license>
-    <keywords>cordova, android, ios, plugin, huawei, hms, analytics</keywords>
+    <keywords>cordova, android, ios, plugin, huawei, hms, hms-analytics, analytics</keywords>
 
     <repo>git+https://github.com/HMS-Core/hms-cordova-plugin.git</repo>
     <issue>https://github.com/HMS-Core/hms-cordova-plugin/issues</issue>
@@ -13,18 +13,19 @@
     <engines>
         <engine name="cordova" version=">=3.0.0" />
     </engines>
-    
+
     <js-module name="cordova-plugin-hms-analytics" src="www/HMSAnalytics.js">
         <clobbers target="HMSAnalytics" />
     </js-module>
-
+    <js-module name="utils" src="www/utils.js"/>
+    
     <platform name="android">
 
         <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
         <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
 
-        <framework src="resources/android/plugin.gradle" custom="true" type="gradleReference" />
-        <framework src="com.huawei.hms:hianalytics:5.0.3.300" />
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+        <framework src="com.huawei.hms:hianalytics:5.1.0.300" />
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -32,36 +33,58 @@
             <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
         </config-file>
 
-        <config-file parent="/*" target="res/xml/config.xml">
-            <feature name="cordova-plugin-hms-analytics">
-                <param name="android-package" value="com.huawei.hms.cordova.analytics.HMSAnalyticsPlugin" />
+		<config-file target="config.xml" parent="/*">
+            <feature name="HMSAnalytics">
+                <param name="android-package" value="com.huawei.hms.cordova.analytics.HMSAnalytics" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
+
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <provider android:authorities="${applicationId}.hmsAnalyticsProvider" android:name="com.huawei.hms.cordova.analytics.HMSContentProvider" android:exported="false" />
+            <provider android:authorities="${applicationId}.CordovaHMSAnalyticsProvider" android:name="com.huawei.hms.cordova.analytics.HMSAnalyticsContentProvider" android:exported="false" />
         </config-file>
-        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsPlugin.java" target-dir="src/com/huawei/hms/cordova/analytics" />
-        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsWrapper.java" target-dir="src/com/huawei/hms/cordova/analytics" />
-        <source-file src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/HMSContentProvider.java" target-dir="src/com/huawei/hms/cordova/analytics" />
-       <source-file  src="platforms/android/src/main/java/com/huawei/hms/cordova/analytics/logger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/analytics/logger" />
+
+        <!-- basef -->
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/analytics/basef/handler/"/>
+		
+        <!-- analytics -->
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalytics.java" target-dir="src/com/huawei/hms/cordova/analytics" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsModule.java" target-dir="src/com/huawei/hms/cordova/analytics" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/viewmodel/HMSAnalyticsViewModel.java" target-dir="src/com/huawei/hms/cordova/analytics/viewmodel" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/presenter/HMSAnalyticsContract.java" target-dir="src/com/huawei/hms/cordova/analytics/presenter" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/analytics/HMSAnalyticsContentProvider.java" target-dir="src/com/huawei/hms/cordova/analytics" />
     </platform>
 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="cordova-plugin-hms-analytics">
-                <param name="ios-package" value="HMSAnalyticsPlugin" />
+            <feature name="HMSAnalytics">
+                <param name="ios-package" value="CordovaHMSAnalytics" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
-        <source-file src="platforms/ios/HMSAnalyticsPlugin.swift" />
-        <source-file src="platforms/ios/Logger.swift" />
-        <source-file src="platforms/ios/AnalyticsViewModel.swift" />
+        <source-file src="src/ios/CordovaHMSAnalytics.swift" />
+        <source-file src="src/ios/HMSAnalyticsLogger.swift" />
+        <source-file src="src/ios/HMSAnalyticsViewModel.swift" />
+        <source-file src="src/ios/AppDelegate+HMSAnalyticsPlugin.m" />
+        <header-file src="src/ios/AppDelegate+HMSAnalyticsPlugin.h" />
 
         <podspec>
             <config>
-                <source url="https://github.com/CocoaPods/Specs.git"/>
+                <source url="https://cdn.cocoapods.org/" />
             </config>
             <pods use-frameworks="true">
-                <pod name="HiAnalytics" spec="5.0.4.300" />
+                <pod name="HiAnalytics" spec="5.1.0.300" />
             </pods>
         </podspec>
     </platform>

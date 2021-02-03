@@ -1,25 +1,30 @@
 {
-    "name": "HMSAnalyticsDemo",
+    "name": "cordova-hms-analytics-demo",
     "displayName": "HMSAnalyticsDemo",
-    "version": "5.0.3-300",
+    "version": "5.1.0-300",
     "description": "A demo application which shows the usage of HMS Analytics plugin",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "readmeFilename": "README.md",
+    "main": "./www/js/index.js",
     "keywords": [
         "cordova",
-        "huaweianalytics",
-        "hianalytics",
-        "ecosystem:cordova"
+        "ecosystem:cordova",
+        "cordova-android",
+        "cordova-ios",
+        "analytics",
+        "hms-analytics",
+        "huawei-analytics",
+        "hms",
+        "huawei"
     ],
-    "license": "Apache-2.0",
-    "dependencies": {},
     "devDependencies": {
-        "cordova-plugin-whitelist": "^1.3.4"
+        "cordova-plugin-whitelist": "1.3.4"
     },
     "cordova": {
-        "platforms": [],    
+        "platforms": [
+            "android"
+        ],
         "plugins": {
             "cordova-plugin-whitelist": {}
         }

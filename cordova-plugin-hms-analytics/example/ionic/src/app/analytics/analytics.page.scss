@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,44 +37,42 @@
     text-decoration: none;
 }
 
-#echo,
 #setAnalyticsEnabled,
-#enableLog,
-#enableLogWithLevel,
-#setUserProfile,
-#setUserId,
-#setPushToken,
-#setMinActivitySession,
-#setSessionDuration,
-#onEvent,
-#sendPredefinedEvent,
-#clearCachedData,
 #getAAID,
+#onEvent,
+#onPredefinedEvent,
+#setUserId,
+#setUserProfile,
+#deleteUserProfile,
 #getUserProfiles,
-#haParamType,
-#haEventType,
-#onPageStart,
-#onPageEnd,
-#enableLogger,
-#disableLogger,
-#setCurrentActivity,
-#constantsToExport,
+#setPushToken,
+#setMinActivitySessions,
+#setSessionDuration,
+#clearCachedData,
+#enableLog,
+#pageStart,
+#pageEnd,
 #setReportPolicies,
-#config {
+#getReportPolicyThreshold,
+#setRestrictionEnabled,
+#isRestrictionEnabled,
+#HAParamType,
+#HAEventType {
     width: 90%;
     border-radius: 4px;
     background: #957DAD;
 }
 
 #boolSetAnalyticsEnabled,
-#level,
-#profiles {
+#profile,
+#selectedLevel,
+#reportPolicyType,
+#restrictionIsEnabled {
     width: 90%;
     border: solid 2px #9ab7d3;
     height: 35px;
     border-radius: 4px;
     margin: auto;
-    padding-left: 30%;
     margin-top: 3%;
 }
 
@@ -87,17 +85,15 @@
     border-top: transparent;
 }
 
-#usrId,
+#userId,
 #name,
 #value,
-#token,
+#deleteName,
 #milliSecondsForActivitySessions,
 #milliSecondsForSessionDuration,
-#activity,
 #startPageName,
 #startPageClassOverride,
-#endPageName,
-#activityName {
+#endPageName {
     border: solid 2px #9ab7d3;
     width: 90%;
     height: 35px;

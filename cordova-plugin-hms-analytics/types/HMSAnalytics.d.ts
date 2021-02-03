@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,122 +13,228 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 /**
- * Provides methods to obtain HiAnalytics Kit functions both In Android & IOS Platforms.
+ * Specifies whether to enable event logging.
+ * The default value is true.
+ * <p>
+ * If event logging is disabled, no data is recorded or analyzed.
+ *
+ * @param enabled : Indicates whether to enable event logging.
  */
-declare class HMSAnalyticsAPI {
-    HAParamType: typeof HAParamType;
-    HAEventType: typeof HAEventType;
-    asyncExecute(action: string, param: any): Promise<any>;
-    /**
-     * Specifies whether to enable event collection.
-     * If the function is disabled, no data is recorded.
-     */
-    setAnalyticsEnabled(enabled: boolean): Promise<void>;
-    /**
-     * Initializes Analytics Kit.
-     * @note This method is only to support on iOS Platform.
-     */
-    config(): Promise<void>;
-    /**
-     * Obtains the app instance ID from AppGallery Connect.
-     */
-    getAAID(): Promise<string>;
-    /**
-     * Report events.
-     */
-    onEvent(eventId: HAEventType | string, value: HAParamType | EventParams): Promise<void>;
-    /**
-     * Set a user ID.
-     * @important: When the setUserId API is called, if the old userId is not empty
-     * and is different from the new userId, a new session is generated.
-     * If you do not want to use setUserId to identify a user
-     * (for example, when a user signs out), set userId to **null**.
-     */
-    setUserId(userId: string): Promise<void>;
-    /**
-     * User attribute values remain unchanged throughout the app's lifecycle and session.
-     * A maximum of 25 user attribute names are supported.
-     * If an attribute name is duplicate with an existing one, the attribute names needs to be changed.
-     */
-    setUserProfile(name: string, value: string): Promise<void>;
-    /**
-     * Enables AB Testing. Predefined or custom user attributes are supported.
-     */
-    getUserProfiles(predefined: boolean): Promise<UserProfiles>;
-    /**
-     * Enables the log method.
-     * @note This method is only to support on Android Platform.
-     */
-    enableLog(): Promise<void>;
-    /**
-     * Enables the debug log method and sets the minimum log level.
-     * @note This method is only to support on Android Platform.
-     */
-    enableLogWithLevel(logLevel: LogLevel): Promise<void>;
-    /**
-     * Sets the push token, which is obtained using the Push Kit.
-     * @note This method is only to support on Android Platform.
-     */
-    setPushToken(token: string): Promise<void>;
-    /**
-     * Sets the minimum interval for starting a new session.
-     */
-    setMinActivitySessions(interval: number): Promise<void>;
-    /**
-     * Sets the session timeout interval.
-     */
-    setSessionDuration(duration: number): Promise<void>;
-    /**
-     * Defines a custom page entry event.
-     * @note This method is only to support on Android Platform.
-     */
-    pageStart(pageName: string, pageClassOverride: string): Promise<void>;
-    /**
-     * Defines a custom page exit event.
-     * @note This method is only to support on Android Platform.
-     */
-    pageEnd(pageName: string): Promise<void>;
-    /**
-     * Delete all collected data in the local cache, including the cached data that fails to be sent.
-     */
-    clearCachedData(): Promise<void>;
-    /**
-     * Sets data reporting policies.
-     * @note This method is only to support on iOS Platform.
-     */
-    setReportPolicies(reportPolicyType: HAReportPolicy): Promise<void>;
-    /**
-     * This method enables HMSLogger capability which is used for sending usage analytics of
-     * AppLinking SDK's methods to improve the service quality.
-     */
-    enableLogger(): Promise<void>;
-    /**
-     * This method disables HMSLogger capability which is used for sending usage analytics of
-     * AppLinking SDK's methods to improve the service quality.
-     */
-    disableLogger(): Promise<void>;
-}
+export declare function setAnalyticsEnabled(enabled: boolean): Promise<void>;
+/**
+ * When the method is called, a new session is generated if the old value of id is not empty
+ * and is different from the new value. If you do not want to use id to identify a user
+ * (for example, when a user signs out), you must set id to null.
+ *
+ * @param id : User ID, a string containing a maximum of 256 characters.
+ *           The value cannot be empty.
+ *           {@param id} is used by Analytics Kit to associate user data.
+ */
+export declare function setUserId(userId: string): Promise<void>;
+/**
+ * Sets user attributes.
+ * The values of user attributes remain unchanged throughout the app lifecycle and during
+ * each session.
+ *
+ * @param name  :  Name of a user attribute, a string containing a maximum of 256 characters.
+ *              The value cannot be empty. It can consist of digits, letters,
+ *              and underscores (_) and must start with a letter.
+ * @param value : User attribute value, a string containing a maximum of 256 characters.
+ */
+export declare function setUserProfile(name: string, value: string): Promise<void>;
+/**
+ * Delete user profile.
+ *
+ * @param name  :  Name of a user attribute
+ */
+export declare function deleteUserProfile(name: string): Promise<void>;
+/**
+ * Sets the push token. After obtaining a push token through Push Kit, call this method
+ * to save the push token so that you can use the audience defined by Analytics Kit
+ * to create HCM notification tasks.
+ *
+ * @param token : Push token, a string containing a maximum of 256 characters.
+ *              The value cannot be empty.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function setPushToken(token: string): Promise<void>;
+/**
+ * Sets the minimum interval for starting a new session.
+ * A new session is generated when an app is switched back to the foreground after it
+ * runs in the background for the specified minimum interval.
+ * <p>
+ * By default, the minimum interval is 30,000 milliseconds (that is, 30 seconds).
+ *
+ * @param milliseconds : Minimum interval for starting a session, in milliseconds.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function setMinActivitySessions(milliseconds: number): Promise<void>;
+/**
+ * Sets the session timeout interval.
+ * A new session is generated when an app is running in the foreground but
+ * the interval between two adjacent events exceeds the specified timeout interval.
+ * By default, the timeout interval is 1,800,000 milliseconds (that is, 30 minutes).
+ *
+ * @param milliseconds : Session timeout interval, in milliseconds.
+ */
+export declare function setSessionDuration(milliseconds: number): Promise<void>;
+/**
+ * Records an event.
+ *
+ * @param eventId : Event ID, a string containing a maximum of 256 characters.
+ *                The value cannot be empty or the ID of an automatically collected event.
+ *                It can consist of digits, letters, and underscores (_) but cannot contain
+ *                spaces or start with a digit.
+ * @param params  :  Information carried in an event. The number of built-in key-value pairs
+ */
+export declare function onEvent(eventId: HAEventType | string, params: HAParamType | EventParams): Promise<void>;
+/**
+ * Clears all collected data cached locally, including cached data that failed to be sent.
+ */
+export declare function clearCachedData(): Promise<void>;
+/**
+ * Obtains the app instance ID from AppGallery Connect.
+ */
+export declare function getAAID(): Promise<string>;
+/**
+ * Obtains the automatically collected or custom user attributes.
+ *
+ * @param preDefined : Indicates whether to obtain the automatically collected or
+ *                   custom user attributes.
+ */
+export declare function getUserProfiles(predefined: boolean): Promise<UserProfiles>;
+/**
+ * Customizes a page entry event.
+ * This method applies only to non-activity pages because automatic collection is supported
+ * for activity pages. If it is called for an activity page,
+ * statistics on page entry and exit events will be inaccurate.
+ * <p>
+ * After this method is called, the pageEnd() API must be called.
+ *
+ * @param pageName          :          Name of the current page,
+ *                          a string containing a maximum of 256 characters.
+ * @param pageClassOverride : Class name of the current page,
+ *                          a string containing a maximum of 256 characters.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function pageStart(pageName: string, pageClassOverride: string): Promise<void>;
+/**
+ * Customizes a page end event.
+ * This method applies only to non-activity pages because automatic collection is supported
+ * for activity pages. If it is called for an activity page,
+ * statistics on page entry and exit events will be inaccurate.
+ * <p>
+ * Before this method is called, the pageStart() API must be called.
+ *
+ * @param pageName : Name of the current page,
+ *                 a string containing a maximum of 256 characters.
+ *                 It must be the same as the value of pageName passed in pageStart().
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function pageEnd(pageName: string): Promise<void>;
+/**
+ * Sets the automatic event reporting policy.
+ *
+ * @param reportPolicies : Policy for data reporting. Four policies are supported.
+ *                       One or more policies can be specified.
+ */
+export declare function setReportPolicies(reportPolicies: ReportPolicy): Promise<void>;
+/**
+ * Obtains the threshold for event reporting.
+ *
+ * @param reportPolicyType : Event reporting policy name.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function getReportPolicyThreshold(reportPolicyType: ReportPolicyType): Promise<number>;
+/**
+ * Specifies whether to enable restriction of HUAWEI Analytics.
+ * <p>
+ * The default value is false, which indicates that HUAWEI Analytics is enabled by default.
+ *
+ * @param isEnabled : Indicates whether to enable restriction of HUAWEI Analytics.
+ */
+export declare function setRestrictionEnabled(isEnabled: boolean): Promise<void>;
+/**
+ * Obtains the restriction status of HUAWEI Analytics.
+ */
+export declare function isRestrictionEnabled(): Promise<boolean>;
+/**
+ * Enables the debug log function and sets the minimum log level.
+ * Default log level DEBUG.
+ *
+ * @param level : Level of recorded debug logs.
+ *
+ * @note This method is only to support on Android Platform.
+ *
+ * @note You can adjust the log level by adding arguments on iOS platform.
+ *      The available options include -HALogLevelDebug, -HALogLevelInfo, -HALogLevelWarn, and -HALogLevelError.
+ *      For example, if you want to set the log level to -HALogLevelDebug:
+ *          1- Choose Product > Scheme > Edit Scheme from the Xcode menu.
+ *          2- On the Arguments page, click + to add the -HALogLevelDebug parameter.
+ */
+export declare function enableLog(logLevel?: LogLevelType): Promise<void>;
+/**
+ * This method enables HMSLogger capability which is used for sending usage analytics of
+ * Analytics SDK's methods to improve the service quality.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function enableLogger(): Promise<void>;
+/**
+ * This method disables HMSLogger capability which is used for sending usage analytics of
+ * Analytics SDK's methods to improve the service quality.
+ *
+ * @note This method is only to support on Android Platform.
+ */
+export declare function disableLogger(): Promise<void>;
 interface GenericObject {
-    [key: string]: string;
+    [key: string]: any;
 }
-declare type UserProfiles = GenericObject;
-declare type EventParams = GenericObject;
-declare type LogLevel = "DEBUG" | "INFO" | "WARN" | "ERROR";
+export declare type UserProfiles = GenericObject;
+export declare type EventParams = GenericObject;
 /**
- * HAReportPolicy types for sets data reporting policies.
+ * ReportPolicy types for Sets automatic event reporting policies.
  */
-interface HAReportPolicy {
+export interface ReportPolicy {
     "onScheduledTimePolicy"?: number;
     "onAppLaunchPolicy"?: boolean;
     "onMoveBackgroundPolicy"?: boolean;
     "onCacheThresholdPolicy"?: number;
 }
 /**
+ * ReportPolicy types
+ */
+export declare enum ReportPolicyType {
+    ON_SCHEDULED_TIME_POLICY = "ON_SCHEDULED_TIME_POLICY",
+    ON_APP_LAUNCH_POLICY = "ON_APP_LAUNCH_POLICY",
+    ON_MOVE_BACKGROUND_POLICY = "ON_MOVE_BACKGROUND_POLICY",
+    ON_CACHE_THRESHOLD_POLICY = "ON_CACHE_THRESHOLD_POLICY"
+}
+/**
+ * HiAnalyticsTools log level enum.
+ */
+export declare enum LogLevelType {
+    DEBUG = 3,
+    INFO = 4,
+    WARN = 5,
+    ERROR = 6
+}
+/**
+ * HAUserProfileType types for provides constants that define the names of all predefined user attributes.
+ */
+export declare enum HAUserProfileType {
+    USERLEVEL = "user_level"
+}
+/**
  * HAEventType types for provides the IDs of all predefined events.
  */
-declare enum HAEventType {
+export declare enum HAEventType {
     CREATEPAYMENTINFO = "$CreatePaymentInfo",
     ADDPRODUCT2CART = "$AddProduct2Cart",
     ADDPRODUCT2WISHLIST = "$AddProduct2WishList",
@@ -171,13 +277,19 @@ declare enum HAEventType {
     OBTAINVOUCHER = "$ObtainVoucher",
     CONTACTCUSTOMSERVICE = "$ContactCustomService",
     RATE = "$Rate",
-    INVITE = "$Invite"
+    INVITE = "$Invite",
+    NOVICEGUIDESTART = "$NoviceGuideStart",
+    NOVICEGUIDEEND = "$NoviceGuideEnd",
+    STARTGAME = "$StartGame",
+    ENDGAME = "$EndGame",
+    WINPROPS = "$WinProps",
+    CONSUMEPROPS = "$ConsumeProps"
 }
 /**
  * HAParamType types for provides the IDs of all predefined parameters,
  * including the IDs of predefined parameters and user attributes.
  */
-declare enum HAParamType {
+export declare enum HAParamType {
     STORENAME = "$StoreName",
     BRAND = "$Brand",
     CATEGORY = "$Category",
@@ -223,6 +335,7 @@ declare enum HAParamType {
     SCORE = "$Score",
     SEARCHKEYWORDS = "$SearchKeywords",
     CONTENTTYPE = "$ContentType",
+    ACHIEVEMENTID = "$AchievementId",
     FLIGHTNO = "$FlightNo",
     POSITIONID = "$PositionId",
     PRODUCTLIST = "$ProductList",
@@ -244,7 +357,11 @@ declare enum HAParamType {
     SERVICETYPE = "$ServiceType",
     DETAILS = "$Details",
     COMMENTTYPE = "$CommentType",
-    REGISTMETHOD = "$RegistMethod"
+    REGISTMETHOD = "$RegistMethod",
+    DURATION = "$Duration",
+    LEVEL = "$Level",
+    PURCHASEENTRY = "$PurchaseEntry",
+    PROPS = "$Props",
+    ENTRY = "$Entry"
 }
-declare const _default: HMSAnalyticsAPI;
-export = _default;
+export {};

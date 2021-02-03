@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,330 +14,341 @@
     limitations under the License.
 */
 
-var app = (function () {
-    var init = function () {
-        document.addEventListener('deviceready', onDeviceReady, false);
-    };
+document.addEventListener("deviceready", onDeviceReady, false);
+const $ = (id) => document.getElementById(id);
 
-    var onDeviceReady = function () {
+function onDeviceReady() {
+    console.log("onDeviceReady");
+}
 
-        document.getElementById('btnSetAnalyticsEnabled').addEventListener('click', onSetAnalyticsEnabled);
-        document.getElementById('btnConfig').addEventListener('click', onConfig);
-        document.getElementById('btnGetAAID').addEventListener('click', onGetAAID);
-        document.getElementById('btnOnEvent').addEventListener('click', onEvent);
-        document.getElementById('btnsendPredefinedEvent').addEventListener('click', onSendPredefinedEvent);
-        document.getElementById('btnSetUserId').addEventListener('click', onSetUserId);
-        document.getElementById('btnSetUserProfile').addEventListener('click', onSetUserProfile);
-        document.getElementById('btnGetUserProfiles').addEventListener('click', onGetUserProfiles);
-        document.getElementById('btnSetPushToken').addEventListener('click', onSetPushToken);
-        document.getElementById('btnSetMinActivitySessions').addEventListener('click', onSetMinActivitySessions);
-        document.getElementById('btnSetSessionDuration').addEventListener('click', onSetSessionDuration);
-        document.getElementById('btnClearCachedData').addEventListener('click', onClearCachedData);
-        document.getElementById('btnEnableLog').addEventListener('click', onEnableLog);
-        document.getElementById('btnEnableLogWithLevel').addEventListener('click', onEnableLogWithLevel);
-        document.getElementById('btnPageStart').addEventListener('click', onPageStart);
-        document.getElementById('btnPageEnd').addEventListener('click', onPageEnd);
-        document.getElementById('btnshowHAParamType').addEventListener('click', onShowHAParamType);
-        document.getElementById('btnshowHAEventType').addEventListener('click', onShowHAEventType);
-        document.getElementById('btnSetReportPolicies').addEventListener('click', onSetReportPolicies);
-
-    };
-
-    init();
-
-})();
 
 /**
  * Specifies whether to enable event collection.
  * If the function is disabled, no data is recorded.
  */
-async function onSetAnalyticsEnabled() {
-
-    const set_analytics_enabled = document.getElementById("set_analytics_enabled").value;
-    const bool_set_analytics_enabled = (set_analytics_enabled == "true");
-    try {
-        const result = await HMSAnalytics.setAnalyticsEnabled(bool_set_analytics_enabled);
-        alert("enableLog -> Success : " + bool_set_analytics_enabled);
-    } catch (err) {
-        alert('enableLog -> Error : ' + err)
-    }
-}
-
-/**
- * Initializes Analytics Kit for iOS Platform.
- * @note This method is only to support on iOS Platform.
- */
-async function onConfig() {
-    try {
-        const result = await HMSAnalytics.config();
-        alert("HMS config -> Success ");
-    } catch (err) {
-        alert('HMS config -> Error : ' + err)
-    }
-}
-
-/**
- * Obtains the app instance ID from AppGallery Connect.
- */
-async function onGetAAID() {
-    try {
-        const aaid = await HMSAnalytics.getAAID();
-        alert('getAAID -> Success -> aaid : ' + aaid);
-    } catch (err) {
-        alert('getAAID -> Error : ' + err);
-    }
-}
-
-/**
- * Report custom events.
- */
-async function onEvent() {
-    const name = 'event_name';
-    const value = {
-        "my_event_key": "my_event_value",
-        "my_event_key_two": "my_event_value_two"
-    };
-
-    try {
-        const event = await HMSAnalytics.onEvent(name, value);
-        alert('onEvent -> Success');
-    } catch (err) {
-        alert('onEvent -> Error : ' + err);
-    }
-}
-
-/**
- * Report predefined events.
- */
-async function onSendPredefinedEvent() {
-    const event_name = HMSAnalytics.HAEventType.SUBMITSCORE;
-    const event_value = {}
-    event_value[HMSAnalytics.HAParamType.SCORE] = 12;
-    event_value[HMSAnalytics.HAParamType.CATEGORY] = "SPORT";
-    try {
-        const event = await HMSAnalytics.onEvent(event_name, event_value);
-        alert('sendPredefinedEvent -> Success');
-    } catch (err) {
-        alert('sendPredefinedEvent -> Error : ' + err);
-    }
-}
+$("setAnalyticsEnabled").onclick = async() => {
+    const set_analytics_enabled = $("set_analytics_enabled").value;
+    const enabled = (set_analytics_enabled === "true");
+    HMSAnalytics.setAnalyticsEnabled(enabled)
+        .then(() => {
+            alert("setAnalyticsEnabled :: Success");
+        })
+        .catch((error) => alert("setAnalyticsEnabled :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
  * Set a user ID.
  * @important: When the setUserId API is called, if the old userId is not empty and is different from the new userId, a new session is generated.
  * If you do not want to use setUserId to identify a user (for example, when a user signs out), set userId to **null**.
  */
-async function onSetUserId() {
-    const txtUserId = document.getElementById("txt_user_id").value;
-    if (txtUserId == "") {
+$("setUserId").onclick = async() => {
+    const userId = $("txt_user_id").value;
+    if (userId === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-            const setUserId = await HMSAnalytics.setUserId(txtUserId);
-            alert('setUserId -> Success');
-        } catch (err) {
-            alert('setUserId -> Error : ' + err);
-        }
+        HMSAnalytics.setUserId(userId)
+            .then(() => {
+                alert("setUserId :: Success");
+            })
+            .catch((error) => alert("setUserId :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
 /**
  * User attribute values remain unchanged throughout the app's lifecycle and session.
  * A maximum of 25 user attribute names are supported.
  * If an attribute name is duplicate with an existing one, the attribute names needs to be changed.
  */
-async function onSetUserProfile() {
-    const txtUserProfileName = document.getElementById("user_profile_name").value;
-    const txtUserProfileValue = document.getElementById("user_profile_value").value;
-
-    if (txtUserProfileName === "" || txtUserProfileValue === "") {
+$("setUserProfile").onclick = async() => {
+    const name = $("user_profile_name").value;
+    const value = $("user_profile_value").value;
+    if (name === "" || value === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-            const setUserProfile = await HMSAnalytics.setUserProfile(txtUserProfileName, txtUserProfileValue);
-            alert('setUserProfile -> Success');
-        } catch (err) {
-            alert('setUserProfile -> Error : ' + err);
-        }
+        HMSAnalytics.setUserProfile(name, value)
+            .then(() => {
+                alert("setUserProfile :: Success");
+            })
+            .catch((error) => alert("setUserProfile :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
 /**
- * Enables AB Testing. Predefined or custom user attributes are supported.
+ * User attribute name
  */
-async function onGetUserProfiles() {
-    const user_profiles = document.getElementById("user_profiles").value;
-    const bool_user_profiles = (user_profiles == "true");
-    try {
-        const userProfiles = await HMSAnalytics.getUserProfiles(bool_user_profiles);
-        alert('getUserProfiles -> Success -> userProfile : ' + JSON.stringify(userProfiles));
-    } catch (err) {
-        alert('getUserProfiles -> Error : ' + err);
+$("deleteUserProfile").onclick = async() => {
+    const name = $("delete_user_profile_name").value;
+    if (name === "") {
+        alert("Please fill out empty area");
+    } else {
+        HMSAnalytics.deleteUserProfile(name)
+            .then(() => {
+                alert("deleteUserProfile :: Success");
+            })
+            .catch((error) => alert("deleteUserProfile :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
 /**
  * Sets the push token, which is obtained using the Push Kit.
  * @note This method is only to support on Android Platform.
  */
-async function onSetPushToken() {
-    const txtPushToken = "AFcSAHhhnxdrMCYBxth2QOG9IgY2VydAM61DTThqNux3KBC_hgzQQTadfgtDv"
-    try {
-        const setPushToken = await HMSAnalytics.setPushToken(txtPushToken);
-        alert('setPushToken -> Success : ' + txtPushToken);
-    } catch (err) {
-        alert('setPushToken -> Error : ' + err);
-    }
-}
+$("setPushToken").onclick = async() => {
+    const pushToken = "AFcSAHhhnxdrMCYBxth2QOG9IgY2VydAM61DTThqNux3KBC_hgzQQTadfgtDv";
+    HMSAnalytics.setPushToken(pushToken)
+        .then(() => {
+            alert("setPushToken :: Success");
+        })
+        .catch((error) => alert("setPushToken :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
  * Sets the minimum interval for starting a new session.
  */
-async function onSetMinActivitySessions() {
-    const txtMinActivitySessions = document.getElementById("txt_min_activity_sessions").value;
-    const num_min_activity_sessions = parseInt(txtMinActivitySessions, 10);
-    if (txtMinActivitySessions == "") {
+$("setMinActivitySessions").onclick = async() => {
+    const txtMinActivitySessions = $("txt_min_activity_sessions").value;
+    if (txtMinActivitySessions === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-            const setMinActivitySessions = await HMSAnalytics.setMinActivitySessions(num_min_activity_sessions);
-            alert('setMinActivitySessions -> Success');
-        } catch (err) {
-            alert('setMinActivitySessions -> Error : ' + err);
-        }
+        const milliseconds = parseInt(txtMinActivitySessions, 10);
+        HMSAnalytics.setMinActivitySessions(milliseconds)
+            .then(() => {
+                alert("setMinActivitySessions :: Success");
+            })
+            .catch((error) => alert("setMinActivitySessions :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
 /**
  * Sets the session timeout interval.
  */
-async function onSetSessionDuration() {
-
-    const txt_session_duration = document.getElementById("txt_session_duration").value;
-    const num_session_duration = parseInt(txt_session_duration, 10);
-
-    if (txt_session_duration == "") {
+$("setSessionDuration").onclick = async() => {
+    const txt_session_duration = $("txt_session_duration").value;
+    if (txt_session_duration === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-            const setSessionDuration = await HMSAnalytics.setSessionDuration(num_session_duration);
-            alert('setSessionDuration -> Success');
-        } catch (err) {
-            alert('setSessionDuration -> Error : ' + err);
-        }
+        const milliseconds = parseInt(txt_session_duration, 10);
+        HMSAnalytics.setSessionDuration(milliseconds)
+            .then(() => {
+                alert("setSessionDuration :: Success");
+            })
+            .catch((error) => alert("setSessionDuration :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
+
+/**
+ * Report custom events.
+ */
+$("onEvent").onclick = async() => {
+    const name = 'event_name';
+    const params = {
+        "putInt": 123,
+        "putDouble": 12.056565665612346789,
+        "putLong": 2121455345345343,
+        "putString": "string",
+        "putBoolean1": true,
+        "putBoolean2": false
+    };
+    HMSAnalytics.onEvent(name, params)
+        .then(() => {
+            alert("onEvent :: Success");
+        })
+        .catch((error) => alert("onEvent :: Error! " + JSON.stringify(error,null,1)));
+};
+
+/**
+ * Report predefined events.
+ */
+$("onPredefinedEvent").onclick = async() => {
+    const name = HMSAnalytics.HAEventType.SUBMITSCORE;
+    const params = {};
+    params[HMSAnalytics.HAParamType.SCORE] = 12;
+    params[HMSAnalytics.HAParamType.CATEGORY] = "SPORT";
+    HMSAnalytics.onEvent(name, params)
+        .then(() => {
+            alert("onPredefinedEvent :: Success");
+        })
+        .catch((error) => alert("onPredefinedEvent :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
  * Delete all collected data in the local cache, including the cached data that fails to be sent.
  */
-async function onClearCachedData() {
-
-    try {
-        const clearCachedData = await HMSAnalytics.clearCachedData();
-        alert('clearCachedData -> Success');
-    } catch (err) {
-        alert('clearCachedData -> Error : ' + err);
-    }
-}
+$("clearCachedData").onclick = async() => {
+    HMSAnalytics.clearCachedData()
+        .then((result) => {
+            alert("clearCachedData :: Success");
+        })
+        .catch((error) => alert("clearCachedData :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
- * Enables the log function.
- * @note This method is only to support on Android Platform.
+ * Obtains the app instance ID from AppGallery Connect.
  */
-async function onEnableLog() {
-    try {
-        const enableLog = await HMSAnalytics.enableLog();
-        alert("enableLog -> Success");
-    } catch (err) {
-        alert('enableLog -> Error : ' + err)
-    }
-}
-
+$("getAAID").onclick = async() => {
+    HMSAnalytics.getAAID()
+        .then((aaid) => {
+            alert("getAAID :: Success -> aaid: " + JSON.stringify(aaid,null,1));
+        })
+        .catch((error) => alert("getAAID :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
- * Enables the debug log function and sets the minimum log level.
- * @note This method is only to support on Android Platform.
+ * Enables AB Testing. Predefined or custom user attributes are supported.
  */
-async function onEnableLogWithLevel() {
-    const enable_log_with_level = document.getElementById("enable_log_with_level").value;
-    if (enable_log_with_level == "DEBUG" || enable_log_with_level == "INFO" || enable_log_with_level == "WARN" || enable_log_with_level == "ERROR") {
-        try {
-            const enableLogWithLevel = await HMSAnalytics.enableLogWithLevel(enable_log_with_level);
-            alert('enableLogWithLevel -> Success');
-        } catch (err) {
-            alert('enableLogWithLevel -> Error : ' + err);
-        }
-
-    } else {
-        alert("Wrong Input Format");
-    }
-}
+$("getUserProfiles").onclick = async() => {
+    const user_profiles_predefined = $("user_profiles_predefined").value;
+    const predefined = (user_profiles_predefined === "true");
+    HMSAnalytics.getUserProfiles(predefined)
+        .then((userProfiles) => {
+            alert("getUserProfiles :: Success -> userProfiles: " + JSON.stringify(userProfiles,null,1));
+        })
+        .catch((error) => alert("getUserProfiles :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
  * Defines a custom page entry event.
  * @note This method is only to support on Android Platform.
  */
-async function onPageStart() {
-
-    const txt_start_page_name = document.getElementById("txt_start_page_name").value;
-    const txt_start_page_class_override = document.getElementById("txt_start_page_class_override").value;
-    if (txt_start_page_name == "" || txt_start_page_class_override == "") {
+$("pageStart").onclick = async() => {
+    const pageName = $("txt_start_page_name").value;
+    const pageClassOverride = $("txt_start_page_class_override").value;
+    if (pageName === "" || pageClassOverride === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-
-            const pageStart = await HMSAnalytics.pageStart(txt_start_page_name, txt_start_page_class_override);
-            alert('pageStart -> Success');
-        } catch (err) {
-            alert('pageStart -> Error : ' + err);
-        }
+        HMSAnalytics.pageStart(pageName, pageClassOverride)
+            .then((result) => {
+                alert("pageStart :: Success");
+            })
+            .catch((error) => alert("pageStart :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
 /**
  * Defines a custom page exit event.
  * @note This method is only to support on Android Platform.
  */
-async function onPageEnd() {
-
-    const txt_end_page_name = document.getElementById("txt_end_page_name").value;
-    if (txt_end_page_name == "") {
+$("pageEnd").onclick = async() => {
+    const pageName = $("txt_end_page_name").value;
+    if (pageName === "") {
         alert("Please fill out empty area");
     } else {
-        try {
-
-            const pageEnd = await HMSAnalytics.pageEnd(txt_end_page_name);
-            alert('pageEnd -> Success' + pageEnd);
-        } catch (err) {
-            alert('pageEnd -> Error : ' + err);
-        }
+        HMSAnalytics.pageEnd(pageName)
+            .then((result) => {
+                alert("pageEnd :: Success");
+            })
+            .catch((error) => alert("pageEnd :: Error! " + JSON.stringify(error,null,1)));
     }
-}
+};
 
-function onShowHAParamType() {
-    alert(JSON.stringify(HMSAnalytics.HAParamType));
-}
-
-function onShowHAEventType() {
-    alert(JSON.stringify(HMSAnalytics.HAEventType));
-}
+/**
+ * Enables the debug log function and sets the minimum log level.
+ * @note This method is only to support on Android Platform.
+ */
+$("enableLog").onclick = async() => {
+    const enable_log_with_level = $("enable_log_with_level").value;
+    let logLevelType;
+    switch(enable_log_with_level) {
+        case "INFO":
+            logLevelType = HMSAnalytics.LogLevelType.INFO;
+          break;
+        case "WARN":
+            logLevelType = HMSAnalytics.LogLevelType.WARN;
+          break;
+        case "ERROR":
+            logLevelType = HMSAnalytics.LogLevelType.ERROR;
+          break;
+        case "DEBUG":
+        default:
+            logLevelType = HMSAnalytics.LogLevelType.DEBUG;
+      }
+    HMSAnalytics.enableLog(logLevelType)
+        .then((result) => {
+            alert("enableLog :: Success");
+        })
+        .catch((error) => alert("enableLog :: Error! " + JSON.stringify(error,null,1)));
+};
 
 /**
  * Sets data reporting policies.
- * @note This method is only to support on iOS Platform.
  */
-async function onSetReportPolicies() {
+$("setReportPolicies").onclick = async() => {
     const reportPolicies = {
         onScheduledTimePolicy: 300,
         onAppLaunchPolicy: true,
         onMoveBackgroundPolicy: true,
-        onCacheThresholdPolicy: 350,
+        onCacheThresholdPolicy: 350
     }
-    try {
-        const result = await HMSAnalytics.setReportPolicies(reportPolicies);
-        alert("HMS setReportPolicies -> Success");
-    } catch (err) {
-        alert('HMS setReportPolicies -> Error : ' + err)
-    }
-}
+    HMSAnalytics.setReportPolicies(reportPolicies)
+        .then(() => {
+            alert("setReportPolicies :: Success");
+        })
+        .catch((error) => alert("setReportPolicies :: Error! " + JSON.stringify(error,null,1)));
+};
+
+/**
+ * Obtains the threshold for event reporting.
+ */
+$("getReportPolicyThreshold").onclick = async() => {
+    const report_policy_type = $("report_policy_type").value;
+    let reportPolicyType;
+    switch(report_policy_type) {
+        case "ON_SCHEDULED_TIME_POLICY":
+            reportPolicyType = HMSAnalytics.ReportPolicyType.ON_SCHEDULED_TIME_POLICY;
+          break;
+        case "ON_APP_LAUNCH_POLICY":
+            reportPolicyType = HMSAnalytics.ReportPolicyType.ON_APP_LAUNCH_POLICY;
+          break;
+        case "ON_MOVE_BACKGROUND_POLICY":
+            reportPolicyType = HMSAnalytics.ReportPolicyType.ON_MOVE_BACKGROUND_POLICY;
+          break;
+        case "ON_CACHE_THRESHOLD_POLICY":
+            reportPolicyType = HMSAnalytics.ReportPolicyType.ON_CACHE_THRESHOLD_POLICY;
+            break;
+        default:
+            reportPolicyType = HMSAnalytics.ReportPolicyType.ON_SCHEDULED_TIME_POLICY;
+      }
+    HMSAnalytics.getReportPolicyThreshold(reportPolicyType)
+        .then((result) => {
+            alert("getReportPolicyThreshold :: Success -> "+reportPolicyType+" ->Threshold:" + JSON.stringify(result,null,1));
+        })
+        .catch((error) => alert("getReportPolicyThreshold :: Error! " + JSON.stringify(error,null,1)));
+};
+
+/**
+ * Specifies whether to enable restriction of HUAWEI Analytics.
+ */
+$("setRestrictionEnabled").onclick = async() => {
+    const restriction_is_enabled = $("restriction_is_enabled").value;
+    const isEnabled = (restriction_is_enabled === "true");
+    HMSAnalytics.setRestrictionEnabled(isEnabled)
+        .then(() => {
+            alert("setRestrictionEnabled :: Success");
+        })
+        .catch((error) => alert("setRestrictionEnabled :: Error! " + JSON.stringify(error,null,1)));
+};
+
+/**
+ * Obtains the restriction status of HUAWEI Analytics.
+ */
+$("isRestrictionEnabled").onclick = async() => {
+    HMSAnalytics.isRestrictionEnabled()
+        .then((result) => {
+            alert("isRestrictionEnabled :: Success -> isRestrictionEnabled: " + JSON.stringify(result,null,1));
+        })
+        .catch((error) => alert("isRestrictionEnabled :: Error! " + JSON.stringify(error,null,1)));
+};
+
+/**
+ * HAParamType types for provides the IDs of all predefined parameters, 
+ * including the IDs of predefined parameters and user attributes.
+ */
+$("HAParamType").onclick = () => {
+    alert(JSON.stringify(HMSAnalytics.HAParamType));
+};
+/**
+ * HAEventType types for provides the IDs of all predefined events.
+ */
+$("HAEventType").onclick = () => {
+    alert(JSON.stringify(HMSAnalytics.HAEventType));
+};

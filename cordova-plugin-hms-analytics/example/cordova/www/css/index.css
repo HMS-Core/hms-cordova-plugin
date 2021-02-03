@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -73,35 +73,35 @@ input[type=number] {
 }
 
 #user_profile_name {
-    width: 60px;
-    height: 36px;
-    padding-left: 5px;
-}
-
-#page_start {
-    width: 60px;
-    height: 36px;
-    padding-left: 5px;
-}
-
-#user_profile_value {
-    width: 19%;
+    width: 40%;
     height: 36px;
     padding-left: 10px;
 }
 
-#txt_set_current_activity {
-    width: 60px;
+#user_profile_value {
+    width: 40%;
     height: 36px;
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
-#txt_set_current_activity_name {
-    width: 22%;
+#delete_user_profile_name {
+    width: 80%;
     height: 36px;
-    padding-left: 2px;
-    font-size: 9px;
+    padding-left: 10px;
 }
+
+#txt_start_page_name {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+#txt_start_page_class_override {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
 
 #txt_on_event_name {
     width: 60px;
@@ -116,20 +116,17 @@ input[type=number] {
     font-size: 9px;
 }
 
-#btnClearCachedData,
-#btnGetAAID,
-#btnRegHmsSvcEvent,
-#btnUnregHmsSvcEvent,
-#btnEnableLog,
-#btnshowHAParamType,
-#btnshowHAEventType,
-#btnOnEvent,
-#btnsendPredefinedEvent,
-#btnPageStart,
-#btnSetPushToken,
-#btnSetReportPolicies,
-#btnConfig,
-#btnEcho,
-#btnConstantsToExport {
+#getAAID,
+#onEvent,
+#onPredefinedEvent,
+#setPushToken,
+#clearCachedData,
+#setUserProfile,
+#deleteUserProfile,
+#pageStart,
+#setReportPolicies,
+#isRestrictionEnabled,
+#HAParamType,
+#HAEventType {
     width: 95%;
 }

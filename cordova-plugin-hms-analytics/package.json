@@ -1,13 +1,15 @@
 {
     "name": "@hmscore/cordova-plugin-hms-analytics",
-    "description": "Huawei Analytics Cordova Plugin",
-    "version": "5.0.3-300",
-    "types": "types/index.d.ts",
+    "description": "Cordova HMS Analytics Plugin",
+    "version": "5.1.0-300",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
         "directory": "cordova-plugin-hms-analytics"
     },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -23,30 +25,32 @@
         "cordova",
         "ecosystem:cordova",
         "cordova-android",
-        "cordova-ios",    
+        "cordova-ios",
         "huawei-analytics",
         "hms-analytics",
-        "hi-analytics"
+        "analytics",
+        "huawei"
     ],
     "files": [
         "hooks",
-        "ionic",
-        "resources",
-        "scripts",
-        "platforms",
+        "ionic-native",
+        "src",
         "types",
         "www",
         "LICENCE",
         "package.json",
         "plugin.xml",
-        "README.md",
-        "tsconfig.json"
+        "README.md"
     ],
-    "devDependencies": {
+    "dependencies": {
         "@types/cordova": "0.0.34"
     },
-    "engines": [{
-        "name": "cordova",
-        "version": ">=3.0.0"
-    }]
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
 }
