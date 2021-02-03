@@ -1,44 +1,55 @@
 {
   "name": "@hmscore/cordova-plugin-hms-site",
-  "title": "Cordova HMS Site Kit",
-  "description": "Cordova HMS Site Kit",
-  "version": "5.0.1-300",
+  "description": "Cordova HMS Site Plugin",
+  "version": "5.1.0-300",
+  "main": "./www/HMSSite.js",
+  "types": "./types/HMSSite.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
     "directory": "cordova-plugin-hms-site"
   },
+  "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
   "readmeFilename": "README.md",
-  "types": "types/index.d.ts",
-  "keywords": [
-    "cordova",
-    "huawei-site",
-    "site",
-    "cordova-site",
-    "ecosystem:cordova"
-  ],
   "cordova": {
     "id": "cordova-plugin-hms-site",
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   },
-  "dependencies": {
-    "@types/cordova": "0.0.34"
-  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "site",
+    "hms-site",
+    "huawei-site",
+    "hms",
+    "huawei"
+  ],
   "files": [
     "hooks",
-    "ionic",
-    "resources",
-    "scripts",
+    "ionic-native",
     "src",
     "types",
     "www",
     "LICENCE",
     "package.json",
     "plugin.xml",
-    "README.md",
-    "tsconfig.json"
-  ]
+    "README.md"
+  ],
+  "dependencies": {
+    "@types/cordova": "0.0.34"
+  },
+  "devDependencies": {
+    "typescript": "3.9.5"
+  },
+  "scripts": {
+    "build:core": "node ./node_modules/typescript/bin/tsc",
+    "build": "npm run build:core",
+    "watch": "node ./node_modules/typescript/bin/tsc --watch"
+  }
 }

@@ -1,133 +1,142 @@
-# cordova-hms-site-demo
+# HMS Site Cordova Demo
 
 ## Contents
-1. Introduction
-2. Installation Guide
-3. Function Definitions
-4. Configuration & Description
-5. Licencing & Terms
 
-## 1. Intruduction
-This demo application demonstrates the usage of Cordova HMS Site plugin.
+- [1. Introduction](#1-introduction)
+- [2. Installation Guide](#2-installation-guide)
+  - [2.1. Creating a Project in AppGallery Connect](#21-creating-a-project-in-appgallery-connect)
+  - [2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json](#22-configuring-the-signing-certificate-fingerprint-and-obtaining-agconnect-servicesjson)
+  - [2.3. Cordova](#23-cordova)
+- [3. Configuration and Description](#3-configuration-and-description)
+- [4. Questions or Issues](#4-questions-or-issues)
+- [5. Licensing and Terms](#5-licensing-and-terms)
+
+---
+
+## 1. Introduction
+
+This demo application demonstrates the usage of the HMS Site Kit Cordova plugin.
+
+---
 
 ## 2. Installation Guide
-- Download agconnect-services.json and put it under the root directory of the project.
-- Add keystore file and build.json file to your project's root and configure build.json file according to keystore information.
-```json
-{
-    "android": {
-        "debug": {
-            "keystore": "<keystore>",
-            "storePassword": "<password>",
-            "alias": "<alias>",
-            "password" : "<password>"
-        },
-        "release": {
-            "keystore": "<keystore>",
-            "storePassword": "<password>",
-            "alias": "<alias>",
-            "password" : "<password>"
+
+Before you get started, you must register as a HUAWEI Developer and complete identity verification on the [HUAWEI Developer](https://developer.huawei.com/consumer/en/) website. For details, please refer to [Register a HUAWEI ID](https://developer.huawei.com/consumer/en/doc/10104).
+
+### 2.1. Creating a Project in AppGallery Connect
+
+Creating an app in AppGallery Connect is required in order to communicate with the Huawei services. To create an app, perform the following steps:
+
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html)  and select **My projects**.
+2. Select your project from the project list or create a new one by clicking the **Add Project** button.
+3. Go to **Project Setting** > **General information**, and click **Add app**.
+    - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+4. On the **Add app** page, enter the app information, and click **OK**.
+
+### 2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json
+
+A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial for the certificate generation. Perform the following steps after you have generated the certificate.
+
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html) and select your project from **My Projects**. Then go to **Project Setting** > **General information**. In the **App information** field, click the  icon next to SHA-256 certificate fingerprint, and enter the obtained **SHA-256 certificate fingerprint**.
+2. After completing the configuration, click **OK** to save the changes. (Check mark icon)
+3. In the same page, click **agconnect-services.json** button to download the configuration file.
+
+### 2.3. Cordova
+
+1. Install Cordova CLI if haven't done before.
+
+    ```bash
+    npm install -g cordova
+    ```
+
+2. Open the demo project's root folder.
+
+3. Update the widget **`id`** property which is specified in the **`config.xml`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
+
+4. Add the **Android platform** to the project.
+
+    ```bash
+    cordova platform add android
+    ```
+
+5. Install `HMS Site plugin` to the project.
+
+    ```bash
+    cordova plugin add @hmscore/cordova-plugin-hms-site
+    ```
+
+6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory.
+
+7. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
+
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
+
+    - Fill **`build.json`** file according to your keystore. For example:
+
+    ```json
+    {
+        "android": {
+            "debug": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            },
+            "release": {
+                "keystore": "<keystore_file>.jks",
+                "storePassword": "<keystore_password>",
+                "alias": "<key_alias>",
+                "password": "<key_password>"
+            }
         }
     }
-}
+    ```
+
+8. Run the app.
+
+    ```bash
+    cordova run android --device
+    ```
+
+---
+
+## 3. Configuration and Description
+
+### Configuring Obfuscation Scripts
+
+Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK from being obfuscated.
+
+**NOTE**: This step is required only if you want to minify and obfuscate your app. By default obfuscation is disabled in Cordova and Ionic apps.
+
+The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled. Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard plugins. If ProGuard is enabled in your project, the Huawei Site plugin's ProGuard rules need to be added to your project. These rules are as follows:
+
+```text
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keep class com.huawei.hianalytics.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+-repackageclasses
 ```
-- Update the widget id property which is specified in config.xml file. It should be same as the package name which is defined in agconnect-services.json file.
 
-![configxml](./.docs/images/config_xml.png)
+---
 
-- Update the API key which is specified in 'www/js/index.js' file. It should be same as the API key which is defined in agconnect-services.json file.
+## 4. Questions or Issues
 
-![apikey](./.docs/images/api_key.png)
+If you have questions about how to use HMS samples, try the following options:
 
-- Download cordova-plugin-hms-site plugin.
-- Run following commands in the root directory of project respectively.
-```
-cordova platform add android
-cordova plugin add @hmscore/cordova-plugin-hms-site
-```
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with **`huawei-mobile-services`**.
+- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
 
-- Execute following command to run application
-```
-cordova run android
-```
-## 3. Function Definitions
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
-| Return Type     | Function                                | Description                                                                                                                                                                                                    |
-|:----------------|:----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Promise\<any>   | initializeService(config)               | Call the initializeService method to initialize the HMSSite service. A configuration object which contains apiKey must be passed as a parameter.                                                               |
-| Promise\<Sites> | textSearch(textSearchRequest)           | With this function, users can specify keywords, coordinate bounds, and other information to search for places such as tourist attractions, enterprises, and schools.                                           |
-| Promise\<Sites> | detailSearch(detailSearchRequest)       | With this function, users can search for details about a place based on the unique ID of the place.                                                                                                            |
-| Promise\<Sites> | querySuggestion(querySuggestionRequest) | With this function, your app can return search suggestions during the user input.                                                                                                                              |
-| Promise\<Sites> | nearbySearch(nearbySearchRequest)       | With this function, your app can return a list of nearby places based on the current location of a user. When the user selects a place, the app obtains the place ID and searches for details about the place. |
-| Promise\<Sites> | widgetSearch(widgetSearchRequest)       | The widget is a search component of the built-in place search suggestion feature. When a user enters a keyword in the search box, the widget displays a list of suggested places to the user.                  |
-| Promise< void >                   | enableLogger()                                      | This method is called to enables the HMSLogger for sends some statistics for the development of functions in the cordova-plugin-hms-site plugin.                              |
-| Promise< void >                   | disableLogger()                                     | This method is called to diables the HMSLogger for stops sending some statistics for the development of functions in the cordova-plugin-hms-site plugin.                       |
+---
 
+## 5. Licensing and Terms
 
-#### Public Methods
-
-##### Future\<any> HMSSite.initializeService(config)
-
-Call the initializeService method to initialize the HMSSite service. A configuration object which contains apiKey must be passed as a parameter.
-
-###### Parameters
-| Name   | Description                                                                                                                               |
-|--------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| config | Configuration that contains the value of apiKey obtained from HUAWEI AppGallery Connect, which is required for the start of the services. |
-
-
-##### Future\<Sites> HMSSite.textSearch(textSearchRequest)
-
-With this function, users can specify keywords, coordinate bounds, and other information to search for places such as tourist attractions, enterprises, and schools. 
-
-###### Parameters
-| Name              | Description                           |
-|-------------------|---------------------------------------|
-| textSearchRequest | Request object used for place search. |
-
-
-##### Future\<Sites> HMSSite.detailSearch(detailSearchRequest)
-
-With this function, users can search for details about a place based on the unique ID of the place.                                                        
-
-###### Parameters
-| Name                | Description                                   |
-|---------------------|-----------------------------------------------|
-| detailSearchRequest | Request object used for place details search. |
-
-
-##### Future\<Sites> HMSSite.querySuggestion(querySuggestionRequest)
-
-With this function, your app can return search suggestions during the user input.                                                       
-
-###### Parameters
-| Name                   | Description                                                   |
-|------------------------|---------------------------------------------------------------|
-| querySuggestionRequest | Request object used for search suggestions during user input. |
-
-
-##### Future\<Sites> HMSSite.nearbySearch(nearbySearchRequest)
-
-With this function, your app can return a list of nearby places based on the current location of a user. When the user selects a place, the app obtains the place ID and searches for details about the place.                                                       
-
-###### Parameters
-| Name                | Description                                      |
-|---------------------|--------------------------------------------------|
-| nearbySearchRequest | Request object used to search for nearby places. |
-
-
-##### Future\<Site> HMSSite.widgetSearch(widgetSearchRequest)
-
-The widget is a search component of the built-in place search suggestion feature. When a user enters a keyword in the search box, the widget displays a list of suggested places to the user.                                                        
-
-###### Parameters
-| Name                | Description                                         |
-|---------------------|-----------------------------------------------------|
-| widgetSearchRequest | Request object used to search for place suggestion. |
-
-## 3. Confuguration & Description
-No.
-
-## 4. Licencing & Terms
-Apache 2.0 license.
-
+Huawei Site Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).

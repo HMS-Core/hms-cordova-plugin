@@ -1,34 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<plugin id="cordova-plugin-hms-site" version="4.0.4" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
-	<name>
-		cordova-plugin-hms-site
-	</name>
-	<js-module name="cordova-plugin-hms-site" src="www/HMSSite.js">
-		<clobbers target="HMSSite" />
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-site" version="5.1.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" android="http://schemas.android.com/apk/res/android">
+	<name>HMS Site</name>
+	<description>Cordova HMS Site Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,site,hms-site,huawei-site,hms,huawei</keywords>
+	
+	<js-module name="HMSSite" src="www/HMSSite.js">
+		<clobbers target="HMSSite"></clobbers>
 	</js-module>
-	<js-module name="utils" src="www/utils.js" />
-	<js-module name="Interfaces" src="www/Interfaces.js" />
-	<!-- Android permissions -->
-	<config-file target="AndroidManifest.xml" parent="/*">
-	</config-file>
+	
+	<js-module name="interfaces" src="www/interfaces.js"></js-module>
+	<js-module name="utils" src="www/utils.js"></js-module>
+	
 	<platform name="android">
-		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
-		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
-		<hook type="after_prepare" src="hooks/after_prepare.js" />
-		<framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
-		<framework src="com.huawei.hms:site:5.0.1.300" />
-		<framework src="androidx.recyclerview:recyclerview:1.1.0" />
-		<framework src="androidx.appcompat:appcompat:1.2.0" />
-		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="cordova-plugin-hms-site">
-				<param name="android-package" value="com.huawei.hms.cordova.site.HMSSitePlugin" />
+		
+		<dependency id="cordova-plugin-androidx-adapter" version="1.1.3"/>
+		<dependency id="cordova-plugin-androidx" version="3.0.0"/>
+		
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"></hook>
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"></hook>
+		
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSSite">
+				<param name="android-package" value="com.huawei.hms.cordova.site.HMSSite"></param>
 			</feature>
 		</config-file>
-		<config-file parent="/*" target="AndroidManifest.xml">
+
+		<config-file target="res/xml/config.xml" parent="/*">
+			<preference name="AndroidXEnabled" value="true"/>
 		</config-file>
-		<source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSitePlugin.java" target-dir="src/com/huawei/hms/cordova/site" />
-		<source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSiteService.java" target-dir="src/com/huawei/hms/cordova/site" />
-		<source-file src="src/main/java/com/huawei/hms/cordova/site/HMSSiteUtils.java" target-dir="src/com/huawei/hms/cordova/site" />
-		<source-file src="src/main/java/com/huawei/hms/cordova/site/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/site" />
+
+		<framework src="com.huawei.hms:site:5.1.0.300"></framework>
+		<framework src="androidx.appcompat:appcompat:1.2.0"></framework>
+		<framework src="androidx.recyclerview:recyclerview:1.1.0"></framework>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/HMSSite.java" target-dir="src/com/huawei/hms/cordova/site/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/HMSSiteModule.java" target-dir="src/com/huawei/hms/cordova/site/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/HMSSiteUtils.java" target-dir="src/com/huawei/hms/cordova/site/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/site/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/site/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/site/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/CordovaRule.java" target-dir="src/com/huawei/hms/cordova/site/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/site/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CorError.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CorException.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CorLog.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/site/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/site/basef/handler/"></source-file>
 	</platform>
 </plugin>

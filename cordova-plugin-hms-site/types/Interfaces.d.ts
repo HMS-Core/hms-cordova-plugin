@@ -1,154 +1,177 @@
 /*
-Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0
+        https://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
-export interface WidgetSearchRequest {
-    query?: string | null;
-    location?: Coordinate | null;
-    radius?: number | null;
-    poiTypes?: (LocationType)[] | LocationType | null;
-    hwPoiTypes?: (HwLocationType)[] | HwLocationType | null;
-    countryCode?: string | null;
-    language?: string | null;
-    politicalView?: string | null;
-    coordinateBounds?: CoordinateBounds | null;
-    hint?: string | null;
+export interface AddressDetail {
+    adminArea?: string;
+    country?: string;
+    countryCode?: string;
+    locality?: string;
+    postalCode?: string;
+    streetNumber?: string;
+    subAdminArea?: string;
+    subLocality?: string;
+    tertiaryAdminArea?: string;
+    thoroughfare?: string;
 }
-export interface QuerySuggestionRequest {
-    query: string;
-    location?: Coordinate | null;
-    radius?: number | null;
-    poiType?: (LocationType)[] | LocationType | null;
-    countryCode?: string | null;
-    language?: string | null;
-    politicalView?: string | null;
-    bounds?: CoordinateBounds | null;
+export interface AutocompletePrediction {
+    description?: string;
+    matchedKeywords?: Word[];
+    matchedWords?: Word[];
 }
-export interface TextSearchRequest {
-    query: string;
-    bounds?: CoordinateBounds | null;
-    politicalView?: string | null;
-    location?: Coordinate | null;
-    radius?: number | null;
-    poiType?: (LocationType)[] | LocationType | null;
-    hwPoiTypes?: (HwLocationType)[] | HwLocationType | null;
-    countryCode?: string | null;
-    language?: string | null;
-    pageIndex?: number | null;
-    pageSize?: number | null;
-}
-export interface NearbySearchRequest {
-    query?: string | null;
-    location: Coordinate;
-    radius?: number | null;
-    poiType?: (LocationType)[] | LocationType | null;
-    politicalView?: string | null;
-    language?: string | null;
-    pageIndex?: number | null;
-    pageSize?: number | null;
-}
-export interface DetailSearchRequest {
-    siteId: string;
-    language?: string | null;
-    politicalView?: string | null;
-}
-export interface WidgetSearchResponse {
-    address: Address;
-    distance: number;
-    formatAddress: string;
-    location: NortheastOrSouthwestOrLocation;
-    name: string;
-    poi: WidgetPoi;
-    siteId: string;
-    viewport: Viewport;
-}
-export interface Address {
-    adminArea: string;
-    country: string;
-    countryCode: string;
-    subAdminArea: string;
-}
-export interface NortheastOrSouthwestOrLocation {
-    lat: number;
-    lng: number;
-}
-export interface WidgetPoi {
-    hwPoiTypes?: (string)[] | null;
-    internationalPhone: string;
-    poiTypes?: (string)[] | null;
-    rating: number;
-}
-export interface Viewport {
-    northeast: NortheastOrSouthwestOrLocation;
-    southwest: NortheastOrSouthwestOrLocation;
+export interface ChildrenNode {
+    depAndArr?: string;
+    domeAndInt?: string;
+    formatAddress?: string;
+    hwPoiTypes?: string[];
+    location?: Coordinate;
+    name?: string;
+    siteId?: string;
 }
 export interface Coordinate {
     lat: number;
     lng: number;
 }
-export interface Sites {
-    site: (Site)[] | Site;
-    totalCount?: number | null;
+export interface CoordinateBounds {
+    northeast: Coordinate;
+    southwest: Coordinate;
 }
-export interface Site {
-    address: AddressDetail;
-    distance: number;
-    formatAddress: string;
-    location: Coordinate;
-    name: string;
-    poi: Poi;
+export interface DetailSearchRequest {
+    language?: string;
+    politicalView?: string;
     siteId: string;
-    viewport?: CoordinateBounds | null;
+    children?: boolean;
 }
-export interface AddressDetail {
-    adminArea: string;
-    country: string;
-    countryCode: string;
-    locality?: string | null;
-    postalCode?: string | null;
-    subAdminArea: string;
-    subLocality?: string | null;
-    thoroughfare?: string | null;
+export interface DetailSearchResponse {
+    site: Site;
 }
-export interface Poi {
-    hwPoiTypes?: (string)[] | null;
-    internationalPhone: string;
-    openingHours: OpeningHours;
-    photoUrls?: (string)[] | null;
-    poiTypes?: (LocationType)[] | null;
-    rating: number;
-    phone?: string | null;
-    websiteUrl?: string | null;
+export interface NearbySearchRequest {
+    hwPoiType?: HwLocationType;
+    language?: string;
+    location: Coordinate;
+    pageIndex?: number;
+    pageSize?: number;
+    poiType?: LocationType;
+    politicalView?: string;
+    query?: string;
+    radius?: number;
+    strictBounds?: boolean;
+}
+export interface NearbySearchResponse {
+    sites: Site[];
+    totalCount: number;
 }
 export interface OpeningHours {
-    periods?: Period;
-    texts?: (string)[];
+    periods?: Period[];
+    texts?: string[];
 }
 export interface Period {
     close?: TimeOfWeek;
     open?: TimeOfWeek;
 }
+export interface Poi {
+    businessStatus?: string;
+    childrenNodes?: ChildrenNode[];
+    internationalPhone?: string;
+    openingHours?: OpeningHours;
+    phone?: string;
+    photoUrls?: string[];
+    poiTypes?: LocationType[];
+    priceLevel: number;
+    hwPoiTypes?: string[];
+    rating?: number;
+    websiteUrl?: string;
+}
+export interface QueryAutocompleteRequest {
+    language?: string;
+    location?: Coordinate;
+    politicalView?: string;
+    query: string;
+    radius?: number;
+    children?: boolean;
+}
+export interface QueryAutocompleteResponse {
+    sites: Site[];
+    predictions: AutocompletePrediction[];
+}
+export interface QuerySuggestionRequest {
+    bounds?: CoordinateBounds;
+    countryCode?: string;
+    language?: string;
+    location?: Coordinate;
+    poiTypes?: LocationType[];
+    politicalView?: string;
+    query: string;
+    radius?: number;
+    children?: boolean;
+    strictBounds?: boolean;
+}
+export interface QuerySuggestionResponse {
+    sites: Site[];
+}
+export interface SearchStatus {
+    errorCode: string;
+    errorMessage: string;
+}
+export interface Site {
+    address?: AddressDetail;
+    distance?: number;
+    formatAddress?: string;
+    location?: Coordinate;
+    name?: string;
+    poi?: Poi;
+    prediction?: AutocompletePrediction;
+    siteId?: string;
+    utcOffset?: number;
+    viewport?: CoordinateBounds;
+}
+export interface TextSearchRequest {
+    countryCode?: string;
+    hwPoiType?: HwLocationType;
+    language?: string;
+    location?: Coordinate;
+    pageIndex?: number;
+    pageSize?: number;
+    poiType?: LocationType;
+    politicalView?: string;
+    query: string;
+    radius?: number;
+    children: boolean;
+}
+export interface TextSearchResponse {
+    sites: Site[];
+    totalCount: number;
+}
 export interface TimeOfWeek {
+    day?: number;
     time?: string;
-    week?: number;
 }
-export interface CoordinateBounds {
-    northeast: Location;
-    southwest: Location;
+export interface Word {
+    offset: number;
+    value: string;
 }
-export interface config {
-    apiKey: string;
+export interface SearchFilter {
+    bounds?: CoordinateBounds;
+    countryCode?: string;
+    language?: string;
+    location?: Coordinate;
+    poiType?: LocationType[];
+    politicalView?: string;
+    query?: string;
+    radius?: number;
+    strictBounds?: boolean;
+    children?: boolean;
 }
 export declare enum LocationType {
     ACCOUNTING = "ACCOUNTING",
