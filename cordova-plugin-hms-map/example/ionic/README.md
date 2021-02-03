@@ -11,13 +11,13 @@
     - [2.3.2. With Capacitor Runtime](#232-with-capacitor-runtime)
 - [3. Configuration and Description](#3-configuration-and-description)
 - [4. Questions or Issues](#4-questions-or-issues)
-- [5. Licencing and Terms](#5-licencing-and-terms)
+- [5. Licensing and Terms](#5-licensing-and-terms)
 
 ---
 
 ## 1. Introduction
 
-This demo application demonstrates the usage of HMS MAP Kit Cordova plugin.
+This demo application demonstrates the usage of the HMS MAP Kit Cordova plugin.
 
 ---
 
@@ -32,7 +32,7 @@ Creating an app in AppGallery Connect is required in order to communicate with t
 1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html)  and select **My projects**.
 2. Select your project from the project list or create a new one by clicking the **Add Project** button.
 3. Go to **Project Setting** > **General information**, and click **Add app**.
-If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+    - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
 4. On the **Add app** page, enter the app information, and click **OK**.
 
 ### 2.2. Configuring the Signing Certificate Fingerprint and Obtaining agconnect-services.json
@@ -45,13 +45,13 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
 ### 2.3. Ionic
 
-1. Install Ionic CLI.
+1. Install Ionic CLI and other required tools if haven't done before.
 
     ```bash
-    npm install -g @ionic/cli
+    npm install -g @ionic/cli cordova-res native-run
     ```
 
-2. Open the demo project root folder.
+2. Open the demo project's root directory.
 
 3. Install project dependencies.
 
@@ -75,21 +75,17 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     ionic cordova platform add android
     ```
 
-4. Install `HMS Map plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
-
-    a. Run the following command in the root directory of your project to install it through **npm**.
+4. Install `HMS Map plugin` to the project.
 
     ```bash
     ionic cordova plugin add @hmscore/cordova-plugin-hms-map
     ```
 
-    b. Or download the plugin from [Plugin > Map Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+5. Install HMS Map Ionic Native wrappers.
 
     ```bash
-    ionic cordova plugin add <hms_cordova_map_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-map
     ```
-
-5. Copy **hms-map** folder from **`node_modules/@hmscore/cordova-plugin-hms-map/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
 
 6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory.
 
@@ -97,7 +93,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
     - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
-    - Fill **`build.json`** file according to your keystore information. For example:
+    - Fill **`build.json`** file according to your keystore. For example:
 
     ```json
     {
@@ -118,7 +114,13 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
     ```
 
-8. Run the application.
+8. Build Ionic app to generate resource files.
+
+    ```bash
+    ionic build
+    ```
+
+9. Run the app.
 
    ```bash
    ionic cordova run android --device
@@ -132,45 +134,49 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
    ionic integrations enable capacitor
    ```
 
-2. Update the widget **`appId`** property which is specified in the **`capacitor.config.json`** file. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
+2. Initialize **Capacitor**.
 
-3. Install `HMS Map plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+    ```bash
+    npx cap init [appName] [appId]
+    ```
 
-   a. Run the following command in the root directory of your project to install it through **npm**.
+    - For more details please follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information).
+
+3. Update the **`appId`** property which is specified in the **`capacitor.config.json`** file according to your project. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
+
+4. Install `HMS Map plugin` to the project.
 
     ```bash
     npm install @hmscore/cordova-plugin-hms-map
     ```
 
-   b. Or download the plugin from [Plugin > Map Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+5. Install HMS Map Ionic Native wrappers.
 
     ```bash
-    npm install <hms_cordova_map_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-map
     ```
 
-4. Copy **hms-map** folder from **`node_modules/@hmscore/cordova-plugin-hms-map/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
-
-5. Build Ionic app to generate resource files.
+6. Build Ionic app to generate resource files.
 
     ```bash
     ionic build
     ```
 
-6. Add the **Android platform** to the project.
+7. Add the **Android platform** to the project.
 
     ```bash
     npx cap add android
     ```
 
-7. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory.
+8. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory.
 
     - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
-8. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
+9. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
 
-    - Add `signingConfigs` entry to **android** according to your keystore information.
-    - Enable `signingConfig` configuration to **debug** and **release** flavors.
-    - Apply `com.huawei.agconnect` plugin.
+    - Add `signingConfigs` entry to the **android** section and modify it according to your keystore.
+
+    - Enable `signingConfig` configuration for **debug** and **release** flavors.
 
     ```groovy
     ...
@@ -179,7 +185,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
 
         ...
 
-        // Add signingConfigs according to your keystore information
+        // Modify signingConfigs according to your keystore
         signingConfigs {
             config {
                 storeFile file('<keystore_file>.jks')
@@ -190,10 +196,10 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
         }
         buildTypes {
             debug {
-                signingConfig signingConfigs.config // Enable signingConfig in debug flavor
+                signingConfig signingConfigs.config // Enable signingConfig for debug flavor
             }
             release {
-                signingConfig signingConfigs.config // Enable signingConfig in release flavor
+                signingConfig signingConfigs.config // Enable signingConfig for release flavor
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
@@ -201,11 +207,9 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
 
     ...
-
-    apply plugin: 'com.huawei.agconnect' // Apply com.huawei.agconnect plugin. This line must be added to the end of the file.
     ```
 
-9. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
+10. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
 
     ```groovy
     buildscript {
@@ -219,7 +223,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.4.1.300'
+            classpath 'com.huawei.agconnect:agcp:1.4.2.301'
         }
     }
 
@@ -237,7 +241,13 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
     }
     ```
 
-10. Open the project in Android Studio and run it.
+11. Updates dependencies, and copy any web assets to your project.
+
+    ```bash
+    npx cap sync
+    ```
+
+12. Open the project in Android Studio and run it.
 
     ```bash
     npx cap open android
@@ -259,6 +269,26 @@ async addMarkerInfo() {
 }
 ``` 
 
+### Configuring Obfuscation Scripts
+
+Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK from being obfuscated.
+
+**NOTE**: This step is required only if you want to minify and obfuscate your app. By default obfuscation is disabled in Cordova and Ionic apps.
+
+The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled. Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard plugins. If ProGuard is enabled in your project, the Huawei Cordova Map plugin's ProGuard rules need to be added to your project. These rules are as follows:
+
+```text
+-ignorewarnings
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keep class com.huawei.hianalytics.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+-repackageclasses
+```
+
 ---
 
 ## 4. Questions or Issues
@@ -274,7 +304,7 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ---
 
-## 5. Licencing and Terms
+## 5. Licensing and Terms
 
 Huawei MAP Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
 

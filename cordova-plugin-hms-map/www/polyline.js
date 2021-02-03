@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
     limitations under the License.
 */
 "use strict";
+
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -119,6 +120,7 @@ class PolylineImpl {
             return result.value;
         });
     }
+    // TODO: Don't forget to parse cap when get method triggered.
     parseCap(promise) {
         return __awaiter(this, void 0, void 0, function* () {
             const value = yield promise;
@@ -145,8 +147,9 @@ class PolylineImpl {
 exports.PolylineImpl = PolylineImpl;
 class Cap {
     constructor() {
-        this.refWidth = null;
-        this.bitmapDescriptor = null;
+        this.type = -1;
+        this.refWidth = -1;
+        this.bitmapDescriptor = {};
     }
     getType() {
         return this.type;
@@ -186,10 +189,10 @@ class CustomCap extends Cap {
         this.refWidth = refWidth;
     }
     getRefWidth() {
-        return this.refWidth;
+        return this.refWidth == null ? -1 : this.refWidth;
     }
     getBitmapDescriptor() {
-        return this.bitmapDescriptor;
+        return this.bitmapDescriptor == undefined ? {} : this.bitmapDescriptor;
     }
 }
 exports.CustomCap = CustomCap;

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,10 +20,6 @@ import { GroundOverlay } from "./groundOverlay";
 import { TileOverlay } from "./tileOverlay";
 import { Polygon } from "./polygon";
 import { MapStyleOptions } from "./HMSMap";
-export interface MapBounds {
-    marginTop?: number;
-    marginBottom?: number;
-}
 export interface HuaweiMapOptions {
     mapType?: MapType;
     zoomControlsEnabled?: boolean;
@@ -277,7 +273,7 @@ export interface Interpolator {
     args?: any;
 }
 export interface HuaweiMap {
-    on(event: MapEvent, callback: (val: any) => void): Promise<void>;
+    on(event: MapEvent, callback: (val: any) => void): void;
     destroyMap(): Promise<void>;
     hideMap(): Promise<void>;
     getComponent(key: string): any;
@@ -321,6 +317,11 @@ export interface HuaweiMap {
     setPadding(left: number, top: number, right: number, bottom: number): Promise<void>;
     setTrafficEnabled(trafficEnabled: boolean): Promise<void>;
     snapshot(onReadyCallback: (snapshot: SnapshotResult) => void): Promise<void>;
+    startOverlayInterval(): void;
+    startObserver(): void;
+    setMapPointersEnabled(mapPointersEnabled: boolean): Promise<void>;
+    isMapPointersEnabled(): Promise<boolean>;
+    setPointToCenter(x: number, y: number): Promise<void>;
 }
 export interface CameraUpdate {
     moveCamera(mapId: string): Promise<any>;
@@ -353,6 +354,7 @@ export interface UiSettings {
     setTiltGesturesEnabled(tiltGesturesEnabled: boolean): Promise<void>;
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
+    setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
 }
 export declare enum Color {
     RED = -65536,

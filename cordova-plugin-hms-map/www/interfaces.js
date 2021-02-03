@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
     limitations under the License.
 */
 "use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
 class AnimationSet {

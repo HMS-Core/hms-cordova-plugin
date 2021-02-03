@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
     limitations under the License.
 */
 "use strict";
+
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -52,18 +53,7 @@ Object.defineProperty(exports, "Hue", { enumerable: true, get: function () { ret
 Object.defineProperty(exports, "PatternItemType", { enumerable: true, get: function () { return interfaces_2.PatternItemType; } });
 Object.defineProperty(exports, "TileType", { enumerable: true, get: function () { return interfaces_2.TileType; } });
 exports.maps = new Map();
-function initialPropsOf(map) {
-    const clientRect = map.getBoundingClientRect();
-    const computedStyle = window.getComputedStyle(map, null);
-    let props = {};
-    props['x'] = clientRect.x;
-    props['y'] = clientRect.y;
-    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
-    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
-    return props;
-}
 function sync(mapId, mapDiv, components) {
-    console.log(`SYNC_FUNCTION --- mapId = ${mapId},,,  ${JSON.stringify(components)}`);
     if (!exports.maps.has(mapId)) {
         const huaweiMap = new HuaweiMapImpl(mapDiv, mapId);
         exports.maps.set(mapId, huaweiMap);
@@ -71,7 +61,6 @@ function sync(mapId, mapDiv, components) {
     const map = exports.maps.get(mapId);
     const hashMap = map.components;
     for (let i = 0; i < components.length; i++) {
-        console.log(`[FOR_LOOP_TAG] -- ${JSON.stringify(components[i])}`);
         if (hashMap.has(components[i]['_id']))
             continue;
         let obj = null;
@@ -92,19 +81,13 @@ function sync(mapId, mapDiv, components) {
     }
 }
 exports.sync = sync;
-function getMap(divId, huaweiMapOptions, bounds) {
+function getMap(divId, huaweiMapOptions) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!document.getElementById(divId))
+        const mapElement = document.getElementById(divId);
+        if (!mapElement)
             return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
-        const initialProps = initialPropsOf(document.getElementById(divId));
-        if (bounds) {
-            if (bounds.marginTop)
-                initialProps['marginTop'] = bounds.marginTop;
-            if (bounds.marginBottom)
-                initialProps['marginBottom'] = bounds.marginBottom;
-        }
-        const mapId = yield utils_1.asyncExec('HMSMap', 'initMap', [divId,
-            { 'mapOptions': huaweiMapOptions, 'initialProps': initialProps }]);
+        const initialProps = utils_1.initalPropsOf(mapElement);
+        const mapId = yield utils_1.asyncExec('HMSMap', 'initMap', [divId, { 'mapOptions': huaweiMapOptions, 'initialProps': initialProps }]);
         const huaweiMap = new HuaweiMapImpl(divId, mapId);
         exports.maps.set(huaweiMap.getId(), huaweiMap);
         return huaweiMap;
@@ -116,7 +99,12 @@ function showMap(divId) {
         if (!document.getElementById(divId))
             return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
         const mapId = yield utils_1.asyncExec("HMSMap", "showMap", [divId]);
-        return exports.maps.get(mapId);
+        const currentMap = exports.maps.get(mapId);
+        if (currentMap == undefined)
+            return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
+        currentMap.startOverlayInterval();
+        currentMap.startObserver();
+        return currentMap;
     });
 }
 exports.showMap = showMap;
@@ -153,6 +141,153 @@ function enableLogger() {
     return utils_1.asyncExec('HMSMap', 'enableLogger', []);
 }
 exports.enableLogger = enableLogger;
+class MapOverlayCache {
+    constructor(mapDivId, mapElement) {
+        this.lastRectsRecord = new Map();
+        this.rects = new Map();
+        this.interval = -1;
+        this.mapDivId = mapDivId;
+        this.mapElement = mapElement;
+    }
+    syncWithJava() {
+        /**
+         * Find and send the Rect information of added/updated/deleted HTML Elements which intersects with map.
+         */
+        let diffToAdd = [];
+        let diffToDelete = [];
+        for (let [key, value] of this.rects) {
+            if (!this.lastRectsRecord.has(key)) {
+                diffToAdd.push(value.rect);
+            }
+            else {
+                this.lastRectsRecord.delete(key);
+            }
+        }
+        for (let [key, value] of this.lastRectsRecord) {
+            diffToDelete.push(value.rect);
+        }
+        if (diffToAdd.length > 0 || diffToDelete.length > 0) {
+            utils_1.asyncExec("HMSMap", "updateOverlappingHTMLElements", [this.mapDivId, diffToAdd, diffToDelete]);
+        }
+        this.lastRectsRecord.clear();
+        this.lastRectsRecord = new Map(this.rects);
+    }
+    mapOverlayInterval() {
+        this.fillCacheRecursively(document.body);
+        this.refreshCache();
+        this.syncWithJava();
+    }
+    refreshCache() {
+        for (let [key, value] of this.rects) {
+            if (!value.visited) {
+                this.removeRect(key, value);
+            }
+            else {
+                value.visited = false;
+                this.rects.set(key, value);
+            }
+        }
+    }
+    removeRect(key, value) {
+        if (value.count > 1) {
+            value.count--;
+            this.rects.set(key, value);
+        }
+        else {
+            this.rects.delete(key);
+        }
+    }
+    fillCacheRecursively(element) {
+        for (let i = 0; i < element.children.length; i++) {
+            this.fillCacheRecursively(element.children[i]);
+        }
+        if (element.id === this.mapDivId)
+            return;
+        const curr = utils_1.Rect.fromDomRect(element.getBoundingClientRect());
+        const map = utils_1.Rect.fromDomRect(this.mapElement.getBoundingClientRect());
+        if (map.intersects(curr) && this.isAboveMap(element)) {
+            let val = this.rects.get(curr.hashCode());
+            if (val == undefined) {
+                this.rects.set(curr.hashCode(), { rect: curr, visited: true, count: 1 });
+            }
+            else {
+                val.count = val.visited ? val.count + 1 : 1;
+                val.visited = true;
+                this.rects.set(curr.hashCode(), val);
+            }
+        }
+    }
+    isAboveMap(element) {
+        const isParentOfMap = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_CONTAINED_BY;
+        const elemZIndex = window.getComputedStyle(element).zIndex;
+        if (!Boolean(isParentOfMap) && !isNaN(parseInt(elemZIndex)) && parseInt(elemZIndex) > 0)
+            return true;
+        const isMapCreatedBefore = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_PRECEDING;
+        return Boolean(isMapCreatedBefore);
+    }
+    startInterval() {
+        this.interval = setInterval(() => this.mapOverlayInterval(), 100);
+    }
+    stopInterval() {
+        if (this.interval !== -1)
+            clearInterval(this.interval);
+    }
+}
+class MapDomChangeListener {
+    constructor(mapDivId, mapElement) {
+        this.mapDivId = mapDivId;
+        this.mapElement = mapElement;
+        this.mapDivRectCache = this.mapElement.getBoundingClientRect();
+        this.mapDomChangeObserver = this.createObserver();
+    }
+    addWindowResizeListener() {
+        window.onresize = () => { this.updateWidthAndHeight(); };
+    }
+    removeWindowResizeListener() {
+        window.onresize = null;
+    }
+    createObserver() {
+        return new MutationObserver(mutations => {
+            this.updateXAndY();
+            this.updateWidthAndHeight();
+        });
+    }
+    startListener() {
+        this.mapDomChangeObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+        this.addWindowResizeListener();
+    }
+    stopListener() {
+        this.mapDomChangeObserver.disconnect();
+        this.removeWindowResizeListener();
+    }
+    updateWidthAndHeight() {
+        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
+        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
+        if (this.mapDivRectCache.width != width || this.mapDivRectCache.height != height) {
+            this.forceUpdateWidthAndHeight(width, height).then(() => {
+                this.mapDivRectCache.width = width;
+                this.mapDivRectCache.height = height;
+            });
+        }
+    }
+    updateXAndY() {
+        const mapRect = this.mapElement.getBoundingClientRect();
+        const x = mapRect.x;
+        const y = mapRect.y;
+        if (this.mapDivRectCache.x != x || this.mapDivRectCache.y != y) {
+            this.forceUpdateXAndY(x, y).then(() => {
+                this.mapDivRectCache.x = x;
+                this.mapDivRectCache.y = y;
+            });
+        }
+    }
+    forceUpdateXAndY(x, y) {
+        return utils_1.asyncExec("HMSMap", "forceUpdateXAndY", [this.mapDivId, x, y]);
+    }
+    forceUpdateWidthAndHeight(width, height) {
+        return utils_1.asyncExec("HMSMap", "forceUpdateWidthAndHeight", [this.mapDivId, width, height]);
+    }
+}
 class HuaweiMapImpl {
     constructor(divId, mapId) {
         this.components = new Map();
@@ -161,29 +296,41 @@ class HuaweiMapImpl {
         this.divId = divId;
         this.projection = new ProjectionImpl(divId);
         this.uiSettings = new UiSettingsImpl(divId);
-        this.htmlElement = document.getElementById(divId);
-        this.mo = new MutationObserver(() => {
-            const x = document.getElementById(this.divId).getBoundingClientRect().x;
-            const y = document.getElementById(this.divId).getBoundingClientRect().y;
-            this.forceUpdateXAndY(x, y);
-        });
-        const config = { attributes: true, childList: true, subtree: true };
-        this.mo.observe(document.body, config);
+        const tempElement = document.getElementById(this.divId);
+        if (tempElement == null)
+            throw Error(`Specified map div could not find: ${divId}`);
+        this.mapElement = tempElement;
+        this.overlay = new MapOverlayCache(divId, this.mapElement);
+        this.mapListener = new MapDomChangeListener(divId, this.mapElement);
+        this.startOverlayInterval();
+        this.startObserver();
+    }
+    startOverlayInterval() {
+        this.overlay.startInterval();
+    }
+    startObserver() {
+        this.mapListener.startListener();
     }
     // IONIC FRAMEWORK SCROLL EVENT
     scroll() {
-        const mapRect = document.getElementById(this.divId).getBoundingClientRect();
+        if (this.mapElement == null)
+            return;
+        const mapRect = this.mapElement.getBoundingClientRect();
         this.forceUpdateXAndY(mapRect.x, mapRect.y);
     }
     destroyMap() {
         return __awaiter(this, void 0, void 0, function* () {
             this.components.clear();
             exports.maps.delete(this.id);
+            this.overlay.stopInterval();
+            this.mapListener.stopListener();
             return utils_1.asyncExec("HMSMap", "destroyMap", [this.divId]);
         });
     }
     hideMap() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.overlay.stopInterval();
+            this.mapListener.startListener();
             return utils_1.asyncExec("HMSMap", "hideMap", [this.divId]);
         });
     }
@@ -195,6 +342,17 @@ class HuaweiMapImpl {
                 .then(value => {
                 window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
             }).catch(err => console.log(err));
+        });
+    }
+    setMapPointersEnabled(mapPointersEnabled) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return utils_1.asyncExec('HMSMap', 'setMapPointersEnabled', [this.divId, mapPointersEnabled]);
+        });
+    }
+    isMapPointersEnabled() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const json = yield utils_1.asyncExec('HMSMap', 'isMapPointersEnabled', [this.divId]);
+            return json.result;
         });
     }
     addCircle(circleOptions) {
@@ -258,15 +416,17 @@ class HuaweiMapImpl {
     animateCamera(cameraUpdate, cancelableCallback, durationMs) {
         const onFinishEventForJavascript = `${interfaces_1.MapEvent.ON_CANCELABLE_CALLBACK_FINISH}_${this.id}`;
         const onCancelEventForJavascript = `${interfaces_1.MapEvent.ON_CANCELABLE_CALLBACK_CANCEL}_${this.id}`;
-        window[onFinishEventForJavascript] = cancelableCallback.onFinish;
-        window[onCancelEventForJavascript] = cancelableCallback.onCancel;
         const props = {};
-        if (cancelableCallback.onFinish)
-            props["isOnFinish"] = true;
-        if (cancelableCallback.onCancel)
-            props["isOnCancel"] = true;
-        if (durationMs)
-            props["duration"] = durationMs;
+        if (cancelableCallback != undefined) {
+            window.subscribeHMSEvent(onFinishEventForJavascript, cancelableCallback.onFinish);
+            window.subscribeHMSEvent(onCancelEventForJavascript, cancelableCallback.onCancel);
+            if (cancelableCallback.onFinish != undefined)
+                props["isOnFinish"] = true;
+            if (cancelableCallback.onCancel != undefined)
+                props["isOnCancel"] = true;
+            if (durationMs)
+                props["duration"] = durationMs;
+        }
         return cameraUpdate.animateCamera(this.divId, props);
     }
     moveCamera(cameraUpdate) {
@@ -351,6 +511,9 @@ class HuaweiMapImpl {
     setTrafficEnabled(trafficEnabled) {
         return this.setHuaweiMapOptions('setTrafficEnabled', { 'trafficEnabled': trafficEnabled });
     }
+    setPointToCenter(x, y) {
+        return this.setHuaweiMapOptions('setPointToCenter', { 'x': x, 'y': y });
+    }
     getComponent(key) {
         return this.components.get(key);
     }
@@ -359,9 +522,10 @@ class HuaweiMapImpl {
     }
     snapshot(onReadyCallback) {
         const eventName = `${interfaces_1.MapEvent.ON_SNAPSHOT_READY_CALLBACK}_${this.id}`;
-        window[eventName] = onReadyCallback;
+        window.subscribeHMSEvent(eventName, onReadyCallback);
         return this.getHuaweiMapOptions('snapshot');
     }
+    // INTERNAL INTERNAL INTERNAL
     removeComponent(key) {
         if (this.components.has(key)) {
             this.components.get(key).remove();
@@ -451,6 +615,9 @@ class UiSettingsImpl {
     setZoomGesturesEnabled(zoomGesturesEnabled) {
         return this.setUiSettings('setZoomGesturesEnabled', { 'zoomGesturesEnabled': zoomGesturesEnabled });
     }
+    setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled) {
+        return this.setUiSettings('setGestureScaleByMapCenter', { 'gestureScaleByMapCenterEnabled': gestureScaleByMapCenterEnabled });
+    }
     setUiSettings(func, props) {
         return utils_1.asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
     }
@@ -462,6 +629,9 @@ class UiSettingsImpl {
     }
 }
 class CameraUpdateImpl {
+    constructor() {
+        this.event = "";
+    }
     moveCamera(mapId) {
         return utils_1.asyncExec('HMSMap', 'mapOptions', [mapId, "moveCamera", this.event, this.props]);
     }

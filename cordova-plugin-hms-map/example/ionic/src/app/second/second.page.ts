@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,19 +15,21 @@
 */
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {HMSMap, CameraUpdateFactory} from '@ionic-native/hms-map/ngx';
+import {HuaweiMap, HMSMap, CameraUpdateFactory} from '@hmscore/ionic-native-hms-map/ngx';
 @Component({
     selector: 'app-second',
     templateUrl: './second.page.html',
     styleUrls: ['./second.page.scss'],
 })
 export class SecondPage{
-    private map: any;
+    private map: HuaweiMap;
     latInput: number;
     lngInput: number;
     durationInput: number;
     markerLatInput: number;
     markerLngInput: number;
+    centerX: string;
+    centerY: string;
 
     constructor(public navCtrl: NavController, private hmsMap: HMSMap) {
     }
@@ -41,10 +43,11 @@ export class SecondPage{
         };
         this.map = await this.hmsMap.getMap('secondMap', mapOptions);
         await this.map.setMyLocationEnabled(true);
+        await this.map.getUiSettings().setGestureScaleByMapCenter(true);
     }
 
     navigate() {
-        this.map.hideMap();
+        this.map.destroyMap();
         this.navCtrl.navigateRoot('/home', {}).then(value => console.log(value));
     }
 
@@ -84,5 +87,15 @@ export class SecondPage{
         const latitude = this.markerLatInput;
         const longitude = this.markerLngInput;
         await this.map.addMarker({position: {lat: latitude, lng: longitude}});
+    }
+
+    async setPointToCenter() {
+        const x = parseInt(this.centerX);
+        const y = parseInt(this.centerY);
+        await this.map.setPointToCenter(x, y);
+    }
+
+    async scrolling() {
+        await this.map.scroll();
     }
 }

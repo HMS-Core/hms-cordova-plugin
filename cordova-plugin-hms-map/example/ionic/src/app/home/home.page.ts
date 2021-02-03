@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import {Component} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {NavController, AlertController} from '@ionic/angular';
 import {
     AnimationSet,
     CameraUpdateFactory,
@@ -24,7 +24,7 @@ import {
     MapEvent,
     Marker,
     TileType
-} from '@ionic-native/hms-map/ngx';
+} from '@hmscore/ionic-native-hms-map/ngx';
 
 @Component({
     selector: 'app-home',
@@ -36,7 +36,7 @@ export class HomePage {
     private map: HuaweiMap;
     private components = new Map<string, any>();
 
-    constructor(public navCtrl: NavController, private hmsMap: HMSMap) {
+    constructor(public navCtrl: NavController, private hmsMap: HMSMap, public alertController: AlertController) {
 
     }
 
@@ -54,7 +54,7 @@ export class HomePage {
     }
 
     navigate() {
-        this.map.hideMap();
+        this.map.destroyMap();
         this.navCtrl.navigateRoot('/second', {}).then(value => console.log(value));
     }
 
@@ -279,5 +279,31 @@ export class HomePage {
                 console.log('Javascript onCancel called');
             }
         }, 1000);
+    }
+
+    async enableMapPointers() {
+        const isMapPointersEnabled = await this.map.isMapPointersEnabled();
+        if(!isMapPointersEnabled){
+            await this.map.setMapPointersEnabled(true);
+            console.log("setMapPointersEnabled true");
+        }
+    }
+
+    async disableMapPointers() {
+        const isMapPointersEnabled = await this.map.isMapPointersEnabled();
+        if(isMapPointersEnabled){
+            await this.map.setMapPointersEnabled(false);
+            console.log("setMapPointersEnabled false");
+        }
+    }
+
+    async presentAlert() {
+        const alert = await this.alertController.create({
+            header: 'Alert',
+            subHeader: 'Subtitle',
+            message: 'Overlay Button clicked.',
+            buttons: ['OK']
+        });
+        await alert.present();
     }
 }

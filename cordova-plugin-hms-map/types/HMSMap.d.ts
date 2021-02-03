@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { CameraPosition, CameraUpdate, ComputeDistanceResult, HuaweiMap, HuaweiMapOptions, LatLng, LatLngBounds, MapBounds } from './interfaces';
+import { CameraPosition, CameraUpdate, ComputeDistanceResult, HuaweiMap, HuaweiMapOptions, LatLng, LatLngBounds } from './interfaces';
 export { Polyline, ButtCap, CustomCap, RoundCap, SquareCap, Cap } from './polyline';
 export { Polygon } from './polygon';
 export { Circle } from './circle';
@@ -23,7 +23,7 @@ export { Marker } from './marker';
 export { AnimationSet, RotateAnimation, AlphaAnimation, ScaleAnimation, TranslateAnimation, InterpolatorType, ErrorCodes, CameraMoveStartedReason, Color, MapType, MapEvent, JointType, Hue, PatternItemType, HuaweiMap, CameraUpdate, Tile, URLTile, RepetitiveTile, TileType } from './interfaces';
 export declare const maps: Map<number, HuaweiMap>;
 export declare function sync(mapId: number, mapDiv: string, components: any): void;
-export declare function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions, bounds?: MapBounds): Promise<HuaweiMap>;
+export declare function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions): Promise<HuaweiMap>;
 export declare function showMap(divId: string): Promise<HuaweiMap>;
 export declare function hasPermission(): Promise<boolean>;
 export declare function requestPermission(): Promise<void>;

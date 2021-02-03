@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,4 +23,17 @@ declare global {
         subscribeHMSEvent: (eventName: string, callback: (data: any) => void) => void;
         [key: string]: any;
     }
+}
+export declare function initalPropsOf(element: HTMLElement): any;
+export declare class Rect {
+    readonly bottom: number;
+    readonly left: number;
+    readonly right: number;
+    readonly top: number;
+    constructor(left: number, top: number, right: number, bottom: number);
+    static fromDomRect(domRect: DOMRect): Rect;
+    equals(rect: Rect): boolean;
+    intersects(rect: Rect): boolean;
+    contains(rect: Rect): boolean;
+    hashCode(): string;
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -36,8 +36,28 @@ async function onDeviceReady() {
     document.getElementById("addDiv").onclick = addDiv;
     document.getElementById("addMarkerInfo").onclick = addMarkerInfo;
     document.getElementById("addMarkerAnim").onclick = addMarkerAnim;
+    document.getElementById("enableMapPointers").onclick = enableMapPointers;
+    document.getElementById("disableMapPointers").onclick = disableMapPointers;
+    document.getElementById("overlay-btn").onclick = onOverlayButtonClicked;
     log = document.getElementById("log");
 
+}
+
+function onOverlayButtonClicked() {
+    log.innerHTML = "<br>" + "Overlay button clicked" + log.innerHTML;
+}
+
+async function enableMapPointers() {
+    const isMapPointersEnabled = await map.isMapPointersEnabled();
+    if(!isMapPointersEnabled){
+        await map.setMapPointersEnabled(true);
+    }
+}
+async function disableMapPointers() {
+    const isMapPointersEnabled = await map.isMapPointersEnabled();
+    if(isMapPointersEnabled){
+        await map.setMapPointersEnabled(false);
+    }
 }
 
 async function addMarkerInfo(){

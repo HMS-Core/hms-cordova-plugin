@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +14,9 @@
     limitations under the License.
 */
 "use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncExec = void 0;
+exports.Rect = exports.initalPropsOf = exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
 function asyncExec(clazz, func, args = []) {
     return new Promise((resolve, reject) => {
@@ -35,5 +36,54 @@ function initEventHandler() {
         window.hmsEvents[eventName] = handler;
     };
 }
+function initPlugin() {
+    asyncExec("HMSMap", "initPlugin", []);
+}
 initEventHandler();
+initPlugin();
+function initalPropsOf(element) {
+    const clientRect = element.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(element, null);
+    let props = {};
+    props['x'] = clientRect.x;
+    props['y'] = clientRect.y;
+    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
+    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
+    return props;
+}
+exports.initalPropsOf = initalPropsOf;
+class Rect {
+    constructor(left, top, right, bottom) {
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+        this.top = top;
+    }
+    static fromDomRect(domRect) {
+        return new Rect(domRect.left, domRect.top, domRect.right, domRect.bottom);
+    }
+    equals(rect) {
+        return rect.left == this.left
+            && rect.right == this.right
+            && rect.bottom == this.bottom
+            && rect.top == this.top;
+    }
+    intersects(rect) {
+        const notIntersects = this.left > rect.right
+            || this.top > rect.bottom
+            || rect.left > this.right
+            || rect.top > this.bottom;
+        return !notIntersects;
+    }
+    contains(rect) {
+        return this.left <= rect.left
+            && this.right >= rect.right
+            && this.top <= rect.top
+            && this.bottom >= rect.bottom;
+    }
+    hashCode() {
+        return `${this.left}-${this.top}-${this.right}-${this.bottom}`;
+    }
+}
+exports.Rect = Rect;
 //# sourceMappingURL=utils.js.map

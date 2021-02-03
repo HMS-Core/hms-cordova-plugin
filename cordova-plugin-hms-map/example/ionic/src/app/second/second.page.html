@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,25 +20,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-  <div class="container">
-    <ion-button color="primary" routerLink="/home" routerDirection="root" id="navigate" (click)="navigate()">Navigate To First Page</ion-button>
-    <ion-button color="primary" id="showMap" (click)="showMap()">Show Map</ion-button>
-    <ion-button color="primary" id="hideMap" (click)="hideMap()">Hide Map</ion-button>
-  </div>
-  <div class="container">
-    <ion-input id="lat-input" type="number" placeholder="latitude" [(ngModel)]="latInput"></ion-input>
-    <ion-input id="lng-input" type="number" placeholder="longitude" [(ngModel)]="lngInput"></ion-input>
-    <ion-input id="duration-input" type="number" placeholder="duration" [(ngModel)]="durationInput"></ion-input>
-    <ion-button color="primary" id="animate-camera" (click)="animateCamera()">Animate Camera</ion-button>
-    <ion-button color="primary" id="move-camera" (click)="moveCamera()">Move Camera</ion-button>
-  </div>
-  <div id="container1">
-    <ion-input id="marker-lat" type="number" placeholder="latitude" [(ngModel)]="markerLatInput"></ion-input>
-    <ion-input id="marker-lng" type="number" placeholder="longitude" [(ngModel)]="markerLngInput"></ion-input>
-    <ion-button color="primary" id="add-marker" (click)="addMarker()">Add Marker</ion-button>
-  </div>
-  <div id="secondMap" style="width:100%;height:100%;"></div>
-
+<ion-content [scrollEvents]="true" (ionScroll)="scrolling()">
+  <ion-grid>
+    <ion-row>
+      <ion-col><ion-button color="primary" routerLink="/home" routerDirection="root" (click)="navigate()">Navigate To First Page</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button color="primary" (click)="showMap()">Show Map</ion-button></ion-col>
+      <ion-col><ion-button color="primary" (click)="hideMap()">Hide Map</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-input type="number" placeholder="latitude" [(ngModel)]="latInput"></ion-input></ion-col>
+      <ion-col><ion-input type="number" placeholder="longitude" [(ngModel)]="lngInput"></ion-input></ion-col>
+      <ion-col><ion-input type="number" placeholder="duration" [(ngModel)]="durationInput"></ion-input></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button color="primary"  (click)="animateCamera()">Animate Camera</ion-button></ion-col>
+      <ion-col><ion-button color="primary" (click)="moveCamera()">Move Camera</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-input type="number" placeholder="latitude" [(ngModel)]="markerLatInput"></ion-input></ion-col>
+      <ion-col><ion-input type="number" placeholder="longitude" [(ngModel)]="markerLngInput"></ion-input></ion-col>
+      <ion-col><ion-button color="primary" (click)="addMarker()">Add Marker</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-input type="number" placeholder="x" [(ngModel)]="centerX"></ion-input></ion-col>
+      <ion-col><ion-input type="number" placeholder="y" [(ngModel)]="centerY"></ion-input></ion-col>
+      <ion-col><ion-button color="primary" (click)="setPointToCenter()">Set Center</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+  <div id="secondMap" style="width:100%;height:50%;"></div>
 </ion-content>

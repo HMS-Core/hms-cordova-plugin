@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -57,12 +57,18 @@
       <ion-button color="primary" id="initMap" (click)="initMap()">Init Map</ion-button>
     </div>
     <div class="container">
+      <ion-button color="primary" id="enableMapClickable" (click)="enableMapPointers()">Enable Map Pointers</ion-button>
+      <ion-button color="primary" id="disableMapClickable" (click)="disableMapPointers()">Disable Map Pointers</ion-button>
+    </div>
+    <div class="container">
       <ion-input id="marker_id_input" type="text" value="" placeholder="Component Id" [(ngModel)]="markerId"></ion-input>
       <ion-button color="primary" id="removeComponent" (click)="removeComponent()">Remove Comp.</ion-button>
     </div>
   </div>
 
-  <div id="map" style="width:100%;height:300px;"></div>
+  <div id="map" style="width:100%;height:300px;">
+    <ion-button color="primary" id="presentAlert" (click)="presentAlert()">Overlay Button</ion-button>
+  </div>
   <label style="display: block;text-align:center;">LOGS<br></label>
   <label id="log" style="display: block;text-align:center;"></label>
 

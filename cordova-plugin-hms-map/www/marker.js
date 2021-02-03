@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
     limitations under the License.
 */
 "use strict";
+
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -97,7 +98,7 @@ class MarkerImpl {
         if (animation.animations.has('Alpha'))
             _animations['alphaAnimation'] = {};
         animation.animations.forEach((value, key) => {
-            if (key === "Rotate") {
+            if (key === "Rotate" && _animations.rotateAnimation != undefined) {
                 _animations.rotateAnimation.fromDegree = value.fromDegree;
                 _animations.rotateAnimation.toDegree = value.toDegree;
                 _animations.rotateAnimation.duration = value.duration;
@@ -109,7 +110,7 @@ class MarkerImpl {
                 if (value.animationStart)
                     _animations.rotateAnimation.isAnimationStart = true;
             }
-            else if (key === "Scale") {
+            else if (key === "Scale" && _animations.scaleAnimation != undefined) {
                 _animations.scaleAnimation.fromX = value.fromX;
                 _animations.scaleAnimation.toX = value.toX;
                 _animations.scaleAnimation.fromY = value.fromY;
@@ -123,7 +124,7 @@ class MarkerImpl {
                 if (value.animationStart)
                     _animations.scaleAnimation.isAnimationStart = true;
             }
-            else if (key === "Translate") {
+            else if (key === "Translate" && _animations.translateAnimation != undefined) {
                 _animations.translateAnimation.target = value.target;
                 _animations.translateAnimation.duration = value.duration;
                 _animations.translateAnimation.repeatCount = value.repeatCount;
@@ -134,7 +135,7 @@ class MarkerImpl {
                 if (value.animationStart)
                     _animations.translateAnimation.isAnimationStart = true;
             }
-            else if (key === "Alpha") {
+            else if (key === "Alpha" && _animations.alphaAnimation != undefined) {
                 _animations.alphaAnimation.fromAlpha = value.fromAlpha;
                 _animations.alphaAnimation.toAlpha = value.toAlpha;
                 _animations.alphaAnimation.duration = value.duration;
