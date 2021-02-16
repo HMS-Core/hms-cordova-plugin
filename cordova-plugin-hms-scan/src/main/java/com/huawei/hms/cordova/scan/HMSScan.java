@@ -19,6 +19,7 @@ package com.huawei.hms.cordova.scan;
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcelable;
@@ -449,6 +450,24 @@ public class HMSScan extends CordovaPlugin {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, String[] permissions,
+                                          int[] grantResults) throws JSONException {
+        super.onRequestPermissionResult(requestCode, permissions, grantResults);
+        for (int r : grantResults) {
+            if (r == PackageManager.PERMISSION_DENIED) {
+                Log.d(TAG, "Permission Denied!");
+                callbackContext.error(scanError.toJSON());
+                return;
+            }
+        }
+        switch (requestCode) {
+            case PermissionUtils.CAMERA_PERMISSION_CODE:
+                callbackContext.success();
+                break;
         }
     }
 
