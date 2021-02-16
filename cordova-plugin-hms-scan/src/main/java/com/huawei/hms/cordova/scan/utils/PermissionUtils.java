@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PermissionUtils {
-    private static final int CAMERA_PERMISSION_CODE = 100;
+    public static final int CAMERA_PERMISSION_CODE = 100;
     private static final String TAG = PermissionUtils.class.getSimpleName();
 
     private PermissionUtils() {
