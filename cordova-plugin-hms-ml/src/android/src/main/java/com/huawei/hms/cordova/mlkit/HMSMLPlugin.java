@@ -16,6 +16,7 @@
 
 package com.huawei.hms.cordova.mlkit;
 
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -74,6 +75,27 @@ public class HMSMLPlugin extends CordovaPlugin {
                 mlLensEngine.scrollXAndY(-webView.getView().getScrollX(), -webView.getView().getScrollY());
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, String[] permissions,
+                                          int[] grantResults) throws JSONException {
+        super.onRequestPermissionResult(requestCode, permissions, grantResults);
+        int currentGrantResultIndex = -1;
+        for (int r : grantResults) {
+            currentGrantResultIndex++;
+            /* Check that element from permissions with same index as r IS NOT null */
+            if (r == PackageManager.PERMISSION_DENIED && permissions[currentGrantResultIndex] != null) {
+                Log.d(TAG, "Permission Denied!");
+                callbackContext.error("Permission denied by user!");
+                return;
+            }
+        }
+        switch (requestCode) {
+            case PermissionUtils.CAMERA_PERMISSION_CODE:
+                callbackContext.success();
+                break;
+        }
     }
 
     public void pluginInitialize() {
