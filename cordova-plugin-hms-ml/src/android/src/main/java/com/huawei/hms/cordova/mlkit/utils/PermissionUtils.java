@@ -30,7 +30,7 @@ import java.util.List;
 
 public class PermissionUtils {
     private static final String TAG = PermissionUtils.class.getSimpleName();
-    private static final int CAMERA_PERMISSION_CODE = 100;
+    public static final int CAMERA_PERMISSION_CODE = 100;
 
     public static boolean hasPermission(final String permissionName, final CordovaPlugin plugin) {
         boolean permissionResult = false;
