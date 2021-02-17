@@ -5,7 +5,7 @@
   "types": "types/index.d.ts",
     "repository": {
     "type": "git",
-    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+    "url": "https://github.com/cempay/hms-cordova-plugin.git",
     "directory": "cordova-plugin-hms-scan"
   },
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
