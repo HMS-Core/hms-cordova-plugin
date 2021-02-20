@@ -17,6 +17,7 @@
 package com.huawei.hms.cordova.scan;
 
 import static android.app.Activity.RESULT_OK;
+import static android.app.Activity.RESULT_CANCELED;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -476,6 +477,9 @@ public class HMSScan extends CordovaPlugin {
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, requestCode, data);
         if (resultCode != RESULT_OK || data == null) {
+            if(resultCode == RESULT_CANCELED) {
+                callbackContext.error("Interaction with scanner canceled!");
+            }
             return;
         }
         if (requestCode == REQUEST_CODE_SCAN_ONE) {
