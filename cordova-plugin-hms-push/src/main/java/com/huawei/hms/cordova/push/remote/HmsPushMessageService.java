@@ -68,6 +68,7 @@ public class HmsPushMessageService extends HmsMessageService {
                 String preFunction = sharedPref.getString("data", null);
                 if (preFunction != null) {
                     preFunction = preFunction.replace("=>", "");
+                    preFunction = preFunction.replace("function", "");
                 }
                 String function = String.format(Locale.ENGLISH, "function callback%s", preFunction);
                 String s = "[\"HmsLocalNotification\"].backgroundLocalNotification";
