@@ -1,7 +1,5 @@
 {
   "name": "HMSPushDemo",
-  "integrations": {
-    "capacitor": {}
-  },
+  "integrations": {},
   "type": "angular"
 }
