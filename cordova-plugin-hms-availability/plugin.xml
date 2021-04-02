@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-availability" version="5.2.0.300" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        android="http://schemas.android.com/apk/res/android">
+    <name>HMS Availability</name>
+    <description>Cordova HMS Availability Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,availability,hms-availability,huawei-availability,hms,huawei</keywords>
+    <js-module name="HMSAvailability" src="www/HMSAvailability.js">
+        <clobbers target="HMSAvailability"/>
+    </js-module>
+    <js-module name="index" src="www/index.js"/>
+    <js-module name="utils" src="www/utils.js"/>
+    <!-- ANDROID PLATFORM -->
+    <platform name="android">
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSAvailability">
+                <param name="android-package" value="com.huawei.hms.cordova.availability.HMSAvailability"/>
+            </feature>
+        </config-file>
+        <!-- dependencies -->
+        <framework src="com.huawei.hms:base:5.2.0.300"/>
+        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+        <!-- source files -->
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/HMSAvailabilityImpl.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/HMSAvailability.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/CordovaBaseModule.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/CordovaEvent.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/CordovaMethod.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/HMSLog.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CorLog.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CorPack.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CordovaController.java"
+                target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CordovaEventRunner.java"
+                target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CordovaModuleGroupHandler.java"
+                target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/CordovaModuleHandler.java"
+                target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/HMSLogger.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/NoSuchCordovaModuleException.java"
+                target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/basef/handler/Promise.java"
+                     target-dir="src/com/huawei/hms/cordova/availability/basef/handler/"/>
+    </platform>
+</plugin>
