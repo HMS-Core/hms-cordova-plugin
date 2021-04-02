@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,19 +15,25 @@
 */
 
 import { Attr, Importance, Priority, RepeatType, Visibility } from './Interfaces';
+export declare function localNotification(localNotification: LocalNotificationObject): Promise<any>;
+export declare function localNotificationSchedule(localNotificationSchedule: LocalNotificationObject): Promise<any>;
+export declare function cancelAllNotifications(): Promise<boolean>;
+export declare function cancelNotifications(): Promise<boolean>;
+export declare function cancelScheduledNotifications(): Promise<boolean>;
+export declare function cancelNotificationsWithId(id: number[]): Promise<boolean>;
+export declare function cancelNotificationsWithIdTag(idTag: IdTag[]): Promise<boolean>;
+export declare function cancelNotificationsWithTag(tag: string): Promise<boolean>;
+export declare function getNotifications(): Promise<any>;
+export declare function getScheduledNotifications(): Promise<any>;
+export declare function getChannels(): Promise<any>;
+export declare function channelExists(channelId: string): Promise<boolean>;
+export declare function channelBlocked(channelId: string): Promise<boolean>;
+export declare function deleteChannel(channelId: string): Promise<boolean>;
+declare type LocalNotificationObject = {
+    [key in Attr]?: any;
+};
+interface IdTag {
+    id: number;
+    tag: string;
+}
 export { Attr, Importance, Priority, RepeatType, Visibility };
-export declare function localNotification(args: any): Promise<any>;
-export declare function localNotificationSchedule(args: any): Promise<any>;
-export declare function cancelAllNotifications(args: any): Promise<any>;
-export declare function cancelNotifications(args: any): Promise<any>;
-export declare function cancelScheduledNotifications(args: any): Promise<any>;
-export declare function cancelNotificationsWithId(args: any): Promise<any>;
-export declare function cancelNotificationsWithIdTag(args: any): Promise<any>;
-export declare function cancelNotificationsWithTag(args: any): Promise<any>;
-export declare function getNotifications(args: any): Promise<any>;
-export declare function getScheduledNotifications(args: any): Promise<any>;
-export declare function getChannels(args: any): Promise<any>;
-export declare function channelExists(args: any): Promise<any>;
-export declare function channelBlocked(args: any): Promise<any>;
-export declare function deleteChannel(args: any): Promise<any>;
-export declare function run(funcName: string, args: any): Promise<any>;

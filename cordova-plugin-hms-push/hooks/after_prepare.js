@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,36 +14,31 @@
     limitations under the License.
 */
 
-'use strict';
+"use strict";
 
-var FSUtils = require('./FSUtils');
+var FSUtils = require("./FSUtils");
 
-var DEST_DIR = 'platforms/android/app/';
-var FILE_NAME = 'agconnect-services.json';
-
+var DEST_DIR = "platforms/android/app/";
+var FILE_NAME = "agconnect-services.json";
 
 module.exports = function (context) {
-  var platforms = context.opts.platforms;
+    var platforms = context.opts.platforms;
 
-  if (platforms.includes('android')) {
-    copyAGConnect();
-  }
-}
+    if (platforms.includes("android")) {
+        copyAGConnect();
+    }
+};
 
 function copyAGConnect() {
+    if (!FSUtils.exists(FILE_NAME)) {
+        console.log("agconnect-services.json does not exists!");
+        return;
+    }
 
-  if (!FSUtils.exists(FILE_NAME)) {
-    console.log('agconnect-services.json does not exists!');
-    return;
-  }
+    if (!FSUtils.exists(DEST_DIR)) {
+        console.log("destination does not exist. dest : " + DEST_DIR);
+        return;
+    }
 
-  if (!FSUtils.exists(DEST_DIR)) {
-    console.log('destination does not exist. dest : ' + DEST_DIR);
-    return;
-  }
-
-  FSUtils.copyFile(FILE_NAME, DEST_DIR + FILE_NAME);
+    FSUtils.copyFile(FILE_NAME, DEST_DIR + FILE_NAME);
 }
-
-
-

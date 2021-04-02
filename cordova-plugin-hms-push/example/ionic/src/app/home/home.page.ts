@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { allowedNodeEnvironmentFlags } from 'process';
-import { HmsPush, HmsPushEvent, RemoteMessageBuilder, HmsLocalNotification } from '@ionic-native/hms-push/ngx'
-import { Router, ActivationStart, RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { HmsPush, HmsPushEvent, HmsLocalNotification} from '@hmscore/ionic-native-hms-push/ngx'
+import { Router, RouterOutlet } from '@angular/router';
+import { Platform } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -28,14 +28,19 @@ export class HomePage {
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
 
   constructor(
+    private platform: Platform,
     private hmsPush: HmsPush,
     private hmsLocalNotification: HmsLocalNotification,
     private hmsPushEvent: HmsPushEvent,
     private router: Router,
     private cd:ChangeDetectorRef
   ) {
-    this.hmsPush.init()
-    this.initListener()
+    this.platform.ready().then(()=>{
+      this.hmsPush.init()
+      this.initListener()
+      this.hmsPush.setBackgroundFile("public/assets/background.js")
+    })
+    
   }
   message: string = "";
   topic: string = "topic"
@@ -88,22 +93,6 @@ export class HomePage {
     this.hmsPushEvent.onPushMessageSentError((result) => {
       this.addLog("ON_PUSH_MESSAGE_SENT_ERROR", JSON.stringify(result));
     })
-
-    this.hmsPush.setBackgroundAction((remoteMessage)=>{
-      const jsonData = JSON.parse(remoteMessage.data);
-      const defaultNotification = {
-          "title": "[Headless] " + jsonData.title,
-          "message": jsonData.message.replace("{{name}}","YourName")
-      };
-      const notification=JSON.stringify(defaultNotification);
-      HmsLocalNotification.backgroundLocalNotification(notification);
-    })
-    .then((result) =>
-        this.defaultSuccessHandler("setBackgroundAction", result)
-    )
-    .catch((error) =>
-        this.defaultExceptionHandler("setBackgroundAction", error)
-    );
   }
 
   openCustomIntent() {
@@ -196,14 +185,14 @@ export class HomePage {
 
   async sendRemoteMessage() {
     this.hmsPush.sendRemoteMessage({
-      [RemoteMessageBuilder.TO]: '',
+      [this.hmsPush.RemoteMessageBuilder.TO]: '',
       //[RemoteMessageBuilder.MESSAGE_ID]: '', // Auto generated
-      [RemoteMessageBuilder.MESSAGE_TYPE]: 'hms',
-      [RemoteMessageBuilder.COLLAPSE_KEY]: '-1',
-      [RemoteMessageBuilder.TTL]: 120,
-      [RemoteMessageBuilder.RECEIPT_MODE]: 1,
-      [RemoteMessageBuilder.SEND_MODE]: 1,
-      [RemoteMessageBuilder.DATA]: { key1: 'test', message: 'huawei-test' }
+      [this.hmsPush.RemoteMessageBuilder.MESSAGE_TYPE]: 'hms',
+      [this.hmsPush.RemoteMessageBuilder.COLLAPSE_KEY]: '-1',
+      [this.hmsPush.RemoteMessageBuilder.TTL]: 120,
+      [this.hmsPush.RemoteMessageBuilder.RECEIPT_MODE]: 1,
+      [this.hmsPush.RemoteMessageBuilder.SEND_MODE]: 1,
+      [this.hmsPush.RemoteMessageBuilder.DATA]: { key1: 'test', message: 'huawei-test' }
     })
       .then((result: any) => { this.defaultSuccessHandler("sendRemoteMessage", result) })
       .catch((result: any) => { this.defaultExceptionHandler("sendRemoteMessage", result) })

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,9 +14,6 @@
     limitations under the License.
 */
 
-import { CordovaRemoteMessage } from './CordovaRemoteMessage'
-import { RemoteMessageBuilder } from './RemoteMessageBuilder'
-
 export * as HmsPush from './HmsPush'
 export * as utils from './utils'
 export * as CordovaRemoteMessage from './CordovaRemoteMessage'
@@ -24,4 +21,3 @@ export * as HmsLocalNotification from './HmsLocalNotification'
 export * as HmsPushEvent from './HmsPushEvent'
 export * as HmsPushResultCode from './HmsPushResultCode'
 export * as Interfaces from './Interfaces'
-export * as RemoteMessageBuilder from './RemoteMessageBuilder'

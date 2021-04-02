@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,32 +14,33 @@
     limitations under the License.
 */
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-
+var fs = require("fs");
 
 var FSUtils = (function () {
     var api = {};
 
     api.exists = function (path) {
         try {
-            return fs.existsSync(path)
-        } catch (err) {/*NOPE*/ }
+            return fs.existsSync(path);
+        } catch (err) {
+            /*NOPE*/
+        }
         return false;
-    }
+    };
 
     api.copyFile = function (src, dest) {
         fs.copyFileSync(src, dest);
-    }
+    };
 
     api.readFile = function (path, encoding) {
         return fs.readFileSync(path, encoding);
-    }
+    };
 
-    api.writeFile = function(path, content) {
-        fs.writeFileSync(path,content);
-    }
+    api.writeFile = function (path, content) {
+        fs.writeFileSync(path, content);
+    };
 
     return api;
 })();

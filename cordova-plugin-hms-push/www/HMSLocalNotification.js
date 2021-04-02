@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,102 +14,69 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.run = exports.deleteChannel = exports.channelBlocked = exports.channelExists = exports.getChannels = exports.getScheduledNotifications = exports.getNotifications = exports.cancelNotificationsWithTag = exports.cancelNotificationsWithIdTag = exports.cancelNotificationsWithId = exports.cancelScheduledNotifications = exports.cancelNotifications = exports.cancelAllNotifications = exports.localNotificationSchedule = exports.localNotification = exports.Visibility = exports.RepeatType = exports.Priority = exports.Importance = exports.Attr = void 0;
+exports.Visibility = exports.RepeatType = exports.Priority = exports.Importance = exports.Attr = exports.deleteChannel = exports.channelBlocked = exports.channelExists = exports.getChannels = exports.getScheduledNotifications = exports.getNotifications = exports.cancelNotificationsWithTag = exports.cancelNotificationsWithIdTag = exports.cancelNotificationsWithId = exports.cancelScheduledNotifications = exports.cancelNotifications = exports.cancelAllNotifications = exports.localNotificationSchedule = exports.localNotification = void 0;
 const utils_1 = require("./utils");
 const Interfaces_1 = require("./Interfaces");
-Object.defineProperty(exports, "Attr", {
-  enumerable: true,
-  get: function () {
-    return Interfaces_1.Attr;
-  },
-});
-Object.defineProperty(exports, "Importance", {
-  enumerable: true,
-  get: function () {
-    return Interfaces_1.Importance;
-  },
-});
-Object.defineProperty(exports, "Priority", {
-  enumerable: true,
-  get: function () {
-    return Interfaces_1.Priority;
-  },
-});
-Object.defineProperty(exports, "RepeatType", {
-  enumerable: true,
-  get: function () {
-    return Interfaces_1.RepeatType;
-  },
-});
-Object.defineProperty(exports, "Visibility", {
-  enumerable: true,
-  get: function () {
-    return Interfaces_1.Visibility;
-  },
-});
-function localNotification(args) {
-  return run("localNotification", args);
+Object.defineProperty(exports, "Attr", { enumerable: true, get: function () { return Interfaces_1.Attr; } });
+Object.defineProperty(exports, "Importance", { enumerable: true, get: function () { return Interfaces_1.Importance; } });
+Object.defineProperty(exports, "Priority", { enumerable: true, get: function () { return Interfaces_1.Priority; } });
+Object.defineProperty(exports, "RepeatType", { enumerable: true, get: function () { return Interfaces_1.RepeatType; } });
+Object.defineProperty(exports, "Visibility", { enumerable: true, get: function () { return Interfaces_1.Visibility; } });
+function localNotification(localNotification) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['localNotification', localNotification]);
 }
 exports.localNotification = localNotification;
-function localNotificationSchedule(args) {
-  return run("localNotificationSchedule", args);
+function localNotificationSchedule(localNotificationSchedule) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['localNotificationSchedule', localNotificationSchedule]);
 }
 exports.localNotificationSchedule = localNotificationSchedule;
-function cancelAllNotifications(args) {
-  return run("cancelAllNotifications", args);
+function cancelAllNotifications() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelAllNotifications']);
 }
 exports.cancelAllNotifications = cancelAllNotifications;
-function cancelNotifications(args) {
-  return run("cancelNotifications", args);
+function cancelNotifications() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelNotifications']);
 }
 exports.cancelNotifications = cancelNotifications;
-function cancelScheduledNotifications(args) {
-  return run("cancelScheduledNotifications", args);
+function cancelScheduledNotifications() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelScheduledNotifications']);
 }
 exports.cancelScheduledNotifications = cancelScheduledNotifications;
-function cancelNotificationsWithId(args) {
-  return run("cancelNotificationsWithId", args);
+function cancelNotificationsWithId(id) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelNotificationsWithId', id]);
 }
 exports.cancelNotificationsWithId = cancelNotificationsWithId;
-function cancelNotificationsWithIdTag(args) {
-  return run("cancelNotificationsWithIdTag", args);
+function cancelNotificationsWithIdTag(idTag) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelNotificationsWithIdTag', idTag]);
 }
 exports.cancelNotificationsWithIdTag = cancelNotificationsWithIdTag;
-function cancelNotificationsWithTag(args) {
-  return run("cancelNotificationsWithTag", args);
+function cancelNotificationsWithTag(tag) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['cancelNotificationsWithTag', tag]);
 }
 exports.cancelNotificationsWithTag = cancelNotificationsWithTag;
-function getNotifications(args) {
-  return run("getNotifications", args);
+function getNotifications() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['getNotifications']);
 }
 exports.getNotifications = getNotifications;
-function getScheduledNotifications(args) {
-  return run("getScheduledNotifications", args);
+function getScheduledNotifications() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['getScheduledNotifications']);
 }
 exports.getScheduledNotifications = getScheduledNotifications;
-function getChannels(args) {
-  return run("getChannels", args);
+function getChannels() {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['getChannels']);
 }
 exports.getChannels = getChannels;
-function channelExists(args) {
-  return run("channelExists", args);
+function channelExists(channelId) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['channelExists', channelId]);
 }
 exports.channelExists = channelExists;
-function channelBlocked(args) {
-  return run("channelBlocked", args);
+function channelBlocked(channelId) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['channelBlocked', channelId]);
 }
 exports.channelBlocked = channelBlocked;
-function deleteChannel(args) {
-  return run("deleteChannel", args);
+function deleteChannel(channelId) {
+    return utils_1.asyncExec('HMSPush', 'HmsLocalNotification', ['deleteChannel', channelId]);
 }
 exports.deleteChannel = deleteChannel;
-function run(funcName, args) {
-  return utils_1.asyncExec("HMSPush", "ACTION_HMS_LOCAL_NOTIFICATION", [
-    funcName,
-    args,
-  ]);
-}
-exports.run = run;
 //# sourceMappingURL=HmsLocalNotification.js.map

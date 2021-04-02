@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -43,9 +43,9 @@ function initiliaze() {
     [HmsLocalNotification.Attr.ongoing]: false,
     [HmsLocalNotification.Attr.importance]: HmsLocalNotification.Importance.MAX,
     [HmsLocalNotification.Attr.dontNotifyInForeground]: false,
-    [HmsLocalNotification.Attr.autoCancel]: true,
+    [HmsLocalNotification.Attr.autoCancel]: false,
     [HmsLocalNotification.Attr.actions]: '["Yes", "No"]',
-    [HmsLocalNotification.Attr.invokeApp]: false,
+    [HmsLocalNotification.Attr.invokeApp]: true,
     // [HmsLocalNotification.Attr.channelId]: 'huawei-hms-cordova-push-channel-id', // Please read the documentation before using this param
   };
 
@@ -155,7 +155,7 @@ function initiliaze() {
       [HmsLocalNotification.Attr.subText]: subText,
       [HmsLocalNotification.Attr.tag]: tagText,
       [HmsLocalNotification.Attr.playSound]: true,
-      [HmsLocalNotification.Attr.soundName]: "huawei_bounce",
+      [HmsLocalNotification.Attr.soundName]: "huawei_bounce.mp3",
     })
       .then((result) =>
         defaultSuccessHandler("localNotification-Sound", result)
@@ -259,19 +259,19 @@ function initiliaze() {
   };
 
   thiz("channelExists").onclick = () => {
-    HmsLocalNotification.channelExists("huawei-hms-cordova-push-channel-id")
+    HmsLocalNotification.channelExists("huawei-hms-cordova-push-channel-id-4")
       .then((result) => defaultSuccessHandler("channelExists", result))
       .catch((error) => defaultExceptionHandler("channelExists", error));
   };
 
   thiz("channelBlocked").onclick = () => {
-    HmsLocalNotification.channelBlocked("huawei-hms-cordova-push-channel-id")
+    HmsLocalNotification.channelBlocked("huawei-hms-cordova-push-channel-id-4")
       .then((result) => defaultSuccessHandler("channelBlocked", result))
       .catch((error) => defaultExceptionHandler("channelBlocked", error));
   };
 
   thiz("deleteChannel").onclick = () => {
-    HmsLocalNotification.deleteChannel("huawei-hms-cordova-push-channel-id")
+    HmsLocalNotification.deleteChannel("huawei-hms-cordova-push-channel-id-4")
       .then((result) => defaultSuccessHandler("deleteChannel", result))
       .catch((error) => defaultExceptionHandler("deleteChannel", error));
   };

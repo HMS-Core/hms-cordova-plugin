@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,97 +15,111 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeBackgroundAction = exports.setBackgroundAction = exports.getOdid = exports.disableLogger = exports.enableLogger = exports.getInitialNotification = exports.sendRemoteMessage = exports.isAutoInitEnabled = exports.setAutoInitEnabled = exports.unsubscribe = exports.subscribe = exports.deleteToken = exports.deleteAAID = exports.getCreationTime = exports.getToken = exports.getAAID = exports.getId = exports.turnOffPush = exports.turnOnPush = exports.init = exports.RemoteMessageBuilder = void 0;
+exports.CordovaRemoteMessage = exports.RemoteMessageBuilder = exports.removeBackgroundFile = exports.getItem = exports.removeItem = exports.setItem = exports.setBackgroundFile = exports.getInitialNotification = exports.sendRemoteMessage = exports.unsubscribe = exports.subscribe = exports.turnOffPush = exports.turnOnPush = exports.setAutoInitEnabled = exports.isAutoInitEnabled = exports.getOdid = exports.deleteTokenWithSubjectId = exports.deleteToken = exports.deleteAAID = exports.getId = exports.getCreationTime = exports.getAAID = exports.getTokenWithSubjectId = exports.getToken = exports.disableLogger = exports.enableLogger = exports.init = exports.DEFAULT_TOKEN_SCOPE = void 0;
 const utils_1 = require("./utils");
-const RemoteMessageBuilder_1 = require("./RemoteMessageBuilder");
-Object.defineProperty(exports, "RemoteMessageBuilder", { enumerable: true, get: function () { return RemoteMessageBuilder_1.RemoteMessageBuilder; } });
-var CordovaRemoteMessage_1 = require("./CordovaRemoteMessage");
-Object.defineProperty(exports, "CordovaRemoteMessage", { enumerable: true, get: function () { return CordovaRemoteMessage_1.CordovaRemoteMessage; } });
-let HMSPush = "HMSPush";
+const Interfaces_1 = require("./Interfaces");
+Object.defineProperty(exports, "RemoteMessageBuilder", { enumerable: true, get: function () { return Interfaces_1.RemoteMessageBuilder; } });
+exports.DEFAULT_TOKEN_SCOPE = "HCM";
 function init() {
-    runHmsInstance("init");
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['init']);
 }
 exports.init = init;
-function turnOnPush() {
-    return runHmsMessaging("turnOnPush");
-}
-exports.turnOnPush = turnOnPush;
-function turnOffPush() {
-    return runHmsMessaging("turnOffPush");
-}
-exports.turnOffPush = turnOffPush;
-function getId() {
-    return runHmsInstance("getId");
-}
-exports.getId = getId;
-function getAAID() {
-    return runHmsInstance("getAAID");
-}
-exports.getAAID = getAAID;
-function getToken(args) {
-    return runHmsInstance("getToken", args);
-}
-exports.getToken = getToken;
-function getCreationTime() {
-    return runHmsInstance("getCreationTime");
-}
-exports.getCreationTime = getCreationTime;
-function deleteAAID() {
-    return runHmsInstance("deleteAAID");
-}
-exports.deleteAAID = deleteAAID;
-function deleteToken(args) {
-    return runHmsInstance("deleteToken", args);
-}
-exports.deleteToken = deleteToken;
-function subscribe(args) {
-    return runHmsMessaging("subscribe", args);
-}
-exports.subscribe = subscribe;
-function unsubscribe(args) {
-    return runHmsMessaging("unsubscribe", args);
-}
-exports.unsubscribe = unsubscribe;
-function setAutoInitEnabled(args) {
-    return runHmsMessaging("setAutoInitEnabled", args);
-}
-exports.setAutoInitEnabled = setAutoInitEnabled;
-function isAutoInitEnabled(args) {
-    return runHmsMessaging("isAutoInitEnabled");
-}
-exports.isAutoInitEnabled = isAutoInitEnabled;
-function sendRemoteMessage(args) {
-    return runHmsMessaging("sendRemoteMessage", args);
-}
-exports.sendRemoteMessage = sendRemoteMessage;
-function getInitialNotification() {
-    return runHmsMessaging("getInitialNotification");
-}
-exports.getInitialNotification = getInitialNotification;
 function enableLogger() {
-    return runHmsInstance("enableLogger");
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['enableLogger']);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return runHmsInstance("disableLogger");
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['disableLogger']);
 }
 exports.disableLogger = disableLogger;
+function getToken(scope) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getToken', scope]);
+}
+exports.getToken = getToken;
+function getTokenWithSubjectId(subjectId) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getTokenWithSubjectId', subjectId]);
+}
+exports.getTokenWithSubjectId = getTokenWithSubjectId;
+function getAAID() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getAAID']);
+}
+exports.getAAID = getAAID;
+function getCreationTime() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getCreationTime']);
+}
+exports.getCreationTime = getCreationTime;
+function getId() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getId']);
+}
+exports.getId = getId;
+function deleteAAID() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteAAID']);
+}
+exports.deleteAAID = deleteAAID;
+function deleteToken(scope) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteToken', scope]);
+}
+exports.deleteToken = deleteToken;
+function deleteTokenWithSubjectId(subjectId) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteTokenWithSubjectId', subjectId]);
+}
+exports.deleteTokenWithSubjectId = deleteTokenWithSubjectId;
 function getOdid() {
-    return runHmsInstance("getOdid");
+    return utils_1.asyncExec('HMSPush', 'HmsPushInstanceId', ['getOdid']);
 }
 exports.getOdid = getOdid;
-function setBackgroundAction(callback) {
-    return runHmsMessaging("setBackgroundAction", callback.toString());
+function isAutoInitEnabled() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['isAutoInitEnabled']);
 }
-exports.setBackgroundAction = setBackgroundAction;
-function removeBackgroundAction() {
-    return runHmsMessaging("removeBackgroundAction");
+exports.isAutoInitEnabled = isAutoInitEnabled;
+function setAutoInitEnabled(enabled) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['setAutoInitEnabled', enabled]);
 }
-exports.removeBackgroundAction = removeBackgroundAction;
-function runHmsMessaging(funcName, args) {
-    return utils_1.asyncExec(HMSPush, 'ACTION_HMS_PUSH_MESSAGING', [funcName, args]);
+exports.setAutoInitEnabled = setAutoInitEnabled;
+function turnOnPush() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['turnOnPush']);
 }
-function runHmsInstance(funcName, args) {
-    return utils_1.asyncExec(HMSPush, 'ACTION_HMS_PUSH_INSTANCE_ID', [funcName, args]);
+exports.turnOnPush = turnOnPush;
+function turnOffPush() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['turnOffPush']);
 }
+exports.turnOffPush = turnOffPush;
+function subscribe(topic) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['subscribe', topic]);
+}
+exports.subscribe = subscribe;
+function unsubscribe(topic) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['unsubscribe', topic]);
+}
+exports.unsubscribe = unsubscribe;
+function sendRemoteMessage(remoteMessage) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['sendRemoteMessage', remoteMessage]);
+}
+exports.sendRemoteMessage = sendRemoteMessage;
+function getInitialNotification() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['getInitialNotification']);
+}
+exports.getInitialNotification = getInitialNotification;
+function setBackgroundFile(filePath) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['setBackgroundFile', filePath]);
+}
+exports.setBackgroundFile = setBackgroundFile;
+function setItem(key, value) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['setItem', key, value]);
+}
+exports.setItem = setItem;
+function removeItem(key) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['removeItem', key]);
+}
+exports.removeItem = removeItem;
+function getItem(key) {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['getItem', key]);
+}
+exports.getItem = getItem;
+function removeBackgroundFile() {
+    return utils_1.asyncExec('HMSPush', 'HmsPushMessaging', ['setBackgroundFile']);
+}
+exports.removeBackgroundFile = removeBackgroundFile;
+var CordovaRemoteMessage_1 = require("./CordovaRemoteMessage");
+Object.defineProperty(exports, "CordovaRemoteMessage", { enumerable: true, get: function () { return CordovaRemoteMessage_1.CordovaRemoteMessage; } });
 //# sourceMappingURL=HmsPush.js.map
