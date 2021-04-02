@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-iap",
     "description": "Cordova HMS IAP Plugin",
-    "version": "5.0.4-301",
+    "version": "5.0.4-302",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {
