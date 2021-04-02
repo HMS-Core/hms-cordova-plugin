@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,21 +20,21 @@ exports.ErrorCodes = exports.HuaweiIdAuthParams = exports.AuthRequestOption = ex
 // Constants
 //
 var AuthScopeList;
-(function(AuthScopeList) {
+(function (AuthScopeList) {
     AuthScopeList["GAME"] = "https://www.huawei.com/auth/games";
     AuthScopeList["OPENID"] = "openid";
     AuthScopeList["EMAIL"] = "email";
     AuthScopeList["PROFILE"] = "profile";
 })(AuthScopeList = exports.AuthScopeList || (exports.AuthScopeList = {}));
 var Gender;
-(function(Gender) {
+(function (Gender) {
     Gender[Gender["UNKNOWN"] = -1] = "UNKNOWN";
     Gender[Gender["MALE"] = 0] = "MALE";
     Gender[Gender["FEMALE"] = 1] = "FEMALE";
     Gender[Gender["CONFIDENTIAL"] = 2] = "CONFIDENTIAL";
 })(Gender = exports.Gender || (exports.Gender = {}));
 var AuthRequestOption;
-(function(AuthRequestOption) {
+(function (AuthRequestOption) {
     AuthRequestOption["SCOPE_ID_TOKEN"] = "idToken";
     AuthRequestOption["SCOPE_ACCESS_TOKEN"] = "accessToken";
     AuthRequestOption["SCOPE_MOBILE_NUMBER"] = "mobileNumber";
@@ -46,12 +46,12 @@ var AuthRequestOption;
     AuthRequestOption["SCOPE_PROFILE"] = "profile";
 })(AuthRequestOption = exports.AuthRequestOption || (exports.AuthRequestOption = {}));
 var HuaweiIdAuthParams;
-(function(HuaweiIdAuthParams) {
+(function (HuaweiIdAuthParams) {
     HuaweiIdAuthParams["DEFAULT_AUTH_REQUEST_PARAM"] = "DEFAULT_AUTH_REQUEST_PARAM";
     HuaweiIdAuthParams["DEFAULT_AUTH_REQUEST_PARAM_GAME"] = "DEFAULT_AUTH_REQUEST_PARAM_GAME";
 })(HuaweiIdAuthParams = exports.HuaweiIdAuthParams || (exports.HuaweiIdAuthParams = {}));
 var ErrorCodes;
-(function(ErrorCodes) {
+(function (ErrorCodes) {
     ErrorCodes["HuaweiIdAuthException"] = "503";
 })(ErrorCodes = exports.ErrorCodes || (exports.ErrorCodes = {}));
 //# sourceMappingURL=HMSCommonTypes.js.map

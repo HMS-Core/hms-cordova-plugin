@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-account-demo",
     "displayName": "HMSAccountDemo",
-    "version": "5.0.3-302",
+    "version": "5.0.3-303",
     "description": "A demo application which shows the usage of HMS Account Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
