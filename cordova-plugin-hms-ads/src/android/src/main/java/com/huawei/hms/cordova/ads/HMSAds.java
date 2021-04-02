@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,8 +37,8 @@ import java.util.Objects;
 
 public class HMSAds extends CordovaPlugin {
     private static final String TAG = HMSAds.class.getSimpleName();
-    private static final String SERVICE = "CordovaAds";
-    private static final String VERSION = "13.4.35.300";
+    private static final String KIT = "Ads";
+    private static final String VERSION = "13.4.35.301";
 
     private CordovaController cordovaController;
     private OnAdLayoutScroll onAdLayoutScroll;
@@ -55,7 +55,7 @@ public class HMSAds extends CordovaPlugin {
             pluginAdLayout.bringToFront();
             ((ViewGroup) webView.getView().getParent()).addView(pluginAdLayout);
         });
-        cordovaController = new CordovaController(this, SERVICE, VERSION,
+        cordovaController = new CordovaController(this, KIT, VERSION,
             Arrays.asList(new HwAdsModule(), new ConsentModule(), new IdentifierModule(), new InstallReferrerModule(),
                 new AdManagerModule(pluginAdLayout, this)));
 
