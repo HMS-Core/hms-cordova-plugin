@@ -1,0 +1,24 @@
+{
+    "name": "@hmscore/ionic-native-hms-account",
+    "description": "Ionic Native wrappers for Cordova Plugin HMS Account",
+    "version": "5.0.3-303",
+    "zipVersion": "5.0.3.303",
+    "module": "index.js",
+    "typings": "index.d.ts",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENCE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-account"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "dependencies": {
+        "@types/cordova": "latest"
+    },
+    "peerDependencies": {
+        "rxjs": "^5.5.0 || ^6.5.0",
+        "@ionic-native/core": "^5.1.0"
+    }
+}

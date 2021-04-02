@@ -1,13 +1,15 @@
 {
     "name": "@hmscore/cordova-plugin-hms-account",
     "description": "Huawei Account Cordova Plugin",
-    "version": "5.0.3-302",
+    "version": "5.0.3-303",
+    "main": "./www/index.js",
     "types": "types/index.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin/tree/master/cordova-plugin-hms-account",
         "directory": "cordova-plugin-hms-account"
     },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -26,22 +28,26 @@
         "huawei",
         "hms"
     ],
-
     "files": [
         "hooks",
-        "ionic",
-        "resources",
-        "scripts",
+        "ionic-native",
+        "src",
         "types",
         "www",
         "LICENCE",
         "package.json",
         "plugin.xml",
-        "README.md",
-        "tsconfig.json",
-        "src"
+        "README.md"
     ],
-    "devDependencies": {
+    "dependencies": {
         "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
     }
 }

@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ var CornerRadius;
 })(CornerRadius = exports.CornerRadius || (exports.CornerRadius = {}));
 function getHuaweiIdAuthButton(edittedButton, theme, colorPolicy, cornerRadius) {
     const btn = document.getElementById(edittedButton);
-    if (btn.hasChildNodes()) {
+    if (btn.firstChild && btn.lastChild) {
         btn.removeChild(btn.firstChild);
         btn.removeChild(btn.lastChild);
     }
@@ -93,6 +93,9 @@ function getHuaweiIdAuthButton(edittedButton, theme, colorPolicy, cornerRadius) 
             btn_color = "gray";
             btn.style.backgroundColor = "#f2f2f2";
             break;
+        default:
+            btn_color = "gray";
+            btn.style.backgroundColor = "#f2f2f2";
     }
     if (btn_color == "black" || btn_color == "red" || btn_color == "blue") {
         span.style.backgroundImage = "url('./img/hw_logo_btn_white.png')";
