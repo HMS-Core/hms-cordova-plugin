@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 */
 
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { HmsLocalNotification, HmsPushEvent,HmsPush } from '@ionic-native/hms-push/ngx'
-import { Router, ActivationStart, RouterOutlet } from '@angular/router';
+import { HmsPush, HmsPushEvent, HmsLocalNotification } from '@hmscore/ionic-native-hms-push/ngx'
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-local',
     templateUrl: './local.page.html',
@@ -34,7 +34,8 @@ export class LocalPage implements OnInit {
         private hmsPushEvent: HmsPushEvent,
         private hmsPush:HmsPush,
         private router: Router,
-        private cd:ChangeDetectorRef) {
+        private cd:ChangeDetectorRef
+    ){
         this.initListener();
     }
     initListener() {
@@ -268,19 +269,19 @@ export class LocalPage implements OnInit {
     }
 
     async channelExists() {
-        this.hmsLocalNotification.channelExists('huawei-hms-cordova-push-channel-id')
+        this.hmsLocalNotification.channelExists('huawei-hms-cordova-push-channel-id-4')
             .then((result: any) => { this.defaultSuccessHandler("channelExists", result) })
             .catch((result: any) => { this.defaultExceptionHandler("channelExists", result) })
     }
 
     async channelBlocked() {
-        this.hmsLocalNotification.channelBlocked('huawei-hms-cordova-push-channel-id')
+        this.hmsLocalNotification.channelBlocked('huawei-hms-cordova-push-channel-id-4')
             .then((result: any) => { this.defaultSuccessHandler("channelBlocked", result) })
             .catch((result: any) => { this.defaultExceptionHandler("channelBlocked", result) })
     }
 
     async deleteChannel() {
-        this.hmsLocalNotification.deleteChannel('huawei-hms-cordova-push-channel-id')
+        this.hmsLocalNotification.deleteChannel('huawei-hms-cordova-push-channel-id-4')
             .then((result: any) => { this.defaultSuccessHandler("deleteChannel", result) })
             .catch((result: any) => { this.defaultExceptionHandler("deleteChannel", result) })
     }

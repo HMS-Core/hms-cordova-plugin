@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-import { HmsPush, HmsPushEvent, HmsLocalNotification } from '@ionic-native/hms-push/ngx'
+import { HmsPush, HmsPushEvent, HmsLocalNotification } from '@hmscore/ionic-native-hms-push/ngx'
 import { HomePageRoutingModule } from './home-routing.module';
 
 

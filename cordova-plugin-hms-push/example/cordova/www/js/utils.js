@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,6 +31,6 @@ function defaultSuccessHandler(tag, message) {
 }
 function defaultExceptionHandler(tag, err) {
   const message = "Error/Exception: " + JSON.stringify(err, "\n", 4);
-  addLog(`[${tag}] :`, message);
+  addLog(`${tag} :`, message);
   alert(`${tag} : ${message}`);
 }

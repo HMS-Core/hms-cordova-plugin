@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,8 +22,11 @@ function openCustomIntent() {
   window.location.href = "customIntent.html";
 }
 
-async function init() {
-  await HmsPush.init();
+function init() {
+
+  HmsPush.init();
+  HmsPush.setBackgroundFile("www/background.js");
+
 }
 
 function turnOffPush() {
@@ -57,8 +60,8 @@ function getAAID() {
 }
 
 function getToken() {
-  HmsPush.getToken()
-    .then((result) => defaultSuccessHandler("getToken", result))
+  HmsPush.getToken(HmsPush.DEFAULT_TOKEN_SCOPE)
+    .then((result) => {defaultSuccessHandler("getToken", result); console.log(JSON.stringify(result))})
     .catch((error) => defaultExceptionHandler("getToken", error));
 }
 
@@ -75,7 +78,7 @@ function deleteAAID() {
 }
 
 function deleteToken() {
-  HmsPush.deleteToken()
+  HmsPush.deleteToken(HmsPush.DEFAULT_TOKEN_SCOPE)
     .then((result) => defaultSuccessHandler("deleteToken", result))
     .catch((error) => defaultExceptionHandler("deleteToken", error));
 }
@@ -113,7 +116,7 @@ function isAutoInitEnabled() {
 function sendRemoteMessage() {
   HmsPush.sendRemoteMessage({
     [HmsPush.RemoteMessageBuilder.TO]: "",
-    //[RemoteMessageBuilder.MESSAGE_ID]: '', // Auto generated
+    //[HmsPush.RemoteMessageBuilder.MESSAGE_ID]: '', // Auto generated
     [HmsPush.RemoteMessageBuilder.MESSAGE_TYPE]: "hms",
     [HmsPush.RemoteMessageBuilder.COLLAPSE_KEY]: "-1",
     [HmsPush.RemoteMessageBuilder.TTL]: 120,

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,26 +14,35 @@
     limitations under the License.
 */
 
-import { RemoteMessageBuilder } from './RemoteMessageBuilder';
-export { CordovaRemoteMessage } from './CordovaRemoteMessage';
-export { RemoteMessageBuilder };
-export declare function init(): void;
-export declare function turnOnPush(): Promise<string>;
-export declare function turnOffPush(): Promise<string>;
-export declare function getId(): Promise<string>;
+import { RemoteMessageBuilder } from './Interfaces';
+export declare const DEFAULT_TOKEN_SCOPE = "HCM";
+export declare function init(): Promise<void>;
+export declare function enableLogger(): Promise<boolean>;
+export declare function disableLogger(): Promise<boolean>;
+export declare function getToken(scope?: string): Promise<string>;
+export declare function getTokenWithSubjectId(subjectId: string): Promise<any>;
 export declare function getAAID(): Promise<string>;
-export declare function getToken(args?: string): Promise<string>;
 export declare function getCreationTime(): Promise<string>;
-export declare function deleteAAID(): Promise<string>;
-export declare function deleteToken(args?: string): Promise<string>;
-export declare function subscribe(args: string): Promise<string>;
-export declare function unsubscribe(args: string): Promise<string>;
-export declare function setAutoInitEnabled(args: boolean): Promise<string>;
-export declare function isAutoInitEnabled(args: string): Promise<string>;
-export declare function sendRemoteMessage(args: any): Promise<any>;
+export declare function getId(): Promise<string>;
+export declare function deleteAAID(): Promise<boolean>;
+export declare function deleteToken(scope?: string): Promise<boolean>;
+export declare function deleteTokenWithSubjectId(subjectId: string): Promise<boolean>;
+export declare function getOdid(): Promise<string>;
+export declare function isAutoInitEnabled(): Promise<boolean>;
+export declare function setAutoInitEnabled(enabled: boolean): Promise<boolean>;
+export declare function turnOnPush(): Promise<boolean>;
+export declare function turnOffPush(): Promise<boolean>;
+export declare function subscribe(topic: string): Promise<boolean>;
+export declare function unsubscribe(topic: string): Promise<boolean>;
+export declare function sendRemoteMessage(remoteMessage: RemoteMessageObject): Promise<boolean>;
 export declare function getInitialNotification(): Promise<any>;
-export declare function enableLogger(): Promise<any>;
-export declare function disableLogger(): Promise<any>;
-export declare function getOdid(): Promise<any>;
-export declare function setBackgroundAction(callback: () => void): Promise<any>;
-export declare function removeBackgroundAction(): Promise<any>;
+export declare function setBackgroundFile(filePath: string): Promise<void>;
+export declare function setItem(key: string, value: string): Promise<void>;
+export declare function removeItem(key: string): Promise<void>;
+export declare function getItem(key: string): Promise<object>;
+export declare function removeBackgroundFile(): Promise<void>;
+declare type RemoteMessageObject = {
+    [key in RemoteMessageBuilder]?: any;
+};
+export { RemoteMessageBuilder };
+export { CordovaRemoteMessage } from './CordovaRemoteMessage';

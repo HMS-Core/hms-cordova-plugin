@@ -1,134 +1,131 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-hms-push" 
-        version="5.0.2" 
-        xmlns="http://apache.org/cordova/ns/plugins/1.0" 
-        xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>Cordova Plugin HMS Push</name>
-    <description>Cordova Plugin HMS Push</description>
-    <license>Apache 2.0</license>
-    <keywords>android, huawei, hms, push</keywords>
+<plugin id="cordova-plugin-hms-push" version="5.1.1-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>Cordova Plugin HMS Push</name>
+	<description>Cordova Plugin HMS Push</description>
+	<license>Apache 2.0</license>
+	<keywords>android, huawei, hms, push</keywords>
+	
+	<js-module name="HmsPush" src="www/HmsPush.js">
+		<clobbers target="HmsPush"/>
+	</js-module>
 
-    <engines>
-      <engine name="cordova" version=">=3.0.0" />
-    </engines>
+	<js-module name="HmsPushProfile" src="www/HmsPushProfile.js">
+		<clobbers target="HmsPushProfile"/>
+	</js-module>
 
-    <js-module name="HmsPush" src="www/HmsPush.js">
-        <clobbers target="HmsPush" />
-    </js-module>
+	<js-module name="HmsPushEvent" src="www/HmsPushEvent.js">
+		<clobbers target="HmsPushEvent"/>
+	</js-module>
 
-    <js-module name="HmsPushResultCode" src="www/HmsPushResultCode.js">
-        <clobbers target="HmsPushResultCode" />
-    </js-module>
+	<js-module name="HmsLocalNotification" src="www/HmsLocalNotification.js">
+		<clobbers target="HmsLocalNotification"/>
+	</js-module>
 
-    <js-module name="HmsPushEvent" src="www/HmsPushEvent.js">
-        <clobbers target="HmsPushEvent" />
-    </js-module>
-    
-    <js-module name="HmsLocalNotification" src="www/HmsLocalNotification.js">
-        <clobbers target="HmsLocalNotification" />
-    </js-module>
+	<js-module name="HmsPushResultCode" src="www/HmsPushResultCode.js">
+		<clobbers target="HmsPushResultCode"/>
+	</js-module>
 
+	<js-module name="Interfaces" src="www/Interfaces.js"/>
+	<js-module name="CordovaRemoteMessage" src="www/CordovaRemoteMessage.js"/>
+	<js-module name="utils" src="www/utils.js"/>
 
-    <js-module name="Interfaces" src="www/Interfaces.js"/>
-    <js-module name="CordovaRemoteMessage" src="www/CordovaRemoteMessage.js"/>
-    <js-module name="RemoteMessageBuilder" src="www/RemoteMessageBuilder.js"/>
-    <js-module name="utils" src="www/utils.js"/>
-    
-    <platform name="android">
+	<platform name="android">
 
-        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
-		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
-        <hook type="after_prepare" src="hooks/after_prepare.js" />
+		<dependency id="cordova-plugin-androidx" version="3.0.0"/>
 
-		<config-file target="AndroidManifest.xml" parent="/*">
-			<uses-permission android:name="android.permission.INTERNET" />
-			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-			    <!-- Below permissions are to support vibration and send scheduled local notifications -->
-            <uses-permission android:name="android.permission.VIBRATE" />
-            <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-            <uses-permission android:name="android.permission.WAKE_LOCK" />
-            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+		<hook type="after_prepare" src="hooks/after_prepare.js"/>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSPush">
+				<param name="android-package" value="com.huawei.hms.cordova.push.HMSPush"/>
+			</feature>
+		</config-file>
+		
+		<config-file target="res/xml/config.xml" parent="/*">
+			<preference name="AndroidXEnabled" value="true"/>
+		</config-file>
+	
+		<config-file target="AndroidManifest.xml" parent="/manifest">
+			<!-- Below permissions are to support vibration and send scheduled local notifications -->
+			<uses-permission android:name="android.permission.VIBRATE"/>
+			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+			<uses-permission android:name="android.permission.WAKE_LOCK"/>
+			<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 		</config-file>
 
-        <config-file target="AndroidManifest.xml" parent="application">
-            <receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationActionsReceiver" />
-            <!-- This receivers are for sending scheduled local notifications -->
-            <receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationBootEventReceiver">
-                <intent-filter>
-                     <action android:name="android.intent.action.BOOT_COMPLETED" />
-                </intent-filter>
-            </receiver>
-            <receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationScheduledPublisher"
-                android:enabled="true"
-                android:exported="true">
-            </receiver>
-            <meta-data
-                android:name="push_kit_auto_init_enabled"
-                android:value="true" />
-        </config-file>
-        <config-file target="AndroidManifest.xml" parent="application/activity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="app"/>
-            </intent-filter>
-        </config-file>
-        
-        <config-file target="AndroidManifest.xml" parent="application">
-            <service android:name="com.huawei.hms.cordova.push.remote.HmsPushMessageService" android:exported="true">
-                <intent-filter>
-                    <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
-                </intent-filter>
-            </service>
-        </config-file>
-        
-        <config-file target="config.xml" parent="/*">
-            <feature name="HMSPush">
-                <param name="android-package" value="com.huawei.hms.cordova.push.HMSPush" />
-            </feature>
-        </config-file>
+		<config-file target="AndroidManifest.xml" parent="application">
+			<receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationActionsReceiver"/>
+			
+			<receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationBootEventReceiver">
+				<intent-filter>
+					<action android:name="android.intent.action.BOOT_COMPLETED"/>
+				</intent-filter>
+			</receiver>
 
-      <framework src="androidx.core:core:1.3.1"/>
-      <framework src="com.facebook.fresco:fresco:2.2.0"/>
-      <framework src="com.huawei.hms:push:5.0.2.300" />
+			<receiver android:name="com.huawei.hms.cordova.push.receiver.HmsLocalNotificationScheduledPublisher" android:enabled="true" android:exported="true"/>
+		</config-file>
+		
+		
+		<config-file target="AndroidManifest.xml" parent="application">
+			<service android:name="com.huawei.hms.cordova.push.remote.HmsPushMessageService" android:exported="true">
+				<intent-filter>
+					<action android:name="com.huawei.push.action.MESSAGING_EVENT"/>
+				</intent-filter>
+			</service>
+		</config-file>
 
-      <framework src="resources/plugin.gradle" custom="true" type="gradleReference"/>
-        
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/HMSPush.java" target-dir="src/com/huawei/hms/cordova/push" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/hmslogger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/push/hmslogger" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/config/NotificationAttributes.java" target-dir="src/com/huawei/hms/cordova/push/config" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/constants/Core.java" target-dir="src/com/huawei/hms/cordova/push/constants" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/constants/LocalNotification.java" target-dir="src/com/huawei/hms/cordova/push/constants" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/constants/NotificationConstants.java" target-dir="src/com/huawei/hms/cordova/push/constants" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/constants/RemoteMessageAttributes.java" target-dir="src/com/huawei/hms/cordova/push/constants" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/constants/ResultCode.java" target-dir="src/com/huawei/hms/cordova/push/constants" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/local/BitmapDataSubscriber.java" target-dir="src/com/huawei/hms/cordova/push/local" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotification.java" target-dir="src/com/huawei/hms/cordova/push/local" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationActionPublisher.java" target-dir="src/com/huawei/hms/cordova/push/local" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationController.java" target-dir="src/com/huawei/hms/cordova/push/local" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationPicturesLoader.java" target-dir="src/com/huawei/hms/cordova/push/local" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationActionsReceiver.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationBootEventReceiver.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationScheduledPublisher.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/receiver/NotificationActionHandler.java" target-dir="src/com/huawei/hms/cordova/push/receiver" />
-         <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/BackgroundJavaScriptInterface.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsMessagePublisher.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsPushInstanceId.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessageService.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessaging.java" target-dir="src/com/huawei/hms/cordova/push/remote" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/ApplicationUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/ArrayUtil.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/BundleUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/CordovaUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/MapUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/NotificationConfigUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/RemoteMessageUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/Action.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/push/utils/ActionManager.java" target-dir="src/com/huawei/hms/cordova/push/utils" />
-
-
-
-
-    </platform>
+		<framework src="androidx.core:core:1.3.1"/>
+		<framework src="com.facebook.fresco:fresco:2.2.0"/>
+		<framework src="com.huawei.hms:push:5.1.1.301"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
+		
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/HMSPush.java" target-dir="src/com/huawei/hms/cordova/push/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/push/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/push/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/push/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/CordovaRule.java" target-dir="src/com/huawei/hms/cordova/push/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/push/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CorError.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CorException.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CorLog.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/push/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/config/NotificationAttributes.java" target-dir="src/com/huawei/hms/cordova/push/config/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/constants/Core.java" target-dir="src/com/huawei/hms/cordova/push/constants/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/constants/LocalNotification.java" target-dir="src/com/huawei/hms/cordova/push/constants/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/constants/NotificationConstants.java" target-dir="src/com/huawei/hms/cordova/push/constants/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/constants/RemoteMessageAttributes.java" target-dir="src/com/huawei/hms/cordova/push/constants/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/constants/ResultCode.java" target-dir="src/com/huawei/hms/cordova/push/constants/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/local/BitmapDataSubscriber.java" target-dir="src/com/huawei/hms/cordova/push/local/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotification.java" target-dir="src/com/huawei/hms/cordova/push/local/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationActionPublisher.java" target-dir="src/com/huawei/hms/cordova/push/local/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationController.java" target-dir="src/com/huawei/hms/cordova/push/local/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/local/HmsLocalNotificationPicturesLoader.java" target-dir="src/com/huawei/hms/cordova/push/local/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationActionsReceiver.java" target-dir="src/com/huawei/hms/cordova/push/receiver/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationBootEventReceiver.java" target-dir="src/com/huawei/hms/cordova/push/receiver/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/receiver/HmsLocalNotificationScheduledPublisher.java" target-dir="src/com/huawei/hms/cordova/push/receiver/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/receiver/NotificationActionHandler.java" target-dir="src/com/huawei/hms/cordova/push/receiver/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/BackgroundJavaScriptInterface.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/BackgroundWebViewLocalStorage.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushInstanceId.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessagePublisher.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessageService.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessaging.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushProfile.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/ApplicationUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/ArrayUtil.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/BundleUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/CordovaUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/HtmlUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/MapUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/NotificationConfigUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/utils/RemoteMessageUtils.java" target-dir="src/com/huawei/hms/cordova/push/utils/"></source-file>
+	</platform>
 </plugin>

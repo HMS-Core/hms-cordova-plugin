@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -58,22 +58,14 @@ function initListener() {
 
     HmsPushEvent.onPushMessageSentError((result) => {
         addLog("ON_PUSH_MESSAGE_SENT_ERROR", JSON.stringify(result, "\n", 4));
+    });    
+
+    HmsPushEvent.onMultiSenderTokenReceivedEvent((result) => {
+        addLog("ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT", JSON.stringify(result, "\n", 4));
     });
 
-    HmsPush.setBackgroundAction((remoteMessage) => {
-        const jsonData = JSON.parse(remoteMessage.data);
-        const headlessNotification = {
-            "title": "[Headless] " + jsonData.title,
-            "message": jsonData.message.replace("{{name}}","YourName")
-        };
-        const notification = JSON.stringify(headlessNotification);
-        HmsLocalNotification.backgroundLocalNotification(notification);
-    })
-    .then((result) =>
-        defaultSuccessHandler("setBackgroundAction", result)
-    )
-    .catch((error) =>
-        defaultExceptionHandler("setBackgroundAction", error)
-    );
-    
+    HmsPushEvent.onMultiSenderTokenErrorEvent((result) => {
+        addLog("ON_MULTI_SENDER_TOKEN_ERROR_EVENT", JSON.stringify(result, "\n", 4));
+    });
+
 }
