@@ -13,19 +13,62 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-export declare function isEnvReady(): Promise<IsEnvReadyResult>;
-export declare function isSandboxActivated(): Promise<IsSandboxActivatedResult>;
-export declare function obtainOwnedPurchases(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
-export declare function obtainProductInfo(productInfoRequest: ProductInfoReq): Promise<ProductInfoResult>;
-export declare function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseIntentResult>;
-export declare function consumeOwnedPurchase(consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult>;
-export declare function obtainOwnedPurchaseRecord(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
-export declare function startIapActivity(startIapActivityRequest: StartIapActivityReq): Promise<void>;
-export declare function enableLogger(): Promise<void>;
-export declare function disableLogger(): Promise<void>;
+
+
+import { IonicNativePlugin } from '@ionic-native/core';
 /**
- * INTERFACES
+ * @name HMSInAppPurchases
+ * @description
+ * Huawei's In-App Purchases (IAP) service integrates multiple payment methods for global payment and allows you to easily offer in-app purchases.
  */
+export declare class HMSInAppPurchasesOriginal extends IonicNativePlugin {
+    /**
+     * Checks whether the currently signed-in HUAWEI ID is located in a country or region where HUAWEI IAP is available.
+     * @return {Promise<IsEnvReadyResult>}
+     */
+    isEnvReady(): Promise<IsEnvReadyResult>;
+    /**
+     * Checks whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing.
+     * @return {Promise<IsSandboxActivatedResult>}
+     */
+    isSandboxActivated(): Promise<IsSandboxActivatedResult>;
+    /**
+     * Queries information about all purchased in-app products, including consumables, non-consumables, and auto-renewable subscriptions.
+     * @param priceType
+     * @return {Promise<OwnedPurchasesResult>}
+     */
+    obtainOwnedPurchases(obtainOwnedPurchasesReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
+    /**
+     * Obtains in-app product details configured in AppGallery Connect.
+     * @param product
+     * @return {Promise<ProductInfoResult>}
+     */
+    obtainProductInfo(product: ProductInfoReq): Promise<ProductInfoResult>;
+    /**
+     * Creates orders for PMS products, including consumables, non-consumables, and subscriptions.
+     * @param purchaseIntent
+     * @return {Promise<PurchaseIntentResult>}
+     */
+    createPurchaseIntent(purchaseIntentReq: PurchaseIntentReq): Promise<PurchaseIntentResult>;
+    /**
+     * Consumes a consumable after the consumable is delivered to a user who has completed payment.
+     * @param ownedPurchase
+     * @return {Promise<ConsumeOwnedPurchaseResult>}
+     */
+    consumeOwnedPurchase(consumeOwnedPurchaseReq: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult>;
+    /**
+     * Obtains the historical consumption information about a consumable or all subscription receipts of a subscription.
+     * @param ownedPurchaseRecord
+     * @return {Promise<OwnedPurchasesResult>}
+     */
+    obtainOwnedPurchaseRecord(obtainOwnedPurchaseRecordReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
+    /**
+     * Brings up in-app payment pages, including Subscription Editing Page and Subscription Management Page
+     * @param uri
+     * @return {Promise<void>}
+     */
+    startIapActivity(startIapActivityReq: StartIapActivityReq): Promise<void>;
+}
 export interface Status {
     errorString: string;
     statusCode: number;
@@ -114,3 +157,5 @@ export interface ConsumeOwnedPurchaseResult {
 export interface StartIapActivityReq {
     productId?: string;
 }
+
+export declare const HMSInAppPurchases: HMSInAppPurchasesOriginal;
