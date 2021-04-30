@@ -164,7 +164,7 @@ export class HomePage {
     await rewardAd.create('testx9dtjwj8hp');
 
     rewardAd.on(RewardAdEvents.REWARDED_LOADED, async () => {
-      await rewardAd.show(true); // if false, setRewardAdListener() and listen RewardAdEvents.REWARDED
+      await rewardAd.show(true); // if you use loadAdWithAdId() function ,call setRewardAdListener(), listen HMSConstants.RewardAdEvents.REWARD_AD_LOADED and HMSConstants.RewardAdEvents.REWARDED
     });
 
     rewardAd.on(RewardAdEvents.REWARDED_STATUS, (reward) => {

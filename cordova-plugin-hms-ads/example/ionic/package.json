@@ -1,7 +1,7 @@
 {
     "name": "ionic-hms-ads-demo",
     "description": "A demo application which shows the usage of HMS Ads Plugin",
-    "version": "13.4.35-301",
+    "version": "13.4.40-302",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",

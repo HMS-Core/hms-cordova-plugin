@@ -46,6 +46,10 @@ export class HMSRewardAd extends Ads {
         return this.run('destroy')
     }
 
+    loadAdWithAdId(adId:string,adParam?:AdParam){
+        return this.run('loadAdWithAdId',{"adId":adId,"adParam":adParam})
+    }
+
     loadAd(adParam: AdParam = {}): Promise<void>{
         return this.run('loadAd', adParam)
     }

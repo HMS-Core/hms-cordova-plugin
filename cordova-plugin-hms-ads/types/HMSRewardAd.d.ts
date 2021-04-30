@@ -24,6 +24,7 @@ export declare class HMSRewardAd extends Ads {
     resume(): Promise<void>;
     pause(): Promise<void>;
     destroy(): Promise<void>;
+    loadAdWithAdId(adId: string, adParam?: AdParam): Promise<any>;
     loadAd(adParam?: AdParam): Promise<void>;
     isLoaded(): Promise<boolean>;
     getData(): Promise<string>;

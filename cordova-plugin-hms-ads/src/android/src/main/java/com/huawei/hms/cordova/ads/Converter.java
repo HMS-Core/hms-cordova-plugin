@@ -104,6 +104,11 @@ public class Converter {
         if (json.has("tagForUnderAgeOfPromise")) {
             builder.setTagForUnderAgeOfPromise(json.getInt("tagForUnderAgeOfPromise"));
         }
+        if (json.has("requestLocation"))
+            builder.setRequestLocation(json.getBoolean("requestLocation"));
+
+        if (json.has("detailedCreativeType"))
+            builder.setDetailedCreativeTypeList(Converter.fromJsonToListInteger(json.getJSONArray("detailedCreativeType")));
 
         if (json.has("consent")) {
             builder.setConsent(json.getString("consent"));
@@ -166,6 +171,9 @@ public class Converter {
         if (requestOptionsJson.has("nonPersonalizedAd")) {
             requestOptions.setNonPersonalizedAd(requestOptionsJson.getInt("nonPersonalizedAd"));
         }
+
+        if(requestOptionsJson.has("requestLocation"))
+            requestOptions.setRequestLocation(requestOptionsJson.getBoolean("requestLocation"));
 
         if (requestOptionsJson.has("consent")) {
             requestOptions.setConsent(requestOptionsJson.getString("consent"));
@@ -240,6 +248,14 @@ public class Converter {
         List<String> list = new ArrayList<>();
         for (int i = 0; i < arr.length(); i++) {
             list.add(arr.getJSONObject(i).getString("name"));
+        }
+        return list;
+    }
+
+    public static List<Integer> fromJsonToListInteger(JSONArray arr) throws JSONException {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < arr.length(); i++) {
+            list.add(arr.getInt(i));
         }
         return list;
     }

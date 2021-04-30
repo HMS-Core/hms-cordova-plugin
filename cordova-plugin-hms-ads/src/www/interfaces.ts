@@ -28,7 +28,8 @@ import {
     InstallReferrerResponses,
     ConsentStatus,
     HMSScreenOrientation,
-    Anchor
+    Anchor,
+    DetailedCreativeType
 }
     from './HMSConstants'
 
@@ -67,6 +68,8 @@ export interface AdParam {
     countryCode?: string,
     belongCountryCode?: string,
     consent?: string
+    requestLocation?: boolean
+    detailedCreativeType?: DetailedCreativeType[]
 }
 
 export interface HMSRequestOptions {
@@ -77,6 +80,7 @@ export interface HMSRequestOptions {
     tagForUnderAgeOfPromise?: UnderAgeOfPromise,
     nonPersonalizedAd?: NonPersonalizedAd
     consent?: string;
+    requestLocation?:boolean
 }
 
 export interface HMSReward {

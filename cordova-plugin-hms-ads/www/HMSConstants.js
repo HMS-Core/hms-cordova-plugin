@@ -1,3 +1,4 @@
+"use strict";
 /*
     Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -13,12 +14,11 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 ///////////////////////////////////////////////////////////////////////////
 // Constants
 ///////////////////////////////////////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NativeAdEvents = exports.RewardAdEvents = exports.RollAdEvents = exports.SplashAdEvents = exports.InterstitialAdEvents = exports.BannerAdEvents = exports.Anchor = exports.InstallReferrerResponses = exports.Color = exports.NativeAdTemplate = exports.MediaDirection = exports.ChoicesPosition = exports.MediaAspect = exports.AudioFocusType = exports.ConsentStatus = exports.DebugNeedConsent = exports.HMSScreenOrientation = exports.BannerAdSize = exports.UnderAgeOfPromise = exports.ChildProtection = exports.NonPersonalizedAd = exports.Gender = exports.AdContentClassification = exports.RewardAdStatusErrorCodes = exports.AdParamErrorCodes = void 0;
+exports.DetailedCreativeType = exports.NativeAdEvents = exports.RewardAdEvents = exports.RollAdEvents = exports.SplashAdEvents = exports.InterstitialAdEvents = exports.BannerAdEvents = exports.Anchor = exports.InstallReferrerResponses = exports.Color = exports.NativeAdTemplate = exports.MediaDirection = exports.ChoicesPosition = exports.MediaAspect = exports.AudioFocusType = exports.ConsentStatus = exports.DebugNeedConsent = exports.HMSScreenOrientation = exports.BannerAdSize = exports.UnderAgeOfPromise = exports.ChildProtection = exports.NonPersonalizedAd = exports.Gender = exports.AdContentClassification = exports.RewardAdStatusErrorCodes = exports.AdParamErrorCodes = void 0;
 var AdParamErrorCodes;
 (function (AdParamErrorCodes) {
     AdParamErrorCodes[AdParamErrorCodes["AD_PARAM_INNER"] = 0] = "AD_PARAM_INNER";
@@ -42,7 +42,7 @@ var AdContentClassification;
 (function (AdContentClassification) {
     AdContentClassification["AD_CONTENT_CLASSIFICATION_A"] = "A";
     AdContentClassification["AD_CONTENT_CLASSIFICATION_PI"] = "PI";
-    AdContentClassification["AD_CONTENT_CLASSIFICATION_UNKOWN"] = "";
+    AdContentClassification["AD_CONTENT_CLASSIFICATION_UNKNOWN"] = "";
     AdContentClassification["AD_CONTENT_CLASSIFICATION_J"] = "J";
     AdContentClassification["AD_CONTENT_CLASSIFICATION_W"] = "W";
 })(AdContentClassification = exports.AdContentClassification || (exports.AdContentClassification = {}));
@@ -244,11 +244,8 @@ var RewardAdEvents;
     RewardAdEvents["REWARDED"] = "rewarded";
     RewardAdEvents["REWARD_AD_CLOSED"] = "reward_ad_closed";
     RewardAdEvents["REWARD_AD_FAILED_TO_LOAD"] = "reward_ad_failed_to_load";
-    RewardAdEvents["REWARD_AD_LEFT_APP"] = "reward_ad_left_app";
     RewardAdEvents["REWARD_AD_LOADED"] = "reward_ad_loaded";
     RewardAdEvents["REWARD_AD_OPENED"] = "reward_ad_opened";
-    RewardAdEvents["REWARD_AD_COMPLETED"] = "reward_ad_completed";
-    RewardAdEvents["REWARD_AD_STARTED"] = "reward_ad_started";
 })(RewardAdEvents = exports.RewardAdEvents || (exports.RewardAdEvents = {}));
 var NativeAdEvents;
 (function (NativeAdEvents) {
@@ -267,4 +264,14 @@ var NativeAdEvents;
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_END"] = "video_operator_video_end";
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_MUTE"] = "video_operator_video_mute";
 })(NativeAdEvents = exports.NativeAdEvents || (exports.NativeAdEvents = {}));
+var DetailedCreativeType;
+(function (DetailedCreativeType) {
+    DetailedCreativeType[DetailedCreativeType["BIG_IMG"] = 901] = "BIG_IMG";
+    DetailedCreativeType[DetailedCreativeType["VIDEO"] = 903] = "VIDEO";
+    DetailedCreativeType[DetailedCreativeType["THREE_IMG"] = 904] = "THREE_IMG";
+    DetailedCreativeType[DetailedCreativeType["SMALL_IMG"] = 905] = "SMALL_IMG";
+    DetailedCreativeType[DetailedCreativeType["SINGLE_IMG"] = 909] = "SINGLE_IMG";
+    DetailedCreativeType[DetailedCreativeType["SHORT_TEXT"] = 913] = "SHORT_TEXT";
+    DetailedCreativeType[DetailedCreativeType["LONG_TEXT"] = 914] = "LONG_TEXT";
+})(DetailedCreativeType = exports.DetailedCreativeType || (exports.DetailedCreativeType = {}));
 //# sourceMappingURL=HMSConstants.js.map

@@ -32,10 +32,12 @@ import org.json.JSONObject;
 public class PluginInterstitialAdManager extends PluginAbstractAdManager {
     private InterstitialAd interstitialAd;
     private PluginInterstitialAdListener listener;
+    private Activity activity;
 
     public PluginInterstitialAdManager(Context context, Activity activity, CordovaEventRunner manager,
         JSONObject json) {
         super();
+        this.activity = activity;
         if (json.optBoolean("useActivity", false)) {
             interstitialAd = new InterstitialAd(activity);
         } else {
@@ -46,7 +48,7 @@ public class PluginInterstitialAdManager extends PluginAbstractAdManager {
     }
 
     public void show(JSONObject args, final Promise promise) {
-        interstitialAd.show();
+        interstitialAd.show(activity);
         promise.success();
     }
 

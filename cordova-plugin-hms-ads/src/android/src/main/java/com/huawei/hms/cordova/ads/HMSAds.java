@@ -37,8 +37,7 @@ import java.util.Objects;
 
 public class HMSAds extends CordovaPlugin {
     private static final String TAG = HMSAds.class.getSimpleName();
-    private static final String KIT = "Ads";
-    private static final String VERSION = "13.4.35.301";
+
 
     private CordovaController cordovaController;
     private OnAdLayoutScroll onAdLayoutScroll;
@@ -48,6 +47,9 @@ public class HMSAds extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
 
+        final String kit = "Ads";
+        final String version = "13.4.40.302";
+
         pluginAdLayout = new PluginAdLayout(webView.getContext());
         pluginAdLayout.setLayoutParams(
             new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -55,7 +57,7 @@ public class HMSAds extends CordovaPlugin {
             pluginAdLayout.bringToFront();
             ((ViewGroup) webView.getView().getParent()).addView(pluginAdLayout);
         });
-        cordovaController = new CordovaController(this, KIT, VERSION,
+        cordovaController = new CordovaController(this, kit, version,
             Arrays.asList(new HwAdsModule(), new ConsentModule(), new IdentifierModule(), new InstallReferrerModule(),
                 new AdManagerModule(pluginAdLayout, this)));
 

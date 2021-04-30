@@ -318,8 +318,8 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
             promise.error("There is no Roll Ad registered!");
             return;
         }
-        instreamView.setInstreamAds(listener.getInstreamAds());
         frameLayout.setVisibility(View.VISIBLE);
+        instreamView.setInstreamAds(listener.getInstreamAds());
         promise.success();
     }
 

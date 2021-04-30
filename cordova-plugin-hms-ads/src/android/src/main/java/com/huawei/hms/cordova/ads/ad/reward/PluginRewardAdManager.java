@@ -54,7 +54,7 @@ public class PluginRewardAdManager extends PluginAbstractAdManager {
 
     public void show(JSONObject args, final Promise promise) {
         if (!args.optBoolean("useActivity", false)) {
-            rewardAd.show();
+            rewardAd.show(activity);
         } else {
             rewardAd.show(activity, listener.getRewardAdStatusListener());
 
@@ -77,12 +77,16 @@ public class PluginRewardAdManager extends PluginAbstractAdManager {
         promise.success();
     }
 
+    public void loadAdWithAdId(JSONObject args, final Promise promise) throws JSONException {
+        if(args.has("adParam"))
+            rewardAd.loadAd(args.getString("adId"),Converter.fromJsonObjectToAdParam(args.getJSONObject("adParam")));
+        else
+            rewardAd.loadAd(args.getString("adId"),new AdParam.Builder().build());
+        promise.success();
+    }
+
     public void loadAd(JSONObject args, final Promise promise) throws JSONException {
-        if (args == null) {
-            rewardAd.loadAd(new AdParam.Builder().build(), listener.getRewardAdLoadListener());
-        } else {
-            rewardAd.loadAd(Converter.fromJsonObjectToAdParam(args), listener.getRewardAdLoadListener());
-        }
+        rewardAd.loadAd(Converter.fromJsonObjectToAdParam(args), listener.getRewardAdLoadListener());
         promise.success();
     }
 

@@ -39,11 +39,8 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
     private static final String REWARDED = "rewarded_%d";
     private static final String REWARD_AD_CLOSED = "reward_ad_closed_%d";
     private static final String REWARD_AD_FAILED_TO_LOAD = "reward_ad_failed_to_load_%d";
-    private static final String REWARD_AD_LEFT_APP = "reward_ad_left_app_%d";
     private static final String REWARD_AD_LOADED = "reward_ad_loaded_%d";
     private static final String REWARD_AD_OPENED = "reward_ad_opened_%d";
-    private static final String REWARD_AD_COMPLETED = "reward_ad_completed_%d";
-    private static final String REWARD_AD_STARTED = "reward_ad_started_%d";
 
     public PluginRewardAdListener(CordovaEventRunner listenerManager, int objectId) {
         super(listenerManager, objectId);
@@ -122,11 +119,6 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
             }
 
             @Override
-            public void onRewardAdLeftApp() {
-                configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_LEFT_APP);
-            }
-
-            @Override
             public void onRewardAdLoaded() {
                 configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_LOADED);
             }
@@ -137,13 +129,15 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
             }
 
             @Override
+            public void onRewardAdLeftApp() {
+            }
+
+            @Override
             public void onRewardAdCompleted() {
-                configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_COMPLETED);
             }
 
             @Override
             public void onRewardAdStarted() {
-                configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_STARTED);
             }
         };
     }

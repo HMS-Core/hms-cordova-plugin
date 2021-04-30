@@ -33,7 +33,7 @@ export declare enum RewardAdStatusErrorCodes {
 export declare enum AdContentClassification {
     AD_CONTENT_CLASSIFICATION_A = "A",
     AD_CONTENT_CLASSIFICATION_PI = "PI",
-    AD_CONTENT_CLASSIFICATION_UNKOWN = "",
+    AD_CONTENT_CLASSIFICATION_UNKNOWN = "",
     AD_CONTENT_CLASSIFICATION_J = "J",
     AD_CONTENT_CLASSIFICATION_W = "W"
 }
@@ -213,11 +213,8 @@ export declare enum RewardAdEvents {
     REWARDED = "rewarded",
     REWARD_AD_CLOSED = "reward_ad_closed",
     REWARD_AD_FAILED_TO_LOAD = "reward_ad_failed_to_load",
-    REWARD_AD_LEFT_APP = "reward_ad_left_app",
     REWARD_AD_LOADED = "reward_ad_loaded",
-    REWARD_AD_OPENED = "reward_ad_opened",
-    REWARD_AD_COMPLETED = "reward_ad_completed",
-    REWARD_AD_STARTED = "reward_ad_started"
+    REWARD_AD_OPENED = "reward_ad_opened"
 }
 export declare enum NativeAdEvents {
     NATIVE_AD_DISLIKED = "native_ad_disliked",
@@ -234,4 +231,13 @@ export declare enum NativeAdEvents {
     VIDEO_OPERATOR_VIDEO_PAUSE = "video_operator_video_pause",
     VIDEO_OPERATOR_VIDEO_END = "video_operator_video_end",
     VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute"
+}
+export declare enum DetailedCreativeType {
+    BIG_IMG = 901,
+    VIDEO = 903,
+    THREE_IMG = 904,
+    SMALL_IMG = 905,
+    SINGLE_IMG = 909,
+    SHORT_TEXT = 913,
+    LONG_TEXT = 914
 }

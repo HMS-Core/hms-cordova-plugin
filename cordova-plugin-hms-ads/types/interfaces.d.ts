@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { ChildProtection, NonPersonalizedAd, UnderAgeOfPromise, AdContentClassification, Gender, AudioFocusType, MediaAspect, MediaDirection, ChoicesPosition, Color, NativeAdTemplate, InstallReferrerResponses, ConsentStatus, HMSScreenOrientation, Anchor } from './HMSConstants';
+import { ChildProtection, NonPersonalizedAd, UnderAgeOfPromise, AdContentClassification, Gender, AudioFocusType, MediaAspect, MediaDirection, ChoicesPosition, Color, NativeAdTemplate, InstallReferrerResponses, ConsentStatus, HMSScreenOrientation, Anchor, DetailedCreativeType } from './HMSConstants';
 export interface LayoutBounds {
     marginLeft?: number;
     marginRight?: number;
@@ -43,6 +43,8 @@ export interface AdParam {
     countryCode?: string;
     belongCountryCode?: string;
     consent?: string;
+    requestLocation?: boolean;
+    detailedCreativeType?: DetailedCreativeType[];
 }
 export interface HMSRequestOptions {
     adContentClassification?: AdContentClassification;
@@ -52,6 +54,7 @@ export interface HMSRequestOptions {
     tagForUnderAgeOfPromise?: UnderAgeOfPromise;
     nonPersonalizedAd?: NonPersonalizedAd;
     consent?: string;
+    requestLocation?: boolean;
 }
 export interface HMSReward {
     rewardAmount: number;

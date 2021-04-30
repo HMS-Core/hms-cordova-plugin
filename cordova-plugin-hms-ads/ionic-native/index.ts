@@ -45,7 +45,7 @@ export enum RewardAdStatusErrorCodes {
 export enum AdContentClassification {
     AD_CONTENT_CLASSIFICATION_A = "A",
     AD_CONTENT_CLASSIFICATION_PI = "PI",
-    AD_CONTENT_CLASSIFICATION_UNKOWN = "",
+    AD_CONTENT_CLASSIFICATION_UNKNOWN = "",
     AD_CONTENT_CLASSIFICATION_J = "J",
     AD_CONTENT_CLASSIFICATION_W = "W",
 }
@@ -225,12 +225,20 @@ export enum RewardAdEvents {
     REWARDED = "rewarded",
     REWARD_AD_CLOSED = "reward_ad_closed",
     REWARD_AD_FAILED_TO_LOAD = "reward_ad_failed_to_load",
-    REWARD_AD_LEFT_APP = "reward_ad_left_app",
     REWARD_AD_LOADED = "reward_ad_loaded",
     REWARD_AD_OPENED = "reward_ad_opened",
-    REWARD_AD_COMPLETED = "reward_ad_completed",
-    REWARD_AD_STARTED = "reward_ad_started",
 }
+
+export enum DetailedCreativeType {
+  BIG_IMG = 901,
+  VIDEO = 903,
+  THREE_IMG = 904,
+  SMALL_IMG = 905,
+  SINGLE_IMG = 909,
+  SHORT_TEXT = 913,
+  LONG_TEXT = 914
+}
+
 export enum NativeAdEvents {
     NATIVE_AD_DISLIKED = "native_ad_disliked",
     NATIVE_AD_LOADED_LOAD = "native_ad_loaded_load",
@@ -281,6 +289,8 @@ export interface AdParam {
     countryCode?: string;
     belongCountryCode?: string;
     consent?: string;
+    requestLocation?: boolean;
+    detailedCreativeType?: DetailedCreativeType[];
 }
 export interface HMSRequestOptions {
     adContentClassification?: AdContentClassification;
@@ -290,6 +300,7 @@ export interface HMSRequestOptions {
     tagForUnderAgeOfPromise?: UnderAgeOfPromise;
     nonPersonalizedAd?: NonPersonalizedAd;
     consent?: string;
+    requestLocation?: boolean;
 }
 export interface HMSReward {
     rewardAmount: number;
@@ -823,6 +834,10 @@ export class HMSRewardAd extends IonicNativePlugin {
     @Cordova({ otherPromise: true })
     destroy(): Promise<void> {
         return;
+    }
+    @Cordova({ otherPromise: true })
+    loadAdWithAdId(adId:string,adParam?:AdParam): Promise<void>{
+      return;
     }
     @Cordova({ otherPromise: true })
     loadAd(adParam?: AdParam): Promise<void> {

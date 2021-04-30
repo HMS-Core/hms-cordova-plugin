@@ -109,12 +109,6 @@ $("create_banner").onclick = async() => {
         banner.style.height = "144px";
     } else if (size === HMSConstants.BannerAdSize.BANNER_SIZE_360_57) {
         banner.style.height = "57px";
-    } else if (size === HMSConstants.BannerAdSize.BANNER_SIZE_468_60) {
-        banner.style.height = "60px";
-    } else if (size === HMSConstants.BannerAdSize.BANNER_SIZE_160_600) {
-        banner.style.height = "600px";
-    } else if (size === HMSConstants.BannerAdSize.BANNER_SIZE_728_90) {
-        banner.style.height = "90px";
     } else {
         banner.style.height = "200px";
     }
@@ -172,9 +166,9 @@ $("load_splash").onclick = async() => {
 $("load_reward").onclick = async() => {
     var rewardAd = new HMSAds.HMSRewardAd();
     await rewardAd.create("testx9dtjwj8hp");
-
+    
     rewardAd.on(HMSConstants.RewardAdEvents.REWARDED_LOADED, async() => {
-        await rewardAd.show(true); // if false, setRewardAdListener() and listen HMSConstants.RewardAdEvents.REWARDED
+        await rewardAd.show(true); // if use loadAdWithAdId function,call this show(false) function in HMSConstants.RewardAdEvents.REWARD_AD_LOADED, call setRewardAdListener() and listen HMSConstants.RewardAdEvents.REWARDED to get result.
     });
 
     rewardAd.on(HMSConstants.RewardAdEvents.REWARDED_STATUS, async(reward) => {
