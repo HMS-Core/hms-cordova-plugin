@@ -40,7 +40,7 @@ module.exports = function (context) {
 
 function addAGConnectDependency(lines) {
     var AG_CONNECT_DEPENDENCY =
-        "classpath 'com.huawei.agconnect:agcp:1.4.2.300' " + COMMENT;
+        "classpath 'com.huawei.agconnect:agcp:1.4.2.301' " + COMMENT;
     var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
     var index;
 

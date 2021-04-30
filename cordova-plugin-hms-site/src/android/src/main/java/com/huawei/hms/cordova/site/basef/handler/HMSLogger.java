@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 package com.huawei.hms.cordova.site.basef.handler;
 
 import static android.os.Build.DEVICE;
@@ -36,8 +35,8 @@ import java.util.Map;
 final class HMSLogger {
     private static final String TAG = "HMSLogger";
 
-    private final String version;
-    private final String service;
+    private static final String PLATFORM = "Cordova";
+    private static final String SERVICE = "Cross-Platform";
 
     private static final String SUCCESS = "0";
     private static final String UNKNOWN = "UNKNOWN";
@@ -49,6 +48,9 @@ final class HMSLogger {
     private static final String NETWORK_TYPE_WIFI = "WIFI";
 
     private static volatile HMSLogger instance;
+
+    private final String kit;
+    private final String version;
 
     private final WeakReference<Context> weakContext;
     private final HiAnalyticsUtils hiAnalyticsUtils;
@@ -66,73 +68,122 @@ final class HMSLogger {
 
     private boolean isEnabled = false;
 
-    private HMSLogger(final Context context, String service, String version) {
-        weakContext = new WeakReference<>(context);
-        this.service = service;
+    /**
+     * Private constructor of this class.
+     *
+     * @param context Application's context
+     */
+    private HMSLogger(final Context context, final String kit, final String version) {
+        this.kit = kit;
         this.version = version;
+        weakContext = new WeakReference<>(context);
         hiAnalyticsUtils = HiAnalyticsUtils.getInstance();
         connectivityManager = objectCast(context.getSystemService(Context.CONNECTIVITY_SERVICE),
                 ConnectivityManager.class);
-        HiAnalyticsUtils.getInstance().enableLog();
-        initHMSBI(HMSBIInitializer.getInstance(context));
+
+        hiAnalyticsUtils.enableLog();
+        HMSBIInitializer.getInstance(context).initBI();
         setupEventMap(singleEventMap);
         setupEventMap(periodicEventMap);
-
-
         enableLogger();
     }
 
-    static synchronized HMSLogger getInstance(final Context context, String service, String version){
+    /**
+     * Returns the instance of this class.
+     *
+     * @param context Context object
+     * @return HMSLogger instance
+     */
+    static synchronized HMSLogger getInstance(final Context context, final String kit, final String version) {
         if (instance == null) {
             synchronized (HMSLogger.class) {
                 if (instance == null) {
-                    instance = new HMSLogger(context, service, version);
+                    instance = new HMSLogger(context.getApplicationContext(), kit, version);
                 }
             }
         }
         return instance;
     }
 
-    private Context getContext() {
+    /**
+     * Returns actual context reference.
+     *
+     * @return Actual context reference
+     */
+    private synchronized Context getContext() {
         return weakContext.get();
     }
 
+    /**
+     * Enables HMSLogger.
+     */
     synchronized void enableLogger() {
         isEnabled = true;
         Log.d(TAG, "HMS Plugin Dotting is Enabled!");
     }
 
+    /**
+     * Disables HMSLogger.
+     */
     synchronized void disableLogger() {
         isEnabled = false;
         Log.d(TAG, "HMS Plugin Dotting is Disabled!");
     }
 
+    /**
+     * Sets method start time for given method name.
+     *
+     * @param methodName Name of the method that will be logged
+     */
     synchronized void startMethodExecutionTimer(final String methodName) {
         startTimeMap.put(methodName, System.currentTimeMillis());
     }
 
+    /**
+     * Sends successful single event.
+     *
+     * @param methodName The name of the method called
+     */
     synchronized void sendSingleEvent(final String methodName) {
         sendEvent(SINGLE_EVENT_ID, methodName, SUCCESS);
     }
 
+    /**
+     * Sends unsuccessful single event.
+     *
+     * @param methodName The name of the method called.
+     * @param errorCode  API error code
+     */
     synchronized void sendSingleEvent(final String methodName, final String errorCode) {
         sendEvent(SINGLE_EVENT_ID, methodName, errorCode);
     }
 
+    /**
+     * Sends successful periodic event.
+     *
+     * @param methodName The name of the method called
+     */
     synchronized void sendPeriodicEvent(final String methodName) {
         sendEvent(PERIODIC_EVENT_ID, methodName, SUCCESS);
     }
 
+    /**
+     * Sends unsuccessful periodic event.
+     *
+     * @param methodName The name of the method called
+     * @param errorCode  API error code
+     */
     synchronized void sendPeriodicEvent(final String methodName, final String errorCode) {
         sendEvent(PERIODIC_EVENT_ID, methodName, errorCode);
     }
 
-    private void initHMSBI(final HMSBIInitializer initializer) {
-        if (!initializer.isInit()) {
-            initializer.initBI();
-        }
-    }
-
+    /**
+     * Sends the event based on eventId, methodName, and resultCode.
+     *
+     * @param eventId    Constant id of the event
+     * @param methodName The name of the method called
+     * @param resultCode Code of the method's result. "0" for success, others for error
+     */
     private synchronized void sendEvent(final String eventId, final String methodName, final String resultCode) {
         if (isEnabled) {
             final long currentTime = System.currentTimeMillis();
@@ -151,7 +202,12 @@ final class HMSLogger {
         }
     }
 
-    private String getAppId() {
+    /**
+     * Gets "client/app_id" value from agconnect-services.json file.
+     *
+     * @return app_id value or NOT_AVAILABLE if not found
+     */
+    private synchronized String getAppId() {
         try {
             return AGConnectServicesConfig.fromContext(getContext()).getString("client/app_id");
         } catch (final NullPointerException e) {
@@ -160,7 +216,13 @@ final class HMSLogger {
         return NOT_AVAILABLE;
     }
 
-    private String getAppVersionName(final String packageName) {
+    /**
+     * Gets app version name.
+     *
+     * @param packageName Package name of the app
+     * @return App version name in String type
+     */
+    private synchronized String getAppVersionName(final String packageName) {
         try {
             return getContext().getPackageManager().getPackageInfo(packageName, 0).versionName;
         } catch (final PackageManager.NameNotFoundException e) {
@@ -169,7 +231,12 @@ final class HMSLogger {
         }
     }
 
-    private String getNetworkType() {
+    /**
+     * Detects current network type.
+     *
+     * @return Human readable network type; such as WIFI, 4G
+     */
+    private synchronized String getNetworkType() {
         if (connectivityManager != null) {
             final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
@@ -190,16 +257,31 @@ final class HMSLogger {
         }
     }
 
-    private void setupEventMap(final Map<String, Object> map) {
+    /**
+     * Sets default values to given map.
+     *
+     * @param map HashMap to put default values
+     */
+    private synchronized void setupEventMap(final Map<String, Object> map) {
+        map.put("kit", kit);
+        map.put("platform", PLATFORM);
         map.put("version", version);
-        map.put("service", service);
+        map.put("service", SERVICE);
         map.put("appid", getAppId());
         map.put("package", getContext().getPackageName());
         map.put("cpAppVersion", getAppVersionName(getContext().getPackageName()));
         map.put("model", DEVICE);
     }
 
-    private void putToSingleEventMap(final String methodName, final String resultCode, final long currentTime) {
+    /**
+     * Prepares sing-event map according to input parameters.
+     *
+     * @param methodName  The name of the method called
+     * @param resultCode  Code of the method's result. "0" for success, others for error
+     * @param currentTime Current timestamp in millisecond
+     */
+    private synchronized void putToSingleEventMap(final String methodName, final String resultCode,
+        final long currentTime) {
         final long startTime = getOrDefault(startTimeMap, methodName, currentTime);
         final int costTime = (int) (currentTime - startTime);
         singleEventMap.put("apiName", methodName);
@@ -209,7 +291,15 @@ final class HMSLogger {
         singleEventMap.put("networkType", getNetworkType());
     }
 
-    private void putToPeriodicEventMap(final String methodName, final String resultCode, final long currentTime) {
+    /**
+     * Prepares periodic-event map according to input parameters.
+     *
+     * @param methodName  The name of the method called
+     * @param resultCode  Code of the method's result. "0" for success, others for error
+     * @param currentTime Current timestamp in millisecond
+     */
+    private synchronized void putToPeriodicEventMap(final String methodName, final String resultCode,
+                                                    final long currentTime) {
         increaseResultCodeCount(methodName, resultCode);
         increaseMapValue(methodName, allCountMap);
 
@@ -240,9 +330,13 @@ final class HMSLogger {
         lastReceiveTimeMap.put(methodName, currentTime);
     }
 
-    private Map<Integer, String> createNetworkTypeMap() {
+    /**
+     * Prepares HashMap of network type id and its human-readable string pairs.
+     *
+     * @return HashMap of human readable network type names
+     */
+    private synchronized Map<Integer, String> createNetworkTypeMap() {
         final Map<Integer, String> map = new HashMap<>();
-
         map.put(0, UNKNOWN);
         map.put(1, "2G");
         map.put(2, "2G");
@@ -261,35 +355,75 @@ final class HMSLogger {
         map.put(15, "3G");
         map.put(16, "2G");
         map.put(17, "3G");
-        map.put(18, "3G");
+        map.put(18, "4G");
         map.put(19, "4G");
         map.put(20, "5G");
 
         return Collections.unmodifiableMap(map);
     }
 
-    private void increaseResultCodeCount(final String methodName, final String resultCode) {
+    /**
+     * Increases count of the given result code.
+     *
+     * @param methodName Name of the calling method
+     * @param resultCode Code of the method's result. "0" for success, others for error
+     */
+    private synchronized void increaseResultCodeCount(final String methodName, final String resultCode) {
         final Map<String, Long> map = getOrDefault(resultCodeCountMap, methodName, new HashMap<>());
 
         increaseMapValue(resultCode, map);
         resultCodeCountMap.put(methodName, map);
     }
 
-    private void increaseMapValue(final String key, final Map<String, Long> map) {
+    /**
+     * Increases the value of the corresponding key which in the map.
+     *
+     * @param key Key for map lookup
+     * @param map The Map that contains the key and its corresponding value
+     */
+    private synchronized void increaseMapValue(final String key, final Map<String, Long> map) {
         map.put(key, getOrDefault(map, key, 0L) + 1);
     }
 
-    private <K, V> V getOrDefault(final Map<K, V> map, final K key, final V defaultValue) {
+    /**
+     * Get the corresponding value of the key. If the key does not exist in the map then the default value is returned.
+     *
+     * @param map          The Map
+     * @param key          Lookup key
+     * @param defaultValue The default value will be returned if the key is absent
+     * @param <K>          Generic type of the key
+     * @param <V>          Generic type of the value
+     * @return Corresponding value or default value
+     */
+    private synchronized <K, V> V getOrDefault(final Map<K, V> map, final K key, final V defaultValue) {
         return map.containsKey(key) ? map.get(key) : defaultValue;
     }
 
-    private <K, V> void putIfAbsent(final Map<K, V> map, final K key, final V value) {
+    /**
+     * Put key-value pair to map if the key is absent.
+     *
+     * @param map   The Map
+     * @param key   Lookup key
+     * @param value The value will be put to the map if the key is absent
+     * @param <K>   Generic type of the key
+     * @param <V>   Generic type of the value
+     */
+    private synchronized <K, V> void putIfAbsent(final Map<K, V> map, final K key, final V value) {
         if (!map.containsKey(key)) {
             map.put(key, value);
         }
     }
 
-    private <S, D> D objectCast(final S source, final Class<D> clazz) {
+    /**
+     * Utility method that castes given object to given class type.
+     *
+     * @param source Source object to be casted
+     * @param clazz  Class that object will be casted to its type
+     * @param <S>    Source object's type
+     * @param <D>    Destination type
+     * @return Object that casted to D type
+     */
+    private synchronized <S, D> D objectCast(final S source, final Class<D> clazz) {
         return clazz.cast(source);
     }
 }

@@ -34,15 +34,16 @@ import java.util.Collections;
 
 public class HMSSite extends CordovaPlugin {
     
-    private static final String SERVICE = "CordovaSite";
-    private static final String VERSION = "5.0.0";
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         CorLog.setEnable(true);
-        cordovaController = new CordovaController(this, SERVICE, VERSION,
+        
+        final String kit = "Site";
+        final String version = "5.2.0.300";
+        cordovaController = new CordovaController(this, kit, version,
                 Collections.singletonList(new HMSSiteModule()));
     }
 

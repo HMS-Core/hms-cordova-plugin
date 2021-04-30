@@ -62,7 +62,8 @@ public class HMSSiteModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void init(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException, UnsupportedEncodingException {
+    public void init(final CorPack corPack, JSONArray args, final Promise promise) 
+        throws JSONException, UnsupportedEncodingException {
         String apiKey = args.getString(0);
         String encodedKey = URLEncoder.encode(apiKey, "UTF-8");
         searchService = SearchServiceFactory.create(corPack.getCordova().getActivity(), encodedKey);
@@ -71,8 +72,10 @@ public class HMSSiteModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void gotoSearchActivity(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void gotoSearchActivity(final CorPack corPack, JSONArray args, final Promise promise) 
+        throws JSONException, UnsupportedEncodingException {
         String apiKey = args.getString(0);
+        String encodedKey = URLEncoder.encode(apiKey, "UTF-8");
         JSONObject searchFilter = args.getJSONObject(1);
         String hint = args.optString(2); // hint is optional
         if(this.siteIntentPromise != null) {
@@ -87,7 +90,7 @@ public class HMSSiteModule extends CordovaBaseModule {
 
         this.searchIntent = new SearchIntent();
         this.searchIntent.setSearchFilter(filter);
-        this.searchIntent.setApiKey(apiKey);
+        this.searchIntent.setApiKey(encodedKey);
         if(hint != null) this.searchIntent.setHint(hint);
 
         Intent intent = this.searchIntent.getIntent(corPack.getCordova().getActivity());

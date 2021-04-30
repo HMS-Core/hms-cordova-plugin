@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-site" version="5.1.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-site" version="5.2.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" android="http://schemas.android.com/apk/res/android">
 	<name>HMS Site</name>
 	<description>Cordova HMS Site Plugin</description>
 	<license>Apache 2.0</license>
@@ -30,7 +30,7 @@
 			<preference name="AndroidXEnabled" value="true"/>
 		</config-file>
 
-		<framework src="com.huawei.hms:site:5.1.0.300"></framework>
+		<framework src="com.huawei.hms:site:5.2.0.300"></framework>
 		<framework src="androidx.appcompat:appcompat:1.2.0"></framework>
 		<framework src="androidx.recyclerview:recyclerview:1.1.0"></framework>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>

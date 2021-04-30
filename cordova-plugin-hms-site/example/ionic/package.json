@@ -1,7 +1,7 @@
 {
     "name": "ionic-hms-site-demo",
     "description": "A demo application which shows the usage of HMS Site Plugin.",
-    "version": "5.1.0-300",
+    "version": "5.2.0-300",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -70,10 +70,5 @@
         "tsconfig.json",
         "tsconfig.spec.json",
         "tslint.json"
-    ],
-    "cordova": {
-        "platforms": [
-            "android"
-        ]
-    }
+    ]
 }

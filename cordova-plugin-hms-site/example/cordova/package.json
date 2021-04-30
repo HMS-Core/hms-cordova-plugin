@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-site-demo",
     "displayName": "HMSSiteDemo",
-    "version": "5.1.0-300",
+    "version": "5.2.0-300",
     "description": "A demo application which shows the usage of HMS Site Plugin.",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -21,9 +21,7 @@
         "plugins": {
             "cordova-plugin-whitelist": {}
         },
-        "platforms": [
-            "android"
-        ]
+        "platforms": []
     },
     "files": [
         "www",
