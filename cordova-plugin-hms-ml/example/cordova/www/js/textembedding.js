@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -115,7 +115,7 @@ async function getSimilarWords() {
             language:"en"
         },
         multipleText:document.getElementById("multipleText").value,
-        similarityNumber:document.getElementById("similartyNumber").value
+        similarityNumber:document.getElementById("SimilarityNumber").value
     };
     try {
         var result = await HMSLanguageServiceProvider.textEmbeddingSimilarWords(textEmbeddingReq);

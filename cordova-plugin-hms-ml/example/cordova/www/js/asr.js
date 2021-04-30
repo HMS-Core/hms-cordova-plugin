@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ function asrAnalyserStart() {
         language: HMSMLKit.LANGUAGE.LAN_EN_US,
         feature: HMSMLKit.FEATURE.FEATURE_ALLINONE
     };
-    document.getElementById('servicesDiv').style.backgroundColor = 'Red';
+    document.getElementById('servicesDiv').style.backgroundColor = '#c4142c';
     HMSVoiceServiceProvider.asrAnalyser(
         asrReq,
         function (res) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import { FileChooser } from "@ionic-native/file-chooser/ngx";
-import { HMSMLKit, downloadModelReq } from "@hmscore/ionic-native-hms-ml/ngx";
+import { HMSMLKit, downloadModelReq,ownCustomModelReq } from "@hmscore/ionic-native-hms-ml/ngx";
 @Component({
     selector: "app-custommodel",
     templateUrl: "./custommodel.page.html",
@@ -37,17 +37,16 @@ export class CustommodelPage {
     }
 
     public async getCustomModel() {
-        var customModelInput = {
+        var customModelInput:ownCustomModelReq = {
             detectType: 0,
-            filePath: this.imageResult
-            /**
-             *modelFullName:"",
-             *modelName:"",
-             *labelFileName:"",
-             *bitmapHeight:"",
-             *bitmapWidth:"",
-             *outPutSize:"",
-             */
+            filePath: this.imageResult,
+             modelFullName:"",
+             modelName:"",
+             labelFileName:"",
+             bitmapHeight:0,
+             bitmapWidth:0,
+             outPutSize:0,
+             
         };
         try {
             const result = await this.HMSMLKit.customModelAnalyser(customModelInput);

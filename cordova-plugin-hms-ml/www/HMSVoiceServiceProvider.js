@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rttAnalyserStop = exports.rttAnalyserStart = exports.asrAnalyser = exports.getDownloadStrategy = exports.aftAnalyser = exports.ttsOfflineAnalyser = exports.aftAnalyserPause = exports.soundDectAnalyserDestroy = exports.aftAnalyserDestroy = exports.asrAnalyserStop = exports.aftAnalyserClose = exports.ttsAnalyserDownloadSetting = exports.ttsAnalyserEngineSetting = exports.ttsAnalysershutDown = exports.ttsAnalyserResume = exports.ttsAnalyserPause = exports.ttsAnalyserStop = exports.ttsAnalyser = exports.soundDectAnalyser = exports.stopLangDetectionService = exports.getLangDetectionSetting = exports.getAFTSetting = exports.getTTSSetting = exports.getRTTSetting = exports.stopTranslatorService = exports.translatorRemoteAllLang = exports.translatorLocalAllLang = exports.translatorDeleteModel = exports.translatorDownloadModel = exports.localLangDetection = exports.remoteLangDetection = exports.remoteTranslator = exports.localTranslator = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.LANGUAGE = void 0;
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.

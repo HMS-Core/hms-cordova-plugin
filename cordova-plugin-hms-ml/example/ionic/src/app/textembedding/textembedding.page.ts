@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -102,7 +102,7 @@ export class TextembeddingPage{
       wordText2:this.wordtext2
   };
   try {
-      var result = await HMSLanguageServiceProvider.textEmbeddingWordSimilarty(textEmbeddingInput);
+      var result = await HMSLanguageServiceProvider.textEmbeddingWordSimilarity(textEmbeddingInput);
       alert(JSON.stringify(result));
   } catch (ex) {
       alert(ex)
@@ -118,7 +118,7 @@ export class TextembeddingPage{
       sentenceText2:this.sentencetext2
   };
   try {
-      var result = await HMSLanguageServiceProvider.textEmbeddingSentenceSimilarty(textEmbeddingInput);
+      var result = await HMSLanguageServiceProvider.textEmbeddingSentenceSimilarity(textEmbeddingInput);
       alert(JSON.stringify(result));
   } catch (ex) {
       alert(ex)

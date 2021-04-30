@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,16 +28,8 @@ export class LivefacePage {
      var mlFace = null;	
     mlFace = new HMSMLKit.liveEngineAnalyser("scene");
     var lensEngineReq={
-        analyzerName:HMSMLKit.MLAnalyzerName.LIVEHAND,
-        analyzerSetting:{
-            sceneType : HMSMLKit.HandkeyPointConfig.TYPE_ALL,
-            maxHandResults:2,
-        },
-        graphicSetting:{
-            idPaintnewSetting:{
-                color:HMSMLKit.Colors.RED
-            }
-        }
+        analyzerName:HMSMLKit.MLAnalyzerName.LIVEFACE,
+        
     }
 	await mlFace.startMLLive({lensEngineReq});
 	await mlFace.on((value) => {

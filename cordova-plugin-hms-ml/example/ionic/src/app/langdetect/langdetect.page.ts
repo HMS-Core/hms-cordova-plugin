@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -67,9 +67,8 @@ export class LangdetectPage {
     };
     try {
       var langDetectResult = await HMSVoiceServiceProvider.remoteLangDetection(remoteLangDetectionInput);
-      this.langCodeInput = JSON.stringify(langDetectResult[0].langCode);
-      this.probabilityInput = JSON.stringify(langDetectResult[0].probability);
-      this.hashCodeInput = JSON.stringify(langDetectResult[0].hashCode);
+      alert(JSON.stringify(langDetectResult,null,4));
+      
     } catch (ex) {
       alert(ex)
     }

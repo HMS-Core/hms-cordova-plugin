@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@
 #container p {
   font-size: 16px;
   line-height: 22px;
-
   color: #8c8c8c;
 
   margin: 0;
@@ -112,7 +111,8 @@
   border: 1px solid gray;
   border-radius: 5px;
   position: relative;
-  background-color: honeydew;
+  background-color: whitesmoke;
+  color: #c4142c;
 }
 
 .servicesImg {
@@ -231,7 +231,8 @@ input:checked+.slider:before {
   border: 1px solid gray;
   border-radius: 5px;
   position: relative;
-  background-color: honeydew;
+  background-color: whitesmoke;
+  color: #c4142c;
 }
 
 .servicesImg {
@@ -256,13 +257,12 @@ input:checked+.slider:before {
 }
 
 .logoImg {
-  height: 100px;
-  width: 100px;
-  position: absolute;
-  left: 10px;
-  top: 5px;
-  margin: auto;
-  text-align: center;
+  width:100%; 
+  height:auto; 
+  max-width: 300px; 
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 .faceCss{

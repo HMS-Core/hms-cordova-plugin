@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ async function imageSuperResolution3X() {
     };
     try {
         let result = await HMSImageServiceProvider.imageSuperResolution(imageSuperResolutionInput);
-        document.getElementById("superResolutionImage").src = "data:image/jpeg;base64," + result[0].result;
+        document.getElementById("superResolutionImage").src = "data:image/jpeg;base64," + result.bitmap;
     } catch (Ex) {
         alert(JSON.stringify(Ex));
     }
