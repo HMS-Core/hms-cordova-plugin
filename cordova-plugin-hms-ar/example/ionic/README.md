@@ -23,13 +23,13 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
 
 ### 2.1. Ionic
 
-1. Install Ionic CLI.
+1. Install Ionic CLI and other required tools if haven't done before.
 
     ```bash
-    npm install -g @ionic/cli
+    npm install -g @ionic/cli cordova-res native-run
     ```
 
-2. Open the demo project root folder.
+2. Open the demo project's root directory.
 
 3. Install project dependencies.
 
@@ -51,23 +51,25 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
     ionic cordova platform add android
     ```
 
-3. Install `HMS AR plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
-
-    a. Run the following command in the root directory of your project to install it through **npm**.
+3. Install `HMS AR plugin` to the project.
 
     ```bash
     ionic cordova plugin add @hmscore/cordova-plugin-hms-ar
     ```
 
-    b. Or download the plugin from [Plugin > Augmented Reality > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+4. Install HMS AR Ionic Native wrappers
 
     ```bash
-    ionic cordova plugin add <hms_cordova_ar_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-ar
     ```
 
-4. Copy **hms-ar** folder from **`node_modules/@hmscore/cordova-plugin-hms-ar/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
+5. Build Ionic app to generate resource files.
 
-5. Run the application.
+    ```bash
+    ionic build
+    ```
+
+6. Run the app.
 
     ```bash
     ionic cordova run android --device
@@ -81,36 +83,45 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
    ionic integrations enable capacitor
    ```
 
+2. Initialize **Capacitor**.
 
-2. Install `HMS AR plugin` to the project. You can either install the plugin through `npm` or by `downloading from HMS Core Plugin page`.
+    ```bash
+    npx cap init [appName] [appId]
+    ```
 
-   a. Run the following command in the root directory of your project to install it through **npm**.
+   - For more details please follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information).
+
+3. Install `HMS AR plugin` to the project.
 
     ```bash
     npm install @hmscore/cordova-plugin-hms-ar
     ```
 
-   b. Or download the plugin from [Plugin > Augmented Reality > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) page and run the following command in the root directory of your project to **install it manually**.
+4. Install HMS AR Ionic Native wrappers.
 
     ```bash
-    npm install <hms_cordova_ar_plugin_path>
+    npm install @ionic-native/core @hmscore/ionic-native-hms-ar
     ```
 
-3. Copy **hms-ar** folder from **`node_modules/@hmscore/cordova-plugin-hms-ar/ionic/dist`** directory to **`node_modules/@ionic-native`** directory.
-
-4. Build Ionic app to generate resource files.
+5. Build Ionic app to generate resource files.
 
     ```bash
     ionic build
     ```
 
-5. Add the **Android platform** to the project.
+6. Add the **Android platform** to the project.
 
     ```bash
     npx cap add android
     ```
 
-6. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
+7. Updates dependencies, and copy any web assets to your project.
+
+    ```bash
+    npx cap sync
+    ```
+
+8. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories**.
 
     ```groovy
     buildscript {
@@ -119,12 +130,6 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
                 <Other repositories>
             */
             maven { url 'https://developer.huawei.com/repo/' }
-        }
-        dependencies {
-            /*
-                <Other dependencies>
-            */
-            classpath 'com.huawei.agconnect:agcp:1.4.1.300'
         }
     }
 
@@ -142,7 +147,7 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
     }
     ```
 
-7. Open the project in Android Studio and run it.
+9. Open the project in Android Studio and run it.
 
     ```bash
     npx cap open android
@@ -152,8 +157,6 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
 
 ## 3. Configuration and Description
 
-No
-
 ---
 
 ## 4. Questions or Issues
@@ -162,8 +165,8 @@ If you have questions about how to use HMS samples, try the following options:
 
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with **`huawei-mobile-services`**.
 - [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
-- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001&ha_source=hms1) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
 
 If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 

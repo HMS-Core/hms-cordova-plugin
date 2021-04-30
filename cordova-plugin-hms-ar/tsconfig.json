@@ -12,5 +12,5 @@
         "declaration": true,
         "declarationDir": "types"
     },
-    "exclude": ["platforms", "node_modules", "plugins", "src", "gradle", "libs", "res", "script", "www", "types", "ionic", "dist"]
+    "exclude": ["node_modules", "**/*.spec.ts", "types", "ionic-native"]
 }

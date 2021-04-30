@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,20 +13,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
-import { ARSceneConfig, SceneBounds } from './interfaces';
-export { ARSceneConfig, ARHandConfig, ARBodyConfig, ARFaceConfig, ARWorldConfig, ARBody, ARFace, ARHand, ARPlane, ARFaceBlendShapes, ARPose, TrackingState, ARCoordinateSystemType, ARHandType, PlaneType, SemanticPlaneLabel, Anchor, ColorRGBA } from './interfaces';
+import { ARSceneConfig, Events, SceneBounds } from './interfaces';
+export { ARSceneConfig, ARHandConfig, ARBodyConfig, ARFaceConfig, ARWorldConfig, ARBody, ARFace, ARHand, ARPlane, ARFaceBlendShapes, ARPose, TrackingState, ARCoordinateSystemType, ARHandType, PlaneType, SemanticPlaneLabel, Anchor, ColorRGBA, Events } from './interfaces';
 export declare abstract class ARScene {
     protected scene: string;
     protected divId: string;
     private mutationObserver;
     constructor(scene: string, divId: string);
-    protected execHelper(func: string, args: any): Promise<any>;
-    on(call: (value: any) => void): Promise<void>;
+    on(eventName: Events, call: (value: any) => void): Promise<void>;
     startARScene(config: ARSceneConfig, bounds?: SceneBounds): Promise<void>;
     destroy(): Promise<void>;
     setConfig(config: ARSceneConfig): Promise<void>;
     scroll(): Promise<void>;
+    protected execHelper(func: string, args: any): Promise<any>;
     private forceUpdateXAndY;
 }
 export declare class ARHandScene extends ARScene {

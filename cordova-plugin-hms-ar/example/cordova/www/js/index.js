@@ -1,5 +1,5 @@
 /*
-  Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+  Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
   Licensed under the Apache License, Version 2.0 (the "License")
   you may not use this file except in compliance with the License.
@@ -15,97 +15,100 @@
 */
 
 document.addEventListener('deviceready', async () => {
-	const isAPKReady = await HMSAR.isAREngineServiceAPKReady();
-	if(!isAPKReady)
-		await HMSAR.navigateToAppMarket();
-	const hasPermission = await HMSAR.hasCameraPermission();
-	if(!hasPermission)
-		await HMSAR.requestCameraPermission();
-},false);
+    const isAPKReady = await HMSAR.isAREngineServiceAPKReady();
+    if (!isAPKReady)
+        await HMSAR.navigateToAppMarket();
+    const hasPermission = await HMSAR.hasCameraPermission();
+    if (!hasPermission)
+        await HMSAR.requestCameraPermission();
+}, false);
 
 let arHand = null;
 let arWorld = null;
 let arFace = null;
 let arBody = null;
 document.getElementById('start-hand-scene').onclick = async () => {
-	if (arHand != null) await arHand.destroy();
-	if (arWorld != null) await arWorld.destroy();
-	if (arFace != null) await arFace.destroy();
-	if (arBody != null) await arBody.destroy();
-	arHand = null;
-	arWorld = null;
-	arFace = null;
-	arBody = null;
-	arHand = new HMSAR.ARHandScene("scene");
-	await arHand.startARScene({});
-	await arHand.on((value) => {
-		console.log(JSON.stringify(value));
-		const type = value[0].gestureType;
-		if (type == 0) {
-			console.log("Box moves to top.");
-			const currentTop = parseInt(document.getElementById('move-me').style.top);
-			document.getElementById('move-me').style.top = `${currentTop + 1}px`;
-		} else if (type == 1) {
-			console.log("Box moves to bottom.");
-			const currentTop = parseInt(document.getElementById('move-me').style.top);
-			document.getElementById('move-me').style.top = `${currentTop - 1}px`;
-		}
-	});
+    if (arHand != null) await arHand.destroy();
+    if (arWorld != null) await arWorld.destroy();
+    if (arFace != null) await arFace.destroy();
+    if (arBody != null) await arBody.destroy();
+    arHand = null;
+    arWorld = null;
+    arFace = null;
+    arBody = null;
+    arHand = new HMSAR.ARHandScene("scene");
+    await arHand.startARScene({});
+    await arHand.on(HMSAR.Events.ON_DRAW_FRAME, (value) => {
+        console.log(JSON.stringify(value));
+        const type = value[0].gestureType;
+        if (type == 0) {
+            console.log("Box moves to top.");
+            const currentTop = parseInt(document.getElementById('move-me').style.top);
+            document.getElementById('move-me').style.top = `${currentTop + 1}px`;
+        } else if (type == 1) {
+            console.log("Box moves to bottom.");
+            const currentTop = parseInt(document.getElementById('move-me').style.top);
+            document.getElementById('move-me').style.top = `${currentTop - 1}px`;
+        }
+    });
 };
 
 document.getElementById('start-world-scene').onclick = async () => {
-	if (arHand != null) await arHand.destroy();
-	if (arWorld != null) await arWorld.destroy();
-	if (arFace != null) await arFace.destroy();
-	if (arBody != null) await arBody.destroy();
-	arHand = null;
-	arWorld = null;
-	arFace = null;
-	arBody = null;
-	arWorld = new HMSAR.ARWorldScene("scene");
-	await arWorld.startARScene({objPath:"www/img/blub.obj", texturePath:"www/img/blub_texture.png"});
-	await arWorld.on((value) => {
-		console.log(JSON.stringify(value));
-	});
+    if (arHand != null) await arHand.destroy();
+    if (arWorld != null) await arWorld.destroy();
+    if (arFace != null) await arFace.destroy();
+    if (arBody != null) await arBody.destroy();
+    arHand = null;
+    arWorld = null;
+    arFace = null;
+    arBody = null;
+    arWorld = new HMSAR.ARWorldScene("scene");
+    await arWorld.startARScene({objPath: "www/img/blub.obj", texturePath: "www/img/blub_texture.png"});
+    await arWorld.on(HMSAR.Events.ON_DRAW_FRAME, (value) => {
+        console.log(JSON.stringify(value));
+    });
 };
 
 document.getElementById('start-face-scene').onclick = async () => {
-	if (arHand != null) await arHand.destroy();
-	if (arWorld != null) await arWorld.destroy();
-	if (arFace != null) await arFace.destroy();
-	if (arBody != null) await arBody.destroy();
-	arHand = null;
-	arWorld = null;
-	arFace = null;
-	arBody = null;
-	arFace = new HMSAR.ARFaceScene("scene");
-	await arFace.startARScene();
-	await arFace.on((value) => {
-		console.log(JSON.stringify(value));
-	});
+    if (arHand != null) await arHand.destroy();
+    if (arWorld != null) await arWorld.destroy();
+    if (arFace != null) await arFace.destroy();
+    if (arBody != null) await arBody.destroy();
+    arHand = null;
+    arWorld = null;
+    arFace = null;
+    arBody = null;
+    arFace = new HMSAR.ARFaceScene("scene");
+    await arFace.startARScene();
+    await arFace.on(HMSAR.Events.ON_DRAW_FRAME, (value) => {
+        console.log(JSON.stringify(value));
+    });
+    await arFace.on(HMSAR.Events.ON_FACE_HEALTH_PROGRESS_CHANGED, (value) => {
+        console.log(JSON.stringify(value));
+    });
 };
 
 document.getElementById('start-body-scene').onclick = async () => {
-	if (arHand != null) await arHand.destroy();
-	if (arWorld != null) await arWorld.destroy();
-	if (arFace != null) await arFace.destroy();
-	if (arBody != null) await arBody.destroy();
-	arHand = null;
-	arWorld = null;
-	arFace = null;
-	arBody = null;
-	arBody = new HMSAR.ARBodyScene("scene");
-	await arBody.startARScene();
-	await arBody.on((value) => {
-	    console.log(JSON.stringify(value));
-	});
+    if (arHand != null) await arHand.destroy();
+    if (arWorld != null) await arWorld.destroy();
+    if (arFace != null) await arFace.destroy();
+    if (arBody != null) await arBody.destroy();
+    arHand = null;
+    arWorld = null;
+    arFace = null;
+    arBody = null;
+    arBody = new HMSAR.ARBodyScene("scene");
+    await arBody.startARScene();
+    await arBody.on(HMSAR.Events.ON_DRAW_FRAME, (value) => {
+        console.log(JSON.stringify(value));
+    });
 };
 
 document.getElementById('move-me').onclick = async () => {
-	const handConfig = {
-		boxColor: { red: 255, green: 65, blue: 72, alpha: 1 },
-		draw: true,
-		lineWidth: 30.5
-	};
-	await arHand.setConfig(handConfig);
+    const handConfig = {
+        boxColor: {red: 255, green: 65, blue: 72, alpha: 1},
+        draw: true,
+        lineWidth: 30.5
+    };
+    await arHand.setConfig(handConfig);
 };

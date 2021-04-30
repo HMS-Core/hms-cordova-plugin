@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 var FSUtils = require('./FSUtils');
 
 var ROOT_GRADLE_FILE = 'platforms/android/build.gradle';
-var COMMENT = '//This line is added by cordova-plugin-hms-map plugin'
+var COMMENT = '//This line is added by cordova-plugin-hms-ar plugin'
 var NEW_LINE = '\n';
 
 module.exports = function (context) {
@@ -39,7 +39,7 @@ module.exports = function (context) {
 }
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = 'classpath \'com.huawei.agconnect:agcp:1.4.1.300\' ' + COMMENT;
+    var AG_CONNECT_DEPENDENCY = 'classpath \'com.huawei.agconnect:agcp:1.4.2.301\' ' + COMMENT;
 
     var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
 

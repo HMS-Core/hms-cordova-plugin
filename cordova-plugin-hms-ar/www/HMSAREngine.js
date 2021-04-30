@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.navigateToAppMarket = exports.isAREngineServiceAPKReady = exports.hasCameraPermission = exports.requestCameraPermission = exports.ARBodyScene = exports.ARFaceScene = exports.ARWorldScene = exports.ARHandScene = exports.ARScene = void 0;
+exports.disableLogger = exports.enableLogger = exports.navigateToAppMarket = exports.isAREngineServiceAPKReady = exports.hasCameraPermission = exports.requestCameraPermission = exports.ARBodyScene = exports.ARFaceScene = exports.ARWorldScene = exports.ARHandScene = exports.ARScene = exports.Events = exports.SemanticPlaneLabel = exports.PlaneType = exports.ARHandType = exports.ARCoordinateSystemType = exports.TrackingState = void 0;
 const util_1 = require("./util");
 var interfaces_1 = require("./interfaces");
 Object.defineProperty(exports, "TrackingState", { enumerable: true, get: function () { return interfaces_1.TrackingState; } });
@@ -32,6 +32,7 @@ Object.defineProperty(exports, "ARCoordinateSystemType", { enumerable: true, get
 Object.defineProperty(exports, "ARHandType", { enumerable: true, get: function () { return interfaces_1.ARHandType; } });
 Object.defineProperty(exports, "PlaneType", { enumerable: true, get: function () { return interfaces_1.PlaneType; } });
 Object.defineProperty(exports, "SemanticPlaneLabel", { enumerable: true, get: function () { return interfaces_1.SemanticPlaneLabel; } });
+Object.defineProperty(exports, "Events", { enumerable: true, get: function () { return interfaces_1.Events; } });
 function getInitialProps(divId) {
     const htmlElement = document.getElementById(divId);
     const clientRect = htmlElement.getBoundingClientRect();
@@ -48,11 +49,8 @@ class ARScene {
         this.scene = scene;
         this.divId = divId;
     }
-    execHelper(func, args) {
-        return util_1.asyncExec('HMSAREngine', func, args);
-    }
-    on(call) {
-        window.subscribeHMSEvent(`${this.scene}_${this.divId}`, call);
+    on(eventName, call) {
+        window.subscribeHMSEvent(`${eventName}_${this.scene}_${this.divId}`, call);
         return this.execHelper('setCallback', [this.scene, this.divId, call.toString()]);
     }
     startARScene(config, bounds) {
@@ -81,25 +79,36 @@ class ARScene {
         const sceneRect = document.getElementById(this.divId).getBoundingClientRect();
         return this.forceUpdateXAndY(sceneRect.x, sceneRect.y);
     }
+    execHelper(func, args) {
+        return util_1.asyncExec('HMSAREngine', func, args);
+    }
     forceUpdateXAndY(x, y) {
         return this.execHelper('forceUpdateXAndY', [this.scene, x, y]);
     }
 }
 exports.ARScene = ARScene;
 class ARHandScene extends ARScene {
-    constructor(divId) { super("ARHand", divId); }
+    constructor(divId) {
+        super("ARHand", divId);
+    }
 }
 exports.ARHandScene = ARHandScene;
 class ARWorldScene extends ARScene {
-    constructor(divId) { super("ARWorld", divId); }
+    constructor(divId) {
+        super("ARWorld", divId);
+    }
 }
 exports.ARWorldScene = ARWorldScene;
 class ARFaceScene extends ARScene {
-    constructor(divId) { super("ARFace", divId); }
+    constructor(divId) {
+        super("ARFace", divId);
+    }
 }
 exports.ARFaceScene = ARFaceScene;
 class ARBodyScene extends ARScene {
-    constructor(divId) { super("ARBody", divId); }
+    constructor(divId) {
+        super("ARBody", divId);
+    }
 }
 exports.ARBodyScene = ARBodyScene;
 function requestCameraPermission() {

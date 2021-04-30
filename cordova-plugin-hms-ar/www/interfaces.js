@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,27 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ARCoordinateSystemType = exports.PlaneType = exports.SemanticPlaneLabel = exports.ARHandType = exports.TrackingState = void 0;
+exports.ARCoordinateSystemType = exports.PlaneType = exports.SemanticPlaneLabel = exports.ARHandType = exports.TrackingState = exports.Events = exports.HealthParameter = void 0;
+var HealthParameter;
+(function (HealthParameter) {
+    HealthParameter[HealthParameter["UNKNOWN_TYPE"] = -1] = "UNKNOWN_TYPE";
+    HealthParameter[HealthParameter["PARAMETER_INVALID"] = 0] = "PARAMETER_INVALID";
+    HealthParameter[HealthParameter["PARAMETER_HEART_RATE"] = 1] = "PARAMETER_HEART_RATE";
+    HealthParameter[HealthParameter["PARAMETER_HEART_RATE_SNR"] = 2] = "PARAMETER_HEART_RATE_SNR";
+    HealthParameter[HealthParameter["PARAMETER_HEART_RATE_CONFIDENCE"] = 3] = "PARAMETER_HEART_RATE_CONFIDENCE";
+    HealthParameter[HealthParameter["PARAMETER_BREATH_RATE"] = 4] = "PARAMETER_BREATH_RATE";
+    HealthParameter[HealthParameter["PARAMETER_BREATH_RATE_SNR"] = 5] = "PARAMETER_BREATH_RATE_SNR";
+    HealthParameter[HealthParameter["PARAMETER_BREATH_RATE_CONFIDENCE"] = 6] = "PARAMETER_BREATH_RATE_CONFIDENCE";
+    HealthParameter[HealthParameter["PARAMETER_FACE_AGE"] = 7] = "PARAMETER_FACE_AGE";
+    HealthParameter[HealthParameter["PARAMETER_GENDER_MALE_WEIGHT"] = 8] = "PARAMETER_GENDER_MALE_WEIGHT";
+    HealthParameter[HealthParameter["PARAMETER_GENDER_FEMALE_WEIGHT"] = 9] = "PARAMETER_GENDER_FEMALE_WEIGHT";
+    HealthParameter[HealthParameter["PARAMETER_HEART_WAVE"] = 15] = "PARAMETER_HEART_WAVE";
+})(HealthParameter = exports.HealthParameter || (exports.HealthParameter = {}));
+var Events;
+(function (Events) {
+    Events["ON_DRAW_FRAME"] = "onDrawFrame";
+    Events["ON_FACE_HEALTH_PROGRESS_CHANGED"] = "onFaceHealthProgressChanged";
+})(Events = exports.Events || (exports.Events = {}));
 var TrackingState;
 (function (TrackingState) {
     TrackingState[TrackingState["UNKNOWN_STATE"] = -1] = "UNKNOWN_STATE";

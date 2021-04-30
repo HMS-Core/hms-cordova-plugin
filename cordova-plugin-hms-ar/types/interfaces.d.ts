@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 export interface ColorRGBA {
     red: number;
     green: number;
@@ -109,6 +108,8 @@ export interface ARFace {
     faceBlendShapes: ARFaceBlendShapes;
     pose: ARPose[];
     trackingState: TrackingState;
+    healthParameterCount: number;
+    healthParameters: Map<HealthParameter, number>;
 }
 export interface ARBody {
     bodyAction: number;
@@ -122,6 +123,24 @@ export interface ARBody {
     skeletonPointIsExist3D: number[];
     coordinateSystemType: ARCoordinateSystemType;
     trackingState: TrackingState;
+}
+export declare enum HealthParameter {
+    UNKNOWN_TYPE = -1,
+    PARAMETER_INVALID = 0,
+    PARAMETER_HEART_RATE = 1,
+    PARAMETER_HEART_RATE_SNR = 2,
+    PARAMETER_HEART_RATE_CONFIDENCE = 3,
+    PARAMETER_BREATH_RATE = 4,
+    PARAMETER_BREATH_RATE_SNR = 5,
+    PARAMETER_BREATH_RATE_CONFIDENCE = 6,
+    PARAMETER_FACE_AGE = 7,
+    PARAMETER_GENDER_MALE_WEIGHT = 8,
+    PARAMETER_GENDER_FEMALE_WEIGHT = 9,
+    PARAMETER_HEART_WAVE = 15
+}
+export declare enum Events {
+    ON_DRAW_FRAME = "onDrawFrame",
+    ON_FACE_HEALTH_PROGRESS_CHANGED = "onFaceHealthProgressChanged"
 }
 export declare enum TrackingState {
     UNKNOWN_STATE = -1,

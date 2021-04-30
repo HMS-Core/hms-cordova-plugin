@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 
 import { Component } from '@angular/core';
-import { HmsAR, ARHandScene, ARHand, ARWorldScene, ARBodyScene, ARFaceScene } from '@ionic-native/hms-ar/ngx'
+import { HMSAR, ARHandScene, ARHand, ARWorldScene, ARBodyScene, ARFaceScene, Events } from '@hmscore/ionic-native-hms-ar/ngx';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +29,7 @@ export class HomePage {
   arFaceScene = null;
   arBodyScene = null;
 
-  constructor(private hmsAR: HmsAR) {
+  constructor(private hmsAR: HMSAR) {
   }
 
   async ionViewDidEnter() {
@@ -52,7 +52,7 @@ export class HomePage {
     this.arBodyScene = null;
     this.arHandScene = new ARHandScene("scene");
     await this.arHandScene.startARScene();
-    await this.arHandScene.on((value: ARHand[]) => {
+    await this.arHandScene.on(Events.ON_DRAW_FRAME, (value: ARHand[]) => {
       console.log(JSON.stringify(value));
       const type = value[0].gestureType;
       if (type == 0) {
@@ -91,7 +91,7 @@ export class HomePage {
     this.arBodyScene = null;
     this.arWorldScene = new ARWorldScene("scene");
     this.arWorldScene.startARScene({ texturePath: "public/assets/blub_texture.png", objPath: "public/assets/blub.obj" });
-    await this.arWorldScene.on((value) => {
+    await this.arWorldScene.on(Events.ON_DRAW_FRAME, (value) => {
       console.log(JSON.stringify(value));
     });
   }
@@ -107,7 +107,10 @@ export class HomePage {
     this.arBodyScene = null;
     this.arFaceScene = new ARFaceScene("scene");
     this.arFaceScene.startARScene();
-    await this.arFaceScene.on((value) => {
+    await this.arFaceScene.on(Events.ON_DRAW_FRAME, (value) => {
+      console.log(JSON.stringify(value));
+    });
+    await this.arFaceScene.on(Events.ON_FACE_HEALTH_PROGRESS_CHANGED, (value) => {
       console.log(JSON.stringify(value));
     });
   }

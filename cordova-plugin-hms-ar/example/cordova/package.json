@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-ar-demo",
     "displayName": "HMSARDemo",
-    "version": "2.13.0-4",
+    "version": "2.15.0-4",
     "description": "A demo application which shows the usage of HMS AR plugin.",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
