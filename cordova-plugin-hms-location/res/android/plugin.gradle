@@ -1,8 +1,0 @@
-repositories {
-    maven { url 'http://developer.huawei.com/repo/' }
-}
-
-dependencies {
-    implementation 'com.huawei.hms:location:5.0.0.301'
-    implementation "androidx.core:core:1.3.1"
-}
