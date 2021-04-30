@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.huawei.hmf.tasks.Task;
-import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.CordovaMethod;
+import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
 import com.huawei.hms.cordova.health.basef.handler.Promise;
@@ -34,8 +34,8 @@ import com.huawei.hms.hihealth.data.ActivityRecord;
 import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.data.SampleSet;
-import com.huawei.hms.hihealth.options.ActivityRecordInsertOptions;
 import com.huawei.hms.hihealth.options.ActivityRecordReadOptions;
+import com.huawei.hms.hihealth.options.ActivityRecordInsertOptions;
 import com.huawei.hms.hihealth.result.ActivityRecordReply;
 import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
 import com.huawei.hms.support.hwid.result.AuthHuaweiId;
@@ -87,8 +87,6 @@ public class ActivityRecordController extends CordovaBaseModule {
     @CordovaMethod
     public void beginActivityRecord(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
         final JSONObject activityRecordData = args.getJSONObject(0);
-
-        // Activity Record
         final String startTime = activityRecordData.getString("startTime");
         final String timeZone = activityRecordData.getString("timeZone");
         final String timeUnitParam = activityRecordData.getString("timeUnit");
@@ -113,9 +111,9 @@ public class ActivityRecordController extends CordovaBaseModule {
             promise.success();
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
-            final String errorMsg = HiHealthStatusCodes.getStatusCodeMessage(Integer.parseInt(errorCode));
-            Log.i(TAG, errorCode + ": " + errorMsg);
-            promise.error(errorCode + ": " + errorMsg);
+            final String errorMessage = HiHealthStatusCodes.getStatusCodeMessage(Integer.parseInt(errorCode));
+            Log.i(TAG, errorCode + ": " + errorMessage);
+            promise.error(errorCode + ": " + errorMessage);
         });
     }
 

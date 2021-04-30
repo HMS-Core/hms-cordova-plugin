@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-health-demo",
   "displayName": "Health",
-  "version": "5.0.5-300",
+  "version": "5.0.5-301",
   "description": "A sample Apache Cordova application that responds to the deviceready event.",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",

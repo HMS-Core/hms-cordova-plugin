@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,16 +20,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.huawei.hmf.tasks.Task;
-import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.CordovaMethod;
 import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
 import com.huawei.hms.cordova.health.basef.handler.Promise;
+import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.utils.Utils;
-import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.HuaweiHiHealth;
-import com.huawei.hms.hihealth.data.DataType;
+import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.data.SamplePoint;
+import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.options.OnSamplePointListener;
 import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
 import com.huawei.hms.support.hwid.result.AuthHuaweiId;

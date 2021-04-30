@@ -22,13 +22,13 @@ This demo application demonstrates the usage of the HMS Health Kit Cordova plugi
 
 ## 2. Installation Guide
 
-Before you get started, you must register as a HUAWEI Developer and complete identity verification on the [HUAWEI Developer](https://developer.huawei.com/consumer/en/) website. For details, please refer to [Register a HUAWEI ID](https://developer.huawei.com/consumer/en/doc/10104).
+Before you get started, you must register as a HUAWEI Developer and complete identity verification on the [HUAWEI Developer](https://developer.huawei.com/consumer/en?ha_source=hms1) website. For details, please refer to [Register a HUAWEI ID](https://developer.huawei.com/consumer/en/doc/10104?ha_source=hms1).
 
 ### 2.1. Creating a Project in AppGallery Connect
 
 Creating an app in AppGallery Connect is required in order to communicate with the Huawei services. To create an app, perform the following steps:
 
-1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html)  and select **My projects**.
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1)  and select **My projects**.
 2. Select your project from the project list or create a new one by clicking the **Add Project** button.
 3. Go to **Project Setting** > **General information**, and click **Add app**.
     - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
@@ -36,13 +36,13 @@ Creating an app in AppGallery Connect is required in order to communicate with t
 
 ### 2.2. Configuring the Signing Certificate Fingerprint
 
-A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial for the certificate generation.
+A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial for the certificate generation.
 
 ### 2.3. Enabling Required Services
 
 #### Applying for Health Kit
 
-To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](https://developer.huawei.com/consumer/en/doc/apply-kitservice-0000001050071707-V5) and also [apply for Huawei ID Service](https://developer.huawei.com/consumer/en/doc/apply-id-0000001050069756-V5).
+To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](https://developer.huawei.com/consumer/en/doc/apply-kitservice-0000001050071707-V5?ha_source=hms1) and also [apply for Huawei ID Service](https://developer.huawei.com/consumer/en/doc/apply-id-0000001050069756-V5?ha_source=hms1).
 
 1. Sign in to the HUAWEI Developers website and click Console.
 
@@ -90,7 +90,7 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 
 6. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
-    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
 
     - Fill **`build.json`** file according to your keystore. For example:
 
@@ -153,8 +153,8 @@ If you have questions about how to use HMS samples, try the following options:
 
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with **`huawei-mobile-services`**.
 - [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001) HMS Core Module is great for general questions, or seeking recommendations and opinions.
-- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001?ha_source=hms1) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
 
 If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 

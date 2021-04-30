@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.DataType = exports.HuaweiHiHealth = exports.on = exports.disableLogger = exports.enableLogger = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.signIn = void 0;
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.

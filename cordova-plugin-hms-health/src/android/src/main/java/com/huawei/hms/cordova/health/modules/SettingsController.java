@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -58,9 +58,6 @@ public class SettingsController extends CordovaBaseModule {
 
         DataTypeAddOptions dataTypeAddOptions =
                 new DataTypeAddOptions.Builder().setName(dataTypeName).addField(selectedField).build();
-
-        // Add a new data type.
-        // Display the returned result on the phone screen.
         settingController
                 .addDataType(dataTypeAddOptions)
                 .addOnFailureListener((e) -> promise.error(e.getMessage()))
@@ -68,7 +65,7 @@ public class SettingsController extends CordovaBaseModule {
                     if (task.isSuccessful()) {
                         promise.success();
                     } else {
-                        Log.i("TAG", "GetException is " + task.getException().getMessage());
+                        Log.i("TAG", "exception is " + task.getException().getMessage());
                         promise.error(task.getException().getMessage());
                     }
                 });
