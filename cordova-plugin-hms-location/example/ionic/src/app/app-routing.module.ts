@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,24 +13,42 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () => import('./location/location.module').then(m => m.LocationPageModule)
-  },
-  {
-    path: 'location',
-    loadChildren: () => import('./location/location.module').then( m => m.LocationPageModule)
-  }
+    {
+        path: 'home',
+        loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'location',
+        loadChildren: () => import('./location/location.module').then(m => m.LocationPageModule)
+    },
+    {
+        path: 'geofence',
+        loadChildren: () => import('./geofence/geofence.module').then(m => m.GeofencePageModule)
+    },
+    {
+        path: 'activity-conversion',
+        loadChildren: () => import('./activity-conversion/activity-conversion.module').then(m => m.ActivityConversionPageModule)
+    },
+    {
+        path: 'activity-identification',
+        loadChildren: () => import('./activity-identification/activity-identification.module').then(m => m.ActivityIdentificationPageModule)
+    },
 ];
+
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+    imports: [
+        RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
+    ],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

@@ -1,51 +1,68 @@
-# cordova-plugin-hms-location-demo
+# HMS Location Cordova Demo
 
 ## Contents
 
-1. Introduction
+- [1. Introduction](#1-introduction)
+- [2. Installation Guide](#2-installation-guide)
+- [3. Configuration and Description](#3-configuration-and-description)
+- [4. Questions or Issues](#4-questions-or-issues)
+- [5. Licencing and Terms](#5-licencing-and-terms)
 
-2. Installation Guide
-
-3. Cordova Example API Method Definition
-
-4. Configure Description
-
-5. Licensing and Terms
-
+---
 
 ## 1. Introduction
 
-This is a demo that demonstrates how to use HMS LocationKit SDK with a Cordova application.
+This demo application demonstrates the usage of HMS Location Cordova Plugin.
+
+---
 
 ## 2. Installation Guide
 
-- Install `cordova` using `npm`.
-```sh
-npm install -g cordova
-```
-- Set up your Android development environment according to the instructions described in [Cordova Documents](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html).
+1. Install Cordova CLI if haven't done before.
 
-- Update the widget id **<package_name>** property which is specified in **config.xml** file.
+    ```bash
+    npm install -g cordova
+    ```
 
-- Install the plugin:
-```sh
-cordova plugin add @hmscore/cordova-plugin-hms-location
-```
-- Add `android` platform.
+2. Open the demo project's root folder.
 
-```sh
-cordova platform add android
-```
-- Now simply do: `cordova run android`
+3. Add the **Android platform** to the project if haven't done before.
 
-## 3. Cordova Example API Method Definition
+    ```bash
+    cordova platform add android
+    ```
 
-No. Developer can flexibly develop projects based on the example code.
+4. Install `HMS Location plugin` to the project.
 
-## 4. Configure Description
+    ```bash
+    cordova plugin add @hmscore/cordova-plugin-hms-location
+    ```
 
-No.
+5. Run the app.
 
-## 5. Licensing and Terms
+    ```bash
+    cordova run android --device
+    ```
 
-Apache 2.0 license.
+---
+
+## 3. Configuration and Description
+
+---
+
+## 4. Questions or Issues
+
+If you have questions about how to use HMS samples, try the following options:
+
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with **`huawei-mobile-services`**.
+- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001&ha_source=hms1) HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
+
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+
+---
+
+## 5. Licencing and Terms
+
+HMS Location Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).

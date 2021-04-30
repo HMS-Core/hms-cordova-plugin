@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,21 +13,21 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { LocationPage } from './location.page';
+import {LocationPage} from './location.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: LocationPage
-  }
+    {
+        path: '',
+        component: LocationPage
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class LocationPageRoutingModule {}
+export class LocationPageRoutingModule {
+}

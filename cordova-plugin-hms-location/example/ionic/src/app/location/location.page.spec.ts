@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,28 +13,27 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
-import { LocationPage } from './location.page';
+import {LocationPage} from './location.page';
 
 describe('LocationPage', () => {
-  let component: LocationPage;
-  let fixture: ComponentFixture<LocationPage>;
+    let component: LocationPage;
+    let fixture: ComponentFixture<LocationPage>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ LocationPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [LocationPage],
+            imports: [IonicModule.forRoot()]
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(LocationPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+        fixture = TestBed.createComponent(LocationPage);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

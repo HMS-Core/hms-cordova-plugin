@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,331 +13,182 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import {Component} from '@angular/core';
+import {Platform} from '@ionic/angular';
 import {
-  HMSFusedLocation,
-  HMSActivityIdentification,
-  HMSGeofence,
-  HMSLocationKit,
-  LocationRequest,
-  PriorityConstants,
-  Events,
-  NavigationRequestConstants,
-  Activities,
-  ActivityConversions,
-  GeofenceRequestConstants
-} from '@ionic-native/hms-location/ngx';
-
-const asStr = (x) => JSON.stringify(x, null, 2);
+    BackgroundManager,
+    Events,
+    FusedLocationService,
+    HMSLocation,
+    LatLng,
+    LocationResult,
+    NavigationRequestConstants,
+    PriorityConstants,
+    RequestType
+} from '@hmscore/ionic-native-hms-location/ngx';
 
 @Component({
-  selector: 'app-location',
-  templateUrl: './location.page.html',
-  styleUrls: ['./location.page.scss'],
+    selector: 'app-location',
+    templateUrl: './location.page.html',
+    styleUrls: ['./location.page.scss'],
 })
-export class LocationPage implements OnInit {
-  locationHasPermissionResult = '';
-  locationRequestPermissionResult = '';
-  getLastLocationResult = '';
-  getLocationAvailabilityResult = '';
-  getNavigationContextStateResult = '';
-  getLastLocationWithAddressResult = '';
-  flushLocationsResult = '';
-  checkLocationSettingsResult = '';
-  enableMockModeResult = '';
-  disableMockModeResult = '';
-  mockLat: string;
-  mockLong: string;
-  setMockLocationResult = '';
-  requestLocationUpdatesResult = '';
-  registerLocationUpdateResult = '';
-  locationUpdateRequests = [];
-  removeLocationUpdateResult = '';
+export class LocationPage {
+    addRequestCode: string;
+    removeRequestCode: any;
+    addRequestCodeEx: any;
+    latitude: any;
+    longitude: any;
+    private fusedClient: FusedLocationService;
+    private locationUpdateRequests = [];
+    private newElement;
 
-  activityHasPermissionResult = '';
-  acitvityRequestPermissionResult = '';
-  createActivityConversionUpdatesResult = '';
-  registerActivityConversionUpdatesResult = '';
-  activityConversionRequestCode = '';
-  deleteActivityConversionResult = '';
-  createActivityIdentificationUpdatesResult = '';
-  registerActivityIdentificationUpdatesResult = '';
-  activityIdentificationRequestCode = '';
-  deleteActivityIdentificationResult = '';
-
-  createGeofenceListResult = '';
-  geofenceRequestCode = '';
-  deleteGeofenceListResult = '';
-  registerGeofenceUpdatesResult = '';
-
-  constructor(
-    private platform: Platform,
-    private fusedLocation: HMSFusedLocation,
-    private activityIdentification: HMSActivityIdentification,
-    private geofence: HMSGeofence,
-    private hmsLocationKit: HMSLocationKit,
-    private ngZone: NgZone
-  ) {
-      this.platform.ready().then(() => {
-      console.log("Platform is ready.");
-    })
-  }
-
-  ngOnInit() {
-    this.hmsLocationKit.init();
-  }
-
-  //
-  // Fused Location
-  //
-
-  async runFunction(fn: () => any, field: string) {
-    console.log(`Updating ${field}`);
-
-    let result = "";
-    try {
-      result = asStr(await fn());
-    } catch (ex) {
-      result = asStr(ex);
+    constructor(private platform: Platform, private hmsLocation: HMSLocation) {
+        platform.ready().then(value => {
+            this.fusedClient = hmsLocation.getFusedLocationProviderClient();
+            if (this.fusedClient == null) {
+                console.log('null');
+            }
+            this.newElement = document.createElement('label');
+            this.newElement.classList.add('alert');
+            this.newElement.classList.add('d-block');
+            this.newElement.classList.add('text-center');
+            this.newElement.role = 'alert';
+            hmsLocation.addListener(Events.ON_LOCATION_RESULT, (data: LocationResult) => {
+                console.log(JSON.stringify(data));
+                const log = document.getElementById('locationUpdateLogs');
+                log.innerHTML = JSON.stringify(data) + log.innerHTML;
+            });
+        });
     }
-    console.log(result);
-    this[field] = result;
-    return field;
-  }
 
-  newLocationRequest(): LocationRequest {
-    return {
-      id: "locationRequest" + Math.random() * 10000,
-      priority: PriorityConstants.PRIORITY_HIGH_ACCURACY,
-      interval: 3,
-      numUpdates: 1,
-      fastestInterval: 1000.0,
-      expirationTime: 1000.0,
-      expirationTimeDuration: 1000.0,
-      smallestDisplacement: 0.0,
-      maxWaitTime: 1000.0,
-      needAddress: true,
-      language: "en",
-      countryCode: "en",
+    async requestLocationPermission() {
+        const button = document.getElementById('requestLocationPermission');
+        const result = await this.fusedClient.requestLocationPermission();
+        if (result === true) {
+            this.newElement.innerHTML = 'Permission is granted.';
+            this.newElement.classList.remove('alert-danger');
+            this.newElement.classList.add('alert-success');
+        } else {
+            this.newElement.innerHTML = 'Permission is denied.';
+            this.newElement.classList.remove('alert-success');
+            this.newElement.classList.add('alert-danger');
+        }
+        button.parentNode.insertBefore(this.newElement, button.nextSibling);
     }
-  }
 
-  hasPermission() {
-    this.runFunction(() => this.fusedLocation.hasPermission(), 'locationHasPermissionResult');
-  }
+    async hasLocationPermission() {
+        const button = document.getElementById('hasLocationPermission');
+        const isGranted = await this.fusedClient.hasLocationPermission();
+        if (isGranted === true) {
+            this.newElement.innerHTML = 'TRUE';
+            this.newElement.classList.remove('alert-danger');
+            this.newElement.classList.add('alert-success');
+        } else {
+            this.newElement.innerHTML = 'FALSE';
+            this.newElement.classList.remove('alert-success');
+            this.newElement.classList.add('alert-danger');
+        }
+        button.parentNode.insertBefore(this.newElement, button.nextSibling);
+    }
 
-  requestLocationPermission() {
-    this.runFunction(() => this.fusedLocation.requestPermission(), 'locationRequestPermissionResult');
-  }
+    async requestLocationUpdates() {
+        const request = {id: 'locationRequest' + Math.random() * 10000, priority: PriorityConstants.PRIORITY_HIGH_ACCURACY, interval: 3000};
+        const requestCodeValue = parseInt(this.addRequestCode, 10);
+        console.log(requestCodeValue);
+        const isSuccess = await this.fusedClient.requestLocationUpdates(requestCodeValue, request, (locationResult) => {
+            console.log('Background event is called.' + JSON.stringify(locationResult));
+            const notification = {
+                contentTitle: 'Current Location',
+                category: 'service',
+                priority: 4,
+                channelName: 'MyChannel',
+                smallIcon: 'splash',
+                contentText: 'Lat: ' + locationResult.lastLocation.latitude + ' - Lng: ' + locationResult.lastLocation.longitude
+            };
+            BackgroundManager.notify(1, JSON.stringify(notification));
+            // BackgroundManager.makeToast('Lat: ' + locationResult.lastLocation.latitude + ' - Lng: ' + locationResult.lastLocation.longitude, 1000);
+        });
+        this.locationUpdateRequests.push(requestCodeValue);
+    }
 
-  getLastLocation() {
-    this.runFunction(() => this.fusedLocation.getLastLocation(), 'getLastLocationResult');
-  }
+    async removeLocationUpdates() {
+        const log = document.getElementById('removeLocationUpdatesLog');
+        const requestCode = parseInt(this.removeRequestCode, 10);
+        const selectElem: any = document.getElementById('removeTypeSelect');
+        let type: RequestType;
+        if (selectElem.options[selectElem.selectedIndex].value === RequestType.LOCATION_CALLBACK) {
+            type = RequestType.LOCATION_CALLBACK;
+        } else {
+            type = RequestType.PENDING_INTENT;
+        }
+        await this.fusedClient.removeLocationUpdates(requestCode, type);
+        log.innerHTML = 'Location provider with request code ' + requestCode + ' is removed.' + log.innerHTML;
+        this.locationUpdateRequests.length = 0;
+    }
 
-  getLocationAvailability() {
-    this.runFunction(() => this.fusedLocation.getLocationAvailability(), 'getLocationAvailabilityResult');
-  }
+    async requestLocationUpdatesEx() {
+        const requestCodeValue = parseInt(this.addRequestCodeEx, 10);
+        const request = {id: 'locationRequest' + Math.random() * 10000, priority: PriorityConstants.PRIORITY_HIGH_ACCURACY, interval: 1000};
+        const isSuccess = await this.fusedClient.requestLocationUpdatesEx(requestCodeValue, request);
+        this.locationUpdateRequests.push(requestCodeValue);
+    }
 
-  getNavigationContextState() {
-    this.runFunction(() => this.fusedLocation.getNavigationContextState(NavigationRequestConstants.IS_SUPPORT_EX), 'getNavigationContextStateResult');
-  }
+    async getLastLocation() {
+        const log = document.getElementById('getLastLocationLog');
+        const lastLocation = await this.fusedClient.getLastLocation();
+        log.innerHTML = JSON.stringify(lastLocation);
+    }
 
-  getLastLocationWithAddress() {
-    this.runFunction(() => this.fusedLocation.getLastLocationWithAddress(this.newLocationRequest()), 'getLastLocationWithAddressResult');
-  }
+    async getLastLocationWithAddress() {
+        const log = document.getElementById('getLastLocationWithAddressLog');
+        const request = {id: 'locationRequest' + Math.random() * 10000, priority: PriorityConstants.PRIORITY_HIGH_ACCURACY, interval: 1000};
+        const getLastLocationWithAddressResult = await this.fusedClient.getLastLocationWithAddress(request);
+        log.innerHTML = JSON.stringify(getLastLocationWithAddressResult);
+    }
 
-  flushLocations() {
-    this.runFunction(() => this.fusedLocation.flushLocations(), 'flushLocationsResult');
-  }
+    async getLocationAvailability() {
+        const log = document.getElementById('getLocationAvailabilityLog');
+        const locationAvailability = await this.fusedClient.getLocationAvailability();
+        log.innerHTML = JSON.stringify(locationAvailability);
+    }
 
-  checkLocationSettings() {
-    this.runFunction(() => this.fusedLocation.checkLocationSettings({
+    async flushLocations() {
+        const log = document.getElementById('flushLocationsLog');
+        const flushLocationsResult = await this.fusedClient.flushLocations();
+        log.innerHTML = flushLocationsResult + '';
+    }
+
+    async checkLocationSettings() {
+        const log = document.getElementById('checkLocationSettingsLog');
+        const request = {id: 'locationRequest' + Math.random() * 10000, priority: PriorityConstants.PRIORITY_HIGH_ACCURACY, interval: 1000};
+        const locationSettingsResult = await this.fusedClient.checkLocationSettings({
             alwaysShow: true,
             needBle: true,
-            locationRequests: []
-        }), 'checkLocationSettingsResult');
-  }
-
-  enableMockMode() {
-    this.runFunction(() => this.fusedLocation.setMockMode(true), 'enableMockModeResult');
-  }
-  
-  disableMockMode() {
-    this.runFunction(() => this.fusedLocation.setMockMode(false), 'disableMockModeResult');
-  }
-
-  setMockLocation() {
-    this.runFunction(() => this.fusedLocation.setMockLocation({
-      latitude: parseFloat(this.mockLat),
-      longitude: parseFloat(this.mockLong)
-    }), 'setMockLocationResult');
-  }
-  
-  async requestLocationUpdates() {
-    this.fusedLocation.requestLocationUpdates({
-      id: "locationRequest" + Math.random() * 10000,
-      priority: PriorityConstants.PRIORITY_HIGH_ACCURACY,
-      interval: 3,
-      numUpdates: 1,
-      fastestInterval: 1000.0,
-      expirationTime: 1000.0,
-      expirationTimeDuration: 1000.0,
-      smallestDisplacement: 0.0,
-      maxWaitTime: 1000.0,
-      needAddress: true,
-      language: "en",
-      countryCode: "en",
-    }).then(requestLocationUpdatesResult => {
-      this.locationUpdateRequests.push(requestLocationUpdatesResult.id);
-      this['requestLocationUpdatesResult'] = JSON.stringify(requestLocationUpdatesResult, null, 1);
-    }).catch(function (e) {
-      this['requestLocationUpdatesResult'] = JSON.stringify(e, null, 1);
-    });
-  }
-
-  async registerLocationUpdates(){
-    window.registerHMSEvent(Events.SCANNING_RESULT, (result) =>
-    this.ngZone.run(() => this.registerLocationUpdateResult = asStr(result)));
-
-  }
-
-  async removeLocationUpdateRequests() {
-    try {
-      console.log("Removing location update requests...");
-      this.locationUpdateRequests.forEach(async requestCode => {
-          const result = await this.fusedLocation.removeLocationUpdates(requestCode);
-          console.log({requestCode, result});
-      });
-      window.unregisterHMSEvent(this.fusedLocation.Events.SCANNING_RESULT,(result) => {
-        this['removeLocationUpdateResult'] = JSON.stringify(result, null, 1);
-      });
-      this.locationUpdateRequests.length = 0; // clear the array
-    } catch (ex) {
-      console.log(JSON.stringify(ex));
+            locationRequests: [request]
+        });
+        log.innerHTML = JSON.stringify(locationSettingsResult);
     }
-  }
 
-  //
-  // Activity Identification
-  //
+    async getNavigationContextState() {
+        const log = document.getElementById('getNavigationContextStateLog');
+        const getNavigationContextStateResult = await this.fusedClient.getNavigationContextState(NavigationRequestConstants.IS_SUPPORT_EX);
+        log.innerHTML = JSON.stringify(getNavigationContextStateResult);
+    }
 
-  hasActivityPermission() {
-    this.runFunction(() => this.activityIdentification.hasPermission(), 'activityHasPermissionResult');
-  }
+    async setMockLocation() {
+        const latitudeValue = parseInt(this.latitude, 10);
+        const longitudeValue = parseInt(this.longitude, 10);
+        const log = document.getElementById('setMockLocationLogs');
+        const latLng: LatLng = {latitude: latitudeValue, longitude: longitudeValue};
+        const setMockLocationResult = await this.fusedClient.setMockLocation(latLng);
+        console.log('Result: ' + setMockLocationResult);
+        log.innerHTML = setMockLocationResult + ' ';
+    }
 
-  requestAcitvityPermission() {
-    this.runFunction(() => this.activityIdentification.requestPermission(), 'acitvityRequestPermissionResult');
-  }
+    async setMockMode() {
+        const log = document.getElementById('setMockModeLogs');
+        const result = await this.fusedClient.setMockMode(true);
+        log.innerHTML = result + '';
+    }
 
-  createActivityConversionUpdates() {
-    const activityConversions = [
-        // STILL
-        {
-            conversionType: ActivityConversions.ENTER_ACTIVITY_CONVERSION,
-            activityType: Activities.STILL
-        },
-        {
-            conversionType: ActivityConversions.EXIT_ACTIVITY_CONVERSION,
-            activityType: Activities.STILL
-        },
-
-        // ON FOOT
-        {
-            conversionType: ActivityConversions.ENTER_ACTIVITY_CONVERSION,
-            activityType: Activities.FOOT
-        },
-        {
-            conversionType: ActivityConversions.EXIT_ACTIVITY_CONVERSION,
-            activityType: Activities.FOOT
-        },
-
-        // RUNNING
-        {
-            conversionType: ActivityConversions.ENTER_ACTIVITY_CONVERSION,
-            activityType: Activities.RUNNING
-        },
-        {
-            conversionType: ActivityConversions.EXIT_ACTIVITY_CONVERSION,
-            activityType: Activities.RUNNING
-        }
-    ];
-    this.runFunction(
-      () => this.activityIdentification.createActivityConversionUpdates(activityConversions),
-      'createActivityConversionUpdatesResult'
-    );
-  }
-
-  registerActivityConversionUpdates() {
-    window.registerHMSEvent(Events.ACTIVITY_CONVERSION_RESULT, (result) =>
-      this.ngZone.run(() => this.registerActivityConversionUpdatesResult = asStr(result)));
-  }
-
-  deleteActivityConversionUpdates() {
-    this.runFunction(() => this.activityIdentification.deleteActivityConversionUpdates(parseInt(this.activityConversionRequestCode)), 'deleteActivityConversionResult');
-  }
-
-  createActivityIdentificationUpdates() {
-    this.runFunction(
-      () => this.activityIdentification.createActivityIdentificationUpdates(2000),
-      'createActivityIdentificationUpdatesResult'
-    );
-  }
-
-  registerActivityIdentificationUpdates() {
-    window.registerHMSEvent(Events.ACTIVITY_IDENTIFICATION_RESULT, (result) =>
-      this.ngZone.run(() => this.registerActivityIdentificationUpdatesResult = asStr(result)));
-  }
-
-  deleteActivityIdentificationUpdates() {
-    this.runFunction(() => this.activityIdentification.deleteActivityIdentificationUpdates(parseInt(this.activityIdentificationRequestCode)), 'deleteActivityIdentificationResult');
-  }
-
-  //
-  // Geofences
-  //
-
-    createGeofenceList() {
-      const geofence1 = {
-          longitude: 42.0,
-          latitude: 29.0,
-          radius: 20.0,
-          uniqueId: 'geofence' + Math.random() * 10000,
-          conversions: 1,
-          validContinueTime: 10000.0,
-          dwellDelayTime: 10,
-          notificationInterval: 1,
-      };
-
-      const geofence2 = {
-        longitude: 32.0,
-        latitude: 37.0,
-        radius: 340000.0,
-        uniqueId: 'geofence' + Math.random() * 10000,
-        conversions: 4,
-        validContinueTime: 100000.0,
-        dwellDelayTime: 5000,
-        notificationInterval: 0,
-      };
-
-      this.runFunction(
-          () => this.geofence.createGeofenceList(
-            [geofence1, geofence2],
-            GeofenceRequestConstants.DWELL_INIT_CONVERSION,
-            GeofenceRequestConstants.COORDINATE_TYPE_WGS_84
-          ),
-          'createGeofenceListResult'
-      );
-
-  }
-
-  deleteGeofenceList() {
-    this.runFunction(() => this.geofence.deleteGeofenceList(parseInt(this.geofenceRequestCode)), 'deleteGeofenceListResult');
-  }
-
-  registerGeofenceUpdates() {
-    window.registerHMSEvent(Events.GEOFENCE_RESULT, (result) =>
-      this.ngZone.run(() => this.registerGeofenceUpdatesResult = asStr(result)));
-  }
 }
