@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
 */
 
 import { Component } from '@angular/core';
-import { HMSScan } from '@ionic-native/hms-scan/ngx'
+import { HMSScan, ScanTypes, Colors, ErrorCorrectionLevel, HMSPermission } from '@ionic-native/hms-scan/ngx'
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -30,137 +29,97 @@ export class HomePage {
   generateBarcodeImage: string = "";
   constructor(private hmsScanKit: HMSScan, private router: Router, private fileChooser: FileChooser) { }
 
+  customViewPage() {
+    this.router.navigate(['customview']);
+  }
+  multiProcessorPage() {
+    this.router.navigate(['multiprocessor']);
+  }
+  bitmapMode() {
+    this.router.navigate(['bitmapmode']);
+  }
+
   public async getFile() {
     this.fileChooser.open()
       .then(uri => this.imageResult = uri)
       .catch(e => console.log(e));
   }
 
-  public async requestPermissions() {
-    try {
-      await this.hmsScanKit.requestPermissions({
-        permissionList: ["CAMERA", "WRITE_EXTERNAL_STORAGE"],
-      });
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
-  }
-  public async checkPermissions() {
-    var permissionListInput = {
-      permissionList: ["CAMERA", "WRITE_EXTERNAL_STORAGE"],
-    }
-    try {
-      const result = await this.hmsScanKit.checkPermissions(permissionListInput);
-      alert("Camera Permission: " + result.CAMERA.hasPermission + "\nWrite Ext Strg Permission: " + result.WRITE_EXTERNAL_STORAGE.hasPermission);
-    } catch (ex) {
-      alert(JSON.stringify(ex))
-    }
+  public async hasPermission() {
+    const permission = HMSPermission.CAMERA;
+    this.hmsScanKit.hasPermission(permission)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)))
   }
 
-  multiProcessorSynMode() {
-    this.router.navigate(['multi-syn']);
+  public async requestPermission() {
+    const permission = HMSPermission.CAMERA;
+    this.hmsScanKit.requestPermission(permission)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
-  multiProcessorAsynMode() {
-    this.router.navigate(['multi-asyn']);
-  }
-  public async bitmapMode() {
-    try {
-      const bitmapModeInput = {
-        scanAreaWidth: 240,
-        scanAreaHeight: 240,
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE],
-        enableScanArea: true,
-        scanTips: "Place the code within the frame",
-      };
-      let result = await this.hmsScanKit.bitmapMode(bitmapModeInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+
+  public async requestPermissions() {
+    this.hmsScanKit.requestPermissions([HMSPermission.CAMERA, HMSPermission.READ_EXTERNAL_STORAGE])
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
 
   public async defaultViewMode() {
-    try {
-      const defaultViewModeInput = {
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE]
-      };
-      let result = await this.hmsScanKit.defaultViewMode(defaultViewModeInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
-  }
-  public async customViewMode() {
-    try {
-      const customViewModeInput = {
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE],
-        scanAreaWidth: 240,
-        scanAreaHeight: 240,
-        enableFlushButton: true,
-        enablePictureButton: false,
-        scanAreaText: "Place the code within the frame",
-      };
-      let result = await this.hmsScanKit.customViewMode(customViewModeInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+    const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
+    this.hmsScanKit.defaultViewMode(scanTypes)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
 
-
-  public async synModeWithImage() {
-    try {
-      const synModeWithImageInput = {
-        filePath: this.imageResult,
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE]
-      };
-      let result = await this.hmsScanKit.synModeWithImage(synModeWithImageInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+  public async analyseFrame() {
+    const filePath = this.imageResult;
+    const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
+    this.hmsScanKit.analyseFrame(filePath, scanTypes)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
 
-  public async asynModeWithImage() {
-    try {
-      const asynModeWithImageInput = {
-        filePath: this.imageResult,
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE]
-      };
-      let result = await this.hmsScanKit.asynModeWithImage(asynModeWithImageInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+  public async analyzInAsyn() {
+    const filePath = this.imageResult;
+    const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
+    this.hmsScanKit.analyzInAsyn(filePath, scanTypes)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
 
   public async decodeWithBitmap() {
-    try {
-      const decodeWithBitmapInput = {
-        filePath: this.imageResult,
-        scanTypes: [this.hmsScanKit.ScanTypes.ALL_SCAN_TYPE]
-      };
-      let result = await this.hmsScanKit.decodeWithBitmap(decodeWithBitmapInput);
-      alert(JSON.stringify(result));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+    const filePath = this.imageResult;
+    const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
+    this.hmsScanKit.decodeWithBitmap(filePath, scanTypes)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
-  public async generateBarcode() {
-    try {
-      const generateBarcodeInput = {
-        inputContent: "Huawei Mobile Services",
-        barcodeFormat: this.hmsScanKit.ScanTypes.QRCODE_SCAN_TYPE,
-        barcodeHeight: 800,
-        barcodeWidth: 800,
-        bitmapBackgroundColor: this.hmsScanKit.Colors.WHITE,
-        bitmapColor: this.hmsScanKit.Colors.BLACK,
+
+  public async buildBitmap() {
+    const buildBitmapRequest = {
+      inputContent: "Huawei",
+      barcodeFormat: ScanTypes.QRCODE_SCAN_TYPE,
+      barcodeHeight: 400,
+      barcodeWidth: 400,
+      hmsBuildBitmapOptions: {
         bitmapMargin: 1,
-      };
-      let result = await this.hmsScanKit.generateBarcode(generateBarcodeInput);
-      this.generateBarcodeImage = "data:image/jpeg;base64," + result;
-    } catch (ex) {
-      alert(JSON.stringify(ex));
+        bitmapColor: Colors.BLACK,
+        bitmapBackgroundColor: Colors.WHITE,
+        qrErrorCorrectionLevel: ErrorCorrectionLevel.M,
+        qrLogoBitmap: this.imageResult
+      }
     }
+    this.hmsScanKit.buildBitmap(buildBitmapRequest)
+      .then((res) => this.generateBarcodeImage = "data:image/jpeg;base64," + res)
+      .catch((err) => alert(JSON.stringify(err)));
+  }
+
+  public async detectForHmsDector() {
+    const filePath = this.imageResult;
+    const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
+    this.hmsScanKit.detectForHmsDector(filePath, scanTypes)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
 }

@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +13,21 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RectStyle = exports.ScanTypes = exports.Colors = void 0;
+exports.RectStyle = exports.ScanTypes = exports.Colors = exports.ErrorCorrectionLevel = exports.HMSPermission = void 0;
+var HMSPermission;
+(function (HMSPermission) {
+    HMSPermission["CAMERA"] = "android.permission.CAMERA";
+    HMSPermission["READ_EXTERNAL_STORAGE"] = "android.permission.READ_EXTERNAL_STORAGE";
+})(HMSPermission = exports.HMSPermission || (exports.HMSPermission = {}));
+var ErrorCorrectionLevel;
+(function (ErrorCorrectionLevel) {
+    ErrorCorrectionLevel["L"] = "L";
+    ErrorCorrectionLevel["M"] = "M";
+    ErrorCorrectionLevel["Q"] = "Q";
+    ErrorCorrectionLevel["H"] = "H";
+})(ErrorCorrectionLevel = exports.ErrorCorrectionLevel || (exports.ErrorCorrectionLevel = {}));
 var Colors;
 (function (Colors) {
     Colors[Colors["RED"] = -65536] = "RED";
@@ -55,4 +67,4 @@ var RectStyle;
     RectStyle[RectStyle["FILL"] = 1] = "FILL";
     RectStyle[RectStyle["FILL_AND_STROKE"] = 2] = "FILL_AND_STROKE";
 })(RectStyle = exports.RectStyle || (exports.RectStyle = {}));
-//# sourceMappingURL=Interfaces.js.map
+//# sourceMappingURL=interfaces.js.map

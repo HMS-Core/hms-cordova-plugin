@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,57 +17,45 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-      <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-      <meta name="format-detection" content="telephone=no">
-      <meta name="msapplication-tap-highlight" content="no">
-      <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-      <link rel="stylesheet" type="text/css" href="css/index.css">
-      <title>cordova-hms-scan-demo</title>
-      <style>
-          .btn {
-              margin-top: 5px;
-              display: block;
-              background-color: cornflowerblue;
-              color: white;
-              width: 100%;
-              height: 50px;
-              border: none;
-          }
 
-          .mllogoText {
-              font-weight: bold;
-              margin-top: 20px;
-              text-align: center;
-          }
-      </style>
-  </head>
-  <body>
-      <div
-          style="text-align: center; margin-top: 5px;"><label class="mllogoText" for="text"><label>Permissions</label>
-      </label></div>
-      <div class="textAlignDiv">
-          <input type="button" id="requestPermissions" value="Request Permissions" class="btn ">
-          <input type="button" id="checkPermissions" value="Check Permissions" class="btn">
-      </div>
+<head>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>cordova-hms-scan-demo</title>
+</head>
 
-      <input type="button" id="defaultViewMode" value="defaultViewMode" class="btn">
-      <input type="button" id="customViewMode" value="customViewMode" class="btn">
-      <input type="button" id="multiProcessorSynMode" value="multiProcessorSynMode" class="btn">
-      <input type="button" id="multiProcessorAsynMode" value="multiProcessorAsynMode" class="btn">
-      <input type="button" id="bitmapMode" value="bitmapMode" class="btn">
-      <div style="text-align: center; margin-top: 5px;"><label class="mllogoText" for="text">Select image for image
-              scan</label></div>
-      <input type="button" id="imagePicker" value="Select Image" class="btn">
-      <input type="button" id="synModeWithImage" value="synModeWithImage" class="btn">
-      <input type="button" id="asynModeWithImage" value="asynModeWithImage" class="btn">
-      <input type="button" id="decodeWithBitmap" value="decodeWithBitmap" class="btn">
-      <input type="button" id="generateBarcode" value="generateBarcode" class="btn">
-      <div style="text-align: center;"><label class="mllogoText" for="text">Barcode Result Image</label></div>
-      <div><img style="height: 200px; width: 200px;" src="" id="barcodeImg" alt="Please select image"></div>
+<body>
+    <div class="app">
+        <img src="./img/logoh.png" style="width: 40%;height: 40;" />
 
-      <script type="text/javascript" src="cordova.js"></script>
-      <script type="text/javascript" src="js/index.js"></script>
-  </body>
+        <input type="button" id="hasPermission" value="Check Permission" class="btn ">
+        <input type="button" id="requestPermission" value="Request single permission" class="btn">
+        <input type="button" id="requestPermissions" value="Request permissions" class="btn">
+
+        <input type="button" id="defaultViewMode" value="defaultViewMode" class="btn">
+        <div style="text-align: center; margin-top: 5px;"><label class="mllogoText" for="text">Select image for image
+                scan</label></div>
+        <input type="button" id="imagePicker" value="Select Image" class="btn">
+        <input type="button" id="analyseFrame" value="analyseFrame" class="btn">
+        <input type="button" id="analyzInAsyn" value="analyzInAsyn" class="btn">
+        <input type="button" id="decodeWithBitmap" value="decodeWithBitmap" class="btn">
+        <input type="button" id="detectForHmsDector" value="detectForHmsDector" class="btn">
+
+        <input type="button" id="customViewPage" value="custom View Page" class="btn">
+        <input type="button" id="multiProcessorPage" value="multi Processor Page" class="btn">
+        <input type="button" id="bitmapMode" value="bitmap Mode Page" class="btn">
+
+        <input type="button" id="buildBitmap" value="buildBitmap" class="btn">
+        <div style="text-align: center;"><label class="mllogoText" for="text">Barcode Result Image</label></div>
+        <div><img style="height: 200px; width: 200px;" src="" id="barcodeImg" alt="Please select image"></div>
+
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
 </html>

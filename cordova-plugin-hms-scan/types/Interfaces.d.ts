@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,75 +13,59 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
-export interface RequestPermissionInput {
-    permissionList: Array<string>;
-}
-export interface CheckPermissionInput {
-    permissionList: Array<string>;
-}
-export interface DefaultViewModeRequest {
-    scanTypes: ScanTypes[] | ScanTypes;
-}
 export interface CustomViewModeRequest {
     scanTypes: ScanTypes[] | ScanTypes;
-    scanAreaWidth?: number | null;
-    scanAreaHeight?: number | null;
-    enableFlushButton?: boolean | null;
-    enablePictureButton?: boolean | null;
-    scanAreaText?: string | null;
+    isContinuouslyScan?: boolean;
+    enableReturnBitmap?: boolean;
+    enableScanAreaBox?: boolean;
+    scanFrameSize?: number;
 }
-export interface MultiProcessorSynModeRequest {
+export interface MultiProcessorModeRequest {
     scanTypes: ScanTypes[] | ScanTypes;
-    enableScanArea?: boolean | null;
-    enablePhotoButton?: boolean | null;
-    textColor?: Colors | null;
-    textSize?: number | null;
-    strokeWidth?: number | null;
-    rectColor?: Colors | null;
-    rectStyle?: RectStyle | null;
-    scanAreaWidth?: number | null;
-    scanAreaHeight?: number | null;
+    scanFrameSize?: number;
+    enableScanAreaBox?: boolean;
+    enableDrawScanResult?: boolean;
+    viewAttributes?: ViewAttributes;
 }
-export interface MultiProcessorAsynModeRequest {
-    scanTypes: ScanTypes[];
-    enableScanArea?: boolean | null;
-    enablePhotoButton?: boolean | null;
-    textColor?: Colors | null;
-    textSize?: number | null;
-    strokeWidth?: number | null;
-    rectColor?: Colors | null;
-    rectStyle?: RectStyle | null;
-    scanAreaWidth?: number | null;
-    scanAreaHeight?: number | null;
+export interface ViewAttributes {
+    textColor?: Colors;
+    textSize?: number;
+    strokeWitdh?: number;
+    rectColor?: Colors;
+    rectStyle?: RectStyle;
 }
-export interface AsynModeWithImageRequest {
-    filePath: string;
-    scanTypes: ScanTypes[] | ScanTypes;
-}
-export interface SynModeWithImageRequest {
-    filePath: string;
-    scanTypes: ScanTypes[] | ScanTypes;
-}
-export interface DecodeWithBitmapRequest {
-    filePath: string;
-    scanTypes: ScanTypes[] | ScanTypes;
-}
-export interface GenerateBarcodeRequest {
-    barcodeHeight?: number | null;
-    barcodeWidth?: number | null;
-    bitmapBackgroundColor?: Colors | null;
-    bitmapColor?: Colors | null;
-    bitmapMargin?: number | null;
-    barcodeFormat: ScanTypes[] | ScanTypes;
+export interface BuildBitmapRequest {
     inputContent: string;
+    barcodeFormat: ScanTypes;
+    barcodeWidth?: number;
+    barcodeHeight?: number;
+    hmsBuildBitmapOptions?: HMSBuildBitmapOptions;
+}
+export interface HMSBuildBitmapOptions {
+    bitmapMargin?: number;
+    bitmapColor?: Colors;
+    bitmapBackgroundColor?: Colors;
+    qrErrorCorrectionLevel?: ErrorCorrectionLevel;
+    qrLogoBitmap?: string;
 }
 export interface BitmapModeRequest {
-    scanAreaWidth?: number;
-    scanAreaHeight?: number;
     scanTypes: ScanTypes;
-    enableScanArea?: boolean;
-    scanTips?: string;
+    scanFrameSize?: number;
+    enableScanAreaBox?: boolean;
+}
+export interface ScanBounds {
+    marginTop?: number;
+    marginBottom?: number;
+}
+export declare enum HMSPermission {
+    CAMERA = "android.permission.CAMERA",
+    READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE"
+}
+export declare enum ErrorCorrectionLevel {
+    L = "L",
+    M = "M",
+    Q = "Q",
+    H = "H"
 }
 export declare enum Colors {
     RED = -65536,
@@ -118,4 +102,22 @@ export declare enum RectStyle {
     STROKE = 0,
     FILL = 1,
     FILL_AND_STROKE = 2
+}
+export interface LayoutBounds {
+    marginLeft?: number;
+    marginRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
+}
+export interface Props {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    marginLeft?: number;
+    marginRight?: number;
+    marginTop?: number;
+    marginBottom?: number;
+    pageXOffset?: number;
+    pageYOffset?: number;
 }

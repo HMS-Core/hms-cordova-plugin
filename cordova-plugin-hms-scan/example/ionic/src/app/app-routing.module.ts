@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -28,13 +27,19 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'multi-asyn',
-    loadChildren: () => import('./multi-asyn/multi-asyn.module').then( m => m.MultiAsynPageModule)
+    path: 'customview',
+    loadChildren: () => import('./customview/customview.module').then( m => m.CustomviewPageModule)
   },
   {
-    path: 'multi-syn',
-    loadChildren: () => import('./multi-syn/multi-syn.module').then( m => m.MultiSynPageModule)
+    path: 'bitmapmode',
+    loadChildren: () => import('./bitmapmode/bitmapmode.module').then( m => m.BitmapmodePageModule)
   },
+  {
+    path: 'multiprocessor',
+    loadChildren: () => import('./multiprocessor/multiprocessor.module').then( m => m.MultiprocessorPageModule)
+  }
+
+
 ];
 
 @NgModule({

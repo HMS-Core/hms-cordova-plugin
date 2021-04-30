@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,21 +26,25 @@
   <div style="text-align: center; margin-top: 5px;">
     <ion-label class="mllogoText" for="text">Permissions</ion-label>
   </div>
-  <ion-button expand="block" (click)="checkPermissions()">Check Permissions</ion-button>
-  <ion-button expand="block" (click)="requestPermissions()">Request Permissions</ion-button>
+  <ion-button expand="block" (click)="hasPermission()">Check Permissions</ion-button>
+  <ion-button expand="block" (click)="requestPermission()">Request single permission</ion-button>
+  <ion-button expand="block" (click)="requestPermissions()">Request permissions</ion-button>
   <ion-button expand="block" (click)="defaultViewMode()">Default View Mode</ion-button>
-  <ion-button expand="block" (click)="customViewMode()">Custom View Mode</ion-button>
-  <ion-button expand="block" (click)="multiProcessorSynMode()">Multi processor Syn Mode</ion-button>
-  <ion-button expand="block" (click)="multiProcessorAsynMode()">Multi Processor Asyn Mode</ion-button>
-  <ion-button expand="block" (click)="bitmapMode()">Bitmap Mode</ion-button>
   <div style="text-align: center; margin-top: 5px;">
     <ion-label class="mllogoText" for="text">Select image for image scan</ion-label>
   </div>
   <ion-button expand="block" (click)="getFile()">Select Image</ion-button>
-  <ion-button expand="block" (click)="asynModeWithImage()">Asyn Mode with Image</ion-button>
-  <ion-button expand="block" (click)="synModeWithImage()">Syn Mode with Image</ion-button>
+  <ion-button expand="block" (click)="analyseFrame()">Analyse Frame</ion-button>
+  <ion-button expand="block" (click)="analyzInAsyn()">Analyse In Asyn</ion-button>
   <ion-button expand="block" (click)="decodeWithBitmap()">Decode with Bitmap</ion-button>
-  <ion-button expand="block" (click)="generateBarcode()">Generate Barcode</ion-button>
+  <ion-button expand="block" (click)="detectForHmsDector()">Detect For HMS Dector</ion-button>
+
+  <ion-button expand="block" (click)="customViewPage()">Custom View Page</ion-button>
+  <ion-button expand="block" (click)="multiProcessorPage()">Multi Processor Page</ion-button>
+  <ion-button expand="block" (click)="bitmapMode()">Bitmap View Page</ion-button>
+  <ion-button expand="block" (click)="buildBitmap()">Build Bitmap</ion-button>
+
+
   <div style="text-align: center;">
     <ion-img style="height: 300px; width: 300px;" [src]="generateBarcodeImage" alt="Generate Barcode Result"></ion-img>
   </div>

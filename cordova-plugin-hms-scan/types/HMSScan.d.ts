@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,26 +13,17 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
-import * as ScanKit from './Interfaces';
-
-declare class HMSScanAPI {
-    Colors: typeof ScanKit.Colors;
-    ScanTypes: typeof ScanKit.ScanTypes;
-    RectStyle: typeof ScanKit.RectStyle;
-    requestPermissions(params: ScanKit.RequestPermissionInput): Promise<any>;
-    checkPermissions(params: ScanKit.CheckPermissionInput): Promise<any>;
-    defaultViewMode(params: ScanKit.DefaultViewModeRequest): Promise<any>;
-    asynModeWithImage(params: ScanKit.AsynModeWithImageRequest): Promise<any>;
-    synModeWithImage(params: ScanKit.SynModeWithImageRequest): Promise<any>;
-    customViewMode(params: ScanKit.CustomViewModeRequest): Promise<any>;
-    decodeWithBitmap(params: ScanKit.DecodeWithBitmapRequest): Promise<any>;
-    generateBarcode(params: ScanKit.GenerateBarcodeRequest): Promise<any>;
-    bitmapMode(params: ScanKit.BitmapModeRequest): Promise<any>;
-    enableLogger(): Promise<any>;
-    disableLogger(): Promise<any>;
-    multiProcessorSynMode(params: ScanKit.MultiProcessorSynModeRequest, success: any, error: any): void;
-    multiProcessorAsynMode(params: ScanKit.MultiProcessorAsynModeRequest, success: any, error: any): void;
-}
-declare const _default: HMSScanAPI;
-export = _default;
+import * as ScanKit from './interfaces';
+export { Colors, ScanTypes, RectStyle, HMSPermission, ErrorCorrectionLevel } from './interfaces';
+export declare function defaultViewMode(scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function analyzInAsyn(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function analyseFrame(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function decodeWithBitmap(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function buildBitmap(params: ScanKit.BuildBitmapRequest): Promise<any>;
+export declare function compressBitmap(path: string): Promise<any>;
+export declare function detectForHmsDector(path: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function enableLogger(): Promise<any>;
+export declare function disableLogger(): Promise<any>;
+export declare function hasPermission(permission: ScanKit.HMSPermission): Promise<any>;
+export declare function requestPermission(permission: ScanKit.HMSPermission): Promise<any>;
+export declare function requestPermissions(permissions: ScanKit.HMSPermission[]): Promise<any>;
