@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-hms-ar"
+        version="2.15.0.4">
+
+    <name>cordova-plugin-hms-ar</name>
+    <description>cordova-plugin-hms-ar</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,hms</keywords>
+
+    <repo>https://github.com/huawei/cordova-plugin-hms-ar.git</repo>
+    <issue>https://github.com/huawei/cordova-plugin-hms-ar/issues</issue>
+
+    <js-module src="www/HMSAREngine.js" name="HMSAREngine">
+        <clobbers target="HMSAR"/>
+    </js-module>
+    <js-module src="www/index.js" name="index"/>
+    <js-module src="www/util.js" name="util"/>
+    <js-module src="www/interfaces.js" name="interfaces"/>
+
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSAREngine">
+                <param name="android-package" value="com.huawei.hms.cordova.ar.HMSAREngine"/>
+            </feature>
+        </config-file>
+
+        <!-- Hooks -->
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+        <hook type="after_prepare" src="hooks/after_prepare.js"/>
+
+        <!-- Android dependencies -->
+        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+        <framework src="com.huawei.hms:arenginesdk:2.15.0.4"/>
+        <framework src="com.huawei.hms:stats:5.2.0.300"/>
+        <framework src="com.huawei.agconnect:agconnect-core:1.4.2.301"/>
+        <framework src="de.javagl:obj:0.3.0"/>
+
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.CAMERA"/>
+        </config-file>
+
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/HMSAREngine.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/CordovaListenerHelper.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/Converter.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/PxToPixelConverter.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/PluginLayoutManager.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/HMSLogger.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/ar/PluginPermissionUtils.java"
+                     target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/ar/PathDoesNotMatchWithFileStructureException.java"
+                target-dir="src/com/huawei/hms/cordova/ar"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/ARSetupFacade.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ARPluginConfigBase.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ARPluginConfigBody.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ARPluginConfigFace.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ARPluginConfigHand.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ARPluginConfigWorld.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/config/ColorRGBA.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/config"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/ArDemoRuntimeException.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/BodySkeletonDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/BodySkeletonLineDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/DisplayRotationManager.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/FaceGeometryDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/GestureEvent.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/HandBoxDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/ObjectDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/LabelDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/PluginCallbackHelper.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/TextureDisplay.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/helper/VirtualObject.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/helper"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/renderer/ARBaseRenderer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/renderer"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/renderer/ARBodyRenderer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/renderer"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/renderer/ARFaceRenderer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/renderer"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/renderer/ARHandRenderer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/renderer"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/renderer/ARWorldRenderer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/renderer"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/BodyShaderUtil.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/ErrorUtil.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/MatrixUtil.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/WorldShaderUtil.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/AREngineAvailability.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/util/OpenGLUtil.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/util"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/CommonSerializer.java"
+                     target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/PluginARBodySerializer.java"
+                target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/PluginARFaceSerializer.java"
+                target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/PluginARHandSerializer.java"
+                target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/PluginARPlaneSerializer.java"
+                target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/plugin/ar/core/serializer/PluginARTrackableSerializer.java"
+                target-dir="src/com/huawei/hms/plugin/ar/core/serializer"/>
+    </platform>
+
+</plugin>
