@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
     limitations under the License.
 */
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { HMSNearby, HMSNearbyEvent, Policy, DataType, TransferState, StatusCode } from '@hmscore/ionic-native-hms-nearby/ngx';
+import { HMSNearby, HMSNearbyEvent, Policy, DataType, TransferState, StatusCode,
+  ConnectInfo, ConnectResult, EndpointId, ScanEndpointInfo, Data, TransferStateUpdate, ChannelPolicy
+} from '@hmscore/ionic-native-hms-nearby/ngx';
 import { ToastController } from '@ionic/angular';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { StringUtilsService } from '../_utils/string-utils.service';
@@ -26,11 +28,11 @@ import { StringUtilsService } from '../_utils/string-utils.service';
 })
 export class Tab1Page {
 
-  private myName: string;
-  private friendName: string;
-  private textMessage: string;
+  myName: string;
+  friendName: string;
+  textMessage: string;
 
-  private connectionStatus: ConnectionStatus = ConnectionStatus.IDLE;
+  connectionStatus: ConnectionStatus = ConnectionStatus.IDLE;
   ConnectionStatus = ConnectionStatus;
   currentEndpoint: string;
 
@@ -120,14 +122,15 @@ export class Tab1Page {
 
   // add plugin listeners
   addListeners() {
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_ESTABLISH, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_ESTABLISH, (res: ConnectInfo) => {
       console.log("connection established: " + JSON.stringify(res));
       this.acceptConnect(res.endpointId);
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_RESULT, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_RESULT, (res: ConnectResult) => {
       console.log("connection result: " + JSON.stringify(res));
-      
+      console.log("channel policy: " + res.channelPolicy);
+
       if(res.statusCode == StatusCode.STATUS_SUCCESS) {
         this.setConnectionStatus(ConnectionStatus.CONNECTED);
         this.currentEndpoint = res.endpointId;
@@ -139,19 +142,20 @@ export class Tab1Page {
       this.stopSearching();
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_DISCONNECT, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_CONNECTION_ON_DISCONNECT, (res: EndpointId) => {
       console.log("disconnected: " + JSON.stringify(res));
       this.setConnectionStatus(ConnectionStatus.IDLE);
       this.currentEndpoint = null;
       this.presentToast('Disconnected');
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_SCAN_ON_FOUND, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_SCAN_ON_FOUND, (res: ScanEndpointInfo) => {
       console.log("onFound: " + JSON.stringify(res));
+      this.presentToast('Nearby device found');
       this.requestConnect(this.myName, res.endpointId);
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_DATA_ON_RECEIVED, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_DATA_ON_RECEIVED, (res: Data) => {
       console.log("onReceived: " + JSON.stringify(res));
 
       if (res.dataType === DataType.DATA_BYTES) {
@@ -164,7 +168,7 @@ export class Tab1Page {
       }
     });
     
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_DATA_ON_TRANSFER_UPDATE, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_DATA_ON_TRANSFER_UPDATE, (res: TransferStateUpdate) => {
       console.log("onTransferUpdate: " + JSON.stringify(res));
       if (res.status === TransferState.TRANSFER_STATE_SUCCESS) {
         // transfer success
@@ -176,39 +180,48 @@ export class Tab1Page {
   startBroadcasting(name: string, serviceId: string) {
     this.hmsNearby.startBroadcasting(name, serviceId, Policy.POLICY_P2P).then(() => {
       console.log("Broadcasting started");
+      this.presentToast('Broadcasting started');
       this.setConnectionStatus(ConnectionStatus.SEARCHING);
-    });
+    }).catch((err) => this.presentToast('Broadcasting start error:' + JSON.stringify(err)));
   }
 
   stopBroadcasting() {
     this.hmsNearby.stopBroadcasting().then(() => {
       console.log('Broadcasting Stopped');
+      this.presentToast('Broadcasting stopped');
       if (this.connectionStatus == ConnectionStatus.SEARCHING)
         this.setConnectionStatus(ConnectionStatus.IDLE);
-    });
+    }).catch((err) => this.presentToast('Broadcasting stop error:' + JSON.stringify(err)));
   }
 
   startScan(serviceId: string) {
     this.hmsNearby.startScan(serviceId, Policy.POLICY_P2P).then(() => {
       console.log("Scan started");
+      this.presentToast('Scan started');
       this.setConnectionStatus(ConnectionStatus.SEARCHING);
-    });
+    }).catch((err) => this.presentToast('Scan start error:' + JSON.stringify(err)));
   }
 
   stopScan() {
     this.hmsNearby.stopScan().then(() => {
       console.log('Scan Stopped');
+      this.presentToast('Scan stopped');
       if (this.connectionStatus == ConnectionStatus.SEARCHING)
         this.setConnectionStatus(ConnectionStatus.IDLE);
-    });
+    }).catch((err) => this.presentToast('Scan stop error:' + JSON.stringify(err)));
   }
 
   acceptConnect(endpointId: string) {
-    this.hmsNearby.acceptConnect(endpointId);
+    this.hmsNearby.acceptConnect(endpointId)
+      .then((res) => this.presentToast('Connection accepted:' + JSON.stringify(res)))
+      .catch((err) => this.presentToast('Connection accept error:' + JSON.stringify(err)));
   }
 
-  requestConnect(name: string, endpointId: string){
-    this.hmsNearby.requestConnect(name, endpointId);
+  requestConnect(name: string, endpointId: string) {
+    let channelPolicy = ChannelPolicy.CHANNEL_HIGH_THROUGHPUT;
+    this.hmsNearby.requestConnectEx(name, endpointId, channelPolicy)
+      .then((res) => this.presentToast('Connection requested:' + JSON.stringify(res)))
+      .catch((err) => this.presentToast('Connection request error:' + JSON.stringify(err)));
   }
 
   disconnect(endpointId: string) {
@@ -217,7 +230,7 @@ export class Tab1Page {
       this.setConnectionStatus(ConnectionStatus.IDLE);
       this.currentEndpoint = null;
       this.presentToast('Disconnected');
-    });
+    }).catch((err) => this.presentToast('Disconnect error:' + JSON.stringify(err)));
   }
 
   // Data transfer

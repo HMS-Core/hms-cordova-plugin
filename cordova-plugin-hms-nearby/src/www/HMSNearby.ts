@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,12 +13,15 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { HMSNearbyEvent, HMSPermission, Policy, WifiSharePolicy } from './enums';
+import { ChannelPolicy, HMSNearbyEvent, HMSPermission, Policy, WifiSharePolicy } from './enums';
 import { GetOption, Message, PutOption } from './interfaces';
 import { asyncExec } from './utils';
 
-export {HMSNearbyEvent, HMSPermission, Policy, DataType, TransferState, MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds, WifiSharePolicy, StatusCode} from "./enums";
-export {Message, EddystoneUid, IBeaconId, NamespaceType, MessagePicker, MessagePolicy, PutOption, GetOption, BleSignal, Distance} from "./interfaces";
+export {HMSNearbyEvent, HMSPermission, Policy, DataType, TransferState, MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds, WifiSharePolicy, StatusCode, ChannelPolicy} from "./enums";
+export {Message, EddystoneUid, IBeaconId, NamespaceType, MessagePicker, MessagePolicy, PutOption, GetOption, BleSignal, Distance,
+    EndpointId, ConnectInfo, ConnectResult, ScanEndpointInfo, Data, TransferStateUpdate, BleSignalUpdate, DistanceUpdate, MessageTimeout, 
+    PermissionUpdate, AuthCodeUpdate, WifiShareResult
+} from "./interfaces";
 export {BLE_UNKNOWN_TX_POWER, PRECISION_LOW, MAX_SIZE_DATA, MAX_CONTENT_SIZE, MAX_TYPE_LENGTH, MESSAGE_NAMESPACE_RESERVED, MESSAGE_TYPE_EDDYSTONE_UID, MESSAGE_TYPE_I_BEACON_ID, 
     DISTANCE_UNKNOWN, MESSAGE_PICKER_INCLUDE_ALL_TYPES, MESSAGE_POLICY_DEFAULT, MESSAGE_POLICY_BLE_ONLY, GET_OPTION_DEFAULT, PUT_OPTION_DEFAULT} from './interfaces';
 
@@ -129,6 +132,17 @@ export function stopScan(): Promise<void> {
  */
 export function requestConnect(name: string, endpointId: string): Promise<void> {
     return asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnect', name, endpointId]);
+}
+
+/**
+ * Sends a request to connect to a remote endpoint.
+ * @param {string} name Local endpoint name.
+ * @param {string} endpointId ID of the remote endpoint.
+ * @param {ChannelPolicy} channelPolicy Channel policy, which is used to select the channel for establishing a connection.
+ * @returns Promise<void>
+ */
+ export function requestConnectEx(name: string, endpointId: string, channelPolicy: ChannelPolicy): Promise<void> {
+    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnectEx', name, endpointId, channelPolicy]);
 }
 
 /**

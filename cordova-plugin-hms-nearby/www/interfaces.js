@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = void 0;
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +16,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = void 0;
 const enums_1 = require("./enums");
 exports.BLE_UNKNOWN_TX_POWER = 0x80000000;
 exports.PRECISION_LOW = 1;

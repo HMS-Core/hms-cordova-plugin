@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -77,6 +77,11 @@ export declare enum WifiSharePolicy {
     POLICY_SHARE = 1,
     POLICY_SET = 2
 }
+export declare enum ChannelPolicy {
+    CHANNEL_AUTO = 1,
+    CHANNEL_HIGH_THROUGHPUT = 2,
+    CHANNEL_INSTANCE = 3
+}
 export declare enum StatusCode {
     STATUS_SUCCESS = 0,
     STATUS_FAILURE = -1,
@@ -118,5 +123,8 @@ export declare enum StatusCode {
     STATUS_MISSING_PERMISSION_INTERNET = 8064,
     STATUS_WIFI_SHARE_USER_AUTH_FAIL = 8065,
     STATUS_WIFI_SHARE_WIFI_CLOSED = 8066,
-    STATUS_WIFI_CONNECT_FAIL = 8067
+    STATUS_WIFI_CONNECT_FAIL = 8067,
+    STATUS_WIFI_NOT_SUPPORT_SHARE = 8068,
+    STATUS_WIFI_MUST_BE_ENABLED = 8069,
+    STATUS_ANDROID_HMS_RESTRICTED = 8070
 }

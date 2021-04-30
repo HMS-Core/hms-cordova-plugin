@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,14 +33,14 @@ import com.huawei.hms.cordova.nearby.modules.HMSWifi;
 import java.util.Arrays;
 
 public class HMSNearby extends CordovaPlugin {
-    private static final String SERVICE = "CordovaNearby";
-    private static final String VERSION = "5.0.4.302";
+    private static final String KIT = "NearbyService";
+    private static final String VERSION = "5.2.1.300";
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        cordovaController = new CordovaController(this, SERVICE, VERSION,
+        cordovaController = new CordovaController(this, KIT, VERSION,
                 Arrays.asList(new HMSDiscovery(cordova.getActivity()),
                 new HMSTransfer(cordova.getActivity()),
                 new HMSMessage(cordova.getActivity()),

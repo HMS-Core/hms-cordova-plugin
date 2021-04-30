@@ -1,6 +1,8 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StatusCode = exports.ChannelPolicy = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +16,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.StatusCode = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
 var HMSNearbyEvent;
 (function (HMSNearbyEvent) {
     HMSNearbyEvent["EVENT_CONNECTION_ON_ESTABLISH"] = "eventConnectionOnEstablish";
@@ -89,6 +89,12 @@ var WifiSharePolicy;
     WifiSharePolicy[WifiSharePolicy["POLICY_SHARE"] = 1] = "POLICY_SHARE";
     WifiSharePolicy[WifiSharePolicy["POLICY_SET"] = 2] = "POLICY_SET";
 })(WifiSharePolicy = exports.WifiSharePolicy || (exports.WifiSharePolicy = {}));
+var ChannelPolicy;
+(function (ChannelPolicy) {
+    ChannelPolicy[ChannelPolicy["CHANNEL_AUTO"] = 1] = "CHANNEL_AUTO";
+    ChannelPolicy[ChannelPolicy["CHANNEL_HIGH_THROUGHPUT"] = 2] = "CHANNEL_HIGH_THROUGHPUT";
+    ChannelPolicy[ChannelPolicy["CHANNEL_INSTANCE"] = 3] = "CHANNEL_INSTANCE";
+})(ChannelPolicy = exports.ChannelPolicy || (exports.ChannelPolicy = {}));
 var StatusCode;
 (function (StatusCode) {
     StatusCode[StatusCode["STATUS_SUCCESS"] = 0] = "STATUS_SUCCESS";
@@ -132,5 +138,8 @@ var StatusCode;
     StatusCode[StatusCode["STATUS_WIFI_SHARE_USER_AUTH_FAIL"] = 8065] = "STATUS_WIFI_SHARE_USER_AUTH_FAIL";
     StatusCode[StatusCode["STATUS_WIFI_SHARE_WIFI_CLOSED"] = 8066] = "STATUS_WIFI_SHARE_WIFI_CLOSED";
     StatusCode[StatusCode["STATUS_WIFI_CONNECT_FAIL"] = 8067] = "STATUS_WIFI_CONNECT_FAIL";
+    StatusCode[StatusCode["STATUS_WIFI_NOT_SUPPORT_SHARE"] = 8068] = "STATUS_WIFI_NOT_SUPPORT_SHARE";
+    StatusCode[StatusCode["STATUS_WIFI_MUST_BE_ENABLED"] = 8069] = "STATUS_WIFI_MUST_BE_ENABLED";
+    StatusCode[StatusCode["STATUS_ANDROID_HMS_RESTRICTED"] = 8070] = "STATUS_ANDROID_HMS_RESTRICTED";
 })(StatusCode = exports.StatusCode || (exports.StatusCode = {}));
 //# sourceMappingURL=enums.js.map

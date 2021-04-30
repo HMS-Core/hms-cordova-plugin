@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { HMSNearby, HMSNearbyEvent, Message, PutOption, GetOption,
    MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds,
+   BleSignalUpdate, DistanceUpdate, MessageTimeout,
    GET_OPTION_DEFAULT, MESSAGE_POLICY_BLE_ONLY, MESSAGE_PICKER_INCLUDE_ALL_TYPES } from '@hmscore/ionic-native-hms-nearby/ngx';
 import { ToastController } from '@ionic/angular';
 import { StringUtilsService } from '../_utils/string-utils.service';
@@ -128,7 +129,7 @@ export class Tab2Page {
       this.cd.detectChanges();
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_LOST, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_LOST, (res: Message) => {
       console.log('Message lost: ' + JSON.stringify(res));
 
       const text = this.strUtils.convertToString(res.content);
@@ -142,15 +143,15 @@ export class Tab2Page {
       this.cd.detectChanges();
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_BLE_SIGNAL_CHANGED, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_BLE_SIGNAL_CHANGED, (res: BleSignalUpdate) => {
       console.log('Message Ble Signal Changed: ' + JSON.stringify(res));
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_DISTANCE_CHANGED, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_MESSAGE_ON_DISTANCE_CHANGED, (res: DistanceUpdate) => {
       console.log('Message Distance Changed: ' + JSON.stringify(res));
     });
 
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_GET_ON_TIMEOUT, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_GET_ON_TIMEOUT, (res: MessageTimeout) => {
       console.log('Get on Timeout: ' + JSON.stringify(res));
       this.currentStatus = Status.IDLE;
     });
@@ -201,6 +202,9 @@ export class Tab2Page {
     this.hmsNearby.get(this.currentGetOption).then((res) => {
       console.log('Message get success: ' + res);
       this.currentStatus = Status.SEARCHING;
+    }).catch(e => {
+      console.log('Message get error: ' + e);
+      this.presentToast('Message get error');
     });
   }
 
@@ -208,6 +212,9 @@ export class Tab2Page {
     this.hmsNearby.unget().then((res) => {
       console.log('Message unget success: ' + res);
       this.currentStatus = Status.IDLE;
+    }).catch(e => {
+      console.log('Message unget error: ' + e);
+      this.presentToast('Message unget error');
     });
   }
 

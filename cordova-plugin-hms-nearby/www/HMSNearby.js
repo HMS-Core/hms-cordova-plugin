@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,8 @@
 */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getVersion = exports.shareWifiConfig = exports.stopWifiShare = exports.startWifiShare = exports.ungetInBackground = exports.unget = exports.unput = exports.getInBackground = exports.get = exports.put = exports.setApiKey = exports.getApiKey = exports.cancelDataTransfer = exports.sendStream = exports.sendFile = exports.sendBytes = exports.disconnectAll = exports.disconnect = exports.rejectConnect = exports.acceptConnect = exports.requestConnect = exports.stopScan = exports.startScan = exports.stopBroadcasting = exports.startBroadcasting = exports.on = exports.requestPermissions = exports.requestPermission = exports.hasPermission = exports.disableLogger = exports.enableLogger = exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = exports.StatusCode = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
+exports.getInBackground = exports.get = exports.put = exports.setApiKey = exports.getApiKey = exports.cancelDataTransfer = exports.sendStream = exports.sendFile = exports.sendBytes = exports.disconnectAll = exports.disconnect = exports.rejectConnect = exports.acceptConnect = exports.requestConnectEx = exports.requestConnect = exports.stopScan = exports.startScan = exports.stopBroadcasting = exports.startBroadcasting = exports.on = exports.requestPermissions = exports.requestPermission = exports.hasPermission = exports.disableLogger = exports.enableLogger = exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = exports.ChannelPolicy = exports.StatusCode = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
+exports.getVersion = exports.shareWifiConfig = exports.stopWifiShare = exports.startWifiShare = exports.ungetInBackground = exports.unget = exports.unput = void 0;
 const utils_1 = require("./utils");
 var enums_1 = require("./enums");
 Object.defineProperty(exports, "HMSNearbyEvent", { enumerable: true, get: function () { return enums_1.HMSNearbyEvent; } });
@@ -28,6 +29,7 @@ Object.defineProperty(exports, "MessagePolicyFindingMode", { enumerable: true, g
 Object.defineProperty(exports, "MessagePolicyTtlSeconds", { enumerable: true, get: function () { return enums_1.MessagePolicyTtlSeconds; } });
 Object.defineProperty(exports, "WifiSharePolicy", { enumerable: true, get: function () { return enums_1.WifiSharePolicy; } });
 Object.defineProperty(exports, "StatusCode", { enumerable: true, get: function () { return enums_1.StatusCode; } });
+Object.defineProperty(exports, "ChannelPolicy", { enumerable: true, get: function () { return enums_1.ChannelPolicy; } });
 var interfaces_1 = require("./interfaces");
 Object.defineProperty(exports, "BLE_UNKNOWN_TX_POWER", { enumerable: true, get: function () { return interfaces_1.BLE_UNKNOWN_TX_POWER; } });
 Object.defineProperty(exports, "PRECISION_LOW", { enumerable: true, get: function () { return interfaces_1.PRECISION_LOW; } });
@@ -147,6 +149,17 @@ function requestConnect(name, endpointId) {
     return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnect', name, endpointId]);
 }
 exports.requestConnect = requestConnect;
+/**
+ * Sends a request to connect to a remote endpoint.
+ * @param {string} name Local endpoint name.
+ * @param {string} endpointId ID of the remote endpoint.
+ * @param {ChannelPolicy} channelPolicy Channel policy, which is used to select the channel for establishing a connection.
+ * @returns Promise<void>
+ */
+function requestConnectEx(name, endpointId, channelPolicy) {
+    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnectEx', name, endpointId, channelPolicy]);
+}
+exports.requestConnectEx = requestConnectEx;
 /**
  * Accepts a connection. This API must be called before data transmission. If the connection request is not accepted within 8 seconds, the connection fails and needs to be re-initiated.
  * @param {string} endpointId ID of the remote endpoint.

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -104,7 +104,7 @@ var nearby_message = {
             HMSNearby.put(message).then((res) => {
                 alert('message :: putResult: ' + JSON.stringify(res));
             }).catch(e => {
-                console.log('message :: putError: ' + JSON.stringify(e));
+                alert('message :: putError: ' + JSON.stringify(e));
             });
 
         });
@@ -122,7 +122,7 @@ var nearby_message = {
             HMSNearby.unput(message).then((res) => {
                 alert('message :: unputResult: ' + JSON.stringify(res));
             }).catch(e => {
-                console.log('message :: unputError: ' + JSON.stringify(e));
+                alert('message :: unputError: ' + JSON.stringify(e));
             });
         });
 
@@ -133,7 +133,7 @@ var nearby_message = {
             HMSNearby.get(HMSNearby.GET_OPTION_DEFAULT).then((res) => {
                 alert('message :: getResult: ' + JSON.stringify(res));
             }).catch(e => {
-                console.log('message :: getError: ' + JSON.stringify(e));
+                alert('message :: getError: ' + JSON.stringify(e));
             })
 
         });
@@ -143,7 +143,7 @@ var nearby_message = {
             HMSNearby.unget().then((res) => {
                 alert('message :: ungetResult: ' + JSON.stringify(res));
             }).catch(e => {
-                console.log('message :: ungetError: ' + JSON.stringify(e));
+                alert('message :: ungetError: ' + JSON.stringify(e));
             });
         });
 

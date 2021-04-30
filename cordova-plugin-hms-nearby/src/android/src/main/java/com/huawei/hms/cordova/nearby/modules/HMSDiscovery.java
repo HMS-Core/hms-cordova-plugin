@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,6 +28,8 @@ import com.huawei.hms.cordova.nearby.utils.HMSEvents;
 import com.huawei.hms.cordova.nearby.utils.HMSUtils;
 import com.huawei.hms.nearby.Nearby;
 import com.huawei.hms.nearby.discovery.BroadcastOption;
+import com.huawei.hms.nearby.discovery.ChannelPolicy;
+import com.huawei.hms.nearby.discovery.ConnectOption;
 import com.huawei.hms.nearby.discovery.DiscoveryEngine;
 import com.huawei.hms.nearby.discovery.Policy;
 import com.huawei.hms.nearby.discovery.ConnectCallback;
@@ -115,6 +117,25 @@ public class HMSDiscovery extends CordovaBaseModule {
                 })
                 .addOnFailureListener(e -> {
                     promise.error(String.format(Locale.ENGLISH, "requestConnect: %s", e.getMessage()));
+                });
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void requestConnectEx(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        String name = args.getString(0);
+        String endpointId = args.getString(1);
+        int channelPolicyNumber = args.getInt(2);
+        ChannelPolicy channelPolicy = HMSUtils.getChannelPolicyByNumber(channelPolicyNumber);
+        ConnectOption connectOption = new ConnectOption.Builder().setPolicy(channelPolicy).build();
+        discoveryEngine.requestConnectEx(name, endpointId,
+                new ConnectCallbackHandler(corPack.getEventRunner()),
+                connectOption)
+                .addOnSuccessListener(unused -> {
+                    promise.success();
+                })
+                .addOnFailureListener(e -> {
+                    promise.error(String.format(Locale.ENGLISH, "requestConnectEx: %s", e.getMessage()));
                 });
     }
 

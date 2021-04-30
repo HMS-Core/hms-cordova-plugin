@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,9 +16,11 @@
 
 package com.huawei.hms.cordova.nearby.utils;
 
+import android.net.Uri;
 import android.util.Log;
 
 import com.huawei.hms.nearby.discovery.BleSignal;
+import com.huawei.hms.nearby.discovery.ChannelPolicy;
 import com.huawei.hms.nearby.discovery.ConnectInfo;
 import com.huawei.hms.nearby.discovery.ConnectResult;
 import com.huawei.hms.nearby.discovery.Distance;
@@ -95,7 +97,6 @@ public class HMSUtils {
             jsonObject.put("authCode", connectInfo.getAuthCode());
             jsonObject.put("endpointName", connectInfo.getEndpointName());
             jsonObject.put("isRemoteConnect", connectInfo.isRemoteConnect());
-            jsonObject.put("describeContents", connectInfo.describeContents());
         } catch (JSONException e) {
             Log.e(TAG, "convertConnectInfoToJSONObject: " + e.getMessage());
         }
@@ -108,6 +109,7 @@ public class HMSUtils {
             jsonObject.put("endpointId", endpointId);
             jsonObject.put("statusCode", connectResult.getStatus().getStatusCode());
             jsonObject.put("statusMessage", connectResult.getStatus().getStatusMessage());
+            jsonObject.put("channelPolicy", getChannelPolicyNumber(connectResult.getChannelPolicy()));
         } catch (JSONException e) {
             Log.e(TAG, "convertConnectResultToJSONObject: " + e.getMessage());
         }
@@ -148,9 +150,11 @@ public class HMSUtils {
                 jsonObject.put("data", new JSONArray(data.asBytes()));
 
             } else if (data.getType() == Data.Type.FILE) {
+                String fileUri = getFileUri(data.asFile());
+                if (fileUri != null) {
+                    jsonObject.put("fileUri", fileUri);
+                }
                 jsonObject.put("size", data.asFile().getSize());
-                jsonObject.put("fileUri", data.asFile().asJavaFile().toURI().toString());
-
             } else if (data.getType() == Data.Type.STREAM) {
                 byte[] bytes = convertStreamToByteArray(data.asStream().asInputStream());
                 jsonObject.put("data", new JSONArray(bytes));
@@ -159,6 +163,21 @@ public class HMSUtils {
             Log.e(TAG, "convertReceivedDataToJSONObject: " + e.getMessage());
         }
         return jsonObject;
+    }
+
+    public static String getFileUri(Data.File file) {
+        String fileUriStr = null;
+        try {
+            Uri uri = file.asUri();
+            if (uri != null) {
+                fileUriStr = uri.toString();
+            } else {
+                fileUriStr = file.asJavaFile().toURI().toString();
+            }
+        } catch (RuntimeException e) {
+            Log.d(TAG, "Obtain file uri error!");
+        }
+        return fileUriStr;
     }
 
     public static JSONObject convertTransferStateUpdateToJSONObject(String endpointId, TransferStateUpdate transferStateUpdate) {
@@ -294,4 +313,27 @@ public class HMSUtils {
         String optionalParameter = jsonArray.optString(index);
         return optionalParameter != null && !optionalParameter.equals("null");
     }
+
+    public static ChannelPolicy getChannelPolicyByNumber(int channelPolicyNumber) {
+        if (channelPolicyNumber == 1)
+            return ChannelPolicy.CHANNEL_AUTO;
+        else if (channelPolicyNumber == 2)
+            return ChannelPolicy.CHANNEL_HIGH_THROUGHPUT;
+        else if (channelPolicyNumber == 3)
+            return ChannelPolicy.CHANNEL_INSTANCE;
+        else
+            return null;
+    }
+
+    public static int getChannelPolicyNumber(ChannelPolicy channelPolicy) {
+        if (channelPolicy.equals(ChannelPolicy.CHANNEL_AUTO))
+            return 1;
+        else if (channelPolicy.equals(ChannelPolicy.CHANNEL_HIGH_THROUGHPUT))
+            return 2;
+        else if (channelPolicy.equals(ChannelPolicy.CHANNEL_INSTANCE))
+            return 3;
+        else
+            return -1;
+    }
+
 }

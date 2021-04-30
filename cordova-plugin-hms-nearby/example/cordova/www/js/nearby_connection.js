@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -53,9 +53,11 @@ var nearby_connection = {
 
         HMSNearby.on(HMSNearby.HMSNearbyEvent.EVENT_CONNECTION_ON_ESTABLISH, (res) => {
             console.log('listener :: EVENT_CONNECTION_ON_ESTABLISH triggered: ' + JSON.stringify(res));
-
+            this.pushMessage({type: 'msg-system', data: "Connection established"});
             // accept the connection
-            HMSNearby.acceptConnect(res.endpointId).then((res2) => console.log(JSON.stringify(res2)));
+            HMSNearby.acceptConnect(res.endpointId)
+                .then((res2) => console.log("connection :: acceptConnect: " + JSON.stringify(res2)))
+                .catch((err) => alert('connection :: acceptConnectError: ' + JSON.stringify(err)));
         });
         HMSNearby.on(HMSNearby.HMSNearbyEvent.EVENT_CONNECTION_ON_RESULT, (res) => {
             console.log('listener :: EVENT_CONNECTION_ON_RESULT triggered: ' + JSON.stringify(res));
@@ -65,6 +67,8 @@ var nearby_connection = {
                 this.clearMessages();
                 this.pushMessage({type: 'msg-system', data: "Connection Success!"});
                 endpointIds.push(res.endpointId);
+            } else {
+                this.pushMessage({type: 'msg-system', data: "Connection Error! Status Code: " + res.statusCode});
             }
             
         });
@@ -78,11 +82,13 @@ var nearby_connection = {
 
         HMSNearby.on(HMSNearby.HMSNearbyEvent.EVENT_SCAN_ON_FOUND, async (res) => {
             console.log('listener :: EVENT_SCAN_ON_FOUND triggered: ' + JSON.stringify(res));
+            this.pushMessage({type: 'msg-system', data: "Nearby device found"});
+            // request connect
+            const channelPolicy = HMSNearby.ChannelPolicy.CHANNEL_HIGH_THROUGHPUT;  
+            HMSNearby.requestConnectEx("scanNameTest", res.endpointId, channelPolicy)
+                .then((resRequest) => console.log("connection :: requestConnect: " + JSON.stringify(resRequest)))
+                .catch((err) => alert('connection :: requestConnectError: ' + JSON.stringify(err)));
 
-            // request connect            
-            HMSNearby.requestConnect("scanNameTest", res.endpointId).then((resRequest) => {
-                console.log("index :: requestConnect: " + JSON.stringify(resRequest));
-            });
         });
         HMSNearby.on(HMSNearby.HMSNearbyEvent.EVENT_SCAN_ON_LOST, (res) => {
             console.log('listener :: EVENT_SCAN_ON_LOST triggered: ' + JSON.stringify(res));
@@ -123,30 +129,28 @@ var nearby_connection = {
         document.getElementById("btn-broadcast").addEventListener('click', () => {
             console.log("connection :: btn-broadcast clicked!");
             HMSNearby.startBroadcasting('testBroadcast', 'com.hms.nearbyservice', HMSNearby.Policy.POLICY_STAR)
-                .then((res) => {
-                    alert('connection :: startBroadcastingResult: ' + JSON.stringify(res));
-                });
+                .then((res) => alert('connection :: startBroadcastingResult: ' + JSON.stringify(res)))
+                .catch((err) => alert('connection :: startBroadcastingError: ' + JSON.stringify(err)));
         });
         document.getElementById("btn-scan").addEventListener('click', () => {
             console.log("connection :: btn-scan clicked!");
             HMSNearby.startScan('com.hms.nearbyservice', HMSNearby.Policy.POLICY_STAR)
-                .then((res) => {
-                    alert('connection :: startScanResult: ' + JSON.stringify(res));
-                });
+                .then((res) => alert('connection :: startScanResult: ' + JSON.stringify(res)))
+                .catch((err) => alert('connection :: startScanError: ' + JSON.stringify(err)));
         });
 
         document.getElementById("btn-broadcast-stop").addEventListener('click', () => {
             console.log("connection :: btn-broadcast-stop clicked!");
-            HMSNearby.stopBroadcasting().then((res) => {
-                alert('connection :: stopBroadcastingResult: ' + JSON.stringify(res));
-            });
+            HMSNearby.stopBroadcasting()
+                .then((res) => alert('connection :: stopBroadcastingResult: ' + JSON.stringify(res)))
+                .catch((err) => alert('connection :: stopBroadcastingError: ' + JSON.stringify(err)));
         });
 
         document.getElementById("btn-scan-stop").addEventListener('click', () => {
             console.log("connection :: btn-scan-stop clicked!");
-            HMSNearby.stopScan().then((res) => {
-                alert('connection :: stopScanResult: ' + JSON.stringify(res));
-            });
+            HMSNearby.stopScan()
+                .then((res) => alert('connection :: stopScanResult: ' + JSON.stringify(res)))
+                .catch((err) => alert('connection :: stopScanError: ' + JSON.stringify(err)));
         });
 
         document.getElementById("btn-disconnect-all").addEventListener('click', () => {
@@ -155,7 +159,7 @@ var nearby_connection = {
                 console.log('connection :: disconnectAll: ' + JSON.stringify(res));
                 endpointIds = [];
                 this.pushMessage({type: 'msg-system', data: "Disconnected!"});
-            });
+            }).catch((err) => alert('connection :: disconnectAllError: ' + JSON.stringify(err)));
         });
 
         /* Data Transfer */
@@ -168,7 +172,7 @@ var nearby_connection = {
                 HMSNearby.sendBytes(strBytes, endpointIds).then(() => {
                     console.log("connection :: '" + inputText + "' is sending");
                     this.pushMessage({type: 'msg-sent', data: inputText});
-                })
+                }).catch((err) => alert('connection :: sendBytesError: ' + JSON.stringify(err)));
             }
         });
         document.getElementById("btn-send-file").addEventListener("click", () => {
@@ -178,7 +182,7 @@ var nearby_connection = {
                 HMSNearby.sendFile(uri, endpointIds).then(() => {
                     console.log("connection :: selected file is sending");
                     this.pushMessage({type: 'msg-system', data: "File Sending..."});
-                });
+                }).catch((err) => alert('connection :: sendFileError: ' + JSON.stringify(err)));
             });
         });
 

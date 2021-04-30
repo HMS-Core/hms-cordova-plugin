@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -47,6 +47,11 @@ var nearby_wifi = {
 
         HMSNearby.on(HMSNearby.HMSNearbyEvent.EVENT_WIFI_ON_SHARE_RESULT, (res) => {
             console.log('listener :: EVENT_WIFI_ON_SHARE_RESULT triggered: ' + JSON.stringify(res));
+            if (res.statusCode == HMSNearby.StatusCode.STATUS_SUCCESS) {
+                alert('wifi share success: ' + JSON.stringify(res));
+            } else {
+                alert('wifi share error! Status code: ' + JSON.stringify(res.statusCode));
+            }
         });
 
         console.log('wifi :: event listeners added');
@@ -57,25 +62,24 @@ var nearby_wifi = {
             console.log("wifi :: btn-wifi-share clicked!");
 
             HMSNearby.startWifiShare(HMSNearby.WifiSharePolicy.POLICY_SHARE)
-                .then((res) => {
-                    alert('wifi :: startWifiShare POLICY_SHARE: ' + JSON.stringify(res));
-                });
+                .then((res) => alert('wifi :: startWifiShare POLICY_SHARE: ' + JSON.stringify(res)))
+                .catch((err) => alert('wifi :: startWifiShareError: ' + JSON.stringify(err)));
         });
 
         document.getElementById("btn-wifi-set").addEventListener('click', () => {
             console.log("wifi :: btn-wifi-set clicked!");
 
             HMSNearby.startWifiShare(HMSNearby.WifiSharePolicy.POLICY_SET)
-                .then((res) => {
-                    alert('wifi :: startWifiShare POLICY_SET: ' + JSON.stringify(res));
-                });
+                .then((res) => alert('wifi :: startWifiShare POLICY_SET: ' + JSON.stringify(res)))
+                .catch((err) => alert('wifi :: startWifiShareError: ' + JSON.stringify(err)));
+
         });
 
         document.getElementById("btn-wifi-stop").addEventListener('click', () => {
             console.log("wifi :: btn-wifi-stop clicked!");
-            HMSNearby.stopWifiShare().then((res) => {
-                alert('wifi :: stopWifiShare: ' + JSON.stringify(res));
-            });
+            HMSNearby.stopWifiShare()
+                .then((res) => alert('wifi :: stopWifiShare: ' + JSON.stringify(res)))
+                .catch((err) => alert('wifi :: stopWifiShareError: ' + JSON.stringify(err)));
         });
 
         console.log('wifi :: click listeners added');

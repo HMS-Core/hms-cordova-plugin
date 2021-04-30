@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,9 @@
     limitations under the License.
 */
 import { Component } from '@angular/core';
-import { HMSNearby, HMSNearbyEvent, WifiSharePolicy} from '@hmscore/ionic-native-hms-nearby/ngx';
+import { HMSNearby, HMSNearbyEvent, WifiSharePolicy,
+  AuthCodeUpdate, WifiShareResult, EndpointId, ScanEndpointInfo
+} from '@hmscore/ionic-native-hms-nearby/ngx';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -46,7 +48,7 @@ export class Tab3Page {
   // add hms wifi listeners
   addListeners() {
     // on wifi found
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_FOUND, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_FOUND, (res: ScanEndpointInfo) => {
       console.log('Wifi on found: ' + JSON.stringify(res));
 
       // share config
@@ -58,19 +60,19 @@ export class Tab3Page {
     });
 
     // on wifi lost
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_LOST, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_LOST, (res: EndpointId) => {
       console.log('Wifi on lost: ' + JSON.stringify(res));
     });
 
     // on fetch auth code
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_FETCH_AUTH_CODE, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_FETCH_AUTH_CODE, (res: AuthCodeUpdate) => {
       console.log('Wifi on fetch auth code: ' + JSON.stringify(res));
 
       this.presentToast('authCode: ' + res.authCode);
     });
 
     // on result
-    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_SHARE_RESULT, (res) => {
+    this.hmsNearby.on(HMSNearbyEvent.EVENT_WIFI_ON_SHARE_RESULT, (res: WifiShareResult) => {
       console.log('Wifi on share result: ' + JSON.stringify(res));
       
       if (res.statusCode == 0) {

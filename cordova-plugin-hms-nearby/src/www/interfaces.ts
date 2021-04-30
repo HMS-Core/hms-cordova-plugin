@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
     limitations under the License.
 */
 import {
+    ChannelPolicy,
+    DataType,
     MessagePolicyDistanceType,
     MessagePolicyFindingMode,
-    MessagePolicyTtlSeconds
+    MessagePolicyTtlSeconds,
+    StatusCode,
+    TransferState
 } from "./enums";
 
 
@@ -72,6 +76,76 @@ export interface BleSignal {
 export interface Distance {
     precision: number,
     meters: number
+}
+
+export interface EndpointId {
+    endpointId: string
+}
+
+export interface ConnectInfo {
+    endpointId: string,
+    endpointName: string,
+    authCode: string,
+    isRemoteConnect: boolean
+}
+
+export interface ConnectResult {
+    endpointId: string,
+    statusCode: StatusCode,
+    statusMessage: string,
+    channelPolicy: ChannelPolicy
+}
+
+export interface ScanEndpointInfo {
+    endpointId: string,
+    serviceId: string,
+    name: string
+}
+
+export interface Data {
+    endpointId: string,
+    dataType: DataType,
+    dataId: string,
+    size?: number,
+    data?: number[],
+    fileUri?: string
+}
+
+export interface TransferStateUpdate {
+    endpointId: string,
+    dataId: string,
+    status: TransferState,
+    transferredBytes: number,
+    totalBytes: number
+}
+
+export interface BleSignalUpdate {
+    message: Message,
+    bleSignal: BleSignal
+}
+
+export interface DistanceUpdate {
+    message: Message,
+    distance: Distance
+}
+
+export interface MessageTimeout {
+    message: Message,
+    status: string
+}
+
+export interface PermissionUpdate {
+    grantPermission: boolean
+}
+
+export interface AuthCodeUpdate {
+    endpointId: string,
+    authCode: string
+}
+
+export interface WifiShareResult {
+    endpointId: string,
+    statusCode: StatusCode
 }
 
 export const BLE_UNKNOWN_TX_POWER: number = 0x80000000;
