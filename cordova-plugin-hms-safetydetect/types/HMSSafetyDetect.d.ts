@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,22 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-export declare function enableAppsCheck(): Promise<EnableAppsCheckResult>;
-export declare function isVerifyAppsCheck(): Promise<VerifyAppsCheckResult>;
-export declare function getMaliciousAppsList(): Promise<HMSMaliciousAppsData[]>;
-export declare function sysIntegrity(nonce: string, appId: string): Promise<string>;
-export declare function initUrlCheck(): Promise<void>;
-export declare function urlCheck(url: string, appId: string, urlCheckThreats: HMSUrlCheckThreatConstants[]): Promise<HMSUrlCheckThreatConstants[]>;
-export declare function shutdownUrlCheck(): Promise<void>;
-export declare function initUserDetect(): Promise<void>;
-export declare function userDetection(appId: string): Promise<string>;
-export declare function shutdownUserDetect(): Promise<void>;
-export declare function initAntiFraud(appId: string): Promise<void>;
-export declare function getRiskToken(): Promise<string>;
-export declare function releaseAntiFraud(): Promise<void>;
-export declare function getWifiDetectStatus(): Promise<HMSWifiDetectResponse>;
-export declare function enableLogger(): Promise<void>;
-export declare function disableLogger(): Promise<void>;
+
 export declare enum HMSAppsCheckConstants {
     HMS_VIRUS_LEVEL_RISK = 1,
     HMS_VIRUS_LEVEL_VIRUS = 2
@@ -53,3 +38,20 @@ export interface HMSMaliciousAppsData {
     apkCategory: HMSAppsCheckConstants;
     apkSha256: string;
 }
+export declare function enableAppsCheck(): Promise<EnableAppsCheckResult>;
+export declare function isVerifyAppsCheck(): Promise<VerifyAppsCheckResult>;
+export declare function getMaliciousAppsList(): Promise<HMSMaliciousAppsData>;
+export declare function sysIntegrity(nonce: string, appId: string): Promise<string>;
+export declare function sysIntegrityWithRequest(nonce: string, appId: string, alg: string): Promise<string>;
+export declare function initUrlCheck(): Promise<void>;
+export declare function urlCheck(url: string, appId: string, urlCheckThreats: HMSUrlCheckThreatConstants[]): Promise<HMSUrlCheckThreatConstants[]>;
+export declare function shutdownUrlCheck(): Promise<void>;
+export declare function initUserDetect(): Promise<void>;
+export declare function userDetection(appId: string): Promise<string>;
+export declare function shutdownUserDetect(): Promise<void>;
+export declare function initAntiFraud(appId: string): Promise<void>;
+export declare function getRiskToken(): Promise<string>;
+export declare function releaseAntiFraud(): Promise<void>;
+export declare function getWifiDetectStatus(): Promise<HMSWifiDetectResponse>;
+export declare function enableLogger(): Promise<void>;
+export declare function disableLogger(): Promise<void>;

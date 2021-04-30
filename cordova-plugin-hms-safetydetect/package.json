@@ -1,48 +1,55 @@
 {
   "name": "@hmscore/cordova-plugin-hms-safetydetect",
   "description": "Huawei Safety Detect Cordova Plugin",
-  "version": "5.0.3-300",
-  "types": "types/index.d.ts",
+  "version": "5.2.0-300",
+  "main": "./www/index.js",
+  "types": "./types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
     "directory": "cordova-plugin-hms-safetydetect"
   },
+  "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
   "readmeFilename": "README.md",
   "cordova": {
-    "id": "com.huawei.hms.cordova.safetydetect",
-    "platforms": []
+    "id": "cordova-plugin-hms-safetydetect",
+    "platforms": [
+      "android"
+    ]
   },
   "keywords": [
     "cordova",
     "ecosystem:cordova",
-    "cordova-android"
+    "cordova-android",
+    "safetydetect",
+    "hms-safetydetect",
+    "huawei-safetydetect",
+    "hms",
+    "huawei"
   ],
   "files": [
     "hooks",
-    "ionic",
-    "resources",
-    "scripts",
+    "ionic-native",
     "src",
     "types",
     "www",
     "LICENCE",
     "package.json",
     "plugin.xml",
-    "README.md",
-    "tsconfig.json"
+    "README.md"
   ],
+  "dependencies": {
+    "@types/cordova": "0.0.34"
+  },
   "devDependencies": {
-    "@types/cordova": "0.0.34",
-    "eslint": "^3.19.0",
-    "eslint-config-semistandard": "^11.0.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.3.0",
-    "eslint-plugin-node": "^5.0.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "typescript": "3.9.5"
+  },
+  "scripts": {
+    "build:core": "node ./node_modules/typescript/bin/tsc",
+    "build": "npm run build:core",
+    "watch": "node ./node_modules/typescript/bin/tsc --watch"
   }
 }

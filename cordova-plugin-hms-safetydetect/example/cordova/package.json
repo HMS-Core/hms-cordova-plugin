@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-safetydetect-demo",
   "displayName": "HMSSafetyDetectDemo",
-  "version": "5.0.3-300",
+  "version": "5.2.0-300",
   "description": "A demo application which shows the usage of HMS Safety Detect Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
