@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,20 +33,17 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
-    <title>Cordova Awareness Barrier Bluetooth Sample</title>
-
-    <style>
-
-    </style>
+    <title>Headset Barrier Sample</title>
 </head>
 
 <body>
-    <input type="button" id="addHeadsetBarrierKeeping" value="addHeadsetBarrierKeepingBackground" class="btn">
-    <input type="button" id="addHeadsetBarrierKeepingCustom" value="addHeadsetBarrierKeepingCustom" class="btn">
-    <input type="button" id="addHeadsetBarrierConnecting" value="addHeadsetBarrierConnecting" class="btn">
-    <input type="button" id="addHeadsetBarrierDisconnecting" value="addHeadsetBarrierDisconnecting" class="btn">
-    <input type="button" id="deleteBarrierWithLabels" value="deleteBarrierWithLabels" class="btn">
-    
+    <div class="app">
+        <input type="button" id="addHeadsetBarrierKeeping" value="KEEPING IN BACGROUND" class="btn">
+        <input type="button" id="addHeadsetBarrierKeepingCustom" value="KEEPING IN DEFAULT" class="btn">
+        <input type="button" id="addHeadsetBarrierConnecting" value="CONNECTING" class="btn">
+        <input type="button" id="addHeadsetBarrierDisconnecting" value="DISCONNECTING" class="btn">
+        <input type="button" id="deleteBarrierWithLabels" value="deleteBarrierWithLabels" class="btn">
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/headetsetbarrier.js"></script>
 </body>

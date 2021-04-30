@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,179 +15,124 @@
 */
 const $ = (x) => document.getElementById(x);
 $('getHeadsetStatus').onclick = async () => {
-    try {
-        const headsetStatusResult = await AwarenessCapture.getHeadsetStatus();
-        console.log(JSON.stringify(headsetStatusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getHeadsetStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
+
 }
 $('getLocation').onclick = async () => {
-    try {
-        const getLocationResult = await AwarenessCapture.getLocation();
-        console.log(JSON.stringify(getLocationResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getLocation()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getBehaviorStatus').onclick = async () => {
-    try {
-        const behaviorStatusResult = await AwarenessCapture.getBehaviorStatus();
-        console.log(JSON.stringify(behaviorStatusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getBehaviorStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('querySupportingCapabilities').onclick = async () => {
-    try {
-        const querySupportingCapabilitiesResult = await AwarenessCapture.querySupportingCapabilities();
-        console.log(JSON.stringify(querySupportingCapabilitiesResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.querySupportingCapabilities()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getBluetoothStatus').onclick = async () => {
-    try {
-        const bluetoothStatusResult = await AwarenessCapture.getBluetoothStatus(AwarenessCapture.BluetoothDevice.DEVICE_CAR);
-        console.log(JSON.stringify(bluetoothStatusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getBluetoothStatus(AwarenessCapture.BluetoothDevice.DEVICE_CAR)
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getBeaconStatus').onclick = async () => {
-    try {
-        const beaconStatusRequest = {
-            namespace: "sample namespace",
-            type: "sample type",
-            content: ['s', 'a', 'm', 'p', 'l', 'e']
-        }
-        const beaconStatusResult = await AwarenessCapture.getBeaconStatus(beaconStatusRequest);
-        console.log(JSON.stringify(beaconStatusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
+    const beaconStatusRequest = {
+        namespace: "sample namespace",
+        type: "sample type",
+        content: ['s', 'a', 'm', 'p', 'l', 'e']
     }
+    AwarenessCapture.getBeaconStatus(beaconStatusRequest)
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getApplicationStatus').onclick = async () => {
-    try {
-        const applicationStatusResult = await AwarenessCapture.getApplicationStatus();
-        console.log(JSON.stringify(applicationStatusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getApplicationStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getLightIntensity').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getLightIntensity();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getLightIntensity()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getScreenStatus').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getScreenStatus();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getScreenStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getCurrentLocation').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getCurrentLocation();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getCurrentLocation()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getDarkModeStatus').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getDarkModeStatus();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getDarkModeStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getWifiStatus').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getWifiStatus();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getWifiStatus()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getWeatherByDevice').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getWeatherByDevice();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getWeatherByDevice()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getWeatherByPosition').onclick = async () => {
-        const weatherPositionRequest = {
-            mCountry: "UK",
-            mProvince: "London",
-            mCity: "London",
-            mDistrict: "",
-            mCounty: "",
-            mLocale: "en_US",
-        }
-        const statusResult = await AwarenessCapture.getWeatherByPosition(weatherPositionRequest);
-        console.log(JSON.stringify(statusResult));
+    const weatherPositionRequest = {
+        mCountry: "UK",
+        mProvince: "London",
+        mCity: "London",
+        mDistrict: "",
+        mCounty: "",
+        mLocale: "en_US",
+    }
+    AwarenessCapture.getWeatherByPosition(weatherPositionRequest)
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategories').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getTimeCategories();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getTimeCategories()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategoriesByIP').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.getTimeCategoriesByIP();
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.getTimeCategoriesByIP()
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategoriesByCountryCode').onclick = async () => {
-    try {
-        const countryCode = "TR";
-        const statusResult = await AwarenessCapture.getTimeCategoriesByCountryCode(countryCode);
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    const countryCode = "TR";
+    AwarenessCapture.getTimeCategoriesByCountryCode(countryCode)
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategoriesByUser').onclick = async () => {
-    try {
-        const locationRequest = {
-            location: {
-                latitude: 48.893478,
-                longitude: 2.334595,
-            }
+    const locationRequest = {
+        location: {
+            latitude: 48.893478,
+            longitude: 2.334595,
         }
-        const statusResult = await AwarenessCapture.getTimeCategoriesByUser(locationRequest);
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
     }
+    AwarenessCapture.getTimeCategoriesByUser(locationRequest)
+        .then((res) => alert(JSON.stringify(res)))
+        .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategoriesForFuture').onclick = async () => {
-    try {
-        const timeStamp = 1607990400;
-        const statusResult = await AwarenessCapture.getTimeCategoriesForFuture(timeStamp);
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    const timeStamp = 1607990400;
+    AwarenessCapture.getTimeCategoriesForFuture(timeStamp)
+    .then((res) => alert(JSON.stringify(res)))
+    .catch((err) => alert(JSON.stringify(err)));
 }
 $('enableUpdateWindow').onclick = async () => {
-    try {
-        const statusResult = await AwarenessCapture.enableUpdateWindow(true);
-        console.log(JSON.stringify(statusResult));
-    } catch (ex) {
-        console.log(JSON.stringify(ex));
-    }
+    AwarenessCapture.enableUpdateWindow()
+    .then((res) => alert(JSON.stringify(res)))
+    .catch((err) => alert(JSON.stringify(err)));
 }

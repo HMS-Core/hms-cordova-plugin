@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { BluetoothBarrier, BluetoothStatus, BlueoothDevice } from '@hmscore/ionic-native-hms-awareness/ngx';
+import { BluetoothBarrier, BluetoothStatus, BluetoothDevice } from '@hmscore/ionic-native-hms-awareness/ngx';
 
 @Component({
     selector: 'app-bluetooth-barrier',
@@ -30,7 +30,7 @@ export class BluetoothBarrierPage implements OnInit {
     public addBluetoothBarrierKeep() {
         let barrierlLabel = "BluetoothBarrierKeep";
         let bluetoothStatus = BluetoothStatus.CONNECTED;
-        let deviceType = BlueoothDevice.DEVICE_CAR;
+        let deviceType = BluetoothDevice.DEVICE_CAR;
         BluetoothBarrier.keep(deviceType, bluetoothStatus)
             .subscribe((data) => {
                 console.log(JSON.stringify(data));
@@ -40,7 +40,7 @@ export class BluetoothBarrierPage implements OnInit {
     }
     public addBluetoothBarrierConnecting() {
         let barrierlLabel = "BluetoothBarrierConnecting";
-        let deviceType = BlueoothDevice.DEVICE_CAR;
+        let deviceType = BluetoothDevice.DEVICE_CAR;
         BluetoothBarrier.connecting(deviceType)
             .subscribe((data) => {
                 console.log(JSON.stringify(data));
@@ -50,7 +50,7 @@ export class BluetoothBarrierPage implements OnInit {
     }
     public addBluetoothBarrierDisconnecting() {
         let barrierlLabel = "BluetoothBarrierDisconnecting";
-        let deviceType = BlueoothDevice.DEVICE_CAR;
+        let deviceType = BluetoothDevice.DEVICE_CAR;
         BluetoothBarrier.disconnecting(deviceType)
             .subscribe((data) => {
                 console.log(JSON.stringify(data));

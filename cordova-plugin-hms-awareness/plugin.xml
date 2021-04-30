@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-awareness" version="1.0.7-303" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-awareness" version="1.0.8-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS Awareness</name>
 	<description>Cordova HMS Awareness Plugin</description>
 	<license>Apache 2.0</license>
@@ -51,7 +51,7 @@
 			<preference name="AndroidXEnabled" value="true"/>
 		</config-file>
 
-		<framework src="com.huawei.hms:awareness:1.0.7.303"/>
+		<framework src="com.huawei.hms:awareness:1.0.8.301"/>
 		<framework src="com.google.code.gson:gson:2.8.5"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
 

@@ -1,7 +1,7 @@
 {
     "name": "ionic-hms-awareness-demo",
     "description": "A demo application which shows the usage of HMS Awareness Plugin.",
-    "version": "1.0.7-303",
+    "version": "1.0.8-301",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -70,10 +70,5 @@
         "tsconfig.json",
         "tsconfig.spec.json",
         "tslint.json"
-    ],
-    "cordova": {
-        "platforms": [
-            "android"
-        ]
-    }
+    ]
 }

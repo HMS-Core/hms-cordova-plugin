@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { BeaconBarrier, Filter } from '@hmscore/ionic-native-hms-awareness/ngx';
+import { BeaconBarrier } from '@hmscore/ionic-native-hms-awareness/ngx';
 @Component({
   selector: 'app-beacon-barrier',
   templateUrl: './beacon-barrier.page.html',

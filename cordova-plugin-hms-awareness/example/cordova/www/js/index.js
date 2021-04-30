@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,25 +41,20 @@ var app = {
     }
 };
 async function hasPermission() {
-    try {
-        const permission = await HMSAwareness.hasPermission(HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION);
-        alert(JSON.stringify(permission));
-    } catch (ex) {
-        alert(JSON.stringify(ex));
-    }
+    HMSAwareness.hasPermission(HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION)
+    .then((res) => alert(JSON.stringify(res)))
+    .catch((err) => alert(JSON.stringify(err)));
 }
 async function requestPermissions() {
-    try {
-        await HMSAwareness.requestPermissions(HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
-            HMSAwareness.HMSPermission.PERMISSION_HUAWEI_ACTIVITY_RECOGNITION,
-            HMSAwareness.HMSPermission.PERMISSION_ACTIVITY_RECOGNITION,
-            HMSAwareness.HMSPermission.PERMISSION_BLUETOOTH,
-            HMSAwareness.HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
-            HMSAwareness.HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
-            HMSAwareness.HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION
-        );
-    } catch (ex) {
-        alert(JSON.stringify(ex));
-    }
+    HMSAwareness.requestPermissions([HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
+        HMSAwareness.HMSPermission.PERMISSION_HUAWEI_ACTIVITY_RECOGNITION,
+        HMSAwareness.HMSPermission.PERMISSION_ACTIVITY_RECOGNITION,
+        HMSAwareness.HMSPermission.PERMISSION_BLUETOOTH,
+        HMSAwareness.HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
+        HMSAwareness.HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
+        HMSAwareness.HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION
+    ])
+    .then((res) => alert(JSON.stringify(res)))
+    .catch((err) => alert(JSON.stringify(err)));
 }
 app.initialize();

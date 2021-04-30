@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,34 +33,28 @@
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
-    <title>Cordova Awareness Barrier Sample</title>
-
-    <style>
-        .sample {
-            text-decoration: none;
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
+    <title>Barrier Samples</title>
 </head>
 
 <body>
+    <div class="app">
+        <img src="./img/logoh.png" style="width: 40%;height: 40;" />
 
-    <a id="goHeadsetBarrier" class="sample btn" href="javascript:(void)">Awareness Headset Barrier Sample</a>
-    <a id="goBluetoohBarrier" class="sample btn" href="javascript:(void)">Awareness Bluetooh Barrier Sample</a>
-    <a id="goAmbientLightBarrier" class="sample btn" href="javascript:(void)">Awareness Ambient Barrier Sample</a>
-    <a id="goBeaconBarrier" class="sample btn" href="javascript:(void)">Awareness Beacon Barrier Sample</a>
-    <a id="goBehaviorBarrier" class="sample btn" href="javascript:(void)">Awareness Behavior Barrier Sample</a>
-    <a id="goLocationBarrier" class="sample btn" href="javascript:(void)">Awareness Location Barrier Sample</a>
-    <a id="goScreenBarrier" class="sample btn" href="javascript:(void)">Awareness Screen Barrier Sample</a>
-    <a id="goWifiBarrier" class="sample btn" href="javascript:(void)">Awareness Wifi Barrier Sample</a>
-    <a id="goTimeBarrier" class="sample btn" href="javascript:(void)">Awareness Time Barrier Sample</a>
-    <a id="goCombinationBarrier" class="sample btn" href="javascript:(void)">Awareness Barrier Combination Sample</a>
+        <input type="button" id="goHeadsetBarrier" value="Headset Barrier" class="btn">
+        <input type="button" id="goBluetoohBarrier" value="Bluetooth Barrier" class="btn">
+        <input type="button" id="goAmbientLightBarrier" value="Ambient Light Barrier" class="btn">
+        <input type="button" id="goBeaconBarrier" value="Beacon Barrier" class="btn">
+        <input type="button" id="goBehaviorBarrier" value="Behaviour Barrier" class="btn">
+        <input type="button" id="goLocationBarrier" value="Location Barrier" class="btn">
+        <input type="button" id="goScreenBarrier" value="Screnn Barrier" class="btn">
+        <input type="button" id="goWifiBarrier" value="Wifi Barrier" class="btn">
+        <input type="button" id="goTimeBarrier" value="Time Barrier" class="btn">
+        <input type="button" id="goCombinationBarrier" value="Combination Barrier" class="btn">
 
-    <input type="button" id="deleteBarrierWithLabels" value="deleteBarrierWithLabels" class="btn">
-    <input type="button" id="deleteAllBarriers" value="deleteAllBarriers" class="btn">
-    <input type="button" id="unRegisterReceiver" value="unRegisterReceiver" class="btn">
-    
+        <input type="button" id="deleteBarrierWithLabels" value="deleteBarrierWithLabels" class="btn">
+        <input type="button" id="deleteAllBarriers" value="deleteAllBarriers" class="btn">
+        <input type="button" id="unRegisterReceiver" value="unRegisterReceiver" class="btn">
+    </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/barriersample.js"></script>
 </body>

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,20 +26,22 @@ export class HomePage {
   constructor(private hmsAwareneess: HMSAwareness, private router: Router) { }
 
   public async hasPermission() {
-    try {
-      const permission = await this.hmsAwareneess.hasPermission(HMSPermission.PERMISSION_ACCESS_FINE_LOCATION);
-      alert(JSON.stringify(permission));
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+    this.hmsAwareneess.hasPermission(HMSPermission.PERMISSION_ACCESS_FINE_LOCATION)
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
-  
+
   public async requestPermissions() {
-    try {
-      await this.hmsAwareneess.requestPermissions(HMSPermission.PERMISSION_ACCESS_FINE_LOCATION, HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION);
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
+    this.hmsAwareneess.requestPermissions(HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
+      HMSPermission.PERMISSION_HUAWEI_ACTIVITY_RECOGNITION,
+      HMSPermission.PERMISSION_ACTIVITY_RECOGNITION,
+      HMSPermission.PERMISSION_BLUETOOTH,
+      HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
+      HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
+      HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION
+    )
+      .then((res) => alert(JSON.stringify(res)))
+      .catch((err) => alert(JSON.stringify(err)));
   }
   goCaptureSample() {
     this.router.navigate(['capture-sample']);
