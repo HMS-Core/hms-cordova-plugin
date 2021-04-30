@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 
 import { Component } from '@angular/core';
-import { HMSDtm } from '@ionic-native/hms-dtm/ngx'
+import { HMSDTM } from '@hmscore/ionic-native-hms-dtm/ngx'
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -23,7 +23,7 @@ import { HMSDtm } from '@ionic-native/hms-dtm/ngx'
 })
 export class HomePage {
 
-  constructor(private hmsDtm:HMSDtm) {
+  constructor(private hmsDtm:HMSDTM) {
     this.hmsDtm.onCustomTag((result)=>{
       console.log(JSON.stringify(result));
       if(result.price==100){

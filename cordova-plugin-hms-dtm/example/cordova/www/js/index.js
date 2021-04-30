@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ var app = {
 
     receivedEvent: function(id) {
 
-        HMSDtm.onCustomTag((result)=>{
+        HMSDTM.onCustomTag((result)=>{
             console.log(JSON.stringify(result));
             if(result.price==100){
                 const newPrice = result.price - result.price/result.discount
-                HMSDtm.setCustomVariable({"varName":"PantsPrice","value":newPrice})
+                HMSDTM.setCustomVariable({"varName":"PantsPrice","value":newPrice})
             }
         })
         console.log('Received Event: ' + id);
@@ -45,25 +45,25 @@ document.getElementById('sendCustomEvent').onclick = async function onEvent() {
     const bundleObject = {
         "platformName":"Cordova"
     }
-    console.log(await HMSDtm.onEvent(eventName, bundleObject));
+    console.log(await HMSDTM.onEvent(eventName, bundleObject));
 }
 
 document.getElementById('CustomTag').onclick = async function onEvent() {
     const eventName = "PurchaseShoes"
     const bundleObject = {}
-    console.log(await HMSDtm.onEvent(eventName, bundleObject));
+    console.log(await HMSDTM.onEvent(eventName, bundleObject));
 }
 
 document.getElementById('setCustomVariableValue').onclick = async function onEvent() {
     const eventName = "SetPantsPrice"
     const bundleObject = {}
-    console.log(await HMSDtm.onEvent(eventName, bundleObject));
+    console.log(await HMSDTM.onEvent(eventName, bundleObject));
     
 }
 
 document.getElementById('reportEventwithCustomVariable').onclick = async function onEvent() {
     const eventName = "PurchasePants"
     const bundleObject = {}
-    console.log(await HMSDtm.onEvent(eventName, bundleObject));
+    console.log(await HMSDTM.onEvent(eventName, bundleObject));
     
 }

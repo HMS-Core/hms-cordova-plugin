@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-dtm" version="5.2.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HMS DTM</name>
+	<description>Cordova HMS DTM Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,dtm,hms-dtm,huawei-dtm,hms,huawei</keywords>
+	<js-module name="HMSDTM" src="www/HMSDTM.js">
+		<clobbers target="HMSDTM"></clobbers>
+	</js-module>
+	<js-module name="index" src="www/index.js"></js-module>
+	<platform name="android">
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"></hook>
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"></hook>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-hms-dtm"
-    version="5.0.4">
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+		</config-file>
 
-    <name>cordova-plugin-hms-dtm</name>
-    <description>cordova-plugin-hms-dtm</description>
-    <license>Apache 2.0</license>
-    <keywords>cordova,hms</keywords>
-
-    <js-module src="www/HMSDtm.js" name="HMSDtm">
-        <clobbers target="HMSDtm" />
-    </js-module>
-
-
-    
-    <!-- android -->
-    <platform name="android">
-
-        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
-		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
-        <hook type="after_prepare" src="hooks/after_prepare.js" />
-
-        <framework src="resources/plugin.gradle" custom="true" type="gradleReference" />
-        <framework src="com.huawei.hms:hianalytics:5.0.3.300" />
-        <framework src="com.huawei.hms:dtm-api:5.0.4.301"/>
-
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="HMSDtm" >
-                <param name="android-package" value="com.huawei.hms.cordova.dtm.HMSDtm"/>
-            </feature>
-        </config-file>
-        <config-file parent="/manifest/application" target="AndroidManifest.xml">
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSDTM">
+				<param name="android-package" value="com.huawei.hms.cordova.dtm.HMSDTM"></param>
+			</feature>
+		</config-file>
+		<config-file parent="/manifest/application" target="AndroidManifest.xml">
             <provider android:authorities="${applicationId}.HMSContentProvider" android:exported="false" android:name="com.huawei.hms.cordova.dtm.HMSDtmProvider" />
         </config-file>
-
-        <source-file src="src/main/java/com/huawei/hms/cordova/dtm/HMSDtm.java" target-dir="src/com/huawei/hms/cordova/dtm" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/dtm/HMSDtmProvider.java" target-dir="src/com/huawei/hms/cordova/dtm" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/dtm/interfaces/CustomTag.java" target-dir="src/com/huawei/hms/cordova/dtm/interfaces" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/dtm/interfaces/CustomVariable.java" target-dir="src/com/huawei/hms/cordova/dtm/interfaces" />
-        <source-file src="src/main/java/com/huawei/hms/cordova/dtm/logger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/dtm/logger" />
-    </platform>
-    
-    
-
+		<framework src="com.huawei.hms:hianalytics:5.2.0.300"></framework>
+		<framework src="com.huawei.hms:dtm-api:5.2.0.300"></framework>
+		<framework src="src/android/plugin.gradle" custom="true" type="gradleReference"></framework>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDTM.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDTMModule.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDtmProvider.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CorLog.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/dtm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/interfaces/CustomTag.java" target-dir="src/com/huawei/hms/cordova/dtm/interfaces/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/interfaces/CustomVariable.java" target-dir="src/com/huawei/hms/cordova/dtm/interfaces/"></source-file>
+	</platform>
 </plugin>
-

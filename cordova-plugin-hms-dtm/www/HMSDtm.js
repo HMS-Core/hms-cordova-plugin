@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -25,9 +24,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.onCustomTag = exports.setCustomVariable = exports.asyncExec = exports.onEvent = void 0;
+exports.enableLogger = exports.disableLogger = exports.onCustomTag = exports.setCustomVariable = exports.asyncExec = exports.onEvent = void 0;
 function onEvent(eventName, bundleObject) {
-    return asyncExec("HMSDtm", "onEvent", [eventName, bundleObject]);
+    return asyncExec('HMSDTM', 'HMSDTMModule', ['onEvent', eventName, bundleObject]);
 }
 exports.onEvent = onEvent;
 function asyncExec(className, funcName, args = []) {
@@ -37,7 +36,7 @@ function asyncExec(className, funcName, args = []) {
 }
 exports.asyncExec = asyncExec;
 function setCustomVariable(customVariableObject) {
-    return asyncExec("HMSDtm", "setCustomVariable", [customVariableObject]);
+    return asyncExec('HMSDTM', 'HMSDTMModule', ['setCustomVariable', customVariableObject]);
 }
 exports.setCustomVariable = setCustomVariable;
 function onCustomTag(callback) {
@@ -46,12 +45,12 @@ function onCustomTag(callback) {
     });
 }
 exports.onCustomTag = onCustomTag;
-function enableLogger() {
-    return asyncExec("HMSDtm", "enableLogger");
-}
-exports.enableLogger = enableLogger;
 function disableLogger() {
-    return asyncExec("HMSDtm", "disableLogger");
+    return asyncExec('HMSDTM', 'HMSDTMModule', ['disableLogger']);
 }
 exports.disableLogger = disableLogger;
-//# sourceMappingURL=HMSDtm.js.map
+function enableLogger() {
+    return asyncExec('HMSDTM', 'HMSDTMModule', ['enableLogger']);
+}
+exports.enableLogger = enableLogger;
+//# sourceMappingURL=HMSDTM.js.map

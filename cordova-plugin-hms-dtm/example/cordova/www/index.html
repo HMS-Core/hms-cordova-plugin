@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,27 +16,57 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-    </head>
-    <body style="background-color: black;">
-        <div>
-        <div style="text-align: center; width: 100%;">
-            <h1 style=" margin:0;color:#FFB300;">HMS DTM DEMO</h1> 
-            <img src="./images/example_assets_images_huawei_icon.jpg" style="width: 40%;height: 40;"/>
-        </div>
-        <div class="app">
-            <button class="button" style="height: 2.5em;width:100%" id="sendCustomEvent">Send Custom Event</button>
-            <button class="button" style="height: 2.5em;width:100%" id="CustomTag">Custom Tag</button>
-            <button class="button" style="height: 2.5em;width:100%" id="setCustomVariableValue">Set Custom Variable Value</button>
-            <button class="button" style="height: 2.5em;width:100%" id="reportEventwithCustomVariable">Report Event with Custom Variable</button>
-        </div>
+  <head>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"
+    />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+  </head>
+  <body style="background-color: white">
+    <div>
+      <div style="text-align: center; width: 100%">
+        <h1 style="margin: 0; color: #ff0000">HMS DTM DEMO</h1>
+        <img src="./images/logo.png" style="width: 40%; height: 40" />
+      </div>
+      <div class="app">
+        <button
+          class="button"
+          style="height: 2.5em; width: 100%"
+          id="sendCustomEvent"
+        >
+          Send Custom Event
+        </button>
+        <button
+          class="button"
+          style="height: 2.5em; width: 100%"
+          id="CustomTag"
+        >
+          Custom Tag
+        </button>
+        <button
+          class="button"
+          style="height: 2.5em; width: 100%"
+          id="setCustomVariableValue"
+        >
+          Set Custom Variable Value
+        </button>
+        <button
+          class="button"
+          style="height: 2.5em; width: 100%"
+          id="reportEventwithCustomVariable"
+        >
+          Report Event with Custom Variable
+        </button>
+      </div>
     </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
 </html>

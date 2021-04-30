@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,20 +15,24 @@
 -->
 
 <ion-content class="app">
-  <ion-header class="ion-no-border" >
-    <ion-toolbar style="--background: black;">
-      <ion-title style="color:#FFB300;font-size: larger;">HMS DTM DEMO</ion-title>
+  <ion-header class="ion-no-border">
+    <ion-toolbar style="--background: white">
+      <ion-title style="color: #c4142c; font-size: larger; text-align: center"
+        >HMS DTM DEMO</ion-title
+      >
+      <img class="logoImg" src="../../assets/images/logo.png" alt="" />
     </ion-toolbar>
   </ion-header>
-  <ion-row style="justify-content: center;">
-    <img style="position: absolute; width: 30%;height: 30%;" src="assets/images/example_assets_images_huawei_icon.jpg"/>
-  </ion-row>
-  <ion-grid style="width: 75%; margin-top: 30px;">
+  <ion-grid style="width: 75%">
     <ion-row class="topRow">
       <ion-button (click)="sendCustomEvent()">Send Custom Event</ion-button>
       <ion-button (click)="CustomTag()">Custom Tag</ion-button>
-      <ion-button (click)="setCustomVariableValue()">Set Custom Variable Value</ion-button>
-      <ion-button (click)="reportEventwithCustomVariable()">Report Event with Custom Variable</ion-button>
+      <ion-button (click)="setCustomVariableValue()"
+        >Set Custom Variable Value</ion-button
+      >
+      <ion-button (click)="reportEventwithCustomVariable()"
+        >Report Event with Custom Variable</ion-button
+      >
     </ion-row>
   </ion-grid>
 </ion-content>
