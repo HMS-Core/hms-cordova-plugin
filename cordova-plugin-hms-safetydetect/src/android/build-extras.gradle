@@ -1,0 +1,16 @@
+// Chage this according to your plugin
+def pluginMinSdk = 19
+
+// Set minSdk
+// for Cordova and Ionic Cordova only
+try {
+    def test = minSdkVersion > 1
+} catch(e) {
+    if (defaultMinSdkVersion < pluginMinSdk) {
+        cdvMinSdkVersion = pluginMinSdk
+    }
+}
+
+cdvPluginPostBuildExtras.add({
+    apply plugin: 'com.huawei.agconnect'
+})
