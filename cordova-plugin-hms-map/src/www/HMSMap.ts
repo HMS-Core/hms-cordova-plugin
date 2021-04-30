@@ -16,6 +16,7 @@
 
 import { asyncExec, Rect, initalPropsOf } from './utils';
 import {
+    BitmapDescriptor,
     CameraPosition,
     CameraUpdate,
     CancelableCallback,
@@ -77,7 +78,8 @@ export {
     Tile,
     URLTile,
     RepetitiveTile,
-    TileType
+    TileType,
+    AnimationConstant
 } from './interfaces';
 
 export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
@@ -162,6 +164,14 @@ export function disableLogger(): Promise<void> {
 
 export function enableLogger(): Promise<void> {
     return asyncExec('HMSMap', 'enableLogger', []);
+}
+
+async function forceUpdateXAndY(x: number, y: number, mapDivId: string): Promise<void> {
+    return asyncExec("HMSMap", "forceUpdateXAndY", [mapDivId, x, y]);
+}
+
+async function forceUpdateWidthAndHeight(width: number, height: number, mapDivId: string): Promise<void> {
+    return asyncExec("HMSMap", "forceUpdateWidthAndHeight", [mapDivId, width, height]);
 }
 
 interface OverlapState {
@@ -320,7 +330,7 @@ class MapDomChangeListener {
         const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
         const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
         if(this.mapDivRectCache.width != width || this.mapDivRectCache.height != height) {
-            this.forceUpdateWidthAndHeight(width, height).then(() => {
+            forceUpdateWidthAndHeight(width, height, this.mapDivId).then(() => {
                 this.mapDivRectCache.width = width;
                 this.mapDivRectCache.height = height;
             });
@@ -332,19 +342,11 @@ class MapDomChangeListener {
         const x = mapRect.x;
         const y = mapRect.y;
         if(this.mapDivRectCache.x != x || this.mapDivRectCache.y != y) {
-            this.forceUpdateXAndY(x, y).then(() => {
+            forceUpdateXAndY(x, y, this.mapDivId).then(() => {
                 this.mapDivRectCache.x = x;
                 this.mapDivRectCache.y = y;
             });
         }
-    }
-
-    private forceUpdateXAndY(x: number, y: number): Promise<void> {
-        return asyncExec("HMSMap", "forceUpdateXAndY", [this.mapDivId, x, y]);
-    }
-
-    private forceUpdateWidthAndHeight(width: number, height: number): Promise<void> {
-        return asyncExec("HMSMap", "forceUpdateWidthAndHeight", [this.mapDivId, width, height]);
     }
 }
 
@@ -387,7 +389,14 @@ class HuaweiMapImpl implements HuaweiMap {
     scroll(): void {
         if (this.mapElement == null) return;
         const mapRect = this.mapElement.getBoundingClientRect();
-        this.forceUpdateXAndY(mapRect.x, mapRect.y);
+        forceUpdateXAndY(mapRect.x, mapRect.y, this.divId);
+    }
+
+    syncDimensions(): void {
+        if (this.mapElement == null) return;
+        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
+        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
+        forceUpdateWidthAndHeight(width, height, this.divId);
     }
 
     async destroyMap(): Promise<void> {
@@ -563,7 +572,7 @@ class HuaweiMapImpl implements HuaweiMap {
     }
 
     setMapStyle(mapStyle: MapStyleOptions): Promise<void> {
-        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceId() });
+        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceName() });
     }
 
     setMapType(mapType: MapType): Promise<void> {
@@ -620,10 +629,6 @@ class HuaweiMapImpl implements HuaweiMap {
         } else {
             throw ErrorCodes.toString(ErrorCodes.NO_COMPONENT_EXISTS_GIVEN_ID);
         }
-    }
-
-    private forceUpdateXAndY(x: number, y: number): Promise<void> {
-        return asyncExec("HMSMap", "forceUpdateXAndY", [this.divId, x, y]);
     }
 
     private setHuaweiMapOptions(func: string, props: any): Promise<void> {
@@ -734,6 +739,18 @@ class UiSettingsImpl implements UiSettings {
         return this.setUiSettings('setGestureScaleByMapCenter', { 'gestureScaleByMapCenterEnabled': gestureScaleByMapCenterEnabled });
     }
 
+    setMarkerClusterColor(markerClusterColor: number): Promise<void> {
+        return this.setUiSettings('setMarkerClusterColor', { 'markerClusterColor': markerClusterColor });
+    }
+
+    setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void> {
+        return this.setUiSettings('setMarkerClusterIcon', { 'markerClusterIcon': markerClusterIcon });
+    }
+
+    setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void> {
+        return this.setUiSettings('setMarkerClusterTextColor', { 'markerClusterTextColor': markerClusterTextColor });
+    }
+
     private setUiSettings(func: string, props: any): Promise<void> {
         return asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
     }
@@ -841,17 +858,17 @@ class ProjectionImpl implements Projection {
 }
 
 export class MapStyleOptions {
-    private readonly resourceId: number;
+    private readonly resourceName: string;
 
-    private constructor(resourceId: number) {
-        this.resourceId = resourceId;
+    private constructor(resourceName: string) {
+        this.resourceName = resourceName;
     }
 
-    public static loadRawResourceStyle(resourceId: number): MapStyleOptions {
-        return new MapStyleOptions(resourceId);
+    public static loadRawResourceStyle(resourceName: string): MapStyleOptions {
+        return new MapStyleOptions(resourceName);
     }
 
-    getResourceId(): number {
-        return this.resourceId;
+    getResourceName(): string {
+        return this.resourceName;
     }
 }

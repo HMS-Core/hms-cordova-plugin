@@ -37,10 +37,10 @@ export declare class CameraUpdateFactory {
     static zoomTo(zoom: number): CameraUpdate;
 }
 export declare class MapStyleOptions {
-    private readonly resourceId;
+    private readonly resourceName;
     private constructor();
-    static loadRawResourceStyle(resourceId: number): MapStyleOptions;
-    getResourceId(): number;
+    static loadRawResourceStyle(resourceName: string): MapStyleOptions;
+    getResourceName(): string;
 }
 export declare abstract class Cap {
     static readonly TYPE_BUTT_CAP = 0;
@@ -96,6 +96,9 @@ export interface UiSettings {
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setMarkerClusterColor(markerClusterColor: number): Promise<void>;
+    setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
+    setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
 }
 export interface HuaweiMap {
     on(event: MapEvent, callback: (val: any) => void): Promise<void>;
@@ -105,6 +108,7 @@ export interface HuaweiMap {
     removeComponent(key: string): void;
     getId(): number;
     scroll(): void;
+    syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
@@ -441,8 +445,6 @@ export interface PolylineOptions {
     zIndex?: number;
 }
 export interface GroundOverlayOptions {
-    width?: number;
-    height?: number;
     anchor?: Anchor;
     bearing?: number;
     clickable?: boolean;
@@ -487,6 +489,7 @@ export interface TileOverlayOptions {
     zIndex?: number;
 }
 export interface Animation {
+    fillMode?: number;
     duration?: number;
     repeatCount?: number;
     repeatMode?: number;
@@ -635,4 +638,11 @@ export declare enum InterpolatorType {
     DECELERATE = 7,
     OVERSHOOT = 8,
     PATH = 9
+}
+export declare enum AnimationConstant {
+    FILL_MODE_FORWARDS = 0,
+    FILL_MODE_BACKWARDS = 1,
+    INFINITE = -1,
+    RESTART = 1,
+    REVERSE = 2
 }

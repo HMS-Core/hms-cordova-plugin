@@ -20,7 +20,7 @@ export { Circle } from './circle';
 export { TileOverlay } from './tileOverlay';
 export { GroundOverlay } from './groundOverlay';
 export { Marker } from './marker';
-export { AnimationSet, RotateAnimation, AlphaAnimation, ScaleAnimation, TranslateAnimation, InterpolatorType, ErrorCodes, CameraMoveStartedReason, Color, MapType, MapEvent, JointType, Hue, PatternItemType, HuaweiMap, CameraUpdate, Tile, URLTile, RepetitiveTile, TileType } from './interfaces';
+export { AnimationSet, RotateAnimation, AlphaAnimation, ScaleAnimation, TranslateAnimation, InterpolatorType, ErrorCodes, CameraMoveStartedReason, Color, MapType, MapEvent, JointType, Hue, PatternItemType, HuaweiMap, CameraUpdate, Tile, URLTile, RepetitiveTile, TileType, AnimationConstant } from './interfaces';
 export declare const maps: Map<number, HuaweiMap>;
 export declare function sync(mapId: number, mapDiv: string, components: any): void;
 export declare function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions): Promise<HuaweiMap>;
@@ -45,8 +45,8 @@ export declare class CameraUpdateFactory {
     private static constructCameraUpdateImpl;
 }
 export declare class MapStyleOptions {
-    private readonly resourceId;
+    private readonly resourceName;
     private constructor();
-    static loadRawResourceStyle(resourceId: number): MapStyleOptions;
-    getResourceId(): number;
+    static loadRawResourceStyle(resourceName: string): MapStyleOptions;
+    getResourceName(): string;
 }

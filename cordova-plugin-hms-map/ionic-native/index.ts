@@ -14,7 +14,6 @@
     limitations under the License.
 */
 
-
 import {Injectable} from '@angular/core';
 import {Cordova, IonicNativePlugin, Plugin} from '@ionic-native/core';
 
@@ -123,18 +122,18 @@ export class CameraUpdateFactory {
 }
 
 export class MapStyleOptions {
-    private readonly resourceId: number;
+    private readonly resourceName: string;
 
-    private constructor(resourceId: number) {
-        this.resourceId = resourceId;
+    private constructor(resourceName: string) {
+        this.resourceName = resourceName;
     }
 
-    public static loadRawResourceStyle(resourceId: number): MapStyleOptions {
-        return new MapStyleOptions(resourceId);
+    public static loadRawResourceStyle(resourceName: string): MapStyleOptions {
+        return new MapStyleOptions(resourceName);
     }
 
-    getResourceId(): number {
-        return this.resourceId;
+    getResourceName(): string {
+        return this.resourceName;
     }
 }
 
@@ -238,6 +237,9 @@ export interface UiSettings {
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setMarkerClusterColor(markerClusterColor: number): Promise<void>;
+    setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
+    setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
 }
 
 export interface HuaweiMap {
@@ -248,6 +250,7 @@ export interface HuaweiMap {
     removeComponent(key: string): void;
     getId(): number;
     scroll(): void;
+    syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
@@ -622,8 +625,6 @@ export interface PolylineOptions {
 }
 
 export interface GroundOverlayOptions {
-    width?: number,
-    height?: number,
     anchor?: Anchor,
     bearing?: number,
     clickable?: boolean,
@@ -675,6 +676,7 @@ export interface TileOverlayOptions {
 }
 
 export interface Animation {
+    fillMode?: number,
     duration?: number,
     repeatCount?: number,
     repeatMode?: number,
@@ -847,4 +849,12 @@ export enum InterpolatorType {
     DECELERATE,
     OVERSHOOT,
     PATH
+}
+
+export enum AnimationConstant {
+    FILL_MODE_FORWARDS = 0,
+    FILL_MODE_BACKWARDS = 1,
+    INFINITE = -1,
+    RESTART = 1,
+    REVERSE = 2
 }

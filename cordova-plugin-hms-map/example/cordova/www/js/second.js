@@ -23,10 +23,54 @@ async function onDeviceReady(){
     document.getElementById("animate-camera").onclick = animateCamera;
     document.getElementById("move-camera").onclick = moveCamera;
     document.getElementById("add-marker").onclick = addMarker;
+    document.getElementById("addMarkersAndMove").onclick = addMarkersAndMove;
+    document.getElementById("changeClusterColor").onclick = changeClusterColor;
+    document.getElementById("changeClusterIcon").onclick = changeClusterIcon;
+    document.getElementById("clearClusterStyle").onclick = clearClusterStyle;
+
     let mapOptions = {"cameraPosition": {"target": {"lat": 40.7587658, "lng": 30.3146964}, "zoom": 2}};
     map = await HMSMap.getMap("secondMap", mapOptions);
     await map.setMyLocationEnabled(true);
     await map.setMarkersClustering(true);
+}
+
+async function addMarkersAndMove() {
+    const position = {"target":{"lat":48.893478,"lng":2.334595}, "zoom": 10};
+    await map.moveCamera(HMSMap.CameraUpdateFactory.newCameraPosition(position));
+
+    // Add the marker to the cluster.
+    await map.addMarker({"position": {"lat": 48.891478, "lng": 2.334595}, clusterable: true});
+    await map.addMarker({"position": {"lat": 48.892478, "lng": 2.334595}, clusterable: true});
+    await map.addMarker({"position": {"lat": 48.893478, "lng": 2.334595}, clusterable: true});
+    await map.addMarker({"position": {"lat": 48.894478, "lng": 2.334595}, clusterable: true});
+    await map.addMarker({"position": {"lat": 48.895478, "lng": 2.334595}, clusterable: true});
+    await map.addMarker({"position": {"lat": 48.896478, "lng": 2.334595}, clusterable: true});
+
+    await map.setMarkersClustering(true);
+}
+
+async function changeClusterColor() {
+    await clearClusterStyle();
+    await map.getUiSettings().setMarkerClusterColor(HMSMap.Color.RED);
+}
+
+async function changeClusterIcon() {
+    const textColor = 0xff000000; // black
+    const iconBitmap = {
+        "asset": {
+            "fileName": "www/icon/cluster-triangle.png",
+            "scaledSize": {
+                "width": 120,
+                "height": 120
+            }
+        }
+    }
+    await map.getUiSettings().setMarkerClusterIcon(iconBitmap);
+    await map.getUiSettings().setMarkerClusterTextColor(textColor);
+}
+
+async function clearClusterStyle() {
+    await map.getUiSettings().setMarkerClusterIcon(null);
 }
 
 async function addMarker(){

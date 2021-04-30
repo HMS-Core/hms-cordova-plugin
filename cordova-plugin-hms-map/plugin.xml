@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-map" version="5.1.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-map" version="5.2.0-302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS Map</name>
 	<description>Cordova HMS Map Plugin</description>
 	<license>Apache 2.0</license>
@@ -41,7 +41,7 @@
 		</config-file>
 
 		<!-- Android dependencies -->
-		<framework src="com.huawei.hms:maps:5.1.0.300"/>
+		<framework src="com.huawei.hms:maps:5.2.0.302"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
 
 		<!-- Source files -->

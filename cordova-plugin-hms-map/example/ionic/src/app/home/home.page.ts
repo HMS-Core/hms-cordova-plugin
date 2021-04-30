@@ -23,7 +23,8 @@ import {
     HuaweiMap,
     MapEvent,
     Marker,
-    TileType
+    TileType,
+    AnimationConstant
 } from '@hmscore/ionic-native-hms-map/ngx';
 
 @Component({
@@ -66,7 +67,7 @@ export class HomePage {
         const marker = this.map.getComponent('Marker102');
         const animationSet = new AnimationSet();
         animationSet.addRotateAnimation({
-            fromDegree: 30, toDegree: 170, duration: 1200, repeatCount: 3,
+            fillMode: AnimationConstant.FILL_MODE_BACKWARDS, fromDegree: 0, toDegree: 170, duration: 1200, repeatCount: 3,
             animationStart: () => {
                 console.log('rotate animation started');
             },
@@ -76,7 +77,7 @@ export class HomePage {
         });
 
         animationSet.addAlphaAnimation({
-            fromAlpha: 0.2, toAlpha: 0.8, duration: 1000, repeatCount: 4,
+            fillMode: AnimationConstant.FILL_MODE_FORWARDS, fromAlpha: 0.2, toAlpha: 0.8, duration: 1200, repeatCount: 3,
             animationStart: () => {
                 console.log('rotate alpha started');
             },
@@ -183,7 +184,7 @@ export class HomePage {
 
     async addGroundOverlay() {
         const groundOverlayOptions = {
-            position: {latLng: {lat: 38, lng: 27}, width: 30, height: 30},
+            position: {latLng: {lat: 38, lng: 27}, width: 300000, height: 500000},
             image: {hue: 210},
             transparency: 0,
             visible: true,
@@ -191,16 +192,21 @@ export class HomePage {
             bearing: 4,
         };
         const groundOverlay = await this.map.addGroundOverlay(groundOverlayOptions);
-        await groundOverlay.setPositionFromBounds({
-            northeast: {lat: 45, lng: 11},
-            southwest: {lat: 35, lng: 17}
-        });
         this.components[groundOverlay.getId()] = groundOverlay;
     }
 
     async addTileOverlay() {
         const tileOverlayOptions = {
-            tileProvider: {type: TileType.URL_TILE, data: {URL: 'https://a.tile.openstreetmap.org/${z}/${x}/${y}.png'}}
+            tileProvider: {
+                type: TileType.REPETITIVE_TILE,
+                data: {
+                    width: 256,
+                    height: 256,
+                    zoom: [2, 3, 4, 5, 6],
+                    path: "www/assets/huawei.png"
+                }
+            },
+            transparency: 0.5
         };
         const tileOverlay = await this.map.addTileOverlay(tileOverlayOptions);
         this.components[tileOverlay.getId()] = tileOverlay;

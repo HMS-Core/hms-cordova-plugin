@@ -135,8 +135,6 @@ export interface PolylineOptions {
     zIndex?: number;
 }
 export interface GroundOverlayOptions {
-    width?: number;
-    height?: number;
     anchor?: Anchor;
     bearing?: number;
     clickable?: boolean;
@@ -188,6 +186,7 @@ export declare class AnimationSet {
     addAlphaAnimation(animation: AlphaAnimation): void;
 }
 export interface Animation {
+    fillMode?: number;
     duration?: number;
     repeatCount?: number;
     repeatMode?: number;
@@ -280,6 +279,7 @@ export interface HuaweiMap {
     removeComponent(key: string): void;
     getId(): number;
     scroll(): void;
+    syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
@@ -355,6 +355,9 @@ export interface UiSettings {
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setMarkerClusterColor(markerClusterColor: number): Promise<void>;
+    setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
+    setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
 }
 export declare enum Color {
     RED = -65536,
@@ -460,5 +463,12 @@ export declare enum TileType {
     URL_TILE = 0,
     REPETITIVE_TILE = 1,
     LOCAL_TILE = 2
+}
+export declare enum AnimationConstant {
+    FILL_MODE_FORWARDS = 0,
+    FILL_MODE_BACKWARDS = 1,
+    INFINITE = -1,
+    RESTART = 1,
+    REVERSE = 2
 }
 export {};

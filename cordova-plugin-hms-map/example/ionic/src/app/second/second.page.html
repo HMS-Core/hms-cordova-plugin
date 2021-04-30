@@ -48,6 +48,12 @@
       <ion-col><ion-input type="number" placeholder="y" [(ngModel)]="centerY"></ion-input></ion-col>
       <ion-col><ion-button color="primary" (click)="setPointToCenter()">Set Center</ion-button></ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col><ion-button color="primary" (click)="addMarkersAndMove()">Add Markers</ion-button></ion-col>
+      <ion-col><ion-button color="primary" (click)="changeClusterColor()">Cluster Color</ion-button></ion-col>
+      <ion-col><ion-button color="primary" (click)="changeClusterIcon()">Cluster Icon</ion-button></ion-col>
+      <ion-col><ion-button color="primary" (click)="clearClusterStyle()">Clear Cluster</ion-button></ion-col>
+    </ion-row>
   </ion-grid>
-  <div id="secondMap" style="width:100%;height:50%;"></div>
+  <div id="secondMap" style="width:100%;height:40%;"></div>
 </ion-content>

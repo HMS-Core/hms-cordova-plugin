@@ -58,7 +58,7 @@ public final class MarkerCapsule extends MapComponent<Marker> {
 
     private void setCommonAnimationPropertiesFromJson(AnimationSet animationSet, Animation animation, String type, JSONObject json) {
         animation.setDuration(json.optLong("duration", 250));
-        animation.setRepeatCount(json.optInt("repeatCount", 1));
+        animation.setRepeatCount(json.optInt("repeatCount", 0));
         animation.setFillMode(json.optInt("fillMode", Animation.FILL_MODE_FORWARDS));
         animation.setRepeatMode(json.optInt("repeatMode", Animation.RESTART));
         if (json.has("interpolator")){
@@ -155,6 +155,10 @@ public final class MarkerCapsule extends MapComponent<Marker> {
 
     JSONObject getPosition() throws JSONException {
         return new JSONObject().put("value", new JSONObject().put("lat", component.getPosition().latitude).put("lng", component.getPosition().longitude));
+    }
+
+    JSONObject isClusterable() throws JSONException {
+        return new JSONObject().put("value", component.isClusterable());
     }
 
     JSONObject isDraggable() throws JSONException {

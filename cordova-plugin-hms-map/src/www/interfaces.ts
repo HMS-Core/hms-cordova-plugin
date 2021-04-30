@@ -153,8 +153,6 @@ export interface PolylineOptions {
 }
 
 export interface GroundOverlayOptions {
-    width?: number,
-    height?: number,
     anchor?: Anchor,
     bearing?: number,
     clickable?: boolean,
@@ -227,6 +225,7 @@ export class AnimationSet {
 }
 
 export interface Animation {
+    fillMode?: number,
     duration?: number,
     repeatCount?: number,
     repeatMode?: number,
@@ -339,6 +338,7 @@ export interface HuaweiMap {
     removeComponent(key: string): void;
     getId(): number;
     scroll(): void;
+    syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
@@ -417,6 +417,9 @@ export interface UiSettings {
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setMarkerClusterColor(markerClusterColor: number): Promise<void>;
+    setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
+    setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
 }
 
 /*-------------------------------------------------------------ENUMS----------------------------------------------------------*/
@@ -554,4 +557,12 @@ export enum TileType {
     URL_TILE,
     REPETITIVE_TILE,
     LOCAL_TILE
+}
+
+export enum AnimationConstant {
+    FILL_MODE_FORWARDS = 0,
+    FILL_MODE_BACKWARDS = 1,
+    INFINITE = -1,
+    RESTART = 1,
+    REVERSE = 2
 }

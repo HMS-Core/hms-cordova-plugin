@@ -15,7 +15,7 @@
 */
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {HuaweiMap, HMSMap, CameraUpdateFactory} from '@hmscore/ionic-native-hms-map/ngx';
+import {HuaweiMap, HMSMap, CameraUpdateFactory, Color} from '@hmscore/ionic-native-hms-map/ngx';
 @Component({
     selector: 'app-second',
     templateUrl: './second.page.html',
@@ -98,4 +98,44 @@ export class SecondPage{
     async scrolling() {
         await this.map.scroll();
     }
+
+    async addMarkersAndMove() {
+        const position = {"target":{"lat":48.893478,"lng":2.334595}, "zoom": 10};
+        await this.map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
+    
+        // Add the marker to the cluster.
+        await this.map.addMarker({"position": {"lat": 48.891478, "lng": 2.334595}, clusterable: true});
+        await this.map.addMarker({"position": {"lat": 48.892478, "lng": 2.334595}, clusterable: true});
+        await this.map.addMarker({"position": {"lat": 48.893478, "lng": 2.334595}, clusterable: true});
+        await this.map.addMarker({"position": {"lat": 48.894478, "lng": 2.334595}, clusterable: true});
+        await this.map.addMarker({"position": {"lat": 48.895478, "lng": 2.334595}, clusterable: true});
+        await this.map.addMarker({"position": {"lat": 48.896478, "lng": 2.334595}, clusterable: true});
+    
+        await this.map.setMarkersClustering(true);
+    }
+
+    async changeClusterColor() {
+        await this.clearClusterStyle();
+        await this.map.getUiSettings().setMarkerClusterColor(Color.RED);
+    }
+
+    async changeClusterIcon() {
+        const textColor = 0xff000000; // black
+        const iconBitmap = {
+            "asset": {
+                "fileName": "www/assets/cluster-triangle.png",
+                "scaledSize": {
+                    "width": 120,
+                    "height": 120
+                }
+            }
+        }
+        await this.map.getUiSettings().setMarkerClusterIcon(iconBitmap);
+        await this.map.getUiSettings().setMarkerClusterTextColor(textColor);
+    }
+
+    async clearClusterStyle() {
+        await this.map.getUiSettings().setMarkerClusterIcon(null);
+    }
+
 }

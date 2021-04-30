@@ -166,6 +166,7 @@ export class MarkerImpl implements Marker {
             if (key === "Rotate"  && _animations.rotateAnimation != undefined) {
                 _animations.rotateAnimation.fromDegree = (<RotateAnimation>value).fromDegree;
                 _animations.rotateAnimation.toDegree = (<RotateAnimation>value).toDegree;
+                _animations.rotateAnimation.fillMode = value.fillMode;
                 _animations.rotateAnimation.duration = value.duration;
                 _animations.rotateAnimation.repeatCount = value.repeatCount;
                 _animations.rotateAnimation.repeatMode = value.repeatMode;
@@ -177,6 +178,7 @@ export class MarkerImpl implements Marker {
                 _animations.scaleAnimation.toX = (<ScaleAnimation>value).toX;
                 _animations.scaleAnimation.fromY = (<ScaleAnimation>value).fromY;
                 _animations.scaleAnimation.toY = (<ScaleAnimation>value).toY;
+                _animations.scaleAnimation.fillMode = value.fillMode;
                 _animations.scaleAnimation.duration = value.duration;
                 _animations.scaleAnimation.repeatCount = value.repeatCount;
                 _animations.scaleAnimation.repeatMode = value.repeatMode;
@@ -185,6 +187,7 @@ export class MarkerImpl implements Marker {
                 if (value.animationStart) _animations.scaleAnimation.isAnimationStart = true;
             } else if (key === "Translate" && _animations.translateAnimation != undefined) {
                 _animations.translateAnimation.target = (<TranslateAnimation>value).target;
+                _animations.translateAnimation.fillMode = value.fillMode;
                 _animations.translateAnimation.duration = value.duration;
                 _animations.translateAnimation.repeatCount = value.repeatCount;
                 _animations.translateAnimation.repeatMode = value.repeatMode;
@@ -194,6 +197,7 @@ export class MarkerImpl implements Marker {
             } else if (key === "Alpha" && _animations.alphaAnimation != undefined) {
                 _animations.alphaAnimation.fromAlpha = (<AlphaAnimation>value).fromAlpha;
                 _animations.alphaAnimation.toAlpha = (<AlphaAnimation>value).toAlpha;
+                _animations.alphaAnimation.fillMode = value.fillMode;
                 _animations.alphaAnimation.duration = value.duration;
                 _animations.alphaAnimation.repeatCount = value.repeatCount;
                 _animations.alphaAnimation.repeatMode = value.repeatMode;

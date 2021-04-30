@@ -16,7 +16,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
+exports.AnimationConstant = exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
 class AnimationSet {
     constructor() {
         this.animations = new Map();
@@ -164,4 +164,12 @@ var TileType;
     TileType[TileType["REPETITIVE_TILE"] = 1] = "REPETITIVE_TILE";
     TileType[TileType["LOCAL_TILE"] = 2] = "LOCAL_TILE";
 })(TileType = exports.TileType || (exports.TileType = {}));
+var AnimationConstant;
+(function (AnimationConstant) {
+    AnimationConstant[AnimationConstant["FILL_MODE_FORWARDS"] = 0] = "FILL_MODE_FORWARDS";
+    AnimationConstant[AnimationConstant["FILL_MODE_BACKWARDS"] = 1] = "FILL_MODE_BACKWARDS";
+    AnimationConstant[AnimationConstant["INFINITE"] = -1] = "INFINITE";
+    AnimationConstant[AnimationConstant["RESTART"] = 1] = "RESTART";
+    AnimationConstant[AnimationConstant["REVERSE"] = 2] = "REVERSE";
+})(AnimationConstant = exports.AnimationConstant || (exports.AnimationConstant = {}));
 //# sourceMappingURL=interfaces.js.map

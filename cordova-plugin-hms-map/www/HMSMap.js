@@ -25,7 +25,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MapStyleOptions = exports.CameraUpdateFactory = exports.enableLogger = exports.disableLogger = exports.setApiKey = exports.computeDistanceBetween = exports.requestPermission = exports.hasPermission = exports.showMap = exports.getMap = exports.sync = exports.maps = exports.TileType = exports.PatternItemType = exports.Hue = exports.JointType = exports.MapEvent = exports.MapType = exports.Color = exports.CameraMoveStartedReason = exports.ErrorCodes = exports.InterpolatorType = exports.AnimationSet = exports.Cap = exports.SquareCap = exports.RoundCap = exports.CustomCap = exports.ButtCap = void 0;
+exports.MapStyleOptions = exports.CameraUpdateFactory = exports.enableLogger = exports.disableLogger = exports.setApiKey = exports.computeDistanceBetween = exports.requestPermission = exports.hasPermission = exports.showMap = exports.getMap = exports.sync = exports.maps = exports.AnimationConstant = exports.TileType = exports.PatternItemType = exports.Hue = exports.JointType = exports.MapEvent = exports.MapType = exports.Color = exports.CameraMoveStartedReason = exports.ErrorCodes = exports.InterpolatorType = exports.AnimationSet = exports.Cap = exports.SquareCap = exports.RoundCap = exports.CustomCap = exports.ButtCap = void 0;
 const utils_1 = require("./utils");
 const interfaces_1 = require("./interfaces");
 const circle_1 = require("./circle");
@@ -52,6 +52,7 @@ Object.defineProperty(exports, "JointType", { enumerable: true, get: function ()
 Object.defineProperty(exports, "Hue", { enumerable: true, get: function () { return interfaces_2.Hue; } });
 Object.defineProperty(exports, "PatternItemType", { enumerable: true, get: function () { return interfaces_2.PatternItemType; } });
 Object.defineProperty(exports, "TileType", { enumerable: true, get: function () { return interfaces_2.TileType; } });
+Object.defineProperty(exports, "AnimationConstant", { enumerable: true, get: function () { return interfaces_2.AnimationConstant; } });
 exports.maps = new Map();
 function sync(mapId, mapDiv, components) {
     if (!exports.maps.has(mapId)) {
@@ -141,6 +142,16 @@ function enableLogger() {
     return utils_1.asyncExec('HMSMap', 'enableLogger', []);
 }
 exports.enableLogger = enableLogger;
+function forceUpdateXAndY(x, y, mapDivId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return utils_1.asyncExec("HMSMap", "forceUpdateXAndY", [mapDivId, x, y]);
+    });
+}
+function forceUpdateWidthAndHeight(width, height, mapDivId) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return utils_1.asyncExec("HMSMap", "forceUpdateWidthAndHeight", [mapDivId, width, height]);
+    });
+}
 class MapOverlayCache {
     constructor(mapDivId, mapElement) {
         this.lastRectsRecord = new Map();
@@ -264,7 +275,7 @@ class MapDomChangeListener {
         const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
         const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
         if (this.mapDivRectCache.width != width || this.mapDivRectCache.height != height) {
-            this.forceUpdateWidthAndHeight(width, height).then(() => {
+            forceUpdateWidthAndHeight(width, height, this.mapDivId).then(() => {
                 this.mapDivRectCache.width = width;
                 this.mapDivRectCache.height = height;
             });
@@ -275,17 +286,11 @@ class MapDomChangeListener {
         const x = mapRect.x;
         const y = mapRect.y;
         if (this.mapDivRectCache.x != x || this.mapDivRectCache.y != y) {
-            this.forceUpdateXAndY(x, y).then(() => {
+            forceUpdateXAndY(x, y, this.mapDivId).then(() => {
                 this.mapDivRectCache.x = x;
                 this.mapDivRectCache.y = y;
             });
         }
-    }
-    forceUpdateXAndY(x, y) {
-        return utils_1.asyncExec("HMSMap", "forceUpdateXAndY", [this.mapDivId, x, y]);
-    }
-    forceUpdateWidthAndHeight(width, height) {
-        return utils_1.asyncExec("HMSMap", "forceUpdateWidthAndHeight", [this.mapDivId, width, height]);
     }
 }
 class HuaweiMapImpl {
@@ -316,7 +321,14 @@ class HuaweiMapImpl {
         if (this.mapElement == null)
             return;
         const mapRect = this.mapElement.getBoundingClientRect();
-        this.forceUpdateXAndY(mapRect.x, mapRect.y);
+        forceUpdateXAndY(mapRect.x, mapRect.y, this.divId);
+    }
+    syncDimensions() {
+        if (this.mapElement == null)
+            return;
+        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
+        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
+        forceUpdateWidthAndHeight(width, height, this.divId);
     }
     destroyMap() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -488,7 +500,7 @@ class HuaweiMapImpl {
         return this.setHuaweiMapOptions('setLocationSource', { 'locationSource': locationSource });
     }
     setMapStyle(mapStyle) {
-        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceId() });
+        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceName() });
     }
     setMapType(mapType) {
         return this.setHuaweiMapOptions('setMapType', { 'mapType': mapType });
@@ -534,9 +546,6 @@ class HuaweiMapImpl {
         else {
             throw interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_COMPONENT_EXISTS_GIVEN_ID);
         }
-    }
-    forceUpdateXAndY(x, y) {
-        return utils_1.asyncExec("HMSMap", "forceUpdateXAndY", [this.divId, x, y]);
     }
     setHuaweiMapOptions(func, props) {
         return utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, 'setHuaweiMapOptions', func, props]);
@@ -617,6 +626,15 @@ class UiSettingsImpl {
     }
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled) {
         return this.setUiSettings('setGestureScaleByMapCenter', { 'gestureScaleByMapCenterEnabled': gestureScaleByMapCenterEnabled });
+    }
+    setMarkerClusterColor(markerClusterColor) {
+        return this.setUiSettings('setMarkerClusterColor', { 'markerClusterColor': markerClusterColor });
+    }
+    setMarkerClusterIcon(markerClusterIcon) {
+        return this.setUiSettings('setMarkerClusterIcon', { 'markerClusterIcon': markerClusterIcon });
+    }
+    setMarkerClusterTextColor(markerClusterTextColor) {
+        return this.setUiSettings('setMarkerClusterTextColor', { 'markerClusterTextColor': markerClusterTextColor });
     }
     setUiSettings(func, props) {
         return utils_1.asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
@@ -703,14 +721,14 @@ class ProjectionImpl {
     }
 }
 class MapStyleOptions {
-    constructor(resourceId) {
-        this.resourceId = resourceId;
+    constructor(resourceName) {
+        this.resourceName = resourceName;
     }
-    static loadRawResourceStyle(resourceId) {
-        return new MapStyleOptions(resourceId);
+    static loadRawResourceStyle(resourceName) {
+        return new MapStyleOptions(resourceName);
     }
-    getResourceId() {
-        return this.resourceId;
+    getResourceName() {
+        return this.resourceName;
     }
 }
 exports.MapStyleOptions = MapStyleOptions;

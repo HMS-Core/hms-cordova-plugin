@@ -99,7 +99,12 @@ class PluginMapSetterGetter {
         }
 
         void setMapStyle(JSONObject json) throws JSONException {
-            mapCapsule.getHuaweiMap().setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), json.getInt("mapStyle")));
+            String filename = json.getString("mapStyle");
+            if (filename.endsWith(".json")){
+                filename = filename.substring(0, filename.length() - 5);
+            }
+            int styleId = mapCapsule.getContext().getResources().getIdentifier(filename, "raw", mapCapsule.getContext().getPackageName());
+            mapCapsule.getHuaweiMap().setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), styleId));
         }
 
         void setLatLngBoundsForCameraTarget(JSONObject json) throws JSONException {

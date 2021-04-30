@@ -40,7 +40,7 @@ async function onDeviceReady() {
     document.getElementById("disableMapPointers").onclick = disableMapPointers;
     document.getElementById("overlay-btn").onclick = onOverlayButtonClicked;
     log = document.getElementById("log");
-
+    HMSMap.requestPermission();
 }
 
 function onOverlayButtonClicked() {
@@ -67,7 +67,7 @@ async function addMarkerInfo(){
 async function addMarkerAnim(){
     let marker = map.getComponent("Marker102");
     const animationSet = new HMSMap.AnimationSet();
-    animationSet.addRotateAnimation({fromDegree: 30, toDegree: 170, duration: 1200, repeatCount: 3,
+    animationSet.addRotateAnimation({fillMode: HMSMap.AnimationConstant.FILL_MODE_BACKWARDS, fromDegree: 0, toDegree: 170, duration: 1200, repeatCount: 3,
         animationStart: ()=>{
             console.log("rotate animation started");
         },
@@ -75,7 +75,7 @@ async function addMarkerAnim(){
             console.log("rotate animation end");
         }});
 
-    animationSet.addAlphaAnimation({fromAlpha:0.2, toAlpha:0.8, duration: 1000, repeatCount:4,
+    animationSet.addAlphaAnimation({fillMode: HMSMap.AnimationConstant.FILL_MODE_BACKWARDS, fromAlpha:0.8, toAlpha:0.2, duration: 1000, repeatCount:3,
         animationStart: ()=>{
             console.log("rotate alpha started");
         },
@@ -123,6 +123,7 @@ async function removeComponent(){
 
 async function showMap(){
     map = await HMSMap.showMap("map");
+    map.scroll();
 }
 
 async function hideMap(){
@@ -170,7 +171,7 @@ async function addPolygon(){
     components[polygon.getId()] = polygon;
 }
 async function addGroundOverlay(){
-    const groundOverlayOptions = { "position": {"latLng": {"lat": 38, "lng": 27},"width": 30,"height": 30},
+    const groundOverlayOptions = { "position": {"latLng": {"lat": 38, "lng": 27},"width": 300000,"height": 500000},
         "image":{"hue":210},
         "transparency":0,
         "visible":true,
@@ -179,12 +180,20 @@ async function addGroundOverlay(){
     };
 
     let groundOverlay = await map.addGroundOverlay(groundOverlayOptions);
-    await groundOverlay.setPositionFromBounds({"northeast": {"lat": 44, "lng": 11},"southwest": {"lat": 35, "lng": 17}});
     components[groundOverlay.getId()] = groundOverlay;
 }
 async function addTileOverlay(){
     const tileOverlayOptions = {
-        tileProvider: {type:HMSMap.TileType.URL_TILE,data:{URL:"https://a.tile.openstreetmap.org/${z}/${x}/${y}.png"}}
+        tileProvider: {
+            type: HMSMap.TileType.REPETITIVE_TILE,
+            data: {
+                width: 256,
+                height: 256,
+                zoom: [2, 3, 4, 5, 6],
+                path: "www/icon/huawei.png"
+            }
+        },
+        transparency: 0.5
     };
     const tileOverlay = await map.addTileOverlay(tileOverlayOptions);
     components[tileOverlay.getId()] = tileOverlay;

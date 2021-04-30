@@ -307,7 +307,7 @@ public final class JsonToObject {
     }
 
     public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json) throws JSONException {
-        JSONObject anchor = optJSONObject(json, "anchorMarker", new JSONObject());
+        JSONObject anchor = optJSONObject(json, "anchor", new JSONObject());
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
                 .anchor((float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
                 .bearing((float) json.optDouble("bearing", 0.0F))
@@ -326,8 +326,9 @@ public final class JsonToObject {
                 groundOverlayOptions.position(constructLatLng(positionJSON.getJSONObject("latLng")),
                         (float) positionJSON.getDouble("width"));
             }
-        } else {
-            groundOverlayOptions.positionFromBounds(constructLatLngBounds(json.optJSONObject("bounds")));
+        } 
+        if (json.has("bounds")) {
+            groundOverlayOptions.positionFromBounds(constructLatLngBounds(json.getJSONObject("bounds")));
         }
         return groundOverlayOptions;
     }

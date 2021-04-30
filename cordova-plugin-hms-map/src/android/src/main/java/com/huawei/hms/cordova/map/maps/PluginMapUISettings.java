@@ -16,6 +16,9 @@
 
 package com.huawei.hms.cordova.map.maps;
 
+import com.huawei.hms.cordova.map.utils.json.JsonToObject;
+import com.huawei.hms.maps.model.BitmapDescriptor;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -92,6 +95,21 @@ class PluginMapUISettings {
 
         void setGestureScaleByMapCenter(JSONObject val) {
             mapCapsule.getHuaweiMap().getUiSettings().setGestureScaleByMapCenter(val.optBoolean("gestureScaleByMapCenterEnabled"));
+        }
+
+        void setMarkerClusterColor(JSONObject val) {
+            mapCapsule.getHuaweiMap().getUiSettings().setMarkerClusterColor(val.optInt("markerClusterColor"));
+        }
+
+        void setMarkerClusterIcon(JSONObject val) {
+            BitmapDescriptor bitmap = null;
+            if (val.optJSONObject("markerClusterIcon") != null)
+                bitmap = JsonToObject.constructBitmapDescriptor(mapCapsule.getContext(), val.optJSONObject("markerClusterIcon"));
+            mapCapsule.getHuaweiMap().getUiSettings().setMarkerClusterIcon(bitmap);
+        }
+
+        void setMarkerClusterTextColor(JSONObject val) {
+            mapCapsule.getHuaweiMap().getUiSettings().setMarkerClusterTextColor(val.optInt("markerClusterTextColor"));
         }
 
         void run(String methodName, JSONObject args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
