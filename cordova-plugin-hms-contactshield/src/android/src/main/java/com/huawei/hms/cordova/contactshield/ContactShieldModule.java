@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,21 +14,24 @@
     limitations under the License.
 */
 
-
 package com.huawei.hms.cordova.contactshield;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.huawei.hms.common.ApiException;
 import com.huawei.hms.contactshield.ContactShield;
 import com.huawei.hms.contactshield.ContactShieldEngine;
 import com.huawei.hms.contactshield.ContactShieldSetting;
+import com.huawei.hms.contactshield.ContactShieldStatus;
+import com.huawei.hms.contactshield.DailySketchConfiguration;
 import com.huawei.hms.contactshield.DiagnosisConfiguration;
+import com.huawei.hms.contactshield.SharedKeyFileProvider;
+import com.huawei.hms.contactshield.SharedKeysDataMapping;
 import com.huawei.hms.contactshield.StatusCode;
 import com.huawei.hms.cordova.contactshield.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.contactshield.basef.CordovaMethod;
@@ -47,12 +50,17 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.huawei.hms.cordova.contactshield.constants.IntentAction.CHECK_CONTACT_STATUS;
 import static com.huawei.hms.cordova.contactshield.constants.RequestCode.PUT_SHARED_KEY_FILES;
+import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.convertJSONArrayToList;
+import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.dailySketchConfiguration;
 import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.getDiagnosisConfiguration;
 import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.getFileList;
+import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.getMapObject;
 import static com.huawei.hms.cordova.contactshield.utils.ObjectProvider.getPendingIntent;
 
 public class ContactShieldModule extends CordovaBaseModule {
@@ -60,11 +68,151 @@ public class ContactShieldModule extends CordovaBaseModule {
 
     private ContactShieldEngine engine;
     private Gson gson;
-    BroadcastReceiver receiver;
+    private BroadcastReceiver receiver;
 
     public ContactShieldModule(Context context) {
         engine = ContactShield.getContactShieldEngine(context);
         gson = new Gson();
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void getStatus(final CorPack corPack, JSONArray args, final Promise promise) {
+        engine.getStatus()
+                .addOnSuccessListener(result -> {
+                    JSONArray statusResult = new JSONArray();
+                    try {
+                        for (ContactShieldStatus value : result) {
+                            JSONObject keyMap = new JSONObject();
+                            keyMap.put("status", value.name());
+                            keyMap.put("value", value.getStatusValue());
+                            statusResult.put(keyMap);
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, "getStatus: error ->" + e.toString());
+                    }
+                    promise.success(statusResult);
+                })
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void getContactShieldVersion(final CorPack corPack, JSONArray args, final Promise promise) {
+        engine.getContactShieldVersion()
+                .addOnSuccessListener(promise::success)
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void getDeviceCalibrationConfidence(final CorPack corPack, JSONArray args, final Promise promise) {
+        engine.getDeviceCalibrationConfidence()
+                .addOnSuccessListener(promise::success)
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void isSupportScanningWithoutLocation(final CorPack corPack, JSONArray args, final Promise promise) {
+        final boolean isSupportScan = engine.isSupportScanningWithoutLocation();
+        promise.success(isSupportScan);
+    }
+
+
+
+    @HMSLog
+    @CordovaMethod
+    public void setSharedKeysDataMapping(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        final JSONObject jsonData = args.getJSONObject(0);
+        final JSONObject daysSinceCreationToContagiousness = jsonData.getJSONObject("daysSinceCreationToContagiousness");
+        final int defaultReportType = jsonData.getInt("defaultReportType");
+        final int defaultContagiousness = jsonData.getInt("defaultContagiousness");
+
+        Map<Integer, Integer> mapObj = getMapObject(daysSinceCreationToContagiousness);
+
+        final SharedKeysDataMapping sharedKeysDataMapping = new SharedKeysDataMapping.Builder()
+                .setDaysSinceCreationToContagiousness(mapObj)
+                .setDefaultContagiousness(defaultContagiousness)
+                .setDefaultReportType(defaultReportType)
+                .build();
+
+        engine.setSharedKeysDataMapping(sharedKeysDataMapping)
+                .addOnSuccessListener(aVoid -> promise.success())
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void getSharedKeysDataMapping(final CorPack corPack, JSONArray args, final Promise promise) {
+        engine.getSharedKeysDataMapping()
+                .addOnSuccessListener(sharedKeysDataMapping -> {
+                    final JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("defaultContagiousness", sharedKeysDataMapping.getDefaultContagiousness());
+                        jsonObject.put("defaultReportType", sharedKeysDataMapping.getDefaultReportType());
+                        jsonObject.put("daysSinceCreationToContagiousness", sharedKeysDataMapping.getDaysSinceCreationToContagiousness());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "getSharedKeysDataMapping: " + e.toString());
+                    }
+                    promise.success(jsonObject);
+                })
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void getDailySketch(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        final JSONObject dailySketchConfigurationJson = args.getJSONObject(0);
+        final DailySketchConfiguration dailySketchConfiguration = dailySketchConfiguration(dailySketchConfigurationJson, gson);
+
+        engine.getDailySketch(dailySketchConfiguration)
+                .addOnSuccessListener(dailySketches -> handleGsonAsList(gson.toJson(dailySketches), promise))
+                .addOnFailureListener(e -> handleError(e, promise));
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void putSharedKeyFilesKeys(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException, IOException {
+        final JSONObject jsonData = args.getJSONObject(0);
+        final JSONObject diagnosisConfig = jsonData.getJSONObject("diagnosisConfiguration");
+        final String token = jsonData.getString("token");
+        final JSONArray fileList = jsonData.getJSONArray("fileList");
+        final JSONArray publicKeysJSON = jsonData.getJSONArray("publicKeys");
+        final List<File> files = getFileList(corPack.getCordovaWebView().getContext().getContentResolver(), fileList);
+
+        final PendingIntent pendingIntent = getPendingIntent(corPack.getCordovaWebView().getContext(), CHECK_CONTACT_STATUS, PUT_SHARED_KEY_FILES);
+
+        final List<String> publicKeys = convertJSONArrayToList(publicKeysJSON);
+        final DiagnosisConfiguration diagnosisConfiguration = getDiagnosisConfiguration(diagnosisConfig, gson);
+
+        engine.putSharedKeyFiles(pendingIntent, files, publicKeys, diagnosisConfiguration, token)
+                .addOnSuccessListener(aVoid -> {
+                    deleteFiles(files);
+                    promise.success();
+                })
+                .addOnFailureListener(e -> {
+                    handleError(e, promise);
+                });
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void putSharedKeyFilesProvider(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException, IOException {
+        final JSONArray fileList = args.getJSONArray(0);
+        final List<File> files = getFileList(corPack.getCordovaWebView().getContext().getContentResolver(), fileList);
+        final PendingIntent pendingIntent = getPendingIntent(corPack.getCordovaWebView().getContext(), CHECK_CONTACT_STATUS, PUT_SHARED_KEY_FILES);
+
+        final SharedKeyFileProvider provider = new SharedKeyFileProvider(files);
+
+        engine.putSharedKeyFiles(pendingIntent, provider)
+                .addOnSuccessListener(aVoid -> {
+                    deleteFiles(files);
+                    promise.success();
+                })
+                .addOnFailureListener(e -> {
+                    handleError(e, promise);
+                });
     }
 
     @HMSLog
@@ -74,7 +222,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnSuccessListener(aVoid -> promise.success())
                 .addOnFailureListener(e -> handleError(e, promise));
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -86,7 +233,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnFailureListener(e -> handleError(e, promise));
     }
 
-
     @HMSLog
     @CordovaMethod
     public void getContactSketch(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
@@ -95,7 +241,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnSuccessListener(contactSketch -> handleGsonAsObject(this.gson.toJson(contactSketch), promise))
                 .addOnFailureListener(e -> handleError(e, promise));
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -106,7 +251,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnFailureListener(e -> handleError(e, promise));
     }
 
-
     @HMSLog
     @CordovaMethod
     public void getPeriodicKey(final CorPack corPack, JSONArray args, final Promise promise) {
@@ -116,7 +260,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnFailureListener(e -> handleError(e, promise));
     }
 
-
     @HMSLog
     @CordovaMethod
     public void isContactShieldRunning(final CorPack corPack, JSONArray args, final Promise promise) {
@@ -124,7 +267,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnSuccessListener(aBoolean -> handleBooleanAsObject(aBoolean, promise))
                 .addOnFailureListener(e -> handleError(e, promise));
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -135,7 +277,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnSuccessListener(aVoid -> promise.success())
                 .addOnFailureListener(e -> handleError(e, promise));
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -151,7 +292,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnFailureListener(e -> handleError(e, promise));
     }
 
-
     @HMSLog
     @CordovaMethod
     public void startContactShieldNoPersistent(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
@@ -162,7 +302,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                 .addOnSuccessListener(aVoid -> promise.success())
                 .addOnFailureListener(e -> handleError(e, promise));
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -196,13 +335,10 @@ public class ContactShieldModule extends CordovaBaseModule {
                 });
     }
 
-
     @HMSLog
     @CordovaMethod
     @Deprecated
     public void putSharedKeyFilesOld(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException, IOException {
-        android.util.Log.i(TAG, "putSharedKeyFilesOld: running");
-
         JSONObject jsonSharedKeyFilesData = args.getJSONObject(0);
         JSONObject diagnosisConfigJson = jsonSharedKeyFilesData.getJSONObject("diagnosisConfiguration");
         String token = jsonSharedKeyFilesData.getString("token");
@@ -219,7 +355,6 @@ public class ContactShieldModule extends CordovaBaseModule {
                     deleteFiles(files);
                     handleError(e, promise);
                 });
-
     }
 
     private void deleteFiles(List<File> files) {
@@ -227,7 +362,6 @@ public class ContactShieldModule extends CordovaBaseModule {
             Log.i(TAG, "isFileDelete: " + file.delete());
         }
     }
-
 
     @HMSLog
     @CordovaMethod
@@ -262,56 +396,18 @@ public class ContactShieldModule extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void hasPermission(final CorPack corPack, JSONArray args, final Promise promise) {
-        try {
-            boolean result = corPack.hasPermission(getRequirePermission(args.getInt(0)));
-            promise.success(result);
-
-        } catch (Exception e) {
-            Log.i(TAG, e.toString());
-        }
+    public void hasPermission(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        String permission = args.getString(0);
+        promise.success(corPack.hasPermission(permission));
     }
 
     @HMSLog
     @CordovaMethod
-    public void requestPermission(final CorPack corPack, JSONArray args, final Promise promise) {
-        try {
-            corPack.requestPermission(100, getRequirePermission(args.getInt(0)));
-            promise.success();
-        } catch (Exception e) {
-            Log.i(TAG, e.toString());
-        }
+    public void requestPermissions(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        List<String> permissions = convertJSONArrayToList(args.getJSONArray(0));
+        corPack.requestPermissions(0, permissions.toArray(new String[0]));
+        promise.success();
     }
-
-    private String getRequirePermission(int permission) {
-        String manifestPermission = "";
-
-        switch (permission) {
-            case 1:
-                manifestPermission = Manifest.permission.INTERNET;
-                break;
-            case 2:
-                manifestPermission = Manifest.permission.ACCESS_NETWORK_STATE;
-                break;
-            case 3:
-                manifestPermission = Manifest.permission.BLUETOOTH;
-                break;
-            case 4:
-                manifestPermission = Manifest.permission.BLUETOOTH_ADMIN;
-                break;
-            case 5:
-                manifestPermission = Manifest.permission.ACCESS_COARSE_LOCATION;
-                break;
-            case 6:
-                manifestPermission = Manifest.permission.ACCESS_FINE_LOCATION;
-                break;
-            default:
-                break;
-        }
-
-        return manifestPermission;
-    }
-
 
     public void handleError(Exception e, Promise promise) {
         try {
@@ -362,6 +458,4 @@ public class ContactShieldModule extends CordovaBaseModule {
             Log.e(TAG, ex.toString());
         }
     }
-
-
 }

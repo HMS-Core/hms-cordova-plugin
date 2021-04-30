@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { HmsContactShield, Permission, ContactShieldEngine } from '@hmscore/ionic-native-hms-contactshield/ngx';
+import { HmsContactShield, HMSPermission, ContactShieldEngine } from '@ionic-native/contactshield/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 @Component({
@@ -32,30 +32,28 @@ export class HomePage implements OnInit {
     console.log("registerReceiver called");
   }
 
-
-  async hasBluetoothPermission() {
-    console.log('hasPermission clicked!');
-
-    const permission: Permission = Permission.BLUETOOTH;
-
+  async hasPermission() {
     try {
+      const permission = HMSPermission.BLUETOOTH;
       const res = await this.engine.hasPermission(permission);
-      alert('hasPermission -> success, ' + JSON.stringify(res));
+      alert(JSON.stringify(res));
     } catch (ex) {
-      alert('hasPermission -> Error : ' + JSON.stringify(ex));
+      alert(JSON.stringify(ex));
     }
   }
 
-  async requestBluetoothPermission() {
-    console.log('requestPermission clicked!');
-
-    const permission: Permission = Permission.BLUETOOTH;
-
+  async requestPermissions() {
     try {
-      await this.engine.requestPermission(permission);
-      alert('requestPermission -> success');
+      const permission = [HMSPermission.BLUETOOTH,
+      HMSPermission.ACCESS_NETWORK_STATE,
+      HMSPermission.BLUETOOTH,
+      HMSPermission.BLUETOOTH_ADMIN,
+      HMSPermission.ACCESS_COARSE_LOCATION,
+      HMSPermission.ACCESS_FINE_LOCATION];
+      await this.engine.requestPermissions(permission);
+      alert("requestPermissions-> success");
     } catch (ex) {
-      alert('requestPermission -> Error : ' + JSON.stringify(ex));
+      alert(JSON.stringify(ex));
     }
   }
 
@@ -78,6 +76,100 @@ export class HomePage implements OnInit {
       alert("clearData-> success");
     } catch (ex) {
       alert(JSON.stringify(ex));
+    }
+  }
+
+
+  async getStatus() {
+    try {
+      const res = await this.engine.getStatus();
+      alert("getStatus -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async getContactShieldVersion() {
+    try {
+      const res = await this.engine.getContactShieldVersion();
+      alert("getContactShieldVersion -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async getDeviceCalibrationConfidence() {
+    try {
+      const res = await this.engine.getDeviceCalibrationConfidence();
+      alert("getDeviceCalibrationConfidence -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async isSupportScanningWithoutLocation() {
+    try {
+      const res = await this.engine.isSupportScanningWithoutLocation();
+      alert("isSupportScanningWithoutLocation -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+
+  async setSharedKeysDataMapping() {
+    try {
+      const params = {
+        daysSinceCreationToContagiousness: {
+          1: 2,
+        },
+        defaultContagiousness: 1,
+        defaultReportType: 0
+      }
+      await this.engine.setSharedKeysDataMapping(params);
+      alert("setSharedKeysDataMapping -> success ");
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async getSharedKeysDataMapping() {
+    try {
+      const res = await this.engine.getSharedKeysDataMapping();
+      alert("getSharedKeysDataMapping -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async getDailySketch() {
+    try {
+      const dailySketch = {};
+      const res = await this.engine.getDailySketch(null);
+      alert("getDailySketch -> success " + JSON.stringify(res));
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+  }
+  async putSharedKeyFilesKeys() {
+    try {
+      const uri = await this.fileChooser.open();
+      const args = {
+        token: "TOKEN_TEST",
+        diagnosisConfiguration: {},
+        fileList: [uri],
+        publicKeys: ["123", "1345"],
+      };
+      const res = await this.engine.putSharedKeyFilesKeys(args);
+      alert("putSharedKeyFilesKeys -> success " + res);
+    } catch (e) {
+      alert(JSON.stringify(e))
+    }
+  }
+
+  async putSharedKeyFilesProvider() {
+    try {
+      const uri = await this.fileChooser.open();
+
+      const fileList = [uri];
+      const res = await this.engine.putSharedKeyFilesProvider(fileList);
+      alert(res);
+    } catch (e) {
+      alert(JSON.stringify(e))
     }
   }
 

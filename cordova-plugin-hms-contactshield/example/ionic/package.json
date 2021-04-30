@@ -1,7 +1,7 @@
 {
     "name": "ionic-hms-contactshield-demo",
     "description": "A demo application which shows the usage of HMS Contact Shield Plugin.",
-    "version": "5.0.4-302",
+    "version": "5.2.1-300",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
@@ -72,13 +72,5 @@
         "tsconfig.json",
         "tsconfig.spec.json",
         "tslint.json"
-    ],
-    "cordova": {
-        "plugins": {
-            "cordova-plugin-filechooser": {}
-        },
-        "platforms": [
-            "android"
-        ]
-    }
+    ]
 }

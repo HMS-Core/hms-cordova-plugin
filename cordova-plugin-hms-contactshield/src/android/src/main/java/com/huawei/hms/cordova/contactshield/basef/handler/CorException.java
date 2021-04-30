@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,23 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.contactshield.basef.handler;
 
-public class NoSuchCordovaModuleException extends RuntimeException {
+public class CorException extends RuntimeException {
+    private final CorError corError;
+
+    public CorException(CorError corError) {
+        super();
+        this.corError = corError;
+    }
+
+    @Override
+    public String getMessage() {
+        return corError.toJson().toString();
+    }
+
+    public CorError getCorError() {
+        return corError;
+    }
 }

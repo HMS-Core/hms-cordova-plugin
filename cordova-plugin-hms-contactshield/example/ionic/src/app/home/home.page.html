@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@
     <ion-body>
         <hr>
         <ion-form>
-            <ion-button (click)="hasBluetoothPermission()" class="submit-button" expand="block">Has Bluetooth Permission
+            <ion-button (click)="hasPermission()" class="submit-button" expand="block">Has Permission
             </ion-button>
         </ion-form>
         <hr>
         <hr>
         <ion-form>
-            <ion-button (click)="requestBluetoothPermission()" class="submit-button" expand="block">Request Bluetooth Permission
+            <ion-button (click)="requestPermissions()" class="submit-button" expand="block">Request Permissions
             </ion-button>
         </ion-form>
         <hr>
@@ -44,6 +44,60 @@
         <hr>
         <ion-form>
             <ion-button (click)="clearData()" class="submit-button" expand="block">clear Data
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getStatus()" class="submit-button" expand="block">Get status
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getContactShieldVersion()" class="submit-button" expand="block">get contact shield version
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getDeviceCalibrationConfidence()" class="submit-button" expand="block">get device calibration confidence
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="isSupportScanningWithoutLocation()" class="submit-button" expand="block">is support scanning without location
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="setSharedKeysDataMapping()" class="submit-button" expand="block">set shared keys data mapping
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getSharedKeysDataMapping()" class="submit-button" expand="block">get shared keys data mapping
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="getDailySketch()" class="submit-button" expand="block">get daily sketch
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="putSharedKeyFilesKeys()" class="submit-button" expand="block">put shared key files keys
+            </ion-button>
+        </ion-form>
+        <hr>
+        <hr>
+        <ion-form>
+            <ion-button (click)="putSharedKeyFilesProvider()" class="submit-button" expand="block">put shared keys files provider
             </ion-button>
         </ion-form>
         <hr>

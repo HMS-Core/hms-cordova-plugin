@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-contactshield" version="5.0.4-302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-contactshield" version="5.2.1-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS Contact Shield</name>
 	<description>Cordova HMS Contact Shield Plugin</description>
 	<license>Apache 2.0</license>
@@ -31,23 +31,26 @@
 			</feature>
 		</config-file>
 
-		<framework src="com.huawei.hms:contactshield:5.0.4.302"/>
+		<framework src="com.huawei.hms:contactshield:5.2.1.300"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
 
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/ContactShieldModule.java" target-dir="src/com/huawei/hms/cordova/contactshield/"/>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/HMSContactShield.java" target-dir="src/com/huawei/hms/cordova/contactshield/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/CordovaRule.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CorError.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CorException.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CorLog.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/contactshield/basef/handler/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/constants/IntentAction.java" target-dir="src/com/huawei/hms/cordova/contactshield/constants/"/>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/constants/RequestCode.java" target-dir="src/com/huawei/hms/cordova/contactshield/constants/"/>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/contactshield/handlers/ContactShieldBroadcastReceiver.java" target-dir="src/com/huawei/hms/cordova/contactshield/handlers/"/>

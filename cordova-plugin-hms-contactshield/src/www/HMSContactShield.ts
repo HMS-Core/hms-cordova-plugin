@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,13 +23,12 @@ export enum ContactShieldEngine {
     TOKEN_A = "TOKEN_WINDOW_MODE"
 }
 
-export enum Permission {
-    INTERNET = 1,
-    ACCESS_NETWORK_STATE = 2,
-    BLUETOOTH = 3,
-    BLUETOOTH_ADMIN = 4,
-    ACCESS_COARSE_LOCATION = 5,
-    ACCESS_FINE_LOCATION = 6
+export enum HMSPermission {
+    ACCESS_NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE",
+    BLUETOOTH = "android.permission.BLUETOOTH",
+    BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN",
+    ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
+    ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION"
 }
 
 export enum RiskLevel {
@@ -69,6 +68,28 @@ export interface SharedKeyData {
     token: string;
     diagnosisConfiguration: DiagnosisConfiguration;
     fileList: string[]
+}
+
+export interface SharedKeyDataKeys {
+    token: string;
+    diagnosisConfiguration: DiagnosisConfiguration;
+    fileList: string[];
+    publicKeys: string[];
+}
+
+export interface SharedKeyDataMapping {
+    daysSinceCreationToContagiousness: any;
+    defaultReportType: number;
+    defaultContagiousness: number;
+}
+
+export interface DailySketchConfiguration {
+    weightsOfReportType: number[],
+    weightsOfContagiousness: number[],
+    thresholdOfAttenuationInDb: number[],
+    weightsOfAttenuationBucket: number[],
+    thresholdOfDaysSinceHit: number,
+    minWindowScore: number,
 }
 
 export interface DiagnosisConfiguration {
@@ -120,44 +141,34 @@ export interface StatusCode {
 export function clearData(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ["clearData"]);
 }
-
 export function getContactDetail(token: string): Promise<ContactDetail[]> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactDetail', token ? token : ""]);
 }
-
 export function startContactShield(incubationPeriod: number): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShield', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
 }
-
 export function startContactShieldOld(incubationPeriod: number): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShieldOld', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
 }
-
 export function startContactShieldNoPersistent(incubationPeriod: number): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShieldNoPersistent', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
 }
-
 export function stopContactShield(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['stopContactShield']);
 }
-
 export function getContactSketch(token: string): Promise<ContactSketch> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactSketch', token ? token : ""]);
 }
-
 export function getContactWindow(token: string): Promise<ContactWindow[]> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactWindow', token ? token : ""]);
 }
-
 export function getPeriodicKey(): Promise<PeriodicKey[]> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['getPeriodicKey']);
 }
-
 export async function isContactShieldRunning(): Promise<boolean> {
     const { result } = await asyncExec('HMSContactShield', 'ContactShieldModule', ['isContactShieldRunning']);
     return result;
 }
-
 export function putSharedKeyFiles(sharedKeyData: SharedKeyData): Promise<void> {
     // Set defaults
     sharedKeyData.diagnosisConfiguration = Object.assign({
@@ -174,7 +185,6 @@ export function putSharedKeyFiles(sharedKeyData: SharedKeyData): Promise<void> {
     }, sharedKeyData.diagnosisConfiguration)
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFiles', sharedKeyData]);
 }
-
 export function putSharedKeyFilesOld(sharedKeyData: SharedKeyData): Promise<void> {
     // Set defaults
     sharedKeyData.diagnosisConfiguration = Object.assign({
@@ -191,31 +201,73 @@ export function putSharedKeyFilesOld(sharedKeyData: SharedKeyData): Promise<void
     }, sharedKeyData.diagnosisConfiguration)
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesOld', sharedKeyData]);
 }
-
 export function disableLogger(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['disableLogger']);
 }
-
 export function enableLogger(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['enableLogger']);
 }
-
 export function handleCallback(event: string, callback: (data: any) => void): void {
     window.subscribeHMSEvent(event, callback);
 }
-
 export function registerReceiver(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['registerReceiver']);
 }
-
 export function unregisterReceiver(): Promise<void> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['unregisterReceiver']);
 }
-
-export function hasPermission(permission: Permission): Promise<boolean> {
+export function hasPermission(permission: HMSPermission): Promise<boolean> {
     return asyncExec('HMSContactShield', 'ContactShieldModule', ['hasPermission', permission]);
 }
-
-export function requestPermission(permission: Permission): Promise<void> {
-    return asyncExec('HMSContactShield', 'ContactShieldModule', ['requestPermission', permission]);
+export function requestPermissions(permissions: HMSPermission[]): Promise<void> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['requestPermissions', permissions]);
+}
+export function getStatus(): Promise<any> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['getStatus']);
+}
+export function getContactShieldVersion(): Promise<number> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactShieldVersion']);
+}
+export function getDeviceCalibrationConfidence(): Promise<number> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['getDeviceCalibrationConfidence']);
+}
+export function isSupportScanningWithoutLocation(): Promise<boolean> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['isSupportScanningWithoutLocation']);
+}
+export function setSharedKeysDataMapping(sharedKey: SharedKeyDataMapping): Promise<any> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['setSharedKeysDataMapping', sharedKey]);
+}
+export function getSharedKeysDataMapping(): Promise<SharedKeyDataMapping> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['getSharedKeysDataMapping']);
+}
+export function getDailySketch(dailySketch: DailySketchConfiguration): Promise<any> {
+    // Set defaults
+    dailySketch = Object.assign({
+        weightsOfReportType: [0],
+        weightsOfContagiousness: [0],
+        thresholdOfAttenuationInDb: [0],
+        weightsOfAttenuationBucket: [0],
+        thresholdOfDaysSinceHit: 0,
+        minWindowScore: 0,
+    }, dailySketch)
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['getDailySketch', dailySketch]);
+}
+export function putSharedKeyFilesKeys(sharedKeyFiles: SharedKeyDataKeys): Promise<any> {
+    // Set defaults
+    sharedKeyFiles.diagnosisConfiguration = Object.assign({
+        attenuationDurationThresholds: [50, 74],
+        attenuationRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        attenuationWeight: 50,
+        daysAfterContactedRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        daysAfterContactedWeight: 50,
+        durationRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        durationWeight: 50,
+        initialRiskLevelRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        initialRiskLevelWeight: 50,
+        minimumRiskValueThreshold: 1
+    }, sharedKeyFiles.diagnosisConfiguration)
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesKeys', sharedKeyFiles]);
+}
+export function putSharedKeyFilesProvider(files: string[]): Promise<any> {
+    return asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesProvider', files]);
 }

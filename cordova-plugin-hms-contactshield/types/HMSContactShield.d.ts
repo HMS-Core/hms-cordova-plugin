@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,13 +19,12 @@ export declare enum ContactShieldSetting {
 export declare enum ContactShieldEngine {
     TOKEN_A = "TOKEN_WINDOW_MODE"
 }
-export declare enum Permission {
-    INTERNET = 1,
-    ACCESS_NETWORK_STATE = 2,
-    BLUETOOTH = 3,
-    BLUETOOTH_ADMIN = 4,
-    ACCESS_COARSE_LOCATION = 5,
-    ACCESS_FINE_LOCATION = 6
+export declare enum HMSPermission {
+    ACCESS_NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE",
+    BLUETOOTH = "android.permission.BLUETOOTH",
+    BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN",
+    ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
+    ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION"
 }
 export declare enum RiskLevel {
     RISK_LEVEL_INVALID = 0,
@@ -61,6 +60,25 @@ export interface SharedKeyData {
     token: string;
     diagnosisConfiguration: DiagnosisConfiguration;
     fileList: string[];
+}
+export interface SharedKeyDataKeys {
+    token: string;
+    diagnosisConfiguration: DiagnosisConfiguration;
+    fileList: string[];
+    publicKeys: string[];
+}
+export interface SharedKeyDataMapping {
+    daysSinceCreationToContagiousness: any;
+    defaultReportType: number;
+    defaultContagiousness: number;
+}
+export interface DailySketchConfiguration {
+    weightsOfReportType: number[];
+    weightsOfContagiousness: number[];
+    thresholdOfAttenuationInDb: number[];
+    weightsOfAttenuationBucket: number[];
+    thresholdOfDaysSinceHit: number;
+    minWindowScore: number;
 }
 export interface DiagnosisConfiguration {
     attenuationDurationThresholds?: number[];
@@ -120,5 +138,14 @@ export declare function enableLogger(): Promise<void>;
 export declare function handleCallback(event: string, callback: (data: any) => void): void;
 export declare function registerReceiver(): Promise<void>;
 export declare function unregisterReceiver(): Promise<void>;
-export declare function hasPermission(permission: Permission): Promise<boolean>;
-export declare function requestPermission(permission: Permission): Promise<void>;
+export declare function hasPermission(permission: HMSPermission): Promise<boolean>;
+export declare function requestPermissions(permissions: HMSPermission[]): Promise<void>;
+export declare function getStatus(): Promise<any>;
+export declare function getContactShieldVersion(): Promise<number>;
+export declare function getDeviceCalibrationConfidence(): Promise<number>;
+export declare function isSupportScanningWithoutLocation(): Promise<boolean>;
+export declare function setSharedKeysDataMapping(sharedKey: SharedKeyDataMapping): Promise<any>;
+export declare function getSharedKeysDataMapping(): Promise<SharedKeyDataMapping>;
+export declare function getDailySketch(dailySketch: DailySketchConfiguration): Promise<any>;
+export declare function putSharedKeyFilesKeys(sharedKeyFiles: SharedKeyDataKeys): Promise<any>;
+export declare function putSharedKeyFilesProvider(files: string[]): Promise<any>;

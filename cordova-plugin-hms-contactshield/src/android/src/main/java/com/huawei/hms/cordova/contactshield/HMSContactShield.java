@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.contactshield;
 
 import com.huawei.hms.cordova.contactshield.basef.handler.CordovaController;
@@ -28,14 +29,14 @@ import java.util.Arrays;
 public class HMSContactShield extends CordovaPlugin {
 
     private CordovaController cordovaController;
-    public static final String SERVICE = "CordovaContactShield";
-    public static final String VERSION = "5.0.4.302";
+
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        ContactShieldModule csm = new ContactShieldModule(webView.getContext());
-        cordovaController = new CordovaController(this, SERVICE, VERSION,
-                Arrays.asList(csm));
+        final String kit = "ContactShield";
+        final String version = "5.2.1.300";
+        cordovaController = new CordovaController(this, kit, version,
+                Arrays.asList(new ContactShieldModule(webView.getContext())));
     }
 
     @Override

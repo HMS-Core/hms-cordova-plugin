@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,56 +13,53 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.contactshield.basef.handler;
 
 import android.app.Activity;
-import android.util.Log;
 
 import org.apache.cordova.CordovaWebView;
 
-import java.util.Locale;
-
 public class CordovaEventRunner {
     private static final String TAG = CordovaEventRunner.class.getName();
-
-    private final HMSLogger hmsLogger;
+    private static final String TO_STR_NOT_VALID_ERR = "Sent event parameter value is not valid! Please add toString() method to the object you " +
+            "are passing or do not pass this object as an event parameter.";
     private final CordovaWebView webView;
     private final Activity activity;
-    private final String TO_STR_NOT_VALID_ERR= "Sent event parameter value is not valid! Please add toString() method to the object you " +
-            "are passing or do not pass this object as an event parameter.";
+    private final HMSLogger hmsLogger;
 
-    CordovaEventRunner(final CordovaWebView cordovaWebView, final Activity activity, final HMSLogger hmsLogger) {
-        this.hmsLogger = hmsLogger;
+    protected CordovaEventRunner(final CordovaWebView cordovaWebView, final HMSLogger hmsLogger, final Activity activity) {
         this.webView = cordovaWebView;
         this.activity = activity;
-
+        this.hmsLogger = hmsLogger;
     }
 
     public void sendEvent(String event, Object... params) {
-        hmsLogger.sendPeriodicEvent(event);
         sendEventToJS(event, params);
     }
 
     public void sendEvent(String event) {
-        hmsLogger.sendPeriodicEvent(event);
         sendEventToJS(event);
     }
 
     private void sendEventToJS(String event, Object... objects) {
-        Log.i(TAG, "Periodic event " + event + " captured and event " + event + " is sending to JS.");
+        CorLog.info(TAG, "Periodic event " + event + " captured and event " + event + " is sending to JS.");
         StringBuilder jsFunctionBuilder = new StringBuilder();
         jsFunctionBuilder.append("javascript:");
         jsFunctionBuilder.append("window.runHMSEvent('").append(event).append("'");
         if (objects.length > 0) jsFunctionBuilder.append(buildJSEventParameters(objects));
         jsFunctionBuilder.append(");");
-        activity.runOnUiThread(() -> webView.loadUrl(jsFunctionBuilder.toString()));
+        activity.runOnUiThread(() -> {
+            webView.loadUrl(jsFunctionBuilder.toString());
+            hmsLogger.sendPeriodicEvent(event);
+        });
     }
 
     private String buildJSEventParameters(Object... objects) {
         StringBuilder eventParametersBuilder = new StringBuilder();
         for (Object obj : objects) {
             if (!isToStringValueValid(obj))
-                Log.w(TAG, TO_STR_NOT_VALID_ERR);
+                CorLog.warn(TAG, TO_STR_NOT_VALID_ERR);
             eventParametersBuilder.append(",").append(obj.toString());
         }
         return eventParametersBuilder.toString();
@@ -74,4 +71,5 @@ public class CordovaEventRunner {
         return originalToStr.equals(currentToStr);
     }
 }
+
 

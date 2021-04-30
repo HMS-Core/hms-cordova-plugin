@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -24,7 +24,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requestPermission = exports.hasPermission = exports.unregisterReceiver = exports.registerReceiver = exports.handleCallback = exports.enableLogger = exports.disableLogger = exports.putSharedKeyFilesOld = exports.putSharedKeyFiles = exports.isContactShieldRunning = exports.getPeriodicKey = exports.getContactWindow = exports.getContactSketch = exports.stopContactShield = exports.startContactShieldNoPersistent = exports.startContactShieldOld = exports.startContactShield = exports.getContactDetail = exports.clearData = exports.HMSStatusCode = exports.RiskLevel = exports.Permission = exports.ContactShieldEngine = exports.ContactShieldSetting = void 0;
+exports.putSharedKeyFilesProvider = exports.putSharedKeyFilesKeys = exports.getDailySketch = exports.getSharedKeysDataMapping = exports.setSharedKeysDataMapping = exports.isSupportScanningWithoutLocation = exports.getDeviceCalibrationConfidence = exports.getContactShieldVersion = exports.getStatus = exports.requestPermissions = exports.hasPermission = exports.unregisterReceiver = exports.registerReceiver = exports.handleCallback = exports.enableLogger = exports.disableLogger = exports.putSharedKeyFilesOld = exports.putSharedKeyFiles = exports.isContactShieldRunning = exports.getPeriodicKey = exports.getContactWindow = exports.getContactSketch = exports.stopContactShield = exports.startContactShieldNoPersistent = exports.startContactShieldOld = exports.startContactShield = exports.getContactDetail = exports.clearData = exports.HMSStatusCode = exports.RiskLevel = exports.HMSPermission = exports.ContactShieldEngine = exports.ContactShieldSetting = void 0;
 const utils_1 = require("./utils");
 var ContactShieldSetting;
 (function (ContactShieldSetting) {
@@ -34,15 +34,14 @@ var ContactShieldEngine;
 (function (ContactShieldEngine) {
     ContactShieldEngine["TOKEN_A"] = "TOKEN_WINDOW_MODE";
 })(ContactShieldEngine = exports.ContactShieldEngine || (exports.ContactShieldEngine = {}));
-var Permission;
-(function (Permission) {
-    Permission[Permission["INTERNET"] = 1] = "INTERNET";
-    Permission[Permission["ACCESS_NETWORK_STATE"] = 2] = "ACCESS_NETWORK_STATE";
-    Permission[Permission["BLUETOOTH"] = 3] = "BLUETOOTH";
-    Permission[Permission["BLUETOOTH_ADMIN"] = 4] = "BLUETOOTH_ADMIN";
-    Permission[Permission["ACCESS_COARSE_LOCATION"] = 5] = "ACCESS_COARSE_LOCATION";
-    Permission[Permission["ACCESS_FINE_LOCATION"] = 6] = "ACCESS_FINE_LOCATION";
-})(Permission = exports.Permission || (exports.Permission = {}));
+var HMSPermission;
+(function (HMSPermission) {
+    HMSPermission["ACCESS_NETWORK_STATE"] = "android.permission.ACCESS_NETWORK_STATE";
+    HMSPermission["BLUETOOTH"] = "android.permission.BLUETOOTH";
+    HMSPermission["BLUETOOTH_ADMIN"] = "android.permission.BLUETOOTH_ADMIN";
+    HMSPermission["ACCESS_COARSE_LOCATION"] = "android.permission.ACCESS_COARSE_LOCATION";
+    HMSPermission["ACCESS_FINE_LOCATION"] = "android.permission.ACCESS_FINE_LOCATION";
+})(HMSPermission = exports.HMSPermission || (exports.HMSPermission = {}));
 var RiskLevel;
 (function (RiskLevel) {
     RiskLevel[RiskLevel["RISK_LEVEL_INVALID"] = 0] = "RISK_LEVEL_INVALID";
@@ -169,8 +168,66 @@ function hasPermission(permission) {
     return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['hasPermission', permission]);
 }
 exports.hasPermission = hasPermission;
-function requestPermission(permission) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['requestPermission', permission]);
+function requestPermissions(permissions) {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['requestPermissions', permissions]);
 }
-exports.requestPermission = requestPermission;
+exports.requestPermissions = requestPermissions;
+function getStatus() {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getStatus']);
+}
+exports.getStatus = getStatus;
+function getContactShieldVersion() {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactShieldVersion']);
+}
+exports.getContactShieldVersion = getContactShieldVersion;
+function getDeviceCalibrationConfidence() {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getDeviceCalibrationConfidence']);
+}
+exports.getDeviceCalibrationConfidence = getDeviceCalibrationConfidence;
+function isSupportScanningWithoutLocation() {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['isSupportScanningWithoutLocation']);
+}
+exports.isSupportScanningWithoutLocation = isSupportScanningWithoutLocation;
+function setSharedKeysDataMapping(sharedKey) {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['setSharedKeysDataMapping', sharedKey]);
+}
+exports.setSharedKeysDataMapping = setSharedKeysDataMapping;
+function getSharedKeysDataMapping() {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getSharedKeysDataMapping']);
+}
+exports.getSharedKeysDataMapping = getSharedKeysDataMapping;
+function getDailySketch(dailySketch) {
+    // Set defaults
+    dailySketch = Object.assign({
+        weightsOfReportType: [0],
+        weightsOfContagiousness: [0],
+        thresholdOfAttenuationInDb: [0],
+        weightsOfAttenuationBucket: [0],
+        thresholdOfDaysSinceHit: 0,
+        minWindowScore: 0,
+    }, dailySketch);
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getDailySketch', dailySketch]);
+}
+exports.getDailySketch = getDailySketch;
+function putSharedKeyFilesKeys(sharedKeyFiles) {
+    // Set defaults
+    sharedKeyFiles.diagnosisConfiguration = Object.assign({
+        attenuationDurationThresholds: [50, 74],
+        attenuationRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        attenuationWeight: 50,
+        daysAfterContactedRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        daysAfterContactedWeight: 50,
+        durationRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        durationWeight: 50,
+        initialRiskLevelRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
+        initialRiskLevelWeight: 50,
+        minimumRiskValueThreshold: 1
+    }, sharedKeyFiles.diagnosisConfiguration);
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesKeys', sharedKeyFiles]);
+}
+exports.putSharedKeyFilesKeys = putSharedKeyFilesKeys;
+function putSharedKeyFilesProvider(files) {
+    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesProvider', files]);
+}
+exports.putSharedKeyFilesProvider = putSharedKeyFilesProvider;
 //# sourceMappingURL=HMSContactShield.js.map

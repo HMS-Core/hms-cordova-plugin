@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.contactshield.basef.handler;
 
 import org.apache.cordova.CallbackContext;
@@ -22,73 +23,91 @@ import org.json.JSONObject;
 
 import static org.apache.cordova.PluginResult.Status.OK;
 
-public class Promise {
+public final class Promise {
 
     private final CallbackContext callbackContext;
-    private final HMSLogger hmsLogger;
     private final String methodName;
     private final boolean isLoggerRunning;
+    private final HMSLogger hmsLogger;
 
-    public Promise(final CallbackContext callbackContext, final HMSLogger logger, String method, boolean isActive) {
+    public Promise(final CallbackContext callbackContext, String method, final HMSLogger logger, boolean isLoggerRunning) {
         this.callbackContext = callbackContext;
-        this.hmsLogger = logger;
         this.methodName = method;
-        this.isLoggerRunning = isActive;
+        this.isLoggerRunning = isLoggerRunning;
+        this.hmsLogger = logger;
     }
 
     public void success() {
         callbackContext.success();
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(int message) {
         callbackContext.success(message);
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(byte[] message) {
         callbackContext.success(message);
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(String message) {
         callbackContext.success(message);
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(JSONArray message) {
         callbackContext.success(message);
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(JSONObject message) {
         callbackContext.success(message);
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(boolean message) {
         callbackContext.sendPluginResult(new PluginResult(OK, message));
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void success(float message) {
         callbackContext.sendPluginResult(new PluginResult(OK, message));
-        sendLogEvent(null);
+        sendSuccessLog();
     }
+
     public void error(int message) {
         callbackContext.error(message);
-        sendLogEvent("" + message);
+        sendErrorLog("" + message);
     }
+
+    public void error(CorError corError) {
+        callbackContext.error(corError.toJson());
+        sendErrorLog("" + corError.getCode());
+    }
+
     public void error(String message) {
         callbackContext.error(message);
-        sendLogEvent(message);
+        sendErrorLog(message);
     }
+
     public void error(JSONObject message) {
         callbackContext.error(message);
-        sendLogEvent(message.toString());
+        sendErrorLog(message.toString());
     }
+
     public void sendPluginResult(PluginResult pluginResult) {
         callbackContext.sendPluginResult(pluginResult);
-        sendLogEvent(null);
     }
 
-    private void sendLogEvent(String nullable) {
-        if (!isLoggerRunning) return;
-        if (nullable == null) hmsLogger.sendSingleEvent(methodName);
-        else hmsLogger.sendSingleEvent(methodName, nullable);
+    private void sendSuccessLog() {
+        if(isLoggerRunning)
+            hmsLogger.sendSingleEvent(methodName);
     }
 
+    private void sendErrorLog(String errorCode) {
+        if(isLoggerRunning)
+            hmsLogger.sendSingleEvent(methodName, errorCode);
+    }
 }

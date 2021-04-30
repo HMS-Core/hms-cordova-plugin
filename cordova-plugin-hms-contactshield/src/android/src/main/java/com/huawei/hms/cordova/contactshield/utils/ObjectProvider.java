@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.contactshield.utils;
 
 import android.app.PendingIntent;
@@ -24,7 +25,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.huawei.hms.contactshield.ContactShieldSetting;
+import com.huawei.hms.contactshield.DailySketchConfiguration;
 import com.huawei.hms.contactshield.DiagnosisConfiguration;
 import com.huawei.hms.cordova.contactshield.constants.IntentAction;
 
@@ -40,7 +43,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectProvider {
     private static final String TAG = ObjectProvider.class.getSimpleName();
@@ -51,6 +56,10 @@ public class ObjectProvider {
 
     public static DiagnosisConfiguration getDiagnosisConfiguration(final JSONObject diagnosisConfigJson, final Gson gson) {
         return gson.fromJson(diagnosisConfigJson.toString(), DiagnosisConfiguration.class);
+    }
+
+    public static DailySketchConfiguration dailySketchConfiguration(final JSONObject dailySketchConfigurationJson, final Gson gson) {
+        return gson.fromJson(dailySketchConfigurationJson.toString(), DailySketchConfiguration.class);
     }
 
     public static List<File> getFileList(final ContentResolver resolver, final JSONArray filePaths) throws JSONException, IOException {
@@ -118,5 +127,20 @@ public class ObjectProvider {
         intentFilter.addAction(IntentAction.CHECK_CONTACT_STATUS_OLD);
         intentFilter.addAction(IntentAction.CHECK_CONTACT_STATUS);
         return intentFilter;
+    }
+
+    public static List<String> convertJSONArrayToList(JSONArray jsonArray) throws JSONException {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getString(i));
+        }
+        return list;
+    }
+
+    public static Map<Integer, Integer> getMapObject(JSONObject daysSinceCreationToContagiousness) {
+        return new Gson().fromJson(
+                String.valueOf(daysSinceCreationToContagiousness), new TypeToken<HashMap<Integer, Integer>>() {
+                }.getType()
+        );
     }
 }

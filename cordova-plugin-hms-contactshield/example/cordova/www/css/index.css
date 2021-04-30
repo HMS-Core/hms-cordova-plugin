@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -72,25 +72,7 @@ body {
     }
 }
 
-#btn_clear_data,
-#btn_get_contact_detail,
-#btn_get_contact_sketch,
-#btn_get_contact_window,
-#btn_get_periodic_key,
-#btn_handle_intent,
-#btn_is_contact_shield_running,
-#btn_put_shared_key_files_depricated,
-#btn_put_shared_key_files,
-#btn_start_contact_shield_depricated,
-#btn_start_contact_shield,
-#btn_stop_contact_shield,
-#btn_enable_logger,
-#btn_disable_logger,
-#btn_start_contact_shield_no_persistent,
-#btn_has_bluetooth_permission,
-#btn_request_bluetooth_permission,
-#btn_handle_callback,
-#btn_unregister_receiver {
+.btn{
     width: 100%;
     height: 40px;
     margin-top: 20px;
