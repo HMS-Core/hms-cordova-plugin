@@ -33,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -189,6 +190,18 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
+    public void addDefaultEventParams(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        if (!params.isNull("params")) {
+            viewModel.addDefaultEventParams(jsonToBundle(params.getJSONObject("params")));
+        } else {
+            viewModel.addDefaultEventParams(null);
+        }
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
     public void enableLog(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject params = args.getJSONObject(0);
         viewModel.enableLog(params.getInt("logLevel"));
@@ -266,7 +279,16 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
     private ReportPolicy getReportPolicyType(String reportPolicyType) {
         return ReportPolicy.valueOf(reportPolicyType);
     }
-
+ 
+    private ArrayList<Bundle> jsonArrayToBundleArrayList(JSONArray jsonArray) throws JSONException {
+        ArrayList<Bundle> listBundle = new ArrayList<>();
+        for (int i = 0; i<jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            listBundle.add(jsonToBundle(jsonObject));
+        }
+        return listBundle;
+    }
+    
     private Bundle jsonToBundle(JSONObject jsonObject) throws JSONException {
         Bundle bundle = new Bundle();
         Iterator<String> iterator = jsonObject.keys();
@@ -283,6 +305,8 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
                 bundle.putString(key, (String) val);
             } else if (val instanceof Boolean) {
                 bundle.putBoolean(key, (Boolean) val);
+            } else if (val instanceof JSONArray) {
+                bundle.putParcelableArrayList(key, jsonArrayToBundleArrayList((JSONArray) val));
             } else {
                 Log.e(TAG, "unable to transform json to bundle " + key);
             }

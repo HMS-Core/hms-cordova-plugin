@@ -120,30 +120,43 @@ public class HMSAnalyticsViewModel {
         return HiAnalytics.isRestrictionEnabled()
     }
 
+    /// Adds default event parameters.
+    /// These parameters will be added to all events except the automatically collected events.
+    /// - Parameters:
+    ///   - params: Default event parameters.
+    /// - Returns: Void
+    func addDefaultEventParams(_ params: [String: Any]?) {
+        guard let params = params else {
+            HiAnalytics.addDefaultEventParams(nil)
+            return
+        }
+        HiAnalytics.addDefaultEventParams(params)
+    }
+
     private func setReportPoliciesList( _ reportPolicyType: [String: Any]) -> [HAReportPolicy] {
         var reportPoliciyList = [HAReportPolicy]()
 
         for key in reportPolicyType.keys {
 
-            if key=="onScheduledTimePolicy" {
+            if key == "onScheduledTimePolicy" {
                 guard let  onScheduledTime = reportPolicyType["onScheduledTimePolicy"] as? Int else {
                     print("Incorrect 'onScheduledTimePolicy' paramater.")
                     continue
                 }
                 reportPoliciyList.append(HAReportPolicy.onScheduledTime(onScheduledTime))
-            } else if key=="onAppLaunchPolicy" && ((reportPolicyType["onAppLaunchPolicy"] as? Bool) == true) {
+            } else if key == "onAppLaunchPolicy" && ((reportPolicyType["onAppLaunchPolicy"] as? Bool) == true) {
                 guard let  _ = reportPolicyType["onAppLaunchPolicy"] as? Bool else {
                     print("Incorrect 'onAppLaunchPolicy' paramater.")
                     continue
                 }
                 reportPoliciyList.append(HAReportPolicy.onAppLaunch())
-            } else if key=="onMoveBackgroundPolicy" && ((reportPolicyType["onMoveBackgroundPolicy"] as? Bool) == true) {
+            } else if key == "onMoveBackgroundPolicy" && ((reportPolicyType["onMoveBackgroundPolicy"] as? Bool) == true) {
                 guard let  _ = reportPolicyType["onMoveBackgroundPolicy"] as? Bool else {
                     print("Incorrect 'onMoveBackgroundPolicy' paramater.")
                     continue
                 }
                 reportPoliciyList.append(HAReportPolicy.onMoveBackground())
-            } else if key=="onCacheThresholdPolicy" {
+            } else if key == "onCacheThresholdPolicy" {
                 guard let  onCacheThresholdTime = reportPolicyType["onCacheThresholdPolicy"] as? Int else {
                     print("Incorrect 'onCacheThresholdPolicy' paramater.")
                     continue

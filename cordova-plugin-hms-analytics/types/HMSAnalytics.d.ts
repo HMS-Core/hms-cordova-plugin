@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 /**
  * Specifies whether to enable event logging.
  * The default value is true.
@@ -96,7 +97,7 @@ export declare function onEvent(eventId: HAEventType | string, params: HAParamTy
  */
 export declare function clearCachedData(): Promise<void>;
 /**
- * Obtains the app instance ID from AppGallery Connect.
+ * Obtains the AAID from AppGallery Connect.
  */
 export declare function getAAID(): Promise<string>;
 /**
@@ -165,6 +166,16 @@ export declare function setRestrictionEnabled(isEnabled: boolean): Promise<void>
  */
 export declare function isRestrictionEnabled(): Promise<boolean>;
 /**
+ * Adds default event parameters.
+ * These parameters will be added to all events except the automatically collected events.
+ *
+ * @param params : Default event parameters.
+ *              A maximum of 100 key-value pairs are supported.
+ *              The key in each key-value pair can contain a maximum of 256 characters and
+ *              can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+ */
+export declare function addDefaultEventParams(params: EventParams): Promise<void>;
+/**
  * Enables the debug log function and sets the minimum log level.
  * Default log level DEBUG.
  *
@@ -229,7 +240,8 @@ export declare enum LogLevelType {
  * HAUserProfileType types for provides constants that define the names of all predefined user attributes.
  */
 export declare enum HAUserProfileType {
-    USERLEVEL = "user_level"
+    USERLEVEL = "user_level",
+    ISFULLLEVEL = "is_full_level"
 }
 /**
  * HAEventType types for provides the IDs of all predefined events.
@@ -283,7 +295,48 @@ export declare enum HAEventType {
     STARTGAME = "$StartGame",
     ENDGAME = "$EndGame",
     WINPROPS = "$WinProps",
-    CONSUMEPROPS = "$ConsumeProps"
+    CONSUMEPROPS = "$ConsumeProps",
+    ADDFRIEND = "$AddFriend",
+    ADDBLACKLIST = "$AddBlacklist",
+    VIEWFRIENDLIST = "$ViewFriendList",
+    QUITUSERGROUP = "$QuitUserGroup",
+    CREATEUSERGROUP = "$CreateUserGroup",
+    DISBANDUSERGROUP = "$DisbandUserGroup",
+    UPGRADEUSERGROUP = "$UpgradeUserGroup",
+    VIEWUSERGROUP = "$ViewUserGroup",
+    JOINTEAM = "$JoinTeam",
+    SENDMESSAGE = "$SendMessage",
+    LEARNSKILL = "$LearnSkill",
+    USESKILL = "$UseSkill",
+    GETEQUIPMENT = "$GetEquipment",
+    LOSEEQUIPMENT = "$LoseEquipment",
+    ENHANCEEQUIPMENT = "$EnhanceEquipment",
+    SWITCHCLASS = "$SwitchClass",
+    ACCEPTTASK = "$AcceptTask",
+    FINISHTASK = "$FinishTask",
+    ATTENDACTIVITY = "$AttendActivity",
+    FINISHCUTSCENE = "$FinishCutscene",
+    SKIPCUTSCENE = "$SkipCutscene",
+    GETPET = "$GetPet",
+    LOSEPET = "$LosePet",
+    ENHANCEPET = "$EnhancePet",
+    GETMOUNT = "$GetMount",
+    LOSEMOUNT = "$LoseMount",
+    ENHANCEMOUNT = "$EnhanceMount",
+    CREATEROLE = "$CreateRole",
+    SIGNINROLE = "$SignInRole",
+    SIGNOUTROLE = "$SignOutRole",
+    STARTBATTLE = "$StartBattle",
+    ENDBATTLE = "$EndBattle",
+    STARTDUNGEON = "$StartDungeon",
+    FINISHDUNGEON = "$FinishDungeon",
+    VIEWPACKAGE = "$ViewPackage",
+    REDEEM = "$Redeem",
+    MODIFYSETTING = "$ModifySetting",
+    WATCHVIDEO = "$WatchVideo",
+    CLICKMESSAGE = "$ClickMessage",
+    DRAWCARD = "$DrawCard",
+    VIEWCARDLIST = "$ViewCardList"
 }
 /**
  * HAParamType types for provides the IDs of all predefined parameters,
@@ -340,7 +393,6 @@ export declare enum HAParamType {
     POSITIONID = "$PositionId",
     PRODUCTLIST = "$ProductList",
     ACOUNTTYPE = "$AcountType",
-    OCCURREDTIME = "$OccurredTime",
     EVTRESULT = "$EvtResult",
     PREVLEVEL = "$PrevLevel",
     CURRVLEVEL = "$CurrvLevel",
@@ -362,6 +414,76 @@ export declare enum HAParamType {
     LEVEL = "$Level",
     PURCHASEENTRY = "$PurchaseEntry",
     PROPS = "$Props",
-    ENTRY = "$Entry"
+    ENTRY = "$Entry",
+    VIPLEVEL = "$VIPLevel",
+    FIRSTSIGNIN = "$FirstSignIn",
+    DISCOUNT = "$Discount",
+    FIRSTPAY = "$FirstPay",
+    TASKID = "$TaskId",
+    FRIENDNUMBER = "$FriendNumber",
+    USERGROUPNAME = "$UserGroupName",
+    USERGROUPLEVEL = "$UserGroupLevel",
+    MEMBERS = "$Members",
+    LEVELBEFORE = "$LevelBefore",
+    MESSAGETYPE = "$MessageType",
+    ROLECOMBAT = "$RoleCombat",
+    ISTOPLEVEL = "$IsTopLevel",
+    ROLECLASS = "$RoleClass",
+    SKILLNAME = "$SkillName",
+    SKILLLEVEL = "$SkillLevel",
+    SKILLLEVELBEFORE = "$SkillLevelBefore",
+    EQUIPMENTID = "$EquipmentId",
+    EQUIPMENTNAME = "$EquipmentName",
+    EQUIPMENTLEVEL = "$EquipmentLevel",
+    CLASSLIMIT = "$ClassLimit",
+    LEVELLIMIT = "$LevelLimit",
+    ISFREE = "$IsFree",
+    TOTALAFTERCHANGE = "$TotalAfterChange",
+    QUALITY = "$Quality",
+    ENHANCETYPE = "$EnhanceType",
+    NEWCLASS = "$NewClass",
+    OLDCLASS = "$OldClass",
+    TASKTYPE = "$TaskType",
+    TASKNAME = "$TaskName",
+    REWARD = "$Reward",
+    ACTIVITYTYPE = "$ActivityType",
+    ACTIVITYNAME = "$ActivityName",
+    CUTSCENENAME = "$CutsceneName",
+    PETID = "$PetId",
+    PETDEFAULTNAME = "$PetDefaultName",
+    PETLEVEL = "$PetLevel",
+    MOUNTID = "$MountId",
+    MOUNTDEFAULTNAME = "$MountDefaultName",
+    MOUNTLEVEL = "$MountLevel",
+    ROLEGENDER = "$RoleGender",
+    SERVER = "$Server",
+    FIRSTCREATE = "$FirstCreate",
+    COMBAT = "$Combat",
+    BATTLETYPE = "$BattleType",
+    BATTLENAME = "$BattleName",
+    NUMBEROFCARDS = "$NumberOfCards",
+    CARDLIST = "$CardList",
+    PARTICIPANTS = "$Participants",
+    DIFFICULTY = "$Difficulty",
+    MVP = "$MVP",
+    DAMAGE = "$Damage",
+    RANKING = "$Ranking",
+    DUNGEONNAME = "$DungeonName",
+    WINREASON = "$WinReason",
+    BALANCE = "$Balance",
+    PACKAGETYPE = "$PackageType",
+    AMOUNT = "$Amount",
+    ITEMLIST = "$ItemList",
+    GIFTTYPE = "$GiftType",
+    GIFTNAME = "$GiftName",
+    TYPE = "$Type",
+    OLDVALUE = "$OldValue",
+    NEWVALUE = "$NewValue",
+    VIDEOTYPE = "$VideoType",
+    VIDEONAME = "$VideoName",
+    MESSAGETITLE = "$MessageTitle",
+    OPERATION = "$Operation",
+    NUMBEROFDRAWING = "$NumberOfDrawing",
+    LEFTPULLSFORGUARANTEE = "$LeftPullsForGuarantee"
 }
 export {};

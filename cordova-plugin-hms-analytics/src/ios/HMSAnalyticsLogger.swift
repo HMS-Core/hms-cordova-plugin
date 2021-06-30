@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-let HMSAnalyticsLog = HMSAnalyticsLogger(version: "5.1.0", service: "CordovaHMSAnalytics")
+let HMSAnalyticsLog = HMSAnalyticsLogger(version: "5.3.1.300", service: "CordovaHMSAnalytics")
 
 /// Custom HMSAnalyticsLogger Class to listen api log events from Cordova Side.
 final class HMSAnalyticsLogger {

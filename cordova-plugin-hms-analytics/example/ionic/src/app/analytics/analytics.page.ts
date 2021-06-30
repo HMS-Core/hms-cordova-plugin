@@ -168,7 +168,20 @@ export class HomePage {
       "putLong": 2121455345345343,
       "putString": "string",
       "putBoolean1": true,
-      "putBoolean2": false
+      "putBoolean2": false,
+      "items": [{
+          "itemsPutInt0": 1523,
+          "itemsPutDouble0": 12.0565600002346789,
+          "itemsPutLong0": 2333333345345343,
+          "itemsPutString0": "string0",
+          "itemsPutBoolean0": true
+      },{
+          "itemsPutInt1": 321,
+          "itemsPutDouble1": 12.056565665612222222,
+          "itemsPutLong1": 1111451115345343,
+          "itemsPutString1": "string1",
+          "itemsPutBoolean1": false
+      }]
     };
     this.hmsAnalytics.onEvent(name, params)
     .then(() => {
@@ -368,19 +381,35 @@ export class HomePage {
     })
     .catch((error) => alert("isRestrictionEnabled :: Error! " + JSON.stringify(error,null,1)));
   }
+
+  /**
+   * Adds default event parameters.
+   * These parameters will be added to all events except the automatically collected events.
+   */
+   addDefaultEventParams() {
+    let params = {};
+    params["DefaultEventKey0"] = false;
+    params["DefaultEventKey1"] = 1;
+    params["DefaultEventKey2"] = "two";
+    this.hmsAnalytics.addDefaultEventParams(params)
+    .then(() => {
+      alert("addDefaultEventParams :: Success");
+    })
+    .catch((error) => alert("addDefaultEventParams :: Error! " + JSON.stringify(error,null,1)));
+  }
   
   /**
    * HAParamType types for provides the IDs of all predefined parameters, 
    * including the IDs of predefined parameters and user attributes.
    */
   HAParamType() {
-    alert(JSON.stringify(HAParamType));
+    alert(JSON.stringify(HAParamType,null,1));
   }
 
   /**
    * HAEventType types for provides the IDs of all predefined events.
    */
   HAEventType() {
-    alert(JSON.stringify(HAEventType));
+    alert(JSON.stringify(HAEventType,null,1));
   }
 }

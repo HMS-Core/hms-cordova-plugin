@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import {exec} from 'cordova';
 
 export function asyncExec(clazz: string, reference: string, args:any[] = []): Promise<any> {

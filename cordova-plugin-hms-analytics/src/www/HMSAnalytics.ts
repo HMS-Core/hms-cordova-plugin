@@ -31,8 +31,8 @@ const HMSAnalyticsModule: string = 'HMSAnalyticsModule';
  * 
  * @param enabled : Indicates whether to enable event logging.
  */
-export function setAnalyticsEnabled(enabled:boolean): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setAnalyticsEnabled',{'enabled':enabled}]);
+export function setAnalyticsEnabled(enabled: boolean): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setAnalyticsEnabled', { 'enabled': enabled }]);
 }
 
 /**
@@ -44,8 +44,8 @@ export function setAnalyticsEnabled(enabled:boolean): Promise<void> {
  *           The value cannot be empty.
  *           {@param id} is used by Analytics Kit to associate user data.
  */
-export function setUserId(userId:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserId',{'userId':userId}]);
+export function setUserId(userId: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserId', { 'userId': userId }]);
 }
 /**
  * Sets user attributes.
@@ -57,16 +57,16 @@ export function setUserId(userId:string): Promise<void> {
  *              and underscores (_) and must start with a letter.
  * @param value : User attribute value, a string containing a maximum of 256 characters.
  */
-export function setUserProfile(name:string,value:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserProfile',{'name':name,'value':value}]);
+export function setUserProfile(name: string, value: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserProfile', { 'name': name, 'value': value }]);
 }
 /**
  * Delete user profile.
  *
  * @param name  :  Name of a user attribute
  */
-export function deleteUserProfile(name:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['deleteUserProfile',{'name':name}]);
+export function deleteUserProfile(name: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['deleteUserProfile', { 'name': name }]);
 }
 
 /**
@@ -79,8 +79,8 @@ export function deleteUserProfile(name:string): Promise<void> {
  * 
  * @note This method is only to support on Android Platform.
  */
-export function setPushToken(token:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setPushToken',{'token':token}]);
+export function setPushToken(token: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setPushToken', { 'token': token }]);
 }
 
 /**
@@ -94,8 +94,8 @@ export function setPushToken(token:string): Promise<void> {
  * 
  * @note This method is only to support on Android Platform.
  */
-export function setMinActivitySessions(milliseconds:number): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setMinActivitySessions',{'milliseconds':milliseconds}]);
+export function setMinActivitySessions(milliseconds: number): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setMinActivitySessions', { 'milliseconds': milliseconds }]);
 }
 
 /**
@@ -106,8 +106,8 @@ export function setMinActivitySessions(milliseconds:number): Promise<void> {
  *
  * @param milliseconds : Session timeout interval, in milliseconds.
  */
-export function setSessionDuration(milliseconds:number): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setSessionDuration',{'milliseconds':milliseconds}]);
+export function setSessionDuration(milliseconds: number): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setSessionDuration', { 'milliseconds': milliseconds }]);
 }
 
 /**
@@ -120,21 +120,21 @@ export function setSessionDuration(milliseconds:number): Promise<void> {
  * @param params  :  Information carried in an event. The number of built-in key-value pairs
  */
 export function onEvent(eventId: HAEventType | string, params: HAParamType | EventParams): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['onEvent',{'eventId':eventId,'params':params}]);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['onEvent', { 'eventId': eventId, 'params': params }]);
 }
 
 /**
  * Clears all collected data cached locally, including cached data that failed to be sent.
  */
 export function clearCachedData(): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['clearCachedData']);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['clearCachedData']);
 }
 
 /**
- * Obtains the app instance ID from AppGallery Connect.
+ * Obtains the AAID from AppGallery Connect.
  */
 export function getAAID(): Promise<string> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
 }
 
 /**
@@ -143,8 +143,8 @@ export function getAAID(): Promise<string> {
  * @param preDefined : Indicates whether to obtain the automatically collected or
  *                   custom user attributes.
  */
-export function getUserProfiles(predefined:boolean): Promise<UserProfiles> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getUserProfiles',{'predefined':predefined}]);
+export function getUserProfiles(predefined: boolean): Promise<UserProfiles> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getUserProfiles', { 'predefined': predefined }]);
 }
 
 /**
@@ -162,8 +162,8 @@ export function getUserProfiles(predefined:boolean): Promise<UserProfiles> {
  * 
  * @note This method is only to support on Android Platform.
  */
-export function pageStart(pageName:string,pageClassOverride:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageStart',{'pageName':pageName,'pageClassOverride':pageClassOverride}]);
+export function pageStart(pageName: string, pageClassOverride: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageStart', { 'pageName': pageName, 'pageClassOverride': pageClassOverride }]);
 }
 
 /**
@@ -180,8 +180,8 @@ export function pageStart(pageName:string,pageClassOverride:string): Promise<voi
  * 
  * @note This method is only to support on Android Platform.
  */
-export function pageEnd(pageName:string): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageEnd',{'pageName':pageName}]);
+export function pageEnd(pageName: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageEnd', { 'pageName': pageName }]);
 }
 
 /**
@@ -190,8 +190,8 @@ export function pageEnd(pageName:string): Promise<void> {
  * @param reportPolicies : Policy for data reporting. Four policies are supported.
  *                       One or more policies can be specified.
  */
-export function setReportPolicies(reportPolicies:ReportPolicy): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setReportPolicies',{'reportPolicies':reportPolicies}]);
+export function setReportPolicies(reportPolicies: ReportPolicy): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setReportPolicies', { 'reportPolicies': reportPolicies }]);
 }
 
 /**
@@ -201,8 +201,8 @@ export function setReportPolicies(reportPolicies:ReportPolicy): Promise<void> {
  * 
  * @note This method is only to support on Android Platform.
  */
-export function getReportPolicyThreshold(reportPolicyType:ReportPolicyType): Promise<number> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getReportPolicyThreshold',{'reportPolicyType':reportPolicyType}]);
+export function getReportPolicyThreshold(reportPolicyType: ReportPolicyType): Promise<number> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getReportPolicyThreshold', { 'reportPolicyType': reportPolicyType }]);
 }
 
 /**
@@ -212,15 +212,28 @@ export function getReportPolicyThreshold(reportPolicyType:ReportPolicyType): Pro
  *
  * @param isEnabled : Indicates whether to enable restriction of HUAWEI Analytics.
  */
-export function setRestrictionEnabled(isEnabled:boolean): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setRestrictionEnabled',{'isEnabled':isEnabled}]);
+export function setRestrictionEnabled(isEnabled: boolean): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setRestrictionEnabled', { 'isEnabled': isEnabled }]);
 }
 
 /**
  * Obtains the restriction status of HUAWEI Analytics.
  */
 export function isRestrictionEnabled(): Promise<boolean> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['isRestrictionEnabled']);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['isRestrictionEnabled']);
+}
+
+/**
+ * Adds default event parameters.
+ * These parameters will be added to all events except the automatically collected events.
+ * 
+ * @param params : Default event parameters. 
+ *              A maximum of 100 key-value pairs are supported. 
+ *              The key in each key-value pair can contain a maximum of 256 characters and 
+ *              can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+ */
+export function addDefaultEventParams(params: EventParams): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['addDefaultEventParams', { 'params': params }]);
 }
 
 /**
@@ -237,8 +250,8 @@ export function isRestrictionEnabled(): Promise<boolean> {
  *          1- Choose Product > Scheme > Edit Scheme from the Xcode menu.
  *          2- On the Arguments page, click + to add the -HALogLevelDebug parameter.
  */
-export function enableLog(logLevel:LogLevelType=LogLevelType.DEBUG): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLog',{'logLevel':logLevel}]);
+export function enableLog(logLevel: LogLevelType = LogLevelType.DEBUG): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLog', { 'logLevel': logLevel }]);
 }
 
 // HMSLogger
@@ -250,7 +263,7 @@ export function enableLog(logLevel:LogLevelType=LogLevelType.DEBUG): Promise<voi
  * @note This method is only to support on Android Platform.
  */
 export function enableLogger(): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLogger']);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLogger']);
 }
 
 /**
@@ -260,7 +273,7 @@ export function enableLogger(): Promise<void> {
  * @note This method is only to support on Android Platform.
  */
 export function disableLogger(): Promise<void> {
-	return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['disableLogger']);
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['disableLogger']);
 }
 
 ///////////////////////////////////////////////////////////////
@@ -275,10 +288,10 @@ export type EventParams = GenericObject;
  * ReportPolicy types for Sets automatic event reporting policies.
  */
 export interface ReportPolicy {
-    "onScheduledTimePolicy" ? : number,
-    "onAppLaunchPolicy" ? : boolean,
-    "onMoveBackgroundPolicy" ? : boolean,
-    "onCacheThresholdPolicy" ? : number
+    "onScheduledTimePolicy"?: number,
+    "onAppLaunchPolicy"?: boolean,
+    "onMoveBackgroundPolicy"?: boolean,
+    "onCacheThresholdPolicy"?: number
 }
 
 ///////////////////////////////////////////////////////////////
@@ -306,7 +319,8 @@ export enum LogLevelType {
  * HAUserProfileType types for provides constants that define the names of all predefined user attributes.
  */
 export enum HAUserProfileType {
-    USERLEVEL = "user_level"
+    USERLEVEL = "user_level",
+    ISFULLLEVEL = "is_full_level"
 }
 /**
  * HAEventType types for provides the IDs of all predefined events.
@@ -360,7 +374,48 @@ export enum HAEventType {
     STARTGAME = "$StartGame",
     ENDGAME = "$EndGame",
     WINPROPS = "$WinProps",
-    CONSUMEPROPS = "$ConsumeProps"
+    CONSUMEPROPS = "$ConsumeProps",
+    ADDFRIEND = "$AddFriend",
+    ADDBLACKLIST = "$AddBlacklist",
+    VIEWFRIENDLIST = "$ViewFriendList",
+    QUITUSERGROUP = "$QuitUserGroup",
+    CREATEUSERGROUP = "$CreateUserGroup",
+    DISBANDUSERGROUP = "$DisbandUserGroup",
+    UPGRADEUSERGROUP = "$UpgradeUserGroup",
+    VIEWUSERGROUP = "$ViewUserGroup",
+    JOINTEAM = "$JoinTeam",
+    SENDMESSAGE = "$SendMessage",
+    LEARNSKILL = "$LearnSkill",
+    USESKILL = "$UseSkill",
+    GETEQUIPMENT = "$GetEquipment",
+    LOSEEQUIPMENT = "$LoseEquipment",
+    ENHANCEEQUIPMENT = "$EnhanceEquipment",
+    SWITCHCLASS = "$SwitchClass",
+    ACCEPTTASK = "$AcceptTask",
+    FINISHTASK = "$FinishTask",
+    ATTENDACTIVITY = "$AttendActivity",
+    FINISHCUTSCENE = "$FinishCutscene",
+    SKIPCUTSCENE = "$SkipCutscene",
+    GETPET = "$GetPet",
+    LOSEPET = "$LosePet",
+    ENHANCEPET = "$EnhancePet",
+    GETMOUNT = "$GetMount",
+    LOSEMOUNT = "$LoseMount",
+    ENHANCEMOUNT = "$EnhanceMount",
+    CREATEROLE = "$CreateRole",
+    SIGNINROLE = "$SignInRole",
+    SIGNOUTROLE = "$SignOutRole",
+    STARTBATTLE = "$StartBattle",
+    ENDBATTLE = "$EndBattle",
+    STARTDUNGEON = "$StartDungeon",
+    FINISHDUNGEON = "$FinishDungeon",
+    VIEWPACKAGE = "$ViewPackage",
+    REDEEM = "$Redeem",
+    MODIFYSETTING = "$ModifySetting",
+    WATCHVIDEO = "$WatchVideo",
+    CLICKMESSAGE = "$ClickMessage",
+    DRAWCARD = "$DrawCard",
+    VIEWCARDLIST = "$ViewCardList"
 }
 /**
  * HAParamType types for provides the IDs of all predefined parameters, 
@@ -417,7 +472,6 @@ export enum HAParamType {
     POSITIONID = "$PositionId",
     PRODUCTLIST = "$ProductList",
     ACOUNTTYPE = "$AcountType",
-    OCCURREDTIME = "$OccurredTime",
     EVTRESULT = "$EvtResult",
     PREVLEVEL = "$PrevLevel",
     CURRVLEVEL = "$CurrvLevel",
@@ -439,5 +493,75 @@ export enum HAParamType {
     LEVEL = "$Level",
     PURCHASEENTRY = "$PurchaseEntry",
     PROPS = "$Props",
-    ENTRY = "$Entry"
+    ENTRY = "$Entry",
+    VIPLEVEL = "$VIPLevel",
+    FIRSTSIGNIN = "$FirstSignIn",
+    DISCOUNT = "$Discount",
+    FIRSTPAY = "$FirstPay",
+    TASKID = "$TaskId",
+    FRIENDNUMBER = "$FriendNumber",
+    USERGROUPNAME = "$UserGroupName",
+    USERGROUPLEVEL = "$UserGroupLevel",
+    MEMBERS = "$Members",
+    LEVELBEFORE = "$LevelBefore",
+    MESSAGETYPE = "$MessageType",
+    ROLECOMBAT = "$RoleCombat",
+    ISTOPLEVEL = "$IsTopLevel",
+    ROLECLASS = "$RoleClass",
+    SKILLNAME = "$SkillName",
+    SKILLLEVEL = "$SkillLevel",
+    SKILLLEVELBEFORE = "$SkillLevelBefore",
+    EQUIPMENTID = "$EquipmentId",
+    EQUIPMENTNAME = "$EquipmentName",
+    EQUIPMENTLEVEL = "$EquipmentLevel",
+    CLASSLIMIT = "$ClassLimit",
+    LEVELLIMIT = "$LevelLimit",
+    ISFREE = "$IsFree",
+    TOTALAFTERCHANGE = "$TotalAfterChange",
+    QUALITY = "$Quality",
+    ENHANCETYPE = "$EnhanceType",
+    NEWCLASS = "$NewClass",
+    OLDCLASS = "$OldClass",
+    TASKTYPE = "$TaskType",
+    TASKNAME = "$TaskName",
+    REWARD = "$Reward",
+    ACTIVITYTYPE = "$ActivityType",
+    ACTIVITYNAME = "$ActivityName",
+    CUTSCENENAME = "$CutsceneName",
+    PETID = "$PetId",
+    PETDEFAULTNAME = "$PetDefaultName",
+    PETLEVEL = "$PetLevel",
+    MOUNTID = "$MountId",
+    MOUNTDEFAULTNAME = "$MountDefaultName",
+    MOUNTLEVEL = "$MountLevel",
+    ROLEGENDER = "$RoleGender",
+    SERVER = "$Server",
+    FIRSTCREATE = "$FirstCreate",
+    COMBAT = "$Combat",
+    BATTLETYPE = "$BattleType",
+    BATTLENAME = "$BattleName",
+    NUMBEROFCARDS = "$NumberOfCards",
+    CARDLIST = "$CardList",
+    PARTICIPANTS = "$Participants",
+    DIFFICULTY = "$Difficulty",
+    MVP = "$MVP",
+    DAMAGE = "$Damage",
+    RANKING = "$Ranking",
+    DUNGEONNAME = "$DungeonName",
+    WINREASON = "$WinReason",
+    BALANCE = "$Balance",
+    PACKAGETYPE = "$PackageType",
+    AMOUNT = "$Amount",
+    ITEMLIST = "$ItemList",
+    GIFTTYPE = "$GiftType",
+    GIFTNAME = "$GiftName",
+    TYPE = "$Type",
+    OLDVALUE = "$OldValue",
+    NEWVALUE = "$NewValue",
+    VIDEOTYPE = "$VideoType",
+    VIDEONAME = "$VideoName",
+    MESSAGETITLE = "$MessageTitle",
+    OPERATION = "$Operation",
+    NUMBEROFDRAWING = "$NumberOfDrawing",
+    LEFTPULLSFORGUARANTEE = "$LeftPullsForGuarantee"
 }

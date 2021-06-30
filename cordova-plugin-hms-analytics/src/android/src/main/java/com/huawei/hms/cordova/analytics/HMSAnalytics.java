@@ -29,7 +29,7 @@ import java.util.Arrays;
 public class HMSAnalytics extends CordovaPlugin {
     private static final String TAG = HMSAnalytics.class.getSimpleName();
     private static final String KIT = "Analytics";
-    private static final String VERSION = "5.1.0.301";
+    private static final String VERSION = "5.3.1.300";
     private CordovaController cordovaController;
 
     @Override

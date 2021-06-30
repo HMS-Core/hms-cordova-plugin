@@ -29,7 +29,7 @@ import java.util.Set;
  * HMSAnalyticsContract defines a blueprint of HMSAnalyticsModule methods
  * that will be exposed to Cordova Side.
  *
- * @since v.5.1.0
+ * @since v.5.3.1.300
  */
 public interface HMSAnalyticsContract {
 
@@ -212,6 +212,17 @@ public interface HMSAnalyticsContract {
          *                        HUAWEI Analytics.
          */
         void isRestrictionEnabled(final HMSAnalyticsContract.ResultListener<Boolean> resultListener);
+
+        /**
+         * Adds default event parameters.
+         * These parameters will be added to all events except the automatically collected events.
+         *
+         * @param params: Default event parameters.
+         *                A maximum of 100 key-value pairs are supported.
+         *                The key in each key-value pair can contain a maximum of 256 characters and
+         *                can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+         */
+        void addDefaultEventParams(final Bundle params);
 
 
         //------------------------------------------------------------------------------------------

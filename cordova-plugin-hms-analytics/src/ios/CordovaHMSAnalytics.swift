@@ -34,6 +34,7 @@
         case setReportPolicies
         case setRestrictionEnabled
         case isRestrictionEnabled
+        case addDefaultEventParams
     }
     // MARK: - HMSAnalyticsModule
     @objc(HMSAnalyticsModule:)
@@ -186,12 +187,24 @@
                 }
             case MethodName.isRestrictionEnabled.rawValue:
                 // MARK: - isRestrictionEnabled
-                print("isRestrictionEnabled")
                 self.commandDelegate.send(CDVPluginResult(
                     status: CDVCommandStatus_OK,
                     messageAs: viewModel.isRestrictionEnabled()
                 ), callbackId: command.callbackId)
                 HMSAnalyticsLog.showInPanel(message: methodName, type: .success)
+            case MethodName.addDefaultEventParams.rawValue:
+                // MARK: - addDefaultEventParams
+                if command.arguments.count > 1 {
+                    let argsArray = command.arguments[1] as? NSDictionary ?? [:]
+                    guard let params = argsArray["params"] as? [String: Any] else {
+                        sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
+                        return
+                    }
+                    viewModel.addDefaultEventParams(params)
+                    sendSuccess(methodName: methodName, callbackId: command.callbackId)
+                } else {
+                    sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
+                }
 
             default:
                 sendError(message: "Error method name. methodName : ", methodName, command.callbackId)

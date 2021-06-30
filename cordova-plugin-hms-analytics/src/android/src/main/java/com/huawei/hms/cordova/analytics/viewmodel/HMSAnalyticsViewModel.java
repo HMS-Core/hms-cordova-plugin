@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * HMSAnalyticsViewModel works as a mediator between {@link HMSAnalyticsContract.Presenter} and HMSAnalyticsModule.
  *
- * @since v.5.1.0
+ * @since v.5.3.1.300
  */
 public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
 
@@ -269,6 +269,20 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     @Override
     public void isRestrictionEnabled(ResultListener<Boolean> resultListener) {
         resultListener.onSuccess(analyticsInstance.isRestrictionEnabled());
+    }
+
+    /**
+     * Adds default event parameters.
+     * These parameters will be added to all events except the automatically collected events.
+     *
+     * @param params: Default event parameters.
+     *                A maximum of 100 key-value pairs are supported.
+     *                The key in each key-value pair can contain a maximum of 256 characters and
+     *                can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+     */
+    @Override
+    public void addDefaultEventParams(Bundle params) {
+        analyticsInstance.addDefaultEventParams(params);
     }
 
     /**

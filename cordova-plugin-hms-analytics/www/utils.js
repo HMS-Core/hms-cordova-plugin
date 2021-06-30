@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncExec = void 0;
 /*
     Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -16,6 +14,8 @@ exports.asyncExec = void 0;
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
 function asyncExec(clazz, reference, args = []) {
     return new Promise((resolve, reject) => {
@@ -23,4 +23,3 @@ function asyncExec(clazz, reference, args = []) {
     });
 }
 exports.asyncExec = asyncExec;
-//# sourceMappingURL=utils.js.map

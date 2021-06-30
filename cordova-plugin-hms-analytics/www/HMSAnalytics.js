@@ -15,7 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HAParamType = exports.HAEventType = exports.HAUserProfileType = exports.LogLevelType = exports.ReportPolicyType = exports.disableLogger = exports.enableLogger = exports.enableLog = exports.isRestrictionEnabled = exports.setRestrictionEnabled = exports.getReportPolicyThreshold = exports.setReportPolicies = exports.pageEnd = exports.pageStart = exports.getUserProfiles = exports.getAAID = exports.clearCachedData = exports.onEvent = exports.setSessionDuration = exports.setMinActivitySessions = exports.setPushToken = exports.deleteUserProfile = exports.setUserProfile = exports.setUserId = exports.setAnalyticsEnabled = void 0;
+exports.HAParamType = exports.HAEventType = exports.HAUserProfileType = exports.LogLevelType = exports.ReportPolicyType = exports.disableLogger = exports.enableLogger = exports.enableLog = exports.addDefaultEventParams = exports.isRestrictionEnabled = exports.setRestrictionEnabled = exports.getReportPolicyThreshold = exports.setReportPolicies = exports.pageEnd = exports.pageStart = exports.getUserProfiles = exports.getAAID = exports.clearCachedData = exports.onEvent = exports.setSessionDuration = exports.setMinActivitySessions = exports.setPushToken = exports.deleteUserProfile = exports.setUserProfile = exports.setUserId = exports.setAnalyticsEnabled = void 0;
 const utils_1 = require("./utils");
 ///////////////////////////////////////////////////////////////////////////
 // HMSAnalytics
@@ -132,7 +132,7 @@ function clearCachedData() {
 }
 exports.clearCachedData = clearCachedData;
 /**
- * Obtains the app instance ID from AppGallery Connect.
+ * Obtains the AAID from AppGallery Connect.
  */
 function getAAID() {
     return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
@@ -225,6 +225,19 @@ function isRestrictionEnabled() {
 }
 exports.isRestrictionEnabled = isRestrictionEnabled;
 /**
+ * Adds default event parameters.
+ * These parameters will be added to all events except the automatically collected events.
+ *
+ * @param params : Default event parameters.
+ *              A maximum of 100 key-value pairs are supported.
+ *              The key in each key-value pair can contain a maximum of 256 characters and
+ *              can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+ */
+function addDefaultEventParams(params) {
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['addDefaultEventParams', { 'params': params }]);
+}
+exports.addDefaultEventParams = addDefaultEventParams;
+/**
  * Enables the debug log function and sets the minimum log level.
  * Default log level DEBUG.
  *
@@ -292,6 +305,7 @@ var LogLevelType;
 var HAUserProfileType;
 (function (HAUserProfileType) {
     HAUserProfileType["USERLEVEL"] = "user_level";
+    HAUserProfileType["ISFULLLEVEL"] = "is_full_level";
 })(HAUserProfileType = exports.HAUserProfileType || (exports.HAUserProfileType = {}));
 /**
  * HAEventType types for provides the IDs of all predefined events.
@@ -347,6 +361,47 @@ var HAEventType;
     HAEventType["ENDGAME"] = "$EndGame";
     HAEventType["WINPROPS"] = "$WinProps";
     HAEventType["CONSUMEPROPS"] = "$ConsumeProps";
+    HAEventType["ADDFRIEND"] = "$AddFriend";
+    HAEventType["ADDBLACKLIST"] = "$AddBlacklist";
+    HAEventType["VIEWFRIENDLIST"] = "$ViewFriendList";
+    HAEventType["QUITUSERGROUP"] = "$QuitUserGroup";
+    HAEventType["CREATEUSERGROUP"] = "$CreateUserGroup";
+    HAEventType["DISBANDUSERGROUP"] = "$DisbandUserGroup";
+    HAEventType["UPGRADEUSERGROUP"] = "$UpgradeUserGroup";
+    HAEventType["VIEWUSERGROUP"] = "$ViewUserGroup";
+    HAEventType["JOINTEAM"] = "$JoinTeam";
+    HAEventType["SENDMESSAGE"] = "$SendMessage";
+    HAEventType["LEARNSKILL"] = "$LearnSkill";
+    HAEventType["USESKILL"] = "$UseSkill";
+    HAEventType["GETEQUIPMENT"] = "$GetEquipment";
+    HAEventType["LOSEEQUIPMENT"] = "$LoseEquipment";
+    HAEventType["ENHANCEEQUIPMENT"] = "$EnhanceEquipment";
+    HAEventType["SWITCHCLASS"] = "$SwitchClass";
+    HAEventType["ACCEPTTASK"] = "$AcceptTask";
+    HAEventType["FINISHTASK"] = "$FinishTask";
+    HAEventType["ATTENDACTIVITY"] = "$AttendActivity";
+    HAEventType["FINISHCUTSCENE"] = "$FinishCutscene";
+    HAEventType["SKIPCUTSCENE"] = "$SkipCutscene";
+    HAEventType["GETPET"] = "$GetPet";
+    HAEventType["LOSEPET"] = "$LosePet";
+    HAEventType["ENHANCEPET"] = "$EnhancePet";
+    HAEventType["GETMOUNT"] = "$GetMount";
+    HAEventType["LOSEMOUNT"] = "$LoseMount";
+    HAEventType["ENHANCEMOUNT"] = "$EnhanceMount";
+    HAEventType["CREATEROLE"] = "$CreateRole";
+    HAEventType["SIGNINROLE"] = "$SignInRole";
+    HAEventType["SIGNOUTROLE"] = "$SignOutRole";
+    HAEventType["STARTBATTLE"] = "$StartBattle";
+    HAEventType["ENDBATTLE"] = "$EndBattle";
+    HAEventType["STARTDUNGEON"] = "$StartDungeon";
+    HAEventType["FINISHDUNGEON"] = "$FinishDungeon";
+    HAEventType["VIEWPACKAGE"] = "$ViewPackage";
+    HAEventType["REDEEM"] = "$Redeem";
+    HAEventType["MODIFYSETTING"] = "$ModifySetting";
+    HAEventType["WATCHVIDEO"] = "$WatchVideo";
+    HAEventType["CLICKMESSAGE"] = "$ClickMessage";
+    HAEventType["DRAWCARD"] = "$DrawCard";
+    HAEventType["VIEWCARDLIST"] = "$ViewCardList";
 })(HAEventType = exports.HAEventType || (exports.HAEventType = {}));
 /**
  * HAParamType types for provides the IDs of all predefined parameters,
@@ -404,7 +459,6 @@ var HAParamType;
     HAParamType["POSITIONID"] = "$PositionId";
     HAParamType["PRODUCTLIST"] = "$ProductList";
     HAParamType["ACOUNTTYPE"] = "$AcountType";
-    HAParamType["OCCURREDTIME"] = "$OccurredTime";
     HAParamType["EVTRESULT"] = "$EvtResult";
     HAParamType["PREVLEVEL"] = "$PrevLevel";
     HAParamType["CURRVLEVEL"] = "$CurrvLevel";
@@ -427,5 +481,74 @@ var HAParamType;
     HAParamType["PURCHASEENTRY"] = "$PurchaseEntry";
     HAParamType["PROPS"] = "$Props";
     HAParamType["ENTRY"] = "$Entry";
+    HAParamType["VIPLEVEL"] = "$VIPLevel";
+    HAParamType["FIRSTSIGNIN"] = "$FirstSignIn";
+    HAParamType["DISCOUNT"] = "$Discount";
+    HAParamType["FIRSTPAY"] = "$FirstPay";
+    HAParamType["TASKID"] = "$TaskId";
+    HAParamType["FRIENDNUMBER"] = "$FriendNumber";
+    HAParamType["USERGROUPNAME"] = "$UserGroupName";
+    HAParamType["USERGROUPLEVEL"] = "$UserGroupLevel";
+    HAParamType["MEMBERS"] = "$Members";
+    HAParamType["LEVELBEFORE"] = "$LevelBefore";
+    HAParamType["MESSAGETYPE"] = "$MessageType";
+    HAParamType["ROLECOMBAT"] = "$RoleCombat";
+    HAParamType["ISTOPLEVEL"] = "$IsTopLevel";
+    HAParamType["ROLECLASS"] = "$RoleClass";
+    HAParamType["SKILLNAME"] = "$SkillName";
+    HAParamType["SKILLLEVEL"] = "$SkillLevel";
+    HAParamType["SKILLLEVELBEFORE"] = "$SkillLevelBefore";
+    HAParamType["EQUIPMENTID"] = "$EquipmentId";
+    HAParamType["EQUIPMENTNAME"] = "$EquipmentName";
+    HAParamType["EQUIPMENTLEVEL"] = "$EquipmentLevel";
+    HAParamType["CLASSLIMIT"] = "$ClassLimit";
+    HAParamType["LEVELLIMIT"] = "$LevelLimit";
+    HAParamType["ISFREE"] = "$IsFree";
+    HAParamType["TOTALAFTERCHANGE"] = "$TotalAfterChange";
+    HAParamType["QUALITY"] = "$Quality";
+    HAParamType["ENHANCETYPE"] = "$EnhanceType";
+    HAParamType["NEWCLASS"] = "$NewClass";
+    HAParamType["OLDCLASS"] = "$OldClass";
+    HAParamType["TASKTYPE"] = "$TaskType";
+    HAParamType["TASKNAME"] = "$TaskName";
+    HAParamType["REWARD"] = "$Reward";
+    HAParamType["ACTIVITYTYPE"] = "$ActivityType";
+    HAParamType["ACTIVITYNAME"] = "$ActivityName";
+    HAParamType["CUTSCENENAME"] = "$CutsceneName";
+    HAParamType["PETID"] = "$PetId";
+    HAParamType["PETDEFAULTNAME"] = "$PetDefaultName";
+    HAParamType["PETLEVEL"] = "$PetLevel";
+    HAParamType["MOUNTID"] = "$MountId";
+    HAParamType["MOUNTDEFAULTNAME"] = "$MountDefaultName";
+    HAParamType["MOUNTLEVEL"] = "$MountLevel";
+    HAParamType["ROLEGENDER"] = "$RoleGender";
+    HAParamType["SERVER"] = "$Server";
+    HAParamType["FIRSTCREATE"] = "$FirstCreate";
+    HAParamType["COMBAT"] = "$Combat";
+    HAParamType["BATTLETYPE"] = "$BattleType";
+    HAParamType["BATTLENAME"] = "$BattleName";
+    HAParamType["NUMBEROFCARDS"] = "$NumberOfCards";
+    HAParamType["CARDLIST"] = "$CardList";
+    HAParamType["PARTICIPANTS"] = "$Participants";
+    HAParamType["DIFFICULTY"] = "$Difficulty";
+    HAParamType["MVP"] = "$MVP";
+    HAParamType["DAMAGE"] = "$Damage";
+    HAParamType["RANKING"] = "$Ranking";
+    HAParamType["DUNGEONNAME"] = "$DungeonName";
+    HAParamType["WINREASON"] = "$WinReason";
+    HAParamType["BALANCE"] = "$Balance";
+    HAParamType["PACKAGETYPE"] = "$PackageType";
+    HAParamType["AMOUNT"] = "$Amount";
+    HAParamType["ITEMLIST"] = "$ItemList";
+    HAParamType["GIFTTYPE"] = "$GiftType";
+    HAParamType["GIFTNAME"] = "$GiftName";
+    HAParamType["TYPE"] = "$Type";
+    HAParamType["OLDVALUE"] = "$OldValue";
+    HAParamType["NEWVALUE"] = "$NewValue";
+    HAParamType["VIDEOTYPE"] = "$VideoType";
+    HAParamType["VIDEONAME"] = "$VideoName";
+    HAParamType["MESSAGETITLE"] = "$MessageTitle";
+    HAParamType["OPERATION"] = "$Operation";
+    HAParamType["NUMBEROFDRAWING"] = "$NumberOfDrawing";
+    HAParamType["LEFTPULLSFORGUARANTEE"] = "$LeftPullsForGuarantee";
 })(HAParamType = exports.HAParamType || (exports.HAParamType = {}));
-//# sourceMappingURL=HMSAnalytics.js.map

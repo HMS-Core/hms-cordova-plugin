@@ -126,6 +126,7 @@ input[type=number] {
 #pageStart,
 #setReportPolicies,
 #isRestrictionEnabled,
+#addDefaultEventParams,
 #HAParamType,
 #HAEventType {
     width: 95%;
