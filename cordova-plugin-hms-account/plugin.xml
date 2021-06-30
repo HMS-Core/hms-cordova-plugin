@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-hms-account"
+    version="5.2.0-300">
+
+    <name>cordova-plugin-hms-account</name>
+    <description>cordova-plugin-hms-account</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova, hms, android, plugin, huawei, account</keywords>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    </config-file>
+
+    <js-module src="www/utils.js" name="utils">
+    </js-module>
+
+    <js-module src="www/HMSCommonTypes.js" name="HMSCommonTypes">
+        <clobbers target="HMSCommonTypes" />
+    </js-module>
+
+    <js-module src="www/HMSAccount.js" name="HMSAccount">
+        <clobbers target="HMSAccount" />
+    </js-module>
+
+	<js-module src="www/HMSHuaweiIdAuthButton.js" name="HMSHuaweiIdAuthButton">
+        <clobbers target="HMSHuaweiIdAuthButton" />
+    </js-module>
+
+	<js-module src="www/HMSHuaweiIdAuthManager.js" name="HMSHuaweiIdAuthManager">
+        <clobbers target="HMSHuaweiIdAuthManager" />
+    </js-module>
+
+	<js-module src="www/HMSHuaweiIdAuthTool.js" name="HMSHuaweiIdAuthTool">
+        <clobbers target="HMSHuaweiIdAuthTool" />
+    </js-module>
+
+	<js-module src="www/HMSNetworkTool.js" name="HMSNetworkTool">
+        <clobbers target="HMSNetworkTool" />
+    </js-module>
+
+	<js-module src="www/HMSReadSMSManager.js" name="HMSReadSMSManager">
+        <clobbers target="HMSReadSMSManager" />
+    </js-module>
+
+    <js-module src="www/HMSAccountAuthService.js" name="HMSAccountAuthService">
+        <clobbers target="HMSAccountAuthService" />
+    </js-module>
+
+    <js-module src="www/HMSAccountAuthManager.js" name="HMSAccountAuthManager">
+        <clobbers target="HMSAccountAuthManager" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+
+        <!-- Android dependencies -->
+        <framework src="com.huawei.hms:hwid:5.2.0.300" />
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSAccount" >
+                <param name="android-package" value="com.huawei.hms.cordova.hwid.HMSAccount"/>
+            </feature>
+
+			<feature name="HMSHuaweiIdAuthManager" >
+                <param name="android-package" value="com.huawei.hms.cordova.hwid.HMSHuaweiIdAuthManager"/>
+            </feature>
+
+			<feature name="HMSHuaweiIdAuthTool" >
+                <param name="android-package" value="com.huawei.hms.cordova.hwid.HMSHuaweiIdAuthTool"/>
+            </feature>
+
+			<feature name="HMSNetworkTool" >
+                <param name="android-package" value="com.huawei.hms.cordova.hwid.HMSNetworkTool"/>
+            </feature>
+
+			<feature name="HMSReadSMSManager" >
+                <param name="android-package" value="com.huawei.hms.cordova.hwid.HMSReadSMSManager"/>
+            </feature>
+
+            <feature name="HMSAccountAuthService" >
+                <param name="android-package" value="com.huawei.hms.cordova.account.HMSAccountAuthService"/>
+            </feature>
+
+            <feature name="HMSAccountAuthManager" >
+                <param name="android-package" value="com.huawei.hms.cordova.account.HMSAccountAuthManager"/>
+            </feature>
+
+        </config-file>
+
+		<asset src="www/images/hw_logo_btn_red.png" target="img/hw_logo_btn_red.png" />
+		<asset src="www/images/hw_logo_btn_white.png" target="img/hw_logo_btn_white.png" />
+
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/hwid/HMSAccount.java" target-dir="src/com/huawei/hms/cordova/hwid" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/hwid/HMSHuaweiIdAuthManager.java" target-dir="src/com/huawei/hms/cordova/hwid" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/hwid/HMSHuaweiIdAuthTool.java" target-dir="src/com/huawei/hms/cordova/hwid" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/hwid/HMSNetworkTool.java" target-dir="src/com/huawei/hms/cordova/hwid" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/hwid/HMSReadSMSManager.java" target-dir="src/com/huawei/hms/cordova/hwid" />
+		
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/CordovaPluginWithLoggerAndExceptions.java" target-dir="src/com/huawei/hms/cordova" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/PackageName.java" target-dir="src/com/huawei/hms/cordova" />
+
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/helpers/Constants.java" target-dir="src/com/huawei/hms/cordova/helpers" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/helpers/SMSBroadcastReceiver.java" target-dir="src/com/huawei/hms/cordova/helpers" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/helpers/HMSCordovaException.java" target-dir="src/com/huawei/hms/cordova/helpers" />
+		
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/utils/ExceptionUtils.java" target-dir="src/com/huawei/hms/cordova/utils" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/utils/HMSAccountUtils.java" target-dir="src/com/huawei/hms/cordova/utils" />
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/logger/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/logger" />
+
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/exceptions/NullMessageDigestException.java" target-dir="src/com/huawei/hms/cordova/exceptions" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/exceptions/NullServiceException.java" target-dir="src/com/huawei/hms/cordova/exceptions" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/exceptions/TimeOutException.java" target-dir="src/com/huawei/hms/cordova/exceptions" />
+
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/account/HMSAccountAuthService.java" target-dir="src/com/huawei/hms/cordova/account/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/account/HMSAccountAuthManager.java" target-dir="src/com/huawei/hms/cordova/account/" />
+    
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAccountBase.java" target-dir="src/com/src/com/huawei/hms/cordova/base/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAuthManagerBase.java" target-dir="src/com/src/com/huawei/hms/cordova/base/"/>
+    </platform>
+
+</plugin>
+
