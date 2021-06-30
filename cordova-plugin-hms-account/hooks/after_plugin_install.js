@@ -13,13 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 "use strict";
 
 var FSUtils = require("./FSUtils");
 
 var ROOT_GRADLE_FILE = "platforms/android/build.gradle";
-var COMMENT = "//This line is added by cordova-plugin-hms-push plugin";
+var COMMENT = "//This line is added by cordova-plugin-hms-account plugin";
 var NEW_LINE = "\n";
 
 module.exports = function (context) {
@@ -40,7 +39,7 @@ module.exports = function (context) {
 
 function addAGConnectDependency(lines) {
     var AG_CONNECT_DEPENDENCY =
-        "classpath 'com.huawei.agconnect:agcp:1.4.2.301' " + COMMENT;
+        "classpath 'com.huawei.agconnect:agcp:1.5.2.300' " + COMMENT;
     var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
     var index;
 

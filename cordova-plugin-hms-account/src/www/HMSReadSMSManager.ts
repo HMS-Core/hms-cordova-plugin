@@ -16,11 +16,15 @@
 
 import { asyncExec } from './utils'
 
-export function smsVerificationCode(): Promise<String> {
+export function smsVerificationCode(): Promise<string> {
   return asyncExec('HMSReadSMSManager', 'smsVerificationCode', []);
 }
 
-export function obtainHashCode(): Promise<String> {
+export function startConsent(phoneNumber: string): Promise<string> {
+  return asyncExec('HMSReadSMSManager', 'startConsent', [phoneNumber]);
+}
+
+export function obtainHashCode(): Promise<string> {
   return asyncExec('HMSReadSMSManager', 'obtainHashCode', []);
 }
 

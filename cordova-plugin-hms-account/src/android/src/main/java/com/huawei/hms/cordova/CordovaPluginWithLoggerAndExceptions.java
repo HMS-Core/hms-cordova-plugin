@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account;
+package com.huawei.hms.cordova;
 
-import com.huawei.hms.cordova.account.logger.HMSLogger;
-import com.huawei.hms.cordova.account.utils.ExceptionUtils;
+import com.huawei.hms.cordova.logger.HMSLogger;
+import com.huawei.hms.cordova.utils.ExceptionUtils;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;

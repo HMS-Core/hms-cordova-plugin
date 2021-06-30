@@ -14,19 +14,11 @@
     limitations under the License.
 */
 
+package com.huawei.hms.cordova.helpers;
 
-package com.huawei.hms.cordova.account.exceptions;
+public interface Constants {
+    int SIGN_IN_REQUEST_ID = 8888;
 
-import com.huawei.hms.cordova.account.helpers.HMSCordovaException;
-
-public class NullMessageDigestException extends Exception implements HMSCordovaException {
-    @Override
-    public String getMessage() {
-        return "MessageDigest is null";
-    }
-
-    @Override
-    public int getErrorCode() {
-        return 504;
-    }
+    int ERR_UNKNOWN = 500;
+    int ERR_HUAWEI_AUTH = 503;
 }

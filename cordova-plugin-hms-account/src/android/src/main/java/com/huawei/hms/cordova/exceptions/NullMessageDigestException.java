@@ -15,18 +15,18 @@
 */
 
 
-package com.huawei.hms.cordova.account.exceptions;
+package com.huawei.hms.cordova.exceptions;
 
-import com.huawei.hms.cordova.account.helpers.HMSCordovaException;
+import com.huawei.hms.cordova.helpers.HMSCordovaException;
 
-public class TimeOutException extends Exception implements HMSCordovaException {
+public class NullMessageDigestException extends Exception implements HMSCordovaException {
     @Override
     public String getMessage() {
-        return "Timeout";
+        return "MessageDigest is null";
     }
 
     @Override
     public int getErrorCode() {
-        return 502;
+        return 504;
     }
 }

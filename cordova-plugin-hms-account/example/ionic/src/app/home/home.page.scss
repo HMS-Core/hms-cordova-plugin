@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -48,9 +48,10 @@
 }
 
 .submit-button {
-    --background: #f3806b;
+    --background: #912a2a;
     --border: none;
     --color: white;
+    --width: 80%;
     --height: 44px;
     --padding: 10px;
     --text-align: center;
@@ -62,4 +63,14 @@
     --cursor: pointer;
     --border-radius: 8px;
     --outline: transparent;
+}
+
+.header{
+    text-align: center;
+    color:#912a2a;
+}
+
+#img_bitmap, #btn_auth_button{
+    position: relative;
+    margin:auto;
 }

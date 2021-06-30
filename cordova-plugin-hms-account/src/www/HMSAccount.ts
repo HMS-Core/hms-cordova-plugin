@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-import { AuthHuaweiId, HuaweiIdAuthParams, SignInData } from './HMSCommonTypes'
+import { AuthHuaweiId, AuthParams, SignInData } from './HMSCommonTypes'
 import { asyncExec } from './utils'
 
 
-export function signIn(signInData: SignInData[]): Promise<AuthHuaweiId> {
+export function signIn(signInData: SignInData): Promise<AuthHuaweiId> {
   return asyncExec('HMSAccount', 'signIn', [signInData ? signInData : []]);
 }
 
@@ -30,7 +30,7 @@ export function cancelAuthorization(): Promise<void> {
   return asyncExec('HMSAccount', 'cancelAuthorization', []);
 }
 
-export function silentSignIn(authParams: HuaweiIdAuthParams): Promise<AuthHuaweiId> {
+export function silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId> {
   return asyncExec('HMSAccount', 'silentSignIn', [authParams]);
 }
 

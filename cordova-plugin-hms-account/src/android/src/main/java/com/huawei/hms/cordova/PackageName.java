@@ -14,12 +14,9 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account.helpers;
+package com.huawei.hms.cordova;
 
-public interface HMSCordovaException {
-    /**
-     * Get the error code for specified account errors
-     * @return int value
-     */
-    int getErrorCode();
+public enum PackageName {
+    HWID,
+    ACCOUNT
 }

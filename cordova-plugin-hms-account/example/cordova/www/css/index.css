@@ -1,5 +1,5 @@
 /*
-    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,9 +32,9 @@ body {
     height: 100vh;
     margin: 0px;
     padding: 0px;
+    text-align: center;
     /* Padding to avoid the "unsafe" areas behind notches in the screen */
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
-    text-transform: uppercase;
     width: 100%;
     background-color: "f5f5f5";
 }
@@ -47,9 +47,9 @@ body {
     /* position in the center of the screen */
     left: 50%;
     top: -5%;
-    height: 50px;
+    height: 60px;
     /* text area height */
-    width: 225px;
+    width: 240px;
     /* text area width */
     padding: 180px 0px 0px 0px;
     /* image height is 200px (bottom 20px are overlapped with text) */
@@ -72,18 +72,12 @@ body {
     }
 }
 
-#btn_sign_in_with_id_token,
-#btn_sign_in_with_authorization_code,
-#btn_sign_out,
-#btn_silent_sign_in,
-#btn_cancel_authorization,
-#btn_sms_verification_code,
-#btn_huawei_id_auth_button {
+input[type=submit] {
     width: 100%;
     height: 40px;
-    margin-top: 40px;
+    margin-top: 20px;
     color: white;
-    background-color: teal;
+    background-color: rgb(66, 7, 94);
     border: solid transparent 1px;
     border-radius: 8px;
     outline: transparent;
@@ -96,5 +90,5 @@ h1 {
     overflow: visible;
     padding: 0px;
     text-align: center;
-    color: teal;
+    color: rgb(66, 7, 94);
 }

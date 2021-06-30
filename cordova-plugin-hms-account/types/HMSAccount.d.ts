@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
-import { AuthHuaweiId, HuaweiIdAuthParams, SignInData } from './HMSCommonTypes';
-export declare function signIn(signInData: SignInData[]): Promise<AuthHuaweiId>;
+import { AuthHuaweiId, AuthParams, SignInData } from './HMSCommonTypes';
+export declare function signIn(signInData: SignInData): Promise<AuthHuaweiId>;
 export declare function signOut(): Promise<void>;
 export declare function cancelAuthorization(): Promise<void>;
-export declare function silentSignIn(authParams: HuaweiIdAuthParams): Promise<AuthHuaweiId>;
+export declare function silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId>;
 export declare function enableLogger(): Promise<void>;
 export declare function disableLogger(): Promise<void>;

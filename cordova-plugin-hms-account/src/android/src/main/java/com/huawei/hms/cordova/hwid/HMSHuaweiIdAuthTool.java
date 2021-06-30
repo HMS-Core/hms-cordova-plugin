@@ -14,11 +14,12 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account;
+package com.huawei.hms.cordova.hwid;
 
 import android.accounts.Account;
 import android.util.Log;
 
+import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
 import com.huawei.hms.support.api.entity.auth.Scope;
 import com.huawei.hms.support.hwid.tools.HuaweiIdAuthTool;
 
@@ -29,8 +30,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static com.huawei.hms.cordova.account.utils.HMSAccountUtils.fromJSONArrayToScopeList;
-import static com.huawei.hms.cordova.account.utils.HMSAccountUtils.fromJSONObjectToAccount;
+import static com.huawei.hms.cordova.utils.HMSAccountUtils.fromJSONArrayToScopeList;
+import static com.huawei.hms.cordova.utils.HMSAccountUtils.fromJSONObjectToAccount;
 
 public class HMSHuaweiIdAuthTool extends CordovaPluginWithLoggerAndExceptions {
     public static final String TAG = HMSHuaweiIdAuthTool.class.getSimpleName();

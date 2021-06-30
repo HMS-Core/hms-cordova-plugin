@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { AuthHuaweiId, ContainScopesResult, AuthHuaweiIdBuilder, AuthScopeList } from './HMSCommonTypes'
+import { AuthHuaweiId, ContainScopesResult, AuthBuilder, AuthScopeList } from './HMSCommonTypes'
 import { asyncExec } from './utils'
 
 export function getAuthResult(): Promise<AuthHuaweiId> {
@@ -25,7 +25,7 @@ export function getAuthResultWithScope(authScopeList: AuthScopeList[]): Promise<
   return asyncExec('HMSHuaweiIdAuthManager', 'getAuthResultWithScope', [authScopeList]);
 }
 
-export function containScopes(authHuaweiId: AuthHuaweiIdBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
+export function containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
   return asyncExec('HMSHuaweiIdAuthManager', 'containScopes', [authHuaweiId, authScopeList]);
 }
 

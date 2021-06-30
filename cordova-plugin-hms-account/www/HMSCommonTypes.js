@@ -15,7 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ErrorCodes = exports.HuaweiIdAuthParams = exports.AuthRequestOption = exports.Gender = exports.AuthScopeList = void 0;
+exports.ErrorCodes = exports.AuthParams = exports.AuthRequestOption = exports.Gender = exports.AuthScopeList = void 0;
 //
 // Constants
 //
@@ -35,21 +35,22 @@ var Gender;
 })(Gender = exports.Gender || (exports.Gender = {}));
 var AuthRequestOption;
 (function (AuthRequestOption) {
-    AuthRequestOption["SCOPE_ID_TOKEN"] = "idToken";
-    AuthRequestOption["SCOPE_ACCESS_TOKEN"] = "accessToken";
-    AuthRequestOption["SCOPE_MOBILE_NUMBER"] = "mobileNumber";
     AuthRequestOption["SCOPE_EMAIL"] = "email";
-    AuthRequestOption["SCOPE_SHIPPING_ADDRESS"] = "shippingAddress";
-    AuthRequestOption["SCOPE_UID"] = "uid";
     AuthRequestOption["SCOPE_ID"] = "id";
-    AuthRequestOption["SCOPE_AUTHORIZATION_CODE"] = "authorizationCode";
+    AuthRequestOption["SCOPE_ID_TOKEN"] = "idToken";
     AuthRequestOption["SCOPE_PROFILE"] = "profile";
+    AuthRequestOption["SCOPE_MOBILE_NUMBER"] = "mobileNumber";
+    AuthRequestOption["SCOPE_UID"] = "uid";
+    AuthRequestOption["SCOPE_AUTHORIZATION_CODE"] = "authorizationCode";
+    AuthRequestOption["SCOPE_ACCESS_TOKEN"] = "accessToken";
+    AuthRequestOption["SCOPE_DIALOG_AUTH"] = "dialogAuth";
+    AuthRequestOption["SCOPE_SHIPPING_ADDRESS"] = "shippingAddress";
 })(AuthRequestOption = exports.AuthRequestOption || (exports.AuthRequestOption = {}));
-var HuaweiIdAuthParams;
-(function (HuaweiIdAuthParams) {
-    HuaweiIdAuthParams["DEFAULT_AUTH_REQUEST_PARAM"] = "DEFAULT_AUTH_REQUEST_PARAM";
-    HuaweiIdAuthParams["DEFAULT_AUTH_REQUEST_PARAM_GAME"] = "DEFAULT_AUTH_REQUEST_PARAM_GAME";
-})(HuaweiIdAuthParams = exports.HuaweiIdAuthParams || (exports.HuaweiIdAuthParams = {}));
+var AuthParams;
+(function (AuthParams) {
+    AuthParams["DEFAULT_AUTH_REQUEST_PARAM"] = "DEFAULT_AUTH_REQUEST_PARAM";
+    AuthParams["DEFAULT_AUTH_REQUEST_PARAM_GAME"] = "DEFAULT_AUTH_REQUEST_PARAM_GAME";
+})(AuthParams = exports.AuthParams || (exports.AuthParams = {}));
 var ErrorCodes;
 (function (ErrorCodes) {
     ErrorCodes["HuaweiIdAuthException"] = "503";

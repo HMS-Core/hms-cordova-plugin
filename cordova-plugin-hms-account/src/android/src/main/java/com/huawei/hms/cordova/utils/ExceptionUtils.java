@@ -14,14 +14,14 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account.utils;
+package com.huawei.hms.cordova.utils;
 
 import android.util.Log;
 
 import com.huawei.hms.common.ApiException;
-import com.huawei.hms.cordova.account.helpers.Constants;
-import com.huawei.hms.cordova.account.helpers.HMSCordovaException;
-import com.huawei.hms.cordova.account.logger.HMSLogger;
+import com.huawei.hms.cordova.helpers.Constants;
+import com.huawei.hms.cordova.helpers.HMSCordovaException;
+import com.huawei.hms.cordova.logger.HMSLogger;
 import com.huawei.hms.support.hwid.common.HuaweiIdAuthException;
 
 import org.json.JSONException;

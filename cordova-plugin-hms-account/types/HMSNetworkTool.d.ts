@@ -15,5 +15,5 @@
 */
 
 import { Cookie, DomainInfo } from './HMSCommonTypes';
-export declare function buildNetworkURL(domainHttps: DomainInfo): Promise<String>;
-export declare function buildNetworkCookie(cookie: Cookie): Promise<String>;
+export declare function buildNetworkURL(domainHttps: DomainInfo): Promise<string>;
+export declare function buildNetworkCookie(cookie: Cookie): Promise<string>;

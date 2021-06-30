@@ -15,12 +15,16 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.obtainHashCode = exports.smsVerificationCode = void 0;
+exports.obtainHashCode = exports.startConsent = exports.smsVerificationCode = void 0;
 const utils_1 = require("./utils");
 function smsVerificationCode() {
     return utils_1.asyncExec('HMSReadSMSManager', 'smsVerificationCode', []);
 }
 exports.smsVerificationCode = smsVerificationCode;
+function startConsent(phoneNumber) {
+    return utils_1.asyncExec('HMSReadSMSManager', 'startConsent', [phoneNumber]);
+}
+exports.startConsent = startConsent;
 function obtainHashCode() {
     return utils_1.asyncExec('HMSReadSMSManager', 'obtainHashCode', []);
 }

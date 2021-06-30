@@ -33,18 +33,19 @@ export enum Gender {
 }
 
 export enum AuthRequestOption {
-  SCOPE_ID_TOKEN = "idToken",
-  SCOPE_ACCESS_TOKEN = "accessToken",
-  SCOPE_MOBILE_NUMBER = "mobileNumber",
   SCOPE_EMAIL = "email",
-  SCOPE_SHIPPING_ADDRESS = "shippingAddress",
-  SCOPE_UID = "uid",
   SCOPE_ID = "id",
+  SCOPE_ID_TOKEN = "idToken",
+  SCOPE_PROFILE = "profile",
+  SCOPE_MOBILE_NUMBER = "mobileNumber",
+  SCOPE_UID = "uid",
   SCOPE_AUTHORIZATION_CODE = "authorizationCode",
-  SCOPE_PROFILE = "profile"
+  SCOPE_ACCESS_TOKEN = "accessToken",
+  SCOPE_DIALOG_AUTH = "dialogAuth",
+  SCOPE_SHIPPING_ADDRESS = "shippingAddress"
 }
 
-export enum HuaweiIdAuthParams {
+export enum AuthParams {
   DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
   DEFAULT_AUTH_REQUEST_PARAM_GAME = "DEFAULT_AUTH_REQUEST_PARAM_GAME"
 }
@@ -58,44 +59,52 @@ export enum ErrorCodes {
 // Data Types
 //
 
-export interface AuthHuaweiId {
-  accessToken: string;
-  displayName: string;
-  email?: string;
-  familyName: string;
-  givenName: string;
-  idToken?: string;
-  unionId: string;
-  avatarUriString: string;
-  expressionTimeSecs: number;
-  openId: string;
+export interface AbstractAuthAccount {
   uid?: string;
-  countryCode?: string;
-  serviceCountryCode?: string;
+  openId: string;
+  displayName: string;
+  accessToken: string;
   status: number;
   gender: Gender;
-  describeContentsInAuthHuaweiId: number;
-  authorizedScopes: string[];
+  serviceCountryCode?: string;
+  countryCode?: string;
+  unionId: string;
+  email?: string;
   extensionScopes: string[];
+  idToken?: string;
+  expressionTimeSecs: number;
+  givenName: string;
+  familyName: string;
+  ageRange?: string;
+  homeZone: number;
+  authorizedScopes: string[];
+  avatarUriString: string;
   authorizationCode?: string;
-  huaweiAccount?: Account;
+  requestedScopes: string[];
+  account?: Account;
+}
+export interface AuthHuaweiId extends AbstractAuthAccount {
+  ageRangeFlag: number;
 }
 
-export interface AuthHuaweiIdBuilder {
+export interface AuthAccount extends AbstractAuthAccount {
+  accountFlag: number;
+}
+
+export interface AuthBuilder {
   openId: string;
   uid: string;
+  photoUriString: string;
   displayName: string;
-  photoUrl: string;
   accessToken: string;
   serviceCountryCode: string;
-  status: number;
   gender: Gender;
-  scopes: AuthScopeList[];
-  serverAuthCode: string;
+  status: number;
   unionId: string;
+  serverAuthCode: string;
   countryCode: string;
+  grantedScopes: AuthScopeList[];
 }
-
 
 export interface ContainScopesResult {
   containScopes: boolean
@@ -121,9 +130,14 @@ export interface Account {
   name: string;
 }
 
+export interface AccountIcon {
+  icon: string;
+  description: string;
+}
+
 export interface SignInData {
   authRequestOption: AuthRequestOption[],
-  authParam?: HuaweiIdAuthParams,
+  authParam?: AuthParams,
   authScopeList?: AuthScopeList[]
 }
 

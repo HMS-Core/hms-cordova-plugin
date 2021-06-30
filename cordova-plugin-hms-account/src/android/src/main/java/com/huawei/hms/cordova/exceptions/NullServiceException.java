@@ -14,13 +14,19 @@
     limitations under the License.
 */
 
-import { asyncExec } from './utils'
 
+package com.huawei.hms.cordova.exceptions;
 
-export function enableLogger(): Promise<void> {
-    return asyncExec('HMSLoggerManager', 'enableLogger', []);
-}
+import com.huawei.hms.cordova.helpers.HMSCordovaException;
 
-export function disableLogger(): Promise<void> {
-    return asyncExec('HMSLoggerManager', 'disableLogger', []);
+public class NullServiceException extends Exception implements HMSCordovaException {
+    @Override
+    public String getMessage() {
+        return "Service is null";
+    }
+
+    @Override
+    public int getErrorCode() {
+        return 501;
+    }
 }

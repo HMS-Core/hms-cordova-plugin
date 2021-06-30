@@ -30,42 +30,73 @@ export enum Gender {
   FEMALE = 1,
   CONFIDENTIAL = 2
 }
-export interface AuthHuaweiId {
-  accessToken: string;
-  displayName: string;
-  email?: string;
-  familyName: string;
-  givenName: string;
-  idToken?: string;
-  unionId: string;
-  avatarUriString: string;
-  expressionTimeSecs: number;
-  openId: string;
+
+export enum AuthRequestOption {
+  SCOPE_EMAIL = "email",
+  SCOPE_ID = "id",
+  SCOPE_ID_TOKEN = "idToken",
+  SCOPE_PROFILE = "profile",
+  SCOPE_MOBILE_NUMBER = "mobileNumber",
+  SCOPE_UID = "uid",
+  SCOPE_AUTHORIZATION_CODE = "authorizationCode",
+  SCOPE_ACCESS_TOKEN = "accessToken",
+  SCOPE_DIALOG_AUTH = "dialogAuth",
+  SCOPE_SHIPPING_ADDRESS = "shippingAddress"
+}
+
+export enum AuthParams {
+  DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
+  DEFAULT_AUTH_REQUEST_PARAM_GAME = "DEFAULT_AUTH_REQUEST_PARAM_GAME"
+}
+
+export interface AbstractAuthAccount {
   uid?: string;
-  countryCode?: string;
-  serviceCountryCode?: string;
+  openId: string;
+  displayName: string;
+  accessToken: string;
   status: number;
   gender: Gender;
-  describeContentsInAuthHuaweiId: number;
-  authorizedScopes: string[];
+  serviceCountryCode?: string;
+  countryCode?: string;
+  unionId: string;
+  email?: string;
   extensionScopes: string[];
+  idToken?: string;
+  expressionTimeSecs: number;
+  givenName: string;
+  familyName: string;
+  ageRange?: string;
+  homeZone: number;
+  authorizedScopes: string[];
+  avatarUriString: string;
   authorizationCode?: string;
-  huaweiAccount?: Account;
+  requestedScopes: string[];
+  account?: Account;
 }
-export interface AuthHuaweiIdBuilder {
+
+export interface AuthHuaweiId extends AbstractAuthAccount {
+  ageRangeFlag: number;
+}
+
+export interface AuthAccount extends AbstractAuthAccount {
+  accountFlag: number;
+}
+
+export interface AuthBuilder {
   openId: string;
   uid: string;
+  photoUriString: string;
   displayName: string;
-  photoUrl: string;
   accessToken: string;
   serviceCountryCode: string;
-  status: number;
   gender: Gender;
-  scopes: AuthScopeList[];
-  serverAuthCode: string;
+  status: number;
   unionId: string;
+  serverAuthCode: string;
   countryCode: string;
+  grantedScopes: AuthScopeList[];
 }
+
 export interface ContainScopesResult {
   containScopes: boolean;
 }
@@ -86,30 +117,21 @@ export interface Account {
   type: string;
   name: string;
 }
-export enum AuthRequestOption {
-  SCOPE_ID_TOKEN = "idToken",
-  SCOPE_ACCESS_TOKEN = "accessToken",
-  SCOPE_MOBILE_NUMBER = "mobileNumber",
-  SCOPE_EMAIL = "email",
-  SCOPE_SHIPPING_ADDRESS = "shippingAddress",
-  SCOPE_UID = "uid",
-  SCOPE_ID = "id",
-  SCOPE_AUTHORIZATION_CODE = "authorizationCode",
-  SCOPE_PROFILE = "profile",
+
+export interface AccountIcon {
+  icon: string;
+  description: string;
 }
 
-export enum ErrorCodes {
-  HuaweiIdAuthException = "503"
-}
-
-export enum HuaweiIdAuthParams {
-  DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
-  DEFAULT_AUTH_REQUEST_PARAM_GAME = "DEFAULT_AUTH_REQUEST_PARAM_GAME"
+export interface SignInData {
+  authRequestOption: AuthRequestOption[];
+  authParam?: AuthParams;
+  authScopeList?: AuthScopeList[];
 }
 
 export interface SignInData {
   authRequestOption: AuthRequestOption[],
-  authParam?: HuaweiIdAuthParams,
+  authParam?: AuthParams,
   authScopeList?: AuthScopeList[]
 }
 
@@ -137,7 +159,7 @@ export class HMSAccount extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  silentSignIn(authParams: HuaweiIdAuthParams): Promise<AuthHuaweiId> {
+  silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId> {
     return;
   }
 
@@ -148,6 +170,42 @@ export class HMSAccount extends IonicNativePlugin {
 
   @Cordova({ otherPromise: true })
   disableLogger(): Promise<void> {
+    return;
+  }
+
+}
+
+
+@Plugin({
+  pluginName: 'HMSAccountAuthService',
+  plugin: 'cordova-plugin-hms-account',
+  pluginRef: 'HMSAccountAuthService',
+  platforms: ['Android']
+})
+@Injectable()
+export class HMSAccountAuthService extends IonicNativePlugin {
+  @Cordova({ otherPromise: true })
+  signIn(signInData: SignInData): Promise<AuthAccount> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  signOut(): Promise<void> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  cancelAuthorization(): Promise<void> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  silentSignIn(authParams: AuthParams): Promise<AuthAccount> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  getChannel(): Promise<AccountIcon> {
     return;
   }
 
@@ -204,7 +262,37 @@ export class HMSHuaweiIdAuthManager extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  containScopes(authHuaweiId: AuthHuaweiIdBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
+  containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void> {
+    return;
+  }
+}
+
+@Plugin({
+  pluginName: 'HMSAccountAuthManager',
+  plugin: 'cordova-plugin-hms-account',
+  pluginRef: 'HMSAccountAuthManager',
+  platforms: ['Android']
+})
+
+@Injectable()
+export class HMSAccountAuthManager extends IonicNativePlugin {
+  @Cordova({ otherPromise: true })
+  getAuthResult(): Promise<AuthAccount> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  getAuthResultWithScope(authAccount: AuthScopeList[]): Promise<AuthAccount> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
     return;
   }
 
@@ -247,12 +335,12 @@ export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
 @Injectable()
 export class HMSNetworkTool extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  buildNetworkURL(domainHttps: DomainInfo): Promise<String> {
+  buildNetworkURL(domainHttps: DomainInfo): Promise<string> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  buildNetworkCookie(cookie: Cookie): Promise<String> {
+  buildNetworkCookie(cookie: Cookie): Promise<string> {
     return;
   }
 }
@@ -266,12 +354,17 @@ export class HMSNetworkTool extends IonicNativePlugin {
 @Injectable()
 export class HMSReadSMSManager extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  smsVerificationCode(): Promise<String> {
+  smsVerificationCode(): Promise<string> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  obtainHashCode(): Promise<String> {
+  obtainHashCode(): Promise<string> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  startConsent(phoneNumber: string): Promise<string> {
     return;
   }
 }

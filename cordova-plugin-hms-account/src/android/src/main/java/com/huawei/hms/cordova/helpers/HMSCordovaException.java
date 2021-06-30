@@ -14,19 +14,12 @@
     limitations under the License.
 */
 
+package com.huawei.hms.cordova.helpers;
 
-package com.huawei.hms.cordova.account.exceptions;
-
-import com.huawei.hms.cordova.account.helpers.HMSCordovaException;
-
-public class NullServiceException extends Exception implements HMSCordovaException {
-    @Override
-    public String getMessage() {
-        return "Service is null";
-    }
-
-    @Override
-    public int getErrorCode() {
-        return 501;
-    }
+public interface HMSCordovaException {
+    /**
+     * Get the error code for specified account errors
+     * @return int value
+     */
+    int getErrorCode();
 }

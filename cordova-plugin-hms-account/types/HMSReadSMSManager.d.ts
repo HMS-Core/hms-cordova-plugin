@@ -14,5 +14,6 @@
     limitations under the License.
 */
 
-export declare function smsVerificationCode(): Promise<String>;
-export declare function obtainHashCode(): Promise<String>;
+export declare function smsVerificationCode(): Promise<string>;
+export declare function startConsent(phoneNumber: string): Promise<string>;
+export declare function obtainHashCode(): Promise<string>;

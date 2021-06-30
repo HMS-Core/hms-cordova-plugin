@@ -14,5 +14,9 @@
     limitations under the License.
 */
 
-export declare function enableLogger(): Promise<void>;
-export declare function disableLogger(): Promise<void>;
+import { AccountIcon, AuthAccount, AuthParams, SignInData } from './HMSCommonTypes';
+export declare function signIn(signInData: SignInData): Promise<AuthAccount>;
+export declare function signOut(): Promise<void>;
+export declare function cancelAuthorization(): Promise<void>;
+export declare function silentSignIn(authParams: AuthParams): Promise<AuthAccount>;
+export declare function getChannel(): Promise<AccountIcon>;

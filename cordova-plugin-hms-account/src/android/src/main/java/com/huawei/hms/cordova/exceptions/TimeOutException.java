@@ -14,11 +14,19 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account.helpers;
 
-public interface Constants {
-    int SIGN_IN_REQUEST_ID = 8888;
+package com.huawei.hms.cordova.exceptions;
 
-    int ERR_UNKNOWN = 500;
-    int ERR_HUAWEI_AUTH = 503;
+import com.huawei.hms.cordova.helpers.HMSCordovaException;
+
+public class TimeOutException extends Exception implements HMSCordovaException {
+    @Override
+    public String getMessage() {
+        return "Timeout";
+    }
+
+    @Override
+    public int getErrorCode() {
+        return 502;
+    }
 }

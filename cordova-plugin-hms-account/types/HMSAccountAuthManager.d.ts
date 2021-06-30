@@ -1,4 +1,3 @@
-"use strict";
 /*
     Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -14,15 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = void 0;
-const utils_1 = require("./utils");
-function enableLogger() {
-    return utils_1.asyncExec('HMSLoggerManager', 'enableLogger', []);
-}
-exports.enableLogger = enableLogger;
-function disableLogger() {
-    return utils_1.asyncExec('HMSLoggerManager', 'disableLogger', []);
-}
-exports.disableLogger = disableLogger;
-//# sourceMappingURL=HMSLoggerManager.js.map
+
+import { AuthAccount, ContainScopesResult, AuthBuilder, AuthScopeList } from './HMSCommonTypes';
+export declare function getAuthResult(): Promise<AuthAccount>;
+export declare function getAuthResultWithScope(authScopeList: AuthScopeList[]): Promise<AuthAccount>;
+export declare function containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult>;
+export declare function addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void>;

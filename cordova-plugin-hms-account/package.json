@@ -1,9 +1,9 @@
 {
     "name": "@hmscore/cordova-plugin-hms-account",
     "description": "Huawei Account Cordova Plugin",
-    "version": "5.0.3-303",
-    "main": "./www/index.js",
-    "types": "types/index.d.ts",
+    "version": "5.2.0-300",
+    "main": "./www/HMSAccount.js",
+    "types": "types/HMSAccount.d.ts",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin/tree/master/cordova-plugin-hms-account",

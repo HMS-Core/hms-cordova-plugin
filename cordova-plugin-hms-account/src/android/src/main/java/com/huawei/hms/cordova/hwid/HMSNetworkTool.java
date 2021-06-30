@@ -14,10 +14,11 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account;
+package com.huawei.hms.cordova.hwid;
 
 import android.util.Log;
 
+import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
 import com.huawei.hms.support.hwid.tools.NetworkTool;
 
 import org.apache.cordova.CallbackContext;

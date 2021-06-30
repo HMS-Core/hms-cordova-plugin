@@ -18,11 +18,11 @@ import { asyncExec } from './utils'
 import { Cookie, DomainInfo } from './HMSCommonTypes';
 
 
-export function buildNetworkURL(domainHttps: DomainInfo): Promise<String> {
+export function buildNetworkURL(domainHttps: DomainInfo): Promise<string> {
   return asyncExec('HMSNetworkTool', 'buildNetworkURL', [domainHttps]);
 }
 
-export function buildNetworkCookie(cookie: Cookie): Promise<String> {
+export function buildNetworkCookie(cookie: Cookie): Promise<string> {
   return asyncExec('HMSNetworkTool', 'buildNetworkCookie', [cookie]);
 }
 

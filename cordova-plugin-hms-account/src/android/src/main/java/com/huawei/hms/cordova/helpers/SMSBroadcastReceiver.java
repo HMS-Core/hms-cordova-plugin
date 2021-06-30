@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account.helpers;
+package com.huawei.hms.cordova.helpers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,9 +23,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.huawei.hms.common.api.CommonStatusCodes;
-import com.huawei.hms.cordova.account.exceptions.TimeOutException;
-import com.huawei.hms.cordova.account.logger.HMSLogger;
-import com.huawei.hms.cordova.account.utils.ExceptionUtils;
+import com.huawei.hms.cordova.exceptions.TimeOutException;
+import com.huawei.hms.cordova.logger.HMSLogger;
+import com.huawei.hms.cordova.utils.ExceptionUtils;
 import com.huawei.hms.support.api.client.Status;
 import com.huawei.hms.support.sms.common.ReadSmsConstant;
 
@@ -39,11 +39,13 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
     public CallbackContext cb;
     private HMSLogger logger;
     private ExceptionUtils exceptions;
+    private String functionName;
 
-    public SMSBroadcastReceiver(HMSLogger logger, CallbackContext callbackContext) {
+    public SMSBroadcastReceiver(HMSLogger logger, String functionName, CallbackContext callbackContext) {
         cb = callbackContext;
         this.logger = logger;
         exceptions = new ExceptionUtils(logger);
+        this.functionName=functionName;
     }
 
     @Override
@@ -53,12 +55,12 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
             Status status = extras.getParcelable(ReadSmsConstant.EXTRA_STATUS);
             if (Objects.requireNonNull(status).getStatusCode() == CommonStatusCodes.TIMEOUT) {
                 Log.i(TAG, exceptions.getErrorMessage(new TimeOutException()).toString());
-                cb.error(exceptions.logAndGetErrorJSON("smsVerificationCode", new TimeOutException(), "periodic"));
+                cb.error(exceptions.logAndGetErrorJSON(functionName, new TimeOutException(), "periodic"));
             } else if (Objects.requireNonNull(status).getStatusCode() == CommonStatusCodes.SUCCESS) {
                 if (extras.containsKey(ReadSmsConstant.EXTRA_SMS_MESSAGE)) {
                     String message = extras.getString(ReadSmsConstant.EXTRA_SMS_MESSAGE);
                     cb.success(message);
-                    logger.sendPeriodicEvent("smsVerificationCode");
+                    logger.sendPeriodicEvent(functionName);
                 }
             }
         }

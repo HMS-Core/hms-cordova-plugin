@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account;
+package com.huawei.hms.cordova.hwid;
 
 import android.content.Context;
 import android.content.IntentFilter;
@@ -24,13 +24,15 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.huawei.hmf.tasks.Task;
-import com.huawei.hms.cordova.account.exceptions.NullMessageDigestException;
-import com.huawei.hms.cordova.account.helpers.SMSBroadcastReceiver;
+import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
+import com.huawei.hms.cordova.exceptions.NullMessageDigestException;
+import com.huawei.hms.cordova.helpers.SMSBroadcastReceiver;
 import com.huawei.hms.support.sms.ReadSmsManager;
 import com.huawei.hms.support.sms.common.ReadSmsConstant;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -42,13 +44,17 @@ public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
     private static SMSBroadcastReceiver smsBroadcastReceiver;
 
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("smsVerificationCode".equals(action)) {
             logger.startMethodExecutionTimer(action);
             smsVerificationCode(callbackContext);
             return true;
         } else if ("obtainHashCode".equals(action)) {
             obtainHashCode(callbackContext);
+            return true;
+        } else if ("startConsent".equals(action)) {
+            String phoneNumber = args.getString(0);
+            startConsent(phoneNumber, callbackContext);
             return true;
         }
         return false;
@@ -57,26 +63,8 @@ public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
 
     private void smsVerificationCode(CallbackContext callbackContext) {
         Log.i(TAG, "smsVerificationCode start");
-
         Task<Void> smsVerificationCodeTask = ReadSmsManager.start(cordova.getContext());
-        smsVerificationCodeTask.addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (smsBroadcastReceiver != null) {
-                    cordova.getContext().unregisterReceiver(smsBroadcastReceiver);
-                }
-                smsBroadcastReceiver = new SMSBroadcastReceiver(logger, callbackContext);
-
-                Log.i(TAG, "smsVerificationCode onSuccess");
-
-                IntentFilter intentFilter = new IntentFilter(ReadSmsConstant.READ_SMS_BROADCAST_ACTION);
-
-                cordova.getContext().registerReceiver(smsBroadcastReceiver, intentFilter);
-            }
-        });
-        smsVerificationCodeTask.addOnFailureListener(e -> {
-            Log.i(TAG, "smsVerificationCode onFailure : " + exceptions.getErrorMessage(e).toString());
-        });
-
+        startRegisterReceiver(smsVerificationCodeTask, "smsVerificationCode", callbackContext);
     }
 
     private void obtainHashCode(CallbackContext callbackContext) {
@@ -92,6 +80,31 @@ public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
             callbackContext.error(exceptions.getErrorMessage(e));
         }
         Log.i(TAG, "obtainHashCode end");
+    }
+
+    private void startConsent(String phoneNumber, CallbackContext callbackContext) {
+        Log.i(TAG, "startConsent start");
+        Task<Void> consentTask = ReadSmsManager.startConsent(cordova.getActivity(), phoneNumber);
+        startRegisterReceiver(consentTask, "startConsent", callbackContext);
+    }
+
+    private void startRegisterReceiver(Task<Void> taskRegisterReceiver, String functionName, CallbackContext callbackContext) {
+        taskRegisterReceiver.addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (smsBroadcastReceiver != null) {
+                    cordova.getContext().unregisterReceiver(smsBroadcastReceiver);
+                }
+                smsBroadcastReceiver = new SMSBroadcastReceiver(logger, functionName, callbackContext);
+
+                Log.i(TAG, functionName + " onSuccess");
+
+                IntentFilter intentFilter = new IntentFilter(ReadSmsConstant.READ_SMS_BROADCAST_ACTION);
+                cordova.getContext().registerReceiver(smsBroadcastReceiver, intentFilter);
+            }
+        }).addOnFailureListener(e -> {
+            Log.i(TAG, functionName + " onFailure : " + exceptions.getErrorMessage(e).toString());
+        });
+
     }
 
     private MessageDigest getMessageDigest() {
@@ -137,6 +150,5 @@ public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
         }
 
     }
-
 
 }

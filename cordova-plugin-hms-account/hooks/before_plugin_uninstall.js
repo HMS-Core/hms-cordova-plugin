@@ -13,13 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 "use strict";
 
 var FSUtils = require("./FSUtils");
 
 var ROOT_GRADLE_FILE = "platforms/android/build.gradle";
-var COMMENT = "//This line is added by cordova-plugin-hms-push plugin";
+var COMMENT = "//This line is added by cordova-plugin-hms-account plugin";
 var NEW_LINE = "\n";
 
 module.exports = function (context) {
@@ -31,6 +30,7 @@ module.exports = function (context) {
 
     var rootGradleContent = FSUtils.readFile(ROOT_GRADLE_FILE, "UTF-8");
     var lines = rootGradleContent.split(NEW_LINE);
+
     var linesAfterRemove = removeLinesAddedByPlugin(lines);
 
     FSUtils.writeFile(ROOT_GRADLE_FILE, linesAfterRemove.join(NEW_LINE));

@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-package com.huawei.hms.cordova.account.logger;
+package com.huawei.hms.cordova.logger;
 
 import static android.os.Build.DEVICE;
 
@@ -38,7 +38,7 @@ public final class HMSLogger {
 
     private static final String KIT = "Account";
     private static final String PLATFORM = "Cordova";
-    private static final String VERSION = "5.0.3.303";
+    private static final String VERSION = "5.2.0.300";
 
     private static final String SERVICE = "Cross-Platform";
 
