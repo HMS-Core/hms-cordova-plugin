@@ -59,7 +59,6 @@ public final class JSONUtils {
     public static JSONObject hmsScansToJSON(final HmsScan hmsScan) throws JSONException {
         final JSONObject defaultScanResult = new JSONObject();
         defaultScanResult.putOpt("originalValue", hmsScan.getOriginalValue());
-        defaultScanResult.putOpt("originalValueByte", new JSONArray(hmsScan.getOriginValueByte()));
         defaultScanResult.putOpt("zoomValue", hmsScan.getZoomValue());
         defaultScanResult.putOpt("showResult", hmsScan.getShowResult());
         defaultScanResult.putOpt("scanTypeForm", hmsScan.getScanTypeForm());

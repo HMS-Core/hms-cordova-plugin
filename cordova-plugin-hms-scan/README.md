@@ -11,6 +11,7 @@
 
 ----
 
+
 This plugin enables communication between Huawei Scan SDK and Cordova platform. It exposes all functionality provided by Huawei Scan SDK.
 
 [> Learn More](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001057398487?ha_source=hms1)
