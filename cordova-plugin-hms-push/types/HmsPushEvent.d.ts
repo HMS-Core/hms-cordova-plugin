@@ -24,15 +24,13 @@ export declare function onLocalNotificationAction(callback: () => void): void;
 export declare function onNotificationOpenedApp(callback: () => void): void;
 export declare function onMultiSenderTokenReceivedEvent(callback: () => void): void;
 export declare function onMultiSenderTokenErrorEvent(callback: () => void): void;
-declare type Handler = (data: any) => void;
-declare global {
-    interface Window {
-        hmsEventHandlers: {
-            [key: string]: Handler[];
-        };
-        hmsEventHandler: (eventName: string, data: any) => void;
-        registerHMSEvent: (eventName: string, handler: Handler) => void;
-        unregisterHMSEvent: (eventName: string, handler?: Handler) => void;
-    }
-}
-export {};
+export declare const REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED";
+export declare const TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT";
+export declare const ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT";
+export declare const NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT";
+export declare const LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT";
+export declare const ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT";
+export declare const ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR";
+export declare const ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED";
+export declare const ON_MULTI_SENDER_TOKEN_ERROR_EVENT = "ON_MULTI_SENDER_TOKEN_ERROR_EVENT";
+export declare const ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT = "ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT";

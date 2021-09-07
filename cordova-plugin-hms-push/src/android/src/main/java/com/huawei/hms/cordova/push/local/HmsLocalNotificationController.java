@@ -342,8 +342,15 @@ public class HmsLocalNotificationController {
 
             int notificationID = Integer.parseInt(BundleUtils.get(bundle, NotificationConstants.ID));
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
+            PendingIntent pendingIntent;
+
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
+                    PendingIntent.FLAG_IMMUTABLE);
+            } else {
+                pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
+            }
 
             NotificationManager notificationManager = notificationManager();
 
@@ -410,8 +417,15 @@ public class HmsLocalNotificationController {
                     actionIntent.putExtra(NotificationConstants.NOTIFICATION, bundle);
                     actionIntent.setPackage(context.getPackageName());
 
-                    PendingIntent pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
+                    PendingIntent pendingActionIntent;
+
+                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+                        pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
+                            PendingIntent.FLAG_IMMUTABLE);
+                    } else {
+                        pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
                             PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         notification.addAction(new NotificationCompat.Action.Builder(icon, action, pendingActionIntent).build());
@@ -518,7 +532,12 @@ public class HmsLocalNotificationController {
             intent.putExtra(Core.ScheduledPublisher.NOTIFICATION_ID, id);
             intent.putExtras(bundle);
 
-            return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_IMMUTABLE);
+            } else {
+                return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
+            
         } catch (Exception e) {
             Log.e(TAG, ResultCode.ERROR, e);
         }

@@ -203,7 +203,7 @@ export class HmsPush extends IonicNativePlugin {
     }
 
     @Cordova({ otherPromise: true })
-    setItem(key:string,value:object): Promise<void> {
+    setItem(key:string,value:string): Promise<void> {
         return;
     }
 
@@ -424,6 +424,20 @@ export class HmsPushProfile extends IonicNativePlugin {
       return;
   }
 }
+
+@Plugin({
+    pluginName: "FcmPushProxy",
+    plugin: "@hmscore/cordova-plugin-hms-push",
+    pluginRef: "FcmPushProxy",
+    repo: "https://github.com/HMS-Core/hms-cordova-plugin",
+    platforms: ["Android"],
+  })
+  @Injectable()
+  export class FcmPushProxy extends IonicNativePlugin {
+    init(): Promise<boolean>{
+        return;
+    }
+  }
 
 export enum HmsPushResultCode {
     // Success
@@ -666,6 +680,8 @@ class CordovaRemoteMessage {
     static TO = "to";
     static FROM = "from";
     static TOKEN = "token";
+    static ANALYTICINFO = "analyticInfo";
+    static ANALYTICINFOMAP = "analyticInfoMap";
 
     static NOTIFICATION = {
         TITLE: "title",
@@ -796,6 +812,14 @@ class CordovaRemoteMessage {
      */
     getToken() {
         return this.remoteMsg[CordovaRemoteMessage.TOKEN];
+    }
+
+    getAnalyticInfo() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFO];
+    }
+
+    getAnalyticInfoMap() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFOMAP];
     }
 
     /*

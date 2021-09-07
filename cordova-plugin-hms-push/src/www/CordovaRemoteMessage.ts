@@ -33,6 +33,8 @@ export class CordovaRemoteMessage {
     static TO = "to";
     static FROM = "from";
     static TOKEN = "token";
+    static ANALYTICINFO = "analyticInfo";
+    static ANALYTICINFOMAP = "analyticInfoMap";
 
     static NOTIFICATION = {
         TITLE: "title",
@@ -163,6 +165,14 @@ export class CordovaRemoteMessage {
      */
     getToken() {
         return this.remoteMsg[CordovaRemoteMessage.TOKEN];
+    }
+
+    getAnalyticInfo() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFO];
+    }
+
+    getAnalyticInfoMap() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFOMAP];
     }
 
     /*

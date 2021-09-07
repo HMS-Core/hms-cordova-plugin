@@ -60,5 +60,7 @@ public interface RemoteMessageAttributes {
     String IS_DEFAULT_LIGHT = "isDefaultLight";
     String IS_DEFAULT_SOUND = "isDefaultSound";
     String IS_DEFAULT_VIBRATE = "isDefaultVibrate";
+    String ANALYTIC_INFO = "analyticInfo";
+    String ANALYTIC_INFO_MAP = "analyticInfoMap";
 
 }

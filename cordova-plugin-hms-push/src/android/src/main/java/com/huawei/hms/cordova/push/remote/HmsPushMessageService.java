@@ -43,13 +43,18 @@ public class HmsPushMessageService extends HmsMessageService {
     private final static String TAG = HmsPushMessageService.class.getSimpleName();
     private WebView webView;
 
+    private static Boolean isApplicationRunning = false;
+
+    public static void setApplicationRunningStatus(boolean isRunning){
+        isApplicationRunning = isRunning;
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage message) {
         Log.w(TAG, "** onMessageReceived **");
 
         try {
-            boolean isApplicationInForeground = ApplicationUtils.isApplicationInForeground(getApplicationContext());
-            if (isApplicationInForeground) {
+            if (isApplicationRunning) {
                 HmsPushMessagePublisher.sendMessageReceivedEvent(message);
             } else {
                 if(getApplication() == null)

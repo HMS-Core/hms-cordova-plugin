@@ -102,6 +102,12 @@ class CordovaRemoteMessage {
     getToken() {
         return this.remoteMsg[CordovaRemoteMessage.TOKEN];
     }
+    getAnalyticInfo() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFO];
+    }
+    getAnalyticInfoMap() {
+        return this.remoteMsg[CordovaRemoteMessage.ANALYTICINFOMAP];
+    }
     /*
      * Notification:getTitle() Obtains the title of a message
      */
@@ -288,6 +294,8 @@ CordovaRemoteMessage.SENTTIME = "sentTime";
 CordovaRemoteMessage.TO = "to";
 CordovaRemoteMessage.FROM = "from";
 CordovaRemoteMessage.TOKEN = "token";
+CordovaRemoteMessage.ANALYTICINFO = "analyticInfo";
+CordovaRemoteMessage.ANALYTICINFOMAP = "analyticInfoMap";
 CordovaRemoteMessage.NOTIFICATION = {
     TITLE: "title",
     TITLELOCALIZATIONKEY: "titleLocalizationKey",

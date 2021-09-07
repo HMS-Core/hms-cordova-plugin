@@ -46,7 +46,6 @@ public class HmsLocalNotification extends CordovaBaseModule {
 
     public HmsLocalNotification(Context context) {
         hmsLocalNotificationController = new HmsLocalNotificationController(context);
-        hmsLocalNotificationController.createDefaultChannel();
     }
 
     @CordovaMethod

@@ -68,8 +68,9 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
     ```bash
     npm install @ionic-native/core @hmscore/ionic-native-hms-push
     ```
+6. Copy **`agconnect-services.json`** file to **`<project_root>/android/app`** directory.
 
-6. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
+7. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
 - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
@@ -94,7 +95,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
   }
   ```
 
-7. Run the application.
+8. Run the application.
 
    ```bash
    ionic cordova run android --device
@@ -141,12 +142,13 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
     ```bash
     npx cap add android
     ```
+7. Copy **`agconnect-services.json`** file to **`<project_root>/android/app`** directory.
 
-7. Copy **`keystore(.jks)`** file to **`<project_root>/android/app`** directory.
+8. Copy **`keystore(.jks)`** file to **`<project_root>/android/app`** directory.
 
 - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2) Codelab tutorial page for generating keystore file.
 
-8. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
+9. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
 
 - Add `signingConfigs` entry to **android** according to your keystore information.
 - Enable `signingConfig` configuration to **debug** and **release** flavors.
@@ -185,7 +187,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
   apply plugin: 'com.huawei.agconnect' // Apply com.huawei.agconnect plugin. This line must be added to the end of the file.
   ```
 
-9. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
+10. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
 
     ```groovy
     buildscript {
@@ -217,7 +219,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
     }
     ```
 
-10. Open the project in Android Studio and run it.
+11. Open the project in Android Studio and run it.
 
     ```bash
     npx cap open android

@@ -22,8 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import static com.huawei.hms.cordova.push.utils.ArrayUtil.fromArray;
@@ -37,6 +40,8 @@ public class MapUtils {
             Object value = bundle.get(key);
             if (value == null) {
                 map.put(key, null);
+            } else if (value instanceof Collection){
+                map.put(key,new JSONArray((Collection) value));
             } else if (value.getClass().isArray()) {
                 map.put(key, fromArray(value));
             } else if (value instanceof String) {

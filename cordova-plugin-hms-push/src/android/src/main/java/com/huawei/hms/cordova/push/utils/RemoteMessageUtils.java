@@ -47,6 +47,8 @@ public class RemoteMessageUtils {
         params.put(RemoteMessageAttributes.RECEIPT_MODE, message.getReceiptMode() + "");
         params.put(RemoteMessageAttributes.SEND_MODE, message.getSendMode() + "");
         params.put(RemoteMessageAttributes.CONTENTS, message.describeContents() + "");
+        params.put(RemoteMessageAttributes.ANALYTIC_INFO,message.getAnalyticInfo() + "");
+        params.put(RemoteMessageAttributes.ANALYTIC_INFO_MAP,message.getAnalyticInfoMap() + "");
 
 
         if (message.getNotification() != null) {

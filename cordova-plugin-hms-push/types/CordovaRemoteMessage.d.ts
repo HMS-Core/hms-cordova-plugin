@@ -31,6 +31,8 @@ export declare class CordovaRemoteMessage {
     static TO: string;
     static FROM: string;
     static TOKEN: string;
+    static ANALYTICINFO: string;
+    static ANALYTICINFOMAP: string;
     static NOTIFICATION: {
         TITLE: string;
         TITLELOCALIZATIONKEY: string;
@@ -76,6 +78,8 @@ export declare class CordovaRemoteMessage {
     getTo(): any;
     getFrom(): any;
     getToken(): any;
+    getAnalyticInfo(): any;
+    getAnalyticInfoMap(): any;
     getNotificationTitle(): any;
     getTitleLocalizationKey(): any;
     getTitleLocalizationArgs(): any;

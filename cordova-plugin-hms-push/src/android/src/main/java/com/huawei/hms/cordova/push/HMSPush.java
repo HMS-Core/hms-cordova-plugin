@@ -24,7 +24,9 @@ import com.huawei.hms.cordova.push.basef.handler.CordovaController;
 import com.huawei.hms.cordova.push.constants.Core;
 import com.huawei.hms.cordova.push.constants.NotificationConstants;
 import com.huawei.hms.cordova.push.local.HmsLocalNotification;
+import com.huawei.hms.cordova.push.remote.FcmProxy;
 import com.huawei.hms.cordova.push.remote.HmsPushInstanceId;
+import com.huawei.hms.cordova.push.remote.HmsPushMessageService;
 import com.huawei.hms.cordova.push.remote.HmsPushMessaging;
 import com.huawei.hms.cordova.push.remote.HmsPushProfile;
 import com.huawei.hms.cordova.push.utils.CordovaUtils;
@@ -67,12 +69,13 @@ public class HMSPush extends CordovaPlugin {
     }
 
     private static final String KIT = "Push";
-    private static final String VERSION = "5.1.1.301";
+    private static final String VERSION = "5.3.0.304";
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
+        HmsPushMessageService.setApplicationRunningStatus(true);
         if(checkFlag(cordova.getActivity().getIntent()))
             sendOpenedNotificationData(cordova.getActivity().getIntent());
         setCordova(cordova);
@@ -82,7 +85,8 @@ public class HMSPush extends CordovaPlugin {
             Arrays.asList(new HmsPushMessaging(webView.getContext()),
                 new HmsPushInstanceId(webView.getContext()),
                 new HmsLocalNotification(webView.getContext()),
-                new HmsPushProfile(webView.getContext())));
+                new HmsPushProfile(webView.getContext()),
+                new FcmProxy(webView.getContext())));
     }
 
     @Override
