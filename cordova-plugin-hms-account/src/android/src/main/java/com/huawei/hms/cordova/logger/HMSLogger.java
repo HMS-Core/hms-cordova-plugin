@@ -38,7 +38,7 @@ public final class HMSLogger {
 
     private static final String KIT = "Account";
     private static final String PLATFORM = "Cordova";
-    private static final String VERSION = "5.2.0.300";
+    private static final String VERSION = "5.3.0.305";
 
     private static final String SERVICE = "Cross-Platform";
 

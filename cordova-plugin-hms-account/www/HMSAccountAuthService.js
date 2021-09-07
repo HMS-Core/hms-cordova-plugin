@@ -15,7 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getChannel = exports.silentSignIn = exports.cancelAuthorization = exports.signOut = exports.signIn = void 0;
+exports.getIndependentSignIn = exports.getChannel = exports.silentSignIn = exports.cancelAuthorization = exports.signOut = exports.signIn = void 0;
 const utils_1 = require("./utils");
 function signIn(signInData) {
     return utils_1.asyncExec('HMSAccountAuthService', 'signIn', [signInData ? signInData : []]);
@@ -37,4 +37,8 @@ function getChannel() {
     return utils_1.asyncExec('HMSAccountAuthService', 'getChannel', []);
 }
 exports.getChannel = getChannel;
+function getIndependentSignIn(independentSignInParams) {
+    return utils_1.asyncExec('HMSAccountAuthService', 'getIndependentSignIn', [independentSignInParams]);
+}
+exports.getIndependentSignIn = getIndependentSignIn;
 //# sourceMappingURL=HMSAccountAuthService.js.map

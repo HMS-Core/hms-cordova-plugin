@@ -23,7 +23,6 @@ import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.PackageName;
-import com.huawei.hms.cordova.account.HMSAccountAuthManager;
 import com.huawei.hms.cordova.exceptions.NullServiceException;
 import com.huawei.hms.cordova.helpers.Constants;
 import com.huawei.hms.cordova.logger.HMSLogger;
@@ -54,6 +53,7 @@ public class HMSAccountBase {
 
     private CallbackContext mSignInCallback;
     private AuthService mService;
+    private AccountAuthService mAccountService;
 
     private PackageName packageName;
     private HMSLogger logger;
@@ -104,7 +104,12 @@ public class HMSAccountBase {
             String authParams = args.getString(0);
             silentSignIn(authParams, callbackContext);
             return true;
-        } else if ("enableLogger".equals(action)) {
+        }else if ("getIndependentSignIn".equals(action)) {
+            String accessToken = args.getString(0);
+            getIndependentSignIn(accessToken, callbackContext);
+            return true;
+        }
+        else if ("enableLogger".equals(action)) {
             enableLogger(callbackContext);
             return true;
         } else if ("disableLogger".equals(action)) {
@@ -115,6 +120,20 @@ public class HMSAccountBase {
             return true;
         }
         return false;
+    }
+
+    private void getIndependentSignIn(String accessToken ,CallbackContext callbackContext) throws JSONException {
+        Log.i(TAG, "getIndependentSignIn start");
+        AccountAuthParams accountAuthParams = new AccountAuthParamsHelper().setProfile().createParams();;
+
+        if(accessToken.isEmpty())
+            callbackContext.error("Missing accessToken parameter.");
+
+        mAccountService = AccountAuthManager.getService(cordova.getContext(),accountAuthParams);
+        cordova.setActivityResultCallback(this.plugin);
+        cordova.getActivity().startActivityForResult(mAccountService.getIndependentSignInIntent(accessToken), Constants.SIGN_IN_REQUEST_ID);
+        mSignInCallback = callbackContext;
+        Log.i(TAG, "getIndependentSignIn end");
     }
 
     private void signIn(JSONObject signInData, CallbackContext callbackContext) throws JSONException {
@@ -178,7 +197,7 @@ public class HMSAccountBase {
                 Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(intent);
                 authAccountTask.addOnSuccessListener(authAccount -> {
                     try {
-                        JSONObject signinObject = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount);
+                        JSONObject signinObject = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount,cordova.getContext());
                         handler.onSuccess(signinObject);
                     } catch (JSONException e) {
                         handleSingInFailure.onFailure(e);
@@ -188,7 +207,7 @@ public class HMSAccountBase {
                 Task<AuthHuaweiId> authHuaweiIdTask = HuaweiIdAuthManager.parseAuthResultFromIntent(intent);
                 authHuaweiIdTask.addOnSuccessListener(authHuaweiId -> {
                     try {
-                        JSONObject signinObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
+                        JSONObject signinObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId,cordova.getContext());
                         handler.onSuccess(signinObject);
                     } catch (JSONException e) {
                         handleSingInFailure.onFailure(e);
@@ -269,7 +288,7 @@ public class HMSAccountBase {
 
             taskSilentSignIn.addOnSuccessListener(authAccount -> {
                 try {
-                    JSONObject jsonObjForSilentlySignIn = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount);
+                    JSONObject jsonObjForSilentlySignIn = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount,cordova.getContext());
                     handleSilentlySignInSuccess.onSuccess(jsonObjForSilentlySignIn);
                 } catch (JSONException e) {
                     Log.i(TAG, exceptions.getErrorMessage(e).toString());
@@ -298,7 +317,7 @@ public class HMSAccountBase {
 
             taskSilentSignIn.addOnSuccessListener(authHuaweiId -> {
                 try {
-                    JSONObject jsonObjForSilentlySignIn = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
+                    JSONObject jsonObjForSilentlySignIn = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId, cordova.getContext());
                     handleSilentlySignInSuccess.onSuccess(jsonObjForSilentlySignIn);
                 } catch (JSONException e) {
                     Log.i(TAG, exceptions.getErrorMessage(e).toString());

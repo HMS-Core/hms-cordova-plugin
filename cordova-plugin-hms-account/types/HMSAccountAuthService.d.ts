@@ -14,9 +14,10 @@
     limitations under the License.
 */
 
-import { AccountIcon, AuthAccount, AuthParams, SignInData } from './HMSCommonTypes';
+import { AccountIcon, AuthAccount, AuthParams, SignInData, IndependentSignInParams } from './HMSCommonTypes';
 export declare function signIn(signInData: SignInData): Promise<AuthAccount>;
 export declare function signOut(): Promise<void>;
 export declare function cancelAuthorization(): Promise<void>;
 export declare function silentSignIn(authParams: AuthParams): Promise<AuthAccount>;
 export declare function getChannel(): Promise<AccountIcon>;
+export declare function getIndependentSignIn(independentSignInParams: IndependentSignInParams): Promise<AuthAccount>;

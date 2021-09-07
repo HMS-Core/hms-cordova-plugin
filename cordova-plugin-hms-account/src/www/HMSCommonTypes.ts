@@ -42,7 +42,8 @@ export enum AuthRequestOption {
   SCOPE_AUTHORIZATION_CODE = "authorizationCode",
   SCOPE_ACCESS_TOKEN = "accessToken",
   SCOPE_DIALOG_AUTH = "dialogAuth",
-  SCOPE_SHIPPING_ADDRESS = "shippingAddress"
+  SCOPE_SHIPPING_ADDRESS = "shippingAddress",
+  SCOPE_CARRIER_ID = "carrierId"
 }
 
 export enum AuthParams {
@@ -75,6 +76,7 @@ export interface AbstractAuthAccount {
   expressionTimeSecs: number;
   givenName: string;
   familyName: string;
+  carrierId:number;
   ageRange?: string;
   homeZone: number;
   authorizedScopes: string[];

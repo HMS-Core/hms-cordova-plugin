@@ -17,6 +17,7 @@
 package com.huawei.hms.cordova.utils;
 
 import android.accounts.Account;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
@@ -48,11 +49,13 @@ import java.util.Set;
 
 public class HMSAccountUtils {
 
-    public static JSONObject fromAuthHuaweiIdToJsonObject(AuthHuaweiId authHuaweiId) throws JSONException {
+
+
+    public static JSONObject fromAuthHuaweiIdToJsonObject(AuthHuaweiId authHuaweiId, Context context) throws JSONException {
         JSONObject authHuaweiJSONObject = fromAbsractAuthAccountToJSONObject(authHuaweiId);
         authHuaweiJSONObject.put("ageRangeFlag", authHuaweiId.getAgeRangeFlag());
-        if (authHuaweiId.getHuaweiAccount() != null) {
-            authHuaweiJSONObject.put("huaweiAccount", fromAccountToJSONObject(authHuaweiId.getHuaweiAccount()));
+        if (authHuaweiId.getHuaweiAccount(context) != null) {
+            authHuaweiJSONObject.put("huaweiAccount", fromAccountToJSONObject(authHuaweiId.getHuaweiAccount(context)));
         } else {
             Log.i("HMSAccountUtils", "The account is null");
         }
@@ -61,10 +64,10 @@ public class HMSAccountUtils {
 
     }
 
-    public static JSONObject fromAuthAccountToJsonObject(AuthAccount authAccount) throws JSONException {
+    public static JSONObject fromAuthAccountToJsonObject(AuthAccount authAccount, Context context) throws JSONException {
         JSONObject authAccountJSONObject = fromAbsractAuthAccountToJSONObject(authAccount);
-        if (authAccount.getAccount() != null) {
-            authAccountJSONObject.put("account", fromAccountToJSONObject(authAccount.getAccount()));
+        if (authAccount.getAccount(context) != null) {
+            authAccountJSONObject.put("account", fromAccountToJSONObject(authAccount.getAccount(context)));
         } else {
             Log.i("HMSAccountUtils", "The account is null");
         }
@@ -90,6 +93,7 @@ public class HMSAccountUtils {
         authAccountJSONObject.put("expirationTimeSecs", authAccount.getExpirationTimeSecs());
         authAccountJSONObject.put("givenName", authAccount.getGivenName());
         authAccountJSONObject.put("familyName", authAccount.getFamilyName());
+        authAccountJSONObject.put("carrierId", authAccount.getCarrierId());
         authAccountJSONObject.put("ageRange", authAccount.getAgeRange());
         authAccountJSONObject.put("homeZone", authAccount.getHomeZone());
         authAccountJSONObject.put("authorizedScopes", fromScopesToJsonArray(authAccount.getAuthorizedScopes()));
@@ -236,6 +240,10 @@ public class HMSAccountUtils {
             accountBuilder.setAuthorizationCode();
         }
 
+        if (accountListData.contains("carrierId")) {
+            accountBuilder.setCarrierId();
+        }
+
         if (accountListData.contains("accessToken")) {
             accountBuilder.setAccessToken();
         }
@@ -294,10 +302,11 @@ public class HMSAccountUtils {
         String photoUriString = auth.getString("photoUriString");
         String accessToken = auth.getString("accessToken");
         String serviceCountryCode = auth.getString("serviceCountryCode");
-        Integer status = auth.getInt("status");
-        Integer gender = auth.getInt("gender");
-
+        int status = auth.getInt("status");
+        int gender = auth.getInt("gender");
+        int carrierId = auth.getInt("carrierId");
         String serverAuthCode = auth.getString("serverAuthCode");
+
         String unionId = auth.getString("unionId");
         String countryCode = auth.getString("countryCode");
         JSONArray jsonScope = auth.getJSONArray("grantedScopes");
@@ -313,7 +322,7 @@ public class HMSAccountUtils {
         if (authType.equals(PackageName.HWID)) {
             buildAuth = (T) AuthHuaweiId.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode);
         } else if (authType.equals(PackageName.ACCOUNT)) {
-            buildAuth = (T) AuthAccount.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode);
+            buildAuth = (T) AuthAccount.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode, carrierId);
         }
 
         return buildAuth;
@@ -336,7 +345,7 @@ public class HMSAccountUtils {
         return result;
     }
 
-    public static <T extends AbstractAuthAccount> void getCallbackSuccess(T authResult, HMSLogger logger, String functionName, CallbackContext callbackContext) throws JSONException {
+    public static <T extends AbstractAuthAccount> void getCallbackSuccess(T authResult, HMSLogger logger, String functionName, CallbackContext callbackContext,Context context) throws JSONException {
         if (authResult == null) {
             callbackContext.success();
             logger.sendSingleEvent(functionName);
@@ -344,9 +353,9 @@ public class HMSAccountUtils {
             JSONObject authResultJson = null;
 
             if (authResult instanceof AuthHuaweiId) {
-                authResultJson = HMSAccountUtils.fromAuthHuaweiIdToJsonObject((AuthHuaweiId) authResult);
+                authResultJson = HMSAccountUtils.fromAuthHuaweiIdToJsonObject((AuthHuaweiId) authResult,context);
             } else if (authResult instanceof AuthAccount) {
-                authResultJson = HMSAccountUtils.fromAuthAccountToJsonObject((AuthAccount) authResult);
+                authResultJson = HMSAccountUtils.fromAuthAccountToJsonObject((AuthAccount) authResult,context);
             }
 
             callbackContext.success(authResultJson);

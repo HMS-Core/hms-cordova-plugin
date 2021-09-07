@@ -124,7 +124,7 @@ public class HMSAuthManagerBase {
         if (packageName == PackageName.ACCOUNT) {
             try {
                 AuthAccount accountAuthResult = AccountAuthManager.getAuthResultWithScopes(scopeList);
-                getCallbackSuccess(accountAuthResult, logger, "getAuthResultWithScope", callbackContext);
+                getCallbackSuccess(accountAuthResult, logger, "getAuthResultWithScope", callbackContext,cordova.getContext());
             } catch (Exception e) {
                 callbackContext.error(exceptions.logAndGetErrorJSON("getAuthResultWithScope", e, "single"));
             }
@@ -132,7 +132,7 @@ public class HMSAuthManagerBase {
         } else if (packageName == PackageName.HWID) {
             try {
                 AuthHuaweiId huaweiIdAuthResult = HuaweiIdAuthManager.getAuthResultWithScopes(scopeList);
-                getCallbackSuccess(huaweiIdAuthResult, logger, "getAuthResultWithScope", callbackContext);
+                getCallbackSuccess(huaweiIdAuthResult, logger, "getAuthResultWithScope", callbackContext,cordova.getContext());
             } catch (Exception e) {
                 callbackContext.error(exceptions.logAndGetErrorJSON("getAuthResultWithScope", e, "single"));
             }
@@ -144,11 +144,11 @@ public class HMSAuthManagerBase {
         Log.i(TAG, "getAuthResult start");
         if (packageName == PackageName.ACCOUNT) {
             AuthAccount authInfo = AccountAuthManager.getAuthResult();
-            getCallbackSuccess(authInfo, logger, "getAuthResult", callbackContext);
+            getCallbackSuccess(authInfo, logger, "getAuthResult", callbackContext,cordova.getContext());
 
         } else if (packageName == PackageName.HWID) {
             AuthHuaweiId authInfo = HuaweiIdAuthManager.getAuthResult();
-            getCallbackSuccess(authInfo, logger, "getAuthResult", callbackContext);
+            getCallbackSuccess(authInfo, logger, "getAuthResult", callbackContext,cordova.getContext());
         }
 
         Log.i(TAG, "getAuthResult end");

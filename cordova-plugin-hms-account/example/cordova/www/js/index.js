@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
+var accessToken;
 var app = {
 
     initialize: function () {
@@ -22,7 +22,6 @@ var app = {
 
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        //this.receivedEvent('deviceready');
         document.getElementById('btn_sign_in_with_id_token').addEventListener('click', signInWithIdToken);
         document.getElementById('btn_sign_in_with_authorization_code').addEventListener('click', signInAuthorizationCode);
         document.getElementById('btn_sign_out').addEventListener('click', signOut);
@@ -34,6 +33,7 @@ var app = {
         document.getElementById('btn_account_cancel_authorization').addEventListener('click', accountCancelAuthorization);
         document.getElementById('btn_account_silent_sign_in').addEventListener('click', accountSilentSignIn);
         document.getElementById('btn_get_channel').addEventListener('click', getChannel);
+        document.getElementById('btn_independent_sign_in').addEventListener('click', getIndependentSignIn);
         document.getElementById('btn_account_contain_scopes').addEventListener('click', containScopes);
         document.getElementById('btn_auth_result').addEventListener('click', getAuthResult);
         document.getElementById('btn_auth_result_with_scopes').addEventListener('click', getAuthResultWithScopes);
@@ -62,12 +62,13 @@ var app = {
 
 async function accountSignInWithIdToken() {
     const signInParameters = {
-        authRequestOption: [HMSCommonTypes.AuthRequestOption.SCOPE_ID_TOKEN, HMSCommonTypes.AuthRequestOption.SCOPE_ACCESS_TOKEN],
+        authRequestOption: [HMSCommonTypes.AuthRequestOption.SCOPE_ID_TOKEN, HMSCommonTypes.AuthRequestOption.SCOPE_ACCESS_TOKEN,HMSCommonTypes.AuthRequestOption.SCOPE_CARRIER_ID],
         authParam: HMSCommonTypes.AuthParams.DEFAULT_AUTH_REQUEST_PARAM
     }
 
     try {
         const res = await HMSAccountAuthService.signIn(signInParameters);
+        accessToken = res.accessToken;
         alert(JSON.stringify(res));
     } catch (ex) {
         alert(JSON.stringify(ex));
@@ -115,6 +116,16 @@ async function getChannel() {
         alert('getChannel -> Error : ' + JSON.stringify(ex));
     }
 }
+
+async function getIndependentSignIn() {
+    try {
+        const res = await HMSAccountAuthService.getIndependentSignIn(accessToken);
+        alert("getIndependentSignIn -> success :" + JSON.stringify(res));
+    } catch (ex) {
+        alert("getIndependentSignIn -> Error : " + JSON.stringify(ex));
+    }
+}
+
 
 async function signInWithIdToken() {
     const signInParameters = {

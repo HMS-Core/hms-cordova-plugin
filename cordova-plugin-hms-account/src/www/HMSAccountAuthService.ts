@@ -37,3 +37,7 @@ export function silentSignIn(authParams: AuthParams): Promise<AuthAccount> {
 export function getChannel(): Promise<AccountIcon> {
     return asyncExec('HMSAccountAuthService', 'getChannel', []);
 }
+
+export function getIndependentSignIn( accessToken:string ): Promise<AuthAccount> {
+    return asyncExec('HMSAccountAuthService', 'getIndependentSignIn', [accessToken]);
+}

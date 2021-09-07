@@ -4,7 +4,7 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-hms-account"
-    version="5.2.0-300">
+    version="5.3.0-305">
 
     <name>cordova-plugin-hms-account</name>
     <description>cordova-plugin-hms-account</description>
@@ -62,7 +62,7 @@
 		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
 
         <!-- Android dependencies -->
-        <framework src="com.huawei.hms:hwid:5.2.0.300" />
+        <framework src="com.huawei.hms:hwid:5.3.0.305" />
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
 
         <config-file target="config.xml" parent="/*">
@@ -124,8 +124,8 @@
         <source-file src="src/android/src/main/java/com/huawei/hms/cordova/account/HMSAccountAuthService.java" target-dir="src/com/huawei/hms/cordova/account/" />
         <source-file src="src/android/src/main/java/com/huawei/hms/cordova/account/HMSAccountAuthManager.java" target-dir="src/com/huawei/hms/cordova/account/" />
     
-        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAccountBase.java" target-dir="src/com/src/com/huawei/hms/cordova/base/"/>
-        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAuthManagerBase.java" target-dir="src/com/src/com/huawei/hms/cordova/base/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAccountBase.java" target-dir="src/com/huawei/hms/cordova/base/"/>
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/base/HMSAuthManagerBase.java" target-dir="src/com/huawei/hms/cordova/base/"/>
     </platform>
 
 </plugin>

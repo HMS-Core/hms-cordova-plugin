@@ -45,6 +45,7 @@ var AuthRequestOption;
     AuthRequestOption["SCOPE_ACCESS_TOKEN"] = "accessToken";
     AuthRequestOption["SCOPE_DIALOG_AUTH"] = "dialogAuth";
     AuthRequestOption["SCOPE_SHIPPING_ADDRESS"] = "shippingAddress";
+    AuthRequestOption["SCOPE_CARRIER_ID"] = "carrierId";
 })(AuthRequestOption = exports.AuthRequestOption || (exports.AuthRequestOption = {}));
 var AuthParams;
 (function (AuthParams) {

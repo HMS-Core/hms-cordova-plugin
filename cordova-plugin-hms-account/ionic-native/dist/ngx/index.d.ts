@@ -37,7 +37,8 @@ export declare enum AuthRequestOption {
     SCOPE_AUTHORIZATION_CODE = "authorizationCode",
     SCOPE_ACCESS_TOKEN = "accessToken",
     SCOPE_DIALOG_AUTH = "dialogAuth",
-    SCOPE_SHIPPING_ADDRESS = "shippingAddress"
+    SCOPE_SHIPPING_ADDRESS = "shippingAddress",
+    SCOPE_CARRIER_ID = "carrierId"
 }
 export declare enum AuthParams {
     DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
@@ -59,6 +60,7 @@ export interface AbstractAuthAccount {
     expressionTimeSecs: number;
     givenName: string;
     familyName: string;
+    carrierId: number;
     ageRange?: string;
     homeZone: number;
     authorizedScopes: string[];
@@ -135,6 +137,7 @@ export declare class HMSAccountAuthService extends IonicNativePlugin {
     cancelAuthorization(): Promise<void>;
     silentSignIn(authParams: AuthParams): Promise<AuthAccount>;
     getChannel(): Promise<AccountIcon>;
+    getIndependentSignIn(accessToken: string): Promise<AuthAccount>;
 }
 export declare enum Theme {
     THEME_NO_TITLE = 0,

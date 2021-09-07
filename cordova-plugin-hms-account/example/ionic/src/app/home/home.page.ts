@@ -42,7 +42,8 @@ import {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
+  public accessToken:string;
+  
   constructor(private account: HMSAccount,
     private smsManager: HMSReadSMSManager,
     private authButton: HMSHuaweiIdAuthButton,
@@ -52,7 +53,6 @@ export class HomePage {
     private authTool: HMSHuaweiIdAuthTool,
     private tool: HMSNetworkTool) {
   }
-
   async signInWithIdToken() {
     console.log('signInWithIdToken clicked!');
 
@@ -170,7 +170,7 @@ export class HomePage {
     console.log('accountSignInWithIdToken clicked!');
 
     const signInParam: SignInData = {
-      "authRequestOption": [AuthRequestOption.SCOPE_ID_TOKEN],
+      "authRequestOption": [AuthRequestOption.SCOPE_ID_TOKEN,AuthRequestOption.SCOPE_ACCESS_TOKEN,AuthRequestOption.SCOPE_CARRIER_ID],
       "authParam": AuthParams.DEFAULT_AUTH_REQUEST_PARAM,
       "authScopeList": [AuthScopeList.EMAIL, AuthScopeList.PROFILE]
     }
@@ -178,6 +178,7 @@ export class HomePage {
     try {
       const res = await this.accountAuthService.signIn(signInParam);
       console.log(JSON.stringify(res));
+      this.accessToken = res.accessToken;
       alert('signIn -> success' + JSON.stringify(res));
     } catch (ex) {
       alert('signIn -> Error : ' + JSON.stringify(ex));
@@ -229,6 +230,15 @@ export class HomePage {
       document.getElementById('img_bitmap').setAttribute('src', bitmapData);
     } catch (ex) {
       alert('getChannel -> Error : ' + JSON.stringify(ex));
+    }
+  }
+
+  async getIndependentSignIn() {
+    try {
+      const res = await this.accountAuthService.getIndependentSignIn(this.accessToken);
+      alert("getIndependentSignIn -> success :" + JSON.stringify(res));
+    } catch (ex) {
+        alert("getIndependentSignIn -> Error : " + JSON.stringify(ex));
     }
   }
 
