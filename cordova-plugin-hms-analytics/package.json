@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-analytics",
     "description": "Cordova HMS Analytics Plugin",
-    "version": "5.3.1-300",
+    "version": "6.1.0-300",
     "main": "./www/HMSAnalytics.js",
     "types": "./types/HMSAnalytics.d.ts",
     "repository": {

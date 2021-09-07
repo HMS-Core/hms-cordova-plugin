@@ -273,7 +273,19 @@ export enum HAEventType {
   WATCHVIDEO = "$WatchVideo",
   CLICKMESSAGE = "$ClickMessage",
   DRAWCARD = "$DrawCard",
-  VIEWCARDLIST = "$ViewCardList"
+  VIEWCARDLIST = "$ViewCardList",
+  BINDACCOUNT = "$BindAccount",
+  STARTEXERCISE = "$StartExercise",
+  ENDEXERCISE = "$EndExercise",
+  STARTPLAYMEDIA = "$StartPlayMedia",
+  ENDPLAYMEDIA = "$EndPlayMedia",
+  STARTEXAMINE = "$StartExamine",
+  ENDEXAMINE = "$EndExamine",
+  CHECKIN = "$CheckIn",
+  COMPENSATION = "$Compensation",
+  POST = "$Post",
+  SHAREAPP = "$ShareApp",
+  IMPROVEINFORMATION = "$ImproveInformation"
 }
 
 /**
@@ -422,5 +434,23 @@ export enum HAParamType {
   MESSAGETITLE = "$MessageTitle",
   OPERATION = "$Operation",
   NUMBEROFDRAWING = "$NumberOfDrawing",
-  LEFTPULLSFORGUARANTEE = "$LeftPullsForGuarantee"
+  LEFTPULLSFORGUARANTEE = "$LeftPullsForGuarantee",
+  VIPTYPE = "$VipType",
+  VIPSTATUS = "$VipStatus",
+  VIPEXPIREDATE = "$VipExpireDate",
+  ENTER = "$Enter",
+  STARTDATE = "$StartDate",
+  EFFECTIVETIME = "$EffectiveTime",
+  NAME = "$Name",
+  MODE = "$Mode",
+  SUBJECT = "$Subject",
+  ACCURACY = "$Accuracy",
+  CONTENTLENGTH = "$ContentLength",
+  REMARK = "$Remark",
+  CONTENTNAME = "$ContentName",
+  SECTION = "$Section",
+  DAYS = "$Days",
+  POSTID = "$PostId",
+  INFORMATIONTYPE = "$InformationType",
+  INFORMATION = "$Information"
 }

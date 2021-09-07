@@ -196,10 +196,7 @@
                 // MARK: - addDefaultEventParams
                 if command.arguments.count > 1 {
                     let argsArray = command.arguments[1] as? NSDictionary ?? [:]
-                    guard let params = argsArray["params"] as? [String: Any] else {
-                        sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
-                        return
-                    }
+                    let params = argsArray["params"] as? [String: Any]
                     viewModel.addDefaultEventParams(params)
                     sendSuccess(methodName: methodName, callbackId: command.callbackId)
                 } else {

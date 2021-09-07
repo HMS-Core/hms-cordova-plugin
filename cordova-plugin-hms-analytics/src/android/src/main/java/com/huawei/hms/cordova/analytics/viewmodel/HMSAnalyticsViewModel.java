@@ -59,9 +59,12 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     }
 
     /**
-     * When the method is called, a new session is generated if the old value of id is not empty
-     * and is different from the new value. If you do not want to use id to identify a user
-     * (for example, when a user signs out), you must set id to null.
+     * When this method is called, a new session will be generated
+     * if the old value of id is not empty and is different from the new value.
+     * If you do not want to use id to identify a user (for example, when a user signs out),
+     * you must set id to null when calling setUserId.
+     *
+     * The SDK does not save the user ID. You are advised to set a user ID each time after the app is launched.
      *
      * @param id : User ID, a string containing a maximum of 256 characters.
      *           The value cannot be empty.
@@ -88,9 +91,9 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     }
 
     /**
-     * Sets the push token. After obtaining a push token through Push Kit, call this method
-     * to save the push token so that you can use the audience defined by Analytics Kit
-     * to create HCM notification tasks.
+     * Sets the push token. After obtaining a push token through Push Kit,
+     * call this method to save the push token so that you can use the audience
+     * defined by Analytics Kit to create HCM notification tasks.
      *
      * @param token : Push token, a string containing a maximum of 256 characters.
      *              The value cannot be empty.
