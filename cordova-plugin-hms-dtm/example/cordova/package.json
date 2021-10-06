@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-dtm-demo",
   "displayName": "HMSDtmDemo",
-  "version": "5.2.0-300",
+  "version": "5.2.0-301",
   "description": "A demo application which shows the usage of HMS Dtm Plugin.",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",

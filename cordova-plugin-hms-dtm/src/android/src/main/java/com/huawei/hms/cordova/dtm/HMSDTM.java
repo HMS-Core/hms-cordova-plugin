@@ -30,7 +30,7 @@ import java.util.Arrays;
 public class HMSDTM extends CordovaPlugin {
 
     private static final String KIT = "DTM";
-    private static final String VERSION = "5.2.0.300";
+    private static final String VERSION = "5.2.0.301";
     private CordovaController cordovaController;
 
     private static CordovaPlugin mPlugin;

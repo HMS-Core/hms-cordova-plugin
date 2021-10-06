@@ -1,8 +1,8 @@
 {
   "name": "@hmscore/ionic-native-hms-dtm",
   "description": "Ionic Native wrappers for Cordova Plugin HMS DTM",
-  "version": "5.2.0-300",
-  "zipVersion": "5.2.0-300",
+  "version": "5.2.0-301",
+  "zipVersion": "5.2.0.301",
   "module": "index.js",
   "typings": "index.d.ts",
   "license": "Apache-2.0",

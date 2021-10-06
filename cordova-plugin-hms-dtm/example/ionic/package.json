@@ -1,7 +1,7 @@
 {
   "name": "ionic-hms-dtm-demo",
   "description": "A demo application which shows the usage of HMS DTM Plugin.",
-  "version": "5.2.0-300",
+  "version": "5.2.0-301",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",

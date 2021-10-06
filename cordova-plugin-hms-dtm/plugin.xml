@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-dtm" version="5.2.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-dtm" version="5.2.0-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS DTM</name>
 	<description>Cordova HMS DTM Plugin</description>
 	<license>Apache 2.0</license>
@@ -27,7 +27,7 @@
         </config-file>
 		<framework src="com.huawei.hms:hianalytics:5.2.0.300"></framework>
 		<framework src="com.huawei.hms:dtm-api:5.2.0.300"></framework>
-		<framework src="src/android/plugin.gradle" custom="true" type="gradleReference"></framework>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDTM.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDTMModule.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/dtm/HMSDtmProvider.java" target-dir="src/com/huawei/hms/cordova/dtm/"></source-file>
