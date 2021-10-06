@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<html>
+
+<head>
+    <style>
+        .bottomright {
+            position: absolute;
+            bottom: 8px;
+            right: 16px;
+            font-size: 18px;
+            color: white;
+        }
+        
+        .skip_button {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            background-color: Transparent;
+            border-color: white;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            border: solid 1px;
+            border-radius: 8px;
+        }
+        
+        .mute_button {
+            position: absolute;
+            bottom: 8px;
+            left: 4px;
+            background-color: Transparent;
+            border-color: white;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            border: solid 1px;
+            border-radius: 8px;
+        }
+        
+        .button_transparent {
+            background-color: Transparent;
+            border-color: white;
+            color: white;
+            cursor: pointer;
+            overflow: hidden;
+            border: solid 1px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="button" class="button_transparent" value="Info" onClick="whyThisAd()" />
+    <input id="play" type="button" class="button_transparent" value="Play" onClick="play()" />
+    <input id="volume" type="button" class="mute_button" value="Mute" onClick="muteOrUnmute()" />
+    <input type="button" class="skip_button" value="Skip" onClick="skip()" />
+    <div class="bottomright" id="bottomright"> CountDown</div>
+
+    <script type="application/javascript">
+        let isMuted = false;
+        document.getElementById('play').style.visibility = 'hidden';
+
+        window.onload = function() {
+            on(ROLL_AD_MEDIA_PAUSE, (playTime) => {
+                document.getElementById('play').style.visibility = 'visible';
+            });
+            on(ROLL_AD_MEDIA_START, (playTime) => {
+                document.getElementById('play').style.visibility = 'hidden';
+            });
+            on(ROLL_AD_MEDIA_MUTE, () => {
+                console.log("Mute!!!!");
+                isMuted = true;
+            });
+
+            on(ROLL_AD_MEDIA_UNMUTE, () => {
+
+                console.log("Unmute!!!!");
+                isMuted = false;
+
+            });
+            console.log("Test> ");
+            on(ROLL_AD_MEDIA_PROGRESS, (adDuration, percent, playTime) => {
+                document.getElementById("bottomright").innerHTML = Math.round((adDuration - playTime) / 1000).toString();
+            });
+        };
+
+        window.addEventListener("click", function() {
+            console.log('ad clicked');
+            if (RollAd.isPlaying()) {
+                RollAd.pause();
+            } else {
+                console.log('already paused');
+            }
+            RollAd.onClick()
+        });
+
+        function whyThisAd(toast) {
+            event.stopPropagation();
+            if (RollAd.isPlaying()) {
+                RollAd.pause();
+            } else {
+                console.log('already paused');
+            }
+            RollAd.whyThisAd()
+        }
+
+        function play() {
+            event.stopPropagation();
+
+            if (!RollAd.isPlaying()) {
+                RollAd.play();
+            } else {
+                console.log('already playing');
+            }
+        }
+
+        function muteOrUnmute() {
+            event.stopPropagation();
+
+            if (isMuted) {
+                RollAd.unmute();
+                document.getElementById("volume").value = "Mute"
+            } else {
+                RollAd.mute();
+                document.getElementById("volume").value = "Unmute"
+
+            }
+        }
+
+        function skip() {
+            event.stopPropagation();
+            RollAd.skip();
+        }
+    </script>
+</body>
+
+</html>
