@@ -1,0 +1,111 @@
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+--->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <title>HMSAnalytics Cordova Demo</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <select id="set_analytics_enabled" class="options">
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    <input type="submit" id="setAnalyticsEnabled" value="Set Analytics Enabled" />
+    <hr>
+    <input type="submit" id="getAAID" value="Get AAID" />
+    <hr>
+    <input type="submit" id="onEvent" value="On Event">
+    <hr>
+    <input type="submit" id="onPredefinedEvent" value="Send Predefined Event" />
+    <hr>
+    <input type="text" id="txt_user_id" placeholder="Enter user id please" />
+    <input type="submit" id="setUserId" value="Set User ID" />
+    <hr>
+    <input type="text" id="user_profile_name" placeholder="Enter name " required />
+    <input type="text" id="user_profile_value" placeholder="Enter value " required />
+    <input type="submit" id="setUserProfile" value="Set User Profile" />
+    <hr>
+    <input type="text" id="delete_user_profile_name" placeholder="Enter name " required />
+    <input type="submit" id="deleteUserProfile" value="Delete User Profile" />
+    <hr>
+    <select id="user_profiles_predefined" class="options">
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    <input type="submit" id="getUserProfiles" value="Get User Profiles" />
+    <hr>
+    <input type="submit" id="setPushToken" value="Set Push Token" />
+    <hr>
+    <input type="number" id="txt_min_activity_sessions" placeholder="Enter milliseconds please" required />
+    <input type="submit" id="setMinActivitySessions" value="Set Min Activity Sessions" />
+    <hr>
+    <input type="number" id="txt_session_duration" placeholder="Enter milliseconds please" required />
+    <input type="submit" id="setSessionDuration" value="Set Session Duration" />
+    <hr>
+    <input type="submit" id="clearCachedData" value="Clear Cached Data" />
+    <hr>
+    <select id="enable_log_with_level" class="options">
+        <option value="DEBUG">DEBUG</option>
+        <option value="INFO">INFO</option>
+        <option value="WARN">WARN</option>
+        <option value="ERROR">ERROR</option>
+    </select>
+    <input type="submit" id="enableLog" value="Enable Log With Level" />
+    <hr>
+    <input type="text" id="txt_start_page_name" placeholder="Enter Start Page Name" required />
+    <input type="text" id="txt_start_page_class_override" placeholder="Enter Start Page Class Override" required />
+    <input type="submit" id="pageStart" value="Page Start">
+    <hr>
+    <input type="text" id="txt_end_page_name" placeholder="Enter End Page Name" required />
+    <input type="submit" id="pageEnd" value="Page End" />
+    <hr>
+    <input type="submit" id="setReportPolicies" value="Set Report Policies" />
+    <hr>
+    <select id="report_policy_type" class="options">
+        <option value="ON_SCHEDULED_TIME_POLICY">ON_SCHEDULED_TIME_POLICY</option>
+        <option value="ON_APP_LAUNCH_POLICY">ON_APP_LAUNCH_POLICY</option>
+        <option value="ON_MOVE_BACKGROUND_POLICY">ON_MOVE_BACKGROUND_POLICY</option>
+        <option value="ON_CACHE_THRESHOLD_POLICY">ON_CACHE_THRESHOLD_POLICY</option>
+    </select>
+    <input type="submit" id="getReportPolicyThreshold" value="Get Report Policy Threshold" />
+    <hr>
+    <select id="restriction_is_enabled" class="options">
+        <option value="true">True</option>
+        <option value="false">False</option>
+    </select>
+    <input type="submit" id="setRestrictionEnabled" value="Set Restriction Enabled" />
+    <hr>
+    <input type="submit" id="isRestrictionEnabled" value="Is Restriction Enabled" />
+    <hr>
+    <input type="submit" id="addDefaultEventParams" value="Add Default Event Params" />
+    <hr>
+    <input type="submit" id="HAParamType" value="HAParamType" />
+    <hr>
+    <input type="submit" id="HAEventType" value="HAEventType" />
+    <hr>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>
