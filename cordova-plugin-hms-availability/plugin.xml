@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-availability" version="5.2.0.300" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin id="cordova-plugin-hms-availability" version="5.2.0.301" xmlns="http://apache.org/cordova/ns/plugins/1.0"
         android="http://schemas.android.com/apk/res/android">
     <name>HMS Availability</name>
     <description>Cordova HMS Availability Plugin</description>
@@ -21,7 +21,7 @@
         </config-file>
         <!-- dependencies -->
         <framework src="com.huawei.hms:base:5.2.0.300"/>
-        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
         <!-- source files -->
         <source-file src="src/android/src/main/java/com/huawei/hms/cordova/availability/HMSAvailabilityImpl.java"
                      target-dir="src/com/huawei/hms/cordova/availability/"/>

@@ -31,9 +31,9 @@ import org.json.JSONException;
 import java.util.Arrays;
 
 public class HMSAvailability extends CordovaPlugin {
-    private static final String SERVICE = "HMSAvailability";
-    private static final String VERSION = "5.2.0.300";
     private CordovaController cordovaController;
+    private static final String SERVICE = "HMSAvailability";
+    private static final String VERSION = "5.2.0.301";
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {

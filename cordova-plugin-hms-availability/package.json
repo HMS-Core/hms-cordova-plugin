@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-availability",
   "description": "Cordova HMS Availability Plugin",
-  "version": "5.2.0-300",
+  "version": "5.2.0-301",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {
@@ -42,14 +42,14 @@
     "README.md"
   ],
   "dependencies": {
-    "@types/cordova": "latest"
+    "@types/cordova": "0.0.34"
   },
   "devDependencies": {
-    "typescript": "4.1.2"
+    "typescript": "3.9.5"
   },
   "scripts": {
-    "build:core": "tsc",
+    "build:core": "node ./node_modules/typescript/bin/tsc",
     "build": "npm run build:core",
-    "watch": "tsc --watch"
+    "watch": "node ./node_modules/typescript/bin/tsc --watch"
   }
 }

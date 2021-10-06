@@ -1,8 +1,19 @@
-# Ionic Native HMS Service Availability
+<p align="center">
+  <h1 align="center">Ionic Native HMS Availability</h1>
+</p>
+
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@hmscore/ionic-native-hms-availability"><img src="https://img.shields.io/npm/dm/@hmscore/ionic-native-hms-availability?color=%23007EC6&style=for-the-badge" alt="downloads"></a>
+  <a href="https://www.npmjs.com/package/@hmscore/ionic-native-hms-availability"><img src="https://img.shields.io/npm/v/@hmscore/ionic-native-hms-availability?color=%23ed2a1c&style=for-the-badge" alt="NPM version"></a>
+  <a href="./LICENCE"><img src="https://img.shields.io/npm/l/@hmscore/ionic-native-hms-availability.svg?color=%3bcc62&style=for-the-badge" alt="License"></a>
+</p>
+
+---
 
 ## 1. About
 
-Ionic Native wrappers for the [cordova-plugin-hms-service-availability](https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-service-availability).
+Ionic Native wrappers for the [cordova-plugin-hms-availability](https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-availability).
 
 ---
 
@@ -11,21 +22,21 @@ Ionic Native wrappers for the [cordova-plugin-hms-service-availability](https://
 ### 2.1 With Cordova Runtime
 
 ```bash
-$ ionic cordova plugin add @hmscore/cordova-plugin-hms-service-availability
+$ ionic cordova plugin add @hmscore/cordova-plugin-hms-availability
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-service-availability
+$ npm install @ionic-native/core @hmscore/ionic-native-hms-availability
 ```
 
 ### 2.2 With Capacitor Runtime
 
 ```bash
-$ npm install @hmscore/cordova-plugin-hms-service-availability
+$ npm install @hmscore/cordova-plugin-hms-availability
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-service-availability
+$ npm install @ionic-native/core @hmscore/ionic-native-hms-availability
 ```
 
 ---
@@ -34,7 +45,7 @@ $ npm install @ionic-native/core @hmscore/ionic-native-hms-service-availability
 
 - [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin)
 
-- [API reference and sample codes](https://github.com/HMS-Core/hms-cordova-plugin/blob/master/cordova-plugin-hms-service-availability/README.md#3-api-reference)
+- [API reference and sample codes]()
 
 ---
 
