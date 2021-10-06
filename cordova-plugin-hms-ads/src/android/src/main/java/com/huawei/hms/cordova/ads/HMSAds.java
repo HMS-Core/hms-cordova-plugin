@@ -48,7 +48,7 @@ public class HMSAds extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         final String kit = "Ads";
-        final String version = "13.4.40.302";
+        final String version = "13.4.40.303";
 
         pluginAdLayout = new PluginAdLayout(webView.getContext());
         pluginAdLayout.setLayoutParams(

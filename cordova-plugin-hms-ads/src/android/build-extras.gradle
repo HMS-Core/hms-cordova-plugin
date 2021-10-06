@@ -14,11 +14,11 @@
     limitations under the License.
 */
 
-def pluginMinSdk = 19;
-def needAGC = false;
+def pluginMinSdk = 19
+def needAGC = false
 
 try {
-    // Use try-catch to check that project's runtime is Cordova
+    // Use try-catch to check that project's runtime is Capacitor
     if (rootProject.ext.minSdkVersion < pluginMinSdk) {
         rootProject.ext.minSdkVersion = pluginMinSdk
     }
@@ -34,11 +34,8 @@ try {
         }
     }
 } catch (e1) {
-    // Project runtime is Capacitor
+    // Project runtime is Cordova
     try {
-        if (defaultMinSdkVersion < pluginMinSdk) {
-            cdvMinSdkVersion = pluginMinSdk
-        }
         if (needAGC) {
             cdvPluginPostBuildExtras.add({
                 afterEvaluate {
@@ -53,6 +50,22 @@ try {
             })
         }
     } catch (e2) {
-        println("WARNING: Huawei AgConnect is not set")
+        println("WARNING: Huawei AGConnect is not set")
+    }
+
+    // Cordova 9.X
+    try {
+        if (defaultMinSdkVersion < pluginMinSdk) {
+            cdvMinSdkVersion = pluginMinSdk
+        }
+    } catch (e3) {
+        // Cordova 10.X
+        try {
+            if (cordovaConfig.MIN_SDK_VERSION < pluginMinSdk) {
+                cordovaConfig.MIN_SDK_VERSION = pluginMinSdk
+            }
+        } catch (e4) {
+            println("WARNING: Huawei Min SDK is not set")
+        }
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-ads" version="13.4.40-302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-ads" version="13.4.40-303" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS Ads</name>
 	<description>Cordova HMS Ads Plugin</description>
 	<license>Apache 2.0</license>
