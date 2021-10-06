@@ -53,10 +53,10 @@ export class HMSAwareness extends IonicNativePlugin {
     @Cordova({ otherPromise: true })
     /**
      * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission[]} permission Represents the list in which permission names are kept.
+     * @param  {HMSPermission[]} permissions Represents the list in which permission names are kept.
      * @returns Promise<any>
      */
-    requestPermissions(...permission: HMSPermission[]): Promise<any> {
+    requestPermissions(permissions: HMSPermission[]): Promise<any> {
         return;
     };
 

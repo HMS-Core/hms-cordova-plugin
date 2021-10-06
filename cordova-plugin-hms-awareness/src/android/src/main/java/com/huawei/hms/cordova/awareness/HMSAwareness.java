@@ -35,7 +35,7 @@ public class HMSAwareness extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         final String kit = "Awareness";
-        final String version = "1.0.8.301";
+        final String version = "1.0.8.302";
         cordovaController = new CordovaController(this, kit, version,
                 Arrays.asList(new HMSAwarenessModule(),
                         new AwarenessBarriers(webView.getContext()),

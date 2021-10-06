@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-awareness",
     "description": "Cordova HMS Awareness Plugin",
-    "version": "1.0.8-301",
+    "version": "1.0.8-302",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {

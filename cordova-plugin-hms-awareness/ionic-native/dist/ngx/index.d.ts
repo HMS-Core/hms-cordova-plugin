@@ -34,10 +34,10 @@ export declare class HMSAwareness extends IonicNativePlugin {
     requestPermission(permission: HMSPermission): Promise<any>;
     /**
      * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission[]} permission Represents the list in which permission names are kept.
+     * @param  {HMSPermission[]} permissions Represents the list in which permission names are kept.
      * @returns Promise<any>
      */
-    requestPermissions(...permission: HMSPermission[]): Promise<any>;
+    requestPermissions(permissions: HMSPermission[]): Promise<any>;
     /**
      * This method enables HMSLogger capability which is used for sending usage analytics of Awareness SDK's methods to improve the service quality.
      * @returns Promise<any>

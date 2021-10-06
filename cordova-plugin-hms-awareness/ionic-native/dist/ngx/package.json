@@ -1,8 +1,8 @@
 {
     "name": "@hmscore/ionic-native-hms-awareness",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Awareness",
-    "version": "1.0.8-301",
-    "zipVersion": "1.0.8.301",
+    "version": "1.0.8-302",
+    "zipVersion": "1.0.8.302",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",

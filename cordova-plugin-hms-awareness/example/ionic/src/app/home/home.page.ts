@@ -32,13 +32,13 @@ export class HomePage {
   }
 
   public async requestPermissions() {
-    this.hmsAwareneess.requestPermissions(HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
+    this.hmsAwareneess.requestPermissions([HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
       HMSPermission.PERMISSION_HUAWEI_ACTIVITY_RECOGNITION,
       HMSPermission.PERMISSION_ACTIVITY_RECOGNITION,
       HMSPermission.PERMISSION_BLUETOOTH,
       HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
       HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
-      HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION
+      HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION]
     )
       .then((res) => alert(JSON.stringify(res)))
       .catch((err) => alert(JSON.stringify(err)));

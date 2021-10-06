@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-awareness-demo",
     "displayName": "HMSAwarenessDemo",
-    "version": "1.0.8-301",
+    "version": "1.0.8-302",
     "description": "A demo application which shows the usage of HMS Awareness Plugin.",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",

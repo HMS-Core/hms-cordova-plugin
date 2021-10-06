@@ -13,31 +13,37 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 
 var FSUtils = require("./FSUtils");
 
-var ROOT_GRADLE_FILE = "platforms/android/build.gradle";
-var COMMENT = "//This line is added by awareness plugin";
+var ROOT_BUILD_GRADLE_FILE = "platforms/android/build.gradle";
+var ROOT_REPOSITORIES_GRADLE_FILE = "platforms/android/repositories.gradle";
+var APP_REPOSITORIES_GRADLE_FILE = "platforms/android/app/repositories.gradle";
+var COMMENT = "//This line is added by cordova-plugin-hms-awareness plugin";
 var NEW_LINE = "\n";
 
 module.exports = function (context) {
-    if (!FSUtils.exists(ROOT_GRADLE_FILE)) {
+    if (!FSUtils.exists(ROOT_BUILD_GRADLE_FILE)) {
         console.log("root gradle file does not exist. after_plugin_install script wont be executed.");
     }
 
-    var rootGradleContent = FSUtils.readFile(ROOT_GRADLE_FILE, "UTF-8");
+    var rootGradleContent = FSUtils.readFile(ROOT_BUILD_GRADLE_FILE, "UTF-8");
     var lines = rootGradleContent.split(NEW_LINE);
 
     var depAddedLines = addAGConnectDependency(lines);
     var repoAddedLines = addHuaweiRepo(depAddedLines);
 
-    FSUtils.writeFile(ROOT_GRADLE_FILE, repoAddedLines.join(NEW_LINE));
+    FSUtils.writeFile(ROOT_BUILD_GRADLE_FILE, repoAddedLines.join(NEW_LINE));
+
+    updateRepositoriesGradle(ROOT_REPOSITORIES_GRADLE_FILE);
+    updateRepositoriesGradle(APP_REPOSITORIES_GRADLE_FILE);
 };
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.4.2.301' " + COMMENT;
-    var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
+    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.5.2.300' " + COMMENT;
+    var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 
     for (var i = 0; i < lines.length; i++) {
@@ -72,4 +78,20 @@ function addHuaweiRepo(lines) {
     }
 
     return lines;
+}
+
+function updateRepositoriesGradle(file) {
+    if (FSUtils.exists(file)) {
+        var repoGradleContent = FSUtils.readFile(file, "UTF-8");
+        if (repoGradleContent.indexOf("developer.huawei.com/repo") === -1) {
+            var lastIndexOfCurlyBracket = repoGradleContent.lastIndexOf("}");
+
+            repoGradleContent =
+                repoGradleContent.substring(0, lastIndexOfCurlyBracket) +
+                "    maven { url 'https://developer.huawei.com/repo/' } "+COMMENT+" \n}" +
+                repoGradleContent.substring(lastIndexOfCurlyBracket + 1);
+
+            FSUtils.writeFile(file, repoGradleContent);
+        }
+    }
 }
