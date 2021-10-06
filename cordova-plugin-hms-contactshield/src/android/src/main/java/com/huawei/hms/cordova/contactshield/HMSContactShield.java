@@ -34,7 +34,7 @@ public class HMSContactShield extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         final String kit = "ContactShield";
-        final String version = "5.2.1.300";
+        final String version = "5.2.1.301";
         cordovaController = new CordovaController(this, kit, version,
                 Arrays.asList(new ContactShieldModule(webView.getContext())));
     }

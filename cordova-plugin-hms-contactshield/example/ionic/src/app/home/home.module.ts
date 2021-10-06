@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-import { HmsContactShield } from '@ionic-native/contactshield/ngx';
+import { HmsContactShield } from '@hmscore/ionic-native-hms-contactshield/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 

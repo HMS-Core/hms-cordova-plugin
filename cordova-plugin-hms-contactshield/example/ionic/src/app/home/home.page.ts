@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { HmsContactShield, HMSPermission, ContactShieldEngine } from '@ionic-native/contactshield/ngx';
+import { HmsContactShield, HMSPermission, ContactShieldEngine } from '@hmscore/ionic-native-hms-contactshield/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 
 @Component({

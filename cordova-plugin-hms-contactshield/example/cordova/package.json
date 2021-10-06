@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-contactshield-demo",
     "displayName": "HMSContactShieldDemo",
-    "version": "5.2.1-300",
+    "version": "5.2.1-301",
     "description": "A demo application which shows the usage of HMS Contact Shield Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",

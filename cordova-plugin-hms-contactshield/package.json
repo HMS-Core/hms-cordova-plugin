@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-contactshield",
     "description": "Cordova HMS Contact Shield Plugin",
-    "version": "5.2.1-300",
+    "version": "5.2.1-301",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {
