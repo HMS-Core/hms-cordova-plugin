@@ -1,0 +1,15 @@
+<svg height="140" style="background:#f6f7f9" width="350" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <path d="M61.905-34.23l96.194 54.51-66.982 54.512L22 34.887z" fill="#F04141" style="mix-blend-mode:multiply"/>
+        <circle cx="155.5" cy="135.5" fill="#10DC60" r="57.5" style="mix-blend-mode:multiply"/>
+        <path d="M208.538 9.513l84.417 15.392L223.93 93.93z" fill="#3880FF" style="mix-blend-mode:multiply"/>
+        <path d="M268.625 106.557l46.332-26.75 46.332 26.75v53.5l-46.332 26.75-46.332-26.75z" fill="#FFCE00"
+              style="mix-blend-mode:multiply"/>
+        <circle cx="299.5" cy="9.5" fill="#7044FF" r="38.5" style="mix-blend-mode:multiply"/>
+        <rect fill="#11D3EA" height="89.884" rx="5.098" style="mix-blend-mode:multiply"
+              transform="rotate(-60 148.47 37.886)" width="10.196" x="143.372" y="-7.056"/>
+        <path d="M-25.389 74.253l84.86 8.107c5.498.525 9.53 5.407 9.004 10.905a10 10 0 0 1-.057.477l-12.36 85.671a10.002 10.002 0 0 1-11.634 8.42l-86.351-15.226c-5.44-.959-9.07-6.145-8.112-11.584l13.851-78.551a10 10 0 0 1 10.799-8.219z"
+              fill="#7044FF" style="mix-blend-mode:multiply"/>
+        <circle cx="273.5" cy="106.5" fill="#0CD1E8" r="20.5" style="mix-blend-mode:multiply"/>
+    </g>
+</svg>
