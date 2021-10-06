@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-hms-ar"
-        version="2.15.0.4">
+        version="2.15.0.5">
 
     <name>cordova-plugin-hms-ar</name>
     <description>cordova-plugin-hms-ar</description>
@@ -32,10 +32,9 @@
         <!-- Hooks -->
         <hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
         <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
-        <hook type="after_prepare" src="hooks/after_prepare.js"/>
 
         <!-- Android dependencies -->
-        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
         <framework src="com.huawei.hms:arenginesdk:2.15.0.4"/>
         <framework src="com.huawei.hms:stats:5.2.0.300"/>
         <framework src="com.huawei.agconnect:agconnect-core:1.4.2.301"/>

@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-ar",
   "description": "Huawei Augmented Reality Cordova Plugin",
-  "version": "2.15.0-4",
+  "version": "2.15.0-5",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {

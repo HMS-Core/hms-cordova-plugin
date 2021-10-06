@@ -13,30 +13,32 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
 
-'use strict';
+var FSUtils = require("./FSUtils");
 
-var FSUtils = require('./FSUtils');
-
-var ROOT_GRADLE_FILE = 'platforms/android/build.gradle';
-var COMMENT = '//This line is added by cordova-plugin-hms-ar plugin'
-var NEW_LINE = '\n';
+var ROOT_GRADLE_FILE = "platforms/android/build.gradle";
+var ROOT_REPOSITORIES_GRADLE_FILE = "platforms/android/repositories.gradle";
+var APP_REPOSITORIES_GRADLE_FILE = "platforms/android/app/repositories.gradle";
+var COMMENT = "//This line is added by cordova-plugin-hms-ar plugin";
+var NEW_LINE = "\n";
 
 module.exports = function (context) {
+    removeLinesFromGradle(ROOT_GRADLE_FILE);
+    removeLinesFromGradle(ROOT_REPOSITORIES_GRADLE_FILE);
+    removeLinesFromGradle(APP_REPOSITORIES_GRADLE_FILE);
+};
 
-    if (!FSUtils.exists(ROOT_GRADLE_FILE)) {
-        console.log('root gradle file does not exist. before_plugin_uninstall script wont be executed.');
+function removeLinesFromGradle(repositoryPath) {
+    if (!FSUtils.exists(repositoryPath)) {
+        return
     }
 
-    var rootGradleContent = FSUtils.readFile(ROOT_GRADLE_FILE, 'UTF-8');
+    var rootGradleContent = FSUtils.readFile(repositoryPath, "UTF-8");
     var lines = rootGradleContent.split(NEW_LINE);
-
     var linesAfterRemove = removeLinesAddedByPlugin(lines);
-
-    FSUtils.writeFile(ROOT_GRADLE_FILE, linesAfterRemove.join(NEW_LINE));
-
+    FSUtils.writeFile(repositoryPath, linesAfterRemove.join(NEW_LINE));
 }
-
 
 function removeLinesAddedByPlugin(lines) {
     var indexList = [];
@@ -59,5 +61,4 @@ function removeLinesAddedByPlugin(lines) {
     }
 
     return lines;
-
 }
