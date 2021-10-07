@@ -178,7 +178,7 @@ export class LocationPage {
     async setMockLocation() {
         const latitudeValue = parseInt(this.latitude, 10);
         const longitudeValue = parseInt(this.longitude, 10);
-        const log = document.getElementById('setMockLocationLogs');
+        const log = document.getElementById('setMockLocationLog');
         const latLng: LatLng = {latitude: latitudeValue, longitude: longitudeValue};
         const setMockLocationResult = await this.fusedClient.setMockLocation(latLng);
         console.log('Result: ' + setMockLocationResult);
@@ -186,7 +186,7 @@ export class LocationPage {
     }
 
     async setMockMode() {
-        const log = document.getElementById('setMockModeLogs');
+        const log = document.getElementById('setMockModeLog');
         const result = await this.fusedClient.setMockMode(true);
         log.innerHTML = result + '';
     }

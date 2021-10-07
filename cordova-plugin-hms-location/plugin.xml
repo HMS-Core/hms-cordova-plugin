@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-location" version="5.1.0.303" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+<plugin id="cordova-plugin-hms-location" version="5.1.0.304" xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android">
     <name>HMS Location</name>
     <description>Cordova HMS Location Plugin</description>
@@ -53,6 +53,7 @@
         <!-- dependencies -->
         <framework src="com.huawei.hms:location:5.1.0.303"/>
         <framework src="androidx.core:core:1.3.2"/>
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
         <!-- source files -->
         <source-file src="src/android/src/main/java/com/huawei/hms/cordova/location/HMSLocation.java"
                      target-dir="src/com/huawei/hms/cordova/location/"/>

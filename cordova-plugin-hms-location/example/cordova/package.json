@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-location-demo",
   "displayName": "HMSLocationDemo",
-  "version": "5.1.0-303",
+  "version": "5.1.0-304",
   "description": "A demo application which shows the usage of HMS Location Cordova Plugin.",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",

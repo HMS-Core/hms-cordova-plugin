@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class HMSLocation extends CordovaPlugin {
 
     private static final String SERVICE = "HMSLocation";
-    private static final String VERSION = "5.1.0.303";
+    private static final String VERSION = "5.1.0.304";
     private CordovaController cordovaController;
 
     @Override

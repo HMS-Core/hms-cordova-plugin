@@ -153,7 +153,7 @@ async function requestLocationUpdatesEx() {
 async function setMockLocation() {
     const latitudeValue = document.getElementById("latitude").value;
     const longitudeValue = document.getElementById("longitude").value;
-    const log = document.getElementById("setMockLocationLogs");
+    const log = document.getElementById("setMockLocationLog");
     const latLng = {latitude: latitudeValue, longitude: longitudeValue};
     const setMockLocationResult = await fusedClient.setMockLocation(latLng);
     console.log("Result: " + setMockLocationResult);
@@ -161,8 +161,8 @@ async function setMockLocation() {
 }
 
 async function setMockMode() {
-    const log = document.getElementById("setMockModeLogs");
+    const log = document.getElementById("setMockModeLog");
     const setMockModeResult = await fusedClient.setMockMode(true);
-    console.log(setMockLocationResult);
+    console.log(setMockModeResult);
     log.innerHTML = setMockModeResult;
 }
