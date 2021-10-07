@@ -1,0 +1,57 @@
+/*
+Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-user-select: none;
+    background-color:#E4E4E4;
+    background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+    font-size:12px;
+    height:100vh;
+    margin:0px;
+    padding:0px;
+    padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+    width:100%;
+}
+
+.intro {
+    text-align: center;
+    padding: 10px;
+}
+
+.iap-list {
+    list-style-type: none;
+    padding: 15px;
+}
+
+.iap-list > li {
+    box-shadow:3px 3px 5px 6px #ccc;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.title {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.content {
+    font-style: italic;
+}
+
+.price {}

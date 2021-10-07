@@ -1,0 +1,80 @@
+<!--
+    Copyright 2020. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      HMS IAP Ionic Demo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">HMS IAP</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-card>
+      <h5>Available Consumable</h5>
+      <ion-item *ngFor="let product of products.consumable">
+        <ion-label> {{ product.productName }} </ion-label>
+        <ion-button (click)="createPurchaseIntent(product, 'consumable')" color="primary"> {{ product.price }}
+        </ion-button>
+      </ion-item>
+      <h5 *ngIf="products.purchased_consumable.length > 0">Purchased Consumable</h5>
+      <ion-item *ngFor="let product of products.purchased_consumable">
+        <ion-label> {{ product.name }} </ion-label>
+        <ion-button (click)="consumeOwnedPurchase(product, product.purchaseData, 'consumable')" color="primary"> Consume
+        </ion-button>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <h5>Available Non Consumable</h5>
+      <ion-item *ngFor="let product of products.nonconsumable">
+        <ion-label> {{ product.productName }} </ion-label>
+        <ion-button (click)="createPurchaseIntent(product, 'nonconsumable')" color="primary"> {{ product.price }}
+        </ion-button>
+      </ion-item>
+      <h5 *ngIf="products.purchased_nonconsumable.length > 0">Purchased Non Consumable</h5>
+      <ion-item *ngFor="let product of products.purchased_nonconsumable">
+        <ion-label> {{ product.name }} </ion-label>
+        <ion-button (click)="consumeOwnedPurchase(product, product.purchaseData, 'consumable')" color="primary"> Consume
+        </ion-button>
+      </ion-item>
+    </ion-card>
+
+    <ion-card>
+      <h5>Available Subscriptions</h5>
+      <ion-item *ngFor="let product of products.subscription">
+        <ion-label> {{ product.productName }} </ion-label>
+        <ion-button (click)="createPurchaseIntent(product, 'subscription')" color="primary"> {{ product.price }}
+        </ion-button>
+      </ion-item>
+      <h5 *ngIf="products.purchased_subscription.length > 0">Purchased Subscriptions</h5>
+      <ion-item *ngFor="let product of products.purchased_subscription">
+        <ion-label> {{ product.name }} </ion-label>
+        <ion-button (click)="editSubscription(product.id)" color="primary"> Edit </ion-button>
+      </ion-item>
+    </ion-card>
+
+    <ion-button size="large" (click)="manageSubscriptions()" color="warning">Manage Subscriptions</ion-button>
+  </div>
+
+</ion-content>
