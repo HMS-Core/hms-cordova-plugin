@@ -1,7 +1,7 @@
 {
   "name": "ionic-hms-health-demo",
   "description": "A demo application which shows the usage of HMS Health plugin.",
-  "version": "5.0.5-301",
+  "version": "5.0.5-302",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",

@@ -33,94 +33,6 @@ export class HMSHealth extends IonicNativePlugin {
     return;
   }
   @Cordova({ otherPromise: true })
-  addActivityRecord(addActivityRecordReq: AddActivityRecordReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  beginActivityRecord(activityRecordData: BeginActivityRecordReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  endActivityRecord(activityRecordId: string): Promise<ActivityRecord[]> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  getActivityRecord(activityRecordJSON: GetActivityRecordReq): Promise<ActivityRecord[]> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  startRecord(startRecordReq: StartRecordReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  stopRecord(stopRecordReq: StopRecordReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  getPermissions(getPermissionsReq: GetPermissionsReq): Promise<ScopeLangItem> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  revokeAll(appId: string): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  revoke(revokeReq: RevokeReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  initDataController(jsonArray: DataOption[]): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  read(readReq: ReadReq): Promise<ReadReply> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  insert(insertReq: InsertReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  update(jsonObject: UpdateReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  deleteData(jsonObject: DeleteReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  readTodaySummation(dataTypeStr: string): Promise<SampleSet> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  readDailySummation(jsonObject: Options): Promise<SampleSet> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  clearAll(): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  addDataType(jsonObject: AddDataTypeReq): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  disableHiHealth(): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  readDataType(dataTypeName: string): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  checkHealthAppAuthorization(): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
-  getHealthAppAuthorization(): Promise<void> {
-    return;
-  }
-  @Cordova({ otherPromise: true })
   enableLogger(): Promise<void> {
     return;
   }
@@ -129,423 +41,508 @@ export class HMSHealth extends IonicNativePlugin {
     return;
   }
   @Cordova({ otherPromise: true })
-  on(event: string, callback: ()=>void) {
+  on(event: string, callback: (res: any)=>void) {
     return;
+  }
+}
+
+export const ActivityRecordController = {
+	addActivityRecord: function addActivityRecord(addActivityRecordReq:AddActivityRecordReq): Promise<void> { 
+    return HMSHealth.getPlugin().ActivityRecordController.addActivityRecord(addActivityRecordReq);
+  },
+	beginActivityRecord: function beginActivityRecord(activityRecordData:BeginActivityRecordReq): Promise<void> { 
+    return HMSHealth.getPlugin().ActivityRecordController.beginActivityRecord(activityRecordData);
+  },
+	endActivityRecord: function endActivityRecord(activityRecordId:string): Promise<ActivityRecord[]> { 
+    return HMSHealth.getPlugin().ActivityRecordController.endActivityRecord(activityRecordId);
+  },
+	getActivityRecord: function getActivityRecord(activityRecordJSON:GetActivityRecordReq): Promise<ActivityRecord[]> { 
+    return HMSHealth.getPlugin().ActivityRecordController.getActivityRecord(activityRecordJSON);
+  }
+}
+
+export const AutoRecorderController = {
+	startRecord: function startRecord(startRecordReq:StartRecordReq): Promise<void> { 
+    return HMSHealth.getPlugin().AutoRecorderController.startRecord(startRecordReq);
+  },
+	stopRecord: function stopRecord(stopRecordReq:StopRecordReq): Promise<void> { 
+    return HMSHealth.getPlugin().AutoRecorderController.stopRecord(stopRecordReq);
+  }
+}
+
+export const ConsentsController = {
+	getPermissions: function getPermissions(getPermissionsReq:GetPermissionsReq): Promise<ScopeLangItem> { 
+    return HMSHealth.getPlugin().ConsentsController.getPermissions(getPermissionsReq);
+  },
+	revokeAll: function revokeAll(appId:string): Promise<void> { 
+    return HMSHealth.getPlugin().ConsentsController.revokeAll(appId);
+  },
+	revoke: function revoke(revokeReq:RevokeReq): Promise<void> { 
+    return HMSHealth.getPlugin().ConsentsController.revoke(revokeReq);
+  }
+}
+export const DataController = {
+	initDataController: function initDataController(jsonArray:DataOption[]): Promise<void> { 
+    return HMSHealth.getPlugin().DataController.initDataController(jsonArray);
+  },
+	read: function read(readReq:ReadReq): Promise<ReadReply> { 
+    return HMSHealth.getPlugin().DataController.read(readReq);
+  },
+	insert: function insert(insertReq:InsertReq): Promise<void> { 
+    return HMSHealth.getPlugin().DataController.insert(insertReq);
+  },
+	update: function update(jsonObject:UpdateReq): Promise<void> { 
+    return HMSHealth.getPlugin().DataController.update(jsonObject);
+  },
+	deleteData: function deleteData(jsonObject:DeleteReq): Promise<void> { 
+    return HMSHealth.getPlugin().DataController.deleteData(jsonObject);
+  },
+	readTodaySummation: function readTodaySummation(dataTypeStr:string): Promise<SampleSet> { 
+    return HMSHealth.getPlugin().DataController.readTodaySummation(dataTypeStr);
+  },
+	readDailySummation: function readDailySummation(jsonObject:ReadDailySummationReq): Promise<SampleSet> { 
+    return HMSHealth.getPlugin().DataController.readDailySummation(jsonObject);
+  },
+	clearAll: function clearAll(): Promise<void> { 
+    return HMSHealth.getPlugin().DataController.clearAll();
+  }
+}
+
+export const SettingsController = {
+	addDataType: function addDataType(jsonObject:AddDataTypeReq): Promise<void> { 
+    return HMSHealth.getPlugin().SettingsController.addDataType(jsonObject);
+  },
+	disableHiHealth: function disableHiHealth(): Promise<void> { 
+    return HMSHealth.getPlugin().SettingsController.disableHiHealth();
+  },
+	readDataType: function readDataType(dataTypeName:string): Promise<void> { 
+    return HMSHealth.getPlugin().SettingsController.readDataType(dataTypeName);
+  },
+	checkHealthAppAuthorization: function checkHealthAppAuthorization(): Promise<void> { 
+    return HMSHealth.getPlugin().SettingsController.checkHealthAppAuthorization();
+  },
+	getHealthAppAuthorization: function getHealthAppAuthorization(): Promise<void> { 
+    return HMSHealth.getPlugin().SettingsController.getHealthAppAuthorization();
   }
 }
 
 // /////////////////////////////////////////////////////////
 // INTERFACES
 // /////////////////////////////////////////////////////////
+export const HuaweiHiHealth = {
+	HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
+	HEALTHKIT_HEIGHTWEIGHT_WRITE: "https://www.huawei.com/healthkit/heightweight.write",
+	HEALTHKIT_HEIGHTWEIGHT_BOTH: "https://www.huawei.com/healthkit/heightweight.both",
+	HEALTHKIT_STEP_READ: "https://www.huawei.com/healthkit/step.read",
+	HEALTHKIT_STEP_WRITE: "https://www.huawei.com/healthkit/step.write",
+	HEALTHKIT_STEP_BOTH: "https://www.huawei.com/healthkit/step.both",
+	HEALTHKIT_LOCATION_READ: "https://www.huawei.com/healthkit/location.read",
+	HEALTHKIT_LOCATION_WRITE: "https://www.huawei.com/healthkit/location.write",
+	HEALTHKIT_LOCATION_BOTH: "https://www.huawei.com/healthkit/location.both",
+	HEALTHKIT_HEARTRATE_READ: "https://www.huawei.com/healthkit/heartrate.read",
+	HEALTHKIT_HEARTRATE_WRITE: "https://www.huawei.com/healthkit/heartrate.write",
+	HEALTHKIT_HEARTRATE_BOTH: "https://www.huawei.com/healthkit/heartrate.both",
+	HEALTHKIT_BLOODGLUCOSE_READ: "https://www.huawei.com/healthkit/bloodglucose.read",
+	HEALTHKIT_BLOODGLUCOSE_WRITE: "https://www.huawei.com/healthkit/bloodglucose.write",
+	HEALTHKIT_BLOODGLUCOSE_BOTH: "https://www.huawei.com/healthkit/bloodglucose.both",
+	HEALTHKIT_DISTANCE_READ: "https://www.huawei.com/healthkit/distance.read",
+	HEALTHKIT_DISTANCE_WRITE: "https://www.huawei.com/healthkit/distance.write",
+	HEALTHKIT_DISTANCE_BOTH: "https://www.huawei.com/healthkit/distance.both",
+	HEALTHKIT_SPEED_READ: "https://www.huawei.com/healthkit/speed.read",
+	HEALTHKIT_SPEED_WRITE: "https://www.huawei.com/healthkit/speed.write",
+	HEALTHKIT_SPEED_BOTH: "https://www.huawei.com/healthkit/speed.both",
+	HEALTHKIT_CALORIES_READ: "https://www.huawei.com/healthkit/calories.read",
+	HEALTHKIT_CALORIES_WRITE: "https://www.huawei.com/healthkit/calories.write",
+	HEALTHKIT_CALORIES_BOTH: "https://www.huawei.com/healthkit/calories.both",
+	HEALTHKIT_PULMONARY_READ: "https://www.huawei.com/healthkit/pulmonary.read",
+	HEALTHKIT_PULMONARY_WRITE: "https://www.huawei.com/healthkit/pulmonary.write",
+	HEALTHKIT_PULMONARY_BOTH: "https://www.huawei.com/healthkit/pulmonary.both",
+	HEALTHKIT_STRENGTH_READ: "https://www.huawei.com/healthkit/strength.read",
+	HEALTHKIT_STRENGTH_WRITE: "https://www.huawei.com/healthkit/strength.write",
+	HEALTHKIT_STRENGTH_BOTH: "https://www.huawei.com/healthkit/strength.both",
+	HEALTHKIT_ACTIVITY_READ: "https://www.huawei.com/healthkit/activity.read",
+	HEALTHKIT_ACTIVITY_WRITE: "https://www.huawei.com/healthkit/activity.write",
+	HEALTHKIT_ACTIVITY_BOTH: "https://www.huawei.com/healthkit/activity.both",
+	HEALTHKIT_BODYFAT_READ: "https://www.huawei.com/healthkit/bodyfat.read",
+	HEALTHKIT_BODYFAT_WRITE: "https://www.huawei.com/healthkit/bodyfat.write",
+	HEALTHKIT_BODYFAT_BOTH: "https://www.huawei.com/healthkit/bodyfat.both",
+	HEALTHKIT_SLEEP_READ: "https://www.huawei.com/healthkit/sleep.read",
+	HEALTHKIT_SLEEP_WRITE: "https://www.huawei.com/healthkit/sleep.write",
+	HEALTHKIT_SLEEP_BOTH: "https://www.huawei.com/healthkit/sleep.both",
+	HEALTHKIT_NUTRITION_READ: "https://www.huawei.com/healthkit/nutrition.read",
+	HEALTHKIT_NUTRITION_WRITE: "https://www.huawei.com/healthkit/nutrition.write",
+	HEALTHKIT_NUTRITION_BOTH: "https://www.huawei.com/healthkit/nutrition.both",
+	HEALTHKIT_BLOODPRESSURE_READ: "https://www.huawei.com/healthkit/bloodpressure.read",
+	HEALTHKIT_BLOODPRESSURE_WRITE: "https://www.huawei.com/healthkit/bloodpressure.write",
+	HEALTHKIT_BLOODPRESSURE_BOTH: "https://www.huawei.com/healthkit/bloodpressure.both",
+	HEALTHKIT_OXYGENSTATURATION_READ: "https://www.huawei.com/healthkit/oxygensaturation.read",
+	HEALTHKIT_OXYGENSTATURATION_WRITE: "https://www.huawei.com/healthkit/oxygensaturation.write",
+	HEALTHKIT_OXYGENSTATURATION_BOTH: "https://www.huawei.com/healthkit/oxygensaturation.both",
+	HEALTHKIT_BODYTEMPERATURE_READ: "https://www.huawei.com/healthkit/bodytemperature.read",
+	HEALTHKIT_BODYTEMPERATURE_WRITE: "https://www.huawei.com/healthkit/bodytemperature.write",
+	HEALTHKIT_BODYTEMPERATURE_BOTH: "https://www.huawei.com/healthkit/bodytemperature.both",
+	HEALTHKIT_REPRODUCTIVE_READ: "https://www.huawei.com/healthkit/reproductive.read",
+	HEALTHKIT_REPRODUCTIVE_WRITE: "https://www.huawei.com/healthkit/reproductive.write",
+	HEALTHKIT_REPRODUCTIVE_BOTH: "https://www.huawei.com/healthkit/reproductive.both",
+	HEALTHKIT_ACTIVITY_RECORD_READ: "https://www.huawei.com/healthkit/activityrecord.read",
+	HEALTHKIT_ACTIVITY_RECORD_WRITE: "https://www.huawei.com/healthkit/activityrecord.write",
+	HEALTHKIT_ACTIVITY_RECORD_BOTH: "https://www.huawei.com/healthkit/activityrecord.both",
+	HEALTHKIT_STRESS_READ: "https://www.huawei.com/healthkit/stress.read",
+	HEALTHKIT_STRESS_WRITE: "https://www.huawei.com/healthkit/stress.write",
+	HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
+	HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
+	ALL_SCOPES: ["https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both"],
+	MAX_SCOPES: ["https://www.huawei.com/healthkit/heightweight.read", "https://www.huawei.com/healthkit/heightweight.write", "https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.read", "https://www.huawei.com/healthkit/step.write", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.read", "https://www.huawei.com/healthkit/location.write", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.read", "https://www.huawei.com/healthkit/heartrate.write", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.read", "https://www.huawei.com/healthkit/bloodglucose.write", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.read", "https://www.huawei.com/healthkit/distance.write", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.read", "https://www.huawei.com/healthkit/speed.write", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.read", "https://www.huawei.com/healthkit/calories.write", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.read", "https://www.huawei.com/healthkit/pulmonary.write", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.read", "https://www.huawei.com/healthkit/strength.write", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.read", "https://www.huawei.com/healthkit/activity.write", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.read", "https://www.huawei.com/healthkit/bodyfat.write", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.read", "https://www.huawei.com/healthkit/sleep.write", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.read", "https://www.huawei.com/healthkit/nutrition.write", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.read", "https://www.huawei.com/healthkit/bloodpressure.write", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.read", "https://www.huawei.com/healthkit/oxygensaturation.write", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.read", "https://www.huawei.com/healthkit/bodytemperature.write", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.read", "https://www.huawei.com/healthkit/reproductive.write", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both", "https://www.huawei.com/healthkit/activity.both"]	
+}
 
-export declare const HuaweiHiHealth: {
-  HEALTHKIT_HEIGHTWEIGHT_READ: string;
-  HEALTHKIT_HEIGHTWEIGHT_WRITE: string;
-  HEALTHKIT_HEIGHTWEIGHT_BOTH: string;
-  HEALTHKIT_STEP_READ: string;
-  HEALTHKIT_STEP_WRITE: string;
-  HEALTHKIT_STEP_BOTH: string;
-  HEALTHKIT_LOCATION_READ: string;
-  HEALTHKIT_LOCATION_WRITE: string;
-  HEALTHKIT_LOCATION_BOTH: string;
-  HEALTHKIT_HEARTRATE_READ: string;
-  HEALTHKIT_HEARTRATE_WRITE: string;
-  HEALTHKIT_HEARTRATE_BOTH: string;
-  HEALTHKIT_BLOODGLUCOSE_READ: string;
-  HEALTHKIT_BLOODGLUCOSE_WRITE: string;
-  HEALTHKIT_BLOODGLUCOSE_BOTH: string;
-  HEALTHKIT_DISTANCE_READ: string;
-  HEALTHKIT_DISTANCE_WRITE: string;
-  HEALTHKIT_DISTANCE_BOTH: string;
-  HEALTHKIT_SPEED_READ: string;
-  HEALTHKIT_SPEED_WRITE: string;
-  HEALTHKIT_SPEED_BOTH: string;
-  HEALTHKIT_CALORIES_READ: string;
-  HEALTHKIT_CALORIES_WRITE: string;
-  HEALTHKIT_CALORIES_BOTH: string;
-  HEALTHKIT_PULMONARY_READ: string;
-  HEALTHKIT_PULMONARY_WRITE: string;
-  HEALTHKIT_PULMONARY_BOTH: string;
-  HEALTHKIT_STRENGTH_READ: string;
-  HEALTHKIT_STRENGTH_WRITE: string;
-  HEALTHKIT_STRENGTH_BOTH: string;
-  HEALTHKIT_ACTIVITY_READ: string;
-  HEALTHKIT_ACTIVITY_WRITE: string;
-  HEALTHKIT_ACTIVITY_BOTH: string;
-  HEALTHKIT_BODYFAT_READ: string;
-  HEALTHKIT_BODYFAT_WRITE: string;
-  HEALTHKIT_BODYFAT_BOTH: string;
-  HEALTHKIT_SLEEP_READ: string;
-  HEALTHKIT_SLEEP_WRITE: string;
-  HEALTHKIT_SLEEP_BOTH: string;
-  HEALTHKIT_NUTRITION_READ: string;
-  HEALTHKIT_NUTRITION_WRITE: string;
-  HEALTHKIT_NUTRITION_BOTH: string;
-  HEALTHKIT_BLOODPRESSURE_READ: string;
-  HEALTHKIT_BLOODPRESSURE_WRITE: string;
-  HEALTHKIT_BLOODPRESSURE_BOTH: string;
-  HEALTHKIT_OXYGENSTATURATION_READ: string;
-  HEALTHKIT_OXYGENSTATURATION_WRITE: string;
-  HEALTHKIT_OXYGENSTATURATION_BOTH: string;
-  HEALTHKIT_BODYTEMPERATURE_READ: string;
-  HEALTHKIT_BODYTEMPERATURE_WRITE: string;
-  HEALTHKIT_BODYTEMPERATURE_BOTH: string;
-  HEALTHKIT_REPRODUCTIVE_READ: string;
-  HEALTHKIT_REPRODUCTIVE_WRITE: string;
-  HEALTHKIT_REPRODUCTIVE_BOTH: string;
-  HEALTHKIT_ACTIVITY_RECORD_READ: string;
-  HEALTHKIT_ACTIVITY_RECORD_WRITE: string;
-  HEALTHKIT_ACTIVITY_RECORD_BOTH: string;
-  HEALTHKIT_STRESS_READ: string;
-  HEALTHKIT_STRESS_WRITE: string;
-  HEALTHKIT_STRESS_BOTH: string;
-  HEALTHKIT_SCOPE_PREFIX: string;
-  ALL_SCOPES: string[];
-  MAX_SCOPES: string[];
-};
-export declare const DataType: {
-  DT_UNUSED_DATA_TYPE: string;
-  DT_CONTINUOUS_STEPS_DELTA: string;
-  DT_CONTINUOUS_STEPS_TOTAL: string;
-  DT_INSTANTANEOUS_STEPS_RATE: string;
-  DT_CONTINUOUS_STEPS_RATE_STATISTIC: string;
-  DT_CONTINUOUS_ACTIVITY_SEGMENT: string;
-  DT_CONTINUOUS_CALORIES_CONSUMED: string;
-  DT_CONTINUOUS_CALORIES_BURNT: string;
-  DT_INSTANTANEOUS_CALORIES_BMR: string;
-  DT_INSTANTANEOUS_POWER_SAMPLE: string;
-  DT_INSTANTANEOUS_ACTIVITY_SAMPLE: string;
-  DT_INSTANTANEOUS_ACTIVITY_SAMPLES: string;
-  DT_INSTANTANEOUS_HEART_RATE: string;
-  DT_INSTANTANEOUS_LOCATION_SAMPLE: string;
-  DT_INSTANTANEOUS_LOCATION_TRACE: string;
-  DT_CONTINUOUS_DISTANCE_DELTA: string;
-  DT_CONTINUOUS_DISTANCE_TOTAL: string;
-  DT_CONTINUOUS_CALORIES_BURNT_TOTAL: string;
-  DT_INSTANTANEOUS_SPEED: string;
-  DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL: string;
-  DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION: string;
-  DT_CONTINUOUS_BIKING_PEDALING_TOTAL: string;
-  DT_INSTANTANEOUS_BIKING_PEDALING_RATE: string;
-  DT_INSTANTANEOUS_HEIGHT: string;
-  DT_INSTANTANEOUS_BODY_WEIGHT: string;
-  DT_INSTANTANEOUS_BODY_FAT_RATE: string;
-  DT_INSTANTANEOUS_NUTRITION_FACTS: string;
-  DT_INSTANTANEOUS_HYDRATE: string;
-  DT_CONTINUOUS_WORKOUT_DURATION: string;
-  DT_CONTINUOUS_EXERCISE_INTENSITY: string;
-  DT_STATISTICS_SLEEP: string;
-  DT_CONTINUOUS_SLEEP: string;
-  DT_INSTANTANEOUS_STRESS: string;
-  DT_INSTANTANEOUS_STRESS_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: string;
-  POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: string;
-  POLYMERIZE_STEP_COUNT_DELTA: string;
-  POLYMERIZE_DISTANCE_DELTA: string;
-  POLYMERIZE_CALORIES_CONSUMED: string;
-  POLYMERIZE_CALORIES_EXPENDED: string;
-  POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE: string;
-  POLYMERIZE_CONTINUOUS_POWER_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_SPEED_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS: string;
-  POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS: string;
-  POLYMERIZE_HYDRATION: string;
-};
-export declare const HiHealthActivities: {
-  MIME_TYPE_PREFIX: string;
-  EXTRA_ACTION_STATUS: string;
-  STATUS_ACTION_START: string;
-  STATUS_ACTION_END: string;
-  AEROBICS: string;
-  ARCHERY: string;
-  BADMINTON: string;
-  BASEBALL: string;
-  BASKETBALL: string;
-  BIATHLON: string;
-  BOXING: string;
-  CALISTHENICS: string;
-  CIRCUIT_TRAINING: string;
-  CRICKET: string;
-  CROSSFIT: string;
-  CURLING: string;
-  CYCLING: string;
-  CYCLING_INDOOR: string;
-  DANCING: string;
-  DIVING: string;
-  ELEVATOR: string;
-  ELLIPTICAL: string;
-  ERGOMETER: string;
-  ESCALATOR: string;
-  FENCING: string;
-  FOOTBALL_AMERICAN: string;
-  FOOTBALL_AUSTRALIAN: string;
-  FOOTBALL_SOCCER: string;
-  FLYING_DISC: string;
-  GARDENING: string;
-  GOLF: string;
-  GYMNASTICS: string;
-  HANDBALL: string;
-  HIIT: string;
-  HIKING: string;
-  HOCKEY: string;
-  HORSE_RIDING: string;
-  HOUSEWORK: string;
-  ICE_SKATING: string;
-  IN_VEHICLE: string;
-  INTERVAL_TRAINING: string;
-  JUMPING_ROPE: string;
-  KAYAKING: string;
-  KETTLEBELL_TRAINING: string;
-  KICKBOXING: string;
-  KITESURFING: string;
-  MARTIAL_ARTS: string;
-  MEDITATION: string;
-  MIXED_MARTIAL_ARTS: string;
-  ON_FOOT: string;
-  OTHER: string;
-  P90X: string;
-  PARAGLIDING: string;
-  PILATES: string;
-  POLO: string;
-  RACQUETBALL: string;
-  ROCK_CLIMBING: string;
-  ROWING: string;
-  ROWING_MACHINE: string;
-  RUGBY: string;
-  RUNNING: string;
-  RUNNING_MACHINE: string;
-  SAILING: string;
-  SCUBA_DIVING: string;
-  SCOOTER_RIDING: string;
-  SKATEBOARDING: string;
-  SKATING: string;
-  SKIING: string;
-  SLEDDING: string;
-  SLEEP: string;
-  SLEEP_LIGHT: string;
-  SLEEP_DEEP: string;
-  SLEEP_REM: string;
-  SLEEP_AWAKE: string;
-  SNOWBOARDING: string;
-  SNOWMOBILE: string;
-  SNOWSHOEING: string;
-  SOFTBALL: string;
-  SQUASH: string;
-  STAIR_CLIMBING: string;
-  STAIR_CLIMBING_MACHINE: string;
-  STANDUP_PADDLEBOARDING: string;
-  STILL: string;
-  STRENGTH_TRAINING: string;
-  SURFING: string;
-  SWIMMING: string;
-  SWIMMING_POOL: string;
-  SWIMMING_OPEN_WATER: string;
-  TABLE_TENNIS: string;
-  TEAM_SPORTS: string;
-  TENNIS: string;
-  TILTING: string;
-  UNKNOWN: string;
-  VOLLEYBALL: string;
-  WAKEBOARDING: string;
-  WALKING: string;
-  WATER_POLO: string;
-  WEIGHTLIFTING: string;
-  WHEELCHAIR: string;
-  WINDSURFING: string;
-  YOGA: string;
-  ZUMBA: string;
-  DARTS: string;
-  BILLIARDS: string;
-  SHUTTLECOCK: string;
-  BOWLING: string;
-  GROUP_CALISTHENICS: string;
-  TUG_OF_WAR: string;
-  BEACH_SOCCER: string;
-  BEACH_VOLLEYBALL: string;
-  GATEBALL: string;
-  SEPAKTAKRAW: string;
-  DODGE_BALL: string;
-  TREADMILL: string;
-  SPINNING: string;
-  STROLL_MACHINE: string;
-  CROSS_FIT: string;
-  FUNCTIONAL_TRAINING: string;
-  PHYSICAL_TRAINING: string;
-  BELLY_DANCE: string;
-  JAZZ: string;
-  LATIN: string;
-  BALLET: string;
-  CORE_TRAINING: string;
-  HORIZONTAL_BAR: string;
-  PARALLEL_BARS: string;
-  HIP_HOP: string;
-  SQUARE_DANCE: string;
-  HU_LA_HOOP: string;
-  BMX: string;
-  ORIENTEERING: string;
-  INDOOR_WALK: string;
-  INDOOR_RUNNING: string;
-  MOUNTIN_CLIMBING: string;
-  CROSS_COUNTRY_RACE: string;
-  ROLLER_SKATING: string;
-  HUNTING: string;
-  FLY_A_KITE: string;
-  SWING: string;
-  OBSTACLE_RACE: string;
-  BUNGEE_JUMPING: string;
-  PARKOUR: string;
-  PARACHUTE: string;
-  RACING_CAR: string;
-  TRIATHLONS: string;
-  ICE_HOCKEY: string;
-  CROSSCOUNTRY_SKIING: string;
-  SLED: string;
-  FISHING: string;
-  DRIFTING: string;
-  DRAGON_BOAT: string;
-  MOTORBOAT: string;
-  SUP: string;
-  FREE_SPARRING: string;
-  KARATE: string;
-  BODY_COMBAT: string;
-  KENDO: string;
-  TAI_CHI: string;
-};
-export declare const DataGenerateType: {
-  DATA_TYPE_INIT: number;
-  DATA_TYPE_RAW: number;
-  DATA_TYPE_DERIVED: number;
-  DATA_TYPE_CLEAN: number;
-  DATA_TYPE_CONVERTED: number;
-  DATA_TYPE_MERGED: number;
-  DATA_TYPE_POLYMERIZED: number;
-};
-export declare const TimeUnit: {
-  HOURS: string;
-  DAYS: string;
-  MICROSECONDS: string;
-  MILLISECONDS: string;
-  MINUTES: string;
-  NANOSECONDS: string;
-  SECONDS: string;
-};
-export declare const Field: {
-  FORMAT_INT32: number;
-  FORMAT_FLOAT: number;
-  FORMAT_STRING: number;
-  FORMAT_MAP: number;
-  FORMAT_LONG: number;
-  FORMAT_DOUBLE: number;
-  MEAL_UNKNOWN: number;
-  MEAL_BREAKFAST: number;
-  MEAL_LUNCH: number;
-  MEAL_DINNER: number;
-  MEAL_SNACK: number;
-  TYPE_OF_RESISTANCE_UNKNOWN: number;
-  TYPE_OF_RESISTANCE_BARBELL: number;
-  TYPE_OF_RESISTANCE_CABLE: number;
-  TYPE_OF_RESISTANCE_DUMBBELL: number;
-  TYPE_OF_RESISTANCE_KETTLEBELL: number;
-  TYPE_OF_RESISTANCE_MACHINE: number;
-  TYPE_OF_RESISTANCE_BODY: number;
-  NUTRIENTS_FACTS_CALORIES: string;
-  NUTRIENTS_FACTS_TOTAL_FAT: string;
-  NUTRIENTS_FACTS_SATURATED_FAT: string;
-  NUTRIENTS_FACTS_UNSATURATED_FAT: string;
-  NUTRIENTS_FACTS_POLYUNSATURATED_FAT: string;
-  NUTRIENTS_FACTS_MONOUNSATURATED_FAT: string;
-  NUTRIENTS_FACTS_TRANS_FAT: string;
-  NUTRIENTS_FACTS_CHOLESTEROL: string;
-  NUTRIENTS_FACTS_SODIUM: string;
-  NUTRIENTS_FACTS_POTASSIUM: string;
-  NUTRIENTS_FACTS_TOTAL_CARBS: string;
-  NUTRIENTS_FACTS_DIETARY_FIBER: string;
-  NUTRIENTS_FACTS_SUGAR: string;
-  NUTRIENTS_FACTS_PROTEIN: string;
-  NUTRIENTS_FACTS_VITAMIN_A: string;
-  NUTRIENTS_FACTS_VITAMIN_C: string;
-  NUTRIENTS_FACTS_CALCIUM: string;
-  NUTRIENTS_FACTS_IRON: string;
-  FIELD_PRECISION: string;
-  FIELD_ALTITUDE: string;
-  FIELD_TYPE_OF_ACTIVITY: string;
-  FIELD_POSSIBILITY_OF_ACTIVITY: string;
-  FIELD_BPM: string;
-  FIELD_POSSIBILITY: string;
-  FIELD_SPAN: string;
-  FIELD_DISTANCE: string;
-  FIELD_DISTANCE_DELTA: string;
-  FIELD_HEIGHT: string;
-  FIELD_STEPS_DELTA: string;
-  FIELD_STEPS: string;
-  FIELD_STEP_LENGTH: string;
-  FIELD_LATITUDE: string;
-  FIELD_LONGITUDE: string;
-  FIELD_BODY_WEIGHT: string;
-  FIELD_BMI: string;
-  FIELD_BODY_FAT: string;
-  FIELD_BODY_FAT_RATE: string;
-  FIELD_MUSCLE_MASS: string;
-  FIELD_BASAL_METABOLISM: string;
-  FIELD_MOISTURE: string;
-  FIELD_MOISTURE_RATE: string;
-  FIELD_VISCERAL_FAT_LEVEL: string;
-  FIELD_BONE_SALT: string;
-  FIELD_PROTEIN_RATE: string;
-  FIELD_BODY_AGE: string;
-  FIELD_BODY_SCORE: string;
-  FIELD_SKELETAL_MUSCLEL_MASS: string;
-  FIELD_IMPEDANCE: string;
-  FIELD_CIRCUMFERENCE: string;
-  FIELD_SPEED: string;
-  FIELD_RPM: string;
-  FIELD_STEP_RATE: string;
-  FIELD_ROTATION: string;
-  FIELD_CALORIES: string;
-  FIELD_CALORIES_TOTAL: string;
-  FIELD_POWER: string;
-  FIELD_HYDRATE: string;
-  FIELD_MEAL: string;
-  FIELD_FOOD: string;
-  FIELD_NUTRIENTS: string;
-  FIELD_NUTRIENTS_FACTS: string;
-  FIELD_AVG: string;
-  FIELD_MAX: string;
-  FIELD_MIN: string;
-  FIELD_MIN_LATITUDE: string;
-  FIELD_MIN_LONGITUDE: string;
-  FIELD_MAX_LATITUDE: string;
-  FIELD_MAX_LONGITUDE: string;
-  FIELD_APPEARANCE: string;
-  FIELD_INTENSITY: string;
-  FALL_ASLEEP_TIME: string;
-  WAKE_UP_TIME: string;
-  SLEEP_SCORE: string;
-  SLEEP_LATENCY: string;
-  GO_BED_TIME: string;
-  SLEEP_EFFICIENCY: string;
-  LIGHT_SLEEP_TIME: string;
-  DEEP_SLEEP_TIME: string;
-  DREAM_TIME: string;
-  AWAKE_TIME: string;
-  ALL_SLEEP_TIME: string;
-  WAKE_UP_CNT: string;
-  DEEP_SLEEP_PART: string;
-  SLEEP_STATE: string;
-  SCORE: string;
-  GRADE: string;
-  MEASURE_TYPE: string;
-  STRESS_AVG: string;
-  STRESS_MAX: string;
-  STRESS_MIN: string;
-  STRESS_LAST: string;
-  MEASURE_COUNT: string;
-};
+export const DataType = {
+	DT_UNUSED_DATA_TYPE: "DT_UNUSED_DATA_TYPE",
+	DT_CONTINUOUS_STEPS_DELTA: "DT_CONTINUOUS_STEPS_DELTA",
+	DT_CONTINUOUS_STEPS_TOTAL: "DT_CONTINUOUS_STEPS_TOTAL",
+	DT_INSTANTANEOUS_STEPS_RATE: "DT_INSTANTANEOUS_STEPS_RATE",
+	DT_CONTINUOUS_STEPS_RATE_STATISTIC: "DT_CONTINUOUS_STEPS_RATE_STATISTIC",
+	DT_CONTINUOUS_ACTIVITY_SEGMENT: "DT_CONTINUOUS_ACTIVITY_SEGMENT",
+	DT_CONTINUOUS_CALORIES_CONSUMED: "DT_CONTINUOUS_CALORIES_CONSUMED",
+	DT_CONTINUOUS_CALORIES_BURNT: "DT_CONTINUOUS_CALORIES_BURNT",
+	DT_INSTANTANEOUS_CALORIES_BMR: "DT_INSTANTANEOUS_CALORIES_BMR",
+	DT_INSTANTANEOUS_POWER_SAMPLE: "DT_INSTANTANEOUS_POWER_SAMPLE",
+	DT_INSTANTANEOUS_ACTIVITY_SAMPLE: "DT_INSTANTANEOUS_ACTIVITY_SAMPLE",
+	DT_INSTANTANEOUS_ACTIVITY_SAMPLES: "DT_INSTANTANEOUS_ACTIVITY_SAMPLES",
+	DT_INSTANTANEOUS_HEART_RATE: "DT_INSTANTANEOUS_HEART_RATE",
+	DT_INSTANTANEOUS_LOCATION_SAMPLE: "DT_INSTANTANEOUS_LOCATION_SAMPLE",
+	DT_INSTANTANEOUS_LOCATION_TRACE: "DT_INSTANTANEOUS_LOCATION_TRACE",
+	DT_CONTINUOUS_DISTANCE_DELTA: "DT_CONTINUOUS_DISTANCE_DELTA",
+	DT_CONTINUOUS_DISTANCE_TOTAL: "DT_CONTINUOUS_DISTANCE_TOTAL",
+	DT_CONTINUOUS_CALORIES_BURNT_TOTAL: "DT_CONTINUOUS_CALORIES_BURNT_TOTAL",
+	DT_INSTANTANEOUS_SPEED: "DT_INSTANTANEOUS_SPEED",
+	DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL: "DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL",
+	DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION: "DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION",
+	DT_CONTINUOUS_BIKING_PEDALING_TOTAL: "DT_CONTINUOUS_BIKING_PEDALING_TOTAL",
+	DT_INSTANTANEOUS_BIKING_PEDALING_RATE: "DT_INSTANTANEOUS_BIKING_PEDALING_RATE",
+	DT_INSTANTANEOUS_HEIGHT: "DT_INSTANTANEOUS_HEIGHT",
+	DT_INSTANTANEOUS_BODY_WEIGHT: "DT_INSTANTANEOUS_BODY_WEIGHT",
+	DT_INSTANTANEOUS_BODY_FAT_RATE: "DT_INSTANTANEOUS_BODY_FAT_RATE",
+	DT_INSTANTANEOUS_NUTRITION_FACTS: "DT_INSTANTANEOUS_NUTRITION_FACTS",
+	DT_INSTANTANEOUS_HYDRATE: "DT_INSTANTANEOUS_HYDRATE",
+	DT_CONTINUOUS_WORKOUT_DURATION: "DT_CONTINUOUS_WORKOUT_DURATION",
+	DT_CONTINUOUS_EXERCISE_INTENSITY: "DT_CONTINUOUS_EXERCISE_INTENSITY",
+	DT_STATISTICS_SLEEP: "DT_STATISTICS_SLEEP",
+	DT_CONTINUOUS_SLEEP: "DT_CONTINUOUS_SLEEP",
+	DT_INSTANTANEOUS_STRESS: "DT_INSTANTANEOUS_STRESS",
+	DT_INSTANTANEOUS_STRESS_STATISTICS: "DT_INSTANTANEOUS_STRESS_STATISTICS",
+	POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
+	POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
+	POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
+	POLYMERIZE_STEP_COUNT_DELTA: "POLYMERIZE_STEP_COUNT_DELTA",
+	POLYMERIZE_DISTANCE_DELTA: "POLYMERIZE_DISTANCE_DELTA",
+	POLYMERIZE_CALORIES_CONSUMED: "POLYMERIZE_CALORIES_CONSUMED",
+	POLYMERIZE_CALORIES_EXPENDED: "POLYMERIZE_CALORIES_EXPENDED",
+	POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS: "POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS",
+	POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS: "POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS",
+	POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE: "POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE",
+	POLYMERIZE_CONTINUOUS_POWER_STATISTICS: "POLYMERIZE_CONTINUOUS_POWER_STATISTICS",
+	POLYMERIZE_CONTINUOUS_SPEED_STATISTICS: "POLYMERIZE_CONTINUOUS_SPEED_STATISTICS",
+	POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS",
+	POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS",
+	POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS",
+	POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS: "POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS",
+	POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION"
+}
+
+export const HiHealthActivities = {
+	MIME_TYPE_PREFIX: "vnd.huawei.hihealth.activity/",
+	EXTRA_ACTION_STATUS: "actionStatus",
+	STATUS_ACTION_START: "StartedActionStatus",
+	STATUS_ACTION_END: "EndedActionStatus",
+	AEROBICS: "aerobics",
+	ARCHERY: "archery",
+	BADMINTON: "badminton",
+	BASEBALL: "baseball",
+	BASKETBALL: "basketball",
+	BIATHLON: "biathlon",
+	BOXING: "boxing",
+	CALISTHENICS: "calisthenics",
+	CIRCUIT_TRAINING: "circuit_training",
+	CRICKET: "cricket",
+	CROSSFIT: "crossfit",
+	CURLING: "curling",
+	CYCLING: "cycling",
+	CYCLING_INDOOR: "cycling_indoor",
+	DANCING: "dancing",
+	DIVING: "diving",
+	ELEVATOR: "elevator",
+	ELLIPTICAL: "elliptical",
+	ERGOMETER: "ergometer",
+	ESCALATOR: "escalator",
+	FENCING: "fencing",
+	FOOTBALL_AMERICAN: "football.american",
+	FOOTBALL_AUSTRALIAN: "football.australian",
+	FOOTBALL_SOCCER: "football.soccer",
+	FLYING_DISC: "flying_disc",
+	GARDENING: "gardening",
+	GOLF: "golf",
+	GYMNASTICS: "gymnastics",
+	HANDBALL: "handball",
+	HIIT: "interval_training.high_intensity",
+	HIKING: "hiking",
+	HOCKEY: "hockey",
+	HORSE_RIDING: "horse_riding",
+	HOUSEWORK: "housework",
+	ICE_SKATING: "ice_skating",
+	IN_VEHICLE: "in_vehicle",
+	INTERVAL_TRAINING: "interval_training",
+	JUMPING_ROPE: "jumping_rope",
+	KAYAKING: "kayaking",
+	KETTLEBELL_TRAINING: "kettlebell_training",
+	KICKBOXING: "kickboxing",
+	KITESURFING: "kitesurfing",
+	MARTIAL_ARTS: "martial_arts",
+	MEDITATION: "meditation",
+	MIXED_MARTIAL_ARTS: "martial_arts.mixed",
+	ON_FOOT: "on_foot",
+	OTHER: "other",
+	P90X: "p90x",
+	PARAGLIDING: "paragliding",
+	PILATES: "pilates",
+	POLO: "polo",
+	RACQUETBALL: "racquetball",
+	ROCK_CLIMBING: "rock_climbing",
+	ROWING: "rowing",
+	ROWING_MACHINE: "rowing.machine",
+	RUGBY: "rugby",
+	RUNNING: "running",
+	RUNNING_MACHINE: "running.machine",
+	SAILING: "sailing",
+	SCUBA_DIVING: "scuba_diving",
+	SCOOTER_RIDING: "scooter_riding",
+	SKATEBOARDING: "skateboarding",
+	SKATING: "skating",
+	SKIING: "skiing",
+	SLEDDING: "sledding",
+	SLEEP: "sleep",
+	SLEEP_LIGHT: "sleep.light",
+	SLEEP_DEEP: "sleep.deep",
+	SLEEP_REM: "sleep.rem",
+	SLEEP_AWAKE: "sleep.awake",
+	SNOWBOARDING: "snowboarding",
+	SNOWMOBILE: "snowmobile",
+	SNOWSHOEING: "snowshoeing",
+	SOFTBALL: "softball",
+	SQUASH: "squash",
+	STAIR_CLIMBING: "stair_climbing",
+	STAIR_CLIMBING_MACHINE: "stair_climbing.machine",
+	STANDUP_PADDLEBOARDING: "standup_paddleboarding",
+	STILL: "still",
+	STRENGTH_TRAINING: "strength_training",
+	SURFING: "surfing",
+	SWIMMING: "swimming",
+	SWIMMING_POOL: "swimming.pool",
+	SWIMMING_OPEN_WATER: "swimming.open_water",
+	TABLE_TENNIS: "table_tennis",
+	TEAM_SPORTS: "team_sports",
+	TENNIS: "tennis",
+	TILTING: "tilting",
+	UNKNOWN: "unknown",
+	VOLLEYBALL: "volleyball",
+	WAKEBOARDING: "wakeboarding",
+	WALKING: "walking",
+	WATER_POLO: "water_polo",
+	WEIGHTLIFTING: "weightlifting",
+	WHEELCHAIR: "wheelchair",
+	WINDSURFING: "windsurfing",
+	YOGA: "yoga",
+	ZUMBA: "zumba",
+	DARTS: "darts",
+	BILLIARDS: "billiards",
+	SHUTTLECOCK: "shuttlecock",
+	BOWLING: "bowling",
+	GROUP_CALISTHENICS: "group_calisthenics",
+	TUG_OF_WAR: "tug_of_war",
+	BEACH_SOCCER: "beach_soccer",
+	BEACH_VOLLEYBALL: "beach_volleyball",
+	GATEBALL: "gateball",
+	SEPAKTAKRAW: "sepaktakraw",
+	DODGE_BALL: "dodge_ball",
+	TREADMILL: "treadmill",
+	SPINNING: "spinning",
+	STROLL_MACHINE: "stroll_machine",
+	CROSS_FIT: "cross_fit",
+	FUNCTIONAL_TRAINING: "functional_training",
+	PHYSICAL_TRAINING: "physical_training",
+	BELLY_DANCE: "belly_dance",
+	JAZZ: "jazz",
+	LATIN: "latin",
+	BALLET: "ballet",
+	CORE_TRAINING: "core_training",
+	HORIZONTAL_BAR: "horizontal_bar",
+	PARALLEL_BARS: "parallel_bars",
+	HIP_HOP: "hip_hop",
+	SQUARE_DANCE: "square_dance",
+	HU_LA_HOOP: "hu_la_hoop",
+	BMX: "bmx",
+	ORIENTEERING: "orienteering",
+	INDOOR_WALK: "indoor_walk",
+	INDOOR_RUNNING: "indoor_running",
+	MOUNTIN_CLIMBING: "mountin_climbing",
+	CROSS_COUNTRY_RACE: "cross_country_race",
+	ROLLER_SKATING: "roller_skatting",
+	HUNTING: "hunting",
+	FLY_A_KITE: "fly_a_kite",
+	SWING: "swing",
+	OBSTACLE_RACE: "obstacle_race",
+	BUNGEE_JUMPING: "bungee_jumping",
+	PARKOUR: "parkour",
+	PARACHUTE: "parachute",
+	RACING_CAR: "racing_car",
+	TRIATHLONS: "triathlons",
+	ICE_HOCKEY: "ice_hockey",
+	CROSSCOUNTRY_SKIING: "crosscountry_skiing",
+	SLED: "sled",
+	FISHING: "fishing",
+	DRIFTING: "drifting",
+	DRAGON_BOAT: "dragon_boat",
+	MOTORBOAT: "motorboat",
+	SUP: "sup",
+	FREE_SPARRING: "free_sparring",
+	KARATE: "karate",
+	BODY_COMBAT: "body_combat",
+	KENDO: "kendo",
+	TAI_CHI: "tai_chi"
+}
+
+export const DataGenerateType = {
+	DATA_TYPE_INIT: 1,
+	DATA_TYPE_RAW: 0,
+	DATA_TYPE_DERIVED: 1,
+	DATA_TYPE_CLEAN: 2,
+	DATA_TYPE_CONVERTED: 3,
+	DATA_TYPE_MERGED: 4,
+	DATA_TYPE_POLYMERIZED: 5
+}
+
+export const TimeUnit = {
+	HOURS: "HOURS",
+	DAYS: "DAYS",
+	MICROSECONDS: "MICROSECONDS",
+	MILLISECONDS: "MILLISECONDS",
+	MINUTES: "MINUTES",
+	NANOSECONDS: "NANOSECONDS",
+	SECONDS: "SECONDS"
+}
+
+export const Field = {
+	FORMAT_INT32: 1,
+	FORMAT_FLOAT: 2,
+	FORMAT_STRING: 3,
+	FORMAT_MAP: 4,
+	FORMAT_LONG: 5,
+	FORMAT_DOUBLE: 2,
+	MEAL_UNKNOWN: 0,
+	MEAL_BREAKFAST: 1,
+	MEAL_LUNCH: 2,
+	MEAL_DINNER: 3,
+	MEAL_SNACK: 4,
+	TYPE_OF_RESISTANCE_UNKNOWN: 0,
+	TYPE_OF_RESISTANCE_BARBELL: 1,
+	TYPE_OF_RESISTANCE_CABLE: 2,
+	TYPE_OF_RESISTANCE_DUMBBELL: 3,
+	TYPE_OF_RESISTANCE_KETTLEBELL: 4,
+	TYPE_OF_RESISTANCE_MACHINE: 5,
+	TYPE_OF_RESISTANCE_BODY: 6,
+	NUTRIENTS_FACTS_CALORIES: "NUTRIENTS_FACTS_CALORIES",
+	NUTRIENTS_FACTS_TOTAL_FAT: "NUTRIENTS_FACTS_TOTAL_FAT",
+	NUTRIENTS_FACTS_SATURATED_FAT: "NUTRIENTS_FACTS_SATURATED_FAT",
+	NUTRIENTS_FACTS_UNSATURATED_FAT: "NUTRIENTS_FACTS_UNSATURATED_FAT",
+	NUTRIENTS_FACTS_POLYUNSATURATED_FAT: "NUTRIENTS_FACTS_POLYUNSATURATED_FAT",
+	NUTRIENTS_FACTS_MONOUNSATURATED_FAT: "NUTRIENTS_FACTS_MONOUNSATURATED_FAT",
+	NUTRIENTS_FACTS_TRANS_FAT: "NUTRIENTS_FACTS_TRANS_FAT",
+	NUTRIENTS_FACTS_CHOLESTEROL: "NUTRIENTS_FACTS_CHOLESTEROL",
+	NUTRIENTS_FACTS_SODIUM: "NUTRIENTS_FACTS_SODIUM",
+	NUTRIENTS_FACTS_POTASSIUM: "NUTRIENTS_FACTS_POTASSIUM",
+	NUTRIENTS_FACTS_TOTAL_CARBS: "NUTRIENTS_FACTS_TOTAL_CARBS",
+	NUTRIENTS_FACTS_DIETARY_FIBER: "NUTRIENTS_FACTS_DIETARY_FIBER",
+	NUTRIENTS_FACTS_SUGAR: "NUTRIENTS_FACTS_SUGAR",
+	NUTRIENTS_FACTS_PROTEIN: "NUTRIENTS_FACTS_PROTEIN",
+	NUTRIENTS_FACTS_VITAMIN_A: "NUTRIENTS_FACTS_VITAMIN_A",
+	NUTRIENTS_FACTS_VITAMIN_C: "NUTRIENTS_FACTS_VITAMIN_C",
+	NUTRIENTS_FACTS_CALCIUM: "NUTRIENTS_FACTS_CALCIUM",
+	NUTRIENTS_FACTS_IRON: "NUTRIENTS_FACTS_IRON",
+	FIELD_PRECISION: "FIELD_PRECISION",
+	FIELD_ALTITUDE: "FIELD_ALTITUDE",
+	FIELD_TYPE_OF_ACTIVITY: "FIELD_TYPE_OF_ACTIVITY",
+	FIELD_POSSIBILITY_OF_ACTIVITY: "FIELD_POSSIBILITY_OF_ACTIVITY",
+	FIELD_BPM: "FIELD_BPM",
+	FIELD_POSSIBILITY: "FIELD_POSSIBILITY",
+	FIELD_SPAN: "FIELD_SPAN",
+	FIELD_DISTANCE: "FIELD_DISTANCE",
+	FIELD_DISTANCE_DELTA: "FIELD_DISTANCE_DELTA",
+	FIELD_HEIGHT: "FIELD_HEIGHT",
+	FIELD_STEPS_DELTA: "FIELD_STEPS_DELTA",
+	FIELD_STEPS: "FIELD_STEPS",
+	FIELD_STEP_LENGTH: "FIELD_STEP_LENGTH",
+	FIELD_LATITUDE: "FIELD_LATITUDE",
+	FIELD_LONGITUDE: "FIELD_LONGITUDE",
+	FIELD_BODY_WEIGHT: "FIELD_BODY_WEIGHT",
+	FIELD_BMI: "FIELD_BMI",
+	FIELD_BODY_FAT: "FIELD_BODY_FAT",
+	FIELD_BODY_FAT_RATE: "FIELD_BODY_FAT_RATE",
+	FIELD_MUSCLE_MASS: "FIELD_MUSCLE_MASS",
+	FIELD_BASAL_METABOLISM: "FIELD_BASAL_METABOLISM",
+	FIELD_MOISTURE: "FIELD_MOISTURE",
+	FIELD_MOISTURE_RATE: "FIELD_MOISTURE_RATE",
+	FIELD_VISCERAL_FAT_LEVEL: "FIELD_VISCERAL_FAT_LEVEL",
+	FIELD_BONE_SALT: "FIELD_BONE_SALT",
+	FIELD_PROTEIN_RATE: "FIELD_PROTEIN_RATE",
+	FIELD_BODY_AGE: "FIELD_BODY_AGE",
+	FIELD_BODY_SCORE: "FIELD_BODY_SCORE",
+	FIELD_SKELETAL_MUSCLEL_MASS: "FIELD_SKELETAL_MUSCLEL_MASS",
+	FIELD_IMPEDANCE: "FIELD_IMPEDANCE",
+	FIELD_CIRCUMFERENCE: "FIELD_CIRCUMFERENCE",
+	FIELD_SPEED: "FIELD_SPEED",
+	FIELD_RPM: "FIELD_RPM",
+	FIELD_STEP_RATE: "FIELD_STEP_RATE",
+	FIELD_ROTATION: "FIELD_ROTATION",
+	FIELD_CALORIES: "FIELD_CALORIES",
+	FIELD_CALORIES_TOTAL: "FIELD_CALORIES_TOTAL",
+	FIELD_POWER: "FIELD_POWER",
+	FIELD_HYDRATE: "FIELD_HYDRATE",
+	FIELD_MEAL: "FIELD_MEAL",
+	FIELD_FOOD: "FIELD_FOOD",
+	FIELD_NUTRIENTS: "FIELD_NUTRIENTS",
+	FIELD_NUTRIENTS_FACTS: "FIELD_NUTRIENTS_FACTS",
+	FIELD_AVG: "FIELD_AVG",
+	FIELD_MAX: "FIELD_MAX",
+	FIELD_MIN: "FIELD_MIN",
+	FIELD_MIN_LATITUDE: "FIELD_MIN_LATITUDE",
+	FIELD_MIN_LONGITUDE: "FIELD_MIN_LONGITUDE",
+	FIELD_MAX_LATITUDE: "FIELD_MAX_LATITUDE",
+	FIELD_MAX_LONGITUDE: "FIELD_MAX_LONGITUDE",
+	FIELD_APPEARANCE: "FIELD_APPEARANCE",
+	FIELD_INTENSITY: "FIELD_INTENSITY",
+	FALL_ASLEEP_TIME: "FALL_ASLEEP_TIME",
+	WAKE_UP_TIME: "WAKE_UP_TIME",
+	SLEEP_SCORE: "SLEEP_SCORE",
+	SLEEP_LATENCY: "SLEEP_LATENCY",
+	GO_BED_TIME: "GO_BED_TIME",
+	SLEEP_EFFICIENCY: "SLEEP_EFFICIENCY",
+	LIGHT_SLEEP_TIME: "LIGHT_SLEEP_TIME",
+	DEEP_SLEEP_TIME: "DEEP_SLEEP_TIME",
+	DREAM_TIME: "DREAM_TIME",
+	AWAKE_TIME: "AWAKE_TIME",
+	ALL_SLEEP_TIME: "ALL_SLEEP_TIME",
+	WAKE_UP_CNT: "WAKE_UP_CNT",
+	DEEP_SLEEP_PART: "DEEP_SLEEP_PART",
+	SLEEP_STATE: "SLEEP_STATE",
+	SCORE: "SCORE",
+	GRADE: "GRADE",
+	MEASURE_TYPE: "MEASURE_TYPE",
+	STRESS_AVG: "STRESS_AVG",
+	STRESS_MAX: "STRESS_MAX",
+	STRESS_MIN: "STRESS_MIN",
+	STRESS_LAST: "STRESS_LAST",
+	MEASURE_COUNT: "MEASURE_COUNT",
+}
+
 export interface AddActivityRecordReq {
   dataCollector: DataCollector;
   activityRecord: ActivityRecord;
@@ -679,6 +676,11 @@ export interface AuthHuaweiId {
   extensionScopes: string[];
   authorizationCode?: string;
   huaweiAccount?: Account;
+}
+export interface ReadDailySummationReq {
+  startDate: number,
+  endDate: number,
+  dataType: string
 }
 export interface Account {
   type: string;

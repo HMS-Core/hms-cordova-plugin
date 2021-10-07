@@ -16,6 +16,8 @@
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
+const packageName = '<package_name>'
+
 const HiHealthOptions = {
   ACCESS_READ: 0,
   ACCESS_WRITE: 1
@@ -495,15 +497,15 @@ initDataControllerButton.onclick = function () {
 };
 let readButton = document.getElementById('read');
 readButton.onclick = function () {
-  readData()
+  read()
 };
 let insertButton = document.getElementById('insert');
 insertButton.onclick = function () {
-  insertData()
+  insert()
 };
 let updateButton = document.getElementById('update');
 updateButton.onclick = function () {
-  updateData()
+  update()
 };
 let deleteButton = document.getElementById('delete');
 deleteButton.onclick = function () {
@@ -523,7 +525,7 @@ clearAllButton.onclick = function () {
 };
 let addDataTypeButton = document.getElementById('addDataType');
 addDataTypeButton.onclick = function () {
-  addNewDataType()
+  addDataType()
 };
 let readDataTypeButton = document.getElementById('readDataType');
 readDataTypeButton.onclick = function () {
@@ -566,6 +568,7 @@ function startAutoRecorder() {
     dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL
   }).then(() => {
     console.log("Start Record Success!");
+    alert("Start Record Success!");
   }).catch(error => {
     console.log(error);
   })
@@ -576,6 +579,7 @@ function stopAutoRecorder() {
     dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL
   }).then(() => {
     console.log("Stop Record Success!");
+    alert("Stop Record Success!");
   }).catch(error => {
     console.log(error);
   })
@@ -589,8 +593,8 @@ function addActivityRecord() {
 
   let activityRecordData = {
     dataCollector: {
-      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-      name: "DT_CONTINUOUS_STEPS_DELTA",
+      dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+      name: "DT_CONTINUOUS_STEPS_TOTAL",
       dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     activityRecord: {
@@ -625,12 +629,12 @@ function addActivityRecord() {
         dataSummary: [{
           startTime: startDate.getTime(),
           endTime: endDate.getTime(),
-          fieldName: Field.FIELD_STEPS_DELTA,
-          fieldValue: "200",
+          fieldName: Field.FIELD_STEPS,
+          fieldValue: "352",
           timeUnit: TimeUnit.MILLISECONDS,
           dataCollector: {
-            dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-            name: "DT_CONTINUOUS_STEPS_DELTA",
+            dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+            name: "DT_CONTINUOUS_STEPS_TOTAL",
             dataGenerateType: DataGenerateType.DATA_TYPE_RAW
           }
         }]
@@ -639,12 +643,12 @@ function addActivityRecord() {
     sampleSet: [{
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      fieldName: Field.FIELD_STEPS_DELTA,
-      fieldValue: "200",
+      fieldName: Field.FIELD_STEPS,
+      fieldValue: "352",
       timeUnit: TimeUnit.MILLISECONDS,
       dataCollector: {
-        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-        name: "DT_CONTINUOUS_STEPS_DELTA",
+        dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+        name: "DT_CONTINUOUS_STEPS_TOTAL",
         dataGenerateType: DataGenerateType.DATA_TYPE_RAW
       },
     }]
@@ -660,7 +664,6 @@ function addActivityRecord() {
 
 function beginActivityRecord() {
   let startDate = new Date();
-  let endDate = new Date();
   startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000))
 
   let activityRecord = {
@@ -940,15 +943,15 @@ function revoke() {
 }
 
 // Settings Controller
-function addNewDataType() {
+function addDataType() {
   const options = {
-    dataTypeName: "com.huseyindeniz.health.newExtendedDataType",
+    dataTypeName: packageName + ".newExtendedDataType",
     fieldValue: Field.FIELD_STEPS_DELTA
   }
 
-  HMSHealth.SettingsController.addNewDataType(options).then((data) => {
-    console.log("addNewDataType Success!");
-    alert("addNewDataType Success!");
+  HMSHealth.SettingsController.addDataType(options).then((data) => {
+    console.log("addDataType Success!");
+    alert("addDataType Success!");
   }).catch(error => {
     console.log(error);
   });
@@ -964,7 +967,7 @@ function disableHiHealth() {
 }
 
 function readDataType() {
-  let dataTypeName = "com.huseyindeniz.health.newExtendedDataType1";
+  let dataTypeName = packageName + ".newExtendedDataType";
 
   HMSHealth.SettingsController.readDataType(dataTypeName).then((data) => {
     console.log("readDataType Success!");

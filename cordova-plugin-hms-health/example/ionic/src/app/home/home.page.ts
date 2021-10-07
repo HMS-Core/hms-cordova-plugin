@@ -15,7 +15,10 @@
 */
 
 import { Component } from '@angular/core';
-import * as HMSHealth from "@hmscore/cordova-plugin-hms-health";
+import { HMSHealth, DataType, DataGenerateType, Field, HiHealthActivities, TimeUnit,
+  ActivityRecordController, AutoRecorderController, ConsentsController, DataController, SettingsController
+} from "@hmscore/ionic-native-hms-health/ngx";
+
 
 const HuaweiHiHealth = {
   HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
@@ -90,10 +93,12 @@ const HuaweiHiHealth = {
 })
 export class HomePage {
 
-  constructor() {}
+  packageName = "<package_name>"
+
+  constructor(private hmsHealth: HMSHealth) {}
 
   signIn() {
-    HMSHealth.signIn([HuaweiHiHealth.ALL_SCOPES]).then(user => {
+    this.hmsHealth.signIn(HuaweiHiHealth.ALL_SCOPES).then(user => {
       console.log("SignIn Success");
       console.log(user);
       console.log(JSON.stringify(user));
@@ -106,8 +111,13 @@ export class HomePage {
 
   
 startAutoRecorder() {
-  HMSHealth.AutoRecorderController.startRecord({
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_TOTAL
+  this.hmsHealth.on("samplepoint", (e) => {
+    console.log(e);
+    alert(JSON.stringify(e))
+  });
+
+  AutoRecorderController.startRecord({
+    dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL
   }).then(() => {
     console.log("Start Record Success!");
   }).catch(error => {
@@ -116,10 +126,11 @@ startAutoRecorder() {
 }
 
 stopAutoRecorder() {
-  HMSHealth.AutoRecorderController.stopRecord({
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_TOTAL
+  AutoRecorderController.stopRecord({
+    dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL
   }).then(() => {
     console.log("Stop Record Success!");
+    alert("Stop Record Success!");
   }).catch(error => {
     console.log(error);
   })
@@ -132,19 +143,19 @@ addActivityRecord() {
 
   let activityRecordData = {
     dataCollector: {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
-      name: "DT_CONTINUOUS_STEPS_DELTA",
-      dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+      dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+      name: "DT_CONTINUOUS_STEPS_TOTAL",
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     activityRecord: {
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
       timeZone: "+0800",
       id: 'ActivityRecordRun1923',
       name: 'BeginActivityRecord',
       description: 'This is a test for ActivityRecord',
-      activityType: HMSHealth.HiHealthActivities.RUNNING,
+      activityType: HiHealthActivities.RUNNING,
       activitySummary: {
         paceSummary: {
           avgPace: 247.27626,
@@ -168,13 +179,13 @@ addActivityRecord() {
         dataSummary: [{
           startTime: startDate.getTime(),
           endTime: endDate.getTime(),
-          fieldName: HMSHealth.Field.FIELD_STEPS_DELTA,
+          fieldName: Field.FIELD_STEPS,
           fieldValue: "200",
-          timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+          timeUnit: TimeUnit.MILLISECONDS,
           dataCollector: {
-            dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
-            name: "DT_CONTINUOUS_STEPS_DELTA",
-            dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+            dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+            name: "DT_CONTINUOUS_STEPS_TOTAL",
+            dataGenerateType: DataGenerateType.DATA_TYPE_RAW
           }
         }]
       }
@@ -182,18 +193,18 @@ addActivityRecord() {
     sampleSet: [{
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      fieldName: HMSHealth.Field.FIELD_STEPS_DELTA,
+      fieldName: Field.FIELD_STEPS,
       fieldValue: "200",
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
       dataCollector: {
-        dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
-        name: "DT_CONTINUOUS_STEPS_DELTA",
-        dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+        dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+        name: "DT_CONTINUOUS_STEPS_TOTAL",
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW
       },
     }]
   }
 
-  HMSHealth.ActivityRecordController.addActivityRecord(activityRecordData).then(() => {
+  ActivityRecordController.addActivityRecord(activityRecordData).then(() => {
     console.log("Add Activity Record Success!");
     alert("Add Activity Record Success!");
   }).catch(error => {
@@ -207,14 +218,14 @@ beginActivityRecord() {
 
   let activityRecord = {
     startTime: startDate.getTime(),
-    timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+    timeUnit: TimeUnit.MILLISECONDS,
     timeZone: "+0800",
     id: 'ActivityRecordRun',
     name: 'BeginActivityRecord',
     description: 'This is a test for ActivityRecord',
-    activityType: HMSHealth.HiHealthActivities.RUNNING,
+    activityType: HiHealthActivities.RUNNING,
   }
-  HMSHealth.ActivityRecordController.beginActivityRecord(activityRecord).then(() => {
+  ActivityRecordController.beginActivityRecord(activityRecord).then(() => {
     console.log("Begin Activity Record Success!");
     alert("Begin Activity Record Success!");
   }).catch(error => {
@@ -225,7 +236,7 @@ beginActivityRecord() {
 endActivityRecord() {
   let activityRecordId = "ActivityRecordRun";
 
-  HMSHealth.ActivityRecordController.endActivityRecord(activityRecordId).then(() => {
+  ActivityRecordController.endActivityRecord(activityRecordId).then(() => {
     console.log("End Activity Record Success!");
     alert("End Activity Record Success!");
   }).catch(error => {
@@ -241,11 +252,11 @@ getActivityRecord() {
   let activityRecord = {
     startTime: startDate.getTime(),
     endTime: endDate.getTime(),
-    timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA
+    timeUnit: TimeUnit.MILLISECONDS,
+    dataType: DataType.DT_CONTINUOUS_STEPS_DELTA
   }
 
-  HMSHealth.ActivityRecordController.getActivityRecord(activityRecord).then((ar) => {
+  ActivityRecordController.getActivityRecord(activityRecord).then((ar) => {
     console.log("Get Activity Record Success!");
     console.log(ar);
     console.log(JSON.stringify(ar));
@@ -258,15 +269,15 @@ getActivityRecord() {
 
 initDataController() {
   let dataTypes = [{
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       hiHealthOption: 0
     },
     {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       hiHealthOption: 1
     }
   ];
-  HMSHealth.DataController.initDataController(dataTypes).then(() => {
+  DataController.initDataController(dataTypes).then(() => {
     console.log("initDataController Success!");
     alert("initDataController Success!");
   }).catch(error => {
@@ -281,18 +292,18 @@ read() {
 
   let readData = {
     dataCollector: {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       name: "DT_CONTINUOUS_STEPS_DELTA",
-      dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     options: {
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
     }
   }
 
-  HMSHealth.DataController.read(readData).then((data) => {
+  DataController.read(readData).then((data) => {
     console.log("read data Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -309,25 +320,25 @@ insert() {
 
   let insertData = {
     dataCollector: {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       name: "DT_CONTINUOUS_STEPS_DELTA",
-      dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     sampleSet: [{
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      fieldName: HMSHealth.Field.FIELD_STEPS_DELTA,
+      fieldName: Field.FIELD_STEPS_DELTA,
       fieldValue: "200",
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
       dataCollector: {
-        dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
         name: "DT_CONTINUOUS_STEPS_DELTA",
-        dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW
       },
     }]
   }
 
-  HMSHealth.DataController.insert(insertData).then(() => {
+  DataController.insert(insertData).then(() => {
     console.log("insert data Success!");
     alert("insert data Success!");
   }).catch(error => {
@@ -342,29 +353,29 @@ update() {
 
   let updateData = {
     dataCollector: {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       name: "DT_CONTINUOUS_STEPS_DELTA",
-      dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     sampleSet: [{
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      fieldName: HMSHealth.Field.FIELD_STEPS_DELTA,
+      fieldName: Field.FIELD_STEPS_DELTA,
       fieldValue: "200",
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
       dataCollector: {
-        dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
         name: "DT_CONTINUOUS_STEPS_DELTA",
-        dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW
       },
     }],
     options: {
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
     }
   }
-  HMSHealth.DataController.update(updateData).then(() => {
+  DataController.update(updateData).then(() => {
     console.log("update data Success!");
     alert("update data Success!");
   }).catch(error => {
@@ -379,17 +390,17 @@ deleteData() {
 
   let deleteData = {
     dataCollector: {
-      dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
       name: "DT_CONTINUOUS_STEPS_DELTA",
-      dataGenerateType: HMSHealth.DataGenerateType.DATA_TYPE_RAW
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     options: {
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
-      timeUnit: HMSHealth.TimeUnit.MILLISECONDS,
+      timeUnit: TimeUnit.MILLISECONDS,
     }
   }
-  HMSHealth.DataController.deleteData(deleteData).then(() => {
+  DataController.deleteData(deleteData).then(() => {
     console.log("delete data Success!");
     alert("delete data Success!");
   }).catch(error => {
@@ -398,7 +409,7 @@ deleteData() {
 }
 
 readTodaySummation() {
-  HMSHealth.DataController.readTodaySummation(HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA).then((data) => {
+  DataController.readTodaySummation(DataType.DT_CONTINUOUS_STEPS_DELTA).then((data) => {
     console.log("readTodaySummation data Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -412,9 +423,9 @@ readDailySummation() {
   let options = {
     startDate: 20210223,
     endDate: 20210225,
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA
+    dataType: DataType.DT_CONTINUOUS_STEPS_DELTA
   }
-  HMSHealth.DataController.readDailySummation(options).then((data) => {
+  DataController.readDailySummation(options).then((data) => {
     console.log("readDailySummation data Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -426,7 +437,7 @@ readDailySummation() {
 }
 
 clearAll() {
-  HMSHealth.DataController.clearAll().then((data) => {
+  DataController.clearAll().then((data) => {
     console.log("clearAll data Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -441,7 +452,7 @@ getPermissions() {
     language: "en-us",
     appId: "103345931"
   }
-  HMSHealth.ConsentsController.getPermissions(options).then((data) => {
+  ConsentsController.getPermissions(options).then((data) => {
     console.log("getPermissions Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -452,7 +463,7 @@ getPermissions() {
 }
 
 revokeAll() {
-  HMSHealth.ConsentsController.revokeAll("103345931").then((data) => {
+  ConsentsController.revokeAll("103345931").then((data) => {
     console.log("revokeAll Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -470,7 +481,7 @@ revoke() {
       HuaweiHiHealth.HEALTHKIT_STEP_WRITE
     ]
   }
-  HMSHealth.ConsentsController.revoke(options).then((data) => {
+  ConsentsController.revoke(options).then((data) => {
     console.log("revoke Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -482,11 +493,11 @@ revoke() {
 
 addNewDataType() {
   const options = {
-    dataTypeName: "com.huseyindeniz.health.newExtendedDataType",
-    fieldValue: HMSHealth.Field.FIELD_STEPS_DELTA
+    dataTypeName: this.packageName + ".newExtendedDataType",
+    fieldValue: Field.FIELD_STEPS_DELTA
   }
 
-  HMSHealth.SettingsController.addDataType(options).then((data) => {
+  SettingsController.addDataType(options).then((data) => {
     console.log("addNewDataType Success!");
     alert("addNewDataType Success!");
   }).catch(error => {
@@ -495,7 +506,7 @@ addNewDataType() {
 }
 
 disableHiHealth() {
-  HMSHealth.SettingsController.disableHiHealth().then(() => {
+  SettingsController.disableHiHealth().then(() => {
     console.log("disableHiHealth Success!");
     alert("disableHiHealth Success!");
   }).catch(error => {
@@ -504,9 +515,9 @@ disableHiHealth() {
 }
 
 readDataType() {
-  let dataTypeName = "com.huseyindeniz.health.newExtendedDataType1";
+  let dataTypeName = this.packageName + ".newExtendedDataType";
 
-  HMSHealth.SettingsController.readDataType(dataTypeName).then((data) => {
+  SettingsController.readDataType(dataTypeName).then((data) => {
     console.log("readDataType Success!");
     alert("readDataType Success!");
   }).catch(error => {
@@ -515,7 +526,7 @@ readDataType() {
 }
 
 checkHealthAppAuthorization() {
-  HMSHealth.SettingsController.checkHealthAppAuthorization().then((data) => {
+  SettingsController.checkHealthAppAuthorization().then((data) => {
     console.log("checkHealthAppAuthorization Success!");
     alert("checkHealthAppAuthorization Success!");
   }).catch(error => {
@@ -524,7 +535,7 @@ checkHealthAppAuthorization() {
 }
 
 getHealthAppAuthorization() {
-  HMSHealth.SettingsController.getHealthAppAuthorization().then((data) => {
+  SettingsController.getHealthAppAuthorization().then((data) => {
     console.log("getHealthAppAuthorization Success!");
     alert("getHealthAppAuthorization Success!");
   }).catch(error => {

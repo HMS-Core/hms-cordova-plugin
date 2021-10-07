@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-health",
     "description": "Cordova HMS Health Plugin",
-    "version": "5.0.5-301",
+    "version": "5.0.5-302",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {

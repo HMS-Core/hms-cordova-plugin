@@ -73,7 +73,7 @@ export const DataController = {
 	readTodaySummation: function readTodaySummation(dataTypeStr:string): Promise<SampleSet> {
 		return asyncExec('HMSHealth', 'DataController', ['readTodaySummation', dataTypeStr]);
 	},
-	readDailySummation: function readDailySummation(jsonObject:Options): Promise<SampleSet> {
+	readDailySummation: function readDailySummation(jsonObject:ReadDailySummationReq): Promise<SampleSet> {
 		return asyncExec('HMSHealth', 'DataController', ['readDailySummation', jsonObject]);
 	},
 	clearAll: function clearAll(): Promise<void> {
@@ -83,7 +83,7 @@ export const DataController = {
 
 export const SettingsController = {
 	addDataType: function addDataType(jsonObject:AddDataTypeReq): Promise<void> {
-		return asyncExec('HMSHealth', 'SettingsController', ['addDataType', jsonObject]);
+		return asyncExec('HMSHealth', 'SettingsController', ['addNewDataType', jsonObject]);
 	},
 	disableHiHealth: function disableHiHealth(): Promise<void> {
 		return asyncExec('HMSHealth', 'SettingsController', ['disableHiHealth']);
@@ -107,7 +107,7 @@ export function disableLogger(): Promise<void> {
 }
 
 // EVENT REGISTERATION FUNCTION FOR SINGLE FILE
-export function on(event: string, callback: ()=>void){
+export function on(event: string, callback: (res: any)=>void){
 	window.subscribeHMSEvent(event, callback);
 }
 
@@ -661,6 +661,11 @@ export interface AuthHuaweiId {
 	extensionScopes: string[];
 	authorizationCode?: string;
 	huaweiAccount?: Account;
+}
+export interface ReadDailySummationReq {
+    startDate: number;
+    endDate: number;
+    dataType: string;
 }
 export interface Account {
 	type: string;

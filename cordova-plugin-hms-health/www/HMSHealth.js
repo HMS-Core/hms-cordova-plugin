@@ -82,7 +82,7 @@ exports.DataController = {
 };
 exports.SettingsController = {
     addDataType: function addDataType(jsonObject) {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['addDataType', jsonObject]);
+        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['addNewDataType', jsonObject]);
     },
     disableHiHealth: function disableHiHealth() {
         return utils_1.asyncExec('HMSHealth', 'SettingsController', ['disableHiHealth']);

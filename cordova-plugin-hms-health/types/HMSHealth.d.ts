@@ -36,7 +36,7 @@ export declare const DataController: {
     update: (jsonObject: UpdateReq) => Promise<void>;
     deleteData: (jsonObject: DeleteReq) => Promise<void>;
     readTodaySummation: (dataTypeStr: string) => Promise<SampleSet>;
-    readDailySummation: (jsonObject: Options) => Promise<SampleSet>;
+    readDailySummation: (jsonObject: ReadDailySummationReq) => Promise<SampleSet>;
     clearAll: () => Promise<void>;
 };
 export declare const SettingsController: {
@@ -48,7 +48,7 @@ export declare const SettingsController: {
 };
 export declare function enableLogger(): Promise<void>;
 export declare function disableLogger(): Promise<void>;
-export declare function on(event: string, callback: () => void): void;
+export declare function on(event: string, callback: (res: any) => void): void;
 export declare const HuaweiHiHealth: {
     HEALTHKIT_HEIGHTWEIGHT_READ: string;
     HEALTHKIT_HEIGHTWEIGHT_WRITE: string;
@@ -590,6 +590,11 @@ export interface AuthHuaweiId {
     extensionScopes: string[];
     authorizationCode?: string;
     huaweiAccount?: Account;
+}
+export interface ReadDailySummationReq {
+    startDate: number;
+    endDate: number;
+    dataType: string;
 }
 export interface Account {
     type: string;

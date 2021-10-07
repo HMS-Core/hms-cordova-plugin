@@ -1,8 +1,8 @@
 {
     "name": "@hmscore/ionic-native-hms-health",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Health",
-    "version": "5.0.5-301",
-    "zipVersion": "5.0.5.301",
+    "version": "5.0.5-302",
+    "zipVersion": "5.0.5.302",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",

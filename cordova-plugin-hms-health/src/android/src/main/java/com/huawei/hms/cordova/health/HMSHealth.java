@@ -33,7 +33,7 @@ import org.json.JSONArray;
 
 public class HMSHealth extends CordovaPlugin {
     private static final String SERVICE = "Health";
-    private static final String VERSION = "5.0.5.301";
+    private static final String VERSION = "5.0.5.302";
 
     private CordovaController cordovaController;
     private OnActivityResultCallback onActivityResultCallback;
