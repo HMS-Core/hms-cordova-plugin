@@ -28,7 +28,7 @@ import org.json.JSONArray;
 
 public class HMSInAppPurchases extends CordovaPlugin {
     private static final String KIT = "IAP";
-    private static final String VERSION = "5.0.4.302";
+    private static final String VERSION = "5.0.4.303";
     private CordovaController cordovaController;
     private OnActivityResultCallback onActivityResultCallback;
 
