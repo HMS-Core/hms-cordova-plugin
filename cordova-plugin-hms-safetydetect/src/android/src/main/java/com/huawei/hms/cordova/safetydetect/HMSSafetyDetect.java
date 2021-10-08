@@ -33,7 +33,7 @@ public class HMSSafetyDetect extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         final String kit = "SafetyDetect";
-        final String version = "5.2.0.300";
+        final String version = "5.2.0.301";
         cordovaController = new CordovaController(this, kit, version,
                 Arrays.asList(new SafetyDetectModule()));
     }

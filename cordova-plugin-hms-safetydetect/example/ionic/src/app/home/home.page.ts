@@ -19,7 +19,7 @@ import {
   HMSSafetyDetect,
   HMSUrlCheckThreatConstants,
   HMSWifiDetectResponse,
-} from '@ionic-native/hms-safety-detect/ngx';
+} from '@hmscore/ionic-native-hms-safetydetect/ngx';
 
 
 @Component({

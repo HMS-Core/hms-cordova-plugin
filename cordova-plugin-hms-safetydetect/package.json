@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-safetydetect",
   "description": "Huawei Safety Detect Cordova Plugin",
-  "version": "5.2.0-300",
+  "version": "5.2.0-301",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {

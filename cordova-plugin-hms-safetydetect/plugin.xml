@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-safetydetect" version="5.2.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:rim="http://www.blackberry.com/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-safetydetect" version="5.2.0-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:rim="http://www.blackberry.com/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>cordova-plugin-hms-safetydetect</name>
 	<description>Huawei Safety Detect Cordova Plugin</description>
 	<license>Apache 2.0</license>
