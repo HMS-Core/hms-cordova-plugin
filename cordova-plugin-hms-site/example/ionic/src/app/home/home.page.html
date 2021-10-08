@@ -1,0 +1,37 @@
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">HMS Site Demo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-button id="text-search" (click)="textSearch()">Text Search</ion-button>
+  <ion-button id="nearby-search" (click)="nearbySearch()">Nearby Search</ion-button>
+  <ion-button id="detail-search" (click)="detailSearch()">Detail Search</ion-button>
+  <ion-button id="query-suggestion" (click)="querySuggestion()">Query Suggestion</ion-button>
+  <ion-button id="query-autocomplete" (click)="queryAutocomplete()">Query Autocomplete</ion-button>
+  <ion-button id="goto-activity" (click)="gotoActivity()">Go to Activity</ion-button>
+  <pre id="logger"></pre>
+</ion-content>
