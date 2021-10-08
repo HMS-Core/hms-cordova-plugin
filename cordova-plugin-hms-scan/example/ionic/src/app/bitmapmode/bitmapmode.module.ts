@@ -20,7 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { BitmapmodePageRoutingModule } from './bitmapmode-routing.module';
-import { MultiProcessor } from '@ionic-native/hms-scan/ngx'
+import { MultiProcessor } from '@hmscore/ionic-native-hms-scan/ngx'
 import { BitmapmodePage } from './bitmapmode.page';
 
 @NgModule({

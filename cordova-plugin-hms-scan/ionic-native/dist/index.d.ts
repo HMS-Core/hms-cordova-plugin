@@ -14,27 +14,7 @@
     limitations under the License.
 */
 import { IonicNativePlugin } from '@ionic-native/core';
-/**
- * @name HMSScan
- * @description
- * Cordova Scan Plugin enables communication between the HMS Core Scan SDK and Cordova platform. This plugin demonstrates wide-ranging functionality of the HMS Core Scan SDK.
- *
- * @usage
- * ```typescript
- * import { HMSScan } from '@ionic-native/hms-scan';
- *
- *
- * constructor(private hmsScan: HMSScan) { }
- *
- * ...
- *
- *
- * this.hmsScan.defaultViewMode(Request)
- *   .then((res: any) => console.log(res))
- *   .catch((error: any) => console.error(error));
- *
- * ```
- */
+
 export declare class HMSScanOriginal extends IonicNativePlugin {
     Colors: typeof Colors;
     ScanTypes: typeof ScanTypes;

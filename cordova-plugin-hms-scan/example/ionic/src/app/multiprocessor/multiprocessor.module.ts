@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { MultiProcessor } from '@ionic-native/hms-scan/ngx'
+import { MultiProcessor } from '@hmscore/ionic-native-hms-scan/ngx'
 import { MultiprocessorPageRoutingModule } from './multiprocessor-routing.module';
 
 import { MultiprocessorPage } from './multiprocessor.page';

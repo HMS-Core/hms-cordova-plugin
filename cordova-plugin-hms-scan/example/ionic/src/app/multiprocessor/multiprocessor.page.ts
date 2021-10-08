@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { MultiProcessor, ScanTypes, Colors, RectStyle } from '@ionic-native/hms-scan/ngx';
+import { MultiProcessor, ScanTypes, Colors, RectStyle } from '@hmscore/ionic-native-hms-scan/ngx';
 @Component({
   selector: 'app-multiprocessor',
   templateUrl: './multiprocessor.page.html',

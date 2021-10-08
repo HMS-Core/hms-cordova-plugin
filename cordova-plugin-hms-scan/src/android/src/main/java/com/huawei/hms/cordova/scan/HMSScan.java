@@ -67,7 +67,7 @@ public class HMSScan extends CordovaPlugin {
 
 
         final String kit = "Scan";
-        final String version = "1.3.1.301";
+        final String version = "1.3.1.302";
         cordovaController = new CordovaController(this, kit, version,
                 Arrays.asList(new HMSScanModule(this),
                         new ViewBaseModule(pluginLayout, this)

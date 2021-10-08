@@ -15,7 +15,7 @@
 */
 
 import { Component } from '@angular/core';
-import { HMSScan, ScanTypes, Colors, ErrorCorrectionLevel, HMSPermission } from '@ionic-native/hms-scan/ngx'
+import { HMSScan, ScanTypes, Colors, ErrorCorrectionLevel, HMSPermission } from '@hmscore/ionic-native-hms-scan/ngx'
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { Router } from '@angular/router';
 @Component({

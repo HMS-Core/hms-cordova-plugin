@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { CustomView, ScanTypes } from '@ionic-native/hms-scan/ngx'
+import { CustomView, ScanTypes } from '@hmscore/ionic-native-hms-scan/ngx'
 @Component({
   selector: 'app-customview',
   templateUrl: './customview.page.html',

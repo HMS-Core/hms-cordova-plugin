@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component, OnInit } from '@angular/core';
-import { MultiProcessor, ScanTypes } from '@ionic-native/hms-scan/ngx';
+import { MultiProcessor, ScanTypes } from '@hmscore/ionic-native-hms-scan/ngx';
 @Component({
   selector: 'app-bitmapmode',
   templateUrl: './bitmapmode.page.html',

@@ -19,7 +19,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-import { HMSScan } from '@ionic-native/hms-scan/ngx'
+import { HMSScan } from '@hmscore/ionic-native-hms-scan/ngx'
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { HomePageRoutingModule } from './home-routing.module';
 

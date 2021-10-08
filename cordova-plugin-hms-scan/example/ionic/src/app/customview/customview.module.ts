@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { CustomView } from '@ionic-native/hms-scan/ngx'
+import { CustomView } from '@hmscore/ionic-native-hms-scan/ngx'
 import { CustomviewPageRoutingModule } from './customview-routing.module';
 
 import { CustomviewPage } from './customview.page';
