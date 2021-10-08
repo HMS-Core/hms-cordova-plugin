@@ -34,7 +34,7 @@ import java.util.Arrays;
 
 public class HMSNearby extends CordovaPlugin {
     private static final String KIT = "NearbyService";
-    private static final String VERSION = "5.2.1.300";
+    private static final String VERSION = "5.2.1.301";
     private CordovaController cordovaController;
 
     @Override
