@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-ml" version="2.0.5-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-ml" version="2.0.5-302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS ML</name>
 	<description>Cordova HMS ML Plugin</description>
 	<license>Apache 2.0</license>
@@ -87,7 +87,7 @@
 		<framework src="com.huawei.hms:ml-computer-vision-formrecognition:2.0.4.300"/>
 		<framework src="com.huawei.hms:ml-product-visual-search-plugin:2.0.3.300"/>
 		<framework src="mindspore:mindspore-lite:5.0.4.300"/>
-		<framework src="com.facebook.fresco:fresco:2.2.0"/>
+		<framework src="com.facebook.fresco:fresco:2.5.0"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
 
 		<config-file target="config.xml" parent="/*">

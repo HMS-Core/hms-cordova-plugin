@@ -28,6 +28,7 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
 import com.huawei.hms.cordova.mlkit.helpers.PluginLayout;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.providers.custommodel.MLCustomModel;
+import com.huawei.hms.cordova.mlkit.providers.voiceproviders.tts.MLTtsAnalyser;
 import com.huawei.hms.cordova.mlkit.utils.CordovaUtils;
 import com.huawei.hms.cordova.mlkit.utils.PermissionUtils;
 import com.huawei.hms.mlsdk.common.MLApplication;
@@ -49,12 +50,12 @@ public class HMSMLPlugin extends CordovaPlugin {
     private CordovaInterface cordovaInterface;
     private PermissionUtils permissionUtils = new PermissionUtils();
     private CallbackContext callbackContext;
-    private MLCustomModel customModel = new MLCustomModel();
     private MLHMSLensEngine mlLensEngine;
     private PluginLayout pluginLayout = new PluginLayout();
     private MLHMSApplication mlhmsApplication;
     private MLHMSCompositeAnalyzer compositeAnalyzer;
     private MLHMSAnalyzer mlhmsAnalyzer;
+    private MLCustomModel customModel;
     private MLHMSFrame mlhmsFrame;
     private static CallbackContext callbackCtx;
     private boolean isStart = false;
@@ -83,6 +84,7 @@ public class HMSMLPlugin extends CordovaPlugin {
             this);
         mlhmsAnalyzer = CordovaHelpers.initializeProvider(new MLHMSAnalyzer(cordova.getContext()), cordova, this);
         mlhmsFrame = CordovaHelpers.initializeProvider(new MLHMSFrame(cordova.getContext()), cordova, this);
+        customModel= CordovaHelpers.initializeProvider(new MLCustomModel(cordova.getContext()), cordova, this);
     }
 
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) {

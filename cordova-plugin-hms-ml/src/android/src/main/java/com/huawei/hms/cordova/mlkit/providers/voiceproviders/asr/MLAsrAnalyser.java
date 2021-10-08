@@ -32,13 +32,14 @@ import com.huawei.hms.mlsdk.asr.MLAsrRecognizer;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class MLAsrAnalyser extends AppCompatActivity {
+public class MLAsrAnalyser extends CordovaPlugin {
     private static final String TAG = MLAsrAnalyser.class.getSimpleName();
     private static final int ML_ASR_CAPTURE_CODE = 2;
     private CallbackContext callbackContext;
@@ -51,7 +52,7 @@ public class MLAsrAnalyser extends AppCompatActivity {
         this.cordovaInterface = cordovaInterface;
         String language = params.optString("language", "en-US");
         int feature = params.optInt("feature", 12);
-        mSpeechRecognizer = MLAsrRecognizer.createAsrRecognizer(this);
+        mSpeechRecognizer = MLAsrRecognizer.createAsrRecognizer(cordovaInterface.getContext());
         mSpeechRecognizer.setAsrListener(new SpeechRecognitionListener());
         Intent intentSdk = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(MLAsrConstants.LANGUAGE,
             language).putExtra(MLAsrConstants.FEATURE, feature);
@@ -60,7 +61,7 @@ public class MLAsrAnalyser extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String text = "";
         if (requestCode == ML_ASR_CAPTURE_CODE) {

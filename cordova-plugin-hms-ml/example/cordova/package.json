@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-ml-demo",
   "displayName": "HMSMLDemo",
-  "version": "2.0.5-301",
+  "version": "2.0.5-302",
   "description": "A sample Apache Cordova application that demonstrates the usage of cordova-plugin-hms-ml",
   "license": "Apache-2.0",
   "licenseFilename": "LICENCE",
