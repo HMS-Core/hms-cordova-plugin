@@ -50,7 +50,8 @@ export declare enum Attr {
     dontNotifyInForeground = "dontNotifyInForeground",
     priority = "priority",
     importance = "importance",
-    visibility = "visibility"
+    visibility = "visibility",
+    data = "data"
 }
 export declare enum RemoteMessageBuilder {
     TO = "to",

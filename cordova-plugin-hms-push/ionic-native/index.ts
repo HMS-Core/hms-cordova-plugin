@@ -616,6 +616,7 @@ export enum Attr {
     priority = "priority",
     importance = "importance",
     visibility = "visibility",
+    data = "data"
 }
 
 export enum Importance {

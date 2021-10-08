@@ -43,7 +43,7 @@ module.exports = function (context) {
 
 function addAGConnectDependency(lines) {
     var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.5.2.300' " + COMMENT;
-    var pattern = /(\s*)classpath(\s+)\'com.android.tools.build:gradle:([0-9-\.\:]+)/m;
+    var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 
     for (var i = 0; i < lines.length; i++) {
@@ -88,7 +88,7 @@ function updateRepositoriesGradle(file) {
 
             repoGradleContent =
                 repoGradleContent.substring(0, lastIndexOfCurlyBracket) +
-                "    maven { url 'https://developer.huawei.com/repo/' }\n}" +
+                "    maven { url 'https://developer.huawei.com/repo/' } "+COMMENT+" \n}" +
                 repoGradleContent.substring(lastIndexOfCurlyBracket + 1);
 
             FSUtils.writeFile(file, repoGradleContent);

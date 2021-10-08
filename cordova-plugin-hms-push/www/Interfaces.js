@@ -54,6 +54,7 @@ var Attr;
     Attr["priority"] = "priority";
     Attr["importance"] = "importance";
     Attr["visibility"] = "visibility";
+    Attr["data"] = "data";
 })(Attr = exports.Attr || (exports.Attr = {}));
 var RemoteMessageBuilder;
 (function (RemoteMessageBuilder) {

@@ -1,7 +1,7 @@
 {
   "name": "CordovaHMSPushDemo",
   "displayName": "CordovaHMSPushDemo",
-  "version": "5.3.0-304",
+  "version": "5.3.0-305",
   "description": "A demo application which shows the usage of HMS Push SDK",
   "main": "index.js",
   "scripts": {

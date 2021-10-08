@@ -69,7 +69,7 @@ public class HMSPush extends CordovaPlugin {
     }
 
     private static final String KIT = "Push";
-    private static final String VERSION = "5.3.0.304";
+    private static final String VERSION = "5.3.0.305";
     private CordovaController cordovaController;
 
     @Override

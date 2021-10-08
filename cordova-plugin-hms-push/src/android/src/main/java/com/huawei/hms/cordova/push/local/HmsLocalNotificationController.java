@@ -537,7 +537,7 @@ public class HmsLocalNotificationController {
             } else {
                 return PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             }
-            
+
         } catch (Exception e) {
             Log.e(TAG, ResultCode.ERROR, e);
         }
@@ -664,6 +664,7 @@ public class HmsLocalNotificationController {
                 notificationMap.put(NotificationConstants.ID, notification.getId());
                 notificationMap.put(NotificationConstants.TITLE, notification.getTitle());
                 notificationMap.put(NotificationConstants.MESSAGE, notification.getMessage());
+                notificationMap.put(NotificationConstants.DATA,notification.getData());
                 notificationMap.put(NotificationConstants.TICKER, notification.getTicker());
                 notificationMap.put(NotificationConstants.NUMBER, notification.getNumber());
                 notificationMap.put(NotificationConstants.DATE, notification.getFireDate());
