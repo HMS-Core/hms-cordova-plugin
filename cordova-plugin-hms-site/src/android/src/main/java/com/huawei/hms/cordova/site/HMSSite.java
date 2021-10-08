@@ -42,7 +42,7 @@ public class HMSSite extends CordovaPlugin {
         CorLog.setEnable(true);
         
         final String kit = "Site";
-        final String version = "5.2.0.300";
+        final String version = "5.2.0.301";
         cordovaController = new CordovaController(this, kit, version,
                 Collections.singletonList(new HMSSiteModule()));
     }

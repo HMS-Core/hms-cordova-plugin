@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-site" version="5.2.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-site" version="5.2.0-301" xmlns="http://apache.org/cordova/ns/plugins/1.0" android="http://schemas.android.com/apk/res/android">
 	<name>HMS Site</name>
 	<description>Cordova HMS Site Plugin</description>
 	<license>Apache 2.0</license>

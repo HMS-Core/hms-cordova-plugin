@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-site",
   "description": "Cordova HMS Site Plugin",
-  "version": "5.2.0-300",
+  "version": "5.2.0-301",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {
