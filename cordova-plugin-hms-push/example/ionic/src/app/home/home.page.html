@@ -1,0 +1,103 @@
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      HMSPush
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+  <ion-grid >
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-button   expand="block" color="danger" (click)="openCustomIntent();">Open Custom Intent Url Page</ion-button>
+      </ion-col>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-button expand="block" (click)="localNotificationPress()">Local Notification</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="topRow">
+      <ion-col  size="6" class="ion-no-padding">
+        <ion-button color="medium" expand="block" (click)="turnOnPush();"><span>turnOnPush</span> </ion-button>
+      </ion-col>
+      <ion-col size="6" class="ion-no-padding">
+        <ion-button color="medium" expand="block" (click)="turnOffPush();">turnOffPush</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row" >
+      <ion-col size="4" class="ion-no-padding">
+        <ion-button color="medium"  expand="block" (click)="getID();">getID</ion-button>
+      </ion-col>
+      <ion-col size="4"  class="ion-no-padding">
+        <ion-button color="medium" expand="block" (click)="getAAID();">getAAID</ion-button>
+      </ion-col>
+      <ion-col size=4 class="ion-no-padding">
+        <ion-button  color="medium"  expand="block" (click)="getOdid();">getOdid</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row">
+      <ion-col  size=6 class="ion-no-padding">
+        <ion-button  color="medium" expand="block" (click)="getToken();">getToken</ion-button>
+      </ion-col>
+      <ion-col  size="6" class="ion-no-padding">
+        <ion-button color="medium"  expand="block" (click)="getCreationTime();">getCreationTime</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="row">
+      <ion-col size="6"  class="ion-no-padding">
+        <ion-button color="medium"   expand="block" (click)="deleteAAID();">deleteAAID</ion-button>
+      </ion-col>
+      <ion-col   size="6" class="ion-no-padding">
+      <ion-button color="medium" expand="block" (click)="deleteToken();">deleteToken</ion-button>
+    </ion-col>
+    </ion-row>
+    <ion-row class="row">
+      <ion-input [(ngModel)]="topic" class="text-input"  placeholder="topic"></ion-input>
+    </ion-row>
+
+  <ion-row class="row">
+    <ion-col size="6" class="ion-no-padding">
+      <ion-button color="medium"  expand="block" (click)="subscribe();">subscribe</ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-no-padding">
+      <ion-button color="medium" expand="block" (click)="unsubscribe();">unsubscribe</ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-no-padding">
+      <ion-button color="medium"  expand="block" (click)="disableAutoInit();">disableAutoInit</ion-button>
+    </ion-col>
+    <ion-col size="6" class="ion-no-padding">
+      <ion-button color="medium" expand="block" (click)="enableAutoInit();">enableAutoInit</ion-button>
+    </ion-col>
+    <ion-col size="6"  class="ion-no-padding">
+      <ion-button color="medium"  expand="block" (click)="isAutoInitEnabled();">isAutoInitEnabled</ion-button>
+    </ion-col>
+    <ion-col  size="6" class="ion-no-padding">
+      <ion-button color="medium" expand="block" (click)="sendRemoteMessage();">sendRemoteMessage</ion-button>
+    </ion-col>
+    <ion-col class="ion-no-padding">
+      <ion-button color="medium"  expand="block" (click)="getInitialNotification();">getInitialNotification</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-content class="content" >
+  <ion-text class="pre-line">
+    {{message}}
+  </ion-text>
+</ion-content>
