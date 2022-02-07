@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<plugin id="cordova-plugin-hms-analytics" version="6.1.0-301" 
+<plugin id="cordova-plugin-hms-analytics" version="6.3.2-300" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/main">
     <name>HMS Analytics</name>
@@ -19,29 +19,32 @@
     </js-module>
     <js-module name="utils" src="www/utils.js"/>
     
+    <preference name="AGC_ROUTE_POLICY" default="default" />
+    <preference name="IS_ANALYTICS_ENABLED" default="true" />
+    
     <platform name="android">
 
         <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
         <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
 
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
-        <framework src="com.huawei.hms:hianalytics:6.1.0.300" />
+        <framework src="com.huawei.hms:hianalytics:6.3.2.300" />
 
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
             <uses-permission android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
-
-            <!--Adapting to Android 11-->
-            <queries>
-                <intent>
-                    <action android:name="com.huawei.hms.core.aidlservice" />
-                </intent>
-            </queries>
-
-            <!--Adapting to minSdkVersion 18-->
-            <uses-sdk xmlns:tools="http://schemas.android.com/tools" tools:overrideLibrary="com.huawei.agconnect.credential,com.huawei.agconnect.core,com.huawei.agconnect.https,com.huawei.agconnect.datastore"/>
-
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <!-- Data processing location.
+            The options are CN (China), DE (Germany), SG (Singapore), and RU (Russia).-->
+            <meta-data
+            android:name="cordova_hms_analytics_route_policy"
+            android:value="$AGC_ROUTE_POLICY" />
+            <meta-data
+            android:name="cordova_hms_is_analytics_enabled"
+            android:value="$IS_ANALYTICS_ENABLED" />
         </config-file>
 
 		<config-file target="config.xml" parent="/*">
@@ -95,7 +98,7 @@
                 <source url="https://cdn.cocoapods.org/" />
             </config>
             <pods use-frameworks="true">
-                <pod name="HiAnalytics" spec="5.3.1.300" />
+                <pod name="HiAnalytics" spec="6.3.2.300" />
             </pods>
         </podspec>
     </platform>

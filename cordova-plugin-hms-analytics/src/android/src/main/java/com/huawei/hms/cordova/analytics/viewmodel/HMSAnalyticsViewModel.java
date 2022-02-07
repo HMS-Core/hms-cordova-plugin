@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,12 +34,24 @@ import java.util.Set;
 /**
  * HMSAnalyticsViewModel works as a mediator between {@link HMSAnalyticsContract.Presenter} and HMSAnalyticsModule.
  *
- * @since v.5.3.1.300
+ * @since v.6.3.2.300
  */
 public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
 
     //HiAnalytics instance
-    private final HiAnalyticsInstance analyticsInstance;
+    private HiAnalyticsInstance analyticsInstance;
+
+    public void setAnalyticsInstance(HiAnalyticsInstance analyticsInstance) {
+        this.analyticsInstance = analyticsInstance;
+    }
+
+    public HiAnalyticsInstance getAnalyticsInstance(Context context) {
+        return HiAnalytics.getInstance(context);
+    }
+
+    public HiAnalyticsInstance getAnalyticsInstance(Context context, String routePolicy) {
+        return HiAnalytics.getInstance(context, routePolicy);
+    }
 
     public HMSAnalyticsViewModel(Context context) {
         this.analyticsInstance = HiAnalytics.getInstance(context);
@@ -63,7 +75,7 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
      * if the old value of id is not empty and is different from the new value.
      * If you do not want to use id to identify a user (for example, when a user signs out),
      * you must set id to null when calling setUserId.
-     *
+     * <p>
      * The SDK does not save the user ID. You are advised to set a user ID each time after the app is launched.
      *
      * @param id : User ID, a string containing a maximum of 256 characters.
@@ -272,6 +284,17 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     @Override
     public void isRestrictionEnabled(ResultListener<Boolean> resultListener) {
         resultListener.onSuccess(analyticsInstance.isRestrictionEnabled());
+    }
+
+    /**
+     * Sets whether to collect advertising identifiers.
+     * <p>
+     *
+     * @param isEnabled : Indicates whether to collect advertising identifiers.
+     */
+    @Override
+    public void setCollectAdsIdEnabled(boolean isEnabled) {
+        analyticsInstance.setCollectAdsIdEnabled(isEnabled);
     }
 
     /**

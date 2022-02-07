@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,18 +18,37 @@ package com.huawei.hms.cordova.analytics;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
 import com.huawei.hms.analytics.HiAnalytics;
 
+import java.util.Arrays;
+
 public class HMSAnalyticsContentProvider extends ContentProvider {
-    private String TAG = HMSAnalyticsContentProvider.class.getSimpleName();
+    private final String TAG = HMSAnalyticsContentProvider.class.getSimpleName();
+    private final String[] routePolicyList = new String[]{"CN", "DE", "SG", "RU"};
 
     @Override
     public boolean onCreate() {
-        Log.i(TAG, "HMSAnalyticsContentProvider -> onCreate");
+        try {
+            Log.i(TAG, "HMSAnalyticsContentProvider -> onCreate");
+            ApplicationInfo ai = getContext().getPackageManager().getApplicationInfo(getContext().getPackageName(), PackageManager.GET_META_DATA);
+            boolean isEnabled = ai.metaData.getBoolean("cordova_hms_is_analytics_enabled", true);
+            if (!isEnabled) {
+                return true;
+            }
+            String routePolicy = ai.metaData.getString("cordova_hms_analytics_route_policy", "default");
+            if (Arrays.asList(routePolicyList).contains(routePolicy)) {
+                HiAnalytics.getInstance(this.getContext(), routePolicy);
+                return true;
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "HiAnalytics=> Invalid  routePolicy!, Initialization failed. Message: " + e.getMessage());
+        }
         HiAnalytics.getInstance(this.getContext());
         return true;
     }

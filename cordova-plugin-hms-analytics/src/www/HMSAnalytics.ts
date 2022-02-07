@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,6 +22,17 @@ import { asyncExec } from './utils'
 
 const HMSAnalytics: string = 'HMSAnalytics';
 const HMSAnalyticsModule: string = 'HMSAnalyticsModule';
+
+/**
+ * Initialize an Analytics Kit instance.
+ * <p>
+ * 
+ * @param routePolicy? : Data processing location.
+ * The options are CN (China), DE (Germany), SG (Singapore), and RU (Russia).
+ */
+export function getInstance(routePolicy?: string): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getInstance', { 'routePolicy': routePolicy }]);
+}
 
 /**
  * Specifies whether to enable event logging.
@@ -224,6 +235,15 @@ export function isRestrictionEnabled(): Promise<boolean> {
 }
 
 /**
+ * Sets whether to collect advertising identifiers.
+ * 
+ * @param isEnabled : Indicates whether to collect advertising identifiers.
+ */
+export function setCollectAdsIdEnabled(isEnabled: boolean): Promise<void> {
+    return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setCollectAdsIdEnabled', { 'isEnabled': isEnabled }]);
+}
+
+/**
  * Adds default event parameters.
  * These parameters will be added to all events except the automatically collected events.
  * 
@@ -320,7 +340,8 @@ export enum LogLevelType {
  */
 export enum HAUserProfileType {
     USERLEVEL = "user_level",
-    ISFULLLEVEL = "is_full_level"
+    ISFULLLEVEL = "is_full_level",
+    ISMEMBER = "is_member"
 }
 /**
  * HAEventType types for provides the IDs of all predefined events.
@@ -427,8 +448,53 @@ export enum HAEventType {
     COMPENSATION = "$Compensation",
     POST = "$Post",
     SHAREAPP = "$ShareApp",
-    IMPROVEINFORMATION = "$ImproveInformation"
-    
+    IMPROVEINFORMATION = "$ImproveInformation",
+    VIEWHOUSELIST = "$ViewHouseList",
+    VIEWHOUSEDETAIL = "$ViewHouseDetail",
+    EXCHANGEGOODS = "$ExchangeGoods",
+    BINDDEVICE = "$BindDevice",
+    UNBINDDEVICE = "$UnBindDevice",
+    RESERVEMAINTENANCE = "$ReserveMaintenance",
+    DEVICEMISSINGREPORT = "$DeviceMissingReport",
+    STARTBOOKING = "$StartBooking",
+    LEARNTARGET = "$LearnTarget",
+    LANGUAGETEST = "$LanguageTest",
+    STARTTRAINING = "$StartTraining",
+    ENDTRAINING = "$EndTraining",
+    REGISTERACTIVITY = "$RegisterActivity",
+    EXITACTIVITY = "$ExitActivity",
+    COMPLETEACTIVITY = "$CompleteActivity",
+    ENTERACCOUNTOPENING = "$EnterAccountOpening",
+    SUBMITACCOUNTOPENING = "$SubmitAccountOpening",
+    BANDCARD = "$BandCard",
+    BANKTRANSFERIN = "$BankTransferIn",
+    BANKTRANSFEROUT = "$BankTransferOut",
+    VIEWSTOCKDETAIL = "$ViewStockDetail",
+    TRADESTOCKS = "$TradeStocks",
+    VIEWFINANCEPAGE = "$ViewFinancePage",
+    PURCHASEFINANCE = "$PurchaseFinance",
+    REDEMPTIONFINANCE = "$RedemptionFinance",
+    FUNDTRADING = "$FundTrading",
+    FIXEDINVESTMENT = "$Fixedinvestment",
+    APPLYNEW = "$ApplyNew",
+    VIEWINFORMATIONSECTION = "$ViewInformationSection",
+    VIEWINFORMATION = "$ViewInformation",
+    MODULARCLICK = "$ModularClick",
+    PAGEVIEW = "$PageView",
+    DISPLAYVOUCHER = "$DisplayVoucher",
+    BOOKCOURSE = "$BookCourse",
+    LEARNCOURSES = "$LearnCourses",
+    TRYOUT = "$Tryout",
+    ANSWER = "$Answer",
+    COMMENTCONTENT = "$CommentContent",
+    LIKECONTENT = "$LikeContent",
+    DELETEPRODUCT2WISHLIST = "$DeleteProduct2WishList",
+    ADCLICK = "$AdClick",
+    ADDISPLAY = "$AdDisplay",
+    ENABLEMEMBER = "$EnableMember",
+    CANCELMEMBER = "$CancelMember",
+    CLICKPURCHASE = "$ClickPurchase",
+    VIEWFUNDPAGE = "$ViewFundPage"
 }
 /**
  * HAParamType types for provides the IDs of all predefined parameters, 
@@ -485,6 +551,7 @@ export enum HAParamType {
     POSITIONID = "$PositionId",
     PRODUCTLIST = "$ProductList",
     ACOUNTTYPE = "$AcountType",
+    OCCURREDDATE = "$OccurredDate",
     EVTRESULT = "$EvtResult",
     PREVLEVEL = "$PrevLevel",
     CURRVLEVEL = "$CurrvLevel",
@@ -507,6 +574,7 @@ export enum HAParamType {
     PURCHASEENTRY = "$PurchaseEntry",
     PROPS = "$Props",
     ENTRY = "$Entry",
+    INVITER = "$Inviter",
     VIPLEVEL = "$VIPLevel",
     FIRSTSIGNIN = "$FirstSignIn",
     DISCOUNT = "$Discount",
@@ -577,9 +645,9 @@ export enum HAParamType {
     OPERATION = "$Operation",
     NUMBEROFDRAWING = "$NumberOfDrawing",
     LEFTPULLSFORGUARANTEE = "$LeftPullsForGuarantee",
-    VIPTYPE = "$VipType",
-    VIPSTATUS = "$VipStatus",
-    VIPEXPIREDATE = "$VipExpireDate",
+    VIPTYPE = "$VIPType",
+    VIPSTATUS = "$VIPStatus",
+    VIPEXPIREDATE = "$VIPExpireDate",
     ENTER = "$Enter",
     STARTDATE = "$StartDate",
     EFFECTIVETIME = "$EffectiveTime",
@@ -594,5 +662,152 @@ export enum HAParamType {
     DAYS = "$Days",
     POSTID = "$PostId",
     INFORMATIONTYPE = "$InformationType",
-    INFORMATION = "$Information"
+    INFORMATION = "$Information",
+    FEATURE = "$Feature",
+    ROOMS = "$Rooms",
+    SALEPRICE = "$SalePrice",
+    RENTFEE = "$RentFee",
+    RENTTYPE = "$RentType",
+    PAGENAME = "$PageName",
+    SERIES = "$Series",
+    MODEL = "$Model",
+    DEVICETYPE = "$DeviceType",
+    DEVICENAME = "$DeviceName",
+    BINDDURATION = "$BindDuration",
+    DEALERNAME = "$DealerName",
+    ARRIVALDATE = "$ArrivalDate",
+    BUYERTYPE = "$BuyerType",
+    SEAT = "$Seat",
+    ENERGY = "$Energy",
+    CONFIGURATION = "$Configuration",
+    ISLOAN = "$IsLoan",
+    LOANPRODUCTNAME = "$LoanProductName",
+    LOANCHANNEL = "$LoanChannel",
+    REPAYMENTMETHOD = "$RepaymentMethod",
+    ACTION = "$Action",
+    PAGE = "$Page",
+    INDEX = "$Index",
+    MODULE = "$Module",
+    SOURCEPAGE = "$SourcePage",
+    SOURCEPAGENAME = "$SourcePageName",
+    SOURCELOCATION = "$SourceLocation",
+    CITY = "$City",
+    FROMCITY = "$FromCity",
+    TOCITY = "$ToCity",
+    DEPARTUREDATE = "$DepartureDate",
+    RETURNDATE = "$ReturnDate",
+    TRIPTYPE = "$TripType",
+    SEARCHHOTEL = "$SearchHotel",
+    SPECIALTICKET = "$SpecialTicket",
+    HASBABY = "$HasBaby",
+    HASCHILDREN = "$HasChildren",
+    COUNTRY = "$Country",
+    STAR = "$Star",
+    CHECKINDATE = "$CheckinDate",
+    CHECKOUTDATE = "$CheckoutDate",
+    ALDULTCOUNT = "$AldultCount",
+    BABYCOUNT = "$BabyCount",
+    CHILDRENCOUNT = "$ChildrenCount",
+    FROM = "$From",
+    CARMODE = "$CarMode",
+    CARTIME = "$CarTime",
+    FLIGHTID = "$FlightID",
+    SEARCHRESULT = "$SearchResult",
+    PRODUCT = "$Product",
+    DEPARTURETIME = "$DepartureTime",
+    ARRIVETIME = "$ArriveTime",
+    DEPARTUREAIRPORT = "$DepartureAirport",
+    ARRIVEEAIRPORT = "$ArriveeAirport",
+    AIRLINE = "$Airline",
+    FLIGHTTYPE = "$FlightType",
+    DIRECTFLIGHT = "$DirectFlight",
+    TRAINTYPE = "$TrainType",
+    FROMSTATION = "$FromStation",
+    BEDTYPE = "$BedType",
+    BREAKFAST = "$Breakfast",
+    ARRIVEDATE = "$ArriveDate",
+    TRAINID = "$TrainID",
+    HOTELID = "$HotelID",
+    HOTELNAME = "$HotelName",
+    TRIPTAG = "$TripTag",
+    HOTELTYPE = "$HotelType",
+    CABIN = "$Cabin",
+    ROOMTYPE = "$RoomType",
+    CARTYPE = "$CarType",
+    SUPPLIER = "$Supplier",
+    STUDENTCOUNT = "$StudentCount",
+    ROOMCOUNT = "$RoomCount",
+    PERSONCOUNT = "$PersonCount",
+    VOUCHERID = "$VoucherID",
+    VOUCHERNAME = "$VoucherName",
+    VOUCHERPRICE = "$VoucherPrice",
+    USERTYPE = "$UserType",
+    TARGET = "$Target",
+    ISCOMPELETED = "$IsCompeleted",
+    USERLEVEL = "$UserLevel",
+    TIME = "$Time",
+    DISTANCE = "$Distance",
+    CALORIECONSUMED = "$CalorieConsumed",
+    PROGRESS = "$Progress",
+    MULTIPLEACCOUNTS = "$MultipleAccounts",
+    ACCOUNTTYPE = "$AccountType",
+    FAILUREREASON = "$FailureReason",
+    AUTHORITY = "$Authority",
+    CARDTYPE = "$CardType",
+    ISSUEBANK = "$IssueBank",
+    TRANSFORMAMOUNT = "$TransformAmount",
+    BANKNAME = "$BankName",
+    SOURCEMODULE = "$SourceModule",
+    STOCKCODE = "$Stockcode",
+    STOCKNAME = "$Stockname",
+    MARKETCODE = "$MarketCode",
+    MARKETNAME = "$MarketName",
+    VIEWTYPE = "$ViewType",
+    TRENDCYCLE = "$TrendCycle",
+    TRANSACTIONTYPE = "$TransactionType",
+    CURRENCY = "$Currency",
+    MONEY = "$Money",
+    FINANCEID = "$FinanceId",
+    FINANCENAME = "$FinanceName",
+    FINANCETYPE = "$FinanceType",
+    FINANCERATE = "$FinanceRate",
+    FINANCETIMELIMIT = "$FinanceTimeLimit",
+    FINANCEAMOUNTMIN = "$FinanceAmountMin",
+    FINANCERISKLEV = "$FinanceRiskLev",
+    PURCHASEAMOUNT = "$PurchaseAmount",
+    HANDLINGFEES = "$HandlingFees",
+    REDEMPTIONAMOUNT = "$RedemptionAmount",
+    RETURNAMOUNT = "$ReturnAmount",
+    FUNDCODE = "$FundCode",
+    FUNDTYPE = "$FundType",
+    FUNDNAME = "$FundName",
+    FUNDRISKLEV = "$FundRiskLev",
+    CHARGERATE = "$ChargeRate",
+    PAYMENTMETHOD = "$PaymentMethod",
+    FIXEDCYCLE = "$FixedCycle",
+    ENTRANCE = "$Entrance",
+    CODE = "$code",
+    NEWSTOPIC = "$NewsTopic",
+    INFORMATIONSOURCE = "$InformationSource",
+    COMMENTSNUMBER = "$CommentsNumber",
+    FORWARDINGNUMBER = "$forwardingNumber",
+    LIKES = "$Likes",
+    TITLE = "$Title",
+    SEARCHTYPE = "$SearchType",
+    LOCATION = "$Location",
+    ID = "$Id",
+    PLAYMODE = "$PlayMode",
+    LISTS = "$Lists",
+    ADLOCATION = "$Adlocation",
+    ADCATEGORY = "$AdCategory",
+    ADTHEME = "$AdTheme",
+    BUTTONNAME = "$ButtonName",
+    USERID = "$UserID",
+    PAGECATEGORY = "$PageCategory",
+    RATING = "$Rating",
+    PERFORMANCE = "$Performance",
+    TRADINGRULES = "$TradingRules",
+    PORTFOLIO = "$Portfolio",
+    INVESTMENTMANAGER = "$InvestmentManager",
+    FUNDSIZE = "$FundSize"
 }

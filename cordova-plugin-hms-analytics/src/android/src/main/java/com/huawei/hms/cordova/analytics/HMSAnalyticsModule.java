@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -53,6 +53,18 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     private Context getContext() {
         return weakContext.get();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void getInstance(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        if (params.isNull("routePolicy")) {
+            viewModel.setAnalyticsInstance(viewModel.getAnalyticsInstance(getContext()));
+        } else {
+            viewModel.setAnalyticsInstance(viewModel.getAnalyticsInstance(getContext(), params.getString("routePolicy")));
+        }
+        promise.success();
     }
 
     @CordovaMethod
@@ -190,6 +202,14 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
+    public void setCollectAdsIdEnabled(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        viewModel.setCollectAdsIdEnabled(params.getBoolean("isEnabled"));
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
     public void addDefaultEventParams(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject params = args.getJSONObject(0);
         if (!params.isNull("params")) {
@@ -279,16 +299,16 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
     private ReportPolicy getReportPolicyType(String reportPolicyType) {
         return ReportPolicy.valueOf(reportPolicyType);
     }
- 
+
     private ArrayList<Bundle> jsonArrayToBundleArrayList(JSONArray jsonArray) throws JSONException {
         ArrayList<Bundle> listBundle = new ArrayList<>();
-        for (int i = 0; i<jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonObject = jsonArray.getJSONObject(0);
             listBundle.add(jsonToBundle(jsonObject));
         }
         return listBundle;
     }
-    
+
     private Bundle jsonToBundle(JSONObject jsonObject) throws JSONException {
         Bundle bundle = new Bundle();
         Iterator<String> iterator = jsonObject.keys();

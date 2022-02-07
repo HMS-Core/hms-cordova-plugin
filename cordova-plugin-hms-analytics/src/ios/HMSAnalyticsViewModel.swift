@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,7 +18,22 @@ import HiAnalytics
 
 /// All the Analytics API's can be reached via AnalyticsViewModel class instance.
 public class HMSAnalyticsViewModel {
-
+    
+    /// Analytics Kit will be initialized in the main thread based on your configuration.
+    /// - Parameters:
+    ///   - routePolicy: Data processing location.
+    ///   The options are CN (China), DE (Germany), SG (Singapore), and RU (Russia).
+    /// - Returns: Void
+    func config(_ routePolicy: String) {
+        HiAnalytics.config(withRoutePolicy: routePolicy)
+    }
+    
+    /// Analytics Kit will be initialized in the main thread based on your configuration.
+    /// - Returns: Void
+    func config() {
+        HiAnalytics.config()
+    }
+    
     /// Enable event collection. No data will be collected when this function is disabled.
     /// - Parameters:
     ///   - enabled: Indicates whether to enable event collection. **YES: enabled (default); NO: disabled.**
@@ -26,7 +41,7 @@ public class HMSAnalyticsViewModel {
     func setAnalyticsEnabled(_ enabled: Bool) {
         HiAnalytics.setAnalyticsEnabled(enabled)
     }
-
+    
     /// Set a user ID.
     /// - Parameters:
     ///   - userId: User ID, a string that contains a maximum of 256 characters. The value cannot be empty.
@@ -39,7 +54,7 @@ public class HMSAnalyticsViewModel {
         }
         HiAnalytics.setUserId(userId)
     }
-
+    
     /// User attribute values remain unchanged throughout the app's lifecycle and session. A maximum of 25 user attribute names are supported. If an attribute name is duplicate with an existing one, the attribute names needs to be changed.
     /// - Parameters:
     ///   - name: User attribute name, a string that contains a maximum of 256 characters excluding spaces and invisible characters. The value cannot be empty.
@@ -48,14 +63,14 @@ public class HMSAnalyticsViewModel {
     func setUserProfile(_ name: String, _ value: String) {
         HiAnalytics.setUserProfile(name, setValue: value)
     }
-
+    
     /// - Parameters:
     ///   - name: User attribute name
     /// - Returns: Void
     func deleteUserProfile(_ name: String) {
         HiAnalytics.setUserProfile(name, setValue: nil)
     }
-
+    
     /// Set the session timeout interval. The app is running in the foreground. When the interval between two adjacent events exceeds the specified timeout interval, a new session is generated.
     /// - Parameters:
     ///   - milliseconds: Session timeout interval, in milliseconds.
@@ -64,7 +79,7 @@ public class HMSAnalyticsViewModel {
     func setSessionDuration(_ milliseconds: TimeInterval) {
         HiAnalytics.setSessionDuration(milliseconds)
     }
-
+    
     /// Report custom events.
     ///
     /// - Parameters:
@@ -74,17 +89,17 @@ public class HMSAnalyticsViewModel {
     func onEvent(_ eventId: String, _ params: [String: Any]) {
         HiAnalytics.onEvent(eventId, setParams: params)
     }
-
+    
     /// Delete all collected data in the local cache, including the cached data that fails to be sent.
     func clearCachedData() {
         HiAnalytics.clearCachedData()
     }
-
+    
     /// Obtain the app instance ID from AppGallery Connect.
     func getAAID() -> String {
         return HiAnalytics.aaid()
     }
-
+    
     /// Enable AB Testing. Predefined or custom user attributes are supported.
     /// - Parameters:
     ///   - predefined: Indicates whether to obtain predefined user attributes.
@@ -92,7 +107,7 @@ public class HMSAnalyticsViewModel {
     func getUserProfiles(_ predefined: Bool) -> [String: Any] {
         return HiAnalytics.userProfiles(predefined) ?? [:]
     }
-
+    
     /// Sets data reporting policies.
     /// - Parameters:
     ///   - reportPolicies: HAReportPolicyType
@@ -106,7 +121,7 @@ public class HMSAnalyticsViewModel {
         let HAReportPolicyList = setReportPoliciesList(reportPolicies)
         HiAnalytics.setReportPolicies(HAReportPolicyList)
     }
-
+    
     /// Specifies whether to enable restriction of HUAWEI Analytics.
     /// The default value is false, which indicates that HUAWEI Analytics is enabled by default.
     /// - Parameters:
@@ -114,12 +129,19 @@ public class HMSAnalyticsViewModel {
     func setRestrictionEnabled(_ isEnabled: Bool) {
         HiAnalytics.setRestrictionEnabled(isEnabled)
     }
-
+    
     /// Obtains the restriction status of HUAWEI Analytics.
     func isRestrictionEnabled() -> Bool {
         return HiAnalytics.isRestrictionEnabled()
     }
-
+    
+    /// Sets whether to collect advertising identifiers.
+    /// - Parameters:
+    ///   - isEnabled : Indicates whether to collect advertising identifiers.
+    func setCollectAdsIdEnabled(_ isEnabled: Bool) {
+        HiAnalytics.setCollectAdsIdEnabled(isEnabled)
+    }
+    
     /// Adds default event parameters.
     /// These parameters will be added to all events except the automatically collected events.
     /// - Parameters:
@@ -132,12 +154,12 @@ public class HMSAnalyticsViewModel {
         }
         HiAnalytics.addDefaultEventParams(params)
     }
-
+    
     private func setReportPoliciesList( _ reportPolicyType: [String: Any]) -> [HAReportPolicy] {
         var reportPoliciyList = [HAReportPolicy]()
-
+        
         for key in reportPolicyType.keys {
-
+            
             if key == "onScheduledTimePolicy" {
                 guard let  onScheduledTime = reportPolicyType["onScheduledTimePolicy"] as? Int else {
                     print("Incorrect 'onScheduledTimePolicy' paramater.")

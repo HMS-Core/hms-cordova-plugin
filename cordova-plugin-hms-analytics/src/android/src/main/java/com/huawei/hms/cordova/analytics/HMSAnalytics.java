@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,9 +27,8 @@ import org.json.JSONArray;
 import java.util.Arrays;
 
 public class HMSAnalytics extends CordovaPlugin {
-    private static final String TAG = HMSAnalytics.class.getSimpleName();
     private static final String KIT = "Analytics";
-    private static final String VERSION = "6.1.0.301";
+    private static final String VERSION = "6.3.2.300";
     private CordovaController cordovaController;
 
     @Override

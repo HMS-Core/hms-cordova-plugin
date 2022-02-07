@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-let HMSAnalyticsLog = HMSAnalyticsLogger(version: "5.3.1.300", service: "CordovaHMSAnalytics")
+let HMSAnalyticsLog = HMSAnalyticsLogger(version: "6.3.2.300", service: "CordovaHMSAnalytics")
 
 /// Custom HMSAnalyticsLogger Class to listen api log events from Cordova Side.
 final class HMSAnalyticsLogger {

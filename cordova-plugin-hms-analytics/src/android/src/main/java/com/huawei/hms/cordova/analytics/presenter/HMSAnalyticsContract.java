@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 
 package com.huawei.hms.cordova.analytics.presenter;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import com.huawei.hms.analytics.HiAnalyticsInstance;
 import com.huawei.hms.analytics.type.ReportPolicy;
 import com.huawei.hms.cordova.analytics.viewmodel.HMSAnalyticsViewModel;
 
@@ -29,7 +31,7 @@ import java.util.Set;
  * HMSAnalyticsContract defines a blueprint of HMSAnalyticsModule methods
  * that will be exposed to Cordova Side.
  *
- * @since v.5.3.1.300
+ * @since v.6.3.2.300
  */
 public interface HMSAnalyticsContract {
 
@@ -56,7 +58,7 @@ public interface HMSAnalyticsContract {
          * if the old value of id is not empty and is different from the new value.
          * If you do not want to use id to identify a user (for example, when a user signs out),
          * you must set id to null when calling setUserId.
-         *
+         * <p>
          * The SDK does not save the user ID. You are advised to set a user ID each time after the app is launched.
          *
          * @param id: User ID, a string containing a maximum of 256 characters.
@@ -217,6 +219,14 @@ public interface HMSAnalyticsContract {
         void isRestrictionEnabled(final HMSAnalyticsContract.ResultListener<Boolean> resultListener);
 
         /**
+         * Sets whether to collect advertising identifiers.
+         * <p>
+         *
+         * @param isEnabled: Indicates whether to collect advertising identifiers..
+         */
+        void setCollectAdsIdEnabled(final boolean isEnabled);
+
+        /**
          * Adds default event parameters.
          * These parameters will be added to all events except the automatically collected events.
          *
@@ -226,7 +236,6 @@ public interface HMSAnalyticsContract {
          *                can consist of only digits, letters, and underscores (_), but cannot start with a digit.
          */
         void addDefaultEventParams(final Bundle params);
-
 
         //------------------------------------------------------------------------------------------
         // HiAnalyticsTools
@@ -240,6 +249,31 @@ public interface HMSAnalyticsContract {
          */
         void enableLog(final int level);
 
+        /**
+         * Set analytics intance.
+         *
+         * @param hiAnalyticsInstance: HiAnalyticsInstance instance.
+         */
+        void setAnalyticsInstance(HiAnalyticsInstance hiAnalyticsInstance);
+
+        /**
+         * Get analytics intance.
+         *
+         * @param context: A context object.
+         * 
+         * @return HiAnalyticsInstance instance.
+         */
+        HiAnalyticsInstance getAnalyticsInstance(Context context);
+
+        /**
+         * Get analytics intance.
+         *
+         * @param context: A context object.
+         * @param routePolicy: Data processing location.
+         * 
+         * @return HiAnalyticsInstance instance.
+         */
+        HiAnalyticsInstance getAnalyticsInstance(Context context, String routePolicy);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,9 +45,21 @@ export class HomePage {
   endPageName: string = '';
   reportPolicyType: string = '';
   restrictionIsEnabled: string = '';
+  collectAdsIdEnabled: string = '';
 
   constructor(private hmsAnalytics: HMSAnalytics) {}
   
+  /**
+   * getInstance
+   */
+   getInstance() {
+    this.hmsAnalytics.getInstance()
+    .then(() => {
+      alert("getInstance :: Success");
+    })
+    .catch((error) => alert("getInstance :: Error! " + JSON.stringify(error,null,1)));
+  }
+
   /**
    * Specifies whether to enable event collection.
    * If the function is disabled, no data is recorded.
@@ -380,6 +392,22 @@ export class HomePage {
       alert("isRestrictionEnabled :: Success -> isRestrictionEnabled: " + JSON.stringify(result,null,1));
     })
     .catch((error) => alert("isRestrictionEnabled :: Error! " + JSON.stringify(error,null,1)));
+  }
+
+  /**
+   * Sets whether to collect advertising identifiers.
+   */
+   setCollectAdsIdEnabled() {
+    if (this.collectAdsIdEnabled === '') {
+      alert("Please fill out requred field");
+    } else {
+      let isEnabled = (this.collectAdsIdEnabled === "true");
+      this.hmsAnalytics.setCollectAdsIdEnabled(isEnabled)
+      .then(() => {
+        alert("setCollectAdsIdEnabled :: Success");
+      })
+      .catch((error) => alert("setCollectAdsIdEnabled :: Error! " + JSON.stringify(error,null,1)));
+    }
   }
 
   /**

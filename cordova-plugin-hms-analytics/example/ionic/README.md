@@ -287,7 +287,7 @@ A signing certificate fingerprint is used to verify the authenticity of an app w
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+            classpath 'com.huawei.agconnect:agcp:1.6.1.300'
         }
     }
 

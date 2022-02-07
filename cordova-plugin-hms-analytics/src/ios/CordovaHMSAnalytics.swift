@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
         super.pluginInitialize()
     }
     enum MethodName: String {
+        case getInstance
         case setAnalyticsEnabled
         case setUserId
         case setUserProfile
@@ -34,6 +35,7 @@
         case setReportPolicies
         case setRestrictionEnabled
         case isRestrictionEnabled
+        case setCollectAdsIdEnabled
         case addDefaultEventParams
     }
     // MARK: - HMSAnalyticsModule
@@ -49,6 +51,19 @@
             }
             HMSAnalyticsLog.showInPanel(message: methodName, type: .call)
             switch methodName {
+            case MethodName.getInstance.rawValue:
+                // MARK: - getInstance
+                if command.arguments.count > 1 {
+                    let argsArray = command.arguments[1] as? NSDictionary ?? [:]
+                    if let routePolicy = argsArray["routePolicy"] as? String {
+                        viewModel.config(routePolicy)
+                    } else {
+                        viewModel.config()
+                    }
+                    sendSuccess(methodName: methodName, callbackId: command.callbackId)
+                } else {
+                    sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
+                }
             case MethodName.setAnalyticsEnabled.rawValue:
                 // MARK: - setAnalyticsEnabled
                 if command.arguments.count > 1 {
@@ -192,6 +207,19 @@
                     messageAs: viewModel.isRestrictionEnabled()
                 ), callbackId: command.callbackId)
                 HMSAnalyticsLog.showInPanel(message: methodName, type: .success)
+            case MethodName.setCollectAdsIdEnabled.rawValue:
+                // MARK: - setCollectAdsIdEnabled
+                if command.arguments.count > 1 {
+                    let argsArray = command.arguments[1] as? NSDictionary ?? [:]
+                    guard let isEnabled = argsArray["isEnabled"] as? Bool else {
+                        sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
+                        return
+                    }
+                    viewModel.setCollectAdsIdEnabled(isEnabled)
+                    sendSuccess(methodName: methodName, callbackId: command.callbackId)
+                } else {
+                    sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
+                }
             case MethodName.addDefaultEventParams.rawValue:
                 // MARK: - addDefaultEventParams
                 if command.arguments.count > 1 {
@@ -202,13 +230,13 @@
                 } else {
                     sendError(message: ERROR_PARAMETER_MESSAGE, methodName, command.callbackId)
                 }
-
+                
             default:
                 sendError(message: "Error method name. methodName : ", methodName, command.callbackId)
             }
         }
     }
-
+    
     private func sendSuccess(methodName: String, callbackId: String) {
         self.commandDelegate.send(CDVPluginResult(
             status: CDVCommandStatus_OK

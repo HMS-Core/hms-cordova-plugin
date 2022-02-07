@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,15 +20,52 @@
 
 @implementation AppDelegate (HMSAnalyticsPlugin)
 
+NSString*const ROUTE_POLICY = @"AGC_ROUTE_POLICY";
+NSString*const IS_ANALYTICS_ENABLED = @"IS_ANALYTICS_ENABLED";
+
 + (void)load {
     Method original = class_getInstanceMethod(self, @selector(application:didFinishLaunchingWithOptions:));
     Method swizzled = class_getInstanceMethod(self, @selector(application:hmsAnalyticsDidFinishLaunchingWithOptions:));
     method_exchangeImplementations(original, swizzled);
 }
 
+- (BOOL) isContainRoutePolicy:(NSString*)routePolicy routePolicyList:(NSMutableArray*)policyList
+{
+    for (NSString* str in policyList) {
+        if ([str isEqualToString:routePolicy]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (void) hiAnalyticsConfig
+{
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSString *routePolicy = [mainBundle objectForInfoDictionaryKey:ROUTE_POLICY];
+    NSMutableArray *routePolicyList = [NSMutableArray arrayWithObjects:@"CN", @"DE", @"SG", @"RU", nil];
+    if([self isContainRoutePolicy:routePolicy routePolicyList:routePolicyList]) {
+        [HiAnalytics configWithRoutePolicy:routePolicy];
+    } else {
+        [HiAnalytics config];
+    }
+}
+
 - (BOOL)application:(UIApplication*)application hmsAnalyticsDidFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     [self application:application hmsAnalyticsDidFinishLaunchingWithOptions:launchOptions];
-    [HiAnalytics config];
+    NSLog(@"Starting HMSAnalytics plugin");
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSDictionary<NSString *, id> *infoDictionary = [mainBundle infoDictionary];
+    NSObject *value = [infoDictionary objectForKey:IS_ANALYTICS_ENABLED];
+    if(value == nil) {
+        [self hiAnalyticsConfig];
+    } else {
+        BOOL isAnalyticsEnabled = [[mainBundle objectForInfoDictionaryKey:IS_ANALYTICS_ENABLED] boolValue];
+        if(!isAnalyticsEnabled) {
+            return YES;
+        }
+        [self hiAnalyticsConfig];
+    }
     return YES;
 }
 @end

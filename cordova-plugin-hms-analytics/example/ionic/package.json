@@ -1,12 +1,11 @@
 {
     "name": "ionic-hms-analytics-demo",
     "description": "A demo application which shows the usage of HMS Analytics plugin.",
-    "version": "6.1.0-300",
+    "version": "6.3.2-300",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENCE",
     "readmeFilename": "README.md",
-
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
@@ -37,7 +36,6 @@
         "@angular/compiler": "9.1.6",
         "@angular/compiler-cli": "9.1.6",
         "@angular/language-service": "9.1.6",
-        "@capacitor/cli": "2.2.1",
         "@ionic/angular-toolkit": "2.1.1",
         "@types/jasmine": "3.5.0",
         "@types/jasminewd2": "2.0.3",

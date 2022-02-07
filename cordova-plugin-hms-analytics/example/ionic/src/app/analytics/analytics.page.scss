@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@
     text-decoration: none;
 }
 
+#getInstance,
 #setAnalyticsEnabled,
 #getAAID,
 #onEvent,
@@ -56,6 +57,7 @@
 #getReportPolicyThreshold,
 #setRestrictionEnabled,
 #isRestrictionEnabled,
+#setCollectAdsIdEnabled,
 #addDefaultEventParams,
 #HAParamType,
 #HAEventType {
@@ -68,7 +70,8 @@
 #profile,
 #selectedLevel,
 #reportPolicyType,
-#restrictionIsEnabled {
+#restrictionIsEnabled,
+#collectAdsIdEnabled {
     width: 90%;
     border: solid 2px #9ab7d3;
     height: 35px;
