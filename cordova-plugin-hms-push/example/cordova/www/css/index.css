@@ -1,0 +1,120 @@
+/*
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+body {
+  background-color: rgba(228, 228, 228, 0.9);
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+}
+
+.event {
+  text-align: center;
+  padding: 2em;
+  font-weight: bold;
+}
+
+.event.listening {
+  background-color: #333333;
+  display: block;
+}
+
+.event.received {
+  background-color: #4b946a;
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.button {
+  flex-grow: 1;
+  border: none;
+  height: 2.5em;
+  background-color: rgb(194, 187, 187);
+  color: black;
+  font-family: 'Lucida Grande','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Sans', Arial, sans-serif;
+  font-weight:900;
+  margin-left:5px; margin-right:5px; margin-bottom: 2px; margin-top: 2px;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 3vw;
+}
+.button #local{
+  background-color:#0091d6;
+}
+
+.seperator {
+  margin: 3px;  
+  margin-top: 1em;
+ 
+}
+
+.seperatorLocal{
+  margin:3px;
+  margin-top: 1em;
+}
+
+.seperatorLocal button{
+  flex-grow: 1;
+  border: none;
+  height: 2.5em;
+  background-color: #0091d6;;
+  color: black;
+  font-family: 'Lucida Grande','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Sans', Arial, sans-serif;
+  font-weight:900;
+  margin-left:5px; margin-right:5px; margin-bottom: 2px; margin-top: 2px;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 3vw;
+}
+
+.input {
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border-width: 1px;
+  font-family: 'Lucida Grande','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Sans', Arial, sans-serif;
+  width: 100%;
+  height: 2em;
+  text-align: center;
+}
+
+.logs {
+  height: 300px;
+  overflow: scroll;
+  padding: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  text-transform: none;
+}
+.image-div{
+  position: absolute;
+  margin: auto;
+  width: 50%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+}
