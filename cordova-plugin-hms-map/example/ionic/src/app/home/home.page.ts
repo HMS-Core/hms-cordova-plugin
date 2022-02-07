@@ -22,6 +22,7 @@ import {
     HMSMap,
     HuaweiMap,
     MapEvent,
+    MapType,
     Marker,
     TileType,
     AnimationConstant
@@ -92,6 +93,7 @@ export class HomePage {
 
     async initMap() {
         const mapOptions = {
+            mapType: MapType.MAP_TYPE_TERRAIN,
             cameraPosition: {
                 target: {lat: 40.7587658, lng: 30.3146964},
                 zoom: 2

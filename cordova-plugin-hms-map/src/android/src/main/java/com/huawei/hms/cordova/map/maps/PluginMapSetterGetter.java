@@ -115,6 +115,14 @@ class PluginMapSetterGetter {
             mapCapsule.getHuaweiMap().setLanguage(json.getString("language"));
         }
 
+        void setStyleId(JSONObject json) throws JSONException {
+            mapCapsule.getHuaweiMap().setStyleId(json.getString("styleId"));
+        }
+
+        void previewId(JSONObject json) throws JSONException {
+            mapCapsule.getHuaweiMap().previewId(json.getString("previewId"));
+        }
+
         void setInfoWindowAdapter(JSONObject json) {
             mapCapsule.getHuaweiMap().setInfoWindowAdapter(new HuaweiMap.InfoWindowAdapter() {
                 @Override

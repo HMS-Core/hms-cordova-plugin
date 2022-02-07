@@ -16,7 +16,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnimationConstant = exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
+exports.Gravity = exports.AnimationConstant = exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
 class AnimationSet {
     constructor() {
         this.animations = new Map();
@@ -172,4 +172,11 @@ var AnimationConstant;
     AnimationConstant[AnimationConstant["RESTART"] = 1] = "RESTART";
     AnimationConstant[AnimationConstant["REVERSE"] = 2] = "REVERSE";
 })(AnimationConstant = exports.AnimationConstant || (exports.AnimationConstant = {}));
+var Gravity;
+(function (Gravity) {
+    Gravity[Gravity["TOP"] = 48] = "TOP";
+    Gravity[Gravity["BOTTOM"] = 80] = "BOTTOM";
+    Gravity[Gravity["START"] = 8388611] = "START";
+    Gravity[Gravity["END"] = 8388613] = "END";
+})(Gravity = exports.Gravity || (exports.Gravity = {}));
 //# sourceMappingURL=interfaces.js.map

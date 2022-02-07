@@ -100,7 +100,9 @@ public final class JsonToObject {
                 .minZoomPreference((float) json.optDouble("minZoomPreference", 0.0))
                 .maxZoomPreference((float) json.optDouble("maxZoomPreference", 22.0))
                 .camera(constructCameraPosition(json.optJSONObject("cameraPosition")))
-                .latLngBoundsForCameraTarget(constructLatLngBounds(json.optJSONObject("latLngBounds")));
+                .latLngBoundsForCameraTarget(constructLatLngBounds(json.optJSONObject("latLngBounds")))
+                .styleId(json.optString("styleId"))
+                .previewId(json.optString("previewId"));
     }
 
     public static CameraPosition constructCameraPosition(JSONObject json) {

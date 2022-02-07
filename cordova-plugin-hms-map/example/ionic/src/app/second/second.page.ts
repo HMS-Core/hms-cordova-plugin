@@ -15,7 +15,7 @@
 */
 import {Component, OnInit} from '@angular/core';
 import {NavController} from '@ionic/angular';
-import {HuaweiMap, HMSMap, CameraUpdateFactory, Color} from '@hmscore/ionic-native-hms-map/ngx';
+import {HuaweiMap, HMSMap, CameraUpdateFactory, Color, Gravity} from '@hmscore/ionic-native-hms-map/ngx';
 @Component({
     selector: 'app-second',
     templateUrl: './second.page.html',
@@ -136,6 +136,28 @@ export class SecondPage{
 
     async clearClusterStyle() {
         await this.map.getUiSettings().setMarkerClusterIcon(null);
+    }
+
+    async changeLogoPosition() {
+        const logoPosition = Gravity.TOP|Gravity.END;
+        await this.map.getUiSettings().setLogoPosition(logoPosition);
+    }
+
+    async changeLogoPadding() {
+        await this.map.getUiSettings().setLogoPadding(0, 0, 0, 0);
+    }
+
+    async clearLogoSettings() {
+        const logoPosition = Gravity.BOTTOM|Gravity.START;
+        await this.map.getUiSettings().setLogoPosition(logoPosition);
+        await this.map.getUiSettings().setLogoPadding(50, 50, 50, 50);
+    }
+
+    async changeStyle() {
+        const styleId = "<style_id>";
+        const previewId = "<preview_id>";
+        await this.map.setStyleId(styleId);
+        await this.map.previewId(previewId);
     }
 
 }

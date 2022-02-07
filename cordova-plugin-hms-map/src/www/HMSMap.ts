@@ -23,6 +23,7 @@ import {
     CircleOptions,
     ComputeDistanceResult,
     ErrorCodes,
+    Gravity,
     GroundOverlayOptions,
     HuaweiMap,
     HuaweiMapOptions,
@@ -79,7 +80,8 @@ export {
     URLTile,
     RepetitiveTile,
     TileType,
-    AnimationConstant
+    AnimationConstant,
+    Gravity
 } from './interfaces';
 
 export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
@@ -607,6 +609,14 @@ class HuaweiMapImpl implements HuaweiMap {
         return this.setHuaweiMapOptions('setPointToCenter', { 'x': x, 'y': y });
     }
 
+    setStyleId(styleId: string): Promise<void> {
+        return this.setHuaweiMapOptions('setStyleId', { 'styleId': styleId});
+    }
+
+    previewId(previewId: string): Promise<void> {
+        return this.setHuaweiMapOptions('previewId', { 'previewId': previewId});
+    }
+
     getComponent(key: string): any {
         return this.components.get(key);
     }
@@ -749,6 +759,14 @@ class UiSettingsImpl implements UiSettings {
 
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void> {
         return this.setUiSettings('setMarkerClusterTextColor', { 'markerClusterTextColor': markerClusterTextColor });
+    }
+
+    setLogoPosition(logoPosition: number): Promise<void> {
+        return this.setUiSettings('setLogoPosition', { 'logoPosition': logoPosition });
+    }
+
+    setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void> {
+        return this.setUiSettings('setLogoPadding', { 'paddingStart': paddingStart, 'paddingTop': paddingTop, 'paddingEnd': paddingEnd, 'paddingBottom': paddingBottom });
     }
 
     private setUiSettings(func: string, props: any): Promise<void> {

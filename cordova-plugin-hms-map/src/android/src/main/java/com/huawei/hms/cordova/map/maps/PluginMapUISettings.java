@@ -112,6 +112,14 @@ class PluginMapUISettings {
             mapCapsule.getHuaweiMap().getUiSettings().setMarkerClusterTextColor(val.optInt("markerClusterTextColor"));
         }
 
+        void setLogoPosition(JSONObject val) {
+            mapCapsule.getHuaweiMap().getUiSettings().setLogoPosition(val.optInt("logoPosition"));
+        }
+
+        void setLogoPadding(JSONObject val) {
+            mapCapsule.getHuaweiMap().getUiSettings().setLogoPadding(val.optInt("paddingStart"), val.optInt("paddingTop"), val.optInt("paddingEnd"), val.optInt("paddingBottom"));
+        }
+
         void run(String methodName, JSONObject args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName, JSONObject.class);
             m.invoke(setter, args);

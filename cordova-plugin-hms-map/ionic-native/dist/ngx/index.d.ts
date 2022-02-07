@@ -99,6 +99,8 @@ export interface UiSettings {
     setMarkerClusterColor(markerClusterColor: number): Promise<void>;
     setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
+    setLogoPosition(logoPosition: number): Promise<void>;
+    setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void>;
 }
 export interface HuaweiMap {
     on(event: MapEvent, callback: (val: any) => void): Promise<void>;
@@ -149,6 +151,8 @@ export interface HuaweiMap {
     setMapPointersEnabled(mapPointersEnabled: boolean): Promise<void>;
     isMapPointersEnabled(): Promise<boolean>;
     setPointToCenter(x: number, y: number): Promise<void>;
+    setStyleId(styleId: string): Promise<void>;
+    previewId(previewId: string): Promise<void>;
 }
 export interface CameraUpdate {
     moveCamera(mapId: string): Promise<any>;
@@ -329,6 +333,8 @@ export interface HuaweiMapOptions {
     maxZoomPreference?: number;
     cameraPosition?: CameraPosition;
     latLngBounds?: LatLngBounds;
+    styleId?: string;
+    previewId?: string;
 }
 export interface Location {
     accuracy: number;
@@ -645,4 +651,10 @@ export declare enum AnimationConstant {
     INFINITE = -1,
     RESTART = 1,
     REVERSE = 2
+}
+export declare enum Gravity {
+    TOP = 48,
+    BOTTOM = 80,
+    START = 8388611,
+    END = 8388613
 }

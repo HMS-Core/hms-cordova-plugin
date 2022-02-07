@@ -87,7 +87,7 @@ async function addMarkerAnim(){
     await marker.startAnimation();
 }
 async function initMap(){
-    let mapOptions = {"cameraPosition": {"target": {"lat": 40.7587658, "lng": 30.3146964}, "zoom": 2}};
+    let mapOptions = {"mapType": HMSMap.MapType.MAP_TYPE_TERRAIN, "cameraPosition": {"target": {"lat": 40.7587658, "lng": 30.3146964}, "zoom": 2}};
     map = await HMSMap.getMap("map", mapOptions,{});
     addListener();
     await map.getUiSettings().setMyLocationButtonEnabled(true);
