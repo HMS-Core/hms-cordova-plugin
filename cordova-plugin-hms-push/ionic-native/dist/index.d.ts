@@ -169,9 +169,6 @@ export declare class HmsPushProfileOriginal extends IonicNativePlugin {
     deleteProfile(profileId: string): Promise<any>;
     deleteProfileWithSubjectId(subjectId: string, profileId: string): Promise<any>;
 }
-export declare class FcmPushProxyOriginal extends IonicNativePlugin {
-    init(): Promise<boolean>;
-}
 export declare enum HmsPushResultCode {
     SUCCESS = "0",
     ERROR = "-1",
@@ -404,4 +401,3 @@ export declare const HmsPush: HmsPushOriginal;
 export declare const HmsLocalNotification: HmsLocalNotificationOriginal;
 export declare const HmsPushEvent: HmsPushEventOriginal;
 export declare const HmsPushProfile: HmsPushProfileOriginal;
-export declare const FcmPushProxy: FcmPushProxyOriginal;

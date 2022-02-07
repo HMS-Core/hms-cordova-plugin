@@ -425,20 +425,6 @@ export class HmsPushProfile extends IonicNativePlugin {
   }
 }
 
-@Plugin({
-    pluginName: "FcmPushProxy",
-    plugin: "@hmscore/cordova-plugin-hms-push",
-    pluginRef: "FcmPushProxy",
-    repo: "https://github.com/HMS-Core/hms-cordova-plugin",
-    platforms: ["Android"],
-  })
-  @Injectable()
-  export class FcmPushProxy extends IonicNativePlugin {
-    init(): Promise<boolean>{
-        return;
-    }
-  }
-
 export enum HmsPushResultCode {
     // Success
     SUCCESS = "0",

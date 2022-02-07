@@ -30,10 +30,6 @@ var FSUtils = (function () {
         return false;
     };
 
-    api.copyFile = function (src, dest) {
-        fs.copyFileSync(src, dest);
-    };
-
     api.readFile = function (path, encoding) {
         return fs.readFileSync(path, encoding);
     };

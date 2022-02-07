@@ -1,8 +1,8 @@
 {
     "name": "@hmscore/ionic-native-hms-push",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Push",
-    "version": "5.3.0-305",
-    "zipVersion": "5.3.0.305",
+    "version": "6.1.0-300",
+    "zipVersion": "6.1.0.300",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",

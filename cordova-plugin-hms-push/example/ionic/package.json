@@ -1,6 +1,6 @@
 {
   "name": "HMSPushDemo",
-  "version": "5.3.0-305",
+  "version": "6.1.0-300",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

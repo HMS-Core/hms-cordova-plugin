@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-hms-push" version="5.3.0-305" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-push" version="6.1.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>Cordova Plugin HMS Push</name>
 	<description>Cordova Plugin HMS Push</description>
 	<license>Apache 2.0</license>
@@ -15,10 +15,6 @@
 
 	<js-module name="HmsPushEvent" src="www/HmsPushEvent.js">
 		<clobbers target="HmsPushEvent"/>
-	</js-module>
-
-	<js-module name="FcmPushProxy" src="www/FcmPushProxy.js">
-		<clobbers target="FcmPushProxy"/>
 	</js-module>
 
 	<js-module name="HmsLocalNotification" src="www/HmsLocalNotification.js">
@@ -39,7 +35,6 @@
 
 		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
 		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
-		<hook type="after_prepare" src="hooks/after_prepare.js"/>
 
 		<config-file target="config.xml" parent="/*">
 			<feature name="HMSPush">
@@ -82,8 +77,7 @@
 
 		<framework src="androidx.core:core:1.3.1"/>
 		<framework src="com.facebook.fresco:fresco:2.5.0"/>
-		<framework src="com.huawei.hms:push:5.3.0.304"/>
-		<framework src="com.huawei.hms:push-fcm:5.3.0.304"/>
+		<framework src="com.huawei.hms:push:6.1.0.300"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
 		
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/HMSPush.java" target-dir="src/com/huawei/hms/cordova/push/"></source-file>
@@ -119,7 +113,6 @@
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/receiver/NotificationActionHandler.java" target-dir="src/com/huawei/hms/cordova/push/receiver/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/BackgroundJavaScriptInterface.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/BackgroundWebViewLocalStorage.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/FcmProxy.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushInstanceId.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessagePublisher.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/push/remote/HmsPushMessageService.java" target-dir="src/com/huawei/hms/cordova/push/remote/"></source-file>
