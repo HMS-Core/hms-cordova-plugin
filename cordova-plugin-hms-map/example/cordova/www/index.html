@@ -1,0 +1,83 @@
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Hello World</title>
+</head>
+<body>
+<div id="wrapper">
+    <div class="container">
+        <button id="addMarker">Add Marker</button>
+        <button id="addCircle">Add Circle</button>
+        <button id="addPolyline">Add Polyline</button>
+    </div>
+    <div class="container">
+        <button id="addPolygon">Add Polygon</button>
+        <button id="addGroundOverlay">Add GroundOv.</button>
+        <button id="addTileOverlay">Add TileOverlay</button>
+    </div>
+    <div class="container">
+        <button id="showMap">Show Map</button>
+        <button id="hideMap">Hide Map</button>
+        <button id="destroyMap">Destroy Map</button>
+
+    </div>
+    <div class="container">
+        <button id="navigate">Navigate</button>
+        <button id="animateCamera">Animate Camera</button>
+        <button id="addDiv">Add Empty Div</button>
+    </div>
+    <div class="container">
+        <button id="addMarkerInfo">Add Marker Info</button>
+        <button id="addMarkerAnim">Add Marker Anim</button>
+        <button id="initMap">Init Map</button>
+    </div>
+    <div class="container">
+        <button id="enableMapPointers" style="width:50%;">Enable Map Pointers</button>
+        <button id="disableMapPointers" style="width:50%;">Disable Map Pointers</button>
+    </div>
+    <div class="container">
+        <input id="inputField" placeholder="Component id..."/>
+        <button id="removeComponent">Remove Comp.</button>
+    </div>
+</div>
+
+<div id="map" style="width:100%;height:300px;">
+    <button id="overlay-btn" >Overlay Button</button>
+</div>
+<label style="display: block;text-align:center;">LOGS<br></label>
+<label id="log" style="display: block;text-align:center;"></label>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

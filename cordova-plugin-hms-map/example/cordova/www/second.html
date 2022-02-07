@@ -1,0 +1,66 @@
+<!--
+    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div class="container">
+        <button id="navigateToFirst">Navigate To First Page</button>
+        <button id="showMap">Show Map</button>
+        <button id="hideMap">Hide Map</button>
+    </div>
+    <div class="container">
+        <input id="lat-input" type="number" placeholder="latitude"/>
+        <input id="lng-input" type="number" placeholder="longitude"/>
+        <input id="duration-input" type="number" placeholder="duration"/>
+        <button id="animate-camera">Animate Camera</button>
+        <button id="move-camera">Move Camera</button>
+    </div>
+    <div class="container">
+        <input id="marker-lat" type="number" placeholder="latitude"/>
+        <input id="marker-lng" type="number" placeholder="longitude"/>
+        <button id="add-marker">Add Marker</button>
+    </div>
+    <div class="container">
+        <button id="addMarkersAndMove">Add Markers & Move</button>
+        <button id="changeClusterColor">Change Cluster Color</button>
+        <button id="changeClusterIcon">Change Cluster Icon</button>
+        <button id="clearClusterStyle">Clear Cluster Style</button>
+    </div>
+    <div class="container">
+        <button id="changeLogoPosition">Set Logo Position</button>
+        <button id="changeLogoPadding">Set Logo Padding</button>
+        <button id="clearLogoSettings">Clear Logo Settings</button>
+        <button id="changeStyle">Change Style</button>
+    </div>
+    <div id="secondMap" style="width:100%;height:60%;"></div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/second.js"></script>
+
+</body>
+</html>
