@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-hms-pushfcm" version="6.1.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>Cordova Plugin HMS Push FCM</name>
+	<description>Cordova Plugin HMS Push FCM</description>
+	<license>Apache 2.0</license>
+	<keywords>android, huawei, hms, pushfcm</keywords>
+
+	<js-module name="HMSPushFcmProxy" src="www/HMSPushFcmProxy.js">
+		<clobbers target="HMSPushFcmProxy"/>
+	</js-module>
+
+	<js-module name="utils" src="www/utils.js"/>
+
+	<platform name="android">
+
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSPushFcmProxy">
+				<param name="android-package" value="com.huawei.hms.cordova.fcm.HMSPushFcmProxy"/>
+			</feature>
+		</config-file>
+
+		<framework src="com.huawei.hms:push-fcm:6.1.0.300"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"></framework>
+		
+		<config-file target="AndroidManifest.xml" parent="application">
+        	<meta-data
+        	    android:name="push_kit_proxy_init_enabled"
+        	    android:value="true" />
+		</config-file>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/HMSPushFcmProxy.java" target-dir="src/com/huawei/hms/cordova/fcm/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/CordovaRule.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CorError.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CorException.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CorLog.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/fcm/basef/handler/"></source-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/fcm/remote/FcmProxy.java" target-dir="src/com/huawei/hms/cordova/fcm/remote/"></source-file>
+		</platform>
+</plugin>
