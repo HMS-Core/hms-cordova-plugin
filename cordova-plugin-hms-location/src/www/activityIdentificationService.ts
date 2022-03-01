@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {asyncExec} from './utils';
+import { asyncExec } from './utils';
 import {
     ActivityConversionInfo,
     ActivityConversionResponse,
@@ -44,14 +44,6 @@ export class ActivityIdentificationServiceImpl implements ActivityIdentification
 
     deleteActivityIdentificationUpdates(requestCode: number): Promise<boolean> {
         return this.run('deleteActivityIdentificationUpdates', [requestCode]);
-    }
-
-    hasActivityRecognitionPermission(): Promise<boolean> {
-        return this.run('hasActivityRecognitionPermission');
-    }
-
-    requestActivityRecognitionPermission(): Promise<boolean> {
-        return this.run('requestActivityRecognitionPermission');
     }
 
     run(funcName: string, args: any[] = []) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {Injectable} from '@angular/core';
-import {Cordova, IonicNativePlugin, Plugin} from '@ionic-native/core';
+import { Injectable } from '@angular/core';
+import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
 
 @Plugin({
     pluginName: 'HMSLocation',
@@ -32,6 +32,10 @@ export class HMSLocation extends IonicNativePlugin {
         return HMSLocation.getPlugin().getGeofenceService();
     }
 
+    getGeocoderService(language: string, country?: string): GeocoderService {
+        return HMSLocation.getPlugin().getGeocoderService(language, country);
+    }
+
     getFusedLocationProviderClient(): FusedLocationService {
         return HMSLocation.getPlugin().getFusedLocationProviderClient();
     }
@@ -44,12 +48,12 @@ export class HMSLocation extends IonicNativePlugin {
         return HMSLocation.getPlugin().addListener(event, callback);
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     disableLogger(): Promise<void> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     enableLogger(): Promise<void> {
         return;
     }
@@ -69,19 +73,21 @@ export class BackgroundManager {
 }
 
 export interface FusedLocationService {
+    disableBackgroundLocation(): Promise<void>;
+    enableBackgroundLocation(notificationId: number, notification: string): Promise<void>;
     checkLocationSettings(request: LocationSettingsRequest): Promise<LocationSettingsStates>;
     flushLocations(): Promise<void>
     getLastLocation(): Promise<Location>;
     getLastLocationWithAddress(request: LocationRequest): Promise<HWLocation>;
     getLocationAvailability(): Promise<boolean>;
     getNavigationContextState(requestType: NavigationRequestConstants): Promise<NavigationResult>;
-    hasLocationPermission(): Promise<boolean>;
     removeLocationUpdates(requestCode: number, type: RequestType): Promise<boolean>;
     requestLocationUpdates(requestCode: number, request: LocationRequest, callback?: (locationResult: LocationResult) => void): Promise<boolean>;
     requestLocationUpdatesEx(requestCode: number, request: LocationRequest): Promise<boolean>;
-    requestLocationPermission(): Promise<boolean>;
     setMockLocation(latLng: LatLng): Promise<void>;
     setMockMode(mode: boolean): Promise<void>;
+    setLogConfig(logConfigSettings: LogConfigSettings): Promise<void>;
+    getLogConfig(): Promise<LogConfigSettings>;
 }
 
 export interface GeofenceService {
@@ -89,13 +95,41 @@ export interface GeofenceService {
     deleteGeofenceList(requestCode: number): Promise<boolean>;
 }
 
+export interface GeocoderService {
+    getFromLocation(getFromLocationRequest: GetFromLocationRequest): Promise<HWLocation[]>;
+    getFromLocationName(getFromLocationNameRequest: GetFromLocationNameRequest): Promise<HWLocation[]>;
+}
+export interface GetFromLocationRequest {
+    latitude: number;
+    longitude: number;
+    maxResults: number;
+}
+export interface GetFromLocationNameRequest {
+    locationName: string;
+    maxResults: number;
+    corner?: Corner;
+}
+export interface Corner {
+    lowerLeftLatitude: number;
+    lowerLeftLongitude: number;
+    upperRightLatitude: number;
+    upperRightLongitude: number;
+}
+
+export interface LogConfigSettings {
+    logConfigSettingsFile? : LogConfigSettingsFile;
+    logPath: string;
+}
+export interface LogConfigSettingsFile {
+    fileExpiredTime: number;
+    fileNum: number;
+    fileSize: number;
+}
 export interface ActivityIdentificationService {
     createActivityConversionUpdates(requestCode: number, activityConversionRequest: ActivityConversionInfo[], callback?: (data: ActivityConversionResponse) => void): Promise<boolean>;
     createActivityIdentificationUpdates(requestCode: number, intervalMillis: number, callback?: (data: ActivityIdentificationResponse) => void): Promise<boolean>;
     deleteActivityConversionUpdates(requestCode: number): Promise<boolean>;
     deleteActivityIdentificationUpdates(requestCode: number): Promise<boolean>;
-    hasActivityRecognitionPermission(): Promise<boolean>;
-    requestActivityRecognitionPermission(): Promise<boolean>;
 }
 
 export interface Location {

@@ -62,4 +62,4 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ## 7. Licensing and Terms
 
-HMS Location Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+HMS Location Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).

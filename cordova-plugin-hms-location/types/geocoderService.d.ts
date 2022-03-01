@@ -13,31 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
-
-var fs = require("fs");
-
-var FSUtils = (function () {
-    var api = {};
-
-    api.exists = function (path) {
-        try {
-            return fs.existsSync(path);
-        } catch (err) {
-            /*NOPE*/
-        }
-        return false;
-    };
-
-    api.readFile = function (path, encoding) {
-        return fs.readFileSync(path, encoding);
-    };
-
-    api.writeFile = function (path, content) {
-        fs.writeFileSync(path, content);
-    };
-
-    return api;
-})();
-
-module.exports = FSUtils;
+import { GeocoderService, GetFromLocationNameRequest, GetFromLocationRequest, HWLocation } from "./interfaces";
+export declare class GeocoderServiceImpl implements GeocoderService {
+    language: string;
+    country?: string;
+    constructor(language: string, country?: string);
+    getFromLocation(getFromLocationRequest: GetFromLocationRequest): Promise<HWLocation[]>;
+    getFromLocationName(getFromLocationNameRequest: GetFromLocationNameRequest): Promise<HWLocation[]>;
+    run(funcName: string, args?: any[]): Promise<any>;
+}

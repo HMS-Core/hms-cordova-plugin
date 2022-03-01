@@ -10,9 +10,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addListener = exports.enableLogger = exports.disableLogger = exports.getActivityIdentificationService = exports.getFusedLocationProviderClient = exports.getGeofenceService = void 0;
+exports.addListener = exports.enableLogger = exports.disableLogger = exports.getGeocoderService = exports.getActivityIdentificationService = exports.getFusedLocationProviderClient = exports.getGeofenceService = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,9 +30,11 @@ const utils_1 = require("./utils");
 const geofenceService_1 = require("./geofenceService");
 const fusedLocationService_1 = require("./fusedLocationService");
 const activityIdentificationService_1 = require("./activityIdentificationService");
+const geocoderService_1 = require("./geocoderService");
 __exportStar(require("./enums"), exports);
 __exportStar(require("./interfaces"), exports);
 let geofenceServiceInstance;
+let geocoderServiceInstance;
 let fusedLocationProviderClientInstance;
 let activityIdentificationServiceInstance;
 function getGeofenceService() {
@@ -56,6 +58,13 @@ function getActivityIdentificationService() {
     return activityIdentificationServiceInstance;
 }
 exports.getActivityIdentificationService = getActivityIdentificationService;
+function getGeocoderService(language, country) {
+    if (geocoderServiceInstance == null) {
+        geocoderServiceInstance = new geocoderService_1.GeocoderServiceImpl(language, country);
+    }
+    return geocoderServiceInstance;
+}
+exports.getGeocoderService = getGeocoderService;
 function disableLogger() {
     return utils_1.asyncExec('HMSLocation', 'PluginService', ['disableLogger']);
 }

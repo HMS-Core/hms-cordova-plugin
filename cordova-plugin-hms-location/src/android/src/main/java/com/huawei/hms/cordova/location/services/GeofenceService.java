@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ public class GeofenceService extends CordovaBaseModule {
     @HMSLog
     public void createGeofenceList(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         if (!LocationUtils.hasLocationPermission(corPack)) {
-            cb.error(Exceptions.toString(Exceptions.GEOFENCE_INSUFFICIENT_PERMISSION));
+            cb.error(Exceptions.getError(Exceptions.GEOFENCE_INSUFFICIENT_PERMISSION));
             return;
         }
         int requestCode = args.getInt(0);
@@ -84,7 +84,7 @@ public class GeofenceService extends CordovaBaseModule {
                 pendingIntent.cancel();
                 cb.success(true);
             } else {
-                cb.error(Exceptions.toString(Exceptions.NO_MATCHED_INTENT));
+                cb.error(Exceptions.getError(Exceptions.NO_MATCHED_INTENT));
             }
         } else {
             pendingIntent = requests.get(requestCode);

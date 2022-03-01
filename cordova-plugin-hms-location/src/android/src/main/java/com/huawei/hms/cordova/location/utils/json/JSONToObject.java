@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.huawei.hms.location.ActivityConversionRequest;
 import com.huawei.hms.location.Geofence;
 import com.huawei.hms.location.LocationRequest;
 import com.huawei.hms.location.LocationSettingsRequest;
+import com.huawei.hms.location.LogConfig;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,6 +83,25 @@ public class JSONToObject {
                 .setDwellDelayTime(geofence.getInt("dwellDelayTime"))
                 .setUniqueId(geofence.getString("uniqueId"));
         return builder.build();
+    }
+
+    public static LogConfig convertJSONToLogConfig(JSONObject logConfigSettings, LogConfig logConfig) throws JSONException {
+        if (logConfigSettings.has("logConfigSettingsFile")) {
+            JSONObject logConfigSettingsFile = logConfigSettings.getJSONObject("logConfigSettingsFile");
+            if (logConfigSettingsFile.has("fileExpiredTime")) {
+                logConfig.setFileExpiredTime(logConfigSettingsFile.getInt("fileExpiredTime"));
+            }
+            if (logConfigSettingsFile.has("fileNum")) {
+                logConfig.setFileNum(logConfigSettingsFile.getInt("fileNum"));
+            }
+            if (logConfigSettingsFile.has("fileSize")) {
+                logConfig.setFileSize(logConfigSettingsFile.getInt("fileSize"));
+            }
+        }
+        if (logConfigSettings.has("logPath")) {
+            logConfig.setLogPath(logConfigSettings.getString("logPath"));
+        }
+        return logConfig;
     }
 
     public static ActivityConversionRequest convertJSONToActivityConversionRequest(JSONArray arr) throws JSONException {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 
 package com.huawei.hms.cordova.location.utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Exceptions {
@@ -58,10 +60,19 @@ public class Exceptions {
     private Exceptions() {
     }
 
-    public static String toString(int errorCode) {
+    public static JSONObject getError(int errorCode) throws JSONException {
+        JSONObject errorObject = new JSONObject();
         if (ERROR_MAP.containsKey(errorCode)) {
-            return String.format(Locale.ENGLISH, "ErrorCode: %d - Message: %s", errorCode, ERROR_MAP.get(errorCode));
+            errorObject.put("errorCode", errorCode).put("message", ERROR_MAP.get(errorCode));
+            return errorObject;
         }
-        return "No message is found.";
+        errorObject.put("errorCode", -1).put("message", "No message is found.");
+        return errorObject;
+    }
+
+    public static JSONObject getError(int errorCode, String errorMsg) throws JSONException {
+        JSONObject errorObject = new JSONObject();
+        errorObject.put("errorCode", errorCode).put("message", errorMsg);
+        return errorObject;
     }
 }

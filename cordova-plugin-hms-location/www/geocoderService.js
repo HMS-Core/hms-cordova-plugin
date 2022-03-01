@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GeofenceServiceImpl = void 0;
+exports.GeocoderServiceImpl = void 0;
 /*
     Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -17,22 +17,21 @@ exports.GeofenceServiceImpl = void 0;
     limitations under the License.
 */
 const utils_1 = require("./utils");
-class GeofenceServiceImpl {
-    createGeofenceList(requestCode, geofences, initConversions, coordinateType, callback) {
-        if (typeof callback !== "undefined") {
-            return this.run('createGeofenceList', [requestCode, [geofences, initConversions, coordinateType], callback.toString()]);
-        }
-        else {
-            return this.run('createGeofenceList', [requestCode, [geofences, initConversions, coordinateType]]);
-        }
+class GeocoderServiceImpl {
+    constructor(language, country) {
+        this.language = language;
+        this.country = country;
     }
-    deleteGeofenceList(requestCode) {
-        return this.run('deleteGeofenceList', [requestCode]);
+    getFromLocation(getFromLocationRequest) {
+        return this.run('getFromLocation', [getFromLocationRequest.latitude, getFromLocationRequest.longitude, getFromLocationRequest.maxResults, this.language, this.country]);
+    }
+    getFromLocationName(getFromLocationNameRequest) {
+        return this.run('getFromLocationName', [getFromLocationNameRequest.locationName, getFromLocationNameRequest.maxResults, getFromLocationNameRequest.corner, this.language, this.country]);
     }
     run(funcName, args = []) {
         args.unshift(funcName);
-        return utils_1.asyncExec('HMSLocation', 'GeofenceService', args);
+        return utils_1.asyncExec('HMSLocation', 'GeocoderService', args);
     }
 }
-exports.GeofenceServiceImpl = GeofenceServiceImpl;
-//# sourceMappingURL=geofenceService.js.map
+exports.GeocoderServiceImpl = GeocoderServiceImpl;
+//# sourceMappingURL=geocoderService.js.map

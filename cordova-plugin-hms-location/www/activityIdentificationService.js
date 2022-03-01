@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ActivityIdentificationServiceImpl = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -39,12 +39,6 @@ class ActivityIdentificationServiceImpl {
     }
     deleteActivityIdentificationUpdates(requestCode) {
         return this.run('deleteActivityIdentificationUpdates', [requestCode]);
-    }
-    hasActivityRecognitionPermission() {
-        return this.run('hasActivityRecognitionPermission');
-    }
-    requestActivityRecognitionPermission() {
-        return this.run('requestActivityRecognitionPermission');
     }
     run(funcName, args = []) {
         args.unshift(funcName);

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import com.huawei.hms.location.Geofence;
 import com.huawei.hms.location.HWLocation;
 import com.huawei.hms.location.LocationResult;
 import com.huawei.hms.location.LocationSettingsStates;
+import com.huawei.hms.location.LogConfig;
 import com.huawei.hms.location.NavigationResult;
 
 import org.json.JSONArray;
@@ -63,6 +64,14 @@ public class ObjectToJSON {
             Log.d(TAG, e.getLocalizedMessage());
         }
         return json;
+    }
+
+    public static JSONArray convertHWLocationListToJSONArray(List<HWLocation> hwLocations) {
+        JSONArray jsonArray = new JSONArray();
+        for (HWLocation hwLocation : hwLocations) {
+            jsonArray.put(convertHWLocationToJSON(hwLocation));
+        }
+        return jsonArray;
     }
 
     public static JSONObject convertHWLocationToJSON(HWLocation hwLocation) {
@@ -229,6 +238,15 @@ public class ObjectToJSON {
         } catch (JSONException e) {
             Log.d(TAG, e.getLocalizedMessage());
         }
+        return result;
+    }
+
+    public static JSONObject convertLogConfigToJSON(LogConfig logConfig) throws JSONException {
+        JSONObject result = new JSONObject();
+        result.put("fileExpiredTime", logConfig.getFileExpiredTime());
+        result.put("fileNum", logConfig.getFileNum());
+        result.put("fileSize", logConfig.getFileSize());
+        result.put("logPath", logConfig.getLogPath());
         return result;
     }
 

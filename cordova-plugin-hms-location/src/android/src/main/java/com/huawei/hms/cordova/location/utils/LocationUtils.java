@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -159,8 +159,9 @@ public class LocationUtils {
     }
 
     public static boolean hasLocationPermission(final CorPack corPack) {
-        boolean hasLocationPermission = corPack.hasPermission(Constants.Permission.ACCESS_COARSE_LOCATION) && corPack.hasPermission(Constants.Permission.ACCESS_FINE_LOCATION);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        boolean hasLocationPermission = corPack.hasPermission(Constants.Permission.ACCESS_COARSE_LOCATION)
+                && corPack.hasPermission(Constants.Permission.ACCESS_FINE_LOCATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             hasLocationPermission = hasLocationPermission && corPack.hasPermission(Constants.Permission.ACCESS_BACKGROUND_LOCATION);
         }
         return hasLocationPermission;

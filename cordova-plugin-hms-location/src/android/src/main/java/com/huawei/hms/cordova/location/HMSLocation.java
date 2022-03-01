@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import android.util.Log;
 import com.huawei.hms.cordova.location.basef.handler.CordovaController;
 import com.huawei.hms.cordova.location.services.ActivityIdentificationService;
 import com.huawei.hms.cordova.location.services.FusedLocationService;
+import com.huawei.hms.cordova.location.services.GeocoderService;
 import com.huawei.hms.cordova.location.services.GeofenceService;
 import com.huawei.hms.cordova.location.services.PluginService;
 import com.huawei.hms.cordova.location.utils.CordovaUtils;
@@ -36,7 +37,7 @@ import java.util.Arrays;
 public class HMSLocation extends CordovaPlugin {
 
     private static final String SERVICE = "HMSLocation";
-    private static final String VERSION = "5.1.0.304";
+    private static final String VERSION = "6.3.0.300";
     private CordovaController cordovaController;
 
     @Override
@@ -48,6 +49,7 @@ public class HMSLocation extends CordovaPlugin {
                         new FusedLocationService(cordova),
                         new GeofenceService(cordova),
                         new ActivityIdentificationService(cordova),
+                        new GeocoderService(),
                         new PluginService()));
         cordova.setActivityResultCallback(this);
     }

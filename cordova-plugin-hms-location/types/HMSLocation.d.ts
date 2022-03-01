@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,13 +13,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { ActivityConversionResponse, ActivityIdentificationResponse, ActivityIdentificationService, FusedLocationService, GeofenceService, LocationResult } from "./interfaces";
+import { ActivityConversionResponse, ActivityIdentificationResponse, ActivityIdentificationService, FusedLocationService, GeocoderService, GeofenceService, LocationResult } from "./interfaces";
 import { Events } from './enums';
 export * from './enums';
 export * from './interfaces';
 export declare function getGeofenceService(): GeofenceService;
 export declare function getFusedLocationProviderClient(): FusedLocationService;
 export declare function getActivityIdentificationService(): ActivityIdentificationService;
+export declare function getGeocoderService(language: string, country?: string): GeocoderService;
 export declare function disableLogger(): Promise<void>;
 export declare function enableLogger(): Promise<void>;
 export declare function addListener(event: Events, callback: (data: LocationResult | [] | ActivityConversionResponse | ActivityIdentificationResponse) => void): void;

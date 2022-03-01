@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {asyncExec} from './utils';
-import {Geofence, GeofenceService, Location} from "./interfaces";
-import {CoordinateType, GeofenceInitConversionType} from "./enums";
+import { asyncExec } from './utils';
+import { Geofence, GeofenceService, Location } from "./interfaces";
+import { CoordinateType, GeofenceInitConversionType } from "./enums";
 
 export class GeofenceServiceImpl implements GeofenceService {
     createGeofenceList(requestCode: number, geofences: Geofence[], initConversions: GeofenceInitConversionType, coordinateType: CoordinateType, callback?: (data: Location) => void): Promise<boolean> {

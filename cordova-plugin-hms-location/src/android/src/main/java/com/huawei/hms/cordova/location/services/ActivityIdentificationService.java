@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,26 +16,24 @@
 package com.huawei.hms.cordova.location.services;
 
 import android.app.PendingIntent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.apache.cordova.CordovaInterface;
-import org.json.JSONException;
-
-import com.huawei.hms.location.ActivityIdentification;
 import com.huawei.hms.cordova.location.basef.CordovaBaseModule;
-import com.huawei.hms.cordova.location.utils.LocationUtils;
-import com.huawei.hms.location.ActivityConversionRequest;
-import com.huawei.hms.cordova.location.basef.handler.CorPack;
-import com.huawei.hms.cordova.location.utils.Constants;
-import com.huawei.hms.cordova.location.basef.handler.Promise;
-import com.huawei.hms.cordova.location.helpers.LocationBroadcastReceiver;
-import com.huawei.hms.cordova.location.utils.json.JSONToObject;
 import com.huawei.hms.cordova.location.basef.CordovaMethod;
 import com.huawei.hms.cordova.location.basef.HMSLog;
+import com.huawei.hms.cordova.location.basef.handler.CorPack;
+import com.huawei.hms.cordova.location.basef.handler.Promise;
+import com.huawei.hms.cordova.location.helpers.LocationBroadcastReceiver;
+import com.huawei.hms.cordova.location.utils.Constants;
 import com.huawei.hms.cordova.location.utils.Exceptions;
+import com.huawei.hms.cordova.location.utils.LocationUtils;
+import com.huawei.hms.cordova.location.utils.json.JSONToObject;
+import com.huawei.hms.location.ActivityConversionRequest;
+import com.huawei.hms.location.ActivityIdentification;
+
+import org.apache.cordova.CordovaInterface;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +42,6 @@ public class ActivityIdentificationService extends CordovaBaseModule {
     private static final String TAG = ActivityIdentificationService.class.getSimpleName();
     private com.huawei.hms.location.ActivityIdentificationService activityIdentificationService;
     private Map<Integer, PendingIntent> requests;
-    private Promise permissionResultPromise;
 
     public ActivityIdentificationService(CordovaInterface cordova) {
         activityIdentificationService = ActivityIdentification.getService(cordova.getContext());
@@ -54,14 +51,6 @@ public class ActivityIdentificationService extends CordovaBaseModule {
     @Override
     public void onDestroy() {
         Log.d(TAG, "ActivityIdentificationService: onDestroy() called");
-    }
-
-    @Override
-    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == Constants.Permission.ACTIVITY_REQUEST_CODE) {
-            boolean result = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-            permissionResultPromise.success(result);
-        }
     }
 
     @CordovaMethod
@@ -91,7 +80,7 @@ public class ActivityIdentificationService extends CordovaBaseModule {
                 pendingIntent.cancel();
                 cb.success(true);
             } else {
-                cb.error(Exceptions.toString(Exceptions.NO_MATCHED_INTENT));
+                cb.error(Exceptions.getError(Exceptions.NO_MATCHED_INTENT));
             }
         } else {
             activityIdentificationService.deleteActivityConversionUpdates(requests.get(requestCode))
@@ -129,7 +118,7 @@ public class ActivityIdentificationService extends CordovaBaseModule {
                 pendingIntent.cancel();
                 cb.success(true);
             } else {
-                cb.error(Exceptions.toString(Exceptions.NO_MATCHED_INTENT));
+                cb.error(Exceptions.getError(Exceptions.NO_MATCHED_INTENT));
             }
         } else {
             activityIdentificationService.deleteActivityIdentificationUpdates(requests.get(requestCode))
@@ -139,28 +128,5 @@ public class ActivityIdentificationService extends CordovaBaseModule {
             Log.i(TAG, "deleteActivityIdentificationUpdates end");
         }
         LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.IDENTIFICATION_FUNCTION);
-    }
-
-    @CordovaMethod
-    public void requestActivityRecognitionPermission(final CorPack corPack, JSONArray args, final Promise cb) {
-        this.permissionResultPromise = cb;
-        String permission;
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            permission = "com.huawei.hms.permission.ACTIVITY_RECOGNITION";
-        } else {
-            permission = "android.permission.ACTIVITY_RECOGNITION";
-        }
-        corPack.requestPermission(Constants.Permission.ACTIVITY_REQUEST_CODE, permission);
-    }
-
-    @CordovaMethod
-    public void hasActivityRecognitionPermission(final CorPack corPack, JSONArray args, final Promise cb) {
-        boolean hasPermission;
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            hasPermission = corPack.hasPermission("com.huawei.hms.permission.ACTIVITY_RECOGNITION");
-        } else {
-            hasPermission = corPack.hasPermission("android.permission.ACTIVITY_RECOGNITION");
-        }
-        cb.success(hasPermission);
     }
 }

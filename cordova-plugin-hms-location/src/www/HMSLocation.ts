@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,24 +13,27 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {asyncExec} from './utils';
+import { asyncExec } from './utils';
 import {
     ActivityConversionResponse,
     ActivityIdentificationResponse,
     ActivityIdentificationService,
     FusedLocationService,
+    GeocoderService,
     GeofenceService,
     LocationResult
 } from "./interfaces";
-import {GeofenceServiceImpl} from "./geofenceService";
-import {FusedLocationServiceImpl} from "./fusedLocationService";
-import {ActivityIdentificationServiceImpl} from "./activityIdentificationService";
-import {Events} from './enums';
+import { GeofenceServiceImpl } from "./geofenceService";
+import { FusedLocationServiceImpl } from "./fusedLocationService";
+import { ActivityIdentificationServiceImpl } from "./activityIdentificationService";
+import { Events } from './enums';
+import { GeocoderServiceImpl } from './geocoderService';
 
 export * from './enums'
 export * from './interfaces'
 
 let geofenceServiceInstance: GeofenceService;
+let geocoderServiceInstance: GeocoderService;
 let fusedLocationProviderClientInstance: FusedLocationService;
 let activityIdentificationServiceInstance: ActivityIdentificationService;
 
@@ -53,6 +56,13 @@ export function getActivityIdentificationService(): ActivityIdentificationServic
         activityIdentificationServiceInstance = new ActivityIdentificationServiceImpl();
     }
     return activityIdentificationServiceInstance;
+}
+
+export function getGeocoderService(language: string, country?: string): GeocoderService {
+    if (geocoderServiceInstance == null) {
+        geocoderServiceInstance = new GeocoderServiceImpl(language, country);
+    }
+    return geocoderServiceInstance;
 }
 
 export function disableLogger(): Promise<void> {

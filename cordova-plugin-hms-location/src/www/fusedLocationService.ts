@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {asyncExec} from './utils';
+import { asyncExec } from './utils';
 import {
     FusedLocationService,
     HWLocation,
@@ -23,11 +23,20 @@ import {
     LocationResult,
     LocationSettingsRequest,
     LocationSettingsStates,
+    LogConfigSettings,
     NavigationResult
 } from "./interfaces";
-import {NavigationRequestConstants, RequestType} from "./enums";
+import { NavigationRequestConstants, RequestType } from "./enums";
 
 export class FusedLocationServiceImpl implements FusedLocationService {
+
+    disableBackgroundLocation(): Promise<void> {
+        return this.run('disableBackgroundLocation');
+    }
+
+    enableBackgroundLocation(notificationId: number, notification: string): Promise<void> {
+        return this.run('enableBackgroundLocation', [notificationId, notification]);
+    }
 
     checkLocationSettings(request: LocationSettingsRequest): Promise<LocationSettingsStates> {
         return this.run('checkLocationSettings', [request]);
@@ -53,10 +62,6 @@ export class FusedLocationServiceImpl implements FusedLocationService {
         return this.run('getNavigationContextState', [requestType]);
     }
 
-    hasLocationPermission(): Promise<boolean> {
-        return this.run('hasLocationPermission');
-    }
-
     removeLocationUpdates(requestCode: number, type: RequestType): Promise<boolean> {
         return this.run('removeLocationUpdates', [requestCode, type]);
     }
@@ -73,10 +78,6 @@ export class FusedLocationServiceImpl implements FusedLocationService {
         return this.run('requestLocationUpdatesEx', [requestCode, request]);
     }
 
-    requestLocationPermission(): Promise<boolean> {
-        return this.run('requestLocationPermission');
-    }
-
     run(funcName: string, args: any[] = []) {
         args.unshift(funcName);
         return asyncExec('HMSLocation', "FusedLocationService", args);
@@ -88,5 +89,13 @@ export class FusedLocationServiceImpl implements FusedLocationService {
 
     setMockMode(mode: boolean): Promise<void> {
         return this.run('setMockMode', [mode]);
+    }
+
+    setLogConfig(logConfigSettings: LogConfigSettings): Promise<void> {
+        return this.run('setLogConfig', [logConfigSettings]);
+    }
+
+    getLogConfig(): Promise<LogConfigSettings> {
+        return this.run('getLogConfig');
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,5 @@ export declare class ActivityIdentificationServiceImpl implements ActivityIdenti
     createActivityIdentificationUpdates(requestCode: number, intervalMillis: number, callback?: (data: ActivityIdentificationResponse) => void): Promise<boolean>;
     deleteActivityConversionUpdates(requestCode: number): Promise<boolean>;
     deleteActivityIdentificationUpdates(requestCode: number): Promise<boolean>;
-    hasActivityRecognitionPermission(): Promise<boolean>;
-    requestActivityRecognitionPermission(): Promise<boolean>;
     run(funcName: string, args?: any[]): Promise<any>;
 }

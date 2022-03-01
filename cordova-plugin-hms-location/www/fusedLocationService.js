@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FusedLocationServiceImpl = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,6 +18,12 @@ exports.FusedLocationServiceImpl = void 0;
 */
 const utils_1 = require("./utils");
 class FusedLocationServiceImpl {
+    disableBackgroundLocation() {
+        return this.run('disableBackgroundLocation');
+    }
+    enableBackgroundLocation(notificationId, notification) {
+        return this.run('enableBackgroundLocation', [notificationId, notification]);
+    }
     checkLocationSettings(request) {
         return this.run('checkLocationSettings', [request]);
     }
@@ -36,9 +42,6 @@ class FusedLocationServiceImpl {
     getNavigationContextState(requestType) {
         return this.run('getNavigationContextState', [requestType]);
     }
-    hasLocationPermission() {
-        return this.run('hasLocationPermission');
-    }
     removeLocationUpdates(requestCode, type) {
         return this.run('removeLocationUpdates', [requestCode, type]);
     }
@@ -53,9 +56,6 @@ class FusedLocationServiceImpl {
     requestLocationUpdatesEx(requestCode, request) {
         return this.run('requestLocationUpdatesEx', [requestCode, request]);
     }
-    requestLocationPermission() {
-        return this.run('requestLocationPermission');
-    }
     run(funcName, args = []) {
         args.unshift(funcName);
         return utils_1.asyncExec('HMSLocation', "FusedLocationService", args);
@@ -65,6 +65,12 @@ class FusedLocationServiceImpl {
     }
     setMockMode(mode) {
         return this.run('setMockMode', [mode]);
+    }
+    setLogConfig(logConfigSettings) {
+        return this.run('setLogConfig', [logConfigSettings]);
+    }
+    getLogConfig() {
+        return this.run('getLogConfig');
     }
 }
 exports.FusedLocationServiceImpl = FusedLocationServiceImpl;
