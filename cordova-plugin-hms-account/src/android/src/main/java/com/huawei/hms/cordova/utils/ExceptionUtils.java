@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import android.util.Log;
 import com.huawei.hms.common.ApiException;
 import com.huawei.hms.cordova.helpers.Constants;
 import com.huawei.hms.cordova.helpers.HMSCordovaException;
-import com.huawei.hms.cordova.logger.HMSLogger;
 import com.huawei.hms.support.hwid.common.HuaweiIdAuthException;
 
 import org.json.JSONException;
@@ -29,34 +28,15 @@ import org.json.JSONObject;
 
 public class ExceptionUtils {
     public static final String TAG = ExceptionUtils.class.getSimpleName();
-    private HMSLogger logger;
-
-    public ExceptionUtils(HMSLogger logger) {
-        this.logger = logger;
-    }
 
     public JSONObject logAndGetErrorJSON(String action, Exception e, String eventType) {
         JSONObject error = new JSONObject();
         try {
             error = getErrorMessage(e);
-            sendRequiredEvent(action, error.getString("errorCode"), eventType);
         } catch (Exception ex) {
             Log.i(TAG, ex.getMessage());
         }
         return error;
-    }
-
-    public void sendRequiredEvent(String action, String errorCode, String eventType) {
-        try {
-            if (eventType.equals("single")) {
-                logger.sendSingleEvent(action, errorCode);
-            } else {
-                logger.sendPeriodicEvent(action, errorCode);
-            }
-        } catch (Exception e) {
-            Log.i(TAG, e.getMessage());
-        }
-
     }
 
     public JSONObject getErrorMessage(Exception e) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ export enum Theme {
 }
 
 export enum ColorPolicy {
-  COLOR_POLICY_BLUE = 0,
   COLOR_POLICY_RED = 1,
   COLOR_POLICY_WHITE = 2,
   COLOR_POLICY_WHITE_WITH_BORDER = 3,
@@ -74,10 +73,6 @@ export function getHuaweiIdAuthButton(edittedButton: string, theme: Theme, color
   let btn_color: string;
 
   switch (colorPolicy) {
-    case 0:
-      btn_color = "blue";
-      btn.style.backgroundColor = "#007DFF";
-      break;
     case 1:
       btn_color = "red";
       btn.style.backgroundColor = "#EF484B";
@@ -104,7 +99,7 @@ export function getHuaweiIdAuthButton(edittedButton: string, theme: Theme, color
       btn.style.backgroundColor = "#f2f2f2";
   }
 
-  if (btn_color == "black" || btn_color == "red" || btn_color == "blue") {
+  if (btn_color == "black" || btn_color == "red") {
     span.style.backgroundImage = "url('./img/hw_logo_btn_white.png')";
     text.style.color = "#fff";
   }
@@ -144,9 +139,6 @@ export function getHuaweiIdAuthButton(edittedButton: string, theme: Theme, color
 
   btn.addEventListener('click', function (event) {
     switch (btn_color) {
-      case "blue":
-        btn.style.backgroundColor = "#0070e5";
-        break;
       case "red":
         btn.style.backgroundColor = "#d64043";
         break;

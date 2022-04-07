@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ErrorCodes = exports.AuthParams = exports.AuthRequestOption = exports.Gender = exports.AuthScopeList = void 0;
+exports.AuthIdTokenSignAlg = exports.PackageName = exports.ErrorCodes = exports.AuthParams = exports.AuthRequestOption = exports.Gender = exports.AuthScopeList = void 0;
 //
 // Constants
 //
@@ -56,4 +56,14 @@ var ErrorCodes;
 (function (ErrorCodes) {
     ErrorCodes["HuaweiIdAuthException"] = "503";
 })(ErrorCodes = exports.ErrorCodes || (exports.ErrorCodes = {}));
+var PackageName;
+(function (PackageName) {
+    PackageName["HWID"] = "HWID";
+    PackageName["ACCOUNT"] = "ACCOUNT";
+})(PackageName = exports.PackageName || (exports.PackageName = {}));
+var AuthIdTokenSignAlg;
+(function (AuthIdTokenSignAlg) {
+    AuthIdTokenSignAlg[AuthIdTokenSignAlg["PS256"] = 1] = "PS256";
+    AuthIdTokenSignAlg[AuthIdTokenSignAlg["RS256"] = 2] = "RS256";
+})(AuthIdTokenSignAlg = exports.AuthIdTokenSignAlg || (exports.AuthIdTokenSignAlg = {}));
 //# sourceMappingURL=HMSCommonTypes.js.map

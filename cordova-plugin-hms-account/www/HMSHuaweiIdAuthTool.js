@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.requestAccessToken = exports.requestUnionId = exports.deleteAuthInfo = void 0;
 const utils_1 = require("./utils");
 function deleteAuthInfo(accessToken) {
-    return utils_1.asyncExec('HMSHuaweiIdAuthTool', 'deleteAuthInfo', [accessToken]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSHuaweiIdAuthTool', ['deleteAuthInfo', accessToken]);
 }
 exports.deleteAuthInfo = deleteAuthInfo;
 function requestUnionId(huaweiAccountName) {
-    return utils_1.asyncExec('HMSHuaweiIdAuthTool', 'requestUnionId', [huaweiAccountName]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSHuaweiIdAuthTool', ['requestUnionId', huaweiAccountName]);
 }
 exports.requestUnionId = requestUnionId;
 function requestAccessToken(account, authScopeList) {
-    return utils_1.asyncExec('HMSHuaweiIdAuthTool', 'requestAccessToken', [account, authScopeList]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSHuaweiIdAuthTool', ['requestAccessToken', account, authScopeList]);
 }
 exports.requestAccessToken = requestAccessToken;
 //# sourceMappingURL=HMSHuaweiIdAuthTool.js.map

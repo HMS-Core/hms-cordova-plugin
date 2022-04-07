@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,14 +23,22 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 
+import com.huawei.hms.cordova.utils.ExceptionUtils;
+
+import org.apache.cordova.CordovaInterface;
+
+import com.huawei.hms.cordova.basef.CordovaBaseModule;
+import com.huawei.hms.cordova.basef.CordovaMethod;
+import com.huawei.hms.cordova.basef.HMSLog;
+import com.huawei.hms.cordova.basef.handler.CorPack;
+import com.huawei.hms.cordova.basef.handler.Promise;
+
 import com.huawei.hmf.tasks.Task;
-import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
 import com.huawei.hms.cordova.exceptions.NullMessageDigestException;
 import com.huawei.hms.cordova.helpers.SMSBroadcastReceiver;
 import com.huawei.hms.support.sms.ReadSmsManager;
 import com.huawei.hms.support.sms.common.ReadSmsConstant;
 
-import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -39,35 +47,31 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
+public class HMSReadSMSManager extends CordovaBaseModule {
     private static final String TAG = HMSReadSMSManager.class.getSimpleName();
+
     private static SMSBroadcastReceiver smsBroadcastReceiver;
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if ("smsVerificationCode".equals(action)) {
-            logger.startMethodExecutionTimer(action);
-            smsVerificationCode(callbackContext);
-            return true;
-        } else if ("obtainHashCode".equals(action)) {
-            obtainHashCode(callbackContext);
-            return true;
-        } else if ("startConsent".equals(action)) {
-            String phoneNumber = args.getString(0);
-            startConsent(phoneNumber, callbackContext);
-            return true;
-        }
-        return false;
+    protected ExceptionUtils exceptions;
+
+    public CordovaInterface cordova;
+
+    public HMSReadSMSManager(CordovaInterface cordova) {
+        this.cordova = cordova;
+        exceptions = new ExceptionUtils();
     }
 
-
-    private void smsVerificationCode(CallbackContext callbackContext) {
+    @CordovaMethod
+    @HMSLog
+    public void smsVerificationCode(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "smsVerificationCode start");
         Task<Void> smsVerificationCodeTask = ReadSmsManager.start(cordova.getContext());
-        startRegisterReceiver(smsVerificationCodeTask, "smsVerificationCode", callbackContext);
+        startRegisterReceiver(smsVerificationCodeTask, "smsVerificationCode", cb);
     }
 
-    private void obtainHashCode(CallbackContext callbackContext) {
+    @CordovaMethod
+    @HMSLog
+    public void obtainHashCode(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "obtainHashCode start");
         String packageName = cordova.getContext().getPackageName();
         String signature = getSignature(cordova.getContext(), packageName);
@@ -75,26 +79,29 @@ public class HMSReadSMSManager extends CordovaPluginWithLoggerAndExceptions {
 
         try {
             String hashCode = getHashCode(packageName, messageDigest, signature);
-            callbackContext.success(hashCode);
+            cb.success(hashCode);
         } catch (Exception e) {
-            callbackContext.error(exceptions.getErrorMessage(e));
+            cb.error(exceptions.getErrorMessage(e));
         }
         Log.i(TAG, "obtainHashCode end");
     }
 
-    private void startConsent(String phoneNumber, CallbackContext callbackContext) {
+    @CordovaMethod
+    @HMSLog
+    public void startConsent(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "startConsent start");
+        String phoneNumber = args.getString(0);
         Task<Void> consentTask = ReadSmsManager.startConsent(cordova.getActivity(), phoneNumber);
-        startRegisterReceiver(consentTask, "startConsent", callbackContext);
+        startRegisterReceiver(consentTask, "startConsent", cb);
     }
 
-    private void startRegisterReceiver(Task<Void> taskRegisterReceiver, String functionName, CallbackContext callbackContext) {
+    private void startRegisterReceiver(Task<Void> taskRegisterReceiver, String functionName, Promise promise) {
         taskRegisterReceiver.addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (smsBroadcastReceiver != null) {
                     cordova.getContext().unregisterReceiver(smsBroadcastReceiver);
                 }
-                smsBroadcastReceiver = new SMSBroadcastReceiver(logger, functionName, callbackContext);
+                smsBroadcastReceiver = new SMSBroadcastReceiver(functionName, promise);
 
                 Log.i(TAG, functionName + " onSuccess");
 

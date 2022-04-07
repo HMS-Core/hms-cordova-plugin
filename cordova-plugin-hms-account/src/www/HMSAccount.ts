@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,33 +14,9 @@
     limitations under the License.
 */
 
-import { AuthHuaweiId, AuthParams, SignInData } from './HMSCommonTypes'
-import { asyncExec } from './utils'
-
-
-export function signIn(signInData: SignInData): Promise<AuthHuaweiId> {
-  return asyncExec('HMSAccount', 'signIn', [signInData ? signInData : []]);
-}
-
-export function signOut(): Promise<void> {
-  return asyncExec('HMSAccount', 'signOut', []);
-}
-
-export function cancelAuthorization(): Promise<void> {
-  return asyncExec('HMSAccount', 'cancelAuthorization', []);
-}
-
-export function silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId> {
-  return asyncExec('HMSAccount', 'silentSignIn', [authParams]);
-}
-
-export function enableLogger(): Promise<void> {
-  return asyncExec('HMSAccount', 'enableLogger', []);
-}
-
-export function disableLogger(): Promise<void> {
-  return asyncExec('HMSAccount', 'disableLogger', []);
-}
-
-
-
+export * from './HMSHuaweiIdAuthService';
+export * from './HMSHuaweiIdAuthManager';
+export * from './HMSHuaweiIdAuthTool';
+export * from './HMSNetworkTool';
+export * from './HMSReadSMSManager';
+export * from './HMSHuaweiIdAuthButton';

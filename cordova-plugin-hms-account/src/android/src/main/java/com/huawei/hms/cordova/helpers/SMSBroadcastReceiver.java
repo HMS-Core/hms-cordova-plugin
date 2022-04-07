@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,28 +24,26 @@ import android.util.Log;
 
 import com.huawei.hms.common.api.CommonStatusCodes;
 import com.huawei.hms.cordova.exceptions.TimeOutException;
-import com.huawei.hms.cordova.logger.HMSLogger;
 import com.huawei.hms.cordova.utils.ExceptionUtils;
 import com.huawei.hms.support.api.client.Status;
 import com.huawei.hms.support.sms.common.ReadSmsConstant;
-
-import org.apache.cordova.CallbackContext;
+import com.huawei.hms.cordova.basef.handler.Promise;
 
 import java.util.Objects;
 
-
 public class SMSBroadcastReceiver extends BroadcastReceiver {
     public static final String TAG = SMSBroadcastReceiver.class.getSimpleName();
-    public CallbackContext cb;
-    private HMSLogger logger;
+
+    public Promise cb;
+
     private ExceptionUtils exceptions;
+
     private String functionName;
 
-    public SMSBroadcastReceiver(HMSLogger logger, String functionName, CallbackContext callbackContext) {
-        cb = callbackContext;
-        this.logger = logger;
-        exceptions = new ExceptionUtils(logger);
-        this.functionName=functionName;
+    public SMSBroadcastReceiver(String functionName, Promise promise) {
+        cb = promise;
+        exceptions = new ExceptionUtils();
+        this.functionName = functionName;
     }
 
     @Override
@@ -60,7 +58,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 if (extras.containsKey(ReadSmsConstant.EXTRA_SMS_MESSAGE)) {
                     String message = extras.getString(ReadSmsConstant.EXTRA_SMS_MESSAGE);
                     cb.success(message);
-                    logger.sendPeriodicEvent(functionName);
                 }
             }
         }

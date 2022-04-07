@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@
 import { AuthAccount, ContainScopesResult, AuthBuilder, AuthScopeList } from './HMSCommonTypes'
 import { asyncExec } from './utils'
 
-export function getAuthResult(): Promise<AuthAccount> {
-  return asyncExec('HMSAccountAuthManager', 'getAuthResult', []);
+export function getAuthResult(packageName:String): Promise<AuthAccount> {
+  return asyncExec('HMSAccount', 'HMSAuthManager', ['getAuthResult',packageName]);
 }
 
-export function getAuthResultWithScope(authScopeList: AuthScopeList[]): Promise<AuthAccount> {
-  return asyncExec('HMSAccountAuthManager', 'getAuthResultWithScope', [authScopeList]);
+export function getAuthResultWithScope(authScopeList: AuthScopeList[],packageName:String): Promise<AuthAccount> {
+  return asyncExec('HMSAccount', 'HMSAuthManager', ['getAuthResultWithScope',authScopeList,packageName]);
 }
 
-export function containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
-  return asyncExec('HMSAccountAuthManager', 'containScopes', [authAccount, authScopeList]);
+export function containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[],packageName:String): Promise<ContainScopesResult> {
+  return asyncExec('HMSAccount', 'HMSAuthManager', ['containScopes',authAccount, authScopeList,packageName]);
 }
 
-export function addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void> {
-  return asyncExec('HMSAccountAuthManager', 'addAuthScopes', [requestCode, authScopeList]);
+export function addAuthScopes(requestCode: number, authScopeList: AuthScopeList[],packageName:String): Promise<void> {
+  return asyncExec('HMSAccount', 'HMSAuthManager', ['addAuthScopes',requestCode, authScopeList,packageName]);
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 
 import { AuthAccount, ContainScopesResult, AuthBuilder, AuthScopeList } from './HMSCommonTypes';
-export declare function getAuthResult(): Promise<AuthAccount>;
-export declare function getAuthResultWithScope(authScopeList: AuthScopeList[]): Promise<AuthAccount>;
-export declare function containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult>;
-export declare function addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void>;
+export declare function getAuthResult(packageName: String): Promise<AuthAccount>;
+export declare function getAuthResultWithScope(authScopeList: AuthScopeList[], packageName: String): Promise<AuthAccount>;
+export declare function containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[], packageName: String): Promise<ContainScopesResult>;
+export declare function addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName: String): Promise<void>;

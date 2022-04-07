@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.obtainHashCode = exports.startConsent = exports.smsVerificationCode = void 0;
 const utils_1 = require("./utils");
 function smsVerificationCode() {
-    return utils_1.asyncExec('HMSReadSMSManager', 'smsVerificationCode', []);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSReadSMSManager', ['smsVerificationCode']);
 }
 exports.smsVerificationCode = smsVerificationCode;
 function startConsent(phoneNumber) {
-    return utils_1.asyncExec('HMSReadSMSManager', 'startConsent', [phoneNumber]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSReadSMSManager', ['startConsent', phoneNumber]);
 }
 exports.startConsent = startConsent;
 function obtainHashCode() {
-    return utils_1.asyncExec('HMSReadSMSManager', 'obtainHashCode', []);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSReadSMSManager', ['obtainHashCode']);
 }
 exports.obtainHashCode = obtainHashCode;
 //# sourceMappingURL=HMSReadSMSManager.js.map

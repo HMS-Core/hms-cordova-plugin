@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,27 +17,27 @@
 import { AccountIcon, AuthAccount, AuthParams, SignInData } from './HMSCommonTypes'
 import { asyncExec } from './utils'
 
-
-export function signIn(signInData: SignInData): Promise<AuthAccount> {
-    return asyncExec('HMSAccountAuthService', 'signIn', [signInData ? signInData : []]);
+export function signIn(signInData: SignInData, packageName:String): Promise<AuthAccount> {
+    return asyncExec('HMSAccount', 'HMSAuthService', ['signIn',signInData ? signInData : [],packageName]);
 }
 
 export function signOut(): Promise<void> {
-    return asyncExec('HMSAccountAuthService', 'signOut', []);
+    return asyncExec('HMSAccount', 'HMSAuthService', ['signOut']);
 }
 
 export function cancelAuthorization(): Promise<void> {
-    return asyncExec('HMSAccountAuthService', 'cancelAuthorization', []);
+    return asyncExec('HMSAccount', 'HMSAuthService', ['cancelAuthorization']);
 }
 
-export function silentSignIn(authParams: AuthParams): Promise<AuthAccount> {
-    return asyncExec('HMSAccountAuthService', 'silentSignIn', [authParams]);
+export function silentSignIn(authParams: AuthParams,packageName:String): Promise<AuthAccount> {
+    return asyncExec('HMSAccount', 'HMSAuthService', ['silentSignIn',authParams,packageName]);
 }
+
 
 export function getChannel(): Promise<AccountIcon> {
-    return asyncExec('HMSAccountAuthService', 'getChannel', []);
+    return asyncExec('HMSAccount', 'HMSAuthService', ['getChannel']);
 }
 
 export function getIndependentSignIn( accessToken:string ): Promise<AuthAccount> {
-    return asyncExec('HMSAccountAuthService', 'getIndependentSignIn', [accessToken]);
+    return asyncExec('HMSAccount', 'HMSAuthService', ['getIndependentSignIn',accessToken]);
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,32 +18,34 @@ package com.huawei.hms.cordova.hwid;
 
 import android.util.Log;
 
-import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
 import com.huawei.hms.support.hwid.tools.NetworkTool;
 
-import org.apache.cordova.CallbackContext;
+import com.huawei.hms.cordova.utils.ExceptionUtils;
+
+import com.huawei.hms.cordova.basef.CordovaBaseModule;
+import com.huawei.hms.cordova.basef.CordovaMethod;
+import com.huawei.hms.cordova.basef.HMSLog;
+import com.huawei.hms.cordova.basef.handler.CorPack;
+import com.huawei.hms.cordova.basef.handler.Promise;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HMSNetworkTool extends CordovaPluginWithLoggerAndExceptions {
+public class HMSNetworkTool extends CordovaBaseModule {
     public static final String TAG = HMSNetworkTool.class.getSimpleName();
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        logger.startMethodExecutionTimer(action);
-        if ("buildNetworkCookie".equals(action)) {
-            JSONObject jsonCookie = args.getJSONObject(0);
-            buildNetworkCookie(jsonCookie, callbackContext);
-        } else if ("buildNetworkURL".equals(action)) {
-            JSONObject domainHttp = args.getJSONObject(0);
-            buildNetworkURL(domainHttp, callbackContext);
-        }
-        return false;
+    protected ExceptionUtils exceptions;
+
+    public HMSNetworkTool() {
+        exceptions = new ExceptionUtils();
     }
 
-    private void buildNetworkCookie(JSONObject jsonCookie, CallbackContext callbackContext) throws JSONException {
+    @CordovaMethod
+    @HMSLog
+    public void buildNetworkCookie(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "buildNetworkCookie start");
+        JSONObject jsonCookie = args.getJSONObject(0);
 
         String cookieName = jsonCookie.getString("cookieName");
         String cookieValue = jsonCookie.getString("cookieValue");
@@ -53,21 +55,26 @@ public class HMSNetworkTool extends CordovaPluginWithLoggerAndExceptions {
         Boolean isSecure = jsonCookie.getBoolean("isSecure");
         Long maxAge = jsonCookie.getLong("maxAge");
 
-        String constructedCookie = NetworkTool.buildNetworkCookie(cookieName, cookieValue, domain, path, isHttpOnly, isSecure, maxAge);
-        callbackContext.success(constructedCookie);
-        logger.sendSingleEvent("buildNetworkCookie");
+        String constructedCookie = NetworkTool.buildNetworkCookie(cookieName, cookieValue, domain, path, isHttpOnly,
+            isSecure, maxAge);
+        cb.success(constructedCookie);
+
         Log.i(TAG, "buildNetworkCookie end");
     }
 
-    private void buildNetworkURL(JSONObject domainHttp, CallbackContext callbackContext) throws JSONException {
+    @CordovaMethod
+    @HMSLog
+    public void buildNetworkURL(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "buildNetworkURL start");
+        JSONObject domainHttp = args.getJSONObject(0);
+
         String domainName = domainHttp.getString("domain");
         Boolean isUseHttps = domainHttp.getBoolean("isUseHttps");
 
         String cookie = NetworkTool.buildNetworkUrl(domainName, isUseHttps);
-        callbackContext.success(cookie);
-        logger.sendSingleEvent("buildNetworkUrl");
+        cb.success(cookie);
 
         Log.i(TAG, "buildNetworkURL end");
     }
+
 }

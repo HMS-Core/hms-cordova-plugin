@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -55,6 +55,15 @@ export enum ErrorCodes {
   HuaweiIdAuthException = "503"
 }
 
+export enum PackageName {
+  HWID="HWID",
+  ACCOUNT="ACCOUNT"
+}
+
+export enum AuthIdTokenSignAlg {
+  PS256 = 1,
+  RS256 = 2
+}
 
 //
 // Data Types
@@ -140,7 +149,8 @@ export interface AccountIcon {
 export interface SignInData {
   authRequestOption: AuthRequestOption[],
   authParam?: AuthParams,
-  authScopeList?: AuthScopeList[]
+  authScopeList?: AuthScopeList[],
+  authIdTokenSignAlg?: AuthIdTokenSignAlg
 }
 
 

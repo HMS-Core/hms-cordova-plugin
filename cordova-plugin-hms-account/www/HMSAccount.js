@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,31 +14,25 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.silentSignIn = exports.cancelAuthorization = exports.signOut = exports.signIn = void 0;
-const utils_1 = require("./utils");
-function signIn(signInData) {
-    return utils_1.asyncExec('HMSAccount', 'signIn', [signInData ? signInData : []]);
-}
-exports.signIn = signIn;
-function signOut() {
-    return utils_1.asyncExec('HMSAccount', 'signOut', []);
-}
-exports.signOut = signOut;
-function cancelAuthorization() {
-    return utils_1.asyncExec('HMSAccount', 'cancelAuthorization', []);
-}
-exports.cancelAuthorization = cancelAuthorization;
-function silentSignIn(authParams) {
-    return utils_1.asyncExec('HMSAccount', 'silentSignIn', [authParams]);
-}
-exports.silentSignIn = silentSignIn;
-function enableLogger() {
-    return utils_1.asyncExec('HMSAccount', 'enableLogger', []);
-}
-exports.enableLogger = enableLogger;
-function disableLogger() {
-    return utils_1.asyncExec('HMSAccount', 'disableLogger', []);
-}
-exports.disableLogger = disableLogger;
+__exportStar(require("./HMSHuaweiIdAuthService"), exports);
+__exportStar(require("./HMSHuaweiIdAuthManager"), exports);
+__exportStar(require("./HMSHuaweiIdAuthTool"), exports);
+__exportStar(require("./HMSNetworkTool"), exports);
+__exportStar(require("./HMSReadSMSManager"), exports);
+__exportStar(require("./HMSHuaweiIdAuthButton"), exports);
 //# sourceMappingURL=HMSAccount.js.map

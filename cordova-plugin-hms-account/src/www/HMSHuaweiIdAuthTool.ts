@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@ import { asyncExec } from './utils'
 import { Account, AuthScopeList } from './HMSCommonTypes';
 
 export function deleteAuthInfo(accessToken: string): Promise<void> {
-  return asyncExec('HMSHuaweiIdAuthTool', 'deleteAuthInfo', [accessToken]);
+  return asyncExec('HMSAccount', 'HMSHuaweiIdAuthTool', ['deleteAuthInfo',accessToken]);
 }
 
 export function requestUnionId(huaweiAccountName: string): Promise<string> {
-  return asyncExec('HMSHuaweiIdAuthTool', 'requestUnionId', [huaweiAccountName]);
+  return asyncExec('HMSAccount', 'HMSHuaweiIdAuthTool', ['requestUnionId',huaweiAccountName]);
 }
 
 export function requestAccessToken(account: Account, authScopeList: AuthScopeList[]): Promise<string> {
-  return asyncExec('HMSHuaweiIdAuthTool', 'requestAccessToken', [account, authScopeList]);
+  return asyncExec('HMSAccount', 'HMSHuaweiIdAuthTool', ['requestAccessToken',account, authScopeList]);
 }
 

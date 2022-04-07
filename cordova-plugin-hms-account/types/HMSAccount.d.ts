@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
     limitations under the License.
 */
 
-import { AuthHuaweiId, AuthParams, SignInData } from './HMSCommonTypes';
-export declare function signIn(signInData: SignInData): Promise<AuthHuaweiId>;
-export declare function signOut(): Promise<void>;
-export declare function cancelAuthorization(): Promise<void>;
-export declare function silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId>;
-export declare function enableLogger(): Promise<void>;
-export declare function disableLogger(): Promise<void>;
+export * from './HMSHuaweiIdAuthService';
+export * from './HMSHuaweiIdAuthManager';
+export * from './HMSHuaweiIdAuthTool';
+export * from './HMSNetworkTool';
+export * from './HMSReadSMSManager';
+export * from './HMSHuaweiIdAuthButton';

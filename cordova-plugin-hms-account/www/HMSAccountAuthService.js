@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,28 +17,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getIndependentSignIn = exports.getChannel = exports.silentSignIn = exports.cancelAuthorization = exports.signOut = exports.signIn = void 0;
 const utils_1 = require("./utils");
-function signIn(signInData) {
-    return utils_1.asyncExec('HMSAccountAuthService', 'signIn', [signInData ? signInData : []]);
+function signIn(signInData, packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['signIn', signInData ? signInData : [], packageName]);
 }
 exports.signIn = signIn;
 function signOut() {
-    return utils_1.asyncExec('HMSAccountAuthService', 'signOut', []);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['signOut']);
 }
 exports.signOut = signOut;
 function cancelAuthorization() {
-    return utils_1.asyncExec('HMSAccountAuthService', 'cancelAuthorization', []);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['cancelAuthorization']);
 }
 exports.cancelAuthorization = cancelAuthorization;
-function silentSignIn(authParams) {
-    return utils_1.asyncExec('HMSAccountAuthService', 'silentSignIn', [authParams]);
+function silentSignIn(authParams, packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['silentSignIn', authParams, packageName]);
 }
 exports.silentSignIn = silentSignIn;
 function getChannel() {
-    return utils_1.asyncExec('HMSAccountAuthService', 'getChannel', []);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['getChannel']);
 }
 exports.getChannel = getChannel;
-function getIndependentSignIn(independentSignInParams) {
-    return utils_1.asyncExec('HMSAccountAuthService', 'getIndependentSignIn', [independentSignInParams]);
+function getIndependentSignIn(accessToken) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthService', ['getIndependentSignIn', accessToken]);
 }
 exports.getIndependentSignIn = getIndependentSignIn;
 //# sourceMappingURL=HMSAccountAuthService.js.map

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import android.graphics.Bitmap;
 import android.util.Base64;
 import android.util.Log;
 
-import com.huawei.hms.cordova.PackageName;
-import com.huawei.hms.cordova.logger.HMSLogger;
 import com.huawei.hms.support.account.request.AccountAuthParams;
 import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
 import com.huawei.hms.support.account.result.AccountIcon;
@@ -34,7 +32,8 @@ import com.huawei.hms.support.hwid.request.HuaweiIdAuthParams;
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParamsHelper;
 import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 
-import org.apache.cordova.CallbackContext;
+import com.huawei.hms.cordova.basef.handler.Promise;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,9 +48,8 @@ import java.util.Set;
 
 public class HMSAccountUtils {
 
-
-
-    public static JSONObject fromAuthHuaweiIdToJsonObject(AuthHuaweiId authHuaweiId, Context context) throws JSONException {
+    public static JSONObject fromAuthHuaweiIdToJsonObject(AuthHuaweiId authHuaweiId, Context context)
+        throws JSONException {
         JSONObject authHuaweiJSONObject = fromAbsractAuthAccountToJSONObject(authHuaweiId);
         authHuaweiJSONObject.put("ageRangeFlag", authHuaweiId.getAgeRangeFlag());
         if (authHuaweiId.getHuaweiAccount(context) != null) {
@@ -64,7 +62,8 @@ public class HMSAccountUtils {
 
     }
 
-    public static JSONObject fromAuthAccountToJsonObject(AuthAccount authAccount, Context context) throws JSONException {
+    public static JSONObject fromAuthAccountToJsonObject(AuthAccount authAccount, Context context)
+        throws JSONException {
         JSONObject authAccountJSONObject = fromAbsractAuthAccountToJSONObject(authAccount);
         if (authAccount.getAccount(context) != null) {
             authAccountJSONObject.put("account", fromAccountToJSONObject(authAccount.getAccount(context)));
@@ -76,7 +75,8 @@ public class HMSAccountUtils {
         return authAccountJSONObject;
     }
 
-    private static <T extends AbstractAuthAccount> JSONObject fromAbsractAuthAccountToJSONObject(T authAccount) throws JSONException {
+    private static <T extends AbstractAuthAccount> JSONObject fromAbsractAuthAccountToJSONObject(T authAccount)
+        throws JSONException {
         JSONObject authAccountJSONObject = new JSONObject();
         authAccountJSONObject.put("uid", authAccount.getUid());
         authAccountJSONObject.put("openId", authAccount.getOpenId());
@@ -123,7 +123,8 @@ public class HMSAccountUtils {
         return accountJsonObject;
     }
 
-    public static HuaweiIdAuthParams fromJSONObjectToHuaweiIdAuthParams(JSONArray scopes, String huaweiIdAuthParams, JSONArray jsonScopeList) throws JSONException {
+    public static HuaweiIdAuthParams fromJSONObjectToHuaweiIdAuthParams(JSONArray scopes, String huaweiIdAuthParams,
+        JSONArray jsonScopeList) throws JSONException {
         HuaweiIdAuthParamsHelper huaweiIdBuilder;
         if (huaweiIdAuthParams.isEmpty()) {
             huaweiIdBuilder = new HuaweiIdAuthParamsHelper();
@@ -195,7 +196,8 @@ public class HMSAccountUtils {
         return huaweiIdBuildAuthParams;
     }
 
-    public static AccountAuthParams fromJSONObjectToAccountAuthParams(JSONArray scopes, String accountAuthParams, JSONArray jsonScopeList) throws JSONException {
+    public static AccountAuthParams fromJSONObjectToAccountAuthParams(JSONArray scopes, String accountAuthParams,
+        JSONArray jsonScopeList, int idTokenSignAlg) throws JSONException {
         AccountAuthParamsHelper accountBuilder;
         if (accountAuthParams.isEmpty()) {
             accountBuilder = new AccountAuthParamsHelper();
@@ -256,6 +258,8 @@ public class HMSAccountUtils {
             accountBuilder.setScopeList(scopeList);
         }
 
+        accountBuilder.setIdTokenSignAlg(idTokenSignAlg);
+
         AccountAuthParams accountBuildAuthParams = accountBuilder.createParams();
 
         return accountBuildAuthParams;
@@ -294,7 +298,8 @@ public class HMSAccountUtils {
         return account;
     }
 
-    public static <T extends AbstractAuthAccount> T fromJSONObjectToAuth(JSONObject auth, PackageName authType) throws JSONException {
+    public static <T extends AbstractAuthAccount> T fromJSONObjectToAuth(JSONObject auth, String authType)
+        throws JSONException {
         T buildAuth = null;
         String openId = auth.getString("openId");
         String uid = auth.getString("uid");
@@ -319,10 +324,12 @@ public class HMSAccountUtils {
             scopes.add(element);
         }
 
-        if (authType.equals(PackageName.HWID)) {
-            buildAuth = (T) AuthHuaweiId.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode);
-        } else if (authType.equals(PackageName.ACCOUNT)) {
-            buildAuth = (T) AuthAccount.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode, carrierId);
+        if (authType.equals("HWID")) {
+            buildAuth = (T) AuthHuaweiId.build(openId, uid, displayName, photoUriString, accessToken,
+                serviceCountryCode, status, gender, scopes, serverAuthCode, unionId, countryCode);
+        } else if (authType.equals("ACCOUNT")) {
+            buildAuth = (T) AuthAccount.build(openId, uid, displayName, photoUriString, accessToken, serviceCountryCode,
+                status, gender, scopes, serverAuthCode, unionId, countryCode, carrierId);
         }
 
         return buildAuth;
@@ -345,21 +352,20 @@ public class HMSAccountUtils {
         return result;
     }
 
-    public static <T extends AbstractAuthAccount> void getCallbackSuccess(T authResult, HMSLogger logger, String functionName, CallbackContext callbackContext,Context context) throws JSONException {
+    public static <T extends AbstractAuthAccount> void getCallbackSuccess(T authResult, String functionName,
+        Promise callbackContext, Context context) throws JSONException {
         if (authResult == null) {
             callbackContext.success();
-            logger.sendSingleEvent(functionName);
         } else {
             JSONObject authResultJson = null;
 
             if (authResult instanceof AuthHuaweiId) {
-                authResultJson = HMSAccountUtils.fromAuthHuaweiIdToJsonObject((AuthHuaweiId) authResult,context);
+                authResultJson = HMSAccountUtils.fromAuthHuaweiIdToJsonObject((AuthHuaweiId) authResult, context);
             } else if (authResult instanceof AuthAccount) {
-                authResultJson = HMSAccountUtils.fromAuthAccountToJsonObject((AuthAccount) authResult,context);
+                authResultJson = HMSAccountUtils.fromAuthAccountToJsonObject((AuthAccount) authResult, context);
             }
 
             callbackContext.success(authResultJson);
-            logger.sendSingleEvent(functionName);
         }
     }
 

@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,20 +17,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addAuthScopes = exports.containScopes = exports.getAuthResultWithScope = exports.getAuthResult = void 0;
 const utils_1 = require("./utils");
-function getAuthResult() {
-    return utils_1.asyncExec('HMSAccountAuthManager', 'getAuthResult', []);
+function getAuthResult(packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthManager', ['getAuthResult', packageName]);
 }
 exports.getAuthResult = getAuthResult;
-function getAuthResultWithScope(authScopeList) {
-    return utils_1.asyncExec('HMSAccountAuthManager', 'getAuthResultWithScope', [authScopeList]);
+function getAuthResultWithScope(authScopeList, packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthManager', ['getAuthResultWithScope', authScopeList, packageName]);
 }
 exports.getAuthResultWithScope = getAuthResultWithScope;
-function containScopes(authAccount, authScopeList) {
-    return utils_1.asyncExec('HMSAccountAuthManager', 'containScopes', [authAccount, authScopeList]);
+function containScopes(authAccount, authScopeList, packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthManager', ['containScopes', authAccount, authScopeList, packageName]);
 }
 exports.containScopes = containScopes;
-function addAuthScopes(requestCode, authScopeList) {
-    return utils_1.asyncExec('HMSAccountAuthManager', 'addAuthScopes', [requestCode, authScopeList]);
+function addAuthScopes(requestCode, authScopeList, packageName) {
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSAuthManager', ['addAuthScopes', requestCode, authScopeList, packageName]);
 }
 exports.addAuthScopes = addAuthScopes;
 //# sourceMappingURL=HMSAccountAuthManager.js.map

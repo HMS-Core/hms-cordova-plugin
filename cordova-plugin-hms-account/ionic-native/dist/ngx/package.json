@@ -1,12 +1,12 @@
 {
     "name": "@hmscore/ionic-native-hms-account",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Account",
-    "version": "5.3.0-306",
-    "zipVersion": "5.3.0.306",
+    "version": "6.4.0-300",
+    "zipVersion": "6.4.0.300",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",

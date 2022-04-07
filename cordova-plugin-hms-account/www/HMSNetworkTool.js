@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,11 +18,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildNetworkCookie = exports.buildNetworkURL = void 0;
 const utils_1 = require("./utils");
 function buildNetworkURL(domainHttps) {
-    return utils_1.asyncExec('HMSNetworkTool', 'buildNetworkURL', [domainHttps]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSNetworkTool', ['buildNetworkURL', domainHttps]);
 }
 exports.buildNetworkURL = buildNetworkURL;
 function buildNetworkCookie(cookie) {
-    return utils_1.asyncExec('HMSNetworkTool', 'buildNetworkCookie', [cookie]);
+    return (0, utils_1.asyncExec)('HMSAccount', 'HMSNetworkTool', ['buildNetworkCookie', cookie]);
 }
 exports.buildNetworkCookie = buildNetworkCookie;
 //# sourceMappingURL=HMSNetworkTool.js.map

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -43,6 +43,14 @@ export declare enum AuthRequestOption {
 export declare enum AuthParams {
     DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
     DEFAULT_AUTH_REQUEST_PARAM_GAME = "DEFAULT_AUTH_REQUEST_PARAM_GAME"
+}
+export declare enum PackageName {
+    HWID = "HWID",
+    ACCOUNT = "ACCOUNT"
+}
+export declare enum AuthIdTokenSignAlg {
+    PS256 = 1,
+    RS256 = 2
 }
 export interface AbstractAuthAccount {
     uid?: string;
@@ -117,34 +125,35 @@ export interface SignInData {
     authRequestOption: AuthRequestOption[];
     authParam?: AuthParams;
     authScopeList?: AuthScopeList[];
+    authIdTokenSignAlg?: AuthIdTokenSignAlg;
 }
 export interface SignInData {
     authRequestOption: AuthRequestOption[];
     authParam?: AuthParams;
     authScopeList?: AuthScopeList[];
+    authIdTokenSignAlg?: AuthIdTokenSignAlg;
 }
 export declare class HMSAccountOriginal extends IonicNativePlugin {
-    signIn(signInData: SignInData): Promise<AuthHuaweiId>;
+    signIn(signInData: SignInData, packageName: string): Promise<AuthHuaweiId>;
     signOut(): Promise<void>;
     cancelAuthorization(): Promise<void>;
-    silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId>;
+    silentSignIn(authParams: AuthParams, packageName: string): Promise<AuthHuaweiId>;
     enableLogger(): Promise<void>;
     disableLogger(): Promise<void>;
 }
 export declare class HMSAccountAuthServiceOriginal extends IonicNativePlugin {
-    signIn(signInData: SignInData): Promise<AuthAccount>;
+    signIn(signInData: SignInData, packageName: string): Promise<AuthAccount>;
+    getIndependentSignIn(accessToken: string): Promise<AuthAccount>;
     signOut(): Promise<void>;
     cancelAuthorization(): Promise<void>;
-    silentSignIn(authParams: AuthParams): Promise<AuthAccount>;
+    silentSignIn(authParams: AuthParams, packageName: string): Promise<AuthAccount>;
     getChannel(): Promise<AccountIcon>;
-    getIndependentSignIn(accessToken: string): Promise<AuthAccount>;
 }
 export declare enum Theme {
     THEME_NO_TITLE = 0,
     THEME_FULL_TITLE = 1
 }
 export declare enum ColorPolicy {
-    COLOR_POLICY_BLUE = 0,
     COLOR_POLICY_RED = 1,
     COLOR_POLICY_WHITE = 2,
     COLOR_POLICY_WHITE_WITH_BORDER = 3,
@@ -160,16 +169,16 @@ export declare class HMSHuaweiIdAuthButtonOriginal extends IonicNativePlugin {
     getHuaweiIdAuthButton(edittedButton: string, theme: Theme, colorPolicy: ColorPolicy, cornerRadius: CornerRadius): void;
 }
 export declare class HMSHuaweiIdAuthManagerOriginal extends IonicNativePlugin {
-    getAuthResult(): Promise<AuthHuaweiId>;
-    getAuthResultWithScope(authHuaweiId: AuthScopeList[]): Promise<AuthHuaweiId>;
-    containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult>;
-    addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void>;
+    getAuthResult(packageName: String): Promise<AuthHuaweiId>;
+    getAuthResultWithScope(authHuaweiId: AuthScopeList[], packageName: string): Promise<AuthHuaweiId>;
+    containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[], packageName: string): Promise<ContainScopesResult>;
+    addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName: string): Promise<void>;
 }
 export declare class HMSAccountAuthManagerOriginal extends IonicNativePlugin {
-    getAuthResult(): Promise<AuthAccount>;
-    getAuthResultWithScope(authAccount: AuthScopeList[]): Promise<AuthAccount>;
-    containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult>;
-    addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void>;
+    getAuthResult(packageName: string): Promise<AuthAccount>;
+    getAuthResultWithScope(authAccount: AuthScopeList[], packageName: string): Promise<AuthAccount>;
+    containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[], packageName: string): Promise<ContainScopesResult>;
+    addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName: string): Promise<void>;
 }
 export declare class HMSHuaweiIdAuthToolOriginal extends IonicNativePlugin {
     deleteAuthInfo(accessToken: string): Promise<void>;

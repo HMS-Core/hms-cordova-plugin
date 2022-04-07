@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,11 +19,19 @@ package com.huawei.hms.cordova.hwid;
 import android.accounts.Account;
 import android.util.Log;
 
-import com.huawei.hms.cordova.CordovaPluginWithLoggerAndExceptions;
 import com.huawei.hms.support.api.entity.auth.Scope;
 import com.huawei.hms.support.hwid.tools.HuaweiIdAuthTool;
 
-import org.apache.cordova.CallbackContext;
+import com.huawei.hms.cordova.utils.ExceptionUtils;
+
+import org.apache.cordova.CordovaInterface;
+
+import com.huawei.hms.cordova.basef.CordovaBaseModule;
+import com.huawei.hms.cordova.basef.CordovaMethod;
+import com.huawei.hms.cordova.basef.HMSLog;
+import com.huawei.hms.cordova.basef.handler.CorPack;
+import com.huawei.hms.cordova.basef.handler.Promise;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,65 +41,62 @@ import java.util.List;
 import static com.huawei.hms.cordova.utils.HMSAccountUtils.fromJSONArrayToScopeList;
 import static com.huawei.hms.cordova.utils.HMSAccountUtils.fromJSONObjectToAccount;
 
-public class HMSHuaweiIdAuthTool extends CordovaPluginWithLoggerAndExceptions {
+public class HMSHuaweiIdAuthTool extends CordovaBaseModule {
     public static final String TAG = HMSHuaweiIdAuthTool.class.getSimpleName();
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        logger.startMethodExecutionTimer(action);
-        if ("requestUnionId".equals(action)) {
-            String huaweiAccountName = args.getString(0);
-            requestUnionId(huaweiAccountName, callbackContext);
-            return true;
-        } else if ("requestAccessToken".equals(action)) {
-            JSONObject account = args.getJSONObject(0);
-            JSONArray scopeList = args.getJSONArray(1);
-            requestAccessToken(account, scopeList, callbackContext);
-            return true;
-        } else if ("deleteAuthInfo".equals(action)) {
-            String accessToken = args.getString(0);
-            deleteAuthInfo(accessToken, callbackContext);
-            return true;
-        }
+    protected ExceptionUtils exceptions;
 
-        return false;
+    public CordovaInterface cordova;
+
+    public HMSHuaweiIdAuthTool(CordovaInterface cordova) {
+        this.cordova = cordova;
+        exceptions = new ExceptionUtils();
     }
 
-    private void requestUnionId(String huaweiAccountName, CallbackContext callbackContext) {
+    @CordovaMethod
+    @HMSLog
+    public void requestUnionId(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "requestUnionId start");
+        String huaweiAccountName = args.getString(0);
         try {
             String unionId = HuaweiIdAuthTool.requestUnionId(cordova.getActivity(), huaweiAccountName);
-            callbackContext.success(unionId);
-            logger.sendSingleEvent("requestUnionId");
+            cb.success(unionId);
         } catch (Exception e) {
-            callbackContext.error(exceptions.logAndGetErrorJSON("requestUnionId", e, "single"));
+            cb.error(exceptions.logAndGetErrorJSON("requestUnionId", e, "single"));
         }
         Log.i(TAG, "requestUnionId end");
     }
 
-    private void requestAccessToken(JSONObject account, JSONArray scopeList, CallbackContext callbackContext) throws JSONException {
+    @CordovaMethod
+    @HMSLog
+    public void requestAccessToken(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "requestAccessToken start");
+        JSONObject account = args.getJSONObject(0);
+        JSONArray scopeList = args.getJSONArray(1);
+
         Account getAccount = fromJSONObjectToAccount(account);
         List<Scope> getScopeList = fromJSONArrayToScopeList(scopeList);
         try {
             String token = HuaweiIdAuthTool.requestAccessToken(cordova.getActivity(), getAccount, getScopeList);
-            callbackContext.success(token);
-            logger.sendSingleEvent("requestAccessToken");
+            cb.success(token);
         } catch (Exception e) {
-            callbackContext.error(exceptions.logAndGetErrorJSON("requestAccessToken", e, "single"));
+            cb.error(exceptions.logAndGetErrorJSON("requestAccessToken", e, "single"));
         }
         Log.i(TAG, "requestAccessToken end");
     }
 
-    private void deleteAuthInfo(String accessToken, CallbackContext callbackContext) {
+    @CordovaMethod
+    @HMSLog
+    public void deleteAuthInfo(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "deleteAuthInfo start");
+        String accessToken = args.getString(0);
         try {
             HuaweiIdAuthTool.deleteAuthInfo(cordova.getActivity(), accessToken);
-            callbackContext.success();
-            logger.sendSingleEvent("deleteAuthInfo");
+            cb.success();
         } catch (Exception e) {
-            callbackContext.error(exceptions.logAndGetErrorJSON("deleteAuthInfo", e, "single"));
+            cb.error(exceptions.logAndGetErrorJSON("deleteAuthInfo", e, "single"));
         }
         Log.i(TAG, "deleteAuthInfo end");
     }
+
 }

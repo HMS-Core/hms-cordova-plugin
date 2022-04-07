@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
     limitations under the License.
 */
 
-import { AccountIcon, AuthAccount, AuthParams, SignInData, IndependentSignInParams } from './HMSCommonTypes';
-export declare function signIn(signInData: SignInData): Promise<AuthAccount>;
+import { AccountIcon, AuthAccount, AuthParams, SignInData } from './HMSCommonTypes';
+export declare function signIn(signInData: SignInData, packageName: String): Promise<AuthAccount>;
 export declare function signOut(): Promise<void>;
 export declare function cancelAuthorization(): Promise<void>;
-export declare function silentSignIn(authParams: AuthParams): Promise<AuthAccount>;
+export declare function silentSignIn(authParams: AuthParams, packageName: String): Promise<AuthAccount>;
 export declare function getChannel(): Promise<AccountIcon>;
-export declare function getIndependentSignIn(independentSignInParams: IndependentSignInParams): Promise<AuthAccount>;
+export declare function getIndependentSignIn(accessToken: string): Promise<AuthAccount>;

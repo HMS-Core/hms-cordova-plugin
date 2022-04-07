@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -46,6 +46,14 @@ export declare enum AuthParams {
 export declare enum ErrorCodes {
     HuaweiIdAuthException = "503"
 }
+export declare enum PackageName {
+    HWID = "HWID",
+    ACCOUNT = "ACCOUNT"
+}
+export declare enum AuthIdTokenSignAlg {
+    PS256 = 1,
+    RS256 = 2
+}
 export interface AbstractAuthAccount {
     uid?: string;
     openId: string;
@@ -73,10 +81,6 @@ export interface AbstractAuthAccount {
 }
 export interface AuthHuaweiId extends AbstractAuthAccount {
     ageRangeFlag: number;
-}
-export interface IndependentSignInParams {
-    accessToken: string;
-    authParam?: AuthParams;
 }
 export interface AuthAccount extends AbstractAuthAccount {
     accountFlag: number;
@@ -123,4 +127,5 @@ export interface SignInData {
     authRequestOption: AuthRequestOption[];
     authParam?: AuthParams;
     authScopeList?: AuthScopeList[];
+    authIdTokenSignAlg?: AuthIdTokenSignAlg;
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,8 +15,7 @@
 */
 
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, CordovaProperty, CordovaInstance, InstanceProperty, IonicNativePlugin } from '@ionic-native/core';
-import { Observable } from 'rxjs';
+import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
 
 export enum AuthScopeList {
   GAME = "https://www.huawei.com/auth/games",
@@ -41,12 +40,23 @@ export enum AuthRequestOption {
   SCOPE_AUTHORIZATION_CODE = "authorizationCode",
   SCOPE_ACCESS_TOKEN = "accessToken",
   SCOPE_DIALOG_AUTH = "dialogAuth",
-  SCOPE_SHIPPING_ADDRESS = "shippingAddress"
+  SCOPE_SHIPPING_ADDRESS = "shippingAddress",
+  SCOPE_CARRIER_ID = "carrierId"
 }
 
 export enum AuthParams {
   DEFAULT_AUTH_REQUEST_PARAM = "DEFAULT_AUTH_REQUEST_PARAM",
   DEFAULT_AUTH_REQUEST_PARAM_GAME = "DEFAULT_AUTH_REQUEST_PARAM_GAME"
+}
+
+export enum PackageName {
+  HWID = "HWID",
+  ACCOUNT = "ACCOUNT"
+}
+
+export enum AuthIdTokenSignAlg {
+  PS256 = 1,
+  RS256 = 2
 }
 
 export interface AbstractAuthAccount {
@@ -65,6 +75,7 @@ export interface AbstractAuthAccount {
   expressionTimeSecs: number;
   givenName: string;
   familyName: string;
+  carrierId: number;
   ageRange?: string;
   homeZone: number;
   authorizedScopes: string[];
@@ -127,13 +138,16 @@ export interface SignInData {
   authRequestOption: AuthRequestOption[];
   authParam?: AuthParams;
   authScopeList?: AuthScopeList[];
+  authIdTokenSignAlg?: AuthIdTokenSignAlg;
 }
 
 export interface SignInData {
   authRequestOption: AuthRequestOption[],
   authParam?: AuthParams,
-  authScopeList?: AuthScopeList[]
+  authScopeList?: AuthScopeList[],
+  authIdTokenSignAlg?: AuthIdTokenSignAlg
 }
+
 
 @Plugin({
   pluginName: 'HMSAccount',
@@ -144,7 +158,7 @@ export interface SignInData {
 @Injectable()
 export class HMSAccount extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  signIn(signInData: SignInData): Promise<AuthHuaweiId> {
+  signIn(signInData: SignInData, packageName:string): Promise<AuthHuaweiId> {
     return;
   }
 
@@ -159,7 +173,7 @@ export class HMSAccount extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  silentSignIn(authParams: AuthParams): Promise<AuthHuaweiId> {
+  silentSignIn(authParams: AuthParams,packageName:string): Promise<AuthHuaweiId> {
     return;
   }
 
@@ -172,9 +186,7 @@ export class HMSAccount extends IonicNativePlugin {
   disableLogger(): Promise<void> {
     return;
   }
-
 }
-
 
 @Plugin({
   pluginName: 'HMSAccountAuthService',
@@ -185,7 +197,12 @@ export class HMSAccount extends IonicNativePlugin {
 @Injectable()
 export class HMSAccountAuthService extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  signIn(signInData: SignInData): Promise<AuthAccount> {
+  signIn(signInData: SignInData, packageName:string): Promise<AuthAccount> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  getIndependentSignIn(accessToken:string): Promise<AuthAccount> {
     return;
   }
 
@@ -200,7 +217,7 @@ export class HMSAccountAuthService extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  silentSignIn(authParams: AuthParams): Promise<AuthAccount> {
+  silentSignIn(authParams: AuthParams, packageName:string): Promise<AuthAccount> {
     return;
   }
 
@@ -208,7 +225,6 @@ export class HMSAccountAuthService extends IonicNativePlugin {
   getChannel(): Promise<AccountIcon> {
     return;
   }
-
 }
 
 export enum Theme {
@@ -216,7 +232,6 @@ export enum Theme {
   THEME_FULL_TITLE = 1
 }
 export enum ColorPolicy {
-  COLOR_POLICY_BLUE = 0,
   COLOR_POLICY_RED = 1,
   COLOR_POLICY_WHITE = 2,
   COLOR_POLICY_WHITE_WITH_BORDER = 3,
@@ -240,8 +255,8 @@ export class HMSHuaweiIdAuthButton extends IonicNativePlugin {
   @Cordova()
   getHuaweiIdAuthButton(edittedButton: string, theme: Theme, colorPolicy: ColorPolicy, cornerRadius: CornerRadius): void {
     return;
-  }
 }
+} 
 
 @Plugin({
   pluginName: 'HMSHuaweiIdAuthManager',
@@ -252,22 +267,22 @@ export class HMSHuaweiIdAuthButton extends IonicNativePlugin {
 @Injectable()
 export class HMSHuaweiIdAuthManager extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  getAuthResult(): Promise<AuthHuaweiId> {
+  getAuthResult(packageName:String): Promise<AuthHuaweiId> {
+    return;
+}
+
+  @Cordova({ otherPromise: true })
+  getAuthResultWithScope(authHuaweiId: AuthScopeList[],packageName:string): Promise<AuthHuaweiId> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  getAuthResultWithScope(authHuaweiId: AuthScopeList[]): Promise<AuthHuaweiId> {
+  containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[], packageName:string): Promise<ContainScopesResult> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
-    return;
-  }
-
-  @Cordova({ otherPromise: true })
-  addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void> {
+  addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName:string): Promise<void> {
     return;
   }
 }
@@ -278,26 +293,25 @@ export class HMSHuaweiIdAuthManager extends IonicNativePlugin {
   pluginRef: 'HMSAccountAuthManager',
   platforms: ['Android']
 })
-
 @Injectable()
 export class HMSAccountAuthManager extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
-  getAuthResult(): Promise<AuthAccount> {
+  getAuthResult(packageName:string): Promise<AuthAccount> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  getAuthResultWithScope(authAccount: AuthScopeList[]): Promise<AuthAccount> {
+  getAuthResultWithScope(authAccount: AuthScopeList[], packageName:string): Promise<AuthAccount> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[]): Promise<ContainScopesResult> {
+  containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[], packageName:string): Promise<ContainScopesResult> {
     return;
   }
 
   @Cordova({ otherPromise: true })
-  addAuthScopes(requestCode: number, authScopeList: AuthScopeList[]): Promise<void> {
+  addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName:string): Promise<void> {
     return;
   }
 }
@@ -313,7 +327,7 @@ export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
   deleteAuthInfo(accessToken: string): Promise<void> {
     return;
-  }
+}
 
   @Cordova({ otherPromise: true })
   requestUnionId(huaweiAccountName: string): Promise<string> {
@@ -323,7 +337,7 @@ export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
   requestAccessToken(account: Account, authScopeList: AuthScopeList[]): Promise<string> {
     return;
-  }
+}
 }
 
 @Plugin({
@@ -336,13 +350,13 @@ export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
 export class HMSNetworkTool extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
   buildNetworkURL(domainHttps: DomainInfo): Promise<string> {
-    return;
-  }
+  return;
+}
 
   @Cordova({ otherPromise: true })
   buildNetworkCookie(cookie: Cookie): Promise<string> {
     return;
-  }
+}
 }
 
 @Plugin({
@@ -355,8 +369,8 @@ export class HMSNetworkTool extends IonicNativePlugin {
 export class HMSReadSMSManager extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
   smsVerificationCode(): Promise<string> {
-    return;
-  }
+  return;
+}
 
   @Cordova({ otherPromise: true })
   obtainHashCode(): Promise<string> {
@@ -366,5 +380,5 @@ export class HMSReadSMSManager extends IonicNativePlugin {
   @Cordova({ otherPromise: true })
   startConsent(phoneNumber: string): Promise<string> {
     return;
-  }
+}
 }
