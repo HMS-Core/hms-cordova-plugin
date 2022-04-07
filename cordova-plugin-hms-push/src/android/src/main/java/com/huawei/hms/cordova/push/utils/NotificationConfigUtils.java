@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -38,7 +38,6 @@ import java.util.Random;
 
 import static com.huawei.hms.cordova.push.constants.NotificationConstants.MESSAGE;
 
-
 public class NotificationConfigUtils {
     private static final Random RANDOM = new Random();
 
@@ -46,8 +45,9 @@ public class NotificationConfigUtils {
     public static String configTitle(Bundle bundle, Context context) {
 
         String title = BundleUtils.get(bundle, NotificationConstants.TITLE);
-        if (title != null)
+        if (title != null) {
             return title;
+        }
 
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         return context.getPackageManager().getApplicationLabel(applicationInfo).toString();
@@ -58,8 +58,9 @@ public class NotificationConfigUtils {
     public static String configMessage(Bundle bundle, Context context) {
 
         String message = BundleUtils.get(bundle, NotificationConstants.MESSAGE);
-        if (message != null)
+        if (message != null) {
             return message;
+        }
 
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         message = context.getPackageManager().getApplicationLabel(applicationInfo).toString();
@@ -76,8 +77,9 @@ public class NotificationConfigUtils {
         int resourceId;
         String value = BundleUtils.get(bundle, NotificationConstants.SMALL_ICON);
 
-        resourceId = value != null ? res.getIdentifier(value, Core.Resource.MIPMAP, packageName)
-                : res.getIdentifier(Core.Resource.NOTIFICATION, Core.Resource.MIPMAP, packageName);
+        resourceId = value != null
+            ? res.getIdentifier(value, Core.Resource.MIPMAP, packageName)
+            : res.getIdentifier(Core.Resource.NOTIFICATION, Core.Resource.MIPMAP, packageName);
 
         if (resourceId == 0) {
             resourceId = res.getIdentifier(Core.Resource.LAUNCHER, Core.Resource.MIPMAP, packageName);
@@ -119,8 +121,9 @@ public class NotificationConfigUtils {
         String repeatType = BundleUtils.get(bundle, NotificationConstants.REPEAT_TYPE);
         long repeatTime = BundleUtils.getL(bundle, NotificationConstants.REPEAT_TIME);
 
-        if (repeatType == null)
+        if (repeatType == null) {
             return 0;
+        }
 
         long fireDate = BundleUtils.getL(bundle, NotificationConstants.FIRE_DATE);
         if (fireDate == 0) {
@@ -151,7 +154,9 @@ public class NotificationConfigUtils {
 
         final String value = BundleUtils.get(bundle, NotificationConstants.PRIORITY);
 
-        if (value == null) return NotificationCompat.PRIORITY_HIGH;
+        if (value == null) {
+            return NotificationCompat.PRIORITY_HIGH;
+        }
 
         switch (value.toLowerCase(Locale.ENGLISH)) {
             case LocalNotification.Priority.MAX:
@@ -170,12 +175,15 @@ public class NotificationConfigUtils {
 
     public static int configImportance(Bundle bundle) {
 
-        if (Build.VERSION_CODES.N < Build.VERSION.SDK_INT)
-            return 4; //NotificationManager.IMPORTANCE_HIGH;
+        if (Build.VERSION_CODES.N < Build.VERSION.SDK_INT) {
+            return 4; // NotificationManager.IMPORTANCE_HIGH;
+        }
 
         final String value = BundleUtils.get(bundle, NotificationConstants.IMPORTANCE);
 
-        if (value == null) return 4; // notificationManager.IMPORTANCE_HIGH;
+        if (value == null) {
+            return 4; // notificationManager.IMPORTANCE_HIGH;
+        }
 
         try {
             switch (value.toLowerCase(Locale.ENGLISH)) {
@@ -204,7 +212,9 @@ public class NotificationConfigUtils {
     public static int configVisibility(Bundle bundle) {
 
         final String value = BundleUtils.get(bundle, NotificationConstants.VISIBILITY);
-        if (value == null) return NotificationCompat.VISIBILITY_PUBLIC;
+        if (value == null) {
+            return NotificationCompat.VISIBILITY_PUBLIC;
+        }
 
         switch (value.toLowerCase(Locale.ENGLISH)) {
             case LocalNotification.Visibility.PUBLIC:

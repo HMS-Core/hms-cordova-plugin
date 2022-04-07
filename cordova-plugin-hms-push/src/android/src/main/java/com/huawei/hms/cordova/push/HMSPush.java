@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -48,7 +48,9 @@ import java.util.Map;
 public class HMSPush extends CordovaPlugin {
 
     private String TAG = HMSPush.class.getSimpleName();
+
     private static CordovaInterface staticCordova;
+
     private static CordovaWebView staticWebView;
 
     public static CordovaInterface getCordova() {
@@ -68,23 +70,24 @@ public class HMSPush extends CordovaPlugin {
     }
 
     private static final String KIT = "Push";
-    private static final String VERSION = "6.1.0.300";
+
+    private static final String VERSION = "6.3.0.302";
+
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         HmsPushMessageService.setApplicationRunningStatus(true);
-        if(checkFlag(cordova.getActivity().getIntent()))
+        if (checkFlag(cordova.getActivity().getIntent())) {
             sendOpenedNotificationData(cordova.getActivity().getIntent());
+        }
         setCordova(cordova);
         setWebView(webView);
 
         cordovaController = new CordovaController(this, KIT, VERSION,
-            Arrays.asList(new HmsPushMessaging(webView.getContext()),
-                new HmsPushInstanceId(webView.getContext()),
-                new HmsLocalNotification(webView.getContext()),
-                new HmsPushProfile(webView.getContext())));
+            Arrays.asList(new HmsPushMessaging(webView.getContext()), new HmsPushInstanceId(webView.getContext()),
+                new HmsLocalNotification(webView.getContext()), new HmsPushProfile(webView.getContext())));
     }
 
     @Override
@@ -125,31 +128,35 @@ public class HMSPush extends CordovaPlugin {
     @Override
     public void onNewIntent(Intent intent) {
         HmsPushMessaging.setInitial(null);
-        if(checkFlag(intent))
+        if (checkFlag(intent)) {
             sendOpenedNotificationData(intent);
+        }
     }
 
-    public boolean checkFlag(Intent intent){
-        int flagNumber = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_RECEIVER_REPLACE_PENDING | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
-        int flagNumberAndBroughtToFront= flagNumber | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
-        return intent.getFlags() == flagNumber || intent.getFlags() == flagNumberAndBroughtToFront || intent.getBundleExtra(NotificationConstants.NOTIFICATION) != null || intent.getDataString() != null;
+    public boolean checkFlag(Intent intent) {
+        int flagNumber = Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_RECEIVER_REPLACE_PENDING
+            | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+        int flagNumberAndBroughtToFront = flagNumber | Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT;
+        return intent.getFlags() == flagNumber || intent.getFlags() == flagNumberAndBroughtToFront
+            || intent.getBundleExtra(NotificationConstants.NOTIFICATION) != null || intent.getDataString() != null;
     }
 
-    public void sendOpenedNotificationData(Intent intent){
+    public void sendOpenedNotificationData(Intent intent) {
         try {
             Map<String, Object> map = new HashMap<>();
             Bundle extras = intent.getExtras();
-            if(extras!= null) {
+            if (extras != null) {
                 RemoteMessage remoteMessage = new RemoteMessage(extras);
                 map.put("remoteMessage", RemoteMessageUtils.fromMap(remoteMessage));
-                JSONObject extrasData= MapUtils.fromBundle(extras);
+                JSONObject extrasData = MapUtils.fromBundle(extras);
                 map.put("extras", extrasData);
             }
-            if(intent.getDataString() != null)
+            if (intent.getDataString() != null) {
                 map.put("uriPage", intent.getDataString());
-            JSONObject result= MapUtils.toJSONObject(map);
+            }
+            JSONObject result = MapUtils.toJSONObject(map);
             HmsPushMessaging.setInitial(result);
-            CordovaUtils.sendEvent(cordova,webView,Core.Event.NOTIFICATION_OPENED_EVENT, result);
+            CordovaUtils.sendEvent(cordova, webView, Core.Event.NOTIFICATION_OPENED_EVENT, result);
         } catch (JSONException e) {
             Log.w(TAG, "sendOpenedNotificationData: " + e.getLocalizedMessage());
         }

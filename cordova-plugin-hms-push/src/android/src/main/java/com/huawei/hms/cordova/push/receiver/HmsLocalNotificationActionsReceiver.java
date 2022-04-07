@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ import com.huawei.hms.cordova.push.constants.NotificationConstants;
 import com.huawei.hms.cordova.push.local.HmsLocalNotificationController;
 import com.huawei.hms.cordova.push.utils.BundleUtils;
 
-
 public class HmsLocalNotificationActionsReceiver extends BroadcastReceiver {
 
     @Override
@@ -38,9 +37,9 @@ public class HmsLocalNotificationActionsReceiver extends BroadcastReceiver {
 
         String intentActionPrefix = context.getPackageName() + ".ACTION_";
 
-        if (intent.getAction() == null || !intent.getAction().startsWith(intentActionPrefix))
+        if (intent.getAction() == null || !intent.getAction().startsWith(intentActionPrefix)) {
             return;
-
+        }
 
         Bundle bundle = null;
         try {
@@ -48,13 +47,17 @@ public class HmsLocalNotificationActionsReceiver extends BroadcastReceiver {
         } catch (Exception ex) {
             Log.w("onReceive", "onReceive: " + ex.getLocalizedMessage());
         }
-        if (bundle == null) return;
+        if (bundle == null) {
+            return;
+        }
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager == null) return;
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(
+            Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            return;
+        }
 
         int id = Integer.parseInt(BundleUtils.get(bundle, NotificationConstants.ID));
-
 
         if (BundleUtils.getB(bundle, NotificationConstants.AUTO_CANCEL, true)) {
             if (BundleUtils.contains(bundle, NotificationConstants.TAG)) {
@@ -66,7 +69,8 @@ public class HmsLocalNotificationActionsReceiver extends BroadcastReceiver {
         }
 
         if (BundleUtils.getB(bundle, NotificationConstants.INVOKE_APP, true)) {
-            HmsLocalNotificationController hmsLocalNotificationController = new HmsLocalNotificationController((Application) context.getApplicationContext());
+            HmsLocalNotificationController hmsLocalNotificationController = new HmsLocalNotificationController(
+                (Application) context.getApplicationContext());
 
             hmsLocalNotificationController.invokeApp(bundle);
         } else {

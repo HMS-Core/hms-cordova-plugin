@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HmsLocalNotificationActionPublisher  {
+public class HmsLocalNotificationActionPublisher {
 
     public static void notifyNotificationAction(Bundle bundle) throws JSONException {
 
@@ -39,7 +39,8 @@ public class HmsLocalNotificationActionPublisher  {
         JSONObject params = new JSONObject();
         params.put(Core.Event.Result.DATA_JSON, bundleString);
 
-        CordovaUtils.sendEvent(HMSPush.getCordova(),HMSPush.getWebView(),Core.Event.LOCAL_NOTIFICATION_ACTION_EVENT,params);
+        CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.LOCAL_NOTIFICATION_ACTION_EVENT,
+            params);
     }
 
 }

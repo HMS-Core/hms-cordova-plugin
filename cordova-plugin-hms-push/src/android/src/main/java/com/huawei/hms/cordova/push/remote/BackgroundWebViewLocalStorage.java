@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,11 +23,8 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-import com.huawei.hms.cordova.push.basef.handler.CorPack;
-import com.huawei.hms.cordova.push.basef.handler.Promise;
 import com.huawei.hms.cordova.push.constants.Core;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,20 +32,21 @@ import java.util.Locale;
 
 public class BackgroundWebViewLocalStorage {
     private Context context;
+
     private WebView webView;
 
-    public BackgroundWebViewLocalStorage(Context context, WebView webView){
-        this.context=context;
-        this.webView= webView;
+    public BackgroundWebViewLocalStorage(Context context, WebView webView) {
+        this.context = context;
+        this.webView = webView;
     }
 
     @JavascriptInterface
-    public void setItem(String key, String jsonData){
+    public void setItem(String key, String jsonData) {
         String myAppId = context.getApplicationInfo().uid + "";
         SharedPreferences sharedPref = context.getApplicationContext()
             .getSharedPreferences(context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(key,jsonData).apply();
+        editor.putString(key, jsonData).apply();
     }
 
     @JavascriptInterface
@@ -56,16 +54,23 @@ public class BackgroundWebViewLocalStorage {
         String myAppId = context.getApplicationInfo().uid + "";
         SharedPreferences sharedPref = context.getApplicationContext()
             .getSharedPreferences(context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE);
-        String jsonData = sharedPref.getString(key,null);
+        String jsonData = sharedPref.getString(key, null);
         Handler mainHandler = new Handler(context.getMainLooper());
         Runnable myRunnable = () -> {
             try {
-                if (jsonData != null)
-                    webView.evaluateJavascript(String.format(Locale.ENGLISH, "if(window.hasOwnProperty('%s')) window['%s'](%s)",Core.Event.ON_GET_ITEM_RESPONSE_EVENT, Core.Event.ON_GET_ITEM_RESPONSE_EVENT, new JSONObject(jsonData)),null);
-                else
-                    webView.evaluateJavascript(String.format(Locale.ENGLISH, "if(window.hasOwnProperty('%s')) window['%s'](%s)",Core.Event.ON_GET_ITEM_RESPONSE_EVENT, Core.Event.ON_GET_ITEM_RESPONSE_EVENT , new JSONObject().put("Error", "Data not found with " + key + " key parameter")),null);
-            }catch (JSONException ex){
-                Log.i(context.getPackageName(), "run: "+ex.getLocalizedMessage());
+                if (jsonData != null) {
+                    webView.evaluateJavascript(
+                        String.format(Locale.ENGLISH, "if(window.hasOwnProperty('%s')) window['%s'](%s)",
+                            Core.Event.ON_GET_ITEM_RESPONSE_EVENT, Core.Event.ON_GET_ITEM_RESPONSE_EVENT,
+                            new JSONObject(jsonData)), null);
+                } else {
+                    webView.evaluateJavascript(
+                        String.format(Locale.ENGLISH, "if(window.hasOwnProperty('%s')) window['%s'](%s)",
+                            Core.Event.ON_GET_ITEM_RESPONSE_EVENT, Core.Event.ON_GET_ITEM_RESPONSE_EVENT,
+                            new JSONObject().put("Error", "Data not found with " + key + " key parameter")), null);
+                }
+            } catch (JSONException ex) {
+                Log.i(context.getPackageName(), "run: " + ex.getLocalizedMessage());
             }
         };
         mainHandler.post(myRunnable);
@@ -73,7 +78,7 @@ public class BackgroundWebViewLocalStorage {
     }
 
     @JavascriptInterface
-    public void removeItem(String key){
+    public void removeItem(String key) {
         String myAppId = context.getApplicationInfo().uid + "";
         SharedPreferences sharedPref = context.getApplicationContext()
             .getSharedPreferences(context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE);

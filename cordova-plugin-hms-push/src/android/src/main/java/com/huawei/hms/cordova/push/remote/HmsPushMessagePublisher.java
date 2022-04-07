@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -43,13 +43,14 @@ public class HmsPushMessagePublisher {
 
     }
 
-    public static void sendOnNewMultiSenderTokenEvent(String token, Bundle bundle){
-        try{
+    public static void sendOnNewMultiSenderTokenEvent(String token, Bundle bundle) {
+        try {
             JSONObject params = new JSONObject();
-            params.put(Core.Event.Result.TOKEN,token);
+            params.put(Core.Event.Result.TOKEN, token);
             params.put(Core.Event.Result.DATA, BundleUtils.convertJSON(bundle));
-            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT, params);
-        } catch(JSONException ex) {
+            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(),
+                Core.Event.ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT, params);
+        } catch (JSONException ex) {
             Log.w(TAG, "sendOnNewMultiSenderTokenEvent: " + ex.getLocalizedMessage());
         }
     }
@@ -58,7 +59,8 @@ public class HmsPushMessagePublisher {
         try {
             JSONObject params = new JSONObject();
             params.put(Core.Event.Result.MSG, RemoteMessageUtils.fromMap(remoteMessage));
-            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.REMOTE_DATA_MESSAGE_RECEIVED, params);
+            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.REMOTE_DATA_MESSAGE_RECEIVED,
+                params);
         } catch (JSONException ex) {
             Log.w(TAG, "sendMessageReceivedEvent: " + ex.getLocalizedMessage());
         }
@@ -74,12 +76,13 @@ public class HmsPushMessagePublisher {
         }
     }
 
-    public static void sendMultiSenderTokenErrorEvent(Exception e,Bundle bundle) {
+    public static void sendMultiSenderTokenErrorEvent(Exception e, Bundle bundle) {
         try {
             JSONObject params = new JSONObject();
             params.put(Core.Event.Result.EXCEPTION, e.getLocalizedMessage());
-            params.put(Core.Event.Result.DATA,BundleUtils.convertJSON(bundle));
-            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.ON_MULTI_SENDER_TOKEN_ERROR_EVENT, params);
+            params.put(Core.Event.Result.DATA, BundleUtils.convertJSON(bundle));
+            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(),
+                Core.Event.ON_MULTI_SENDER_TOKEN_ERROR_EVENT, params);
         } catch (JSONException ex) {
             Log.w(TAG, "sendMultiSenderTokenErrorEvent: " + ex.getLocalizedMessage());
         }
@@ -102,7 +105,8 @@ public class HmsPushMessagePublisher {
             params.put(Core.Event.Result.RESULT, errorCode + "");
             params.put(Core.Event.Result.MSG_ID, msgId);
             params.put(Core.Event.Result.RESULT_INFO, errorInfo);
-            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.ON_PUSH_MESSAGE_SENT_ERROR, params);
+            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.ON_PUSH_MESSAGE_SENT_ERROR,
+                params);
         } catch (JSONException ex) {
             Log.w(TAG, "sendOnMessageSentErrorEvent: " + ex.getLocalizedMessage());
         }
@@ -115,7 +119,8 @@ public class HmsPushMessagePublisher {
             params.put(Core.Event.Result.RESULT, errorCode + "");
             params.put(Core.Event.Result.MSG_ID, msgId);
             params.put(Core.Event.Result.RESULT_INFO, errorInfo);
-            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.ON_PUSH_MESSAGE_SENT_DELIVERED, params);
+            CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(),
+                Core.Event.ON_PUSH_MESSAGE_SENT_DELIVERED, params);
         } catch (JSONException ex) {
             Log.w(TAG, "sendOnMessageDeliveredEvent: " + ex.getLocalizedMessage());
         }
@@ -123,4 +128,3 @@ public class HmsPushMessagePublisher {
     }
 
 }
-

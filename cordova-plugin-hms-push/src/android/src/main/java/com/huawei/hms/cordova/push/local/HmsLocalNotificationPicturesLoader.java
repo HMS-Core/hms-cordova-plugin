@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
 import com.huawei.hms.cordova.push.basef.handler.Promise;
 import com.huawei.hms.cordova.push.constants.LocalNotification;
 
@@ -40,9 +41,9 @@ public class HmsLocalNotificationPicturesLoader {
         /**
          * call Method
          *
-         * @param largeIconImage  : Bitmap
+         * @param largeIconImage : Bitmap
          * @param bigPictureImage : Bitmap
-         * @param promise        : Promise
+         * @param promise : Promise
          */
         void call(Bitmap largeIconImage, Bitmap bigPictureImage, Promise promise);
     }
@@ -50,9 +51,11 @@ public class HmsLocalNotificationPicturesLoader {
     private volatile AtomicInteger count = new AtomicInteger(0);
 
     private Bitmap largeIconImage;
+
     private Bitmap bigPictureImage;
 
     private Callback callback;
+
     private Promise promise;
 
     public HmsLocalNotificationPicturesLoader(Callback callback) {
@@ -81,7 +84,8 @@ public class HmsLocalNotificationPicturesLoader {
 
         try {
             Uri uri = Uri.parse(url);
-            this.download(context, uri, new BitmapDataSubscriber(hmsLocalNotificationPicturesLoader, LocalNotification.Bitmap.BIG_PICTURE));
+            this.download(context, uri,
+                new BitmapDataSubscriber(hmsLocalNotificationPicturesLoader, LocalNotification.Bitmap.BIG_PICTURE));
 
         } catch (Exception e) {
             this.setBigPicture(null);
@@ -103,7 +107,8 @@ public class HmsLocalNotificationPicturesLoader {
 
         try {
             Uri uri = Uri.parse(url);
-            this.download(context, uri, new BitmapDataSubscriber(hmsLocalNotificationPicturesLoader, LocalNotification.Bitmap.LARGE_ICON));
+            this.download(context, uri,
+                new BitmapDataSubscriber(hmsLocalNotificationPicturesLoader, LocalNotification.Bitmap.LARGE_ICON));
 
         } catch (Exception e) {
             this.setLargeIcon(null);
@@ -111,8 +116,7 @@ public class HmsLocalNotificationPicturesLoader {
     }
 
     private void download(Context context, Uri uri, BaseBitmapDataSubscriber subscriber) {
-        ImageRequest imageRequest = ImageRequestBuilder
-            .newBuilderWithSource(uri)
+        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(uri)
             .setRequestPriority(Priority.HIGH)
             .setLowestPermittedRequestLevel(ImageRequest.RequestLevel.FULL_FETCH)
             .build();
@@ -121,7 +125,8 @@ public class HmsLocalNotificationPicturesLoader {
             Fresco.initialize(context);
         }
 
-        DataSource<CloseableReference<CloseableImage>> dataSource = Fresco.getImagePipeline().fetchDecodedImage(imageRequest, context);
+        DataSource<CloseableReference<CloseableImage>> dataSource = Fresco.getImagePipeline()
+            .fetchDecodedImage(imageRequest, context);
 
         dataSource.subscribe(subscriber, CallerThreadExecutor.getInstance());
     }

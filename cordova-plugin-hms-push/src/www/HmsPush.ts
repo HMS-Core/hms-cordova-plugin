@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,90 +14,107 @@
     limitations under the License.
 */
 
-import {asyncExec} from './utils'
-import {RemoteMessageBuilder} from './Interfaces'
+import { asyncExec } from "./utils";
+import { RemoteMessageBuilder } from "./Interfaces";
 
-export const DEFAULT_TOKEN_SCOPE="HCM";
+export const DEFAULT_TOKEN_SCOPE = "HCM";
 
-export function  init(): Promise<void> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['init']);
+export function init(): Promise<void> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["init"]);
 }
-export function  enableLogger(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['enableLogger']);
+export function enableLogger(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["enableLogger"]);
 }
-export function  disableLogger(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['disableLogger']);
+export function disableLogger(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["disableLogger"]);
 }
-export function	getToken(scope?:string): Promise<string> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getToken', scope]);
+export function getToken(scope?: string): Promise<string> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["getToken", scope]);
 }
-export function	getTokenWithSubjectId (subjectId:string): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getTokenWithSubjectId', subjectId]);
+export function getTokenWithSubjectId(subjectId: string): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", [
+        "getTokenWithSubjectId",
+        subjectId,
+    ]);
 }
-export function	getAAID(): Promise<string> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getAAID']);
+export function getAAID(): Promise<string> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["getAAID"]);
 }
-export function	getCreationTime(): Promise<string> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getCreationTime']);
+export function getCreationTime(): Promise<string> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["getCreationTime"]);
 }
-export function	getId(): Promise<string> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getId']);
+export function getId(): Promise<string> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["getId"]);
 }
-export function	deleteAAID(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteAAID']);
+export function deleteAAID(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["deleteAAID"]);
 }
-export function	deleteToken(scope?:string): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteToken', scope]);
+export function deleteToken(scope?: string): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["deleteToken", scope]);
 }
-export function	deleteTokenWithSubjectId (subjectId:string): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['deleteTokenWithSubjectId', subjectId]);
+export function deleteTokenWithSubjectId(subjectId: string): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", [
+        "deleteTokenWithSubjectId",
+        subjectId,
+    ]);
 }
-export function	getOdid(): Promise<string> {
-	return asyncExec('HMSPush', 'HmsPushInstanceId', ['getOdid']);
+export function getOdid(): Promise<string> {
+    return asyncExec("HMSPush", "HmsPushInstanceId", ["getOdid"]);
 }
-export function	isAutoInitEnabled(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['isAutoInitEnabled']);
+export function isAutoInitEnabled(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["isAutoInitEnabled"]);
 }
-export function	setAutoInitEnabled(enabled:boolean): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['setAutoInitEnabled', enabled]);
+export function setAutoInitEnabled(enabled: boolean): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", [
+        "setAutoInitEnabled",
+        enabled,
+    ]);
 }
-export function	turnOnPush(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['turnOnPush']);
+export function turnOnPush(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["turnOnPush"]);
 }
-export function	turnOffPush(): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['turnOffPush']);
+export function turnOffPush(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["turnOffPush"]);
 }
-export function	subscribe(topic:string): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['subscribe', topic]);
+export function subscribe(topic: string): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["subscribe", topic]);
 }
-export function	unsubscribe(topic:string): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['unsubscribe', topic]);
+export function unsubscribe(topic: string): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["unsubscribe", topic]);
 }
-export function	sendRemoteMessage(remoteMessage:RemoteMessageObject): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['sendRemoteMessage', remoteMessage]);
+export function sendRemoteMessage(
+    remoteMessage: RemoteMessageObject
+): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushMessaging", [
+        "sendRemoteMessage",
+        remoteMessage,
+    ]);
 }
-export function	getInitialNotification (): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['getInitialNotification']);
+export function getInitialNotification(): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["getInitialNotification"]);
 }
-export function	setBackgroundFile(filePath:string): Promise<void> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['setBackgroundFile', filePath]);
+export function setBackgroundFile(filePath: string): Promise<void> {
+    return asyncExec("HMSPush", "HmsPushMessaging", [
+        "setBackgroundFile",
+        filePath,
+    ]);
 }
-export function	setItem(key:string,value:string): Promise<void> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['setItem', key, value]);
+export function setItem(key: string, value: string): Promise<void> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["setItem", key, value]);
 }
-export function	removeItem(key:string): Promise<void> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['removeItem', key]);
+export function removeItem(key: string): Promise<void> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["removeItem", key]);
 }
-export function	getItem(key:string): Promise<object> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['getItem', key]);
+export function getItem(key: string): Promise<object> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["getItem", key]);
 }
-export function	removeBackgroundFile(): Promise<void> {
-	return asyncExec('HMSPush', 'HmsPushMessaging', ['setBackgroundFile']);
+export function removeBackgroundFile(): Promise<void> {
+    return asyncExec("HMSPush", "HmsPushMessaging", ["setBackgroundFile"]);
 }
 
 type RemoteMessageObject = {
     [key in RemoteMessageBuilder]?: any;
 };
 
-export {RemoteMessageBuilder};
-export {CordovaRemoteMessage} from './CordovaRemoteMessage'
+export { RemoteMessageBuilder };
+export { CordovaRemoteMessage } from "./CordovaRemoteMessage";

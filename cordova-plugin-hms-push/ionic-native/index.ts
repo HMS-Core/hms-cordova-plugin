@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ export class HmsPush extends IonicNativePlugin {
     HmsPushResultCode = HmsPushResultCode;
     CordovaRemoteMessage = CordovaRemoteMessage;
     RemoteMessageBuilder = RemoteMessageBuilder;
-    DEFAULT_TOKEN_SCOPE = "HCM"
+    DEFAULT_TOKEN_SCOPE = "HCM";
     @Cordova({ otherPromise: true })
     /**
      * This method  initialized HmsPush.
@@ -198,22 +198,22 @@ export class HmsPush extends IonicNativePlugin {
     }
 
     @Cordova({ otherPromise: true })
-    setBackgroundFile(filePath:string): Promise<void> {
+    setBackgroundFile(filePath: string): Promise<void> {
         return;
     }
 
     @Cordova({ otherPromise: true })
-    setItem(key:string,value:string): Promise<void> {
+    setItem(key: string, value: string): Promise<void> {
         return;
     }
 
     @Cordova({ otherPromise: true })
-    getItem(key:string): Promise<object> {
+    getItem(key: string): Promise<object> {
         return;
     }
 
     @Cordova({ otherPromise: true })
-    removeItem(key:string): Promise<void> {
+    removeItem(key: string): Promise<void> {
         return;
     }
 
@@ -221,7 +221,6 @@ export class HmsPush extends IonicNativePlugin {
     removeBackgroundFile(): Promise<void> {
         return;
     }
-
 }
 
 @Plugin({
@@ -240,12 +239,16 @@ export class HmsLocalNotification extends IonicNativePlugin {
     Visibility = Visibility;
 
     @Cordova({ otherPromise: true })
-    localNotification(localNotification: LocalNotificationObject): Promise<any> {
+    localNotification(
+        localNotification: LocalNotificationObject
+    ): Promise<any> {
         return;
     }
 
     @Cordova({ otherPromise: true })
-    localNotificationSchedule(localNotification: LocalNotificationObject): Promise<any> {
+    localNotificationSchedule(
+        localNotification: LocalNotificationObject
+    ): Promise<any> {
         return;
     }
 
@@ -319,110 +322,116 @@ export class HmsLocalNotification extends IonicNativePlugin {
 })
 @Injectable()
 export class HmsPushEvent extends IonicNativePlugin {
+    @Cordova({ otherPromise: true })
+    onRemoteMessageReceived(callback: (data: any) => void): void {
+        return;
+    }
 
-  @Cordova({ otherPromise: true })
-  onRemoteMessageReceived (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onTokenReceived (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onTokenError (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onPushMessageSent (callback:(data:any)=>void):void {
-    return;
-   }
-  
-   @Cordova({ otherPromise: true })
-   onPushMessageSentError (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onPushMessageSentDelivered (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onLocalNotificationAction (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onNotificationOpenedApp (callback:(data:any)=>void):void {
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onMultiSenderTokenReceivedEvent(callback:(data:any)=>void):void{
-    return;
-  }
-  
-  @Cordova({ otherPromise: true })
-  onMultiSenderTokenErrorEvent(callback:(data:any)=>void):void{
-    return;
-  }
-  
-  REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED"
-  TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT"
-  ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT"
-  NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT"
-  LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT"
-  ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT"
-  ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR"
-  ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED"
-  ON_MULTI_SENDER_TOKEN_ERROR_EVENT = "ON_MULTI_SENDER_TOKEN_ERROR_EVENT"
-  ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT = "ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT"
-  }
+    @Cordova({ otherPromise: true })
+    onTokenReceived(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onTokenError(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onPushMessageSent(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onPushMessageSentError(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onPushMessageSentDelivered(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onLocalNotificationAction(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onNotificationOpenedApp(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onMultiSenderTokenReceivedEvent(callback: (data: any) => void): void {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    onMultiSenderTokenErrorEvent(callback: (data: any) => void): void {
+        return;
+    }
+
+    REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED";
+    TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT";
+    ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT";
+    NOTIFICATION_OPENED_EVENT = "NOTIFICATION_OPENED_EVENT";
+    LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT";
+    ON_PUSH_MESSAGE_SENT = "ON_PUSH_MESSAGE_SENT";
+    ON_PUSH_MESSAGE_SENT_ERROR = "ON_PUSH_MESSAGE_SENT_ERROR";
+    ON_PUSH_MESSAGE_SENT_DELIVERED = "ON_PUSH_MESSAGE_SENT_DELIVERED";
+    ON_MULTI_SENDER_TOKEN_ERROR_EVENT = "ON_MULTI_SENDER_TOKEN_ERROR_EVENT";
+    ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT =
+        "ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT";
+}
 
 @Plugin({
-  pluginName: "HmsPushProfile",
-  plugin: "@hmscore/cordova-plugin-hms-push",
-  pluginRef: "HmsPushProfile",
-  repo: "https://github.com/HMS-Core/hms-cordova-plugin",
-  platforms: ["Android"],
+    pluginName: "HmsPushProfile",
+    plugin: "@hmscore/cordova-plugin-hms-push",
+    pluginRef: "HmsPushProfile",
+    repo: "https://github.com/HMS-Core/hms-cordova-plugin",
+    platforms: ["Android"],
 })
 @Injectable()
 export class HmsPushProfile extends IonicNativePlugin {
-  
-  HUAWEI_PROFILE=1;
-  CUSTOM_PROFILE=2;
-  UNDEFINED_PROFILE=-1;
+    HUAWEI_PROFILE = 1;
+    CUSTOM_PROFILE = 2;
+    UNDEFINED_PROFILE = -1;
 
-  @Cordova({ otherPromise: true })
-  /**
-   * 
-   */
-  isSupportProfile(): Promise<boolean> {
-      return;
-  }
+    @Cordova({ otherPromise: true })
+    /**
+     *
+     */
+    isSupportProfile(): Promise<boolean> {
+        return;
+    }
 
-  @Cordova({ otherPromise: true })
-  addProfile(type:number, profileId:string): Promise<any> {
-      return;
-  }
+    @Cordova({ otherPromise: true })
+    addProfile(type: number, profileId: string): Promise<any> {
+        return;
+    }
 
-  @Cordova({ otherPromise: true })
-  addProfileWithSubjectId(subjectId:string, type:number, profileId:string): Promise<any> {
-      return;
-  }
+    @Cordova({ otherPromise: true })
+    addProfileWithSubjectId(
+        subjectId: string,
+        type: number,
+        profileId: string
+    ): Promise<any> {
+        return;
+    }
 
-  @Cordova({ otherPromise: true })
-  deleteProfile(profileId:string): Promise<any> {
-      return;
-  }
+    @Cordova({ otherPromise: true })
+    deleteProfile(profileId: string): Promise<any> {
+        return;
+    }
 
-  @Cordova({ otherPromise: true })
-  deleteProfileWithSubjectId(subjectId:string, profileId:string): Promise<any> {
-      return;
-  }
+    @Cordova({ otherPromise: true })
+    deleteProfileWithSubjectId(
+        subjectId: string,
+        profileId: string
+    ): Promise<any> {
+        return;
+    }
 }
 
 export enum HmsPushResultCode {
@@ -602,7 +611,7 @@ export enum Attr {
     priority = "priority",
     importance = "importance",
     visibility = "visibility",
-    data = "data"
+    data = "data",
 }
 
 export enum Importance {
@@ -1025,6 +1034,6 @@ type RemoteMessageObject = {
 };
 
 interface IdTag {
-	id:number,
-	tag:string
+    id: number;
+    tag: string;
 }

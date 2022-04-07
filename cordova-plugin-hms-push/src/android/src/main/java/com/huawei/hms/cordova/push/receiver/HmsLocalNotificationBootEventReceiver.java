@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,30 +37,35 @@ public class HmsLocalNotificationBootEventReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (intent.getAction() == null) return;
-        if (!intent.getAction().equals(Core.ScheduledPublisher.BOOT_EVENT))
+        if (intent.getAction() == null) {
             return;
+        }
+        if (!intent.getAction().equals(Core.ScheduledPublisher.BOOT_EVENT)) {
+            return;
+        }
 
         Log.i(TAG, "Loading scheduled notifications....");
-
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(Core.PREFERENCE_NAME, Context.MODE_PRIVATE);
         Set<String> ids = sharedPreferences.getAll().keySet();
 
         Application applicationContext = (Application) context.getApplicationContext();
-        HmsLocalNotificationController hmsLocalNotificationController = new HmsLocalNotificationController(applicationContext);
+        HmsLocalNotificationController hmsLocalNotificationController = new HmsLocalNotificationController(
+            applicationContext);
 
         for (String id : ids) {
             try {
                 String notificationAttributesJson = sharedPreferences.getString(id, null);
                 if (notificationAttributesJson != null) {
-                    NotificationAttributes notificationAttributes = NotificationAttributes.fromJson(notificationAttributesJson);
+                    NotificationAttributes notificationAttributes = NotificationAttributes.fromJson(
+                        notificationAttributesJson);
 
                     if (notificationAttributes.getFireDate() < System.currentTimeMillis()) {
                         hmsLocalNotificationController.localNotificationNow(notificationAttributes.toBundle(), null);
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            hmsLocalNotificationController.localNotificationScheduleSetAlarm(notificationAttributes.toBundle());
+                            hmsLocalNotificationController.localNotificationScheduleSetAlarm(
+                                notificationAttributes.toBundle());
                         }
                     }
                 }

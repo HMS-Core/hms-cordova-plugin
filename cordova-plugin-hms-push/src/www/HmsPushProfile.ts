@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,25 +14,44 @@
     limitations under the License.
 */
 
-import {asyncExec} from './utils'
+import { asyncExec } from "./utils";
 
 export const HUAWEI_PROFILE = 1;
 export const CUSTOM_PROFILE = 2;
-export const UNDEFINED_PROFILE =-1;
+export const UNDEFINED_PROFILE = -1;
 
-export function isSupportProfile (): Promise<boolean> {
-	return asyncExec('HMSPush', 'HmsPushProfile', ['isSupportProfile']);
+export function isSupportProfile(): Promise<boolean> {
+    return asyncExec("HMSPush", "HmsPushProfile", ["isSupportProfile"]);
 }
-export function addProfile (type:number, profileId:string): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushProfile', ['addProfile', type, profileId]);
+export function addProfile(type: number, profileId: string): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushProfile", [
+        "addProfile",
+        type,
+        profileId,
+    ]);
 }
-export function addProfileWithSubjectId (subjectId:string, type:number, profileId:string): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushProfile', ['addProfileWithSubjectId', subjectId, type, profileId]);
+export function addProfileWithSubjectId(
+    subjectId: string,
+    type: number,
+    profileId: string
+): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushProfile", [
+        "addProfileWithSubjectId",
+        subjectId,
+        type,
+        profileId,
+    ]);
 }
-export function deleteProfile (profileId:string): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushProfile', ['deleteProfile', profileId]);
+export function deleteProfile(profileId: string): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushProfile", ["deleteProfile", profileId]);
 }
-export function deleteProfileWithSubjectId (subjectId:string, profileId:string): Promise<any> {
-	return asyncExec('HMSPush', 'HmsPushProfile', ['deleteProfileWithSubjectId', subjectId, profileId]);
+export function deleteProfileWithSubjectId(
+    subjectId: string,
+    profileId: string
+): Promise<any> {
+    return asyncExec("HMSPush", "HmsPushProfile", [
+        "deleteProfileWithSubjectId",
+        subjectId,
+        profileId,
+    ]);
 }
-

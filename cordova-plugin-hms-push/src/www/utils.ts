@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
     limitations under the License.
 */
 
-import {exec} from 'cordova';
+import { exec } from "cordova";
 
-export function asyncExec(clazz: string, reference: string, args:any[] = []): Promise<any> {
+export function asyncExec(
+    clazz: string,
+    reference: string,
+    args: any[] = []
+): Promise<any> {
     return new Promise((resolve, reject) => {
         exec(resolve, reject, clazz, reference, args);
     });

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,17 +35,23 @@ import java.util.Map;
 
 public class CordovaController {
     private static final String TAG = CordovaController.class.getSimpleName();
-    private static final String NOT_CORDOVA_MODULE_ERR = " is not a cordova module. Please check if the given module extends" +
-            " class CordovaBaseModule. If the class extends CordovaBaseModule then check the main cordova class, you have to register the module" +
-            " inside the main cordova class. If everything is okay so far, then please check the action parameter sent from JavaScript and ensure that" +
-            " exported cordova method in java is public. If the problem persists then contact the administrator. ";
+
+    private static final String NOT_CORDOVA_MODULE_ERR =
+        " is not a cordova module. Please check if the given module extends"
+            + " class CordovaBaseModule. If the class extends CordovaBaseModule then check the main cordova class, you have to register the module"
+            + " inside the main cordova class. If everything is okay so far, then please check the action parameter sent from JavaScript and ensure that"
+            + " exported cordova method in java is public. If the problem persists then contact the administrator. ";
 
     private final CordovaModuleGroupHandler groupHandler;
+
     private final CordovaEventRunner eventRunner;
+
     private final CordovaPlugin cordovaPlugin;
+
     private final HMSLogger hmsLogger;
 
-    public CordovaController(CordovaPlugin cordovaPlugin, String service, String version, List<CordovaBaseModule> cordovaModules) {
+    public CordovaController(CordovaPlugin cordovaPlugin, String service, String version,
+        List<CordovaBaseModule> cordovaModules) {
         List<CordovaModuleHandler> moduleHandlerList = new ArrayList<>();
         for (CordovaBaseModule cordovaModule : cordovaModules) {
             CordovaModuleHandler moduleHandler = new CordovaModuleHandler(cordovaModule);
@@ -54,7 +60,8 @@ public class CordovaController {
         this.cordovaPlugin = cordovaPlugin;
         this.hmsLogger = HMSLogger.getInstance(cordovaPlugin.webView.getContext(), service, version);
         this.groupHandler = new CordovaModuleGroupHandler(moduleHandlerList);
-        this.eventRunner = new CordovaEventRunner(cordovaPlugin.webView, hmsLogger, cordovaPlugin.cordova.getActivity());
+        this.eventRunner = new CordovaEventRunner(cordovaPlugin.webView, hmsLogger,
+            cordovaPlugin.cordova.getActivity());
         prepareEventsThenClear();
     }
 
@@ -62,7 +69,7 @@ public class CordovaController {
         for (Map.Entry<String, CordovaModuleHandler> moduleHandlerEntry : groupHandler.getLookupTable().entrySet()) {
             List<Method> eventCache = moduleHandlerEntry.getValue().getEventCache();
             runAllEventMethods(moduleHandlerEntry.getValue().getInstance(), eventCache);
-            moduleHandlerEntry.getValue().getEventCache().clear();  // Clear after running above
+            moduleHandlerEntry.getValue().getEventCache().clear(); // Clear after running above
         }
     }
 
@@ -89,8 +96,10 @@ public class CordovaController {
             return;
         }
         CordovaModuleHandler moduleHandler = groupHandler.getCordovaModuleHandler(action);
-        if (args.length() == 0 || (args.opt(0).getClass() != String.class) || !moduleHandler.hasModuleMethod(args.optString(0))) {
-            CorLog.err(TAG, "Please ensure that the first parameter of arguments you have sent from JavaScript is the methodName and the action is the module name.");
+        if (args.length() == 0 || (args.opt(0).getClass() != String.class) || !moduleHandler.hasModuleMethod(
+            args.optString(0))) {
+            CorLog.err(TAG,
+                "Please ensure that the first parameter of arguments you have sent from JavaScript is the methodName and the action is the module name.");
             callbackContext.error("Function name doesn't exist.");
             return;
         }
@@ -107,25 +116,27 @@ public class CordovaController {
             checkRulesOfMethodIfExists(moduleHandler, rules);
             method.invoke(moduleHandler.getInstance(), corPack, args, promise);
         } catch (IllegalAccessException | IllegalArgumentException e) {
-            CorLog.err(TAG, String.format(Locale.ENGLISH, "Error occurred when method %s in module %s was called." +
-                            " Exception class is %s and exception message is %s.",
-                    methodName, action, e.getClass().getSimpleName(), e.toString()));
+            CorLog.err(TAG, String.format(Locale.ENGLISH, "Error occurred when method %s in module %s was called."
+                    + " Exception class is %s and exception message is %s.", methodName, action,
+                e.getClass().getSimpleName(), e.toString()));
             promise.error(e.toString());
         } catch (InvocationTargetException e) {
-            CorLog.err(TAG, String.format(Locale.ENGLISH, "When method %s in module %s was called 'Invocation Target Exception' occurred." +
-                            " Invocation target exception means that called method was failed. Target exception is %s." +
-                            " Custom error message of the target exception is '%s.'", methodName, action, e.getTargetException().getClass(),
-                    e.getTargetException().getMessage()));
+            CorLog.err(TAG, String.format(Locale.ENGLISH,
+                "When method %s in module %s was called 'Invocation Target Exception' occurred."
+                    + " Invocation target exception means that called method was failed. Target exception is %s."
+                    + " Custom error message of the target exception is '%s.'", methodName, action,
+                e.getTargetException().getClass(), e.getTargetException().getMessage()));
             // Capture custom runtime exception and send it via parsing.
-            if (e.getTargetException() instanceof CorException)
+            if (e.getTargetException() instanceof CorException) {
                 promise.error(((CorException) e.getTargetException()).getCorError());
-            else
+            } else {
                 promise.error(e.getTargetException().toString());
+            }
         }
     }
 
     private void checkRulesOfMethodIfExists(CordovaModuleHandler moduleHandler, String[] rules)
-            throws InvocationTargetException, IllegalAccessException, IllegalArgumentException {
+        throws InvocationTargetException, IllegalAccessException, IllegalArgumentException {
         Map<String, Method> ruleTable = moduleHandler.getRuleTable();
         for (String rule : rules) {
             if (ruleTable.containsKey(rule)) {
@@ -135,57 +146,65 @@ public class CordovaController {
         }
     }
 
-    private Promise createPromiseFromCallbackContext(final CallbackContext callbackContext, String methodName, boolean isActive) {
+    private Promise createPromiseFromCallbackContext(final CallbackContext callbackContext, String methodName,
+        boolean isActive) {
         return new Promise(callbackContext, methodName, hmsLogger, isActive);
     }
 
     public void onPause(boolean multitasking) {
         CorLog.debug(TAG, "onPause");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onPause(multitasking);
+        }
     }
 
     public void onDestroy() {
         CorLog.debug(TAG, "onDestroy");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onDestroy();
+        }
         groupHandler.clear();
     }
 
     public void onReset() {
         CorLog.debug(TAG, "onReset");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onReset();
+        }
     }
 
     public void onResume(boolean multitasking) {
         CorLog.debug(TAG, "onResume");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onResume(multitasking);
+        }
     }
 
     public void onStart() {
         CorLog.debug(TAG, "onStart");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onStart();
+        }
     }
 
     public void onStop() {
         CorLog.debug(TAG, "onStop");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onStop();
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         CorLog.debug(TAG, "onActivityResult");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
         CorLog.debug(TAG, "onRequestPermissionResult");
-        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values())
+        for (CordovaModuleHandler moduleHandler : groupHandler.getLookupTable().values()) {
             moduleHandler.getInstance().onRequestPermissionResult(requestCode, permissions, grantResults);
+        }
     }
 }
-

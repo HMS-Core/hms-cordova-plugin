@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,7 +26,9 @@ var NEW_LINE = "\n";
 
 module.exports = function (context) {
     if (!FSUtils.exists(ROOT_BUILD_GRADLE_FILE)) {
-        console.log("root gradle file does not exist. after_plugin_install script wont be executed.");
+        console.log(
+            "root gradle file does not exist. after_plugin_install script wont be executed."
+        );
     }
 
     var rootGradleContent = FSUtils.readFile(ROOT_BUILD_GRADLE_FILE, "UTF-8");
@@ -42,8 +44,10 @@ module.exports = function (context) {
 };
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.6.0.300' " + COMMENT;
-    var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
+    var AG_CONNECT_DEPENDENCY =
+        "classpath 'com.huawei.agconnect:agcp:1.6.0.300' " + COMMENT;
+    var pattern =
+        /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 
     for (var i = 0; i < lines.length; i++) {
@@ -59,7 +63,8 @@ function addAGConnectDependency(lines) {
 }
 
 function addHuaweiRepo(lines) {
-    var HUAWEI_REPO = "maven { url 'https://developer.huawei.com/repo/' } " + COMMENT;
+    var HUAWEI_REPO =
+        "maven { url 'https://developer.huawei.com/repo/' } " + COMMENT;
     var pattern = /(\s*)jcenter\(\)/m;
     var indexList = [];
 
@@ -88,7 +93,9 @@ function updateRepositoriesGradle(file) {
 
             repoGradleContent =
                 repoGradleContent.substring(0, lastIndexOfCurlyBracket) +
-                "    maven { url 'https://developer.huawei.com/repo/' } "+COMMENT+" \n}" +
+                "    maven { url 'https://developer.huawei.com/repo/' } " +
+                COMMENT +
+                " \n}" +
                 repoGradleContent.substring(lastIndexOfCurlyBracket + 1);
 
             FSUtils.writeFile(file, repoGradleContent);

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -47,17 +47,18 @@ public class RemoteMessageUtils {
         params.put(RemoteMessageAttributes.RECEIPT_MODE, message.getReceiptMode() + "");
         params.put(RemoteMessageAttributes.SEND_MODE, message.getSendMode() + "");
         params.put(RemoteMessageAttributes.CONTENTS, message.describeContents() + "");
-        params.put(RemoteMessageAttributes.ANALYTIC_INFO,message.getAnalyticInfo() + "");
-        params.put(RemoteMessageAttributes.ANALYTIC_INFO_MAP,message.getAnalyticInfoMap() + "");
-
+        params.put(RemoteMessageAttributes.ANALYTIC_INFO, message.getAnalyticInfo() + "");
+        params.put(RemoteMessageAttributes.ANALYTIC_INFO_MAP, message.getAnalyticInfoMap() + "");
 
         if (message.getNotification() != null) {
             RemoteMessage.Notification notification = message.getNotification();
             params.put(RemoteMessageAttributes.TITLE, notification.getTitle());
             params.put(RemoteMessageAttributes.TITLE_LOCALIZATION_KEY, notification.getTitleLocalizationKey());
-            params.put(RemoteMessageAttributes.TITLE_LOCALIZATION_ARGS, Arrays.toString(notification.getTitleLocalizationArgs()));
+            params.put(RemoteMessageAttributes.TITLE_LOCALIZATION_ARGS,
+                Arrays.toString(notification.getTitleLocalizationArgs()));
             params.put(RemoteMessageAttributes.BODY_LOCALIZATION_KEY, notification.getBodyLocalizationKey());
-            params.put(RemoteMessageAttributes.BODY_LOCALIZATION_ARGS, Arrays.toString(notification.getBodyLocalizationArgs()));
+            params.put(RemoteMessageAttributes.BODY_LOCALIZATION_ARGS,
+                Arrays.toString(notification.getBodyLocalizationArgs()));
             params.put(RemoteMessageAttributes.BODY, notification.getBody());
             params.put(RemoteMessageAttributes.ICON, notification.getIcon());
             params.put(RemoteMessageAttributes.SOUND, notification.getSound());
@@ -89,26 +90,35 @@ public class RemoteMessageUtils {
     public static RemoteMessage toRemoteMessage(JSONObject params) throws JSONException {
 
         String to = params.getString(RemoteMessageAttributes.TO);
-        if (to == null || to.equals("")) to = Core.REMOTE_MESSAGE_UPLINK_TO;
+        if (to == null || to.equals("")) {
+            to = Core.REMOTE_MESSAGE_UPLINK_TO;
+        }
 
         RemoteMessage.Builder builder = new RemoteMessage.Builder(to);
 
-        String messageId = params.has(RemoteMessageAttributes.MESSAGE_ID) ? params.getString(RemoteMessageAttributes.MESSAGE_ID) : NotificationConfigUtils.generateNotificationId();
-        String messageType = params.has(RemoteMessageAttributes.MESSAGE_TYPE) ? params.getString(RemoteMessageAttributes.MESSAGE_TYPE) : null;
+        String messageId = params.has(RemoteMessageAttributes.MESSAGE_ID) ? params.getString(
+            RemoteMessageAttributes.MESSAGE_ID) : NotificationConfigUtils.generateNotificationId();
+        String messageType = params.has(RemoteMessageAttributes.MESSAGE_TYPE) ? params.getString(
+            RemoteMessageAttributes.MESSAGE_TYPE) : null;
         int ttl = params.has(RemoteMessageAttributes.TTL) ? params.getInt(RemoteMessageAttributes.TTL) : 120;
-        String collapseKey = params.has(RemoteMessageAttributes.COLLAPSE_KEY) ? params.getString(RemoteMessageAttributes.COLLAPSE_KEY) : null;
-        int receiptMode = params.has(RemoteMessageAttributes.RECEIPT_MODE) ? params.getInt(RemoteMessageAttributes.RECEIPT_MODE) : 1;
-        int sendMode = params.has(RemoteMessageAttributes.SEND_MODE) ? params.getInt(RemoteMessageAttributes.SEND_MODE) : 1;
+        String collapseKey = params.has(RemoteMessageAttributes.COLLAPSE_KEY) ? params.getString(
+            RemoteMessageAttributes.COLLAPSE_KEY) : null;
+        int receiptMode = params.has(RemoteMessageAttributes.RECEIPT_MODE) ? params.getInt(
+            RemoteMessageAttributes.RECEIPT_MODE) : 1;
+        int sendMode = params.has(RemoteMessageAttributes.SEND_MODE)
+            ? params.getInt(RemoteMessageAttributes.SEND_MODE)
+            : 1;
 
-        JSONObject map = params.has(RemoteMessageAttributes.DATA) ? (JSONObject) params.get(RemoteMessageAttributes.DATA) : null;
-        if (map != null)
+        JSONObject map = params.has(RemoteMessageAttributes.DATA) ? (JSONObject) params.get(
+            RemoteMessageAttributes.DATA) : null;
+        if (map != null) {
             builder.setData(MapUtils.toStringMap(map));
+        }
 
         Iterator<String> it = params.keys();
-        while (it.hasNext())
-
+        while (it.hasNext()) {
             it.next();
-
+        }
 
         builder.setCollapseKey(collapseKey);
         builder.setMessageId(messageId);

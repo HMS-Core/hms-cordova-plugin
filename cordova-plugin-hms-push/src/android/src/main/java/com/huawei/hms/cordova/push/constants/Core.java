@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
 */
 
 package com.huawei.hms.cordova.push.constants;
-
 
 public interface Core {
     String CLIENT_APP_ID = "client/app_id";
@@ -34,7 +33,7 @@ public interface Core {
 
     interface Event {
         String REMOTE_DATA_MESSAGE_RECEIVED = "REMOTE_DATA_MESSAGE_RECEIVED";
-        String BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED= "BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED";
+        String BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED = "BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED";
         String ON_GET_ITEM_RESPONSE_EVENT = "ON_GET_ITEM_RESPONSE_EVENT";
         String LOCAL_NOTIFICATION_ACTION_EVENT = "LOCAL_NOTIFICATION_ACTION_EVENT";
         String TOKEN_RECEIVED_EVENT = "TOKEN_RECEIVED_EVENT";
@@ -45,7 +44,6 @@ public interface Core {
         String ON_TOKEN_ERROR_EVENT = "ON_TOKEN_ERROR_EVENT";
         String ON_MULTI_SENDER_TOKEN_ERROR_EVENT = "ON_MULTI_SENDER_TOKEN_ERROR_EVENT";
         String ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT = "ON_MULTI_SENDER_TOKEN_RECEIVED_EVENT";
-
 
         interface Result {
             String DATA_JSON = "dataJSON";

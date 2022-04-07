@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,10 +22,12 @@ import androidx.annotation.Nullable;
 
 import com.facebook.datasource.DataSource;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+
 import com.huawei.hms.cordova.push.constants.LocalNotification;
 
 public class BitmapDataSubscriber extends BaseBitmapDataSubscriber {
     HmsLocalNotificationPicturesLoader hmsLocalNotificationPicturesLoader;
+
     LocalNotification.Bitmap bitmapType;
 
     public BitmapDataSubscriber(HmsLocalNotificationPicturesLoader loader, LocalNotification.Bitmap bitmapType) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,110 +37,112 @@ import com.huawei.hms.cordova.push.utils.NotificationConfigUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-
 public class HmsLocalNotification extends CordovaBaseModule {
 
     private final String TAG = HmsLocalNotification.class.getSimpleName();
-    private HmsLocalNotificationController hmsLocalNotificationController;
 
+    private HmsLocalNotificationController hmsLocalNotificationController;
 
     public HmsLocalNotification(Context context) {
         hmsLocalNotificationController = new HmsLocalNotificationController(context);
     }
 
     @CordovaMethod
-    public void localNotification(final CorPack corPack, JSONArray args, final Promise promise){
+    public void localNotification(final CorPack corPack, JSONArray args, final Promise promise) {
         try {
             Bundle bundle = MapUtils.toBundle(args.getJSONObject(0));
-            if(bundle==null){
+            if (bundle == null) {
                 promise.error(ResultCode.NULL_BUNDLE);
             }
             NotificationConfigUtils.configId(bundle);
-            hmsLocalNotificationController.localNotificationNow(bundle,promise);
+            hmsLocalNotificationController.localNotificationNow(bundle, promise);
         } catch (JSONException e) {
             promise.error(e.getLocalizedMessage());
         }
     }
 
     @CordovaMethod
-    public void localNotificationSchedule(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
-            Bundle bundle = MapUtils.toBundle(args.getJSONObject(0));
-            if (bundle == null) {
-                promise.error(ResultCode.NULL_BUNDLE);
-                return;
-            }
-            NotificationConfigUtils.configId(bundle);
-            hmsLocalNotificationController.localNotificationSchedule(bundle, promise);
+    public void localNotificationSchedule(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
+        Bundle bundle = MapUtils.toBundle(args.getJSONObject(0));
+        if (bundle == null) {
+            promise.error(ResultCode.NULL_BUNDLE);
+            return;
+        }
+        NotificationConfigUtils.configId(bundle);
+        hmsLocalNotificationController.localNotificationSchedule(bundle, promise);
     }
 
     @CordovaMethod
-    public void cancelAllNotifications(final CorPack corPack,JSONArray args,final Promise promise){
+    public void cancelAllNotifications(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsLocalNotificationController.cancelScheduledNotifications();
         hmsLocalNotificationController.cancelNotifications();
         promise.success(true);
     }
 
     @CordovaMethod
-    public void cancelNotifications(final CorPack corPack,JSONArray args,final Promise promise){
+    public void cancelNotifications(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsLocalNotificationController.cancelNotifications();
         promise.success(true);
     }
 
     @CordovaMethod
-    public void cancelScheduledNotifications(final CorPack corPack,JSONArray args,final Promise promise){
+    public void cancelScheduledNotifications(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsLocalNotificationController.cancelScheduledNotifications();
         promise.success(true);
     }
 
     @CordovaMethod
-    public void cancelNotificationsWithId(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
+    public void cancelNotificationsWithId(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         hmsLocalNotificationController.cancelNotificationsWithId(args.getJSONArray(0));
         promise.success(true);
     }
 
     @CordovaMethod
-    public void cancelNotificationsWithIdTag(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
+    public void cancelNotificationsWithIdTag(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         hmsLocalNotificationController.cancelNotificationsWithIdTag(args.getJSONArray(0));
         promise.success(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @CordovaMethod
-    public void cancelNotificationsWithTag(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
+    public void cancelNotificationsWithTag(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         hmsLocalNotificationController.cancelNotificationsWithTag(args.getString(0));
         promise.success(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @CordovaMethod
-    public void getNotifications(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
+    public void getNotifications(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         promise.success(hmsLocalNotificationController.getNotifications());
     }
 
     @CordovaMethod
-    public void getScheduledNotifications(final CorPack corPack,JSONArray args,final Promise promise){
+    public void getScheduledNotifications(final CorPack corPack, JSONArray args, final Promise promise) {
         promise.success(hmsLocalNotificationController.getScheduledNotifications());
     }
 
     @CordovaMethod
-    public void getChannels(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
+    public void getChannels(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         promise.success(ArrayUtil.fromList(hmsLocalNotificationController.listChannels()));
     }
 
     @CordovaMethod
-    public void channelExists(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
-        hmsLocalNotificationController.channelExists(args.getString(0),promise);
+    public void channelExists(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        hmsLocalNotificationController.channelExists(args.getString(0), promise);
     }
 
     @CordovaMethod
-    public void channelBlocked(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
-        hmsLocalNotificationController.isChannelBlocked(args.getString(0),promise);
+    public void channelBlocked(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        hmsLocalNotificationController.isChannelBlocked(args.getString(0), promise);
     }
 
     @CordovaMethod
-    public void deleteChannel(final CorPack corPack,JSONArray args,final Promise promise) throws JSONException {
-        hmsLocalNotificationController.deleteChannel(args.getString(0),promise);
+    public void deleteChannel(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        hmsLocalNotificationController.deleteChannel(args.getString(0), promise);
     }
 
 }
-

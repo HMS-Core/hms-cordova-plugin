@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,38 +29,71 @@ import org.json.JSONObject;
 
 public class NotificationAttributes {
     private final String id;
+
     private final String message;
+
     private final double fireDate;
+
     private final String title;
+
     private final String ticker;
+
     private final boolean showWhen;
+
     private final boolean autoCancel;
+
     private final String largeIcon;
+
     private final String largeIconUrl;
+
     private final String smallIcon;
+
     private final String bigText;
+
     private final String subText;
+
     private final String bigPictureUrl;
+
     private final String shortcutId;
+
     private final String number;
+
     private final String channelId;
+
     private final String channelName;
+
     private final String channelDescription;
+
     private final String sound;
+
     private final String color;
+
     private final String group;
+
     private final boolean groupSummary;
+
     private final boolean playSound;
+
     private final boolean vibrate;
+
     private final double vibrateDuration;
+
     private final String actions;
+
     private final boolean invokeApp;
+
     private final String tag;
+
     private final String repeatType;
+
     private final double repeatTime;
+
     private final boolean ongoing;
+
     private final boolean allowWhileIdle;
+
     private final boolean dontNotifyInForeground;
+
     private final String data;
 
     public NotificationAttributes(Bundle bundle) {
@@ -105,44 +138,70 @@ public class NotificationAttributes {
 
         try {
             id = json.has(NotificationConstants.ID) ? json.getString(NotificationConstants.ID) : null;
-            message = json.has(NotificationConstants.MESSAGE) ? json.getString(NotificationConstants.MESSAGE) : Core.DEFAULT_MESSAGE;
-            fireDate = json.has(NotificationConstants.FIRE_DATE) ? json.getDouble(NotificationConstants.FIRE_DATE) : 0.0;
+            message = json.has(NotificationConstants.MESSAGE)
+                ? json.getString(NotificationConstants.MESSAGE)
+                : Core.DEFAULT_MESSAGE;
+            fireDate = json.has(NotificationConstants.FIRE_DATE)
+                ? json.getDouble(NotificationConstants.FIRE_DATE)
+                : 0.0;
             title = json.has(NotificationConstants.TITLE) ? json.getString(NotificationConstants.TITLE) : null;
             ticker = json.has(NotificationConstants.TICKER) ? json.getString(NotificationConstants.TICKER) : null;
             showWhen = !json.has(NotificationConstants.SHOW_WHEN) || json.getBoolean(NotificationConstants.SHOW_WHEN);
-            autoCancel = !json.has(NotificationConstants.AUTO_CANCEL) || json.getBoolean(NotificationConstants.AUTO_CANCEL);
-            largeIcon = json.has(NotificationConstants.LARGE_ICON) ? json.getString(NotificationConstants.LARGE_ICON) : null;
-            largeIconUrl = json.has(NotificationConstants.LARGE_ICON_URL) ? json.getString(NotificationConstants.LARGE_ICON_URL) : null;
-            smallIcon = json.has(NotificationConstants.SMALL_ICON) ? json.getString(NotificationConstants.SMALL_ICON) : null;
+            autoCancel = !json.has(NotificationConstants.AUTO_CANCEL) || json.getBoolean(
+                NotificationConstants.AUTO_CANCEL);
+            largeIcon = json.has(NotificationConstants.LARGE_ICON)
+                ? json.getString(NotificationConstants.LARGE_ICON)
+                : null;
+            largeIconUrl = json.has(NotificationConstants.LARGE_ICON_URL) ? json.getString(
+                NotificationConstants.LARGE_ICON_URL) : null;
+            smallIcon = json.has(NotificationConstants.SMALL_ICON)
+                ? json.getString(NotificationConstants.SMALL_ICON)
+                : null;
             bigText = json.has(NotificationConstants.BIG_TEXT) ? json.getString(NotificationConstants.BIG_TEXT) : null;
             subText = json.has(NotificationConstants.SUB_TEXT) ? json.getString(NotificationConstants.SUB_TEXT) : null;
-            bigPictureUrl = json.has(NotificationConstants.BIG_PICTURE_URL) ? json.getString(NotificationConstants.BIG_PICTURE_URL) : null;
-            shortcutId = json.has(NotificationConstants.SHORTCUT_ID) ? json.getString(NotificationConstants.SHORTCUT_ID) : null;
+            bigPictureUrl = json.has(NotificationConstants.BIG_PICTURE_URL) ? json.getString(
+                NotificationConstants.BIG_PICTURE_URL) : null;
+            shortcutId = json.has(NotificationConstants.SHORTCUT_ID)
+                ? json.getString(NotificationConstants.SHORTCUT_ID)
+                : null;
             number = json.has(NotificationConstants.NUMBER) ? json.getString(NotificationConstants.NUMBER) : null;
-            channelId = json.has(NotificationConstants.CHANNEL_ID) ? json.getString(NotificationConstants.CHANNEL_ID) : null;
-            channelName = json.has(NotificationConstants.CHANNEL_NAME) ? json.getString(NotificationConstants.CHANNEL_NAME) : null;
-            channelDescription = json.has(NotificationConstants.CHANNEL_DESCRIPTION) ? json.getString(NotificationConstants.CHANNEL_DESCRIPTION) : null;
+            channelId = json.has(NotificationConstants.CHANNEL_ID)
+                ? json.getString(NotificationConstants.CHANNEL_ID)
+                : null;
+            channelName = json.has(NotificationConstants.CHANNEL_NAME) ? json.getString(
+                NotificationConstants.CHANNEL_NAME) : null;
+            channelDescription = json.has(NotificationConstants.CHANNEL_DESCRIPTION) ? json.getString(
+                NotificationConstants.CHANNEL_DESCRIPTION) : null;
             sound = json.has(NotificationConstants.SOUND) ? json.getString(NotificationConstants.SOUND) : null;
             color = json.has(NotificationConstants.COLOR) ? json.getString(NotificationConstants.COLOR) : null;
             group = json.has(NotificationConstants.GROUP) ? json.getString(NotificationConstants.GROUP) : null;
-            groupSummary = json.has(NotificationConstants.GROUP_SUMMARY) && json.getBoolean(NotificationConstants.GROUP_SUMMARY);
-            playSound = !json.has(NotificationConstants.PLAY_SOUND) || json.getBoolean(NotificationConstants.PLAY_SOUND);
+            groupSummary = json.has(NotificationConstants.GROUP_SUMMARY) && json.getBoolean(
+                NotificationConstants.GROUP_SUMMARY);
+            playSound = !json.has(NotificationConstants.PLAY_SOUND) || json.getBoolean(
+                NotificationConstants.PLAY_SOUND);
             vibrate = !json.has(NotificationConstants.VIBRATE) || json.getBoolean(NotificationConstants.VIBRATE);
-            vibrateDuration = json.has(NotificationConstants.VIBRATE_DURATION) ? json.getDouble(NotificationConstants.VIBRATE_DURATION) : 1000;
+            vibrateDuration = json.has(NotificationConstants.VIBRATE_DURATION) ? json.getDouble(
+                NotificationConstants.VIBRATE_DURATION) : 1000;
             actions = json.has(NotificationConstants.ACTIONS) ? json.getString(NotificationConstants.ACTIONS) : null;
-            invokeApp = !json.has(NotificationConstants.INVOKE_APP) || json.getBoolean(NotificationConstants.INVOKE_APP);
+            invokeApp = !json.has(NotificationConstants.INVOKE_APP) || json.getBoolean(
+                NotificationConstants.INVOKE_APP);
             tag = json.has(NotificationConstants.TAG) ? json.getString(NotificationConstants.TAG) : null;
-            repeatType = json.has(NotificationConstants.REPEAT_TYPE) ? json.getString(NotificationConstants.REPEAT_TYPE) : null;
-            repeatTime = json.has(NotificationConstants.REPEAT_TIME) ? json.getDouble(NotificationConstants.REPEAT_TIME) : 0.0;
+            repeatType = json.has(NotificationConstants.REPEAT_TYPE)
+                ? json.getString(NotificationConstants.REPEAT_TYPE)
+                : null;
+            repeatTime = json.has(NotificationConstants.REPEAT_TIME)
+                ? json.getDouble(NotificationConstants.REPEAT_TIME)
+                : 0.0;
             ongoing = json.has(NotificationConstants.ONGOING) && json.getBoolean(NotificationConstants.ONGOING);
-            allowWhileIdle = json.has(NotificationConstants.ALLOW_WHILE_IDLE) && json.getBoolean(NotificationConstants.ALLOW_WHILE_IDLE);
-            dontNotifyInForeground = json.has(NotificationConstants.DONT_NOTIFY_IN_FOREGROUND) && json.getBoolean(NotificationConstants.DONT_NOTIFY_IN_FOREGROUND);
+            allowWhileIdle = json.has(NotificationConstants.ALLOW_WHILE_IDLE) && json.getBoolean(
+                NotificationConstants.ALLOW_WHILE_IDLE);
+            dontNotifyInForeground = json.has(NotificationConstants.DONT_NOTIFY_IN_FOREGROUND) && json.getBoolean(
+                NotificationConstants.DONT_NOTIFY_IN_FOREGROUND);
             data = json.has(NotificationConstants.DATA) ? json.getString(NotificationConstants.DATA) : null;
         } catch (IllegalStateException | JSONException | NumberFormatException | NullPointerException e) {
             throw new IllegalStateException(ResultCode.ERROR, e);
         }
     }
-
 
     public static NotificationAttributes fromJson(String json) throws JSONException {
 
@@ -186,7 +245,7 @@ public class NotificationAttributes {
         BundleUtils.setB(bundle, NotificationConstants.ONGOING, ongoing);
         BundleUtils.setB(bundle, NotificationConstants.ALLOW_WHILE_IDLE, allowWhileIdle);
         BundleUtils.setB(bundle, NotificationConstants.DONT_NOTIFY_IN_FOREGROUND, dontNotifyInForeground);
-        BundleUtils.set(bundle, NotificationConstants.DATA,data);
+        BundleUtils.set(bundle, NotificationConstants.DATA, data);
         return bundle;
     }
 
@@ -227,7 +286,7 @@ public class NotificationAttributes {
             json.put(NotificationConstants.ONGOING, ongoing);
             json.put(NotificationConstants.ALLOW_WHILE_IDLE, allowWhileIdle);
             json.put(NotificationConstants.DONT_NOTIFY_IN_FOREGROUND, dontNotifyInForeground);
-            json.put(NotificationConstants.DATA,data);
+            json.put(NotificationConstants.DATA, data);
         } catch (JSONException e) {
             Log.e("NotificationAttributes", ResultCode.ERROR, e);
             return new JSONObject();
@@ -275,7 +334,7 @@ public class NotificationAttributes {
         return ticker;
     }
 
-    public String getData(){
+    public String getData() {
         return data;
     }
 
@@ -405,4 +464,3 @@ public class NotificationAttributes {
     }
 
 }
-

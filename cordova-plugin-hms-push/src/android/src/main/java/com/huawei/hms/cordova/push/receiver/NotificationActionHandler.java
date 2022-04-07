@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,8 +26,11 @@ import org.json.JSONException;
 
 public class NotificationActionHandler implements Runnable {
     private static String TAG = NotificationActionHandler.class.getSimpleName();
+
     Bundle bundle;
+
     Context context;
+
     public NotificationActionHandler(Context context, Bundle bundle) {
         this.bundle = bundle;
         this.context = context;
@@ -44,4 +47,3 @@ public class NotificationActionHandler implements Runnable {
         }
     }
 }
-

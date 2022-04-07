@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,11 +26,15 @@ import static org.apache.cordova.PluginResult.Status.OK;
 public final class Promise {
 
     private final CallbackContext callbackContext;
+
     private final String methodName;
+
     private final boolean isLoggerRunning;
+
     private final HMSLogger hmsLogger;
 
-    public Promise(final CallbackContext callbackContext, String method, final HMSLogger logger, boolean isLoggerRunning) {
+    public Promise(final CallbackContext callbackContext, String method, final HMSLogger logger,
+        boolean isLoggerRunning) {
         this.callbackContext = callbackContext;
         this.methodName = method;
         this.isLoggerRunning = isLoggerRunning;
@@ -102,12 +106,14 @@ public final class Promise {
     }
 
     private void sendSuccessLog() {
-        if(isLoggerRunning)
+        if (isLoggerRunning) {
             hmsLogger.sendSingleEvent(methodName);
+        }
     }
 
     private void sendErrorLog(String errorCode) {
-        if(isLoggerRunning)
+        if (isLoggerRunning) {
             hmsLogger.sendSingleEvent(methodName, errorCode);
+        }
     }
 }

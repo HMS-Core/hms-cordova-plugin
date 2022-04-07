@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 public class HmsPushMessaging extends CordovaBaseModule {
     private final HmsMessaging hmsMessaging;
+
     private static JSONObject initialNotification = null;
 
     public HmsPushMessaging(Context context) {
@@ -48,18 +49,22 @@ public class HmsPushMessaging extends CordovaBaseModule {
     @CordovaMethod
     public void setItem(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
         String myAppId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
-        SharedPreferences sharedPref = corPack.getCordova().getContext()
-            .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = corPack.getCordova()
+                .getContext()
+                .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId,
+                        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(args.getString(0),args.getString(1)).apply();
+        editor.putString(args.getString(0), args.getString(1)).apply();
         promise.success();
     }
 
     @CordovaMethod
     public void removeItem(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
         String myAppId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
-        SharedPreferences sharedPref = corPack.getCordova().getContext()
-            .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = corPack.getCordova()
+                .getContext()
+                .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId,
+                        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(args.getString(0)).apply();
         promise.success();
@@ -68,28 +73,39 @@ public class HmsPushMessaging extends CordovaBaseModule {
     @CordovaMethod
     public void getItem(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
         String myAppId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
-        SharedPreferences sharedPref = corPack.getCordova().getContext()
-            .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId, Context.MODE_PRIVATE);
-        String jsonData = sharedPref.getString(args.getString(0),null);
-        if(jsonData == null)
-            promise.error(new JSONObject().put("Error","Data not found with "+ args.getString(0) +" key parameter"));
-        else
+        SharedPreferences sharedPref = corPack.getCordova()
+                .getContext()
+                .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + myAppId,
+                        Context.MODE_PRIVATE);
+        String jsonData = sharedPref.getString(args.getString(0), null);
+        if (jsonData == null) {
+            promise.error(new JSONObject().put("Error", "Data not found with " + args.getString(0) + " key parameter"));
+        } else {
             promise.success(new JSONObject(jsonData));
+        }
     }
 
     @CordovaMethod
-    public void setBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
-        String appId = corPack.getCordova().getActivity().getApplicationInfo().uid+"";
-        SharedPreferences sharedPref = corPack.getCordova().getContext().getSharedPreferences(corPack.getCordova().getContext().getPackageName()+"."+appId,Context.MODE_PRIVATE);
+    public void setBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise)
+            throws JSONException {
+        String appId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
+        SharedPreferences sharedPref = corPack.getCordova()
+                .getContext()
+                .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + appId,
+                        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("backgroundFileName",args.getString(0)).apply();
+        editor.putString("backgroundFileName", args.getString(0)).apply();
         promise.success();
     }
 
     @CordovaMethod
-    public void removeBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
-        String appId = corPack.getCordova().getActivity().getApplicationInfo().uid+"";
-        SharedPreferences sharedPref = corPack.getCordova().getContext().getSharedPreferences(corPack.getCordova().getContext().getPackageName()+"."+appId,Context.MODE_PRIVATE);
+    public void removeBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise)
+            throws JSONException {
+        String appId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
+        SharedPreferences sharedPref = corPack.getCordova()
+                .getContext()
+                .getSharedPreferences(corPack.getCordova().getContext().getPackageName() + "." + appId,
+                        Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("backgroundFileName").apply();
         promise.success();
@@ -113,32 +129,32 @@ public class HmsPushMessaging extends CordovaBaseModule {
     @CordovaMethod
     public void turnOnPush(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsMessaging.turnOnPush()
-            .addOnSuccessListener(result -> promise.success(true))
-            .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
+                .addOnSuccessListener(result -> promise.success(true))
+                .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
     }
 
     @HMSLog
     @CordovaMethod
     public void turnOffPush(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsMessaging.turnOffPush()
-            .addOnSuccessListener(result -> promise.success(true))
-            .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
+                .addOnSuccessListener(result -> promise.success(true))
+                .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
     }
 
     @HMSLog
     @CordovaMethod
     public void subscribe(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         hmsMessaging.subscribe(args.getString(0))
-            .addOnSuccessListener(result -> promise.success(true))
-            .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
+                .addOnSuccessListener(result -> promise.success(true))
+                .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
     }
 
     @HMSLog
     @CordovaMethod
     public void unsubscribe(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         hmsMessaging.unsubscribe(args.getString(0))
-            .addOnSuccessListener(result -> promise.success(true))
-            .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
+                .addOnSuccessListener(result -> promise.success(true))
+                .addOnFailureListener(error -> promise.error(error.getLocalizedMessage()));
     }
 
     @HMSLog
@@ -151,7 +167,7 @@ public class HmsPushMessaging extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void getInitialNotification(final CorPack corPack, JSONArray args, final Promise promise){
+    public void getInitialNotification(final CorPack corPack, JSONArray args, final Promise promise) {
         if (initialNotification != null) {
             promise.success(HmsPushMessaging.initialNotification);
         } else {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import java.util.Set;
 
 public class BundleUtils {
 
-
     public static String get(Bundle bundle, String key) {
 
         return bundle != null ? bundle.getString(key) : null;
@@ -35,8 +34,9 @@ public class BundleUtils {
 
     public static void set(Bundle bundle, String key, String value) {
 
-        if (bundle != null)
+        if (bundle != null) {
             bundle.putString(key, value);
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
@@ -57,8 +57,9 @@ public class BundleUtils {
 
     public static void setB(Bundle bundle, String key, boolean value) {
 
-        if (bundle != null)
+        if (bundle != null) {
             bundle.putBoolean(key, value);
+        }
     }
 
     public static double getD(Bundle bundle, String key) {
@@ -73,8 +74,9 @@ public class BundleUtils {
 
     public static void setD(Bundle bundle, String key, double value) {
 
-        if (bundle != null)
+        if (bundle != null) {
             bundle.putDouble(key, value);
+        }
     }
 
     public static long getL(Bundle bundle, String key) {
@@ -120,6 +122,5 @@ public class BundleUtils {
         }
         return json;
     }
-
 
 }

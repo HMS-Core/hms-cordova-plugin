@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,13 +35,15 @@ public class MapUtils {
 
     public static JSONObject fromBundle(Bundle bundle) throws JSONException {
         JSONObject map = new JSONObject();
-        if (bundle == null) return map;
+        if (bundle == null) {
+            return map;
+        }
         for (String key : bundle.keySet()) {
             Object value = bundle.get(key);
             if (value == null) {
                 map.put(key, null);
-            } else if (value instanceof Collection){
-                map.put(key,new JSONArray((Collection) value));
+            } else if (value instanceof Collection) {
+                map.put(key, new JSONArray((Collection) value));
             } else if (value.getClass().isArray()) {
                 map.put(key, fromArray(value));
             } else if (value instanceof String) {
@@ -77,10 +79,10 @@ public class MapUtils {
         while (iterator.hasNext()) {
             String key = (String) iterator.next();
             Object value;
-            if(!jsonObject.isNull(key)){
+            if (!jsonObject.isNull(key)) {
                 value = jsonObject.get(key);
-            }else{
-                value=null;
+            } else {
+                value = null;
             }
             if (value == null) {
                 bundle.putString(key, null);
@@ -99,7 +101,6 @@ public class MapUtils {
 
         return bundle;
     }
-
 
     public static Map<String, Object> toMap(JSONObject jsonObject) throws JSONException {
 
@@ -123,14 +124,14 @@ public class MapUtils {
         return map;
     }
 
-
     public static Map<String, String> toStringMap(JSONObject jsonObject) throws JSONException {
 
         Map<String, Object> objectMap = toMap(jsonObject);
         Map<String, String> map = new HashMap<>();
 
-        for (Map.Entry<String, Object> entry : objectMap.entrySet())
+        for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
             map.put(entry.getKey(), String.valueOf(entry.getValue()));
+        }
 
         return map;
     }
@@ -154,10 +155,9 @@ public class MapUtils {
                 jsonObject.put((String) pair.getKey(), (Integer) value);
             } else if (value instanceof String) {
                 jsonObject.put((String) pair.getKey(), (String) value);
-            }else if (value instanceof JSONObject) {
-                jsonObject.put((String) pair.getKey(),value);
-            }
-            else if (value instanceof Map) {
+            } else if (value instanceof JSONObject) {
+                jsonObject.put((String) pair.getKey(), value);
+            } else if (value instanceof Map) {
                 jsonObject.put((String) pair.getKey(), MapUtils.toJSONObject((Map<String, Object>) value));
             } else {
                 value.getClass();
@@ -172,4 +172,3 @@ public class MapUtils {
         return jsonObject;
     }
 }
-

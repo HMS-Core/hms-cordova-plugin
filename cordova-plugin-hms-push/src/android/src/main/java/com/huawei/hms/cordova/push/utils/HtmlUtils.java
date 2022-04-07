@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,16 +32,19 @@ public class HtmlUtils {
         BufferedReader reader = null;
         String line;
         try {
-            reader = new BufferedReader(new InputStreamReader(context.getAssets().open(filename), StandardCharsets.UTF_8));
-            while ((line = reader.readLine()) != null) fContent.append(line);
+            reader = new BufferedReader(
+                new InputStreamReader(context.getAssets().open(filename), StandardCharsets.UTF_8));
+            while ((line = reader.readLine()) != null) {
+                fContent.append(line);
+            }
         } catch (IOException e) {
-            Log.d(TAG, "file2str: "+ e.getLocalizedMessage());
+            Log.d(TAG, "file2str: " + e.getLocalizedMessage());
         } finally {
             if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    Log.d(TAG, "file2str: "+ e.getLocalizedMessage());
+                    Log.d(TAG, "file2str: " + e.getLocalizedMessage());
                 }
             }
         }
@@ -49,17 +52,15 @@ public class HtmlUtils {
     }
 
     public static String onBackgroundRemoteMessageReceived() {
-        String onBackgroundRemoteMessageReceived = "function onBackgroundRemoteMessageReceived(callback) {" +
-            "window['BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED'] = callback;" +
-            "}";
+        String onBackgroundRemoteMessageReceived = "function onBackgroundRemoteMessageReceived(callback) {"
+            + "window['BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED'] = callback;" + "}";
         return onBackgroundRemoteMessageReceived;
     }
 
-    public  static String getItemResponseListener() {
-        String getItemResponseListener = "function onGetItemResponse(callback) {" +
-            "window['ON_GET_ITEM_RESPONSE_EVENT'] = callback;" +
-            "}";
-        return  getItemResponseListener;
+    public static String getItemResponseListener() {
+        String getItemResponseListener = "function onGetItemResponse(callback) {"
+            + "window['ON_GET_ITEM_RESPONSE_EVENT'] = callback;" + "}";
+        return getItemResponseListener;
     }
 
     public static String wrapInsideScriptTag(String data) {

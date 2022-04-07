@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,10 +27,14 @@ public class ApplicationUtils {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
 
-        if (processInfos == null) return false;
+        if (processInfos == null) {
+            return false;
+        }
 
         for (ActivityManager.RunningAppProcessInfo processInfo : processInfos) {
-            if (processInfo.pkgList.length < 1) return false;
+            if (processInfo.pkgList.length < 1) {
+                return false;
+            }
             if (processInfo.processName.equals(context.getPackageName())
                 && processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                 return true;
