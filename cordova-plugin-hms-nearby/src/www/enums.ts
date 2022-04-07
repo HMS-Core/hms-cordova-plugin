@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ export enum HMSNearbyEvent {
     EVENT_WIFI_ON_FOUND = "eventWifiOnFound",
     EVENT_WIFI_ON_LOST = "eventWifiOnLost",
     EVENT_WIFI_ON_FETCH_AUTH_CODE = "eventWifiOnFetchAuthCode",
-    EVENT_WIFI_ON_SHARE_RESULT = "eventWifiOnShareResult"
+    EVENT_WIFI_ON_SHARE_RESULT = "eventWifiOnShareResult",
 }
 
 export enum HMSPermission {
@@ -42,54 +42,54 @@ export enum HMSPermission {
     PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
     PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
     PERMISSION_READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE",
-    PERMISSION_WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE"
+    PERMISSION_WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE",
 }
 
 export enum Policy {
     POLICY_MESH = 1,
     POLICY_P2P = 2,
-    POLICY_STAR = 3
+    POLICY_STAR = 3,
 }
 
 export enum DataType {
     DATA_FILE = 1,
     DATA_BYTES = 2,
-    DATA_STREAM = 3
+    DATA_STREAM = 3,
 }
 
 export enum TransferState {
     TRANSFER_STATE_SUCCESS = 1,
     TRANSFER_STATE_FAILURE = 2,
     TRANSFER_STATE_IN_PROGRESS = 3,
-    TRANSFER_STATE_CANCELED = 4
+    TRANSFER_STATE_CANCELED = 4,
 }
 
 export enum MessagePolicyDistanceType {
     POLICY_DISTANCE_TYPE_DEFAULT = 0,
-    POLICY_DISTANCE_TYPE_EARSHOT = 1
+    POLICY_DISTANCE_TYPE_EARSHOT = 1,
 }
 
 export enum MessagePolicyFindingMode {
     POLICY_FINDING_MODE_DEFAULT = 0,
     POLICY_FINDING_MODE_BROADCAST = 1,
-    POLICY_FINDING_MODE_SCAN = 2
+    POLICY_FINDING_MODE_SCAN = 2,
 }
 
 export enum MessagePolicyTtlSeconds {
     POLICY_TTL_SECONDS_DEFAULT = 240,
     POLICY_TTL_SECONDS_MAX = 86400,
-    POLICY_TTL_SECONDS_INFINITE = 2147483647
+    POLICY_TTL_SECONDS_INFINITE = 2147483647,
 }
 
 export enum WifiSharePolicy {
     POLICY_SHARE = 1,
-    POLICY_SET = 2
+    POLICY_SET = 2,
 }
 
 export enum ChannelPolicy {
     CHANNEL_AUTO = 1,
     CHANNEL_HIGH_THROUGHPUT = 2,
-    CHANNEL_INSTANCE = 3
+    CHANNEL_INSTANCE = 3,
 }
 
 export enum StatusCode {
@@ -136,5 +136,5 @@ export enum StatusCode {
     STATUS_WIFI_CONNECT_FAIL = 8067,
     STATUS_WIFI_NOT_SUPPORT_SHARE = 8068,
     STATUS_WIFI_MUST_BE_ENABLED = 8069,
-    STATUS_ANDROID_HMS_RESTRICTED = 8070
+    STATUS_ANDROID_HMS_RESTRICTED = 8070,
 }

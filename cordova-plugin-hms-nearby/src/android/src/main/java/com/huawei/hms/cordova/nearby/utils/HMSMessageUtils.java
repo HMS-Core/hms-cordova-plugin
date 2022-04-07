@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -44,8 +44,9 @@ public class HMSMessageUtils {
             String type = json.getString("type");
             String namespace = json.getString("namespace");
             return new Message(content, type, namespace);
-        } else if (json.has("type"))
+        } else if (json.has("type")) {
             return new Message(content, json.getString("type"));
+        }
 
         return new Message(content);
     }
@@ -53,12 +54,13 @@ public class HMSMessageUtils {
     public static MessagePicker buildMessagePicker(JSONObject json) throws JSONException {
         MessagePicker.Builder builder = new MessagePicker.Builder();
 
-        if (json.optBoolean("includeAllTypes", false))
+        if (json.optBoolean("includeAllTypes", false)) {
             builder.includeAllTypes();
+        }
 
         if (json.has("eddystoneUids")) {
             JSONArray ids = json.getJSONArray("eddystoneUids");
-            for (int i = 0; i < ids.length() ; i++) {
+            for (int i = 0; i < ids.length(); i++) {
                 JSONObject id = ids.getJSONObject(i);
                 String hexNamespace = id.getString("hexNamespace");
                 String hexInstance = id.getString("hexInstance");
@@ -68,7 +70,7 @@ public class HMSMessageUtils {
 
         if (json.has("iBeaconIds")) {
             JSONArray ids = json.getJSONArray("iBeaconIds");
-            for (int i = 0; i < ids.length() ; i++) {
+            for (int i = 0; i < ids.length(); i++) {
                 JSONObject id = ids.getJSONObject(i);
                 UUID iBeaconUuid = UUID.fromString(id.getString("iBeaconUuid"));
                 Short major = (short) id.getInt("major");
@@ -79,7 +81,7 @@ public class HMSMessageUtils {
 
         if (json.has("namespaceTypes")) {
             JSONArray ids = json.getJSONArray("namespaceTypes");
-            for (int i = 0; i < ids.length() ; i++) {
+            for (int i = 0; i < ids.length(); i++) {
                 JSONObject id = ids.getJSONObject(i);
                 String namespace = id.getString("namespace");
                 String type = id.getString("type");
@@ -91,14 +93,14 @@ public class HMSMessageUtils {
     }
 
     public static Policy buildPolicy(JSONObject json) {
-        return new Policy.Builder()
-                .setDistanceType(json.optInt("distanceType", Policy.POLICY_DISTANCE_TYPE_DEFAULT))
-                .setFindingMode(json.optInt("findingMode", Policy.POLICY_FINDING_MODE_DEFAULT))
-                .setTtlSeconds(json.optInt("ttlSeconds", Policy.POLICY_TTL_SECONDS_DEFAULT))
-                .build();
+        return new Policy.Builder().setDistanceType(json.optInt("distanceType", Policy.POLICY_DISTANCE_TYPE_DEFAULT))
+            .setFindingMode(json.optInt("findingMode", Policy.POLICY_FINDING_MODE_DEFAULT))
+            .setTtlSeconds(json.optInt("ttlSeconds", Policy.POLICY_TTL_SECONDS_DEFAULT))
+            .build();
     }
 
-    public static PutOption buildPutOption(JSONObject json, final CordovaEventRunner eventRunner, Message message) throws JSONException {
+    public static PutOption buildPutOption(JSONObject json, final CordovaEventRunner eventRunner, Message message)
+        throws JSONException {
         JSONObject jsonObject = HMSUtils.convertMessageToJSONObject(message);
         jsonObject.put("status", "PutOption onTimeout");
 
@@ -111,10 +113,11 @@ public class HMSMessageUtils {
             }
         });
 
-        if (json.has("policy"))
+        if (json.has("policy")) {
             builder.setPolicy(buildPolicy(json.getJSONObject("policy")));
-        else
+        } else {
             builder.setPolicy(new Policy.Builder().build());
+        }
 
         return builder.build();
     }
@@ -132,15 +135,17 @@ public class HMSMessageUtils {
             }
         });
 
-        if (json.has("picker"))
+        if (json.has("picker")) {
             builder.setPicker(buildMessagePicker(json.getJSONObject("picker")));
-        else
+        } else {
             builder.setPicker(new MessagePicker.Builder().build());
+        }
 
-        if (json.has("policy"))
+        if (json.has("policy")) {
             builder.setPolicy(buildPolicy(json.getJSONObject("policy")));
-        else
+        } else {
             builder.setPolicy(new Policy.Builder().build());
+        }
 
         return builder.build();
     }

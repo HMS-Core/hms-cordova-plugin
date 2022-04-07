@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import com.huawei.hms.nearby.discovery.ScanEndpointInfo;
 import com.huawei.hms.nearby.wifishare.WifiShareCallback;
 import com.huawei.hms.nearby.wifishare.WifiShareEngine;
 import com.huawei.hms.nearby.wifishare.WifiSharePolicy;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,41 +52,38 @@ public class HMSWifi extends CordovaBaseModule {
         int policyNumber = args.getInt(0);
         WifiSharePolicy policy = HMSUtils.getWifiSharePolicyByNumber(policyNumber);
         wifiShareEngine.startWifiShare(new WifiShareCallbackHandler(corPack.getEventRunner()), policy)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "startWifiShare: %s", e.getMessage()));
-                });
+            .addOnSuccessListener(unused -> {
+                promise.success();
+            })
+            .addOnFailureListener(e -> {
+                promise.error(String.format(Locale.ENGLISH, "startWifiShare: %s", e.getMessage()));
+            });
     }
 
     @HMSLog
     @CordovaMethod
     public void stopWifiShare(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
-        wifiShareEngine.stopWifiShare()
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "stopWifiShare: %s", e.getMessage()));
-                });
+        wifiShareEngine.stopWifiShare().addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "stopWifiShare: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
     @CordovaMethod
     public void shareWifiConfig(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String endpointId = args.getString(0);
-        wifiShareEngine.shareWifiConfig(endpointId)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "shareWifiConfig: %s", e.getMessage()));
-                });
+        wifiShareEngine.shareWifiConfig(endpointId).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "shareWifiConfig: %s", e.getMessage()));
+        });
     }
 
     private static class WifiShareCallbackHandler extends WifiShareCallback {
         private final CordovaEventRunner eventRunner;
+
         public WifiShareCallbackHandler(CordovaEventRunner eventRunner) {
             super();
             this.eventRunner = eventRunner;

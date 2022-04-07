@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,132 +20,131 @@ import {
     MessagePolicyFindingMode,
     MessagePolicyTtlSeconds,
     StatusCode,
-    TransferState
+    TransferState,
 } from "./enums";
 
-
 export interface Message {
-    content: number[],
-    namespace?: string,
-    type?: string
+    content: number[];
+    namespace?: string;
+    type?: string;
 }
 
 export interface EddystoneUid {
-    hexNamespace: string,
-    hexInstance: string
+    hexNamespace: string;
+    hexInstance: string;
 }
 
 export interface IBeaconId {
-    iBeaconUuid: string,
-    major: number,
-    minor: number
+    iBeaconUuid: string;
+    major: number;
+    minor: number;
 }
 
 export interface NamespaceType {
-    namespace: string,
-    type: string
+    namespace: string;
+    type: string;
 }
 
 export interface MessagePicker {
-    includeAllTypes?: boolean,
-    eddystoneUids?: EddystoneUid[],
-    iBeaconIds?: IBeaconId[],
-    namespaceTypes?: NamespaceType[]
+    includeAllTypes?: boolean;
+    eddystoneUids?: EddystoneUid[];
+    iBeaconIds?: IBeaconId[];
+    namespaceTypes?: NamespaceType[];
 }
 
 export interface MessagePolicy {
-    distanceType?: MessagePolicyDistanceType,
-    findingMode?: MessagePolicyFindingMode,
-    ttlSeconds?: MessagePolicyTtlSeconds
+    distanceType?: MessagePolicyDistanceType;
+    findingMode?: MessagePolicyFindingMode;
+    ttlSeconds?: MessagePolicyTtlSeconds;
 }
 
 export interface PutOption {
-    policy?: MessagePolicy
+    policy?: MessagePolicy;
 }
 
 export interface GetOption {
-    picker?: MessagePicker,
-    policy?: MessagePolicy
+    picker?: MessagePicker;
+    policy?: MessagePolicy;
 }
 
 export interface BleSignal {
-    rssi: number,
-    txPower: number
+    rssi: number;
+    txPower: number;
 }
 
 export interface Distance {
-    precision: number,
-    meters: number
+    precision: number;
+    meters: number;
 }
 
 export interface EndpointId {
-    endpointId: string
+    endpointId: string;
 }
 
 export interface ConnectInfo {
-    endpointId: string,
-    endpointName: string,
-    authCode: string,
-    isRemoteConnect: boolean
+    endpointId: string;
+    endpointName: string;
+    authCode: string;
+    isRemoteConnect: boolean;
 }
 
 export interface ConnectResult {
-    endpointId: string,
-    statusCode: StatusCode,
-    statusMessage: string,
-    channelPolicy: ChannelPolicy
+    endpointId: string;
+    statusCode: StatusCode;
+    statusMessage: string;
+    channelPolicy: ChannelPolicy;
 }
 
 export interface ScanEndpointInfo {
-    endpointId: string,
-    serviceId: string,
-    name: string
+    endpointId: string;
+    serviceId: string;
+    name: string;
 }
 
 export interface Data {
-    endpointId: string,
-    dataType: DataType,
-    dataId: string,
-    size?: number,
-    data?: number[],
-    fileUri?: string
+    endpointId: string;
+    dataType: DataType;
+    dataId: string;
+    size?: number;
+    data?: number[];
+    fileUri?: string;
 }
 
 export interface TransferStateUpdate {
-    endpointId: string,
-    dataId: string,
-    status: TransferState,
-    transferredBytes: number,
-    totalBytes: number
+    endpointId: string;
+    dataId: string;
+    status: TransferState;
+    transferredBytes: number;
+    totalBytes: number;
 }
 
 export interface BleSignalUpdate {
-    message: Message,
-    bleSignal: BleSignal
+    message: Message;
+    bleSignal: BleSignal;
 }
 
 export interface DistanceUpdate {
-    message: Message,
-    distance: Distance
+    message: Message;
+    distance: Distance;
 }
 
 export interface MessageTimeout {
-    message: Message,
-    status: string
+    message: Message;
+    status: string;
 }
 
 export interface PermissionUpdate {
-    grantPermission: boolean
+    grantPermission: boolean;
 }
 
 export interface AuthCodeUpdate {
-    endpointId: string,
-    authCode: string
+    endpointId: string;
+    authCode: string;
 }
 
 export interface WifiShareResult {
-    endpointId: string,
-    statusCode: StatusCode
+    endpointId: string;
+    statusCode: StatusCode;
 }
 
 export const BLE_UNKNOWN_TX_POWER: number = 0x80000000;
@@ -158,20 +157,20 @@ export const MESSAGE_TYPE_EDDYSTONE_UID: string = "_eddystone_uid";
 export const MESSAGE_TYPE_I_BEACON_ID: string = "_ibeacon_id";
 export const DISTANCE_UNKNOWN: Distance = {
     precision: PRECISION_LOW,
-    meters: NaN
-}
+    meters: NaN,
+};
 export const MESSAGE_PICKER_INCLUDE_ALL_TYPES: MessagePicker = {
-    includeAllTypes: true
-}
-export const MESSAGE_POLICY_DEFAULT: MessagePolicy = {}
+    includeAllTypes: true,
+};
+export const MESSAGE_POLICY_DEFAULT: MessagePolicy = {};
 export const MESSAGE_POLICY_BLE_ONLY: MessagePolicy = {
     ttlSeconds: MessagePolicyTtlSeconds.POLICY_TTL_SECONDS_INFINITE,
-    findingMode: MessagePolicyFindingMode.POLICY_FINDING_MODE_SCAN
-}
+    findingMode: MessagePolicyFindingMode.POLICY_FINDING_MODE_SCAN,
+};
 export const GET_OPTION_DEFAULT: GetOption = {
     picker: MESSAGE_PICKER_INCLUDE_ALL_TYPES,
-    policy: MESSAGE_POLICY_DEFAULT
-}
+    policy: MESSAGE_POLICY_DEFAULT,
+};
 export const PUT_OPTION_DEFAULT: PutOption = {
-    policy: MESSAGE_POLICY_DEFAULT
-}
+    policy: MESSAGE_POLICY_DEFAULT,
+};

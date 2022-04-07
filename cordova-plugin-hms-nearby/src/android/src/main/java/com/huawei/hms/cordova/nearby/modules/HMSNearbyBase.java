@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class HMSNearbyBase extends CordovaBaseModule {
         String permission = args.getString(0);
         promise.success(corPack.hasPermission(permission));
     }
-    
+
     @HMSLog
     @CordovaMethod
     public void requestPermission(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {

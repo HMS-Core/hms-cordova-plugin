@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import com.huawei.hms.nearby.message.Message;
 import com.huawei.hms.nearby.transfer.Data;
 import com.huawei.hms.nearby.transfer.TransferStateUpdate;
 import com.huawei.hms.nearby.wifishare.WifiSharePolicy;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,23 +55,25 @@ public class HMSUtils {
     }
 
     public static Policy getPolicyByNumber(int policyNumber) {
-        if (policyNumber == 1)
+        if (policyNumber == 1) {
             return Policy.POLICY_MESH;
-        else if (policyNumber == 2)
+        } else if (policyNumber == 2) {
             return Policy.POLICY_P2P;
-        else if (policyNumber == 3)
+        } else if (policyNumber == 3) {
             return Policy.POLICY_STAR;
-        else
+        } else {
             return null;
+        }
     }
 
     public static WifiSharePolicy getWifiSharePolicyByNumber(int policyNumber) {
-        if (policyNumber == 1)
+        if (policyNumber == 1) {
             return WifiSharePolicy.POLICY_SHARE;
-        else if (policyNumber == 2)
+        } else if (policyNumber == 2) {
             return WifiSharePolicy.POLICY_SET;
-        else
+        } else {
             return null;
+        }
     }
 
     public static byte[] convertJSONArrayToBytes(JSONArray jsonArray) throws JSONException {
@@ -88,7 +91,6 @@ public class HMSUtils {
         }
         return list;
     }
-
 
     public static JSONObject convertConnectInfoToJSONObject(String endpointId, ConnectInfo connectInfo) {
         JSONObject jsonObject = new JSONObject();
@@ -180,7 +182,8 @@ public class HMSUtils {
         return fileUriStr;
     }
 
-    public static JSONObject convertTransferStateUpdateToJSONObject(String endpointId, TransferStateUpdate transferStateUpdate) {
+    public static JSONObject convertTransferStateUpdateToJSONObject(String endpointId,
+        TransferStateUpdate transferStateUpdate) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("endpointId", endpointId);
@@ -315,25 +318,27 @@ public class HMSUtils {
     }
 
     public static ChannelPolicy getChannelPolicyByNumber(int channelPolicyNumber) {
-        if (channelPolicyNumber == 1)
+        if (channelPolicyNumber == 1) {
             return ChannelPolicy.CHANNEL_AUTO;
-        else if (channelPolicyNumber == 2)
+        } else if (channelPolicyNumber == 2) {
             return ChannelPolicy.CHANNEL_HIGH_THROUGHPUT;
-        else if (channelPolicyNumber == 3)
+        } else if (channelPolicyNumber == 3) {
             return ChannelPolicy.CHANNEL_INSTANCE;
-        else
+        } else {
             return null;
+        }
     }
 
     public static int getChannelPolicyNumber(ChannelPolicy channelPolicy) {
-        if (channelPolicy.equals(ChannelPolicy.CHANNEL_AUTO))
+        if (channelPolicy.equals(ChannelPolicy.CHANNEL_AUTO)) {
             return 1;
-        else if (channelPolicy.equals(ChannelPolicy.CHANNEL_HIGH_THROUGHPUT))
+        } else if (channelPolicy.equals(ChannelPolicy.CHANNEL_HIGH_THROUGHPUT)) {
             return 2;
-        else if (channelPolicy.equals(ChannelPolicy.CHANNEL_INSTANCE))
+        } else if (channelPolicy.equals(ChannelPolicy.CHANNEL_INSTANCE)) {
             return 3;
-        else
+        } else {
             return -1;
+        }
     }
 
 }

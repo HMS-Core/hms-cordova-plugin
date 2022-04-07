@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import com.huawei.hms.nearby.message.MessageHandler;
 import com.huawei.hms.nearby.message.PutOption;
 import com.huawei.hms.nearby.message.StatusCallback;
 import com.huawei.hms.nearby.message.GetOption;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,14 +49,45 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 public class HMSMessage extends CordovaBaseModule {
-    private Activity activity;
-    private MessageEngine messageEngine;
-
     private static volatile MessageHandler currentMessageHandler;
+
+    private Activity activity;
+
+    private MessageEngine messageEngine;
 
     public HMSMessage(Activity activity) {
         this.activity = activity;
         messageEngine = Nearby.getMessageEngine(activity);
+    }
+
+    private static void initMessageHandler(final CordovaEventRunner eventRunner) {
+        if (currentMessageHandler == null) {
+            currentMessageHandler = new MessageHandler() {
+                @Override
+                public void onFound(Message message) {
+                    JSONObject jsonObject = HMSUtils.convertMessageToJSONObject(message);
+                    eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_FOUND, jsonObject);
+                }
+
+                @Override
+                public void onLost(Message message) {
+                    JSONObject jsonObject = HMSUtils.convertMessageToJSONObject(message);
+                    eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_LOST, jsonObject);
+                }
+
+                @Override
+                public void onDistanceChanged(Message message, Distance distance) {
+                    JSONObject jsonObject = HMSUtils.convertMessageAndDistanceToJSONObject(message, distance);
+                    eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_DISTANCE_CHANGED, jsonObject);
+                }
+
+                @Override
+                public void onBleSignalChanged(Message message, BleSignal bleSignal) {
+                    JSONObject jsonObject = HMSUtils.convertMessageAndBleSignalToJSONObject(message, bleSignal);
+                    eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_BLE_SIGNAL_CHANGED, jsonObject);
+                }
+            };
+        }
     }
 
     @CordovaEvent
@@ -81,24 +113,20 @@ public class HMSMessage extends CordovaBaseModule {
 
     private void putInternal(Message message, final CorPack corPack, final Promise promise) {
         // without put option / default options
-        messageEngine.put(message)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "put: %s", e.getMessage()));
-                });
+        messageEngine.put(message).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "put: %s", e.getMessage()));
+        });
     }
 
     private void putInternal(Message message, PutOption putOption, final CorPack corPack, final Promise promise) {
         // with put option
-        messageEngine.put(message, putOption)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "put: %s", e.getMessage()));
-                });
+        messageEngine.put(message, putOption).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "put: %s", e.getMessage()));
+        });
 
     }
 
@@ -107,13 +135,11 @@ public class HMSMessage extends CordovaBaseModule {
     public void unput(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject messageObj = args.getJSONObject(0);
         Message message = HMSMessageUtils.buildMessage(messageObj);
-        messageEngine.unput(message)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "unput: %s", e.getMessage()));
-                });
+        messageEngine.unput(message).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "unput: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
@@ -132,36 +158,30 @@ public class HMSMessage extends CordovaBaseModule {
     public void getInternal(final CorPack corPack, final Promise promise) {
         initMessageHandler(corPack.getEventRunner());
         // without get option / default options
-        messageEngine.get(currentMessageHandler)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "get: %s", e.getMessage()));
-                });
+        messageEngine.get(currentMessageHandler).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "get: %s", e.getMessage()));
+        });
     }
 
     public void getInternal(GetOption getOption, final CorPack corPack, final Promise promise) {
         initMessageHandler(corPack.getEventRunner());
-        messageEngine.get(currentMessageHandler, getOption)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "get: %s", e.getMessage()));
-                });
+        messageEngine.get(currentMessageHandler, getOption).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "get: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
     @CordovaMethod
     public void unget(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
-        messageEngine.unget(currentMessageHandler)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "unget: %s", e.getMessage()));
-                });
+        messageEngine.unget(currentMessageHandler).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "unget: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
@@ -180,85 +200,45 @@ public class HMSMessage extends CordovaBaseModule {
     public void getInBackgroundInternal(final CorPack corPack, final Promise promise) {
         initMessageHandler(corPack.getEventRunner());
 
-        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(),
-                0,
-                new Intent(activity, BackgroundIntentService.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(), 0,
+            new Intent(activity, BackgroundIntentService.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
         // without get option / default options
-        messageEngine.get(pendingIntent)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "getInBackground: %s", e.getMessage()));
-                });
+        messageEngine.get(pendingIntent).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "getInBackground: %s", e.getMessage()));
+        });
     }
 
     public void getInBackgroundInternal(GetOption getOption, final CorPack corPack, final Promise promise) {
         initMessageHandler(corPack.getEventRunner());
-        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(),
-                0,
-                new Intent(activity, BackgroundIntentService.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(), 0,
+            new Intent(activity, BackgroundIntentService.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        messageEngine.get(pendingIntent, getOption)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "getInBackground: %s", e.getMessage()));
-                });
+        messageEngine.get(pendingIntent, getOption).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "getInBackground: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
     @CordovaMethod
     public void ungetInBackground(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
-        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(),
-                0,
-                new Intent(activity, BackgroundIntentService.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(activity.getApplicationContext(), 0,
+            new Intent(activity, BackgroundIntentService.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        messageEngine.unget(pendingIntent)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "ungetInBackground: %s", e.getMessage()));
-                });
-    }
-
-    private static void initMessageHandler(final CordovaEventRunner eventRunner) {
-        if (currentMessageHandler == null)
-            currentMessageHandler = new MessageHandler() {
-            @Override
-            public void onFound(Message message) {
-                JSONObject jsonObject = HMSUtils.convertMessageToJSONObject(message);
-                eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_FOUND, jsonObject);
-            }
-
-            @Override
-            public void onLost(Message message) {
-                JSONObject jsonObject = HMSUtils.convertMessageToJSONObject(message);
-                eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_LOST, jsonObject);
-            }
-
-            @Override
-            public void onDistanceChanged(Message message, Distance distance) {
-                JSONObject jsonObject = HMSUtils.convertMessageAndDistanceToJSONObject(message, distance);
-                eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_DISTANCE_CHANGED, jsonObject);
-            }
-
-            @Override
-            public void onBleSignalChanged(Message message, BleSignal bleSignal) {
-                JSONObject jsonObject = HMSUtils.convertMessageAndBleSignalToJSONObject(message, bleSignal);
-                eventRunner.sendEvent(HMSEvents.EVENT_MESSAGE_ON_BLE_SIGNAL_CHANGED, jsonObject);
-            }
-        };
+        messageEngine.unget(pendingIntent).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "ungetInBackground: %s", e.getMessage()));
+        });
     }
 
     private static class StatusCallbackHandler extends StatusCallback {
         private final CordovaEventRunner eventRunner;
+
         public StatusCallbackHandler(CordovaEventRunner eventRunner) {
             super();
             this.eventRunner = eventRunner;

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.nearby;
 
 import org.apache.cordova.CordovaWebView;
@@ -34,25 +35,24 @@ import java.util.Arrays;
 
 public class HMSNearby extends CordovaPlugin {
     private static final String KIT = "NearbyService";
-    private static final String VERSION = "5.2.1.301";
+
+    private static final String VERSION = "6.2.0.300";
+
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         cordovaController = new CordovaController(this, KIT, VERSION,
-                Arrays.asList(new HMSDiscovery(cordova.getActivity()),
-                new HMSTransfer(cordova.getActivity()),
-                new HMSMessage(cordova.getActivity()),
-                new HMSWifi(cordova.getActivity()),
-                new HMSNearbyBase()));
+            Arrays.asList(new HMSDiscovery(cordova.getActivity()), new HMSTransfer(cordova.getActivity()),
+                new HMSMessage(cordova.getActivity()), new HMSWifi(cordova.getActivity()), new HMSNearbyBase()));
     }
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
         return cordovaController.execute(action, args, callbackContext);
     }
-    
+
     @Override
     public void onPause(boolean multitasking) {
         super.onPause(multitasking);

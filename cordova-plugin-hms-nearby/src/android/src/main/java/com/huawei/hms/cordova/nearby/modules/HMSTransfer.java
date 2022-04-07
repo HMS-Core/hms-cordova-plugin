@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import com.huawei.hms.cordova.nearby.utils.HMSUtils;
 import com.huawei.hms.nearby.Nearby;
 import com.huawei.hms.nearby.transfer.Data;
 import com.huawei.hms.nearby.transfer.TransferEngine;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -42,13 +43,14 @@ import java.util.Locale;
 
 public class HMSTransfer extends CordovaBaseModule {
     private Activity activity;
+
     private TransferEngine transferEngine;
 
     public HMSTransfer(Activity activity) {
         this.activity = activity;
         transferEngine = Nearby.getTransferEngine(activity);
     }
-    
+
     @HMSLog
     @CordovaMethod
     public void sendBytes(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
@@ -56,7 +58,7 @@ public class HMSTransfer extends CordovaBaseModule {
         List<String> endpointIds = HMSUtils.convertJSONArrayToList(args.getJSONArray(1));
         sendData(Data.fromBytes(bytes), endpointIds, promise);
     }
-    
+
     @HMSLog
     @CordovaMethod
     public void sendFile(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
@@ -71,7 +73,7 @@ public class HMSTransfer extends CordovaBaseModule {
         }
         sendData(Data.fromFile(pfd), endpointIds, promise);
     }
-    
+
     @HMSLog
     @CordovaMethod
     public void sendStream(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
@@ -93,22 +95,18 @@ public class HMSTransfer extends CordovaBaseModule {
     public void cancelDataTransfer(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String dataIdText = args.getString(0);
         long dataId = Long.parseLong(dataIdText);
-        transferEngine.cancelDataTransfer(dataId)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "cancelDataTransfer: %s", e.getMessage()));
-                });
+        transferEngine.cancelDataTransfer(dataId).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "cancelDataTransfer: %s", e.getMessage()));
+        });
     }
 
     private void sendData(Data data, List<String> endpointIds, final Promise promise) {
-        transferEngine.sendData(endpointIds, data)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "sendData: %s", e.getMessage()));
-                });
+        transferEngine.sendData(endpointIds, data).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "sendData: %s", e.getMessage()));
+        });
     }
 }

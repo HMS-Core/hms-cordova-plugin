@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ import com.huawei.hms.nearby.discovery.ScanOption;
 import com.huawei.hms.nearby.transfer.Data;
 import com.huawei.hms.nearby.transfer.DataCallback;
 import com.huawei.hms.nearby.transfer.TransferStateUpdate;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,14 +64,12 @@ public class HMSDiscovery extends CordovaBaseModule {
         Policy policy = HMSUtils.getPolicyByNumber(policyNumber);
 
         BroadcastOption broadcastOption = new BroadcastOption.Builder().setPolicy(policy).build();
-        discoveryEngine.startBroadcasting(name, serviceId,
-                new ConnectCallbackHandler(corPack.getEventRunner()), broadcastOption)
-                .addOnSuccessListener(aVoid -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "startBroadcasting: %s", e.getMessage()));
-                });
+        discoveryEngine.startBroadcasting(name, serviceId, new ConnectCallbackHandler(corPack.getEventRunner()),
+            broadcastOption).addOnSuccessListener(aVoid -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "startBroadcasting: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
@@ -88,14 +87,13 @@ public class HMSDiscovery extends CordovaBaseModule {
         Policy policy = HMSUtils.getPolicyByNumber(policyNumber);
 
         ScanOption scanOption = new ScanOption.Builder().setPolicy(policy).build();
-        discoveryEngine.startScan(serviceId,
-                new ScanEndpointCallbackHandler(corPack.getEventRunner()), scanOption)
-                .addOnSuccessListener(aVoid -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "startScan: %s", e.getMessage()));
-                });
+        discoveryEngine.startScan(serviceId, new ScanEndpointCallbackHandler(corPack.getEventRunner()), scanOption)
+            .addOnSuccessListener(aVoid -> {
+                promise.success();
+            })
+            .addOnFailureListener(e -> {
+                promise.error(String.format(Locale.ENGLISH, "startScan: %s", e.getMessage()));
+            });
     }
 
     @HMSLog
@@ -110,14 +108,13 @@ public class HMSDiscovery extends CordovaBaseModule {
     public void requestConnect(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String name = args.getString(0);
         String endpointId = args.getString(1);
-        discoveryEngine.requestConnect(name, endpointId, 
-                new ConnectCallbackHandler(corPack.getEventRunner()))
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "requestConnect: %s", e.getMessage()));
-                });
+        discoveryEngine.requestConnect(name, endpointId, new ConnectCallbackHandler(corPack.getEventRunner()))
+            .addOnSuccessListener(unused -> {
+                promise.success();
+            })
+            .addOnFailureListener(e -> {
+                promise.error(String.format(Locale.ENGLISH, "requestConnect: %s", e.getMessage()));
+            });
     }
 
     @HMSLog
@@ -128,42 +125,36 @@ public class HMSDiscovery extends CordovaBaseModule {
         int channelPolicyNumber = args.getInt(2);
         ChannelPolicy channelPolicy = HMSUtils.getChannelPolicyByNumber(channelPolicyNumber);
         ConnectOption connectOption = new ConnectOption.Builder().setPolicy(channelPolicy).build();
-        discoveryEngine.requestConnectEx(name, endpointId,
-                new ConnectCallbackHandler(corPack.getEventRunner()),
-                connectOption)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "requestConnectEx: %s", e.getMessage()));
-                });
+        discoveryEngine.requestConnectEx(name, endpointId, new ConnectCallbackHandler(corPack.getEventRunner()),
+            connectOption).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "requestConnectEx: %s", e.getMessage()));
+        });
     }
 
     @HMSLog
     @CordovaMethod
     public void acceptConnect(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String endpointId = args.getString(0);
-        discoveryEngine.acceptConnect(endpointId,
-                new DataCallbackHandler(corPack.getEventRunner()))
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "acceptConnect: %s", e.getMessage()));
-                });
+        discoveryEngine.acceptConnect(endpointId, new DataCallbackHandler(corPack.getEventRunner()))
+            .addOnSuccessListener(unused -> {
+                promise.success();
+            })
+            .addOnFailureListener(e -> {
+                promise.error(String.format(Locale.ENGLISH, "acceptConnect: %s", e.getMessage()));
+            });
     }
 
     @HMSLog
     @CordovaMethod
     public void rejectConnect(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String endpointId = args.getString(0);
-        discoveryEngine.rejectConnect(endpointId)
-                .addOnSuccessListener(unused -> {
-                    promise.success();
-                })
-                .addOnFailureListener(e -> {
-                    promise.error(String.format(Locale.ENGLISH, "rejectConnect: %s", e.getMessage()));
-                });
+        discoveryEngine.rejectConnect(endpointId).addOnSuccessListener(unused -> {
+            promise.success();
+        }).addOnFailureListener(e -> {
+            promise.error(String.format(Locale.ENGLISH, "rejectConnect: %s", e.getMessage()));
+        });
     }
 
     @HMSLog

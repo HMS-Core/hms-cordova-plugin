@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,19 +13,71 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { ChannelPolicy, HMSNearbyEvent, HMSPermission, Policy, WifiSharePolicy } from './enums';
-import { GetOption, Message, PutOption } from './interfaces';
-import { asyncExec } from './utils';
+import {
+    ChannelPolicy,
+    HMSNearbyEvent,
+    HMSPermission,
+    Policy,
+    WifiSharePolicy,
+} from "./enums";
+import { GetOption, Message, PutOption } from "./interfaces";
+import { asyncExec } from "./utils";
 
-export {HMSNearbyEvent, HMSPermission, Policy, DataType, TransferState, MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds, WifiSharePolicy, StatusCode, ChannelPolicy} from "./enums";
-export {Message, EddystoneUid, IBeaconId, NamespaceType, MessagePicker, MessagePolicy, PutOption, GetOption, BleSignal, Distance,
-    EndpointId, ConnectInfo, ConnectResult, ScanEndpointInfo, Data, TransferStateUpdate, BleSignalUpdate, DistanceUpdate, MessageTimeout, 
-    PermissionUpdate, AuthCodeUpdate, WifiShareResult
+export {
+    HMSNearbyEvent,
+    HMSPermission,
+    Policy,
+    DataType,
+    TransferState,
+    MessagePolicyDistanceType,
+    MessagePolicyFindingMode,
+    MessagePolicyTtlSeconds,
+    WifiSharePolicy,
+    StatusCode,
+    ChannelPolicy,
+} from "./enums";
+export {
+    Message,
+    EddystoneUid,
+    IBeaconId,
+    NamespaceType,
+    MessagePicker,
+    MessagePolicy,
+    PutOption,
+    GetOption,
+    BleSignal,
+    Distance,
+    EndpointId,
+    ConnectInfo,
+    ConnectResult,
+    ScanEndpointInfo,
+    Data,
+    TransferStateUpdate,
+    BleSignalUpdate,
+    DistanceUpdate,
+    MessageTimeout,
+    PermissionUpdate,
+    AuthCodeUpdate,
+    WifiShareResult,
 } from "./interfaces";
-export {BLE_UNKNOWN_TX_POWER, PRECISION_LOW, MAX_SIZE_DATA, MAX_CONTENT_SIZE, MAX_TYPE_LENGTH, MESSAGE_NAMESPACE_RESERVED, MESSAGE_TYPE_EDDYSTONE_UID, MESSAGE_TYPE_I_BEACON_ID, 
-    DISTANCE_UNKNOWN, MESSAGE_PICKER_INCLUDE_ALL_TYPES, MESSAGE_POLICY_DEFAULT, MESSAGE_POLICY_BLE_ONLY, GET_OPTION_DEFAULT, PUT_OPTION_DEFAULT} from './interfaces';
+export {
+    BLE_UNKNOWN_TX_POWER,
+    PRECISION_LOW,
+    MAX_SIZE_DATA,
+    MAX_CONTENT_SIZE,
+    MAX_TYPE_LENGTH,
+    MESSAGE_NAMESPACE_RESERVED,
+    MESSAGE_TYPE_EDDYSTONE_UID,
+    MESSAGE_TYPE_I_BEACON_ID,
+    DISTANCE_UNKNOWN,
+    MESSAGE_PICKER_INCLUDE_ALL_TYPES,
+    MESSAGE_POLICY_DEFAULT,
+    MESSAGE_POLICY_BLE_ONLY,
+    GET_OPTION_DEFAULT,
+    PUT_OPTION_DEFAULT,
+} from "./interfaces";
 
-const CLASS_NAME = 'HMSNearby';
+const CLASS_NAME = "HMSNearby";
 
 //////////////////// LOGGER ////////////////////
 
@@ -34,7 +86,7 @@ const CLASS_NAME = 'HMSNearby';
  * @returns Promise<void>
  */
 export function enableLogger(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['enableLogger']);
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", ["enableLogger"]);
 }
 
 /**
@@ -42,7 +94,7 @@ export function enableLogger(): Promise<void> {
  * @returns Promise<void>
  */
 export function disableLogger(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['disableLogger']);
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", ["disableLogger"]);
 }
 
 //////////////////// PERMISSIONS ////////////////////
@@ -52,8 +104,11 @@ export function disableLogger(): Promise<void> {
  * @param {HMSPermission} permission Permission.
  * @returns Promise<boolean>
  */
-export function hasPermission(permission:HMSPermission): Promise<boolean> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['hasPermission', permission]);
+export function hasPermission(permission: HMSPermission): Promise<boolean> {
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", [
+        "hasPermission",
+        permission,
+    ]);
 }
 
 /**
@@ -61,8 +116,11 @@ export function hasPermission(permission:HMSPermission): Promise<boolean> {
  * @param {HMSPermission} permission Permission.
  * @returns Promise<void>
  */
-export function requestPermission(permission:HMSPermission): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['requestPermission', permission]);
+export function requestPermission(permission: HMSPermission): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", [
+        "requestPermission",
+        permission,
+    ]);
 }
 
 /**
@@ -70,8 +128,13 @@ export function requestPermission(permission:HMSPermission): Promise<void> {
  * @param {HMSPermission[]} permissions Permissions List.
  * @returns Promise<void>
  */
-export function requestPermissions(permissions:HMSPermission[]): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['requestPermissions', permissions]);
+export function requestPermissions(
+    permissions: HMSPermission[]
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", [
+        "requestPermissions",
+        permissions,
+    ]);
 }
 
 //////////////////// EVENT REGISTERATION ////////////////////
@@ -81,7 +144,7 @@ export function requestPermissions(permissions:HMSPermission[]): Promise<void> {
  * @param {HMSNearbyEvent} event Event name.
  * @param {(res: any) => void} callback Callback to be called when the event triggered.
  */
-export function on(event: HMSNearbyEvent, callback: (res: any)=>void): void {
+export function on(event: HMSNearbyEvent, callback: (res: any) => void): void {
     window.subscribeHMSEvent(event, callback);
 }
 
@@ -94,8 +157,17 @@ export function on(event: HMSNearbyEvent, callback: (res: any)=>void): void {
  * @param {Policy} policy Object of the Policy type.
  * @returns Promise<void>
  */
-export function startBroadcasting(name: string, serviceId: string, policy: Policy): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['startBroadcasting', name, serviceId, policy]);
+export function startBroadcasting(
+    name: string,
+    serviceId: string,
+    policy: Policy
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSDiscovery", [
+        "startBroadcasting",
+        name,
+        serviceId,
+        policy,
+    ]);
 }
 
 /**
@@ -103,7 +175,7 @@ export function startBroadcasting(name: string, serviceId: string, policy: Polic
  * @returns Promise<void>
  */
 export function stopBroadcasting(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['stopBroadcasting']);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["stopBroadcasting"]);
 }
 
 /**
@@ -113,7 +185,11 @@ export function stopBroadcasting(): Promise<void> {
  * @returns Promise<void>
  */
 export function startScan(serviceId: string, policy: Policy): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['startScan', serviceId, policy]);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", [
+        "startScan",
+        serviceId,
+        policy,
+    ]);
 }
 
 /**
@@ -121,7 +197,7 @@ export function startScan(serviceId: string, policy: Policy): Promise<void> {
  * @returns Promise<void>
  */
 export function stopScan(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['stopScan']);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["stopScan"]);
 }
 
 /**
@@ -130,8 +206,15 @@ export function stopScan(): Promise<void> {
  * @param {string} endpointId ID of the remote endpoint.
  * @returns Promise<void>
  */
-export function requestConnect(name: string, endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnect', name, endpointId]);
+export function requestConnect(
+    name: string,
+    endpointId: string
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSDiscovery", [
+        "requestConnect",
+        name,
+        endpointId,
+    ]);
 }
 
 /**
@@ -141,8 +224,17 @@ export function requestConnect(name: string, endpointId: string): Promise<void> 
  * @param {ChannelPolicy} channelPolicy Channel policy, which is used to select the channel for establishing a connection.
  * @returns Promise<void>
  */
- export function requestConnectEx(name: string, endpointId: string, channelPolicy: ChannelPolicy): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnectEx', name, endpointId, channelPolicy]);
+export function requestConnectEx(
+    name: string,
+    endpointId: string,
+    channelPolicy: ChannelPolicy
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSDiscovery", [
+        "requestConnectEx",
+        name,
+        endpointId,
+        channelPolicy,
+    ]);
 }
 
 /**
@@ -151,7 +243,7 @@ export function requestConnect(name: string, endpointId: string): Promise<void> 
  * @returns Promise<void>
  */
 export function acceptConnect(endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['acceptConnect', endpointId]);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["acceptConnect", endpointId]);
 }
 
 /**
@@ -160,7 +252,7 @@ export function acceptConnect(endpointId: string): Promise<void> {
  * @returns Promise<void>
  */
 export function rejectConnect(endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['rejectConnect', endpointId]);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["rejectConnect", endpointId]);
 }
 
 /**
@@ -169,7 +261,7 @@ export function rejectConnect(endpointId: string): Promise<void> {
  * @returns Promise<void>
  */
 export function disconnect(endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['disconnect', endpointId]);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["disconnect", endpointId]);
 }
 
 /**
@@ -177,7 +269,7 @@ export function disconnect(endpointId: string): Promise<void> {
  * @returns Promise<void>
  */
 export function disconnectAll(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSDiscovery', ['disconnectAll']);
+    return asyncExec(CLASS_NAME, "HMSDiscovery", ["disconnectAll"]);
 }
 
 //////////////////// TRANSFER ////////////////////
@@ -188,8 +280,15 @@ export function disconnectAll(): Promise<void> {
  * @param {string[]} endpointIds string array of remote endpoint IDs.
  * @returns Promise<void>
  */
-export function sendBytes(bytes: number[], endpointIds: string[]): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSTransfer', ['sendBytes', bytes, endpointIds]);
+export function sendBytes(
+    bytes: number[],
+    endpointIds: string[]
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSTransfer", [
+        "sendBytes",
+        bytes,
+        endpointIds,
+    ]);
 }
 
 /**
@@ -198,8 +297,15 @@ export function sendBytes(bytes: number[], endpointIds: string[]): Promise<void>
  * @param {string[]} endpointIds string array of remote endpoint IDs.
  * @returns Promise<void>
  */
-export function sendFile(fileUri: string, endpointIds: string[]): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSTransfer', ['sendFile', fileUri, endpointIds]);
+export function sendFile(
+    fileUri: string,
+    endpointIds: string[]
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSTransfer", [
+        "sendFile",
+        fileUri,
+        endpointIds,
+    ]);
 }
 
 /**
@@ -208,8 +314,15 @@ export function sendFile(fileUri: string, endpointIds: string[]): Promise<void> 
  * @param {string[]} endpointIds string array of remote endpoint IDs.
  * @returns Promise<void>
  */
-export function sendStream(streamUrl: string, endpointIds: string[]): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSTransfer', ['sendStream', streamUrl, endpointIds]);
+export function sendStream(
+    streamUrl: string,
+    endpointIds: string[]
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSTransfer", [
+        "sendStream",
+        streamUrl,
+        endpointIds,
+    ]);
 }
 
 /**
@@ -218,7 +331,7 @@ export function sendStream(streamUrl: string, endpointIds: string[]): Promise<vo
  * @returns Promise<void>
  */
 export function cancelDataTransfer(dataId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSTransfer', ['cancelDataTransfer', dataId]);
+    return asyncExec(CLASS_NAME, "HMSTransfer", ["cancelDataTransfer", dataId]);
 }
 
 //////////////////// MESSAGE ////////////////////
@@ -228,7 +341,7 @@ export function cancelDataTransfer(dataId: string): Promise<void> {
  * @returns Promise<string> Promise result of an execution that returns the current API credential.
  */
 export function getApiKey(): Promise<string> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['getApiKey']);
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", ["getApiKey"]);
 }
 
 /**
@@ -237,7 +350,7 @@ export function getApiKey(): Promise<string> {
  * @returns Promise<void>
  */
 export function setApiKey(apiKey: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['setApiKey', apiKey]);
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", ["setApiKey", apiKey]);
 }
 
 /**
@@ -254,7 +367,7 @@ export function put(message: Message): Promise<void>;
  */
 export function put(message: Message, putOption: PutOption): Promise<void>;
 export function put(message: Message, putOption?: PutOption): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['put', message, putOption]);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["put", message, putOption]);
 }
 
 /**
@@ -269,7 +382,7 @@ export function get(): Promise<void>;
  */
 export function get(getOption: GetOption): Promise<void>;
 export function get(getOption?: GetOption): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['get', getOption]);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["get", getOption]);
 }
 
 /**
@@ -284,7 +397,7 @@ export function getInBackground(): Promise<void>;
  */
 export function getInBackground(getOption: GetOption): Promise<void>;
 export function getInBackground(getOption?: GetOption): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['getInBackground', getOption]);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["getInBackground", getOption]);
 }
 
 /**
@@ -293,7 +406,7 @@ export function getInBackground(getOption?: GetOption): Promise<void> {
  * @returns Promise<void>
  */
 export function unput(message: Message): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['unput', message]);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["unput", message]);
 }
 
 /**
@@ -301,7 +414,7 @@ export function unput(message: Message): Promise<void> {
  * @returns Promise<void>
  */
 export function unget(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['unget']);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["unget"]);
 }
 
 /**
@@ -309,7 +422,7 @@ export function unget(): Promise<void> {
  * @returns Promise<void>
  */
 export function ungetInBackground(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSMessage', ['ungetInBackground']);
+    return asyncExec(CLASS_NAME, "HMSMessage", ["ungetInBackground"]);
 }
 
 //////////////////// WIFI ////////////////////
@@ -319,8 +432,13 @@ export function ungetInBackground(): Promise<void> {
  * @param {WifiSharePolicy} wifiSharePolicy Wi-Fi sharing policy. Enable the Wi-Fi sharing mode or configuration mode as required.
  * @returns Promise<void>
  */
-export function startWifiShare(wifiSharePolicy: WifiSharePolicy): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSWifi', ['startWifiShare', wifiSharePolicy]);
+export function startWifiShare(
+    wifiSharePolicy: WifiSharePolicy
+): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSWifi", [
+        "startWifiShare",
+        wifiSharePolicy,
+    ]);
 }
 
 /**
@@ -328,7 +446,7 @@ export function startWifiShare(wifiSharePolicy: WifiSharePolicy): Promise<void> 
  * @returns Promise<void>
  */
 export function stopWifiShare(): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSWifi', ['stopWifiShare']);
+    return asyncExec(CLASS_NAME, "HMSWifi", ["stopWifiShare"]);
 }
 
 /**
@@ -337,7 +455,7 @@ export function stopWifiShare(): Promise<void> {
  * @returns Promise<void>
  */
 export function shareWifiConfig(endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, 'HMSWifi', ['shareWifiConfig', endpointId]);
+    return asyncExec(CLASS_NAME, "HMSWifi", ["shareWifiConfig", endpointId]);
 }
 
 //////////////////// VERSION ////////////////////
@@ -347,5 +465,5 @@ export function shareWifiConfig(endpointId: string): Promise<void> {
  * @returns Promise<string> Version number of the Nearby Service SDK.
  */
 export function getVersion(): Promise<string> {
-    return asyncExec(CLASS_NAME, 'HMSNearbyBase', ['getVersion']);
+    return asyncExec(CLASS_NAME, "HMSNearbyBase", ["getVersion"]);
 }
