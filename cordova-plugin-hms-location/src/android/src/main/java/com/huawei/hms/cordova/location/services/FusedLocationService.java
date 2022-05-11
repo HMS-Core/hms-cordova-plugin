@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.services;
 
 import android.app.Activity;
@@ -62,11 +63,17 @@ import java.util.Objects;
 
 public class FusedLocationService extends CordovaBaseModule {
     private static final String TAG = FusedLocationService.class.getSimpleName();
+
     private FusedLocationProviderClient client;
+
     private LogConfig logConfig;
+
     private Map<Integer, PendingIntent> pendingIntentRequestMap;
+
     private Map<Integer, LocationCallbackHandler> locationCallbackRequestMap;
+
     private Promise activityResultCb;
+
     private boolean isMockModeEnabled = false;
 
     public FusedLocationService(CordovaInterface cordova) {
@@ -82,7 +89,8 @@ public class FusedLocationService extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void disableBackgroundLocation(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void disableBackgroundLocation(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         client.disableBackgroundLocation().addOnSuccessListener(aVoid -> {
             cb.success();
         }).addOnFailureListener(e -> {
@@ -95,7 +103,8 @@ public class FusedLocationService extends CordovaBaseModule {
     public void enableBackgroundLocation(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         boolean hasLocationPermission = corPack.hasPermission(Constants.Permission.FOREGROUND_SERVICE);
         if (!hasLocationPermission) {
-            cb.error(Exceptions.getError(Exceptions.NO_PERMISSION_ERROR, "App does not have FOREGROUND_SERVICE permission."));
+            cb.error(Exceptions.getError(Exceptions.NO_PERMISSION_ERROR,
+                "App does not have FOREGROUND_SERVICE permission."));
             return;
         }
         JSONObject json = new JSONObject(args.getString(1));
@@ -122,8 +131,10 @@ public class FusedLocationService extends CordovaBaseModule {
         LocationRequest locationRequest = JSONToObject.convertJSONToLocationRequest(requestParams);
         LocationCallbackHandler locationCallbackHandler = new LocationCallbackHandler(corPack.getCordova());
         locationCallbackRequestMap.put(requestCode, locationCallbackHandler);
-        Task<Void> task = client.requestLocationUpdatesEx(locationRequest, locationCallbackHandler, Looper.getMainLooper());
-        task.addOnSuccessListener(aVoid -> cb.success(true)).addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+        Task<Void> task = client.requestLocationUpdatesEx(locationRequest, locationCallbackHandler,
+            Looper.getMainLooper());
+        task.addOnSuccessListener(aVoid -> cb.success(true))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     @CordovaMethod
@@ -138,18 +149,20 @@ public class FusedLocationService extends CordovaBaseModule {
         LocationRequest locationRequest = JSONToObject.convertJSONToLocationRequest(requestParams);
         if (args.length() > 2) {
             String function = args.getString(2);
-            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.LOCATION_FUNCTION, function);
-            PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_LOCATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
+                Constants.FunctionType.LOCATION_FUNCTION, function);
+            PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+                LocationBroadcastReceiver.ACTION_PROCESS_LOCATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
             pendingIntentRequestMap.put(requestCode, pendingIntent);
             client.requestLocationUpdates(locationRequest, pendingIntent)
-                    .addOnSuccessListener(aVoid -> cb.success(true))
-                    .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+                .addOnSuccessListener(aVoid -> cb.success(true))
+                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
         } else {
             LocationCallbackHandler locationCallbackHandler = new LocationCallbackHandler(corPack.getCordova());
             locationCallbackRequestMap.put(requestCode, locationCallbackHandler);
             client.requestLocationUpdates(locationRequest, locationCallbackHandler, Looper.getMainLooper())
-                    .addOnSuccessListener(aVoid -> cb.success(true))
-                    .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+                .addOnSuccessListener(aVoid -> cb.success(true))
+                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
         }
     }
 
@@ -157,10 +170,12 @@ public class FusedLocationService extends CordovaBaseModule {
     @HMSLog
     public void checkLocationSettings(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         SettingsClient settingsClient = LocationServices.getSettingsClient(corPack.getCordova().getContext());
-        LocationSettingsRequest locationSettingsRequest = JSONToObject.convertJSONToLocationSettingsRequest(args.getJSONObject(0));
+        LocationSettingsRequest locationSettingsRequest = JSONToObject.convertJSONToLocationSettingsRequest(
+            args.getJSONObject(0));
         Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(locationSettingsRequest);
         task.addOnSuccessListener(locationSettingsResponse -> {
-            JSONObject result = ObjectToJSON.locationSettingsStatesToJSON(locationSettingsResponse.getLocationSettingsStates());
+            JSONObject result = ObjectToJSON.locationSettingsStatesToJSON(
+                locationSettingsResponse.getLocationSettingsStates());
             cb.success(result);
         }).addOnFailureListener(exception -> {
             if (exception instanceof ResolvableApiException) {
@@ -169,7 +184,8 @@ public class FusedLocationService extends CordovaBaseModule {
                         try {
                             ResolvableApiException resolvable = (ResolvableApiException) exception;
                             activityResultCb = cb;
-                            resolvable.startResolutionForResult(corPack.getCordova().getActivity(), Constants.RequestType.CHECK_SETTINGS_REQUEST_CODE);
+                            resolvable.startResolutionForResult(corPack.getCordova().getActivity(),
+                                Constants.RequestType.CHECK_SETTINGS_REQUEST_CODE);
                         } catch (IntentSender.SendIntentException | ClassCastException e) {
                             Log.d(TAG, e.getLocalizedMessage());
                             cb.error(exception.getLocalizedMessage());
@@ -205,29 +221,34 @@ public class FusedLocationService extends CordovaBaseModule {
     @CordovaMethod
     @HMSLog
     public void flushLocations(final CorPack corPack, JSONArray args, final Promise cb) {
-        client.flushLocations().addOnSuccessListener(aVoid -> cb.success()).addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+        client.flushLocations()
+            .addOnSuccessListener(aVoid -> cb.success())
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     @CordovaMethod
     @HMSLog
     public void getLastLocation(final CorPack corPack, JSONArray args, final Promise cb) {
         client.getLastLocation().addOnSuccessListener(location -> {
-            if (location == null)
+            if (location == null) {
                 cb.error("Location is null.");
-            else
+            } else {
                 cb.success(ObjectToJSON.convertLocationToJSON(location));
+            }
         }).addOnFailureListener(e -> cb.error(e.getMessage()));
     }
 
     @CordovaMethod
     @HMSLog
-    public void getLastLocationWithAddress(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void getLastLocationWithAddress(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         LocationRequest locationRequest = JSONToObject.convertJSONToLocationRequest(args.getJSONObject(0));
         client.getLastLocationWithAddress(locationRequest).addOnSuccessListener(hwLocation -> {
-            if (hwLocation == null)
+            if (hwLocation == null) {
                 cb.error("HWLocation is null.");
-            else
+            } else {
                 cb.success(ObjectToJSON.convertHWLocationToJSON(hwLocation));
+            }
         }).addOnFailureListener(e -> cb.error(e.getMessage()));
     }
 
@@ -242,12 +263,14 @@ public class FusedLocationService extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void getNavigationContextState(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void getNavigationContextState(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         int requestType = args.getInt(0);
-        LocationEnhanceService locationEnhanceService = LocationServices.getLocationEnhanceService(corPack.getCordova().getContext());
+        LocationEnhanceService locationEnhanceService = LocationServices.getLocationEnhanceService(
+            corPack.getCordova().getContext());
         locationEnhanceService.getNavigationState(new NavigationRequest(requestType))
-                .addOnSuccessListener(navigationResult -> cb.success(ObjectToJSON.navigationResultToJSON(navigationResult)))
-                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(navigationResult -> cb.success(ObjectToJSON.navigationResultToJSON(navigationResult)))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     public void removeLocationUpdatesCallback(int requestCode, final Promise cb) throws JSONException {
@@ -257,15 +280,17 @@ public class FusedLocationService extends CordovaBaseModule {
         }
         LocationCallbackHandler locationCallbackHandler = locationCallbackRequestMap.get(requestCode);
         client.removeLocationUpdates(locationCallbackHandler)
-                .addOnSuccessListener(aVoid -> cb.success(true))
-                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(aVoid -> cb.success(true))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
         locationCallbackRequestMap.remove(requestCode);
     }
 
-    public void removeLocationUpdatesPendingIntent(Context context, int requestCode, final Promise cb) throws JSONException {
+    public void removeLocationUpdatesPendingIntent(Context context, int requestCode, final Promise cb)
+        throws JSONException {
         PendingIntent pendingIntent;
         if (!pendingIntentRequestMap.containsKey(requestCode)) {
-            pendingIntent = LocationUtils.getPendingIntent(context, LocationBroadcastReceiver.ACTION_PROCESS_LOCATION, requestCode, PendingIntent.FLAG_NO_CREATE);
+            pendingIntent = LocationUtils.getPendingIntent(context, LocationBroadcastReceiver.ACTION_PROCESS_LOCATION,
+                requestCode, PendingIntent.FLAG_NO_CREATE);
             if (pendingIntent != null) {
                 pendingIntent.cancel();
                 cb.success(true);
@@ -286,12 +311,13 @@ public class FusedLocationService extends CordovaBaseModule {
     public void removeLocationUpdates(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         int requestCode = args.getInt(0);
         String type = args.getString(1);
-        if (type.equals(Constants.RequestType.LOCATION_CALLBACK))
+        if (type.equals(Constants.RequestType.LOCATION_CALLBACK)) {
             removeLocationUpdatesCallback(requestCode, cb);
-        else if (type.equals(Constants.RequestType.PENDING_INTENT))
+        } else if (type.equals(Constants.RequestType.PENDING_INTENT)) {
             removeLocationUpdatesPendingIntent(corPack.getCordova().getContext(), requestCode, cb);
-        else
+        } else {
             cb.error(Exceptions.getError(Exceptions.INVALID_REQUEST_TYPE));
+        }
     }
 
     @CordovaMethod
@@ -305,7 +331,9 @@ public class FusedLocationService extends CordovaBaseModule {
         Location location = new Location("HMS-MOCK");
         location.setLongitude(json.optDouble("longitude"));
         location.setLatitude(json.optDouble("latitude"));
-        client.setMockLocation(location).addOnSuccessListener(aVoid -> cb.success()).addOnFailureListener(e -> cb.error(e.getMessage()));
+        client.setMockLocation(location)
+            .addOnSuccessListener(aVoid -> cb.success())
+            .addOnFailureListener(e -> cb.error(e.getMessage()));
     }
 
     @CordovaMethod
@@ -322,7 +350,7 @@ public class FusedLocationService extends CordovaBaseModule {
     @HMSLog
     public void setLogConfig(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         boolean hasLocationPermission = corPack.hasPermission(Constants.Permission.READ_EXTERNAL_STORAGE)
-                && corPack.hasPermission(Constants.Permission.WRITE_EXTERNAL_STORAGE);
+            && corPack.hasPermission(Constants.Permission.WRITE_EXTERNAL_STORAGE);
         if (!hasLocationPermission) {
             cb.error(Exceptions.getError(Exceptions.NO_PERMISSION_ERROR, "App does not have storage permission."));
             return;

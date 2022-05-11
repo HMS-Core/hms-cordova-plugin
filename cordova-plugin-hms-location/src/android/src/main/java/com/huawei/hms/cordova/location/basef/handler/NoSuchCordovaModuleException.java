@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.basef.handler;
 
-public class NoSuchCordovaModuleException extends RuntimeException {
-}
+public class NoSuchCordovaModuleException extends RuntimeException { }

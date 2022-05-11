@@ -13,32 +13,36 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.basef.handler;
 
 import android.util.Log;
 
 public class CorLog {
-    private CorLog(){}
     private static boolean enable = false;
+
+    private CorLog() {
+    }
 
     public static void setEnable(boolean enable) {
         CorLog.enable = enable;
     }
 
     public static void log(int priority, String tag, String message) {
-        if(enable)
+        if (enable) {
             Log.println(priority, tag, message);
+        }
     }
 
     public static void info(String tag, String message) {
         log(Log.INFO, tag, message);
     }
 
-    public static void warn(String tag, String message){
+    public static void warn(String tag, String message) {
         log(Log.WARN, tag, message);
     }
 
-    public static void debug(String tag, String message){
+    public static void debug(String tag, String message) {
         log(Log.DEBUG, tag, message);
     }
 
@@ -50,7 +54,7 @@ public class CorLog {
         log(Log.VERBOSE, tag, message);
     }
 
-    public static void asst(String tag, String message){
+    public static void asst(String tag, String message) {
         log(Log.ASSERT, tag, message);
     }
 

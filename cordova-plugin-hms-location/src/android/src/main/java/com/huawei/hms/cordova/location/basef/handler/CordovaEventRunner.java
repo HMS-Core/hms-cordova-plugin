@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.basef.handler;
 
 import android.app.Activity;
@@ -22,10 +23,15 @@ import org.apache.cordova.CordovaWebView;
 
 public class CordovaEventRunner {
     private static final String TAG = CordovaEventRunner.class.getName();
-    private static final String TO_STR_NOT_VALID_ERR = "Sent event parameter value is not valid! Please add toString() method to the object you " +
-            "are passing or do not pass this object as an event parameter.";
+
+    private static final String TO_STR_NOT_VALID_ERR =
+        "Sent event parameter value is not valid! Please add toString() method to the object you "
+            + "are passing or do not pass this object as an event parameter.";
+
     private final HMSLogger hmsLogger;
+
     private final CordovaWebView webView;
+
     private final Activity activity;
 
     CordovaEventRunner(final CordovaWebView cordovaWebView, final Activity activity, final HMSLogger hmsLogger) {
@@ -49,7 +55,9 @@ public class CordovaEventRunner {
         StringBuilder jsFunctionBuilder = new StringBuilder();
         jsFunctionBuilder.append("javascript:");
         jsFunctionBuilder.append("window.runHMSEvent('").append(event).append("'");
-        if (objects.length > 0) jsFunctionBuilder.append(buildJSEventParameters(objects));
+        if (objects.length > 0) {
+            jsFunctionBuilder.append(buildJSEventParameters(objects));
+        }
         jsFunctionBuilder.append(");");
         activity.runOnUiThread(() -> webView.loadUrl(jsFunctionBuilder.toString()));
     }
@@ -57,8 +65,9 @@ public class CordovaEventRunner {
     private String buildJSEventParameters(Object... objects) {
         StringBuilder eventParametersBuilder = new StringBuilder();
         for (Object obj : objects) {
-            if (!isToStringValueValid(obj))
+            if (!isToStringValueValid(obj)) {
                 Log.w(TAG, TO_STR_NOT_VALID_ERR);
+            }
             eventParametersBuilder.append(",").append(obj.toString());
         }
         return eventParametersBuilder.toString();

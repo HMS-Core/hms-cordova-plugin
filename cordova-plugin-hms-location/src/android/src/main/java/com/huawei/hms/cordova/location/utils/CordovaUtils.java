@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.utils;
 
 import android.util.Log;
@@ -27,7 +28,9 @@ import java.util.Map;
 
 public class CordovaUtils {
     private static final String TAG = CordovaUtils.class.getSimpleName();
+
     private static volatile CordovaUtils cordovaUtils = null;
+
     private CordovaWebView webView;
 
     private CordovaUtils(CordovaWebView webView) {
@@ -37,19 +40,27 @@ public class CordovaUtils {
     public static synchronized void createInstance(CordovaWebView webView) {
         if (cordovaUtils == null) {
             synchronized (CordovaUtils.class) {
-                if (cordovaUtils == null) cordovaUtils = new CordovaUtils(webView);
+                if (cordovaUtils == null) {
+                    cordovaUtils = new CordovaUtils(webView);
+                }
             }
         }
     }
 
     public static void sendEvent(final String eventName, JSONArray args) {
-        if (cordovaUtils == null) return;
-        cordovaUtils.webView.loadUrl(String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s',%s);", eventName, args));
+        if (cordovaUtils == null) {
+            return;
+        }
+        cordovaUtils.webView.loadUrl(
+            String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s',%s);", eventName, args));
     }
 
     public static void sendEvent(final String eventName, JSONObject json) {
-        if (cordovaUtils == null) return;
-        cordovaUtils.webView.loadUrl(String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s',%s);", eventName, json));
+        if (cordovaUtils == null) {
+            return;
+        }
+        cordovaUtils.webView.loadUrl(
+            String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s',%s);", eventName, json));
     }
 
     public static JSONObject fromMapToJSONObject(Map<String, Object> map) {

@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.helpers;
 
 import android.util.Log;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 
 public class LocationCallbackHandler extends LocationCallback {
     private static final String TAG = LocationCallbackHandler.class.getSimpleName();
+
     private CordovaInterface cordova;
 
     public LocationCallbackHandler(CordovaInterface cordova) {
@@ -37,7 +39,9 @@ public class LocationCallbackHandler extends LocationCallback {
     @Override
     public void onLocationResult(LocationResult locationResult) {
         Log.d(TAG, "LocationCallbackHandler:onLocationResult: ");
-        if (locationResult == null) return;
+        if (locationResult == null) {
+            return;
+        }
         handleResult(locationResult);
     }
 
@@ -52,9 +56,12 @@ public class LocationCallbackHandler extends LocationCallback {
     }
 
     private void handleResult(LocationResult locationResult) {
-        Log.d("LocationCallbackHandler", "LocationCallbackHandler: handleResult() called with: locationResult = [" + locationResult + "]");
+        Log.d("LocationCallbackHandler",
+            "LocationCallbackHandler: handleResult() called with: locationResult = [" + locationResult + "]");
         JSONObject json = ObjectToJSON.convertLocationResultToJSON(locationResult);
-        if (cordova == null) Log.d(TAG, "handleResult: null");
+        if (cordova == null) {
+            Log.d(TAG, "handleResult: null");
+        }
         CordovaUtils.sendEvent("onLocationResult", json);
     }
 }

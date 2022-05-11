@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.services;
 
 import android.app.PendingIntent;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 public class GeofenceService extends CordovaBaseModule {
     private com.huawei.hms.location.GeofenceService geofenceService;
+
     private Map<Integer, PendingIntent> requests;
 
     public GeofenceService(CordovaInterface cordova) {
@@ -64,13 +66,15 @@ public class GeofenceService extends CordovaBaseModule {
         GeofenceRequest geofenceRequest = getGeofenceRequest(requestParams);
         if (args.length() > 2) {
             String function = args.getString(2);
-            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.GEOFENCE_FUNCTION, function);
+            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
+                Constants.FunctionType.GEOFENCE_FUNCTION, function);
         }
-        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+            LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
         requests.put(requestCode, pendingIntent);
         geofenceService.createGeofenceList(geofenceRequest, pendingIntent)
-                .addOnSuccessListener(aVoid -> cb.success(true))
-                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(aVoid -> cb.success(true))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     @CordovaMethod
@@ -79,7 +83,8 @@ public class GeofenceService extends CordovaBaseModule {
         int requestCode = args.getInt(0);
         PendingIntent pendingIntent;
         if (!requests.containsKey(requestCode)) {
-            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_NO_CREATE);
+            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+                LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_NO_CREATE);
             if (pendingIntent != null) {
                 pendingIntent.cancel();
                 cb.success(true);
@@ -89,8 +94,8 @@ public class GeofenceService extends CordovaBaseModule {
         } else {
             pendingIntent = requests.get(requestCode);
             geofenceService.deleteGeofenceList(pendingIntent)
-                    .addOnSuccessListener(aVoid -> cb.success(true))
-                    .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+                .addOnSuccessListener(aVoid -> cb.success(true))
+                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
             requests.remove(requestCode);
         }
         LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.GEOFENCE_FUNCTION);

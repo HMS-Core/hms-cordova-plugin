@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.helpers;
 
 import android.app.Notification;
@@ -37,7 +38,8 @@ public class BackgroundManager {
 
     @JavascriptInterface
     public void notify(int notificationId, String param) throws JSONException {
-        Log.d("BackgroundManager", "notify() called with: notificationId = [" + notificationId + "], param = [" + param + "]");
+        Log.d("BackgroundManager",
+            "notify() called with: notificationId = [" + notificationId + "], param = [" + param + "]");
         JSONObject json = new JSONObject(param);
         Notification notification = LocationUtils.buildNotification(context, json);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);

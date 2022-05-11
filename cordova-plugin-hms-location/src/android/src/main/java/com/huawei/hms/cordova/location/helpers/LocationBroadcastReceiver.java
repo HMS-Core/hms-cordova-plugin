@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.helpers;
 
 import android.content.BroadcastReceiver;
@@ -38,14 +39,21 @@ import java.util.List;
 
 public class LocationBroadcastReceiver extends BroadcastReceiver {
     public static final String ACTION_PROCESS_GEOFENCE = "com.huawei.hms.location.ACTION_PROCESS_GEOFENCE";
-    public static final String ACTION_PROCESS_IDENTIFICATION = "com.huawei.hms.location.ACTION_PROCESS_ACTIVITY_IDENTIFICATION";
+
+    public static final String ACTION_PROCESS_IDENTIFICATION
+        = "com.huawei.hms.location.ACTION_PROCESS_ACTIVITY_IDENTIFICATION";
+
     public static final String ACTION_PROCESS_CONVERSION = "com.huawei.hms.location.ACTION_PROCESS_ACTIVITY_CONVERSION";
+
     public static final String ACTION_PROCESS_LOCATION = "com.huawei.hms.location.ACTION_PROCESS_LOCATION";
+
     private static final String TAG = LocationBroadcastReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent == null || intent.getAction() == null) return;
+        if (intent == null || intent.getAction() == null) {
+            return;
+        }
         Log.d(TAG, "onReceive is called. Action: " + intent.getAction());
         switch (intent.getAction()) {
             case ACTION_PROCESS_GEOFENCE:
@@ -89,7 +97,8 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void runBackgroundTask(String functionName, Context context, JSONObject result) {
-        Log.d(TAG, "runBackgroundTask() called with: functionName = [" + functionName + "], context = [" + context + "], result = [" + result + "]");
+        Log.d(TAG, "runBackgroundTask() called with: functionName = [" + functionName + "], context = [" + context
+            + "], result = [" + result + "]");
         BackgroundTaskHandler handler = new BackgroundTaskHandler(context);
         handler.handle(functionName, result);
     }
@@ -112,8 +121,10 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
             return;
         }
         int triggerType = geofenceData.getConversion(); // Get the conversion type.
-        if (triggerType == Geofence.ENTER_GEOFENCE_CONVERSION || triggerType == Geofence.EXIT_GEOFENCE_CONVERSION || triggerType == Geofence.DWELL_GEOFENCE_CONVERSION) {
-            List<Geofence> triggeringGeofences = geofenceData.getConvertingGeofenceList(); // Get the geofences that were triggered. A single event can trigger
+        if (triggerType == Geofence.ENTER_GEOFENCE_CONVERSION || triggerType == Geofence.EXIT_GEOFENCE_CONVERSION
+            || triggerType == Geofence.DWELL_GEOFENCE_CONVERSION) {
+            List<Geofence> triggeringGeofences
+                = geofenceData.getConvertingGeofenceList(); // Get the geofences that were triggered. A single event can trigger
             JSONArray geofences = ObjectToJSON.convertGeofenceListToJSONArray(triggeringGeofences);
             if (!LocationUtils.isApplicationInForeground(context)) {
                 JSONObject json = ObjectToJSON.convertLocationToJSON(geofenceData.getConvertingLocation());

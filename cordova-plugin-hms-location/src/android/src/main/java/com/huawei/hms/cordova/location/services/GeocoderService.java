@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.services;
 
 import com.huawei.hms.cordova.location.basef.CordovaBaseModule;
@@ -41,8 +42,8 @@ public class GeocoderService extends CordovaBaseModule {
     public void getFromLocation(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Locale locale = new Locale(args.getString(3), args.getString(4));
         geocoderService = LocationServices.getGeocoderService(corPack.getCordova().getActivity(), locale);
-        GetFromLocationRequest getFromLocationRequest = new GetFromLocationRequest(
-                args.getDouble(0), args.getDouble(1), args.getInt(2));
+        GetFromLocationRequest getFromLocationRequest = new GetFromLocationRequest(args.getDouble(0), args.getDouble(1),
+            args.getInt(2));
         geocoderService.getFromLocation(getFromLocationRequest).addOnSuccessListener((List<HWLocation> hwLocations) -> {
             cb.success(ObjectToJSON.convertHWLocationListToJSONArray(hwLocations));
         }).addOnFailureListener(e -> cb.error(e.getMessage()));
@@ -60,11 +61,13 @@ public class GeocoderService extends CordovaBaseModule {
         } else {
             JSONObject corner = args.getJSONObject(2);
             getFromLocationNameRequest = new GetFromLocationNameRequest(args.getString(0), args.getInt(1),
-                    corner.getDouble("lowerLeftLatitude"), corner.getDouble("lowerLeftLongitude"),
-                    corner.getDouble("upperRightLatitude"), corner.getDouble("upperRightLongitude"));
+                corner.getDouble("lowerLeftLatitude"), corner.getDouble("lowerLeftLongitude"),
+                corner.getDouble("upperRightLatitude"), corner.getDouble("upperRightLongitude"));
         }
-        geocoderService.getFromLocationName(getFromLocationNameRequest).addOnSuccessListener((List<HWLocation> hwLocations) -> {
-            cb.success(ObjectToJSON.convertHWLocationListToJSONArray(hwLocations));
-        }).addOnFailureListener(e -> cb.error(e.getMessage()));
+        geocoderService.getFromLocationName(getFromLocationNameRequest)
+            .addOnSuccessListener((List<HWLocation> hwLocations) -> {
+                cb.success(ObjectToJSON.convertHWLocationListToJSONArray(hwLocations));
+            })
+            .addOnFailureListener(e -> cb.error(e.getMessage()));
     }
 }

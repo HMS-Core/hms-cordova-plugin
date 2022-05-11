@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.utils;
 
 import android.app.ActivityManager;
@@ -69,14 +70,17 @@ public class LocationUtils {
         return fillNotificationBuilder(context, notificationBuilder, json);
     }
 
-    private static Notification fillNotificationBuilder(Context context, NotificationCompat.Builder builder, JSONObject json) throws JSONException {
+    private static Notification fillNotificationBuilder(Context context, NotificationCompat.Builder builder,
+        JSONObject json) throws JSONException {
         if (json.has("contentTitle")) {
             builder = builder.setContentTitle(json.getString("contentTitle"));
         }
-        if (json.has("color"))
+        if (json.has("color")) {
             builder = builder.setColor(json.getInt("color"));
-        if (json.has("colorized"))
+        }
+        if (json.has("colorized")) {
             builder = builder.setColorized(json.getBoolean("colorized"));
+        }
         if (json.has("contentInfo")) {
             builder = builder.setContentInfo(json.getString("contentInfo"));
         }
@@ -84,7 +88,8 @@ public class LocationUtils {
             builder = builder.setContentText(json.getString("contentText"));
         }
         if (json.has("smallIcon")) {
-            int resourceId = context.getResources().getIdentifier(json.getString("smallIcon"), "drawable", context.getPackageName());
+            int resourceId = context.getResources()
+                .getIdentifier(json.getString("smallIcon"), "drawable", context.getPackageName());
             builder = builder.setSmallIcon(resourceId);
         }
         if (json.has("largeIcon")) {
@@ -94,11 +99,13 @@ public class LocationUtils {
         if (json.has("sound")) {
             String sourceName = json.getString("sound");
             int resourceId = context.getResources().getIdentifier(sourceName, "raw", context.getPackageName());
-            Uri soundUri = Uri.parse(String.format(Locale.ENGLISH, "android.resource://%s/%s", context.getPackageName(), resourceId));
+            Uri soundUri = Uri.parse(
+                String.format(Locale.ENGLISH, "android.resource://%s/%s", context.getPackageName(), resourceId));
             builder = builder.setSound(soundUri);
         }
-        if (json.has("onGoing"))
+        if (json.has("onGoing")) {
             builder = builder.setOngoing(json.getBoolean("onGoing"));
+        }
         if (json.has("subText")) {
             builder = builder.setSubText(json.getString("subText"));
         }
@@ -106,11 +113,13 @@ public class LocationUtils {
             long[] pattern = convertJSONToVibrate(json.getJSONArray("vibrate"));
             builder = builder.setVibrate(pattern);
         }
-        if (json.has("visibility"))
+        if (json.has("visibility")) {
             builder = builder.setVisibility(json.getInt("visibility"));
+        }
         return builder.setOngoing(true)
-                .setPriority(json.getInt("priority"))
-                .setCategory(json.getString("category")).build();
+            .setPriority(json.getInt("priority"))
+            .setCategory(json.getString("category"))
+            .build();
     }
 
     private static long[] convertJSONToVibrate(JSONArray patternJA) throws JSONException {
@@ -135,11 +144,15 @@ public class LocationUtils {
     public static boolean isApplicationInForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
-        if (processInfos == null) return false;
+        if (processInfos == null) {
+            return false;
+        }
         for (ActivityManager.RunningAppProcessInfo processInfo : processInfos) {
-            if (processInfo.pkgList.length < 1) return false;
+            if (processInfo.pkgList.length < 1) {
+                return false;
+            }
             if (processInfo.processName.equals(context.getPackageName())
-                    && processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                && processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
                 return true;
             }
         }
@@ -148,21 +161,24 @@ public class LocationUtils {
 
     public static void saveBackgroundTask(Context context, String key, String function) {
         String myAppId = context.getApplicationInfo().uid + "";
-        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(
+            context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE).edit();
         sharedPreferences.putString(key, function).apply();
     }
 
     public static void deleteBackgroundTask(Context context, String key) {
         String myAppId = context.getApplicationInfo().uid + "";
-        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(
+            context.getPackageName() + "." + myAppId, Context.MODE_PRIVATE).edit();
         sharedPreferences.remove(key).apply();
     }
 
     public static boolean hasLocationPermission(final CorPack corPack) {
         boolean hasLocationPermission = corPack.hasPermission(Constants.Permission.ACCESS_COARSE_LOCATION)
-                && corPack.hasPermission(Constants.Permission.ACCESS_FINE_LOCATION);
+            && corPack.hasPermission(Constants.Permission.ACCESS_FINE_LOCATION);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            hasLocationPermission = hasLocationPermission && corPack.hasPermission(Constants.Permission.ACCESS_BACKGROUND_LOCATION);
+            hasLocationPermission = hasLocationPermission && corPack.hasPermission(
+                Constants.Permission.ACCESS_BACKGROUND_LOCATION);
         }
         return hasLocationPermission;
     }

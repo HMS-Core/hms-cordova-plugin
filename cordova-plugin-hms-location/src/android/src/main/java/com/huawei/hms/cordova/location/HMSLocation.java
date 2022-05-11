@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location;
 
 import android.content.Intent;
@@ -37,7 +38,9 @@ import java.util.Arrays;
 public class HMSLocation extends CordovaPlugin {
 
     private static final String SERVICE = "HMSLocation";
-    private static final String VERSION = "6.3.0.300";
+
+    private static final String VERSION = "6.4.0.300";
+
     private CordovaController cordovaController;
 
     @Override
@@ -45,12 +48,8 @@ public class HMSLocation extends CordovaPlugin {
         super.initialize(cordova, webView);
         CordovaUtils.createInstance(webView);
         cordovaController = new CordovaController(this, SERVICE, VERSION,
-                Arrays.asList(
-                        new FusedLocationService(cordova),
-                        new GeofenceService(cordova),
-                        new ActivityIdentificationService(cordova),
-                        new GeocoderService(),
-                        new PluginService()));
+            Arrays.asList(new FusedLocationService(cordova), new GeofenceService(cordova),
+                new ActivityIdentificationService(cordova), new GeocoderService(), new PluginService()));
         cordova.setActivityResultCallback(this);
     }
 
@@ -104,7 +103,9 @@ public class HMSLocation extends CordovaPlugin {
 
     @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
-        Log.d("HMSLocation", "onRequestPermissionResult() called with: requestCode = [" + requestCode + "], permissions = [" + Arrays.toString(permissions) + "], grantResults = [" + Arrays.toString(grantResults) + "]");
+        Log.d("HMSLocation",
+            "onRequestPermissionResult() called with: requestCode = [" + requestCode + "], permissions = ["
+                + Arrays.toString(permissions) + "], grantResults = [" + Arrays.toString(grantResults) + "]");
         cordovaController.onRequestPermissionResult(requestCode, permissions, grantResults);
     }
 }

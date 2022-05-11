@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.location.services;
 
 import android.app.PendingIntent;
@@ -40,7 +41,9 @@ import java.util.Map;
 
 public class ActivityIdentificationService extends CordovaBaseModule {
     private static final String TAG = ActivityIdentificationService.class.getSimpleName();
+
     private com.huawei.hms.location.ActivityIdentificationService activityIdentificationService;
+
     private Map<Integer, PendingIntent> requests;
 
     public ActivityIdentificationService(CordovaInterface cordova) {
@@ -55,27 +58,32 @@ public class ActivityIdentificationService extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void createActivityConversionUpdates(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void createActivityConversionUpdates(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         int requestCode = args.getInt(0);
         ActivityConversionRequest request = JSONToObject.convertJSONToActivityConversionRequest(args.getJSONArray(1));
         if (args.length() > 2) {
             String function = args.getString(2);
-            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.CONVERSION_FUNCTION, function);
+            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
+                Constants.FunctionType.CONVERSION_FUNCTION, function);
         }
-        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_CONVERSION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+            LocationBroadcastReceiver.ACTION_PROCESS_CONVERSION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
         requests.put(requestCode, pendingIntent);
         activityIdentificationService.createActivityConversionUpdates(request, pendingIntent)
-                .addOnSuccessListener(aVoid -> cb.success(true))
-                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(aVoid -> cb.success(true))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     @CordovaMethod
     @HMSLog
-    public void deleteActivityConversionUpdates(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void deleteActivityConversionUpdates(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         int requestCode = args.getInt(0);
         PendingIntent pendingIntent;
         if (!requests.containsKey(requestCode)) {
-            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_CONVERSION, requestCode, PendingIntent.FLAG_NO_CREATE);
+            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+                LocationBroadcastReceiver.ACTION_PROCESS_CONVERSION, requestCode, PendingIntent.FLAG_NO_CREATE);
             if (pendingIntent != null) {
                 pendingIntent.cancel();
                 cb.success(true);
@@ -84,36 +92,42 @@ public class ActivityIdentificationService extends CordovaBaseModule {
             }
         } else {
             activityIdentificationService.deleteActivityConversionUpdates(requests.get(requestCode))
-                    .addOnSuccessListener(aVoid -> cb.success())
-                    .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+                .addOnSuccessListener(aVoid -> cb.success())
+                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
             requests.remove(requestCode);
         }
-        LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.CONVERSION_FUNCTION);
+        LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(),
+            Constants.FunctionType.CONVERSION_FUNCTION);
     }
 
     @CordovaMethod
     @HMSLog
-    public void createActivityIdentificationUpdates(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void createActivityIdentificationUpdates(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         int requestCode = args.getInt(0);
         long detectionIntervalMillis = args.getLong(1);
         if (args.length() > 2) {
             String function = args.getString(2);
-            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.IDENTIFICATION_FUNCTION, function);
+            LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
+                Constants.FunctionType.IDENTIFICATION_FUNCTION, function);
         }
-        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_IDENTIFICATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+            LocationBroadcastReceiver.ACTION_PROCESS_IDENTIFICATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
         requests.put(requestCode, pendingIntent);
         activityIdentificationService.createActivityIdentificationUpdates(detectionIntervalMillis, pendingIntent)
-                .addOnSuccessListener(aVoid -> cb.success(true))
-                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(aVoid -> cb.success(true))
+            .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
     }
 
     @CordovaMethod
     @HMSLog
-    public void deleteActivityIdentificationUpdates(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
+    public void deleteActivityIdentificationUpdates(final CorPack corPack, JSONArray args, final Promise cb)
+        throws JSONException {
         int requestCode = args.getInt(0);
         PendingIntent pendingIntent;
         if (!requests.containsKey(requestCode)) {
-            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(), LocationBroadcastReceiver.ACTION_PROCESS_IDENTIFICATION, requestCode, PendingIntent.FLAG_NO_CREATE);
+            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+                LocationBroadcastReceiver.ACTION_PROCESS_IDENTIFICATION, requestCode, PendingIntent.FLAG_NO_CREATE);
             if (pendingIntent != null) {
                 pendingIntent.cancel();
                 cb.success(true);
@@ -122,11 +136,12 @@ public class ActivityIdentificationService extends CordovaBaseModule {
             }
         } else {
             activityIdentificationService.deleteActivityIdentificationUpdates(requests.get(requestCode))
-                    .addOnSuccessListener(aVoid -> cb.success())
-                    .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
+                .addOnSuccessListener(aVoid -> cb.success())
+                .addOnFailureListener(e -> cb.error(e.getLocalizedMessage()));
             requests.remove(requestCode);
             Log.i(TAG, "deleteActivityIdentificationUpdates end");
         }
-        LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(), Constants.FunctionType.IDENTIFICATION_FUNCTION);
+        LocationUtils.deleteBackgroundTask(corPack.getCordova().getContext(),
+            Constants.FunctionType.IDENTIFICATION_FUNCTION);
     }
 }
