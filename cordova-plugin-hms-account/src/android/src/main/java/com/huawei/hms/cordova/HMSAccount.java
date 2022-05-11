@@ -36,7 +36,7 @@ import java.util.Arrays;
 public class HMSAccount extends CordovaPlugin {
     private static final String KIT = "Account";
 
-    private static final String VERSION = "6.4.0.300";
+    private static final String VERSION = "6.4.0.301";
 
     private CordovaController cordovaController;
 
