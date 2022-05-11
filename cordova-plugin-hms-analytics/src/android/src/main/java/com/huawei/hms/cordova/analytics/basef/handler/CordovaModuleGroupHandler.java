@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.analytics.basef.handler;
 
 import java.util.HashMap;
@@ -21,14 +22,16 @@ import java.util.Map;
 
 class CordovaModuleGroupHandler {
     private final Map<String, CordovaModuleHandler> lookupTable = new HashMap<>();
+
     private final List<CordovaModuleHandler> cordovaModuleHandlers;
-    public CordovaModuleGroupHandler(List<CordovaModuleHandler> cordovaModuleHandlerList){
+
+    public CordovaModuleGroupHandler(List<CordovaModuleHandler> cordovaModuleHandlerList) {
         this.cordovaModuleHandlers = cordovaModuleHandlerList;
         this.fillLookupTable();
     }
 
-    private void fillLookupTable(){
-        for(CordovaModuleHandler cordovaModuleHandler : cordovaModuleHandlers) {
+    private void fillLookupTable() {
+        for (CordovaModuleHandler cordovaModuleHandler : cordovaModuleHandlers) {
             String reference = cordovaModuleHandler.getInstance().getReference();
             lookupTable.put(reference, cordovaModuleHandler);
         }
@@ -39,14 +42,17 @@ class CordovaModuleGroupHandler {
     }
 
     CordovaModuleHandler getCordovaModuleHandler(String reference) throws NoSuchCordovaModuleException {
-        if(!hasCordovaModuleHandler(reference)) throw new NoSuchCordovaModuleException();
+        if (!hasCordovaModuleHandler(reference)) {
+            throw new NoSuchCordovaModuleException();
+        }
         return lookupTable.get(reference);
     }
 
     void clear() {
         lookupTable.clear();
-        for(CordovaModuleHandler moduleHandler: cordovaModuleHandlers)
+        for (CordovaModuleHandler moduleHandler : cordovaModuleHandlers) {
             moduleHandler.clear();
+        }
         cordovaModuleHandlers.clear();
     }
 }

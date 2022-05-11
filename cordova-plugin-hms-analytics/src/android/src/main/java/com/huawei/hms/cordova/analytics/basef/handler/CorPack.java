@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.analytics.basef.handler;
 
 import org.apache.cordova.CordovaInterface;
@@ -21,9 +22,13 @@ import org.apache.cordova.CordovaWebView;
 
 public class CorPack {
     private final HMSLogger hmsLogger;
+
     private final CordovaPlugin cordovaPlugin;
+
     private final CordovaWebView webView;
+
     private final CordovaInterface cordova;
+
     private final CordovaEventRunner eventRunner;
 
     CorPack(final HMSLogger hmsLogger, final CordovaPlugin cordovaPlugin, final CordovaEventRunner eventRunner) {

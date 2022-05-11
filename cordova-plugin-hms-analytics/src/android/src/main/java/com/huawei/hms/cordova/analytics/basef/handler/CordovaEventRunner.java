@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.analytics.basef.handler;
 
 import android.app.Activity;
@@ -22,12 +23,15 @@ import org.apache.cordova.CordovaWebView;
 
 public class CordovaEventRunner {
     private static final String TAG = CordovaEventRunner.class.getName();
+
     private static final String TO_STR_NOT_VALID_ERR =
         "Sent event parameter value is not valid! Please add toString() method to the object you "
             + "are passing or do not pass this object as an event parameter.";
 
     private final HMSLogger hmsLogger;
+
     private final CordovaWebView webView;
+
     private final Activity activity;
 
     CordovaEventRunner(final CordovaWebView cordovaWebView, final Activity activity, final HMSLogger hmsLogger) {

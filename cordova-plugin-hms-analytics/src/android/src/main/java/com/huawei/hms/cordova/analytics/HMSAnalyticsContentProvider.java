@@ -30,13 +30,15 @@ import java.util.Arrays;
 
 public class HMSAnalyticsContentProvider extends ContentProvider {
     private final String TAG = HMSAnalyticsContentProvider.class.getSimpleName();
-    private final String[] routePolicyList = new String[]{"CN", "DE", "SG", "RU"};
+
+    private final String[] routePolicyList = new String[] {"CN", "DE", "SG", "RU"};
 
     @Override
     public boolean onCreate() {
         try {
             Log.i(TAG, "HMSAnalyticsContentProvider -> onCreate");
-            ApplicationInfo ai = getContext().getPackageManager().getApplicationInfo(getContext().getPackageName(), PackageManager.GET_META_DATA);
+            ApplicationInfo ai = getContext().getPackageManager()
+                .getApplicationInfo(getContext().getPackageName(), PackageManager.GET_META_DATA);
             boolean isEnabled = ai.metaData.getBoolean("cordova_hms_is_analytics_enabled", true);
             if (!isEnabled) {
                 return true;

@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.analytics.basef.handler;
 
 import android.util.Log;
@@ -33,13 +34,18 @@ import java.util.List;
 public class CordovaController {
     private static final String TAG = CordovaController.class.getSimpleName();
 
-    private CordovaModuleGroupHandler groupHandler;
     private final HMSLogger hmsLogger;
+
     private final CordovaEventRunner eventRunner;
+
     private final CordovaPlugin cordovaPlugin;
+
     private final List<String> moduleReferences = new ArrayList<>();
 
-    public <T extends CordovaBaseModule> CordovaController(CordovaPlugin cordovaPlugin, String service, String version, List<T> cordovaModules) {
+    private CordovaModuleGroupHandler groupHandler;
+
+    public <T extends CordovaBaseModule> CordovaController(CordovaPlugin cordovaPlugin, String service, String version,
+        List<T> cordovaModules) {
         List<CordovaModuleHandler> moduleHandlerList = new ArrayList<>();
         for (T cordovaModule : cordovaModules) {
             CordovaModuleHandler moduleHandler = new CordovaModuleHandler(cordovaModule);
@@ -49,7 +55,8 @@ public class CordovaController {
         this.cordovaPlugin = cordovaPlugin;
         this.groupHandler = new CordovaModuleGroupHandler(moduleHandlerList);
         this.hmsLogger = HMSLogger.getInstance(cordovaPlugin.webView.getContext(), service, version);
-        this.eventRunner = new CordovaEventRunner(cordovaPlugin.webView, cordovaPlugin.cordova.getActivity(), hmsLogger);
+        this.eventRunner = new CordovaEventRunner(cordovaPlugin.webView, cordovaPlugin.cordova.getActivity(),
+            hmsLogger);
 
         prepareEvents();
         clearEventCache();
@@ -74,8 +81,9 @@ public class CordovaController {
     }
 
     private void clearEventCache() {
-        for (String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getEventCache().clear();
+        }
     }
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) {
@@ -102,7 +110,8 @@ public class CordovaController {
         }
     }
 
-    private Promise createPromiseFromCallbackContext(final CallbackContext callbackContext, String methodName, boolean isLoggerActive) {
+    private Promise createPromiseFromCallbackContext(final CallbackContext callbackContext, String methodName,
+        boolean isLoggerActive) {
         return new Promise(callbackContext, hmsLogger, methodName, isLoggerActive);
     }
 
@@ -115,33 +124,38 @@ public class CordovaController {
 
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-        for (String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getInstance().onDestroy();
+        }
         groupHandler.clear();
     }
 
     public void onReset() {
         Log.i(TAG, "onReset");
-        for (String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getInstance().onReset();
+        }
     }
 
     public void onResume(boolean multitasking) {
         Log.i(TAG, "onResume");
-        for (String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getInstance().onResume(multitasking);
+        }
     }
 
     public void onStart() {
         Log.i(TAG, "onStart");
-        for (String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getInstance().onStart();
+        }
     }
 
     public void onStop() {
         Log.i(TAG, "onStop");
-        for(String ref : moduleReferences)
+        for (String ref : moduleReferences) {
             groupHandler.getCordovaModuleHandler(ref).getInstance().onStop();
+        }
     }
 
 }

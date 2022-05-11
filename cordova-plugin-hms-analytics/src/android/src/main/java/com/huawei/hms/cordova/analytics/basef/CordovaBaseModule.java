@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.analytics.basef;
 
 public abstract class CordovaBaseModule {
@@ -21,15 +22,26 @@ public abstract class CordovaBaseModule {
     public CordovaBaseModule() {
         this.reference = this.getClass().getSimpleName();
     }
-    public void onDestroy(){}
-    public void onPause(boolean multitasking){}
-    public void onResume(boolean multitasking){}
-    public void onReset(){}
-    public void onStart(){}
-    public void onStop(){}
 
+    public void onDestroy() {
+    }
 
-    public String getReference(){
+    public void onPause(boolean multitasking) {
+    }
+
+    public void onResume(boolean multitasking) {
+    }
+
+    public void onReset() {
+    }
+
+    public void onStart() {
+    }
+
+    public void onStop() {
+    }
+
+    public String getReference() {
         return reference;
     }
 }

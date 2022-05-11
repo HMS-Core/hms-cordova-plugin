@@ -31,7 +31,7 @@ import java.util.Set;
  * HMSAnalyticsContract defines a blueprint of HMSAnalyticsModule methods
  * that will be exposed to Cordova Side.
  *
- * @since v.6.3.2.300
+ * @since v.6.3.2.301
  */
 public interface HMSAnalyticsContract {
 
@@ -40,43 +40,49 @@ public interface HMSAnalyticsContract {
      */
     interface Presenter {
 
-        //------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------
         // HiAnalyticsInstance
-        //------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------
 
         /**
          * Specifies whether to enable event logging.
          * <p>
          * If event logging is disabled, no data is recorded or analyzed.
          *
-         * @param enabled: Indicates whether to enable event logging. The default value is true.
+         * @param enabled: Indicates whether to enable event logging. The default value
+         * is true.
          */
         void setAnalyticsEnabled(final boolean enabled);
 
         /**
          * When this method is called, a new session will be generated
          * if the old value of id is not empty and is different from the new value.
-         * If you do not want to use id to identify a user (for example, when a user signs out),
+         * If you do not want to use id to identify a user (for example, when a user
+         * signs out),
          * you must set id to null when calling setUserId.
          * <p>
-         * The SDK does not save the user ID. You are advised to set a user ID each time after the app is launched.
+         * The SDK does not save the user ID. You are advised to set a user ID each time
+         * after the app is launched.
          *
          * @param id: User ID, a string containing a maximum of 256 characters.
-         *            The value cannot be empty.
-         *            {@param id} is used by Analytics Kit to associate user data.
+         * The value cannot be empty.
+         * {@param id} is used by Analytics Kit to associate user data.
          */
         void setUserId(final String id);
 
         /**
          * Sets user attributes.
-         * The values of user attributes remain unchanged throughout the app lifecycle and during
+         * The values of user attributes remain unchanged throughout the app lifecycle
+         * and during
          * each session.
          *
-         * @param name:  Name of a user attribute, a string containing a maximum of 256 characters.
-         *               The value cannot be empty. It can consist of digits, letters,
-         *               and underscores (_) and must start with a letter.
-         * @param value: User attribute value, a string containing a maximum of 256 characters.
-         *               The value cannot be empty.
+         * @param name: Name of a user attribute, a string containing a maximum of 256
+         * characters.
+         * The value cannot be empty. It can consist of digits, letters,
+         * and underscores (_) and must start with a letter.
+         * @param value: User attribute value, a string containing a maximum of 256
+         * characters.
+         * The value cannot be empty.
          */
         void setUserProfile(final String name, final String value);
 
@@ -86,26 +92,31 @@ public interface HMSAnalyticsContract {
          * defined by Analytics Kit to create HCM notification tasks.
          *
          * @param token: Push token, a string containing a maximum of 256 characters.
-         *               The value cannot be empty.
+         * The value cannot be empty.
          */
         void setPushToken(final String token);
 
         /**
          * Sets the minimum interval for starting a new session.
-         * A new session is generated when an app is switched back to the foreground after it
+         * A new session is generated when an app is switched back to the foreground
+         * after it
          * runs in the background for the specified minimum interval.
          * <p>
-         * By default, the minimum interval is 30,000 milliseconds (that is, 30 seconds).
+         * By default, the minimum interval is 30,000 milliseconds (that is, 30
+         * seconds).
          *
-         * @param milliseconds: Minimum interval for starting a session, in milliseconds.
+         * @param milliseconds: Minimum interval for starting a session, in
+         * milliseconds.
          */
         void setMinActivitySessions(final long milliseconds);
 
         /**
          * Sets the session timeout interval.
          * A new session is generated when an app is running in the foreground but
-         * the interval between two adjacent events exceeds the specified timeout interval.
-         * By default, the timeout interval is 1,800,000 milliseconds (that is, 30 minutes).
+         * the interval between two adjacent events exceeds the specified timeout
+         * interval.
+         * By default, the timeout interval is 1,800,000 milliseconds (that is, 30
+         * minutes).
          *
          * @param milliseconds: Session timeout interval, in milliseconds.
          */
@@ -115,16 +126,21 @@ public interface HMSAnalyticsContract {
          * Records an event.
          *
          * @param eventId: Event ID, a string containing a maximum of 256 characters.
-         *                 The value cannot be empty or the ID of an automatically collected event.
-         *                 It can consist of digits, letters, and underscores (_) but cannot contain
-         *                 spaces or start with a digit.
-         * @param params:  Information carried in an event. The number of built-in key-value pairs
-         *                 in the Bundle cannot exceed 2048 and the size cannot exceed 200 KB.
+         * The value cannot be empty or the ID of an automatically
+         * collected event.
+         * It can consist of digits, letters, and underscores (_) but
+         * cannot contain
+         * spaces or start with a digit.
+         * @param params: Information carried in an event. The number of built-in
+         * key-value pairs
+         * in the Bundle cannot exceed 2048 and the size cannot exceed
+         * 200 KB.
          */
         void onEvent(final String eventId, final Bundle params);
 
         /**
-         * Clears all collected data cached locally, including cached data that failed to be sent.
+         * Clears all collected data cached locally, including cached data that failed
+         * to be sent.
          */
         void clearCachedData();
 
@@ -132,9 +148,10 @@ public interface HMSAnalyticsContract {
          * Obtains the app instance ID from AppGallery Connect.
          *
          * @param resultListener: In the success scenario,
-         *                        {@link HMSAnalyticsContract.ResultListener<String>}
-         *                        instance is returned via listener. {@param resultListener} that
-         *                        obtains the app instance ID.
+         * {@link HMSAnalyticsContract.ResultListener<String>}
+         * instance is returned via listener.
+         * {@param resultListener} that
+         * obtains the app instance ID.
          */
         void getAAID(final HMSAnalyticsContract.ResultListener<String> resultListener);
 
@@ -142,40 +159,47 @@ public interface HMSAnalyticsContract {
          * Obtains the automatically collected or custom user attributes.
          *
          * @param resultListener: In the success scenario,
-         *                        {@link HMSAnalyticsContract.ResultListener<>}
-         *                        instance is returned via listener. {@param resultListener} that
-         *                        obtains automatically collected or custom user attributes.
-         * @param preDefined:     Indicates whether to obtain the automatically collected or
-         *                        custom user attributes.
+         * {@link HMSAnalyticsContract.ResultListener<>}
+         * instance is returned via listener.
+         * {@param resultListener} that
+         * obtains automatically collected or custom user
+         * attributes.
+         * @param preDefined: Indicates whether to obtain the automatically
+         * collected or
+         * custom user attributes.
          */
-        void getUserProfiles(final HMSAnalyticsContract.ResultListener<JSONObject> resultListener, final boolean preDefined);
+        void getUserProfiles(final HMSAnalyticsContract.ResultListener<JSONObject> resultListener,
+            final boolean preDefined);
 
         /**
          * Customizes a page entry event.
-         * This method applies only to non-activity pages because automatic collection is supported
+         * This method applies only to non-activity pages because automatic collection
+         * is supported
          * for activity pages. If it is called for an activity page,
          * statistics on page entry and exit events will be inaccurate.
          * <p>
          * After this method is called, the pageEnd() API must be called.
          *
-         * @param pageName:          Name of the current page,
-         *                           a string containing a maximum of 256 characters.
+         * @param pageName: Name of the current page,
+         * a string containing a maximum of 256 characters.
          * @param pageClassOverride: Class name of the current page,
-         *                           a string containing a maximum of 256 characters.
+         * a string containing a maximum of 256 characters.
          */
         void pageStart(final String pageName, final String pageClassOverride);
 
         /**
          * Customizes a page end event.
-         * This method applies only to non-activity pages because automatic collection is supported
+         * This method applies only to non-activity pages because automatic collection
+         * is supported
          * for activity pages. If it is called for an activity page,
          * statistics on page entry and exit events will be inaccurate.
          * <p>
          * Before this method is called, the pageStart() API must be called.
          *
          * @param pageName: Name of the current page,
-         *                  a string containing a maximum of 256 characters.
-         *                  It must be the same as the value of pageName passed in pageStart().
+         * a string containing a maximum of 256 characters.
+         * It must be the same as the value of pageName passed in
+         * pageStart().
          */
         void pageEnd(final String pageName);
 
@@ -183,27 +207,31 @@ public interface HMSAnalyticsContract {
          * Sets the automatic event reporting policy.
          *
          * @param policies: Policy for data reporting. Four policies are supported.
-         *                  One or more policies can be specified.
+         * One or more policies can be specified.
          */
         void setReportPolicies(final Set<ReportPolicy> policies);
 
         /**
          * Obtains the threshold for event reporting.
          *
-         * @param resultListener:   In the success scenario,
-         *                          {@link HMSAnalyticsContract.ResultListener<>}
-         *                          instance is returned via listener. {@param resultListener} that
-         *                          obtains the threshold for event reporting.
+         * @param resultListener: In the success scenario,
+         * {@link HMSAnalyticsContract.ResultListener<>}
+         * instance is returned via listener.
+         * {@param resultListener} that
+         * obtains the threshold for event reporting.
          * @param reportPolicyType: Event reporting policy name.
          */
-        void getReportPolicyThreshold(final HMSAnalyticsContract.ResultListener<Long> resultListener, ReportPolicy reportPolicyType);
+        void getReportPolicyThreshold(final HMSAnalyticsContract.ResultListener<Long> resultListener,
+            ReportPolicy reportPolicyType);
 
         /**
          * Specifies whether to enable restriction of HUAWEI Analytics.
          * <p>
-         * The default value is false, which indicates that HUAWEI Analytics is enabled by default.
+         * The default value is false, which indicates that HUAWEI Analytics is enabled
+         * by default.
          *
-         * @param isEnabled: Indicates whether to enable restriction of HUAWEI Analytics.
+         * @param isEnabled: Indicates whether to enable restriction of HUAWEI
+         * Analytics.
          */
         void setRestrictionEnabled(final boolean isEnabled);
 
@@ -211,10 +239,11 @@ public interface HMSAnalyticsContract {
          * Obtains the restriction status of HUAWEI Analytics.
          *
          * @param resultListener: In the success scenario,
-         *                        {@link HMSAnalyticsContract.ResultListener<Boolean>}
-         *                        instance is returned via listener.
-         *                        {@param resultListener} that obtains the restriction status of
-         *                        HUAWEI Analytics.
+         * {@link HMSAnalyticsContract.ResultListener<Boolean>}
+         * instance is returned via listener.
+         * {@param resultListener} that obtains the restriction
+         * status of
+         * HUAWEI Analytics.
          */
         void isRestrictionEnabled(final HMSAnalyticsContract.ResultListener<Boolean> resultListener);
 
@@ -228,18 +257,21 @@ public interface HMSAnalyticsContract {
 
         /**
          * Adds default event parameters.
-         * These parameters will be added to all events except the automatically collected events.
+         * These parameters will be added to all events except the automatically
+         * collected events.
          *
          * @param params: Default event parameters.
-         *                A maximum of 100 key-value pairs are supported.
-         *                The key in each key-value pair can contain a maximum of 256 characters and
-         *                can consist of only digits, letters, and underscores (_), but cannot start with a digit.
+         * A maximum of 100 key-value pairs are supported.
+         * The key in each key-value pair can contain a maximum of 256
+         * characters and
+         * can consist of only digits, letters, and underscores (_), but
+         * cannot start with a digit.
          */
         void addDefaultEventParams(final Bundle params);
 
-        //------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------
         // HiAnalyticsTools
-        //------------------------------------------------------------------------------------------
+        // ------------------------------------------------------------------------------------------
 
         /**
          * Enables the debug log function and sets the minimum log level.
@@ -260,7 +292,6 @@ public interface HMSAnalyticsContract {
          * Get analytics intance.
          *
          * @param context: A context object.
-         * 
          * @return HiAnalyticsInstance instance.
          */
         HiAnalyticsInstance getAnalyticsInstance(Context context);
@@ -270,7 +301,6 @@ public interface HMSAnalyticsContract {
          *
          * @param context: A context object.
          * @param routePolicy: Data processing location.
-         * 
          * @return HiAnalyticsInstance instance.
          */
         HiAnalyticsInstance getAnalyticsInstance(Context context, String routePolicy);

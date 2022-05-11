@@ -28,14 +28,16 @@ import java.util.Arrays;
 
 public class HMSAnalytics extends CordovaPlugin {
     private static final String KIT = "Analytics";
-    private static final String VERSION = "6.3.2.300";
+
+    private static final String VERSION = "6.4.1.302";
+
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         cordovaController = new CordovaController(this, KIT, VERSION,
-                Arrays.asList(new HMSAnalyticsModule(cordova.getContext())));
+            Arrays.asList(new HMSAnalyticsModule(cordova.getContext())));
     }
 
     @Override
