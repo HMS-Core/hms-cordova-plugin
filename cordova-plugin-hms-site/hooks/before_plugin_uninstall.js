@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,41 +24,41 @@ var COMMENT = "//This line is added by cordova-plugin-hms-site plugin";
 var NEW_LINE = "\n";
 
 module.exports = function (context) {
-    removeLinesFromGradle(ROOT_GRADLE_FILE);
-    removeLinesFromGradle(ROOT_REPOSITORIES_GRADLE_FILE);
-    removeLinesFromGradle(APP_REPOSITORIES_GRADLE_FILE);
+  removeLinesFromGradle(ROOT_GRADLE_FILE);
+  removeLinesFromGradle(ROOT_REPOSITORIES_GRADLE_FILE);
+  removeLinesFromGradle(APP_REPOSITORIES_GRADLE_FILE);
 };
 
 function removeLinesFromGradle(repositoryPath) {
-    if (!FSUtils.exists(repositoryPath)) {
-        return
-    }
+  if (!FSUtils.exists(repositoryPath)) {
+    return;
+  }
 
-    var rootGradleContent = FSUtils.readFile(repositoryPath, "UTF-8");
-    var lines = rootGradleContent.split(NEW_LINE);
-    var linesAfterRemove = removeLinesAddedByPlugin(lines);
-    FSUtils.writeFile(repositoryPath, linesAfterRemove.join(NEW_LINE));
+  var rootGradleContent = FSUtils.readFile(repositoryPath, "UTF-8");
+  var lines = rootGradleContent.split(NEW_LINE);
+  var linesAfterRemove = removeLinesAddedByPlugin(lines);
+  FSUtils.writeFile(repositoryPath, linesAfterRemove.join(NEW_LINE));
 }
 
 function removeLinesAddedByPlugin(lines) {
-    var indexList = [];
-    for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        if (line.includes(COMMENT)) {
-            indexList.push(i);
-        }
+  var indexList = [];
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    if (line.includes(COMMENT)) {
+      indexList.push(i);
     }
+  }
 
-    for (var i = 0; i < indexList.length; i++) {
-        lines.splice(indexList[i], 1);
+  for (var i = 0; i < indexList.length; i++) {
+    lines.splice(indexList[i], 1);
 
-        //if a line is removed, indexes are changed
-        if (i !== indexList.length - 1) {
-            for (var j = i + 1; j < indexList.length; j++) {
-                indexList[j] = indexList[j] - 1;
-            }
-        }
+    //if a line is removed, indexes are changed
+    if (i !== indexList.length - 1) {
+      for (var j = i + 1; j < indexList.length; j++) {
+        indexList[j] = indexList[j] - 1;
+      }
     }
+  }
 
-    return lines;
+  return lines;
 }

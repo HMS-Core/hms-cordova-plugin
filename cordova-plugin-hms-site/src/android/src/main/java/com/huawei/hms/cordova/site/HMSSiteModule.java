@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -50,19 +50,25 @@ import java.net.URLEncoder;
 public class HMSSiteModule extends CordovaBaseModule {
 
     private final static CorError SEARCH_INTENT_ALREADY_SET = new CorError(2000, "Search intent already set.");
+
     private final static CorError SERVICE_NOT_INITIALIZED = new CorError(1000, "Search service not initialized.");
+
     private Promise siteIntentPromise = null;
+
     private SearchService searchService = null;
+
     private SearchIntent searchIntent = null;
 
     @CordovaRule
     public void checkSearchResult() throws CorException {
-        if (searchService == null) throw new CorException(SERVICE_NOT_INITIALIZED);
+        if (searchService == null) {
+            throw new CorException(SERVICE_NOT_INITIALIZED);
+        }
     }
 
     @CordovaMethod
     @HMSLog
-    public void init(final CorPack corPack, JSONArray args, final Promise promise) 
+    public void init(final CorPack corPack, JSONArray args, final Promise promise)
         throws JSONException, UnsupportedEncodingException {
         String apiKey = args.getString(0);
         String encodedKey = URLEncoder.encode(apiKey, "UTF-8");
@@ -72,26 +78,29 @@ public class HMSSiteModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void gotoSearchActivity(final CorPack corPack, JSONArray args, final Promise promise) 
+    public void gotoSearchActivity(final CorPack corPack, JSONArray args, final Promise promise)
         throws JSONException, UnsupportedEncodingException {
         String apiKey = args.getString(0);
         String encodedKey = URLEncoder.encode(apiKey, "UTF-8");
         JSONObject searchFilter = args.getJSONObject(1);
         String hint = args.optString(2); // hint is optional
-        if(this.siteIntentPromise != null) {
+        if (this.siteIntentPromise != null) {
             // Method already called skip this and send promise reject
             throw new CorException(SEARCH_INTENT_ALREADY_SET);
         }
         this.siteIntentPromise = promise;
 
         SearchFilter filter = HMSSiteUtils.toObject(searchFilter, SearchFilter.class);
-        if(searchFilter.has("poiType"))
+        if (searchFilter.has("poiType")) {
             filter.setPoiType(HMSSiteUtils.jArrToPoiList(searchFilter.optJSONArray("poiType")));
+        }
 
         this.searchIntent = new SearchIntent();
         this.searchIntent.setSearchFilter(filter);
         this.searchIntent.setApiKey(encodedKey);
-        if(hint != null) this.searchIntent.setHint(hint);
+        if (hint != null) {
+            this.searchIntent.setHint(hint);
+        }
 
         Intent intent = this.searchIntent.getIntent(corPack.getCordova().getActivity());
         corPack.startActivityForResult(intent, SearchIntent.SEARCH_REQUEST_CODE);
@@ -126,8 +135,9 @@ public class HMSSiteModule extends CordovaBaseModule {
     public void querySuggestion(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject querySuggestionReq = args.getJSONObject(0);
         QuerySuggestionRequest req = HMSSiteUtils.toObject(querySuggestionReq, QuerySuggestionRequest.class);
-        if(querySuggestionReq.has("poiTypes"))
+        if (querySuggestionReq.has("poiTypes")) {
             req.setPoiTypes(HMSSiteUtils.jArrToPoiList(querySuggestionReq.getJSONArray("poiTypes")));
+        }
         searchService.querySuggestion(req, new HMSSiteUtils.SearchListener<>(promise));
     }
 
@@ -157,8 +167,8 @@ public class HMSSiteModule extends CordovaBaseModule {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(SearchIntent.SEARCH_REQUEST_CODE == requestCode) {
-            if(SearchIntent.isSuccess(resultCode)){
+        if (SearchIntent.SEARCH_REQUEST_CODE == requestCode) {
+            if (SearchIntent.isSuccess(resultCode)) {
                 Site site = this.searchIntent.getSiteFromIntent(data);
                 this.siteIntentPromise.success(HMSSiteUtils.toJson(site));
             } else {

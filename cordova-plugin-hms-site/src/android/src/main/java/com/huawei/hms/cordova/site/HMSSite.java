@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,18 +33,17 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class HMSSite extends CordovaPlugin {
-    
+
     private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         CorLog.setEnable(true);
-        
+
         final String kit = "Site";
-        final String version = "5.2.0.301";
-        cordovaController = new CordovaController(this, kit, version,
-                Collections.singletonList(new HMSSiteModule()));
+        final String version = "6.4.0.300";
+        cordovaController = new CordovaController(this, kit, version, Collections.singletonList(new HMSSiteModule()));
     }
 
     @Override
@@ -59,7 +58,8 @@ public class HMSSite extends CordovaPlugin {
     }
 
     @Override
-    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults)
+        throws JSONException {
         super.onRequestPermissionResult(requestCode, permissions, grantResults);
         cordovaController.onRequestPermissionResult(requestCode, permissions, grantResults);
     }

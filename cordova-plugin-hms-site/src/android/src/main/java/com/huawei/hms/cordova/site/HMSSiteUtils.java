@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
     limitations under the License.
 */
 
-
 package com.huawei.hms.cordova.site;
 
 import com.google.gson.Gson;
 
 import com.google.gson.GsonBuilder;
+
 import com.huawei.hms.cordova.site.basef.handler.CorLog;
 import com.huawei.hms.cordova.site.basef.handler.Promise;
 import com.huawei.hms.site.api.SearchResultListener;
@@ -38,19 +38,24 @@ public class HMSSiteUtils {
     private static final String TAG = HMSSiteUtils.class.getSimpleName();
 
     private static final Gson GSON = new GsonBuilder().serializeSpecialFloatingPointValues().create();
-    private HMSSiteUtils() { }
+
+    private HMSSiteUtils() {
+    }
 
     public static <T> String toJson(T obj) {
         return GSON.toJson(obj);
     }
+
     public static <T> T toObject(JSONObject json, Class<T> clazz) {
         return GSON.fromJson(json.toString(), clazz);
     }
 
     public static List<LocationType> jArrToPoiList(JSONArray array) {
         List<LocationType> locTypes = new ArrayList<>();
-        if(array == null) return locTypes;
-        for(int i=0; i<array.length();i++) {
+        if (array == null) {
+            return locTypes;
+        }
+        for (int i = 0; i < array.length(); i++) {
             locTypes.add(LocationType.valueOf(array.optString(i).toUpperCase(Locale.ENGLISH)));
         }
         return locTypes;
@@ -60,6 +65,7 @@ public class HMSSiteUtils {
         private static final String TAG = SearchListener.class.getSimpleName();
 
         private final Promise promise;
+
         public SearchListener(final Promise promise) {
             this.promise = promise;
         }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,16 +24,32 @@ public abstract class CordovaBaseModule {
     public CordovaBaseModule() {
         this.reference = this.getClass().getSimpleName();
     }
-    public void onDestroy(){}
-    public void onPause(boolean multitasking){}
-    public void onResume(boolean multitasking){}
-    public void onReset(){}
-    public void onStart(){}
-    public void onStop(){}
-    public void onActivityResult(int requestCode, int resultCode, Intent data){}
-    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults){}
 
-    public String getReference(){
+    public void onDestroy() {
+    }
+
+    public void onPause(boolean multitasking) {
+    }
+
+    public void onResume(boolean multitasking) {
+    }
+
+    public void onReset() {
+    }
+
+    public void onStart() {
+    }
+
+    public void onStop() {
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
+
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+    }
+
+    public String getReference() {
         return reference;
     }
 
