@@ -37,17 +37,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class HmsLocalNotificationPicturesLoader {
 
-    public interface Callback {
-        /**
-         * call Method
-         *
-         * @param largeIconImage : Bitmap
-         * @param bigPictureImage : Bitmap
-         * @param promise : Promise
-         */
-        void call(Bitmap largeIconImage, Bitmap bigPictureImage, Promise promise);
-    }
-
     private volatile AtomicInteger count = new AtomicInteger(0);
 
     private Bitmap largeIconImage;
@@ -137,5 +126,16 @@ public class HmsLocalNotificationPicturesLoader {
             this.callback.call(this.largeIconImage, this.bigPictureImage, this.promise);
         }
 
+    }
+
+    public interface Callback {
+        /**
+         * call Method
+         *
+         * @param largeIconImage : Bitmap
+         * @param bigPictureImage : Bitmap
+         * @param promise : Promise
+         */
+        void call(Bitmap largeIconImage, Bitmap bigPictureImage, Promise promise);
     }
 }

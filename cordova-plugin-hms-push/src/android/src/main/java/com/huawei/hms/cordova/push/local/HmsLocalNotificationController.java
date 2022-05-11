@@ -66,9 +66,9 @@ public class HmsLocalNotificationController {
 
     private final String TAG = HmsLocalNotificationController.class.getSimpleName();
 
-    private Context context;
-
     private final SharedPreferences sharedPreferences;
+
+    private Context context;
 
     public HmsLocalNotificationController(Context context) {
 
@@ -108,11 +108,11 @@ public class HmsLocalNotificationController {
 
         String channelId = Core.NOTIFICATION_CHANNEL_ID + "-" + importance;
         createChannel(notificationManager, channelId, Core.NOTIFICATION_CHANNEL_NAME, Core.NOTIFICATION_CHANNEL_DESC,
-                soundUri, importance, new long[] { 0, Core.DEFAULT_VIBRATE_DURATION });
+            soundUri, importance, new long[] {0, Core.DEFAULT_VIBRATE_DURATION});
     }
 
     private void createChannel(NotificationManager notificationManager, String channelId, String channelName,
-            String channelDescription, Uri soundUri, int importance, long[] vibratePattern) {
+        String channelDescription, Uri soundUri, int importance, long[] vibratePattern) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return;
@@ -144,7 +144,7 @@ public class HmsLocalNotificationController {
 
         if (soundUri != null) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder().setContentType(
-                    AudioAttributes.CONTENT_TYPE_SONIFICATION).setUsage(AudioAttributes.USAGE_NOTIFICATION).build();
+                AudioAttributes.CONTENT_TYPE_SONIFICATION).setUsage(AudioAttributes.USAGE_NOTIFICATION).build();
 
             notificationChannel.setSound(soundUri, audioAttributes);
         } else {
@@ -158,15 +158,14 @@ public class HmsLocalNotificationController {
     public void localNotificationNow(final Bundle bundle, final Promise promise) {
 
         HmsLocalNotificationPicturesLoader notificationPicturesLoader = new HmsLocalNotificationPicturesLoader(
-                (largeIconImage, bigPictureImage, cordovaCallback) -> localNotificationNowPicture(bundle,
-                        largeIconImage,
-                        bigPictureImage, cordovaCallback));
+            (largeIconImage, bigPictureImage, cordovaCallback) -> localNotificationNowPicture(bundle, largeIconImage,
+                bigPictureImage, cordovaCallback));
 
         notificationPicturesLoader.setCordovaCallBack(promise);
         notificationPicturesLoader.setLargeIconUrl(context,
-                BundleUtils.get(bundle, NotificationConstants.LARGE_ICON_URL));
+            BundleUtils.get(bundle, NotificationConstants.LARGE_ICON_URL));
         notificationPicturesLoader.setBigPictureUrl(context,
-                BundleUtils.get(bundle, NotificationConstants.BIG_PICTURE_URL));
+            BundleUtils.get(bundle, NotificationConstants.BIG_PICTURE_URL));
 
     }
 
@@ -223,7 +222,7 @@ public class HmsLocalNotificationController {
     }
 
     public void localNotificationNowPicture(Bundle bundle, Bitmap largeIconBitmap, Bitmap bigPictureBitmap,
-            Promise promise) {
+        Promise promise) {
 
         checkRequiredParams(bundle, promise, Core.NotificationType.NOW);
         try {
@@ -236,13 +235,13 @@ public class HmsLocalNotificationController {
             String channelId = Core.NOTIFICATION_CHANNEL_ID + "-" + importance;
 
             NotificationCompat.Builder notification = new NotificationCompat.Builder(context, "").setChannelId(
-                    channelId)
-                    .setContentTitle(title)
-                    .setTicker(BundleUtils.get(bundle, NotificationConstants.TICKER))
-                    .setVisibility(visibility)
-                    .setPriority(priority)
-                    .setAutoCancel(BundleUtils.getB(bundle, NotificationConstants.AUTO_CANCEL, true))
-                    .setOnlyAlertOnce(BundleUtils.getB(bundle, NotificationConstants.ONLY_ALERT_ONCE, false));
+                channelId)
+                .setContentTitle(title)
+                .setTicker(BundleUtils.get(bundle, NotificationConstants.TICKER))
+                .setVisibility(visibility)
+                .setPriority(priority)
+                .setAutoCancel(BundleUtils.getB(bundle, NotificationConstants.AUTO_CANCEL, true))
+                .setOnlyAlertOnce(BundleUtils.getB(bundle, NotificationConstants.ONLY_ALERT_ONCE, false));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 boolean showWhen = BundleUtils.getB(bundle, NotificationConstants.SHOW_WHEN, true);
@@ -261,7 +260,7 @@ public class HmsLocalNotificationController {
                 }
 
                 if (BundleUtils.contains(bundle, NotificationConstants.GROUP_SUMMARY) || BundleUtils.getB(bundle,
-                        NotificationConstants.GROUP_SUMMARY)) {
+                    NotificationConstants.GROUP_SUMMARY)) {
                     notification.setGroupSummary(BundleUtils.getB(bundle, NotificationConstants.GROUP_SUMMARY));
                 }
             }
@@ -295,8 +294,8 @@ public class HmsLocalNotificationController {
 
             if (bigPictureBitmap != null) {
                 style = new NotificationCompat.BigPictureStyle().bigPicture(bigPictureBitmap)
-                        .setBigContentTitle(title)
-                        .setSummaryText(message);
+                    .setBigContentTitle(title)
+                    .setSummaryText(message);
             } else {
                 style = new NotificationCompat.BigTextStyle().bigText(bigText);
             }
@@ -312,7 +311,7 @@ public class HmsLocalNotificationController {
             Uri soundUri = null;
 
             if (!BundleUtils.contains(bundle, NotificationConstants.PLAY_SOUND) || BundleUtils.getB(bundle,
-                    NotificationConstants.PLAY_SOUND)) {
+                NotificationConstants.PLAY_SOUND)) {
                 soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                 String soundName = BundleUtils.get(bundle, NotificationConstants.SOUND_NAME);
@@ -322,7 +321,7 @@ public class HmsLocalNotificationController {
 
                         int resId;
                         if (context.getResources().getIdentifier(soundName, Core.RAW, context.getPackageName()) == 0
-                                && soundName.contains(".")) {
+                            && soundName.contains(".")) {
                             soundName = soundName.substring(0, soundName.lastIndexOf('.'));
                         }
                         resId = context.getResources().getIdentifier(soundName, Core.RAW, context.getPackageName());
@@ -345,7 +344,7 @@ public class HmsLocalNotificationController {
             }
 
             if (BundleUtils.contains(bundle, NotificationConstants.ONGOING) || BundleUtils.getB(bundle,
-                    NotificationConstants.ONGOING)) {
+                NotificationConstants.ONGOING)) {
                 notification.setOngoing(BundleUtils.getB(bundle, NotificationConstants.ONGOING));
             }
 
@@ -364,28 +363,28 @@ public class HmsLocalNotificationController {
 
             if (android.os.Build.VERSION.SDK_INT >= 23) {
                 pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-                        PendingIntent.FLAG_IMMUTABLE);
+                    PendingIntent.FLAG_IMMUTABLE);
             } else {
                 pendingIntent = PendingIntent.getActivity(context, notificationID, intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.FLAG_UPDATE_CURRENT);
             }
 
             NotificationManager notificationManager = notificationManager();
 
-            long[] vibratePattern = new long[] { 0 };
+            long[] vibratePattern = new long[] {0};
 
             if (!BundleUtils.contains(bundle, NotificationConstants.VIBRATE) || BundleUtils.getB(bundle,
-                    NotificationConstants.VIBRATE)) {
+                NotificationConstants.VIBRATE)) {
                 long vibrateDuration = BundleUtils.contains(bundle, NotificationConstants.VIBRATE_DURATION)
-                        ? BundleUtils.getL(bundle, NotificationConstants.VIBRATE_DURATION)
-                        : Core.DEFAULT_VIBRATE_DURATION;
+                    ? BundleUtils.getL(bundle, NotificationConstants.VIBRATE_DURATION)
+                    : Core.DEFAULT_VIBRATE_DURATION;
                 if (vibrateDuration == 0) {
                     vibrateDuration = Core.DEFAULT_VIBRATE_DURATION;
                 }
 
                 channelId = channelId + "-" + vibrateDuration;
 
-                vibratePattern = new long[] { 0, vibrateDuration };
+                vibratePattern = new long[] {0, vibrateDuration};
 
                 notification.setVibrate(vibratePattern);
             }
@@ -407,7 +406,7 @@ public class HmsLocalNotificationController {
             String channelDescription = BundleUtils.get(bundle, NotificationConstants.CHANNEL_DESCRIPTION);
 
             createChannel(notificationManager, channelId, channelName, channelDescription, soundUri, importance,
-                    vibratePattern);
+                vibratePattern);
 
             notification.setChannelId(channelId);
             notification.setContentIntent(pendingIntent);
@@ -415,7 +414,7 @@ public class HmsLocalNotificationController {
             JSONArray actionArr = null;
             try {
                 actionArr = BundleUtils.get(bundle, NotificationConstants.ACTIONS) != null ? new JSONArray(
-                        BundleUtils.get(bundle, NotificationConstants.ACTIONS)) : null;
+                    BundleUtils.get(bundle, NotificationConstants.ACTIONS)) : null;
             } catch (Exception e) {
                 if (promise != null) {
                     promise.error(e.getLocalizedMessage());
@@ -446,15 +445,15 @@ public class HmsLocalNotificationController {
 
                     if (android.os.Build.VERSION.SDK_INT >= 23) {
                         pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
-                                PendingIntent.FLAG_IMMUTABLE);
+                            PendingIntent.FLAG_IMMUTABLE);
                     } else {
                         pendingActionIntent = PendingIntent.getBroadcast(context, notificationID, actionIntent,
-                                PendingIntent.FLAG_UPDATE_CURRENT);
+                            PendingIntent.FLAG_UPDATE_CURRENT);
                     }
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         notification.addAction(
-                                new NotificationCompat.Action.Builder(icon, action, pendingActionIntent).build());
+                            new NotificationCompat.Action.Builder(icon, action, pendingActionIntent).build());
                     } else {
                         notification.addAction(icon, action, pendingActionIntent);
                     }
@@ -468,7 +467,7 @@ public class HmsLocalNotificationController {
             }
 
             if (!(ApplicationUtils.isApplicationInForeground(context) && BundleUtils.getB(bundle,
-                    NotificationConstants.DONT_NOTIFY_IN_FOREGROUND))) {
+                NotificationConstants.DONT_NOTIFY_IN_FOREGROUND))) {
                 Notification builtNotification = notification.build();
                 builtNotification.defaults |= Notification.DEFAULT_LIGHTS;
 

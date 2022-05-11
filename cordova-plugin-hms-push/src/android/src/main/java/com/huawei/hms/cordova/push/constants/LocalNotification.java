@@ -18,6 +18,11 @@ package com.huawei.hms.cordova.push.constants;
 
 public interface LocalNotification {
 
+    enum Bitmap {
+        BIG_PICTURE,
+        LARGE_ICON
+    }
+
     interface Priority {
         String MAX = "max";
         String HIGH = "high";
@@ -58,10 +63,5 @@ public interface LocalNotification {
         String MIN = "min";
         String NONE = "none";
         String UNSPECIFIED = "unspecified";
-    }
-
-    enum Bitmap {
-        BIG_PICTURE,
-        LARGE_ICON
     }
 }

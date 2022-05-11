@@ -47,11 +47,17 @@ import java.util.Map;
 
 public class HMSPush extends CordovaPlugin {
 
-    private String TAG = HMSPush.class.getSimpleName();
+    private static final String KIT = "Push";
+
+    private static final String VERSION = "6.3.0.304";
 
     private static CordovaInterface staticCordova;
 
     private static CordovaWebView staticWebView;
+
+    private String TAG = HMSPush.class.getSimpleName();
+
+    private CordovaController cordovaController;
 
     public static CordovaInterface getCordova() {
         return staticCordova;
@@ -68,12 +74,6 @@ public class HMSPush extends CordovaPlugin {
     public static void setWebView(CordovaWebView webView) {
         staticWebView = webView;
     }
-
-    private static final String KIT = "Push";
-
-    private static final String VERSION = "6.3.0.302";
-
-    private CordovaController cordovaController;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {

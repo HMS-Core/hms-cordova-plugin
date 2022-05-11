@@ -70,9 +70,9 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void getToken(final CorPack corPack, JSONArray args, final Promise promise)
-            throws ApiException, JSONException {
+        throws ApiException, JSONException {
         String appId = AGConnectServicesConfig.fromContext(corPack.getCordova().getContext())
-                .getString(Core.CLIENT_APP_ID);
+            .getString(Core.CLIENT_APP_ID);
         String scope = args.optString(0, "HCM");
         try {
             String token = hmsInstanceId.getToken(appId, scope);
@@ -86,7 +86,7 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void getTokenWithSubjectId(final CorPack corPack, JSONArray args, final Promise promise)
-            throws JSONException, ApiException {
+        throws JSONException, ApiException {
         String token = hmsInstanceId.getToken(args.getString(0));
         promise.success(token);
     }
@@ -95,8 +95,8 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @CordovaMethod
     public void getAAID(final CorPack corPack, JSONArray args, final Promise promise) {
         hmsInstanceId.getAAID()
-                .addOnSuccessListener(task -> promise.success(task.getId()))
-                .addOnFailureListener(e -> promise.error(e.getLocalizedMessage()));
+            .addOnSuccessListener(task -> promise.success(task.getId()))
+            .addOnFailureListener(e -> promise.error(e.getLocalizedMessage()));
     }
 
     @HMSLog
@@ -121,9 +121,9 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void deleteToken(final CorPack corPack, JSONArray args, final Promise promise)
-            throws ApiException, JSONException {
+        throws ApiException, JSONException {
         String appId = AGConnectServicesConfig.fromContext(corPack.getCordova().getContext())
-                .getString(Core.CLIENT_APP_ID);
+            .getString(Core.CLIENT_APP_ID);
         String scope = args.optString(0, "HCM");
         HmsInstanceId.getInstance(corPack.getCordova().getContext()).deleteToken(appId, scope);
         promise.success(true);
@@ -132,7 +132,7 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void deleteTokenWithSubjectId(final CorPack corPack, JSONArray args, final Promise promise)
-            throws JSONException, ApiException {
+        throws JSONException, ApiException {
         hmsInstanceId.deleteToken(args.getString(0));
         promise.success(true);
     }
@@ -141,9 +141,9 @@ public class HmsPushInstanceId extends CordovaBaseModule {
     @CordovaMethod
     public void getOdid(final CorPack corPack, JSONArray args, final Promise promise) {
         OpenDevice.getOpenDeviceClient(corPack.getCordova().getContext())
-                .getOdid()
-                .addOnSuccessListener(odidResult -> promise.success(odidResult.getId()))
-                .addOnFailureListener(e -> promise.error(e.getLocalizedMessage()));
+            .getOdid()
+            .addOnSuccessListener(odidResult -> promise.success(odidResult.getId()))
+            .addOnFailureListener(e -> promise.error(e.getLocalizedMessage()));
     }
 
 }

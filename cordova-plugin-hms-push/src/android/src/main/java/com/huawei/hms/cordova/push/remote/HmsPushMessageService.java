@@ -42,9 +42,9 @@ public class HmsPushMessageService extends HmsMessageService {
 
     private final static String TAG = HmsPushMessageService.class.getSimpleName();
 
-    private WebView webView;
-
     private static Boolean isApplicationRunning = false;
+
+    private WebView webView;
 
     public static void setApplicationRunningStatus(boolean isRunning) {
         isApplicationRunning = isRunning;

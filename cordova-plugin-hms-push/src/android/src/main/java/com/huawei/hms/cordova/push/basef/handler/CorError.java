@@ -22,11 +22,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class CorError implements Serializable {
+    private static final long serialVersionUID = 8461223600L;
+
     private final int code;
 
     private final String message;
-
-    private static final long serialVersionUID = 8461223600L;
 
     public CorError(int code, String message) {
         this.code = code;

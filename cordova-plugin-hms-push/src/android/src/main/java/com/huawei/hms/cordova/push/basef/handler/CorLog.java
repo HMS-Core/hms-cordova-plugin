@@ -19,10 +19,10 @@ package com.huawei.hms.cordova.push.basef.handler;
 import android.util.Log;
 
 public final class CorLog {
+    private static boolean enable = false;
+
     private CorLog() {
     }
-
-    private static boolean enable = false;
 
     public static void setEnable(boolean enable) {
         CorLog.enable = enable;
