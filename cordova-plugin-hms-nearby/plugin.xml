@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-nearby"
-	version="6.2.0-300"
-	xmlns="http://apache.org/cordova/ns/plugins/1.0">
-	<name>HMS Nearby</name>
-	<description>Cordova HMS Nearby Plugin</description>
-	<license>Apache 2.0</license>
-	<keywords>cordova,nearby,hms-nearby,huawei-nearby,hms,huawei</keywords>
-
+	version="6.2.0-301" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>
+		HMS Nearby
+	</name>
+	<description>
+		Cordova HMS Nearby Plugin
+	</description>
+	<license>
+		Apache 2.0
+	</license>
+	<keywords>
+		cordova,nearby,hms-nearby,huawei-nearby,hms,huawei
+	</keywords>
 	<js-module name="HMSNearby" src="www/HMSNearby.js">
 		<clobbers target="HMSNearby" />
 	</js-module>
-
 	<js-module name="enums" src="www/enums.js" />
 	<js-module name="index" src="www/index.js" />
 	<js-module name="interfaces" src="www/interfaces.js" />
 	<js-module name="utils" src="www/utils.js" />
-
 	<platform name="android">
 		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
 		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
-
 		<config-file target="config.xml" parent="/*">
 			<feature name="HMSNearby">
 				<param name="android-package" value="com.huawei.hms.cordova.nearby.HMSNearby" />
 			</feature>
 		</config-file>
-
 		<config-file target="AndroidManifest.xml" parent="/manifest">
 			<uses-permission android:name="android.permission.INTERNET" />
 			<uses-permission android:name="android.permission.BLUETOOTH" />
@@ -37,16 +39,13 @@
 			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 		</config-file>
-
 		<!-- Android services -->
 		<config-file target="AndroidManifest.xml" parent="application">
 			<service android:exported="false"
 				android:name="com.huawei.hms.cordova.nearby.modules.HMSMessage$BackgroundIntentService" />
 		</config-file>
-
-		<framework src="com.huawei.hms:nearby:6.2.0.300" />
+		<framework src="com.huawei.hms:nearby:6.2.0.301" />
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
-
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/nearby/HMSNearby.java"
 			target-dir="src/com/huawei/hms/cordova/nearby/" />
 		<source-file
