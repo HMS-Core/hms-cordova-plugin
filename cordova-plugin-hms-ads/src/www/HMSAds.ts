@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { asyncExec } from './utils'
-import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult } from './interfaces'
-import { ConsentStatus, DebugNeedConsent } from './HMSConstants'
+import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult,VastSdkConfiguration } from './interfaces'
+import { ConsentStatus, DebugNeedConsent, ActivateStyle } from './HMSConstants'
 
 
 export { HMSInterstitialAd } from './HMSInterstitialAd';
@@ -24,6 +25,7 @@ export { HMSRewardAd } from './HMSRewardAd';
 export { HMSSplashAd } from './HMSSplashAd';
 export { HMSRollAd } from './HMSRollAd';
 export { HMSNativeAd } from './HMSNativeAd';
+export { HMSVast } from './HMSVast';
 
 export function on(event: string, callback: ()=>void){
 	window.subscribeHMSEvent(event, callback);
@@ -47,6 +49,18 @@ export function setRequestOptions(requestOptions:HMSRequestOptions): Promise<voi
 }
 export function setConsent(consent:string): Promise<void> {
 	return asyncExec('HMSAds', 'HwAdsModule', ['setConsent', consent]);
+}
+export function getAppActivateStyle(): Promise<number> {
+	return asyncExec('HMSAds', 'HwAdsModule', ['getAppActivateStyle']);
+}
+export function setAppActivateStyle(style:number): Promise<void> {
+	return asyncExec('HMSAds', 'HwAdsModule', ['setAppActivateStyle', style]);
+}
+export function setAppInstalledNotify(status:boolean): Promise<void> {
+	return asyncExec('HMSAds', 'HwAdsModule', ['setAppInstalledNotify', status]);
+}
+export function isAppInstalledNotify(): Promise<boolean> {
+	return asyncExec('HMSAds', 'HwAdsModule', ['isAppInstalledNotify']);
 }
 
 // HMSLogger
@@ -109,3 +123,22 @@ export function getInstallReferrer(): Promise<ReferrerDetails> {
 	return asyncExec('HMSAds', 'InstallReferrerModule', ['getInstallReferrer']);
 }
 
+///////////////////////////////////////////////////////////////////////////
+// VAST Module
+///////////////////////////////////////////////////////////////////////////
+
+export function initVast(vastSdkConfiguration:VastSdkConfiguration): Promise<void> { 
+	return asyncExec('HMSAds', 'VastModule', ['initVast',vastSdkConfiguration]);
+}
+export function getVastSdkConfiguration(): Promise<VastSdkConfiguration> {
+	return asyncExec('HMSAds', 'VastModule', ['getVastSdkConfiguration']);
+}
+export function updateSdkServerConfig(slotId:string): Promise<void> {
+	return asyncExec('HMSAds', 'VastModule', ['updateSdkServerConfig',slotId]);
+}
+export function userAcceptAdLicense(isAcceptLicense:boolean): Promise<void> {
+	return asyncExec('HMSAds', 'VastModule', ['userAcceptAdLicense',isAcceptLicense]);
+}
+export function getEventProcessor(): Promise<void> {
+	return asyncExec('HMSAds', 'VastModule', ['getEventProcessor']);
+}

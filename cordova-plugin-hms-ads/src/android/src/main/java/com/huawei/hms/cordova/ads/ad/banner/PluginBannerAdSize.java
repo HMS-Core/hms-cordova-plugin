@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.banner;
 
 import com.huawei.hms.ads.BannerAdSize;
@@ -34,7 +35,9 @@ public enum PluginBannerAdSize {
     BANNER_SIZE_160_600(BannerAdSize.BANNER_SIZE_160_600, "BANNER_SIZE_160_600");
 
     BannerAdSize adSize;
+
     String adSizeString;
+
     private static final Map<BannerAdSize, PluginBannerAdSize> AD_SIZE_MAP = new HashMap<>();
 
     PluginBannerAdSize(BannerAdSize adSize, String adSizeString) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -56,7 +57,7 @@ class HMSBannerAd extends ads_1.Ads {
                 throw new BannerAlreadyDefinedError();
             this.element = document.getElementById(this.divId);
             bannerViews.set(divId, this);
-            const initialProps = layout_1.getInitialPropsOfHTMLElementFrom(divId);
+            const initialProps = (0, layout_1.getInitialPropsOfHTMLElementFrom)(divId);
             if (bounds) {
                 if (bounds.marginLeft)
                     initialProps['marginLeft'] = bounds.marginLeft;

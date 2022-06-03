@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.huawei.hms.cordova.ads;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -33,6 +34,13 @@ import com.huawei.hms.ads.instreamad.InstreamAd;
 import com.huawei.hms.ads.nativead.DislikeAdReason;
 import com.huawei.hms.ads.nativead.NativeAdConfiguration;
 import com.huawei.hms.ads.reward.Reward;
+import com.huawei.hms.ads.vast.adapter.SdkFactory;
+import com.huawei.hms.ads.vast.adapter.VastSdkConfiguration;
+import com.huawei.hms.ads.vast.application.requestinfo.CreativeMatchStrategy;
+import com.huawei.hms.ads.vast.domain.advertisement.CreativeExtension;
+import com.huawei.hms.ads.vast.player.api.PlayerConfig;
+import com.huawei.hms.ads.vast.player.model.LinearCreative;
+import com.huawei.hms.ads.vast.player.model.adslot.LinearAdSlot;
 import com.huawei.hms.cordova.ads.layout.InitialProps;
 
 import org.json.JSONArray;
@@ -42,6 +50,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Converter {
     public static final String TAG = Converter.class.getSimpleName();
@@ -104,17 +113,36 @@ public class Converter {
         if (json.has("tagForUnderAgeOfPromise")) {
             builder.setTagForUnderAgeOfPromise(json.getInt("tagForUnderAgeOfPromise"));
         }
-        if (json.has("requestLocation"))
+        if (json.has("requestLocation")) {
             builder.setRequestLocation(json.getBoolean("requestLocation"));
-
-        if (json.has("detailedCreativeType"))
-            builder.setDetailedCreativeTypeList(Converter.fromJsonToListInteger(json.getJSONArray("detailedCreativeType")));
-
+        }
+        if (json.has("detailedCreativeType")) {
+            builder.setDetailedCreativeTypeList(
+                Converter.fromJsonToListInteger(json.getJSONArray("detailedCreativeType")));
+        }
         if (json.has("consent")) {
             builder.setConsent(json.getString("consent"));
         }
+        if (json.has("contentBundle")) {
+            builder.setContentBundle(json.getString("contentBundle"));
+        }
+        if (json.has("location")) {
+            builder.setLocation(fromJSONObjectToLocation((JSONObject) json.get("location")));
+        }
         return builder.build();
 
+    }
+
+    public static Location fromJSONObjectToLocation(JSONObject json) throws JSONException {
+        Location location = new Location("");
+
+        if (json.has("lat")) {
+            location.setLatitude(json.getInt("lat"));
+        }
+        if (json.has("lng")) {
+            location.setLongitude(json.getInt("lng"));
+        }
+        return location;
     }
 
     public static JSONObject fromRequestOptionsToJsonObj(RequestOptions requestOptions) {
@@ -172,8 +200,9 @@ public class Converter {
             requestOptions.setNonPersonalizedAd(requestOptionsJson.getInt("nonPersonalizedAd"));
         }
 
-        if(requestOptionsJson.has("requestLocation"))
+        if (requestOptionsJson.has("requestLocation")) {
             requestOptions.setRequestLocation(requestOptionsJson.getBoolean("requestLocation"));
+        }
 
         if (requestOptionsJson.has("consent")) {
             requestOptions.setConsent(requestOptionsJson.getString("consent"));
@@ -356,6 +385,232 @@ public class Converter {
         }
 
         return jsonArray;
+    }
+
+    public static VastSdkConfiguration fromJSONObjectToVastSdkConfiguration(JSONObject json) throws JSONException {
+        VastSdkConfiguration vastSdkConfiguration = SdkFactory.getConfiguration();
+        if (json != null) {
+            if (json.has("httpCallTimeoutMs")) {
+                vastSdkConfiguration.setHttpCallTimeoutMs(json.getInt("httpCallTimeoutMs"));
+            }
+            if (json.has("httpConnectTimeoutMs")) {
+                vastSdkConfiguration.setHttpConnectTimeoutMs(json.getInt("httpConnectTimeoutMs"));
+            }
+            if (json.has("httpKeepAliveDurationMs")) {
+                vastSdkConfiguration.setHttpKeepAliveDurationMs(json.getInt("httpKeepAliveDurationMs"));
+            }
+            if (json.has("httpReadTimeoutMs")) {
+                vastSdkConfiguration.setHttpReadTimeoutMs(json.getInt("httpReadTimeoutMs"));
+            }
+            if (json.has("maxHttpConnections")) {
+                vastSdkConfiguration.setMaxHttpConnections(json.getInt("maxHttpConnections"));
+            }
+            if (json.has("maxRedirectWrapperLimit")) {
+                vastSdkConfiguration.setMaxRedirectWrapperLimit(json.getInt("maxRedirectWrapperLimit"));
+            }
+            if (json.has("isTest")) {
+                vastSdkConfiguration.setTest(json.getBoolean("isTest"));
+            }
+            if (json.has("vastEventRetryBatchSize")) {
+                vastSdkConfiguration.setVastEventRetryBatchSize(json.getInt("vastEventRetryBatchSize"));
+            }
+            if (json.has("vastEventRetryIntervalSeconds")) {
+                vastSdkConfiguration.setVastEventRetryIntervalSeconds(json.getInt("vastEventRetryIntervalSeconds"));
+            }
+            if (json.has("vastEventRetryUploadTimes")) {
+                vastSdkConfiguration.setVastEventRetryUploadTimes(json.getInt("vastEventRetryUploadTimes"));
+            }
+        }
+        return vastSdkConfiguration;
+    }
+
+    public static JSONObject fromVastSdkConfigurationToJson(VastSdkConfiguration vastSdkConfiguration)
+        throws JSONException {
+        return new JSONObject().put("httpCallTimeoutMs", vastSdkConfiguration.getHttpCallTimeoutMs())
+            .put("httpConnectTimeoutMs", vastSdkConfiguration.getHttpConnectTimeoutMs())
+            .put("httpKeepAliveDurationMs", vastSdkConfiguration.getHttpKeepAliveDurationMs())
+            .put("httpReadTimeoutMs", vastSdkConfiguration.getHttpReadTimeoutMs())
+            .put("maxHttpConnections", vastSdkConfiguration.getMaxHttpConnections())
+            .put("maxRedirectWrapperLimit", vastSdkConfiguration.getMaxRedirectWrapperLimit())
+            .put("isTest", vastSdkConfiguration.isTest())
+            .put("vastEventRetryBatchSize", vastSdkConfiguration.getVastEventRetryBatchSize())
+            .put("vastEventRetryIntervalSeconds", vastSdkConfiguration.getVastEventRetryIntervalSeconds())
+            .put("vastEventRetryUploadTimes", vastSdkConfiguration.getVastEventRetryUploadTimes());
+    }
+
+    public static com.huawei.hms.ads.vast.openalliance.ad.beans.parameter.RequestOptions fromJSONObjectToVastRequestOptions(
+        JSONObject json) throws JSONException {
+        com.huawei.hms.ads.vast.openalliance.ad.beans.parameter.RequestOptions.Builder vastRequestOptions
+            = new com.huawei.hms.ads.vast.openalliance.ad.beans.parameter.RequestOptions.Builder();
+        if (json != null) {
+            if (json.has("adContentClassification")) {
+                vastRequestOptions.setAdContentClassification(json.getString("adContentClassification"));
+            }
+            if (json.has("appCountry")) {
+                vastRequestOptions.setAppCountry(json.getString("appCountry"));
+            }
+            if (json.has("appLang")) {
+                vastRequestOptions.setAppLang(json.getString("appLang"));
+            }
+            if (json.has("nonPersonalizedAd")) {
+                vastRequestOptions.setNonPersonalizedAd(json.getInt("nonPersonalizedAd"));
+            }
+            if (json.has("tagForChildProtection")) {
+                vastRequestOptions.setTagForChildProtection(json.getInt("tagForChildProtection"));
+            }
+            if (json.has("tagForUnderAgeOfPromise")) {
+                vastRequestOptions.setTagForUnderAgeOfPromise(json.getInt("tagForUnderAgeOfPromise"));
+            }
+            if (json.has("requestLocation")) {
+                vastRequestOptions.setRequestLocation(json.getBoolean("requestLocation"));
+            }
+            if (json.has("consent")) {
+                vastRequestOptions.setConsent(json.getString("consent"));
+            }
+        }
+        return vastRequestOptions.build();
+    }
+
+    public static JSONObject fromVastRequestOptionsToJson(
+        com.huawei.hms.ads.vast.openalliance.ad.beans.parameter.RequestOptions vastRequestOptions)
+        throws JSONException {
+
+        return new JSONObject().put("adContentClassification", vastRequestOptions.getAdContentClassification())
+            .put("appCountry", vastRequestOptions.getAppCountry())
+            .put("appLang", vastRequestOptions.getAppLang())
+            .put("nonPersonalizedAd", vastRequestOptions.getNonPersonalizedAd())
+            .put("tagForChildProtection", vastRequestOptions.getTagForChildProtection())
+            .put("tagForUnderAgeOfPromise", vastRequestOptions.getTagForUnderAgeOfPromise())
+            .put("isRequestLocation", vastRequestOptions.isRequestLocation())
+            .put("consent", vastRequestOptions.getConsent());
+
+    }
+
+    public static LinearAdSlot fromJSONObjectToLinearAdSlot(JSONObject json) throws JSONException {
+        LinearAdSlot linearAdSlot = new LinearAdSlot();
+        if (json != null) {
+            if (json.has("adId")) {
+                linearAdSlot.setSlotId(json.getString("adId"));
+            }
+            if (json.has("totalDuration")) {
+                linearAdSlot.setTotalDuration(json.getInt("totalDuration"));
+            }
+            if (json.has("isAllowMobileTraffic")) {
+                linearAdSlot.setAllowMobileTraffic(json.getBoolean("isAllowMobileTraffic"));
+            }
+            if (json.has("adOrientation")) {
+                linearAdSlot.setOrientation(json.getInt("adOrientation"));
+            }
+            if (json.has("creativeMatchStrategy")) {
+                CreativeMatchStrategy creativeMatchStrategy = new CreativeMatchStrategy(
+                    toCreativeMatchType(json.getInt("creativeMatchStrategy")));
+                linearAdSlot.setCreativeMatchStrategy(creativeMatchStrategy);
+            }
+            if (json.has("requestOption")) {
+                linearAdSlot.setRequestOptions(fromJSONObjectToVastRequestOptions(json.getJSONObject("requestOption")));
+            }
+            if (json.has("size")) {
+                linearAdSlot.setSize(json.getInt("width"), json.getInt("height"));
+            }
+            if (json.has("maxAdPods")) {
+                linearAdSlot.setMaxAdPods(json.getInt("maxAdPods"));
+            }
+        }
+
+        return linearAdSlot;
+    }
+
+    private static CreativeMatchStrategy.CreativeMatchType toCreativeMatchType(int creativeMatchStrategy) {
+        switch (creativeMatchStrategy) {
+            case 0:
+                return CreativeMatchStrategy.CreativeMatchType.EXACT;
+            case 1:
+                return CreativeMatchStrategy.CreativeMatchType.SMART;
+            case 2:
+                return CreativeMatchStrategy.CreativeMatchType.UNKNOWN;
+            case 3:
+                return CreativeMatchStrategy.CreativeMatchType.ANY;
+            case 4:
+                return CreativeMatchStrategy.CreativeMatchType.LANDSCAPE;
+            case 5:
+                return CreativeMatchStrategy.CreativeMatchType.PORTRAIT;
+            case 6:
+                return CreativeMatchStrategy.CreativeMatchType.SQUARE;
+            default:
+                break;
+        }
+        return CreativeMatchStrategy.CreativeMatchType.ANY;
+    }
+
+    ;
+
+    public static JSONObject fromLinearAdSlotToJson(LinearAdSlot linearAdSlot) throws JSONException {
+        return new JSONObject().put("adId", linearAdSlot.getSlotId())
+            .put("totalDuration", linearAdSlot.getTotalDuration())
+            .put("isAllowMobileTraffic", linearAdSlot.isAllowMobileTraffic())
+            .put("adOrientation", linearAdSlot.getOrientation())
+            .put("requestOption", linearAdSlot.getRequestOptions())
+            .put("maxAdPods", linearAdSlot.getMaxAdPods())
+            .put("width", linearAdSlot.getWidth())
+            .put("height", linearAdSlot.getHeight())
+            .put("creativeMatchStrategy", fromCreativeMatchStrategyToJson(linearAdSlot.getCreativeMatchStrategy()));
+    }
+
+    public static JSONObject fromCreativeMatchStrategyToJson(CreativeMatchStrategy creativeMatchStrategy)
+        throws JSONException {
+        return new JSONObject().put("height", creativeMatchStrategy.getExpectedCreativeHeight())
+            .put("width", creativeMatchStrategy.getExpectedCreativeWidth())
+            .put("creativeMatchType", creativeMatchStrategy.getCreativeMatchType().getCode());
+    }
+
+    public static JSONObject fromLinearCreativeToJson(LinearCreative linearCreative) throws JSONException {
+        return new JSONObject().put("contentId", linearCreative.getContentId())
+            .put("requestId", linearCreative.getRequestId())
+            .put("showId", linearCreative.getShowId())
+            .put("slotId", linearCreative.getSlotId())
+            .put("type", linearCreative.getType())
+            .put("url", linearCreative.getUrl())
+            .put("adExtensions", fromCreativeExtensionMapToJson(linearCreative.getAdExtensionMap()))
+            .put("typeToCreativeExtensions",
+                fromCreativeExtensionMapToJson(linearCreative.getTypeToCreativeExtension()));
+    }
+
+    public static JSONObject fromCreativeExtensionMapToJson(Map<String, CreativeExtension> map) throws JSONException {
+        JSONObject json = new JSONObject();
+        Iterator<Map.Entry<String, CreativeExtension>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, CreativeExtension> pair = iterator.next();
+            json.put(pair.getKey(), pair.getValue());
+        }
+        return json;
+    }
+
+    public static PlayerConfig fromJSONObjectToPlayerConfig(JSONObject json) throws JSONException {
+        PlayerConfig.Builder playerConfig = PlayerConfig.newBuilder();
+        if (json != null) {
+            if (json.has("isEnableCutout")) {
+                playerConfig.setIsEnableCutout(json.getBoolean("isEnableCutout"));
+            }
+            if (json.has("isEnablePortrait")) {
+                playerConfig.setIsEnablePortrait(json.getBoolean("isEnablePortrait"));
+            }
+            if (json.has("isEnableRotation")) {
+                playerConfig.setEnableRotation(json.getBoolean("isEnableRotation"));
+            }
+            if (json.has("isSkipLinearAd")) {
+                playerConfig.setSkipLinearAd(json.getBoolean("isSkipLinearAd"));
+            }
+        }
+        return playerConfig.build();
+    }
+
+    public static JSONObject fromPlayerConfigToJson(PlayerConfig playerConfig) throws JSONException {
+        return new JSONObject().put("isEnableCutout", playerConfig.isEnableCutout())
+            .put("isEnablePortrait", playerConfig.isEnablePortrait())
+            .put("isEnableRotation", playerConfig.isEnableRotation())
+            .put("isForceMute", playerConfig.isForceMute())
+            .put("isIndustryIconShow", playerConfig.isIndustryIconShow())
+            .put("isSkipLinearAd", playerConfig.isSkipLinearAd());
     }
 
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.reward;
 
 import com.huawei.hms.ads.reward.OnMetadataChangedListener;
@@ -23,23 +24,31 @@ import com.huawei.hms.ads.reward.RewardAdStatusListener;
 import com.huawei.hms.cordova.ads.Converter;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdListener;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 public class PluginRewardAdListener extends PluginAbstractAdListener {
     private static final String REWARD_METADATA_CHANGED = "reward_metadata_changed_%d";
 
     private static final String REWARD_AD_FAILED_TO_LOAD_LOAD = "reward_ad_failed_to_load_load%d";
+
     private static final String REWARDED_LOADED = "rewarded_loaded_%d";
 
     private static final String REWARDED_STATUS = "rewarded_status_%d";
+
     private static final String REWARD_AD_CLOSED_STATUS = "reward_ad_closed_status_%d";
+
     private static final String REWARD_AD_OPENED_STATUS = "reward_ad_opened_status_%d";
+
     private static final String REWARD_AD_FAILED_TO_SHOW = "reward_ad_failed_to_show_%d";
 
     private static final String REWARDED = "rewarded_%d";
+
     private static final String REWARD_AD_CLOSED = "reward_ad_closed_%d";
+
     private static final String REWARD_AD_FAILED_TO_LOAD = "reward_ad_failed_to_load_%d";
+
     private static final String REWARD_AD_LOADED = "reward_ad_loaded_%d";
+
     private static final String REWARD_AD_OPENED = "reward_ad_opened_%d";
 
     public PluginRewardAdListener(CordovaEventRunner listenerManager, int objectId) {
@@ -61,7 +70,7 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
             @Override
             public void onRewardAdFailedToLoad(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_FAILED_TO_LOAD_LOAD,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
             }
 
             @Override
@@ -82,7 +91,7 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
             @Override
             public void onRewardAdFailedToShow(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_FAILED_TO_SHOW,
-                    ErrorCodes.fromCodeRewardAdStatus(i).toJson());
+                    ErrorAndStateCodes.fromCodeRewardAdStatus(i).toJson());
             }
 
             @Override
@@ -115,7 +124,7 @@ public class PluginRewardAdListener extends PluginAbstractAdListener {
             @Override
             public void onRewardAdFailedToLoad(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginRewardAdListener.REWARD_AD_FAILED_TO_LOAD,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
             }
 
             @Override

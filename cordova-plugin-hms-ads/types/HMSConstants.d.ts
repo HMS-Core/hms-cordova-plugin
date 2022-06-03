@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 export declare enum AdParamErrorCodes {
     AD_PARAM_INNER = 0,
     AD_PARAM_INVALID_REQUEST = 1,
@@ -67,7 +68,8 @@ export declare enum BannerAdSize {
     BANNER_SIZE_728_90 = "BANNER_SIZE_728_90",
     BANNER_SIZE_DYNAMIC = "BANNER_SIZE_DYNAMIC",
     BANNER_SIZE_INVALID = "BANNER_SIZE_INVALID",
-    BANNER_SIZE_SMART = "BANNER_SIZE_SMART"
+    BANNER_SIZE_SMART = "BANNER_SIZE_SMART",
+    BANNER_SIZE_ADVANCED = "BANNER_SIZE_ADVANCED"
 }
 export declare enum HMSScreenOrientation {
     SCREEN_ORIENTATION_LANDSCAPE = 0,
@@ -126,7 +128,8 @@ export declare enum NativeAdTemplate {
     NATIVE_AD_SMALL_TEMPLATE = "NATIVE_AD_SMALL_TEMPLATE",
     NATIVE_AD_FULL_TEMPLATE = "NATIVE_AD_FULL_TEMPLATE",
     NATIVE_AD_BANNER_TEMPLATE = "NATIVE_AD_BANNER_TEMPLATE",
-    NATIVE_AD_VIDEO_TEMPLATE = "NATIVE_AD_VIDEO_TEMPLATE"
+    NATIVE_AD_VIDEO_TEMPLATE = "NATIVE_AD_VIDEO_TEMPLATE",
+    NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE = "NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE"
 }
 export declare enum Color {
     RED = "RED",
@@ -230,7 +233,23 @@ export declare enum NativeAdEvents {
     VIDEO_OPERATOR_VIDEO_PLAY = "video_operator_video_play",
     VIDEO_OPERATOR_VIDEO_PAUSE = "video_operator_video_pause",
     VIDEO_OPERATOR_VIDEO_END = "video_operator_video_end",
-    VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute"
+    VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute",
+    APP_DOWNLOAD_STATUS_CHANGED = "app_download_status_changed",
+    APP_DOWNLOAD_NON_WIFI_DOWNLOAD = "app_download_non_wifi_download"
+}
+export declare enum VastEvents {
+    VAST_LOAD_SUCCESS = "vast_load_success",
+    VAST_LOAD_FAILED = "vast_load_failed",
+    VAST_PLAY_STATE_CHANGED = "vast_play_state_changed",
+    VAST_VOLUME_CHANGED = "vast_volume_changed",
+    VAST_SCREEN_VIEW_CHANGED = "vast_screen_view_changed",
+    VAST_PROGRESS_CHANGED = "vast_progress_changed",
+    VAST_ON_SUCCESS = "vast_on_success",
+    VAST_ON_FAILED = "vast_on_failed",
+    VAST_AD_READY = "vast_ad_ready",
+    VAST_AD_FINISH = "vast_ad_finish",
+    VAST_BUFFER_START = "vast_buffer_start",
+    VAST_BUFFER_END = "vast_buffer_end"
 }
 export declare enum DetailedCreativeType {
     BIG_IMG = 901,
@@ -240,4 +259,30 @@ export declare enum DetailedCreativeType {
     SINGLE_IMG = 909,
     SHORT_TEXT = 913,
     LONG_TEXT = 914
+}
+export declare enum CreativeMatchType {
+    EXACT = 0,
+    SMART = 1,
+    UNKNOWN = 2,
+    ANY = 3,
+    LANDSCAPE = 4,
+    PORTRAIT = 5,
+    SQUARE = 6
+}
+export declare enum ActivateStyle {
+    BOTTOM_BANNER = 1,
+    CONFIRM_DIALOG = 2
+}
+export declare enum AppDownloadStatus {
+    DOWNLOAD = "DOWNLOAD",
+    WAITING_FOR_WIFI = "WAITING_FOR_WIFI",
+    WAITING = "WAITING",
+    DOWNLOADING = "DOWNLOADING",
+    PAUSE = "PAUSE",
+    RESUME = "RESUME",
+    DOWNLOADED = "DOWNLOADED",
+    DOWNLOADFAILED = "DOWNLOADFAILED",
+    INSTALLING = "INSTALLING",
+    INSTALL = "INSTALL",
+    INSTALLED = "INSTALLED"
 }

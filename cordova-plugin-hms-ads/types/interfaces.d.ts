@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { ChildProtection, NonPersonalizedAd, UnderAgeOfPromise, AdContentClassification, Gender, AudioFocusType, MediaAspect, MediaDirection, ChoicesPosition, Color, NativeAdTemplate, InstallReferrerResponses, ConsentStatus, HMSScreenOrientation, Anchor, DetailedCreativeType } from './HMSConstants';
+
+import { ChildProtection, NonPersonalizedAd, UnderAgeOfPromise, AdContentClassification, Gender, AudioFocusType, MediaAspect, MediaDirection, ChoicesPosition, Color, NativeAdTemplate, InstallReferrerResponses, ConsentStatus, HMSScreenOrientation, Anchor, DetailedCreativeType, CreativeMatchType } from './HMSConstants';
 export interface LayoutBounds {
     marginLeft?: number;
     marginRight?: number;
@@ -45,6 +46,23 @@ export interface AdParam {
     consent?: string;
     requestLocation?: boolean;
     detailedCreativeType?: DetailedCreativeType[];
+    location?: Location;
+    contentBundle?: ContentBundle;
+}
+export interface Location {
+    lat: number;
+    lng: number;
+}
+export interface ContentBundle {
+    channelCategoryCode?: string;
+    title?: string;
+    tags?: string;
+    relatedPeople?: string;
+    content?: string;
+    contentID?: number;
+    category?: string;
+    subcategory?: string;
+    thirdCategory?: string;
 }
 export interface HMSRequestOptions {
     adContentClassification?: AdContentClassification;
@@ -135,4 +153,40 @@ export interface SplashAdLoadOptions {
     orientation?: HMSScreenOrientation;
     adParam?: AdParam;
     logoAnchor?: Anchor;
+}
+export interface VastLoadOptions {
+    adParam?: VastConfiguration;
+    playerConfig?: PlayerConfig;
+    isTestAd?: boolean;
+    isAdLoadWithAdsData?: boolean;
+    isCustomVideoPlayer?: boolean;
+}
+export interface VastConfiguration {
+    adId?: string;
+    totalDuration?: number;
+    creativeMatchStrategy?: CreativeMatchType;
+    allowMobileTraffic?: boolean;
+    adOrientation?: MediaDirection;
+    maxAdPods?: number;
+    requestOption?: HMSRequestOptions;
+}
+export interface PlayerConfig {
+    isEnableCutout?: boolean;
+    isEnablePortrait?: boolean;
+    isEnableRotation?: boolean;
+    isSkipLinearAd?: boolean;
+    isForceMute?: boolean;
+    isIndustryIconShow?: boolean;
+}
+export interface VastSdkConfiguration {
+    httpCallTimeoutMs: number;
+    httpConnectTimeoutMs: number;
+    httpKeepAliveDurationMs: number;
+    httpReadTimeoutMs: number;
+    maxHttpConnections: number;
+    maxRedirectWrapperLimit: number;
+    isTest: boolean;
+    vastEventRetryBatchSize: number;
+    vastEventRetryIntervalSeconds: number;
+    vastEventRetryUploadTimes: number;
 }

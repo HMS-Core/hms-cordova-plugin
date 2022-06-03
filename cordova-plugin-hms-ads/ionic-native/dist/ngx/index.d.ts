@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { IonicNativePlugin } from "@ionic-native/core";
 export declare enum AdParamErrorCodes {
     AD_PARAM_INNER = 0,
@@ -68,7 +69,8 @@ export declare enum BannerAdSize {
     BANNER_SIZE_728_90 = "BANNER_SIZE_728_90",
     BANNER_SIZE_DYNAMIC = "BANNER_SIZE_DYNAMIC",
     BANNER_SIZE_INVALID = "BANNER_SIZE_INVALID",
-    BANNER_SIZE_SMART = "BANNER_SIZE_SMART"
+    BANNER_SIZE_SMART = "BANNER_SIZE_SMART",
+    BANNER_SIZE_ADVANCED = "BANNER_SIZE_ADVANCED"
 }
 export declare enum HMSScreenOrientation {
     SCREEN_ORIENTATION_LANDSCAPE = 0,
@@ -127,7 +129,8 @@ export declare enum NativeAdTemplate {
     NATIVE_AD_SMALL_TEMPLATE = "NATIVE_AD_SMALL_TEMPLATE",
     NATIVE_AD_FULL_TEMPLATE = "NATIVE_AD_FULL_TEMPLATE",
     NATIVE_AD_BANNER_TEMPLATE = "NATIVE_AD_BANNER_TEMPLATE",
-    NATIVE_AD_VIDEO_TEMPLATE = "NATIVE_AD_VIDEO_TEMPLATE"
+    NATIVE_AD_VIDEO_TEMPLATE = "NATIVE_AD_VIDEO_TEMPLATE",
+    NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE = "NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE"
 }
 export declare enum Color {
     RED = "RED",
@@ -240,7 +243,49 @@ export declare enum NativeAdEvents {
     VIDEO_OPERATOR_VIDEO_PLAY = "video_operator_video_play",
     VIDEO_OPERATOR_VIDEO_PAUSE = "video_operator_video_pause",
     VIDEO_OPERATOR_VIDEO_END = "video_operator_video_end",
-    VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute"
+    VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute",
+    APP_DOWNLOAD_STATUS_CHANGED = "app_download_status_changed",
+    APP_DOWNLOAD_NON_WIFI_DOWNLOAD = "app_download_non_wifi_download"
+}
+export declare enum VastEvents {
+    VAST_LOAD_SUCCESS = "vast_load_success",
+    VAST_LOAD_FAILED = "vast_load_failed",
+    VAST_PLAY_STATE_CHANGED = "vast_play_state_changed",
+    VAST_VOLUME_CHANGED = "vast_volume_changed",
+    VAST_SCREEN_VIEW_CHANGED = "vast_screen_view_changed",
+    VAST_PROGRESS_CHANGED = "vast_progress_changed",
+    VAST_ON_SUCCESS = "vast_on_success",
+    VAST_ON_FAILED = "vast_on_failed",
+    VAST_AD_READY = "vast_ad_ready",
+    VAST_AD_FINISH = "vast_ad_finish",
+    VAST_BUFFER_START = "vast_buffer_start",
+    VAST_BUFFER_END = "vast_buffer_end"
+}
+export declare enum ActivateStyle {
+    BOTTOM_BANNER = 1,
+    CONFIRM_DIALOG = 2
+}
+export declare enum CreativeMatchType {
+    EXACT = 0,
+    SMART = 1,
+    UNKNOWN = 2,
+    ANY = 3,
+    LANDSCAPE = 4,
+    PORTRAIT = 5,
+    SQUARE = 6
+}
+export declare enum AppDownloadStatus {
+    DOWNLOAD = "DOWNLOAD",
+    WAITING_FOR_WIFI = "WAITING_FOR_WIFI",
+    WAITING = "WAITING",
+    DOWNLOADING = "DOWNLOADING",
+    PAUSE = "PAUSE",
+    RESUME = "RESUME",
+    DOWNLOADED = "DOWNLOADED",
+    DOWNLOADFAILED = "DOWNLOADFAILED",
+    INSTALLING = "INSTALLING",
+    INSTALL = "INSTALL",
+    INSTALLED = "INSTALLED"
 }
 export interface LayoutBounds {
     marginLeft?: number;
@@ -273,6 +318,23 @@ export interface AdParam {
     consent?: string;
     requestLocation?: boolean;
     detailedCreativeType?: DetailedCreativeType[];
+    location?: Location;
+    contentBundle?: ContentBundle;
+}
+export interface Location {
+    lat: number;
+    lng: number;
+}
+export interface ContentBundle {
+    channelCategoryCode?: string;
+    title?: string;
+    tags?: string;
+    relatedPeople?: string;
+    content?: string;
+    contentID?: number;
+    category?: string;
+    subcategory?: string;
+    thirdCategory?: string;
 }
 export interface HMSRequestOptions {
     adContentClassification?: AdContentClassification;
@@ -364,6 +426,42 @@ export interface SplashAdLoadOptions {
     adParam?: AdParam;
     logoAnchor?: Anchor;
 }
+export interface VastLoadOptions {
+    adParam?: VastConfiguration;
+    playerConfig?: PlayerConfig;
+    isTestAd?: boolean;
+    isAdLoadWithAdsData?: boolean;
+    isCustomVideoPlayer?: boolean;
+}
+export interface VastConfiguration {
+    adId?: string;
+    totalDuration?: number;
+    creativeMatchStrategy?: CreativeMatchType;
+    allowMobileTraffic?: boolean;
+    adOrientation?: MediaDirection;
+    maxAdPods?: number;
+    requestOption?: HMSRequestOptions;
+}
+export interface PlayerConfig {
+    isEnableCutout?: boolean;
+    isEnablePortrait?: boolean;
+    isEnableRotation?: boolean;
+    isSkipLinearAd?: boolean;
+    isForceMute?: boolean;
+    isIndustryIconShow?: boolean;
+}
+export interface VastSdkConfiguration {
+    httpCallTimeoutMs: number;
+    httpConnectTimeoutMs: number;
+    httpKeepAliveDurationMs: number;
+    httpReadTimeoutMs: number;
+    maxHttpConnections: number;
+    maxRedirectWrapperLimit: number;
+    isTest: boolean;
+    vastEventRetryBatchSize: number;
+    vastEventRetryIntervalSeconds: number;
+    vastEventRetryUploadTimes: number;
+}
 export declare class HMSAds extends IonicNativePlugin {
     HMSInterstitialAd: typeof HMSInterstitialAd;
     HMSBannerAd: typeof HMSBannerAd;
@@ -371,12 +469,17 @@ export declare class HMSAds extends IonicNativePlugin {
     HMSRewardAd: typeof HMSRewardAd;
     HMSNativeAd: typeof HMSNativeAd;
     HMSRollAd: typeof HMSRollAd;
+    HMSVast: typeof HMSVast;
     on(event: string, callback: () => void): void;
     init(): Promise<void>;
     getSDKVersion(): Promise<string>;
     getRequestOptions(): Promise<HMSRequestOptions>;
     setRequestOptions(requestOptions: HMSRequestOptions): Promise<void>;
     setConsent(consent: string): Promise<void>;
+    getAppActivateStyle(): Promise<number>;
+    setAppActivateStyle(style: number): Promise<void>;
+    setAppInstalledNotify(status: boolean): Promise<void>;
+    isAppInstalledNotify(): Promise<boolean>;
     enableLogger(): Promise<any>;
     disableLogger(): Promise<any>;
     addTestDeviceId(testDeviceId: string): Promise<void>;
@@ -391,6 +494,11 @@ export declare class HMSAds extends IonicNativePlugin {
     referrerClientEndConnection(): Promise<void>;
     referrerClientIsReady(): Promise<boolean>;
     getInstallReferrer(): Promise<ReferrerDetails>;
+    initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
+    getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
+    updateSdkServerConfig(slotId: string): Promise<void>;
+    userAcceptAdLicense(isAcceptLicense: boolean): Promise<void>;
+    getEventProcessor(): Promise<void>;
 }
 export declare class HMSBannerAd extends IonicNativePlugin {
     on(eventName: BannerAdEvents, callback: (result?: any) => void): void;
@@ -466,6 +574,12 @@ export declare class HMSNativeAd extends IonicNativePlugin {
     recordShowStartEvent(showStartData: any): Promise<boolean>;
     onAdClose(keywords: string[]): Promise<void>;
     getNativeAdConfiguration(): Promise<NativeAdConfiguration>;
+    setOnDownloadStatusChangedListener(): Promise<void>;
+    setOnNonWifiDownloadListener(): Promise<void>;
+    setShowPermissionDialog(show: boolean): Promise<void>;
+    setAllowedNonWifiNetwork(allowed: boolean): Promise<void>;
+    cancel(): Promise<void>;
+    continueDownload(): Promise<void>;
 }
 export declare class HMSRewardAd extends IonicNativePlugin {
     on(eventName: RewardAdEvents, callback: (result?: any) => void): void;
@@ -487,6 +601,7 @@ export declare class HMSRewardAd extends IonicNativePlugin {
     getRewardVerifyConfig(): Promise<HMSRewardVerifyConfig>;
     setOnMetadataChangedListener(): Promise<void>;
     setRewardAdListener(): Promise<void>;
+    setMobileDataAlertSwitch(alertSwitch: boolean): Promise<void>;
 }
 export declare class HMSRollAd extends IonicNativePlugin {
     on(eventName: RollAdEvents, callback: (result?: any) => void): void;
@@ -536,4 +651,15 @@ export declare class HMSSplashAd extends IonicNativePlugin {
     isLoaded(): Promise<boolean>;
     setAdDisplayListener(): Promise<void>;
     setAudioFocusType(audioFocusType: AudioFocusType): Promise<void>;
+}
+export declare class HMSVast extends IonicNativePlugin {
+    on(eventName: VastEvents, callback: (result?: any) => void): void;
+    create(divId: string, bounds?: LayoutBounds): Promise<HMSVast>;
+    scroll(): void;
+    loadAd(options: VastLoadOptions): Promise<void>;
+    resume(): Promise<void>;
+    pause(): Promise<void>;
+    release(): Promise<void>;
+    toggleMuteState(isMute: boolean): Promise<void>;
+    startOrPause(): Promise<void>;
 }

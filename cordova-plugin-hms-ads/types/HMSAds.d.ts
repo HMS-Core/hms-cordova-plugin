@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { HMSRequestOptions, OaidResult, ReferrerDetails, ConsentUpdateResult } from './interfaces';
+
+import { HMSRequestOptions, OaidResult, ReferrerDetails, ConsentUpdateResult, VastSdkConfiguration } from './interfaces';
 import { ConsentStatus, DebugNeedConsent } from './HMSConstants';
 export { HMSInterstitialAd } from './HMSInterstitialAd';
 export { HMSBannerAd } from './HMSBannerAd';
@@ -21,12 +22,17 @@ export { HMSRewardAd } from './HMSRewardAd';
 export { HMSSplashAd } from './HMSSplashAd';
 export { HMSRollAd } from './HMSRollAd';
 export { HMSNativeAd } from './HMSNativeAd';
+export { HMSVast } from './HMSVast';
 export declare function on(event: string, callback: () => void): void;
 export declare function init(): Promise<void>;
 export declare function getSDKVersion(): Promise<string>;
 export declare function getRequestOptions(): Promise<HMSRequestOptions>;
 export declare function setRequestOptions(requestOptions: HMSRequestOptions): Promise<void>;
 export declare function setConsent(consent: string): Promise<void>;
+export declare function getAppActivateStyle(): Promise<number>;
+export declare function setAppActivateStyle(style: number): Promise<void>;
+export declare function setAppInstalledNotify(status: boolean): Promise<void>;
+export declare function isAppInstalledNotify(): Promise<boolean>;
 export declare function enableLogger(): Promise<any>;
 export declare function disableLogger(): Promise<any>;
 export declare function addTestDeviceId(testDeviceId: string): Promise<void>;
@@ -41,3 +47,8 @@ export declare function referrerClientStartConnection(isTest?: boolean): Promise
 export declare function referrerClientEndConnection(): Promise<void>;
 export declare function referrerClientIsReady(): Promise<boolean>;
 export declare function getInstallReferrer(): Promise<ReferrerDetails>;
+export declare function initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
+export declare function getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
+export declare function updateSdkServerConfig(slotId: string): Promise<void>;
+export declare function userAcceptAdLicense(isAcceptLicense: boolean): Promise<void>;
+export declare function getEventProcessor(): Promise<void>;

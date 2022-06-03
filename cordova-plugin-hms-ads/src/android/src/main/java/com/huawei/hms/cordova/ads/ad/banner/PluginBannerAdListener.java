@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,16 +19,22 @@ package com.huawei.hms.cordova.ads.ad.banner;
 import com.huawei.hms.ads.AdListener;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdListener;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 public class PluginBannerAdListener extends PluginAbstractAdListener {
 
     private static final String BANNER_AD_CLOSED = "banner_ad_closed_%d";
+
     private static final String BANNER_AD_FAILED = "banner_ad_failed_%d";
+
     private static final String BANNER_AD_LEAVE = "banner_ad_leave_%d";
+
     private static final String BANNER_AD_OPENED = "banner_ad_opened_%d";
+
     private static final String BANNER_AD_LOADED = "banner_ad_loaded_%d";
+
     private static final String BANNER_AD_CLICKED = "banner_ad_clicked_%d";
+
     private static final String BANNER_AD_IMPRESSION = "banner_ad_impression_%d";
 
     public PluginBannerAdListener(CordovaEventRunner listenerManager, int objectId) {
@@ -45,7 +51,7 @@ public class PluginBannerAdListener extends PluginAbstractAdListener {
             @Override
             public void onAdFailed(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginBannerAdListener.BANNER_AD_FAILED,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
 
             }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@ import com.huawei.hms.cordova.ads.basef.handler.CorPack;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
 import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
+import com.huawei.hms.cordova.ads.vast.VastManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,8 +46,11 @@ import java.util.Map;
 
 public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScroll {
     public static final String TAG = AdManagerModule.class.getSimpleName();
+
     private Map<Integer, PluginAbstractAdManager> managerMap = new HashMap<>();
+
     private PluginAdLayout pluginAdLayout;
+
     private ViewGroup parent;
 
     public AdManagerModule(PluginAdLayout pluginAdLayout, HMSAds hmsAds) {
@@ -83,7 +87,9 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
         JSONArray args, CorPack corPack) {
         PluginAbstractAdManager abstractAdManager = new PluginRollAdManager(context, activity, pluginAdLayout,
             eventRunner, args.optJSONObject(1), corPack);
-        activity.runOnUiThread(() -> ((PluginRollAdManager) abstractAdManager).create(args.optJSONObject(0)));
+        activity.runOnUiThread(() -> {
+            ((PluginRollAdManager) abstractAdManager).create(args.optJSONObject(0));
+        });
         return abstractAdManager;
     }
 
@@ -91,7 +97,19 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
         JSONArray args) {
         PluginAbstractAdManager abstractAdManager = new PluginNativeAdManager(context, activity, pluginAdLayout,
             eventRunner, args.optJSONObject(1));
-        activity.runOnUiThread(() -> ((PluginNativeAdManager) abstractAdManager).create(args.optJSONObject(0)));
+        activity.runOnUiThread(() -> {
+            ((PluginNativeAdManager) abstractAdManager).create(args.optJSONObject(0));
+        });
+        return abstractAdManager;
+    }
+
+    private PluginAbstractAdManager createVast(Context context, Activity activity, CordovaEventRunner eventRunner,
+        JSONArray args) {
+        PluginAbstractAdManager abstractAdManager = new VastManager(context, activity, pluginAdLayout, eventRunner,
+            args.optJSONObject(1));
+        activity.runOnUiThread(() -> {
+            ((VastManager) abstractAdManager).create(args.optJSONObject(0));
+        });
         return abstractAdManager;
     }
 
@@ -107,7 +125,6 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
             case "hmsbannerad":
                 adManager = createBannerAd(corPack.getCordovaWebView().getContext(), corPack.getCordova().getActivity(),
                     corPack.getEventRunner(), args.optJSONArray(1));
-
                 break;
             case "hmssplashad":
                 adManager = createSplashAd(corPack.getCordovaWebView().getContext(), corPack.getEventRunner());
@@ -122,6 +139,10 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
                 break;
             case "hmsnativead":
                 adManager = createNativeAd(corPack.getCordovaWebView().getContext(), corPack.getCordova().getActivity(),
+                    corPack.getEventRunner(), args.optJSONArray(1));
+                break;
+            case "hmsvast":
+                adManager = createVast(corPack.getCordovaWebView().getContext(), corPack.getCordova().getActivity(),
                     corPack.getEventRunner(), args.optJSONArray(1));
                 break;
             default:
@@ -146,8 +167,9 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
                     managerMap.get(args.optInt(1)).runMethod(args.optString(2), args.optJSONObject(3), promise);
                     corPack.sendSingleEvent(loggerMethod);
                 } else {
-                    promise.error(ErrorCodes.AD_NOT_INITIALIZED.toJson());
-                    corPack.sendSingleEvent(loggerMethod, "" + ErrorCodes.AD_NOT_INITIALIZED.toJson().optInt("code"));
+                    promise.error(ErrorAndStateCodes.AD_NOT_INITIALIZED.toJson());
+                    corPack.sendSingleEvent(loggerMethod,
+                        "" + ErrorAndStateCodes.AD_NOT_INITIALIZED.toJson().optInt("code"));
                 }
             } catch (NoSuchMethodException | IllegalAccessException e) {
                 corPack.sendSingleEvent(loggerMethod, e.getMessage());
@@ -167,4 +189,3 @@ public class AdManagerModule extends CordovaBaseModule implements OnAdLayoutScro
         }
     }
 }
-

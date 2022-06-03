@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,11 +13,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+"use strict";
 ///////////////////////////////////////////////////////////////////////////
 // Constants
 ///////////////////////////////////////////////////////////////////////////
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DetailedCreativeType = exports.NativeAdEvents = exports.RewardAdEvents = exports.RollAdEvents = exports.SplashAdEvents = exports.InterstitialAdEvents = exports.BannerAdEvents = exports.Anchor = exports.InstallReferrerResponses = exports.Color = exports.NativeAdTemplate = exports.MediaDirection = exports.ChoicesPosition = exports.MediaAspect = exports.AudioFocusType = exports.ConsentStatus = exports.DebugNeedConsent = exports.HMSScreenOrientation = exports.BannerAdSize = exports.UnderAgeOfPromise = exports.ChildProtection = exports.NonPersonalizedAd = exports.Gender = exports.AdContentClassification = exports.RewardAdStatusErrorCodes = exports.AdParamErrorCodes = void 0;
+exports.AppDownloadStatus = exports.ActivateStyle = exports.CreativeMatchType = exports.DetailedCreativeType = exports.VastEvents = exports.NativeAdEvents = exports.RewardAdEvents = exports.RollAdEvents = exports.SplashAdEvents = exports.InterstitialAdEvents = exports.BannerAdEvents = exports.Anchor = exports.InstallReferrerResponses = exports.Color = exports.NativeAdTemplate = exports.MediaDirection = exports.ChoicesPosition = exports.MediaAspect = exports.AudioFocusType = exports.ConsentStatus = exports.DebugNeedConsent = exports.HMSScreenOrientation = exports.BannerAdSize = exports.UnderAgeOfPromise = exports.ChildProtection = exports.NonPersonalizedAd = exports.Gender = exports.AdContentClassification = exports.RewardAdStatusErrorCodes = exports.AdParamErrorCodes = void 0;
 var AdParamErrorCodes;
 (function (AdParamErrorCodes) {
     AdParamErrorCodes[AdParamErrorCodes["AD_PARAM_INNER"] = 0] = "AD_PARAM_INNER";
@@ -82,6 +83,7 @@ var BannerAdSize;
     BannerAdSize["BANNER_SIZE_DYNAMIC"] = "BANNER_SIZE_DYNAMIC";
     BannerAdSize["BANNER_SIZE_INVALID"] = "BANNER_SIZE_INVALID";
     BannerAdSize["BANNER_SIZE_SMART"] = "BANNER_SIZE_SMART";
+    BannerAdSize["BANNER_SIZE_ADVANCED"] = "BANNER_SIZE_ADVANCED";
 })(BannerAdSize = exports.BannerAdSize || (exports.BannerAdSize = {}));
 var HMSScreenOrientation;
 (function (HMSScreenOrientation) {
@@ -149,6 +151,7 @@ var NativeAdTemplate;
     NativeAdTemplate["NATIVE_AD_FULL_TEMPLATE"] = "NATIVE_AD_FULL_TEMPLATE";
     NativeAdTemplate["NATIVE_AD_BANNER_TEMPLATE"] = "NATIVE_AD_BANNER_TEMPLATE";
     NativeAdTemplate["NATIVE_AD_VIDEO_TEMPLATE"] = "NATIVE_AD_VIDEO_TEMPLATE";
+    NativeAdTemplate["NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE"] = "NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE";
 })(NativeAdTemplate = exports.NativeAdTemplate || (exports.NativeAdTemplate = {}));
 var Color;
 (function (Color) {
@@ -263,7 +266,24 @@ var NativeAdEvents;
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_PAUSE"] = "video_operator_video_pause";
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_END"] = "video_operator_video_end";
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_MUTE"] = "video_operator_video_mute";
+    NativeAdEvents["APP_DOWNLOAD_STATUS_CHANGED"] = "app_download_status_changed";
+    NativeAdEvents["APP_DOWNLOAD_NON_WIFI_DOWNLOAD"] = "app_download_non_wifi_download";
 })(NativeAdEvents = exports.NativeAdEvents || (exports.NativeAdEvents = {}));
+var VastEvents;
+(function (VastEvents) {
+    VastEvents["VAST_LOAD_SUCCESS"] = "vast_load_success";
+    VastEvents["VAST_LOAD_FAILED"] = "vast_load_failed";
+    VastEvents["VAST_PLAY_STATE_CHANGED"] = "vast_play_state_changed";
+    VastEvents["VAST_VOLUME_CHANGED"] = "vast_volume_changed";
+    VastEvents["VAST_SCREEN_VIEW_CHANGED"] = "vast_screen_view_changed";
+    VastEvents["VAST_PROGRESS_CHANGED"] = "vast_progress_changed";
+    VastEvents["VAST_ON_SUCCESS"] = "vast_on_success";
+    VastEvents["VAST_ON_FAILED"] = "vast_on_failed";
+    VastEvents["VAST_AD_READY"] = "vast_ad_ready";
+    VastEvents["VAST_AD_FINISH"] = "vast_ad_finish";
+    VastEvents["VAST_BUFFER_START"] = "vast_buffer_start";
+    VastEvents["VAST_BUFFER_END"] = "vast_buffer_end";
+})(VastEvents = exports.VastEvents || (exports.VastEvents = {}));
 var DetailedCreativeType;
 (function (DetailedCreativeType) {
     DetailedCreativeType[DetailedCreativeType["BIG_IMG"] = 901] = "BIG_IMG";
@@ -274,4 +294,33 @@ var DetailedCreativeType;
     DetailedCreativeType[DetailedCreativeType["SHORT_TEXT"] = 913] = "SHORT_TEXT";
     DetailedCreativeType[DetailedCreativeType["LONG_TEXT"] = 914] = "LONG_TEXT";
 })(DetailedCreativeType = exports.DetailedCreativeType || (exports.DetailedCreativeType = {}));
+var CreativeMatchType;
+(function (CreativeMatchType) {
+    CreativeMatchType[CreativeMatchType["EXACT"] = 0] = "EXACT";
+    CreativeMatchType[CreativeMatchType["SMART"] = 1] = "SMART";
+    CreativeMatchType[CreativeMatchType["UNKNOWN"] = 2] = "UNKNOWN";
+    CreativeMatchType[CreativeMatchType["ANY"] = 3] = "ANY";
+    CreativeMatchType[CreativeMatchType["LANDSCAPE"] = 4] = "LANDSCAPE";
+    CreativeMatchType[CreativeMatchType["PORTRAIT"] = 5] = "PORTRAIT";
+    CreativeMatchType[CreativeMatchType["SQUARE"] = 6] = "SQUARE";
+})(CreativeMatchType = exports.CreativeMatchType || (exports.CreativeMatchType = {}));
+var ActivateStyle;
+(function (ActivateStyle) {
+    ActivateStyle[ActivateStyle["BOTTOM_BANNER"] = 1] = "BOTTOM_BANNER";
+    ActivateStyle[ActivateStyle["CONFIRM_DIALOG"] = 2] = "CONFIRM_DIALOG";
+})(ActivateStyle = exports.ActivateStyle || (exports.ActivateStyle = {}));
+var AppDownloadStatus;
+(function (AppDownloadStatus) {
+    AppDownloadStatus["DOWNLOAD"] = "DOWNLOAD";
+    AppDownloadStatus["WAITING_FOR_WIFI"] = "WAITING_FOR_WIFI";
+    AppDownloadStatus["WAITING"] = "WAITING";
+    AppDownloadStatus["DOWNLOADING"] = "DOWNLOADING";
+    AppDownloadStatus["PAUSE"] = "PAUSE";
+    AppDownloadStatus["RESUME"] = "RESUME";
+    AppDownloadStatus["DOWNLOADED"] = "DOWNLOADED";
+    AppDownloadStatus["DOWNLOADFAILED"] = "DOWNLOADFAILED";
+    AppDownloadStatus["INSTALLING"] = "INSTALLING";
+    AppDownloadStatus["INSTALL"] = "INSTALL";
+    AppDownloadStatus["INSTALLED"] = "INSTALLED";
+})(AppDownloadStatus = exports.AppDownloadStatus || (exports.AppDownloadStatus = {}));
 //# sourceMappingURL=HMSConstants.js.map

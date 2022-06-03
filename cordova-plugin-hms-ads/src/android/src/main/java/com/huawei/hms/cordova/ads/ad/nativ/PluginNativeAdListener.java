@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,33 +13,51 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.nativ;
 
 import com.huawei.hms.ads.AdListener;
+import com.huawei.hms.ads.AppDownloadButton;
+import com.huawei.hms.ads.AppDownloadStatus;
 import com.huawei.hms.ads.VideoOperator.VideoLifecycleListener;
 import com.huawei.hms.ads.nativead.DislikeAdListener;
 import com.huawei.hms.ads.nativead.NativeAd;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdListener;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 public class PluginNativeAdListener extends PluginAbstractAdListener {
     private static final String NATIVE_AD_DISLIKED = "native_ad_disliked_%d";
+
     private static final String NATIVE_AD_LOADED_LOAD = "native_ad_loaded_load_%d";
 
     private static final String NATIVE_AD_CLOSED = "native_ad_closed_%d";
+
     private static final String NATIVE_AD_FAILED = "native_ad_failed_%d";
+
     private static final String NATIVE_AD_LEAVE = "native_ad_leave_%d";
+
     private static final String NATIVE_AD_OPENED = "native_ad_opened_%d";
+
     private static final String NATIVE_AD_LOADED = "native_ad_loaded_%d";
+
     private static final String NATIVE_AD_CLICKED = "native_ad_clicked_%d";
+
     private static final String NATIVE_AD_IMPRESSION = "native_ad_impression_%d";
 
     private static final String VIDEO_OPERATOR_VIDEO_START = "video_operator_video_start_%d";
+
     private static final String VIDEO_OPERATOR_VIDEO_PLAY = "video_operator_video_play_%d";
+
     private static final String VIDEO_OPERATOR_VIDEO_PAUSE = "video_operator_video_pause_%d";
+
     private static final String VIDEO_OPERATOR_VIDEO_END = "video_operator_video_end_%d";
+
     private static final String VIDEO_OPERATOR_VIDEO_MUTE = "video_operator_video_mute_%d";
+
+    private static final String APP_DOWNLOAD_STATUS_CHANGED = "app_download_status_changed_%d";
+
+    private static final String APP_DOWNLOAD_NON_WIFI_DOWNLOAD = "app_download_non_wifi_download_%d";
 
     private NativeAd globalNativeAd = null;
 
@@ -80,7 +98,7 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
             @Override
             public void onAdFailed(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.NATIVE_AD_FAILED,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
 
             }
 
@@ -136,6 +154,25 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
             @Override
             public void onVideoMute(boolean b) {
                 configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.VIDEO_OPERATOR_VIDEO_MUTE, b);
+            }
+        };
+    }
+
+    public AppDownloadButton.OnDownloadStatusChangedListener getOnDownloadStatusChangedListener() {
+        return new AppDownloadButton.OnDownloadStatusChangedListener() {
+            @Override
+            public void onStatusChanged(AppDownloadStatus appDownloadStatus) {
+                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_STATUS_CHANGED, appDownloadStatus);
+            }
+        };
+    }
+
+    public AppDownloadButton.OnNonWifiDownloadListener getOnNonWifiDownloadListener() {
+        return new AppDownloadButton.OnNonWifiDownloadListener() {
+            @Override
+            public boolean onNonWifiDownload(long l) {
+                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_NON_WIFI_DOWNLOAD, l);
+                return false;
             }
         };
     }

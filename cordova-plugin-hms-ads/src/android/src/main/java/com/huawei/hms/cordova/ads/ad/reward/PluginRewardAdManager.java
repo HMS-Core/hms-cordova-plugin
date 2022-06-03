@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.reward;
 
 import android.app.Activity;
@@ -26,15 +27,18 @@ import com.huawei.hms.cordova.ads.ad.PluginAbstractAdManager;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
 import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PluginRewardAdManager extends PluginAbstractAdManager {
     private RewardAd rewardAd;
+
     private Activity activity;
+
     private PluginRewardAdListener listener;
+
     private RewardVerifyConfig rewardVerifyConfig = null;
 
     public PluginRewardAdManager(Context context, Activity activity, CordovaEventRunner manager, JSONObject args) {
@@ -78,10 +82,11 @@ public class PluginRewardAdManager extends PluginAbstractAdManager {
     }
 
     public void loadAdWithAdId(JSONObject args, final Promise promise) throws JSONException {
-        if(args.has("adParam"))
-            rewardAd.loadAd(args.getString("adId"),Converter.fromJsonObjectToAdParam(args.getJSONObject("adParam")));
-        else
-            rewardAd.loadAd(args.getString("adId"),new AdParam.Builder().build());
+        if (args.has("adParam")) {
+            rewardAd.loadAd(args.getString("adId"), Converter.fromJsonObjectToAdParam(args.getJSONObject("adParam")));
+        } else {
+            rewardAd.loadAd(args.getString("adId"), new AdParam.Builder().build());
+        }
         promise.success();
     }
 
@@ -137,8 +142,9 @@ public class PluginRewardAdManager extends PluginAbstractAdManager {
 
     public void getRewardVerifyConfig(JSONObject json, final Promise promise) throws JSONException {
         if (rewardVerifyConfig == null) {
-            promise.error(ErrorCodes.REWARD_VERIFY_CONF_NOT_INITIALIZED.toJson());
-            checkIfObjectNullOrThrowError(rewardVerifyConfig, promise, ErrorCodes.REWARD_VERIFY_CONF_NOT_INITIALIZED);
+            promise.error(ErrorAndStateCodes.REWARD_VERIFY_CONF_NOT_INITIALIZED.toJson());
+            checkIfObjectNullOrThrowError(rewardVerifyConfig, promise,
+                ErrorAndStateCodes.REWARD_VERIFY_CONF_NOT_INITIALIZED);
         }
         promise.success(
             new JSONObject().put("data", rewardVerifyConfig.getData()).put("userId", rewardVerifyConfig.getUserId()));
@@ -151,6 +157,12 @@ public class PluginRewardAdManager extends PluginAbstractAdManager {
 
     public void setRewardAdListener(JSONObject args, final Promise promise) {
         rewardAd.setRewardAdListener(listener.getRewardAdListener());
+        promise.success();
+    }
+
+    public void setMobileDataAlertSwitch(JSONObject json, final Promise promise) throws JSONException {
+        boolean alertSwitch = json.optBoolean("alertSwitch", true);
+        rewardAd.setMobileDataAlertSwitch(alertSwitch);
         promise.success();
     }
 

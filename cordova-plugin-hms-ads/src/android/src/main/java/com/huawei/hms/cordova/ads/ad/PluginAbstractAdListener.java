@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad;
 
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 public abstract class PluginAbstractAdListener {
     protected final int objId;
+
     protected final CordovaEventRunner pluginListenerManager;
 
     public PluginAbstractAdListener(final CordovaEventRunner listenerManager, final int objectId) {
@@ -34,7 +36,7 @@ public abstract class PluginAbstractAdListener {
         return String.format(Locale.ENGLISH, event, objId);
     }
 
-    protected void configureEventNameAndParamsThenSendEvent(String event, Object... params) {
+    public void configureEventNameAndParamsThenSendEvent(String event, Object... params) {
         String eventName = generateEventName(event);
         Log.d("TAG", "event :: " + eventName);
         if (params.length == 0) {

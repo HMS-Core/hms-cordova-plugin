@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.instream;
 
 import android.util.Log;
@@ -27,7 +28,7 @@ import com.huawei.hms.ads.instreamad.InstreamView;
 import com.huawei.hms.cordova.ads.Converter;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdListener;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,21 +38,35 @@ import java.util.Locale;
 
 public class PluginRollAdListener extends PluginAbstractAdListener {
     private static final String TAG = PluginRollAdListener.class.getSimpleName();
+
     private static final String ROLL_AD_LOAD_FAILED = "roll_ad_load_failed_%d";
+
     private static final String ROLL_AD_LOADED = "roll_ad_loaded_%d";
+
     private static final String ROLL_AD_MEDIA_CHANGED = "roll_ad_media_changed_%d";
+
     private static final String ROLL_AD_CLICKED = "roll_ad_clicked_%d";
+
     private static final String ROLL_AD_MEDIA_PROGRESS = "roll_ad_media_progress_%d";
+
     private static final String ROLL_AD_MEDIA_START = "roll_ad_media_start_%d";
+
     private static final String ROLL_AD_MEDIA_PAUSE = "roll_ad_media_pause_%d";
+
     private static final String ROLL_AD_MEDIA_STOP = "roll_ad_media_stop_%d";
+
     private static final String ROLL_AD_MEDIA_COMPLETION = "roll_ad_media_completion_%d";
+
     private static final String ROLL_AD_MEDIA_ERROR = "roll_ad_media_error_%d";
+
     private static final String ROLL_AD_MEDIA_UNMUTE = "roll_ad_media_unmute_%d";
+
     private static final String ROLL_AD_MEDIA_MUTE = "roll_ad_media_mute_%d";
 
     private List<InstreamAd> instreamAds = null;
+
     private InstreamAd currentInstreamAd = null;
+
     private WebView webView = null;
 
     public PluginRollAdListener(CordovaEventRunner listenerManager, int objectId) {
@@ -87,7 +102,7 @@ public class PluginRollAdListener extends PluginAbstractAdListener {
             @Override
             public void onAdFailed(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginRollAdListener.ROLL_AD_LOAD_FAILED,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
             }
         };
     }

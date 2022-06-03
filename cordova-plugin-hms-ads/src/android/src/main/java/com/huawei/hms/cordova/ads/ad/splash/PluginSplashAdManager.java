@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.splash;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -43,11 +44,15 @@ import org.json.JSONObject;
 
 public class PluginSplashAdManager extends PluginAbstractAdManager {
     private SplashView splashView;
+
     private PluginSplashAdListener listener;
+
     private Context context;
+
     private Dialog dialog = null;
 
     private RelativeLayout relativeLayout;
+
     private WebView webView;
 
     public PluginSplashAdManager(Context context, CordovaEventRunner manager) {

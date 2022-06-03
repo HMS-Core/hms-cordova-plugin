@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { LayoutBounds, NativeAdLoadOptions, NativeAdOptions, Props, VideoOperatorAspectRatio, NativeAdConfiguration } from './interfaces';
 import { NativeAdEvents } from './HMSConstants';
 import { Ads } from './ads';
@@ -59,4 +60,10 @@ export declare class HMSNativeAd extends Ads {
     videoOperatorPause(): Promise<void>;
     videoOperatorPlay(): Promise<void>;
     videoOperatorStop(): Promise<void>;
+    setOnDownloadStatusChangedListener(): Promise<void>;
+    setOnNonWifiDownloadListener(): Promise<void>;
+    setShowPermissionDialog(show: boolean): Promise<void>;
+    setAllowedNonWifiNetwork(allowed: boolean): Promise<void>;
+    cancel(): Promise<void>;
+    continueDownload(): Promise<void>;
 }

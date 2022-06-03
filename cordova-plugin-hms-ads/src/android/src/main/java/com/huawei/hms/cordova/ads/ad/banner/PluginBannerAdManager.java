@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
 import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,9 +36,13 @@ import org.json.JSONObject;
 public class PluginBannerAdManager extends PluginAbstractAdManager {
 
     private BannerView bannerView;
+
     private PluginAdLayout parent;
+
     private PluginLayoutManager bannerLayoutManager;
+
     private PluginBannerAdListener listener;
+
     private Context context;
 
     public PluginBannerAdManager(Context context, PluginAdLayout parent, CordovaEventRunner manager) {
@@ -85,43 +89,50 @@ public class PluginBannerAdManager extends PluginAbstractAdManager {
     }
 
     public void getHeight(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().getHeight());
 
     }
 
     public void getHeightPx(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().getHeightPx(context));
 
     }
 
     public void getWidth(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().getWidth());
 
     }
 
     public void getWidthPx(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().getWidthPx(context));
 
     }
 
     public void isAutoHeightSize(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().isAutoHeightSize());
 
     }
 
     public void isDynamicSize(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().isDynamicSize());
 
     }
 
     public void isFullWidthSize(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise, ErrorCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(bannerView.getBannerAdSize(), promise,
+            ErrorAndStateCodes.BANNER_AD_SIZE_NOT_INITIALIZED);
         promise.success(bannerView.getBannerAdSize().isFullWidthSize());
     }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads;
 
 import com.huawei.hms.ads.HwAds;
@@ -74,5 +75,35 @@ public class HwAdsModule extends CordovaBaseModule {
     public void disableLogger(final CorPack corPack, JSONArray args, final Promise promise) {
         corPack.disableLogger();
         promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void getAppActivateStyle(final CorPack corPack, JSONArray args, final Promise promise) {
+        promise.success(HwAds.getAppActivateStyle());
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void setAppActivateStyle(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        int style = args.getInt(0);
+        HwAds.setAppActivateStyle(style);
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void setAppInstalledNotify(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
+        boolean status = args.getBoolean(0);
+        HwAds.setAppInstalledNotify(status);
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void isAppInstalledNotify(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
+        promise.success(HwAds.isAppInstalledNotify());
     }
 }

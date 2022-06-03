@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -196,4 +196,24 @@ export class HMSNativeAd extends Ads {
     videoOperatorStop(): Promise<void> {
         return this.run('videoOperatorStop')
     }
+
+    //AppDownloadButton
+    setOnDownloadStatusChangedListener(): Promise<void> {
+        return this.run('setOnDownloadStatusChangedListener')
+    }
+    setOnNonWifiDownloadListener(): Promise<void> {
+        return this.run('setOnNonWifiDownloadListener')
+    }
+    setShowPermissionDialog(show:boolean): Promise<void> {
+        return this.run('setShowPermissionDialog', { "show": show })
+    }
+    setAllowedNonWifiNetwork(allowed:boolean): Promise<void> {
+        return this.run('setAllowedNonWifiNetwork', { "allowed": allowed })
+    }
+    cancel(): Promise<void> {
+        return this.run('cancel')
+    }
+    continueDownload(): Promise<void> {
+        return this.run('continueDownload')
+    }  
 }

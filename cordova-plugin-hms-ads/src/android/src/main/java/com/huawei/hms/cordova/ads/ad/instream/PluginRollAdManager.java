@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.InitialProps;
 import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 import com.huawei.hms.cordova.ads.utils.FileUtils;
 
 import org.json.JSONArray;
@@ -49,15 +49,25 @@ import java.util.Locale;
 public class PluginRollAdManager extends PluginAbstractAdManager {
 
     private InstreamView instreamView;
+
     private PluginRollAdListener listener;
+
     private Context context;
+
     private PluginAdLayout parent;
+
     private InstreamAdLoader instreamAdLoader;
+
     private PluginLayoutManager instreamLayoutManager;
+
     private WebView webView;
+
     private FrameLayout frameLayout;
+
     private JSONObject initialProps;
+
     private Activity activity;
+
     private CorPack corPack;
 
     public PluginRollAdManager(Context context, Activity activity, PluginAdLayout parent, CordovaEventRunner manager,
@@ -344,53 +354,63 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
     }
 
     public void getAdSource(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().getAdSource());
     }
 
     public void getDuration(JSONObject json, final Promise promise) throws JSONException {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(new JSONObject().put("duration", listener.getCurrentInstreamAd().getDuration()));
     }
 
     public void getWhyThisAd(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().getWhyThisAd());
     }
 
     public void getAdSign(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().getAdSign());
     }
 
     public void isClicked(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().isClicked());
     }
 
     public void isExpired(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().isExpired());
     }
 
     public void isImageAd(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().isImageAd());
     }
 
     public void isShown(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().isShown());
 
     }
 
     public void isVideoAd(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().isVideoAd());
     }
 
     public void getCallToAction(JSONObject json, final Promise promise) {
-        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise, ErrorCodes.ROLL_AD_NOT_INITIALIZED);
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().getCallToAction());
     }
 

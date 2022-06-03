@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.interstitial;
 
 import android.app.Activity;
@@ -31,7 +32,9 @@ import org.json.JSONObject;
 
 public class PluginInterstitialAdManager extends PluginAbstractAdManager {
     private InterstitialAd interstitialAd;
+
     private PluginInterstitialAdListener listener;
+
     private Activity activity;
 
     public PluginInterstitialAdManager(Context context, Activity activity, CordovaEventRunner manager,

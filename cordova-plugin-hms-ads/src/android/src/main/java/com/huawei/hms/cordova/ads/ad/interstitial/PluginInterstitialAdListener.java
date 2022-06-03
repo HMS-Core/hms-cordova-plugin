@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad.interstitial;
 
 import com.huawei.hms.ads.AdListener;
@@ -22,27 +23,40 @@ import com.huawei.hms.ads.reward.RewardAdListener;
 import com.huawei.hms.cordova.ads.Converter;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdListener;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 public class PluginInterstitialAdListener extends PluginAbstractAdListener {
 
     private static final String INTERSTITIAL_METADATA_CHANGED = "interstitial_metadata_changed_%d";
 
     private static final String INTERSTITIAL_AD_CLOSED = "interstitial_ad_closed_%d";
+
     private static final String INTERSTITIAL_AD_FAILED = "interstitial_ad_failed_%d";
+
     private static final String INTERSTITIAL_AD_LEAVE = "interstitial_ad_leave_%d";
+
     private static final String INTERSTITIAL_AD_OPENED = "interstitial_ad_opened_%d";
+
     private static final String INTERSTITIAL_AD_LOADED = "interstitial_ad_loaded_%d";
+
     private static final String INTERSTITIAL_AD_CLICKED = "interstitial_ad_clicked_%d";
+
     private static final String INTERSTITIAL_AD_IMPRESSION = "interstitial_ad_impression_%d";
 
     private static final String INTERSTITIAL_AD_REWARDED = "interstitial_ad_rewarded_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_CLOSED = "interstitial_reward_ad_closed_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_FAILED_TO_LOAD = "interstitial_reward_ad_failed_to_load_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_LEFT_APP = "interstitial_reward_ad_left_app_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_LOADED = "interstitial_reward_ad_loaded_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_OPENED = "interstitial_reward_ad_opened_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_COMPLETED = "interstitial_reward_ad_completed_%d";
+
     private static final String INTERSTITIAL_REWARD_AD_STARTED = "interstitial_reward_ad_started_%d";
 
     public PluginInterstitialAdListener(CordovaEventRunner listenerManager, int objectId) {
@@ -68,7 +82,7 @@ public class PluginInterstitialAdListener extends PluginAbstractAdListener {
             @Override
             public void onAdFailed(int i) {
                 configureEventNameAndParamsThenSendEvent(PluginInterstitialAdListener.INTERSTITIAL_AD_FAILED,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
 
             }
 
@@ -117,7 +131,7 @@ public class PluginInterstitialAdListener extends PluginAbstractAdListener {
             public void onRewardAdFailedToLoad(int i) {
                 configureEventNameAndParamsThenSendEvent(
                     PluginInterstitialAdListener.INTERSTITIAL_REWARD_AD_FAILED_TO_LOAD,
-                    ErrorCodes.fromCode(i).toJson());
+                    ErrorAndStateCodes.fromCode(i).toJson());
             }
 
             @Override

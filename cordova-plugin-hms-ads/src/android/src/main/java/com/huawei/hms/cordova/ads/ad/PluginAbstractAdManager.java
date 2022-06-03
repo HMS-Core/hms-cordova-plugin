@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.ads.ad;
 
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
 import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
-import com.huawei.hms.cordova.ads.utils.ErrorCodes;
+import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 
 import org.json.JSONObject;
 
@@ -27,8 +28,11 @@ import java.lang.reflect.Method;
 
 public abstract class PluginAbstractAdManager {
     protected CordovaEventRunner pluginListenerManager;
+
     protected final int managerId;
+
     private static int managerIdCounter = 0;
+
     protected final String TAG;
 
     public PluginAbstractAdManager() {
@@ -50,7 +54,7 @@ public abstract class PluginAbstractAdManager {
         m.invoke(this, args, promise);
     }
 
-    public void checkIfObjectNullOrThrowError(Object object, Promise promise, ErrorCodes error) {
+    public void checkIfObjectNullOrThrowError(Object object, Promise promise, ErrorAndStateCodes error) {
         if (object == null) {
             promise.error(error.toJson());
             throw new NullPointerException(Integer.toString(error.toJson().optInt("code")));

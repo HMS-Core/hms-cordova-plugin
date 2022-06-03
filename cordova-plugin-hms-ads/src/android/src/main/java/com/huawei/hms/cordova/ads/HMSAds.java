@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 
 import com.huawei.hms.cordova.ads.basef.handler.CordovaController;
 import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
+import com.huawei.hms.cordova.ads.vast.VastModule;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -38,9 +39,10 @@ import java.util.Objects;
 public class HMSAds extends CordovaPlugin {
     private static final String TAG = HMSAds.class.getSimpleName();
 
-
     private CordovaController cordovaController;
+
     private OnAdLayoutScroll onAdLayoutScroll;
+
     private PluginAdLayout pluginAdLayout;
 
     @Override
@@ -48,7 +50,7 @@ public class HMSAds extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         final String kit = "Ads";
-        final String version = "13.4.40.303";
+        final String version = "13.4.54.300";
 
         pluginAdLayout = new PluginAdLayout(webView.getContext());
         pluginAdLayout.setLayoutParams(
@@ -59,7 +61,7 @@ public class HMSAds extends CordovaPlugin {
         });
         cordovaController = new CordovaController(this, kit, version,
             Arrays.asList(new HwAdsModule(), new ConsentModule(), new IdentifierModule(), new InstallReferrerModule(),
-                new AdManagerModule(pluginAdLayout, this)));
+                new AdManagerModule(pluginAdLayout, this), new VastModule()));
 
         boolean isIonicCapacitor = false;
         try {
