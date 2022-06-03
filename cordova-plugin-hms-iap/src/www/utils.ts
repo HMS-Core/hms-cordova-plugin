@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,32 +15,40 @@
 */
 import { exec } from "cordova";
 
-export function asyncExec(clazz: string, reference: string, args: any[] = []): Promise<any> {
-    return new Promise((resolve, reject) => {
-        exec(resolve, reject, clazz, reference, args);
-    });
+export function asyncExec(
+  clazz: string,
+  reference: string,
+  args: any[] = []
+): Promise<any> {
+  return new Promise((resolve, reject) => {
+    exec(resolve, reject, clazz, reference, args);
+  });
 }
 
 declare global {
-    interface Window {
-        hmsEvents: {
-            [key: string]: (data: any) => void;
-        };
-        runHMSEvent: (eventName: string, data: any) => void;
-        subscribeHMSEvent: (eventName: string, callback: (data: any) => void) => void;
-        [key: string]: any;
-    }
+  interface Window {
+    hmsEvents: {
+      [key: string]: (data: any) => void;
+    };
+    runHMSEvent: (eventName: string, data: any) => void;
+    subscribeHMSEvent: (
+      eventName: string,
+      callback: (data: any) => void
+    ) => void;
+    [key: string]: any;
+  }
 }
 
 function initEventHandler() {
-    if (window.hmsEvents != null) return;
-    window.hmsEvents = {};
-    window.runHMSEvent = (eventName, data) => {
-        if (window.hmsEvents.hasOwnProperty(eventName)) window.hmsEvents[eventName](data);
-    };
-    window.subscribeHMSEvent = (eventName, handler) => {
-        window.hmsEvents[eventName] = handler;
-    };
+  if (window.hmsEvents != null) return;
+  window.hmsEvents = {};
+  window.runHMSEvent = (eventName, data) => {
+    if (window.hmsEvents.hasOwnProperty(eventName))
+      window.hmsEvents[eventName](data);
+  };
+  window.subscribeHMSEvent = (eventName, handler) => {
+    window.hmsEvents[eventName] = handler;
+  };
 }
 
 initEventHandler();

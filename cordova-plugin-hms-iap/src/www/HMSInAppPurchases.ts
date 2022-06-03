@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,129 +13,197 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { asyncExec } from "./utils";
 
-export function isEnvReady(): Promise<IsEnvReadyResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["isEnvReady"]);
+export function isEnvReady(
+  isSupportAppTouch?: boolean
+): Promise<IsEnvReadyResult> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "isEnvReady",
+    { isSupportAppTouch: isSupportAppTouch },
+  ]);
 }
 export function isSandboxActivated(): Promise<IsSandboxActivatedResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["isSandboxActivated"]);
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "isSandboxActivated",
+  ]);
 }
-export function obtainOwnedPurchases(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchases", ownedPurchasesRequest]);
+export function obtainOwnedPurchases(
+  ownedPurchasesRequest: OwnedPurchasesReq
+): Promise<OwnedPurchasesResult> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "obtainOwnedPurchases",
+    ownedPurchasesRequest,
+  ]);
 }
-export function obtainProductInfo(productInfoRequest: ProductInfoReq): Promise<ProductInfoResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainProductInfo", productInfoRequest]);
+export function obtainProductInfo(
+  productInfoRequest: ProductInfoReq
+): Promise<ProductInfoResult> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "obtainProductInfo",
+    productInfoRequest,
+  ]);
 }
-export function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseIntentResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["createPurchaseIntent", purchaseIntentRequest]);
+export function createPurchaseIntent(
+  purchaseIntentRequest: PurchaseIntentReq
+): Promise<PurchaseIntentResult> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "createPurchaseIntent",
+    purchaseIntentRequest,
+  ]);
 }
 export function consumeOwnedPurchase(
-    consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq
+  consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq
 ): Promise<ConsumeOwnedPurchaseResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["consumeOwnedPurchase", consumeOwnedPurchaseRequest]);
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "consumeOwnedPurchase",
+    consumeOwnedPurchaseRequest,
+  ]);
 }
-export function obtainOwnedPurchaseRecord(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchaseRecord", ownedPurchasesRequest]);
+export function obtainOwnedPurchaseRecord(
+  ownedPurchasesRequest: OwnedPurchasesReq
+): Promise<OwnedPurchasesResult> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "obtainOwnedPurchaseRecord",
+    ownedPurchasesRequest,
+  ]);
 }
-export function startIapActivity(startIapActivityRequest: StartIapActivityReq): Promise<void> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["startIapActivity", startIapActivityRequest]);
+export function startIapActivity(
+  startIapActivityRequest: StartIapActivityReq
+): Promise<void> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "startIapActivity",
+    startIapActivityRequest,
+  ]);
 }
 export function enableLogger(): Promise<void> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["enableLogger"]);
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", ["enableLogger"]);
 }
 export function disableLogger(): Promise<void> {
-    return asyncExec("HMSInAppPurchases", "InAppPurchases", ["disableLogger"]);
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", ["disableLogger"]);
+}
+export function enablePendingPurchase(): Promise<void> {
+  return asyncExec("HMSInAppPurchases", "InAppPurchases", [
+    "enablePendingPurchase",
+  ]);
 }
 
 /**
  * INTERFACES
  */
 export interface Status {
-    errorString: string;
-    statusCode: number;
-    statusMessage: string;
-    hasResolution: boolean;
-    isCanceled: boolean;
-    isInterrupted: boolean;
-    isSuccess: boolean;
-    describeContents: number;
+  errorString: string;
+  statusCode: number;
+  statusMessage: string;
+  hasResolution: boolean;
+  isCanceled: boolean;
+  isInterrupted: boolean;
+  isSuccess: boolean;
+  describeContents: number;
 }
 export interface IsEnvReadyResult {
-    returnCode: number;
-    status: Status;
+  returnCode: number;
+  status: Status;
+  country: string;
+  carrierId: string;
 }
 export interface IsSandboxActivatedResult {
-    returnCode: number;
-    errMsg: string;
-    isSandboxUser: boolean;
-    isSandboxApk: boolean;
-    versionInApk: string;
-    versionFrMarket: string;
-    status: Status;
+  returnCode: number;
+  errMsg: string;
+  isSandboxUser: boolean;
+  isSandboxApk: boolean;
+  versionInApk: string;
+  versionFrMarket: string;
+  status: Status;
 }
 export interface OwnedPurchasesReq {
-    priceType: number;
-    continuationToken?: string;
+  signatureAlgorithm?: string;
+  priceType: number;
+  continuationToken?: string;
 }
 export interface OwnedPurchasesResult {
-    continuationToken: string;
-    errMsg: string;
-    itemList: string[];
-    inAppPurchaseDataList: string[];
-    inAppSignature: string[];
-    placedInappPurchaseDataList: string[];
-    placedInappSignatureList: string[];
-    returnCode: number;
-    status: Status;
+  signatureAlgorithm?: string;
+  continuationToken: string;
+  errMsg: string;
+  itemList: string[];
+  inAppPurchaseDataList: string[];
+  inAppSignature: string[];
+  placedInappPurchaseDataList: string[];
+  placedInappSignatureList: string[];
+  returnCode: number;
+  status: Status;
 }
 export interface ProductInfoReq {
-    priceType: number;
-    productList: string[];
+  priceType: number;
+  productList: string[];
 }
 export interface ProductInfoResult {
-    returnCode: number;
-    errMsg: string;
-    productInfoList: ProductInfo[];
-    status: Status;
+  returnCode: number;
+  errMsg: string;
+  productInfoList: ProductInfo[];
+  status: Status;
 }
 export interface ProductInfo {
-    productId: string;
-    priceType: number;
-    price: string;
-    microsPrice: number;
-    originalLocalPrice: string;
-    originalMicroPrice: number;
-    currency: string;
-    productName: string;
-    productDesc: string;
-    subSpecialPriceMicros: number;
-    subSpecialPeriodCycles: number;
-    subProductLevel: number;
+  productId: string;
+  priceType: number;
+  price: string;
+  microsPrice: number;
+  originalLocalPrice: string;
+  originalMicroPrice: number;
+  currency: string;
+  productName: string;
+  productDesc: string;
+  subSpecialPriceMicros: number;
+  subSpecialPeriodCycles: number;
+  subProductLevel: number;
+  status: number;
+  offerUsedStatus: number;
+  subGroupTitle: string;
+  subPeriod: string;
+  subSpecialPeriod: string;
+  subSpecialPrice: string;
+  subFreeTrialPeriod: string;
+  subGroupId: string;
 }
 export interface PurchaseIntentReq {
-    priceType: number;
-    productId: string;
-    developerPayload: string;
-    reservedInfor: string;
+  signatureAlgorithm?: string;
+  priceType: number;
+  productId: string;
+  developerPayload: string;
+  reservedInfor: string;
 }
 export interface PurchaseIntentResult {
-    returnCode: number;
-    errMsg: string;
-    inAppPurchaseData: string;
-    inAppDataSignature: string;
+  returnCode: number;
+  errMsg: string;
+  signatureAlgorithm?: string;
+  status: Status;
+}
+
+export interface PurchaseResultInfo {
+  returnCode: number;
+  errMsg: string;
+  inAppPurchaseData: string;
+  inAppDataSignature: string;
+  signatureAlgorithm?: string;
 }
 export interface ConsumeOwnedPurchaseReq {
-    inAppPurchaseData: string;
-    developerChallenge: string;
+  signatureAlgorithm?: string;
+  inAppPurchaseData: string;
+  developerChallenge: string;
 }
 export interface ConsumeOwnedPurchaseResult {
-    consumePurchaseData: string;
-    dataSignature: string;
-    errMsg: string;
-    returnCode: number;
-    status: Status;
+  signatureAlgorithm?: string;
+  consumePurchaseData: string;
+  dataSignature: string;
+  errMsg: string;
+  returnCode: number;
+  status: Status;
 }
 export interface StartIapActivityReq {
-    productId?: string;
+  productId?: string;
+}
+
+export enum SignAlgorithmConstants {
+  SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS = "SHA256WithRSA/PSS",
 }

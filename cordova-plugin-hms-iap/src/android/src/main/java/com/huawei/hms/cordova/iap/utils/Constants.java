@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,8 +28,11 @@ import java.util.Map;
 
 public final class Constants {
     public static final int ERR_CAN_NOT_LOG_IN = 722;
+
     public static final int ERR_INTENT_DATA_EMPTY = 723;
+
     public static final int REQUEST_IS_ENVIRONMENT_READY = 111;
+
     public static final int REQUEST_CREATE_PURCHASE_INTENT = 222;
 
     private static final Map<String, Integer> CONSTANTS_MAP = new HashMap<>();
@@ -50,10 +53,12 @@ public final class Constants {
         CONSTANTS_MAP.put("ORDER_PRODUCT_OWNED", OrderStatusCode.ORDER_PRODUCT_OWNED);
         CONSTANTS_MAP.put("ORDER_STATE_CANCEL", OrderStatusCode.ORDER_STATE_CANCEL);
         CONSTANTS_MAP.put("ORDER_STATE_FAILED", OrderStatusCode.ORDER_STATE_FAILED);
+        CONSTANTS_MAP.put("ORDER_STATE_DEFAULT_CODE", OrderStatusCode.ORDER_STATE_DEFAULT_CODE);
         CONSTANTS_MAP.put("ORDER_STATE_NET_ERROR", OrderStatusCode.ORDER_STATE_NET_ERROR);
         CONSTANTS_MAP.put("ORDER_STATE_PARAM_ERROR", OrderStatusCode.ORDER_STATE_PARAM_ERROR);
         CONSTANTS_MAP.put("ORDER_STATE_SUCCESS", OrderStatusCode.ORDER_STATE_SUCCESS);
         CONSTANTS_MAP.put("ORDER_VR_UNINSTALL_ERROR", OrderStatusCode.ORDER_VR_UNINSTALL_ERROR);
+        CONSTANTS_MAP.put("ORDER_STATE_PENDING", OrderStatusCode.ORDER_STATE_PENDING);
 
         // InAppPurchaseData
         CONSTANTS_MAP.put("PURCHASE_DATA_NOT_PRESENT", InAppPurchaseData.NOT_PRESENT);
@@ -63,7 +68,7 @@ public final class Constants {
         CONSTANTS_MAP.put("PURCHASE_STATE_INITIALIZED", InAppPurchaseData.PurchaseState.INITIALIZED);
         CONSTANTS_MAP.put("PURCHASE_STATE_PURCHASED", InAppPurchaseData.PurchaseState.PURCHASED);
         CONSTANTS_MAP.put("PURCHASE_STATE_REFUNDED", InAppPurchaseData.PurchaseState.REFUNDED);
-
+        CONSTANTS_MAP.put("PURCHASE_STATE_PENDING", InAppPurchaseData.PurchaseState.PENDING);
         // PriceType
         CONSTANTS_MAP.put("PRICE_TYPE_IN_APP_CONSUMABLE", IapClient.PriceType.IN_APP_CONSUMABLE);
         CONSTANTS_MAP.put("PRICE_TYPE_IN_APP_NONCONSUMABLE", IapClient.PriceType.IN_APP_NONCONSUMABLE);

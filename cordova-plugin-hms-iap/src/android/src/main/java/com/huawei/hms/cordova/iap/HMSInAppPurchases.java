@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,28 +17,33 @@
 package com.huawei.hms.cordova.iap;
 
 import android.content.Intent;
+
 import com.huawei.hms.cordova.iap.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.iap.basef.handler.CordovaController;
-import java.util.Arrays;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 
+import java.util.Arrays;
+
 public class HMSInAppPurchases extends CordovaPlugin {
     private static final String KIT = "IAP";
-    private static final String VERSION = "5.0.4.303";
+
+    private static final String VERSION = "6.4.0.301";
+
     private CordovaController cordovaController;
+
     private OnActivityResultCallback onActivityResultCallback;
 
     @Override
     public void initialize(final CordovaInterface cordova, final CordovaWebView webView) {
         super.initialize(cordova, webView);
-        cordovaController = new CordovaController(this, KIT, VERSION,
-            Arrays.asList(new CordovaBaseModule[] {
-                new InAppPurchases(this)
-            }));
+        cordovaController = new CordovaController(this, KIT, VERSION, Arrays.asList(new CordovaBaseModule[] {
+            new InAppPurchases(this)
+        }));
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Injectable } from '@angular/core';
-import { Plugin, Cordova,  IonicNativePlugin } from '@ionic-native/core';
+
+import { Injectable } from "@angular/core";
+import { Plugin, Cordova, IonicNativePlugin } from "@ionic-native/core";
 
 /**
  * @name HMSInAppPurchases
@@ -22,25 +23,23 @@ import { Plugin, Cordova,  IonicNativePlugin } from '@ionic-native/core';
  * Huawei's In-App Purchases (IAP) service integrates multiple payment methods for global payment and allows you to easily offer in-app purchases.
  */
 @Plugin({
-  pluginName: 'HMSInAppPurchases',
-  plugin: 'cordova-plugin-hms-iap',
-  pluginRef: 'HMSInAppPurchases',
-  repo: 'https://github.com/HMS-Core/hms-cordova-plugin',
-  platforms: ['Android']
+  pluginName: "HMSInAppPurchases",
+  plugin: "cordova-plugin-hms-iap",
+  pluginRef: "HMSInAppPurchases",
+  repo: "https://github.com/HMS-Core/hms-cordova-plugin",
+  platforms: ["Android"],
 })
 @Injectable()
 export class HMSInAppPurchases extends IonicNativePlugin {
-
   /**
    * Checks whether the currently signed-in HUAWEI ID is located in a country or region where HUAWEI IAP is available.
    * @return {Promise<IsEnvReadyResult>}
    */
   @Cordova({ otherPromise: true })
-  isEnvReady(): Promise<IsEnvReadyResult> {
+  isEnvReady(isSupportAppTouch?: boolean): Promise<IsEnvReadyResult> {
     return;
   }
 
-  
   /**
    * Checks whether the sign-in HUAWEI ID and app APK version meets the requirements of the sandbox testing.
    * @return {Promise<IsSandboxActivatedResult>}
@@ -56,10 +55,12 @@ export class HMSInAppPurchases extends IonicNativePlugin {
    * @return {Promise<OwnedPurchasesResult>}
    */
   @Cordova({ otherPromise: true })
-  obtainOwnedPurchases(obtainOwnedPurchasesReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
+  obtainOwnedPurchases(
+    obtainOwnedPurchasesReq: OwnedPurchasesReq
+  ): Promise<OwnedPurchasesResult> {
     return;
   }
-  
+
   /**
    * Obtains in-app product details configured in AppGallery Connect.
    * @param product
@@ -76,7 +77,9 @@ export class HMSInAppPurchases extends IonicNativePlugin {
    * @return {Promise<PurchaseIntentResult>}
    */
   @Cordova({ otherPromise: true })
-  createPurchaseIntent(purchaseIntentReq: PurchaseIntentReq): Promise<PurchaseIntentResult> {
+  createPurchaseIntent(
+    purchaseIntentReq: PurchaseIntentReq
+  ): Promise<PurchaseIntentResult> {
     return;
   }
 
@@ -86,7 +89,9 @@ export class HMSInAppPurchases extends IonicNativePlugin {
    * @return {Promise<ConsumeOwnedPurchaseResult>}
    */
   @Cordova({ otherPromise: true })
-  consumeOwnedPurchase(consumeOwnedPurchaseReq: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult> {
+  consumeOwnedPurchase(
+    consumeOwnedPurchaseReq: ConsumeOwnedPurchaseReq
+  ): Promise<ConsumeOwnedPurchaseResult> {
     return;
   }
 
@@ -96,7 +101,9 @@ export class HMSInAppPurchases extends IonicNativePlugin {
    * @return {Promise<OwnedPurchasesResult>}
    */
   @Cordova({ otherPromise: true })
-  obtainOwnedPurchaseRecord(obtainOwnedPurchaseRecordReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult> {
+  obtainOwnedPurchaseRecord(
+    obtainOwnedPurchaseRecordReq: OwnedPurchasesReq
+  ): Promise<OwnedPurchasesResult> {
     return;
   }
 
@@ -110,6 +117,32 @@ export class HMSInAppPurchases extends IonicNativePlugin {
     return;
   }
 
+  /**
+   * To implement pending purchase in your app, call this method before a purchase request is made.
+   * @return {Promise<void>}
+   */
+  @Cordova({ otherPromise: true })
+  enablePendingPurchase(): Promise<void> {
+    return;
+  }
+
+  /**
+   *Enables the HMSLogger capability which is used for sending usage analytics of IAP SDK's methods to improve the service quality.
+   * @return {Promise<void>}
+   */
+  @Cordova({ otherPromise: true })
+  enableLogger(): Promise<void> {
+    return;
+  }
+
+  /**
+   * Disables the HMSLogger capability which is used for sending usage analytics of IAP SDK's methods to improve the service quality.
+   * @return {Promise<void>}
+   */
+  @Cordova({ otherPromise: true })
+  disableLogger(): Promise<void> {
+    return;
+  }
 }
 
 // /////////////////////////////////////////////////////////
@@ -126,9 +159,11 @@ export interface Status {
   isSuccess: boolean;
   describeContents: number;
 }
- export interface IsEnvReadyResult {
+export interface IsEnvReadyResult {
   returnCode: number;
   status: Status;
+  country: string;
+  carrierId: string;
 }
 export interface IsSandboxActivatedResult {
   returnCode: number;
@@ -140,10 +175,12 @@ export interface IsSandboxActivatedResult {
   status: Status;
 }
 export interface OwnedPurchasesReq {
+  signatureAlgorithm?: string;
   priceType: number;
   continuationToken?: string;
-};
+}
 export interface OwnedPurchasesResult {
+  signatureAlgorithm?: string;
   continuationToken: string;
   errMsg: string;
   itemList: string[];
@@ -157,7 +194,7 @@ export interface OwnedPurchasesResult {
 export interface ProductInfoReq {
   priceType: number;
   productList: string[];
-};
+}
 export interface ProductInfoResult {
   returnCode: number;
   errMsg: string;
@@ -177,24 +214,43 @@ export interface ProductInfo {
   subSpecialPriceMicros: number;
   subSpecialPeriodCycles: number;
   subProductLevel: number;
+  status: number;
+  offerUsedStatus: number;
+  subGroupTitle: string;
+  subPeriod: string;
+  subSpecialPeriod: string;
+  subSpecialPrice: string;
+  subFreeTrialPeriod: string;
+  subGroupId: string;
 }
 export interface PurchaseIntentReq {
+  signatureAlgorithm?: string;
   priceType: number;
   productId: string;
   developerPayload: string;
   reservedInfor: string;
-};
+}
 export interface PurchaseIntentResult {
+  returnCode: number;
+  errMsg: string;
+  signatureAlgorithm?: string;
+  status: Status;
+}
+
+export interface PurchaseResultInfo {
   returnCode: number;
   errMsg: string;
   inAppPurchaseData: string;
   inAppDataSignature: string;
+  signatureAlgorithm?: string;
 }
 export interface ConsumeOwnedPurchaseReq {
+  signatureAlgorithm?: string;
   inAppPurchaseData: string;
   developerChallenge: string;
-};
+}
 export interface ConsumeOwnedPurchaseResult {
+  signatureAlgorithm?: string;
   consumePurchaseData: string;
   dataSignature: string;
   errMsg: string;
@@ -203,4 +259,8 @@ export interface ConsumeOwnedPurchaseResult {
 }
 export interface StartIapActivityReq {
   productId?: string;
+}
+
+export enum SignAlgorithmConstants {
+  SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS = "SHA256WithRSA/PSS",
 }

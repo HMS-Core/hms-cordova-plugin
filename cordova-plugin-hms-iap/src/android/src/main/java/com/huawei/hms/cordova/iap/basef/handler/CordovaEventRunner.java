@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,13 +18,16 @@ package com.huawei.hms.cordova.iap.basef.handler;
 
 import android.app.Activity;
 import android.util.Log;
+
 import org.apache.cordova.CordovaWebView;
 
 public class CordovaEventRunner {
     private static final String TAG = CordovaEventRunner.class.getName();
 
     private final HMSLogger hmsLogger;
+
     private final CordovaWebView webView;
+
     private final Activity activity;
 
     CordovaEventRunner(final CordovaWebView cordovaWebView, final Activity activity, final HMSLogger hmsLogger) {
@@ -58,8 +61,8 @@ public class CordovaEventRunner {
 
     private String buildJSEventParameters(final Object... objects) {
         final String toStrNotValidErr =
-            "Sent event parameter value is not valid! Please add toString() method to the object you " +
-                "are passing or do not pass this object as an event parameter.";
+            "Sent event parameter value is not valid! Please add toString() method to the object you "
+                + "are passing or do not pass this object as an event parameter.";
         final StringBuilder eventParametersBuilder = new StringBuilder();
         for (final Object obj : objects) {
             if (!isToStringValueValid(obj)) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -91,6 +91,7 @@ public final class JSONUtils {
         try {
             jsonObject.put("developerChallenge", obj.getDeveloperChallenge());
             jsonObject.put("purchaseToken", obj.getPurchaseToken());
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -102,6 +103,8 @@ public final class JSONUtils {
         try {
             consumeOwnedPurchaseReq.setDeveloperChallenge(jsonObject.getString("developerChallenge"));
             consumeOwnedPurchaseReq.setPurchaseToken(getInAppPurchaseDataFromJSON(jsonObject).getPurchaseToken());
+            consumeOwnedPurchaseReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -116,6 +119,7 @@ public final class JSONUtils {
             jsonObject.put("errMsg", obj.getErrMsg());
             jsonObject.put("returnCode", obj.getReturnCode());
             jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -125,6 +129,7 @@ public final class JSONUtils {
     public static JSONObject getJSONFromInAppPurchaseData(final InAppPurchaseData obj) {
         final JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put("accountFlag", obj.getAccountFlag());
             jsonObject.put("appInfo", obj.getAppInfo());
             jsonObject.put("applicationId", obj.getApplicationId());
             jsonObject.put("cancelledSubKeepDays", obj.getCancelledSubKeepDays());
@@ -187,6 +192,8 @@ public final class JSONUtils {
         try {
             jsonObject.put("returnCode", obj.getReturnCode());
             jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+            jsonObject.put("country", obj.getCountry());
+            jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -214,6 +221,7 @@ public final class JSONUtils {
         try {
             jsonObject.put("continuationToken", obj.getContinuationToken());
             jsonObject.put("priceType", obj.getPriceType());
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -225,6 +233,7 @@ public final class JSONUtils {
         try {
             ownedPurchasesReq.setPriceType(jsonObject.getInt("priceType"));
             ownedPurchasesReq.setContinuationToken(jsonObject.optString("continuationToken"));
+            ownedPurchasesReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -243,6 +252,7 @@ public final class JSONUtils {
             jsonObject.put("placedInappSignatureList", new JSONArray(obj.getPlacedInappSignatureList()));
             jsonObject.put("returnCode", obj.getReturnCode());
             jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -271,6 +281,7 @@ public final class JSONUtils {
             jsonObject.put("subGroupId", obj.getSubGroupId());
             jsonObject.put("subGroupTitle", obj.getSubGroupTitle());
             jsonObject.put("subProductLevel", obj.getSubProductLevel());
+            jsonObject.put("offerUsedStatus", obj.getOfferUsedStatus());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -318,6 +329,8 @@ public final class JSONUtils {
             jsonObject.put("priceType", obj.getPriceType());
             jsonObject.put("productId", obj.getProductId());
             jsonObject.put("developerPayload", obj.getDeveloperPayload());
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
+
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -331,6 +344,8 @@ public final class JSONUtils {
             purchaseIntentReq.setProductId(jsonObject.getString("productId"));
             purchaseIntentReq.setDeveloperPayload(jsonObject.getString("developerPayload"));
             purchaseIntentReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+            purchaseIntentReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -345,6 +360,8 @@ public final class JSONUtils {
             jsonObject.put("paymentData", obj.getPaymentData());
             jsonObject.put("paymentSignature", obj.getPaymentSignature());
             jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
+
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -358,6 +375,7 @@ public final class JSONUtils {
             jsonObject.put("errMsg", obj.getErrMsg());
             jsonObject.put("inAppPurchaseData", obj.getInAppPurchaseData());
             jsonObject.put("inAppDataSignature", obj.getInAppDataSignature());
+            jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }

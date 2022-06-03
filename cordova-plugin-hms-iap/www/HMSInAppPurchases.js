@@ -1,5 +1,6 @@
+"use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,48 +14,81 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.startIapActivity = exports.obtainOwnedPurchaseRecord = exports.consumeOwnedPurchase = exports.createPurchaseIntent = exports.obtainProductInfo = exports.obtainOwnedPurchases = exports.isSandboxActivated = exports.isEnvReady = void 0;
+exports.SignAlgorithmConstants = exports.enablePendingPurchase = exports.disableLogger = exports.enableLogger = exports.startIapActivity = exports.obtainOwnedPurchaseRecord = exports.consumeOwnedPurchase = exports.createPurchaseIntent = exports.obtainProductInfo = exports.obtainOwnedPurchases = exports.isSandboxActivated = exports.isEnvReady = void 0;
 const utils_1 = require("./utils");
-function isEnvReady() {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["isEnvReady"]);
+function isEnvReady(isSupportAppTouch) {
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "isEnvReady",
+        { isSupportAppTouch: isSupportAppTouch },
+    ]);
 }
 exports.isEnvReady = isEnvReady;
 function isSandboxActivated() {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["isSandboxActivated"]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "isSandboxActivated",
+    ]);
 }
 exports.isSandboxActivated = isSandboxActivated;
 function obtainOwnedPurchases(ownedPurchasesRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchases", ownedPurchasesRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "obtainOwnedPurchases",
+        ownedPurchasesRequest,
+    ]);
 }
 exports.obtainOwnedPurchases = obtainOwnedPurchases;
 function obtainProductInfo(productInfoRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainProductInfo", productInfoRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "obtainProductInfo",
+        productInfoRequest,
+    ]);
 }
 exports.obtainProductInfo = obtainProductInfo;
 function createPurchaseIntent(purchaseIntentRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["createPurchaseIntent", purchaseIntentRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "createPurchaseIntent",
+        purchaseIntentRequest,
+    ]);
 }
 exports.createPurchaseIntent = createPurchaseIntent;
 function consumeOwnedPurchase(consumeOwnedPurchaseRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["consumeOwnedPurchase", consumeOwnedPurchaseRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "consumeOwnedPurchase",
+        consumeOwnedPurchaseRequest,
+    ]);
 }
 exports.consumeOwnedPurchase = consumeOwnedPurchase;
 function obtainOwnedPurchaseRecord(ownedPurchasesRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["obtainOwnedPurchaseRecord", ownedPurchasesRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "obtainOwnedPurchaseRecord",
+        ownedPurchasesRequest,
+    ]);
 }
 exports.obtainOwnedPurchaseRecord = obtainOwnedPurchaseRecord;
 function startIapActivity(startIapActivityRequest) {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["startIapActivity", startIapActivityRequest]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "startIapActivity",
+        startIapActivityRequest,
+    ]);
 }
 exports.startIapActivity = startIapActivity;
 function enableLogger() {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["enableLogger"]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", ["enableLogger"]);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return utils_1.asyncExec("HMSInAppPurchases", "InAppPurchases", ["disableLogger"]);
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", ["disableLogger"]);
 }
 exports.disableLogger = disableLogger;
+function enablePendingPurchase() {
+    return (0, utils_1.asyncExec)("HMSInAppPurchases", "InAppPurchases", [
+        "enablePendingPurchase",
+    ]);
+}
+exports.enablePendingPurchase = enablePendingPurchase;
+var SignAlgorithmConstants;
+(function (SignAlgorithmConstants) {
+    SignAlgorithmConstants["SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS"] = "SHA256WithRSA/PSS";
+})(SignAlgorithmConstants = exports.SignAlgorithmConstants || (exports.SignAlgorithmConstants = {}));
 //# sourceMappingURL=HMSInAppPurchases.js.map

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,14 +22,16 @@ import java.util.Map;
 
 class CordovaModuleGroupHandler {
     private final Map<String, CordovaModuleHandler> lookupTable = new HashMap<>();
+
     private final List<CordovaModuleHandler> cordovaModuleHandlers;
-    public CordovaModuleGroupHandler(List<CordovaModuleHandler> cordovaModuleHandlerList){
+
+    public CordovaModuleGroupHandler(List<CordovaModuleHandler> cordovaModuleHandlerList) {
         this.cordovaModuleHandlers = cordovaModuleHandlerList;
         this.fillLookupTable();
     }
 
-    private void fillLookupTable(){
-        for(CordovaModuleHandler cordovaModuleHandler : cordovaModuleHandlers) {
+    private void fillLookupTable() {
+        for (CordovaModuleHandler cordovaModuleHandler : cordovaModuleHandlers) {
             String reference = cordovaModuleHandler.getInstance().getReference();
             lookupTable.put(reference, cordovaModuleHandler);
         }
@@ -40,14 +42,17 @@ class CordovaModuleGroupHandler {
     }
 
     CordovaModuleHandler getCordovaModuleHandler(String reference) throws NoSuchCordovaModuleException {
-        if(!hasCordovaModuleHandler(reference)) throw new NoSuchCordovaModuleException();
+        if (!hasCordovaModuleHandler(reference)) {
+            throw new NoSuchCordovaModuleException();
+        }
         return lookupTable.get(reference);
     }
 
     void clear() {
         lookupTable.clear();
-        for(CordovaModuleHandler moduleHandler: cordovaModuleHandlers)
+        for (CordovaModuleHandler moduleHandler : cordovaModuleHandlers) {
             moduleHandler.clear();
+        }
         cordovaModuleHandlers.clear();
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.huawei.hms.cordova.iap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.util.Log;
@@ -48,18 +47,17 @@ import com.huawei.hms.iap.entity.PurchaseIntentResult;
 import com.huawei.hms.iap.entity.PurchaseResultInfo;
 import com.huawei.hms.iap.entity.StartIapActivityReq;
 import com.huawei.hms.iap.entity.StartIapActivityResult;
+import com.huawei.hms.iap.util.IapClientHelper;
 import com.huawei.hms.support.api.client.Status;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public final class InAppPurchases extends CordovaBaseModule implements OnActivityResultCallback {
@@ -68,11 +66,14 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
     private final Map<Integer, Integer> typesForRequests = new HashMap<>();
 
     private int requestNumber;
+
     private IapClient iapClient;
+
     private CordovaPlugin plugin;
+
     private Promise promise;
 
-    public InAppPurchases (HMSInAppPurchases hmsiap) {
+    public InAppPurchases(HMSInAppPurchases hmsiap) {
         plugin = hmsiap;
         iapClient = Iap.getIapClient(hmsiap.cordova.getActivity());
         hmsiap.setOnActivityResultCallback(this);
@@ -81,13 +82,29 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         Log.d(TAG, "new onActivityResult, requestCode=" + requestCode + ", resultCode=" + resultCode);
-
+        JSONObject mergedJson = new JSONObject();
         if (this.promise != null && typesForRequests.containsKey(requestCode)) {
             if (data == null) {
                 Log.e("onActivityResult", "data is null");
                 this.promise.error(JSONUtils.error(Constants.ERR_INTENT_DATA_EMPTY));
             } else {
                 final int requestType = ObjectUtils.safeUnboxInteger(typesForRequests.get(requestCode), -1);
+                final int accountFlag = IapClientHelper.parseAccountFlagFromIntent(data);
+                final int responseCode = IapClientHelper.parseRespCodeFromIntent(data);
+                final String country = IapClientHelper.parseCountryFromIntent(data);
+                final String carrierId = IapClientHelper.parseCarrierIdFromIntent(data);
+                final String responseMessage = IapClientHelper.parseRespMessageFromIntent(data);
+                JSONObject iapClientHelper = new JSONObject();
+
+                try {
+                    iapClientHelper.put("accountFlag", accountFlag);
+                    iapClientHelper.put("responseCode", responseCode);
+                    iapClientHelper.put("country", country);
+                    iapClientHelper.put("carrierId", carrierId);
+                    iapClientHelper.put("responseMessage", responseMessage);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
 
                 if (requestType == Constants.REQUEST_IS_ENVIRONMENT_READY) {
                     Log.i(TAG, "onActivityResult from isEnvReady");
@@ -100,9 +117,22 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
                     }
                 }
                 if (requestType == Constants.REQUEST_CREATE_PURCHASE_INTENT) {
-                    Log.i(TAG, "onActivityResult from createPurchaseIntent");
                     final PurchaseResultInfo purchaseResultInfo = iapClient.parsePurchaseResultInfoFromIntent(data);
-                    promise.success(JSONUtils.getJSONFromPurchaseResultInfo(purchaseResultInfo));
+                    JSONObject purchaseResultInfoObj = JSONUtils.getJSONFromPurchaseResultInfo(purchaseResultInfo);
+                    try {
+                        JSONObject[] objs = new JSONObject[] {iapClientHelper, purchaseResultInfoObj};
+                        for (JSONObject obj : objs) {
+                            Iterator<String> it = obj.keys();
+                            while (it.hasNext()) {
+                                String key = (String) it.next();
+                                mergedJson.put(key, obj.get(key));
+                            }
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    Log.i(TAG, "onActivityResult from createPurchaseIntent");
+                    promise.success(mergedJson);
                 }
                 typesForRequests.remove(requestCode);
             }
@@ -124,23 +154,40 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
 
     @HMSLog
     @CordovaMethod
-    public void isEnvReady(final CorPack corPack, JSONArray args, final Promise promise) {
+    public void isEnvReady(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         this.promise = promise;
         plugin.cordova.setActivityResultCallback(plugin);
-        final Task<IsEnvReadyResult> task = iapClient.isEnvReady();
-        task.addOnSuccessListener(result -> {
-            Log.i(TAG, "isEnvReady success");
-            promise.success(JSONUtils.getJSONFromIsEnvReadyResult(result));
-        }).addOnFailureListener(e -> {
-            Log.i(TAG, "isEnvReady fail");
-            handleError(e, promise, Constants.REQUEST_IS_ENVIRONMENT_READY,
-                new Integer[] {OrderStatusCode.ORDER_HWID_NOT_LOGIN});
-        });
+        JSONObject json = args.getJSONObject(0);
+
+        boolean isSupportAppTouch = json.optBoolean("isSupportAppTouch", false);
+        if (isSupportAppTouch) {
+            final Task<IsEnvReadyResult> task = iapClient.isEnvReady(true);
+            task.addOnSuccessListener(result -> {
+                Log.i(TAG, "isEnvReady success");
+                promise.success(JSONUtils.getJSONFromIsEnvReadyResult(result));
+            }).addOnFailureListener(e -> {
+                Log.i(TAG, "isEnvReady fail");
+                handleError(e, promise, Constants.REQUEST_IS_ENVIRONMENT_READY,
+                    new Integer[] {OrderStatusCode.ORDER_HWID_NOT_LOGIN});
+            });
+        } else {
+            final Task<IsEnvReadyResult> task = iapClient.isEnvReady();
+            task.addOnSuccessListener(result -> {
+                Log.i(TAG, "isEnvReady success");
+                promise.success(JSONUtils.getJSONFromIsEnvReadyResult(result));
+            }).addOnFailureListener(e -> {
+                Log.i(TAG, "isEnvReady fail");
+                handleError(e, promise, Constants.REQUEST_IS_ENVIRONMENT_READY,
+                    new Integer[] {OrderStatusCode.ORDER_HWID_NOT_LOGIN});
+            });
+        }
+
     }
 
     @HMSLog
     @CordovaMethod
-    public void obtainOwnedPurchases(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void obtainOwnedPurchases(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         JSONObject ownedPurchasesRequest = args.getJSONObject(0);
         final OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequest);
         final Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchases(req);
@@ -172,7 +219,8 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
 
     @HMSLog
     @CordovaMethod
-    public void createPurchaseIntent(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void createPurchaseIntent(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         this.promise = promise;
         plugin.cordova.setActivityResultCallback(plugin);
         JSONObject purchaseIntentRequest = args.getJSONObject(0);
@@ -194,7 +242,8 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
 
     @HMSLog
     @CordovaMethod
-    public void consumeOwnedPurchase(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void consumeOwnedPurchase(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         JSONObject consumeOwnedPurchaseRequest = args.getJSONObject(0);
         final ConsumeOwnedPurchaseReq req = JSONUtils.getConsumeOwnedPurchaseReqFromJSON(consumeOwnedPurchaseRequest);
         final Task<ConsumeOwnedPurchaseResult> task = iapClient.consumeOwnedPurchase(req);
@@ -210,11 +259,11 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
 
     @HMSLog
     @CordovaMethod
-    public void obtainOwnedPurchaseRecord(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void obtainOwnedPurchaseRecord(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         JSONObject ownedPurchasesRequest = args.getJSONObject(0);
         final OwnedPurchasesReq req = JSONUtils.getOwnedPurchasesReqFromJSON(ownedPurchasesRequest);
         final Task<OwnedPurchasesResult> task = iapClient.obtainOwnedPurchaseRecord(req);
-
         task.addOnSuccessListener(result -> {
             Log.i(TAG, "obtainOwnedPurchaseRecord success");
             promise.success(JSONUtils.getJSONFromOwnedPurchasesResult(result));
@@ -230,14 +279,13 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
         final StartIapActivityReq req = new StartIapActivityReq();
 
         String productId = null;
-
         try {
             productId = args.get(0) == null ? null : args.getJSONObject(0).getString("productId");
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
 
-        if(productId == null) {
+        if (productId == null) {
             req.setType(StartIapActivityReq.TYPE_SUBSCRIBE_MANAGER_ACTIVITY);
         } else {
             req.setSubscribeProductId(productId);
@@ -260,6 +308,13 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
     @CordovaMethod
     public void enableLogger(final CorPack corPack, JSONArray args, final Promise promise) {
         corPack.enableLogger();
+        promise.success();
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void enablePendingPurchase(final CorPack corPack, JSONArray args, final Promise promise) {
+        iapClient.enablePendingPurchase();
         promise.success();
     }
 
@@ -288,7 +343,8 @@ public final class InAppPurchases extends CordovaBaseModule implements OnActivit
         handleError(e, promise, null, new Integer[] {});
     }
 
-    private void handleError(final Exception e, final Promise promise, final Integer requestType, final Integer[] statusCodes) {
+    private void handleError(final Exception e, final Promise promise, final Integer requestType,
+        final Integer[] statusCodes) {
         if (e instanceof IapApiException) {
             final IapApiException apiException = (IapApiException) e;
             final Status status = apiException.getStatus();
