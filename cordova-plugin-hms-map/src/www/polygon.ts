@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import {PatternItem, LatLng, Color, JointType} from "./interfaces";
-import {asyncExec} from "./utils";
+import { PatternItem, LatLng, Color, JointType } from "./interfaces";
+import { asyncExec } from "./utils";
 
 export interface Polygon {
     getFillColor(): Promise<Color>;
@@ -49,7 +49,6 @@ export interface Polygon {
 }
 
 export class PolygonImpl implements Polygon {
-
     private readonly mapDivId: string;
     private readonly mapCapsuleId: number;
     private readonly id: string;
@@ -61,11 +60,11 @@ export class PolygonImpl implements Polygon {
     }
 
     getFillColor(): Promise<Color> {
-        return this.getComponentOptions('getFillColor');
+        return this.getComponentOptions("getFillColor");
     }
 
     getHoles(): Promise<LatLng[][]> {
-        return this.getComponentOptions('getHoles');
+        return this.getComponentOptions("getHoles");
     }
 
     getId(): string {
@@ -73,43 +72,43 @@ export class PolygonImpl implements Polygon {
     }
 
     getPoints(): Promise<LatLng[]> {
-        return this.getComponentOptions('getPoints');
+        return this.getComponentOptions("getPoints");
     }
 
     getStrokeColor(): Promise<Color> {
-        return this.getComponentOptions('getStrokeColor');
+        return this.getComponentOptions("getStrokeColor");
     }
 
     getStrokeJointType(): Promise<JointType> {
-        return this.getComponentOptions('getStrokeJointType');
+        return this.getComponentOptions("getStrokeJointType");
     }
 
     getStrokePattern(): Promise<PatternItem[]> {
-        return this.getComponentOptions('getStrokePattern');
+        return this.getComponentOptions("getStrokePattern");
     }
 
     getStrokeWidth(): Promise<number> {
-        return this.getComponentOptions('getStrokeWidth');
+        return this.getComponentOptions("getStrokeWidth");
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions('isClickable');
+        return this.getComponentOptions("isClickable");
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
 
     isGeodesic(): Promise<boolean> {
-        return this.getComponentOptions('isGeodesic');
+        return this.getComponentOptions("isGeodesic");
     }
 
     remove(): Promise<void> {
@@ -117,60 +116,83 @@ export class PolygonImpl implements Polygon {
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {"clickable": clickable});
+        return this.setComponentOptions("setClickable", {
+            clickable: clickable,
+        });
     }
 
     setFillColor(fillColor: Color): Promise<void> {
-        return this.setComponentOptions("setFillColor", {"fillColor": fillColor});
+        return this.setComponentOptions("setFillColor", {
+            fillColor: fillColor,
+        });
     }
 
     setGeodesic(geodesic: boolean): Promise<void> {
-        return this.setComponentOptions("setGeodesic", {"geodesic": geodesic});
+        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
     }
 
     setHoles(holes: LatLng[][]): Promise<void> {
-        return this.setComponentOptions("setHoles", {"holes": holes});
+        return this.setComponentOptions("setHoles", { holes: holes });
     }
 
     setPoints(points: LatLng[]): Promise<void> {
-        return this.setComponentOptions("setPoints", {"points": points});
+        return this.setComponentOptions("setPoints", { points: points });
     }
 
     setStrokeColor(strokeColor: Color): Promise<void> {
-        return this.setComponentOptions("setStrokeColor", {"strokeColor": strokeColor});
+        return this.setComponentOptions("setStrokeColor", {
+            strokeColor: strokeColor,
+        });
     }
 
     setStrokeJointType(strokeJointType: JointType): Promise<void> {
-        return this.setComponentOptions("setStrokeJointType", {"strokeJointType": strokeJointType});
+        return this.setComponentOptions("setStrokeJointType", {
+            strokeJointType: strokeJointType,
+        });
     }
 
     setStrokePattern(strokePattern: PatternItem[]): Promise<void> {
-        return this.setComponentOptions("setStrokePattern", {"strokePattern": strokePattern});
+        return this.setComponentOptions("setStrokePattern", {
+            strokePattern: strokePattern,
+        });
     }
 
     setStrokeWidth(strokeWidth: number): Promise<void> {
-        return this.setComponentOptions("setStrokeWidth", {"strokeWidth": strokeWidth});
+        return this.setComponentOptions("setStrokeWidth", {
+            strokeWidth: strokeWidth,
+        });
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", {"tag": tag});
+        return this.setComponentOptions("setTag", { tag: tag });
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", {"visible": visible});
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", {"zIndex": zIndex});
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
 
     private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
 
     private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+        const result = await asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "get",
+            func,
+            {},
+        ]);
         return result.value;
     }
-
 }

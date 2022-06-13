@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -47,16 +47,12 @@ public class PolylineCapsule extends MapComponent<Polyline> {
         return component.getId();
     }
 
-    void setTag(JSONObject json) {
-        component.setTag(json.opt("tag"));
-    }
-
-    void setPattern(JSONObject json) {
-        component.setPattern(JsonToObject.constructPatternItemList(json.optJSONArray("pattern")));
-    }
-
     JSONObject getStartCap() throws JSONException {
         return new JSONObject().put("value", ObjectToJson.constructJsonFromCap(component.getStartCap()));
+    }
+
+    void setStartCap(JSONObject json) {
+        component.setStartCap(JsonToObject.constructCap(context, json.optJSONObject("cap")));
     }
 
     JSONObject getEndCap() throws JSONException {
@@ -75,32 +71,28 @@ public class PolylineCapsule extends MapComponent<Polyline> {
         return new JSONObject().put("value", component.getZIndex());
     }
 
+    void setZIndex(JSONObject json) {
+        component.setZIndex((float) json.optDouble("zIndex"));
+    }
+
     JSONObject isClickable() throws JSONException {
         return new JSONObject().put("value", component.isClickable());
-    }
-
-    void setStartCap(JSONObject json) {
-        component.setStartCap(JsonToObject.constructCap(context, json.optJSONObject("cap")));
-    }
-
-    void setWidth(JSONObject json) {
-        component.setWidth((float) json.optDouble("width"));
     }
 
     JSONObject getColor() throws JSONException {
         return new JSONObject().put("value", component.getColor());
     }
 
-    JSONObject getJointType() throws JSONException {
-        return new JSONObject().put("value", component.getJointType());
-    }
-
     void setColor(JSONObject json) {
         component.setColor(json.optInt("color"));
     }
 
-    void setZIndex(JSONObject json) {
-        component.setZIndex((float) json.optDouble("zIndex"));
+    JSONObject getJointType() throws JSONException {
+        return new JSONObject().put("value", component.getJointType());
+    }
+
+    void setJointType(JSONObject json) {
+        component.setJointType(json.optInt("jointType"));
     }
 
     JSONObject isGeodesic() throws JSONException {
@@ -111,10 +103,6 @@ public class PolylineCapsule extends MapComponent<Polyline> {
         return new JSONObject().put("value", ObjectToJson.constructJsonFromPoints(component.getPoints()));
     }
 
-    void setJointType(JSONObject json) {
-        component.setJointType(json.optInt("jointType"));
-    }
-
     void setPoints(JSONObject json) {
         component.setPoints(JsonToObject.constructPoints(json.optJSONArray("points")));
     }
@@ -123,8 +111,16 @@ public class PolylineCapsule extends MapComponent<Polyline> {
         return new JSONObject().put("value", ObjectToJson.constructJsonFromStrokePattern(component.getPattern()));
     }
 
+    void setPattern(JSONObject json) {
+        component.setPattern(JsonToObject.constructPatternItemList(json.optJSONArray("pattern")));
+    }
+
     JSONObject getTag() throws JSONException {
         return new JSONObject().put("value", component.getTag());
+    }
+
+    void setTag(JSONObject json) {
+        component.setTag(json.opt("tag"));
     }
 
     void setClickable(JSONObject json) {
@@ -141,5 +137,9 @@ public class PolylineCapsule extends MapComponent<Polyline> {
 
     JSONObject getWidth() throws JSONException {
         return new JSONObject().put("value", component.getWidth());
+    }
+
+    void setWidth(JSONObject json) {
+        component.setWidth((float) json.optDouble("width"));
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,162 +14,161 @@
     limitations under the License.
 */
 
-import {Cap, Polyline} from './polyline';
-import {Circle} from "./circle";
-import {Marker} from "./marker";
-import {GroundOverlay} from "./groundOverlay";
-import {TileOverlay} from "./tileOverlay";
-import {Polygon} from "./polygon";
-import {MapStyleOptions} from "./HMSMap";
-
+import { Cap, Polyline } from "./polyline";
+import { Circle } from "./circle";
+import { Marker } from "./marker";
+import { GroundOverlay } from "./groundOverlay";
+import { TileOverlay } from "./tileOverlay";
+import { Polygon } from "./polygon";
+import { MapStyleOptions } from "./HMSMap";
 
 export interface HuaweiMapOptions {
-    mapType?: MapType,
-    zoomControlsEnabled?: boolean,
-    compassEnabled?: boolean,
-    zoomGesturesEnabled?: boolean,
-    scrollGesturesEnabled?: boolean,
-    rotateGesturesEnabled?: boolean,
-    tiltGesturesEnabled?: boolean,
-    zOrderOnTop?: boolean,
-    liteMode?: boolean,
-    ambientEnabled?: boolean,
-    minZoomPreference?: number,
-    maxZoomPreference?: number,
-    cameraPosition?: CameraPosition,
-    latLngBounds?: LatLngBounds,
-    styleId?: string,
-    previewId?: string
+    mapType?: MapType;
+    zoomControlsEnabled?: boolean;
+    compassEnabled?: boolean;
+    zoomGesturesEnabled?: boolean;
+    scrollGesturesEnabled?: boolean;
+    rotateGesturesEnabled?: boolean;
+    tiltGesturesEnabled?: boolean;
+    zOrderOnTop?: boolean;
+    liteMode?: boolean;
+    ambientEnabled?: boolean;
+    minZoomPreference?: number;
+    maxZoomPreference?: number;
+    cameraPosition?: CameraPosition;
+    latLngBounds?: LatLngBounds;
+    styleId?: string;
+    previewId?: string;
 }
 
 export interface LatLngBounds {
-    southwest: LatLng,
-    northeast: LatLng
+    southwest: LatLng;
+    northeast: LatLng;
 }
 
 export interface CameraPosition {
-    target: LatLng,
-    zoom?: number,
-    bearing?: number,
-    tilt?: number
+    target: LatLng;
+    zoom?: number;
+    bearing?: number;
+    tilt?: number;
 }
 
 export interface LatLng {
-    lat: number,
-    lng: number
+    lat: number;
+    lng: number;
 }
 
 export interface CircleOptions {
-    center: LatLng,
-    clickable?: boolean,
-    fillColor?: Color,
-    radius: number,
-    strokeColor?: Color,
-    strokeWidth?: number,
-    strokePattern?: PatternItem[],
-    visible?: boolean,
-    zIndex?: number
+    center: LatLng;
+    clickable?: boolean;
+    fillColor?: Color;
+    radius: number;
+    strokeColor?: Color;
+    strokeWidth?: number;
+    strokePattern?: PatternItem[];
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export interface POI {
-    latLng: LatLng,
-    name?: string,
-    placeId?: string
+    latLng: LatLng;
+    name?: string;
+    placeId?: string;
 }
 
 export interface PatternItem {
-    type: PatternItemType,
-    length: number
+    type: PatternItemType;
+    length: number;
 }
 
 export interface MarkerOptions {
-    anchorMarker?: Anchor,
-    infoWindowAnchor?: Anchor,
-    infoWindowShown?: boolean,
-    alpha?: number,
-    clusterable?: boolean,
-    draggable?: boolean,
-    icon?: BitmapDescriptor,
-    flat?: boolean,
-    position: LatLng,
-    rotation?: number,
-    snippet?: string,
-    title?: string,
-    visible?: boolean,
-    zIndex?: number
+    anchorMarker?: Anchor;
+    infoWindowAnchor?: Anchor;
+    infoWindowShown?: boolean;
+    alpha?: number;
+    clusterable?: boolean;
+    draggable?: boolean;
+    icon?: BitmapDescriptor;
+    flat?: boolean;
+    position: LatLng;
+    rotation?: number;
+    snippet?: string;
+    title?: string;
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export interface ScaledSize {
-    width: number,
-    height: number
+    width: number;
+    height: number;
 }
 
 export interface Asset {
-    fileName: string,
-    scaledSize?: ScaledSize
+    fileName: string;
+    scaledSize?: ScaledSize;
 }
 
 export interface Resource {
-    fileName: string,
-    resourceType: string,
-    scaledSize?: ScaledSize
+    fileName: string;
+    resourceType: string;
+    scaledSize?: ScaledSize;
 }
 
 export interface BitmapDescriptor {
-    hue?: Hue,
-    asset?: Asset,
-    resource?: Resource,
+    hue?: Hue;
+    asset?: Asset;
+    resource?: Resource;
 }
 
 export interface Anchor {
-    u?: number,
-    v?: number
+    u?: number;
+    v?: number;
 }
 
 export interface PolygonOptions {
-    points: LatLng[],
+    points: LatLng[];
     holes?: LatLng[][];
-    clickable?: boolean,
-    geodesic?: boolean,
-    fillColor?: Color,
-    strokeColor?: Color,
-    strokeJointType?: JointType,
-    strokePattern?: PatternItem[],
-    strokeWidth?: number,
-    visible?: true,
+    clickable?: boolean;
+    geodesic?: boolean;
+    fillColor?: Color;
+    strokeColor?: Color;
+    strokeJointType?: JointType;
+    strokePattern?: PatternItem[];
+    strokeWidth?: number;
+    visible?: true;
     zIndex?: number;
 }
 
 export interface PolylineOptions {
-    points: LatLng[],
-    clickable?: boolean,
-    color?: Color,
-    startCap?: Cap,
-    pattern?: PatternItem[],
-    endCap?: Cap,
-    geodesic?: boolean,
-    jointType?: JointType,
-    visible?: boolean,
-    width?: number,
-    zIndex?: number
+    points: LatLng[];
+    clickable?: boolean;
+    color?: Color;
+    startCap?: Cap;
+    pattern?: PatternItem[];
+    endCap?: Cap;
+    geodesic?: boolean;
+    jointType?: JointType;
+    visible?: boolean;
+    width?: number;
+    zIndex?: number;
 }
 
 export interface GroundOverlayOptions {
-    anchor?: Anchor,
-    bearing?: number,
-    clickable?: boolean,
-    image?: BitmapDescriptor,
-    visible?: boolean,
-    transparency?: number,
-    zIndex?: number,
-    position: Position,
-    bounds?: LatLngBounds
+    anchor?: Anchor;
+    bearing?: number;
+    clickable?: boolean;
+    image?: BitmapDescriptor;
+    visible?: boolean;
+    transparency?: number;
+    zIndex?: number;
+    position: Position;
+    bounds?: LatLngBounds;
 }
 
 export interface Position {
-    latLng: LatLng,
-    width: number,
-    height?: number
+    latLng: LatLng;
+    width: number;
+    height?: number;
 }
 
 export interface URLTile {
@@ -193,20 +192,19 @@ export interface RepetitiveTile {
 }
 
 export interface TileProvider {
-    type: TileType,
-    data: Tile[] | URLTile | RepetitiveTile
+    type: TileType;
+    data: Tile[] | URLTile | RepetitiveTile;
 }
 
 export interface TileOverlayOptions {
-    tileProvider: TileProvider,
-    fadeIn?: boolean,
-    transparency?: number,
-    visible?: boolean,
-    zIndex?: number
+    tileProvider: TileProvider;
+    fadeIn?: boolean;
+    transparency?: number;
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export class AnimationSet {
-
     readonly animations: Map<string, Animation> = new Map<string, Animation>();
 
     addRotateAnimation(animation: RotateAnimation): void {
@@ -227,31 +225,27 @@ export class AnimationSet {
 }
 
 export interface Animation {
-    fillMode?: number,
-    duration?: number,
-    repeatCount?: number,
-    repeatMode?: number,
-    interpolator?: Interpolator,
-    animationStart?: () => void,
-    animationEnd?: () => void
+    fillMode?: number;
+    duration?: number;
+    repeatCount?: number;
+    repeatMode?: number;
+    interpolator?: Interpolator;
+    animationStart?: () => void;
+    animationEnd?: () => void;
 }
 
 interface _control {
-    isAnimationStart: boolean,
-    isAnimationEnd: boolean
+    isAnimationStart: boolean;
+    isAnimationEnd: boolean;
 }
 
-export interface _rotateAnimation extends RotateAnimation, _control {
-}
+export interface _rotateAnimation extends RotateAnimation, _control {}
 
-export interface _translateAnimation extends TranslateAnimation, _control {
-}
+export interface _translateAnimation extends TranslateAnimation, _control {}
 
-export interface _scaleAnimation extends ScaleAnimation, _control {
-}
+export interface _scaleAnimation extends ScaleAnimation, _control {}
 
-export interface _alphaAnimation extends AlphaAnimation, _control {
-}
+export interface _alphaAnimation extends AlphaAnimation, _control {}
 
 export interface RotateAnimation extends Animation {
     fromDegree: number;
@@ -275,61 +269,59 @@ export interface AlphaAnimation extends Animation {
 }
 
 export interface CancelableCallback {
-    onFinish: () => void,
-    onCancel: () => void
+    onFinish: () => void;
+    onCancel: () => void;
 }
 
 export interface InfoWindowAdapter {
-    file: string,
-    width: number,
-    height: number
+    file: string;
+    width: number;
+    height: number;
 }
 
 export interface Location {
-    accuracy: number,
-    altitude: number,
-    bearing: number,
-    elapsedRealtimeNanos: number,
-    latitude: number,
-    longitude: number,
-    provider: string,
-    speed: number,
-    time: number,
-    fromMockProvider: boolean,
-    contents: number,
-    bearingAccuracyDegrees?: number,
-    speedAccuracyMetersPerSecond?: number,
-    verticalAccuracyMeters?: number
+    accuracy: number;
+    altitude: number;
+    bearing: number;
+    elapsedRealtimeNanos: number;
+    latitude: number;
+    longitude: number;
+    provider: string;
+    speed: number;
+    time: number;
+    fromMockProvider: boolean;
+    contents: number;
+    bearingAccuracyDegrees?: number;
+    speedAccuracyMetersPerSecond?: number;
+    verticalAccuracyMeters?: number;
 }
 
-export interface LocationSource {
-
-}
+export interface LocationSource {}
 
 export interface ComputeDistanceResult {
-    result: number
+    result: number;
 }
 
 export interface Point {
-    x: number,
-    y: number
+    x: number;
+    y: number;
 }
 
 export interface SnapshotResult {
-    data: string,
+    data: string;
 }
 
 export interface VisibleRegion {
-    farLeft: LatLng,
-    farRight: LatLng,
-    latLngBounds: LatLngBounds,
-    nearLeft: LatLng,
-    nearRight: LatLng
+    farLeft: LatLng;
+    farRight: LatLng;
+    latLngBounds: LatLngBounds;
+    nearLeft: LatLng;
+    nearRight: LatLng;
 }
 
 export interface Interpolator {
-    type: InterpolatorType,
-    args?: any
+    type: InterpolatorType;
+    args?: any;
 }
 
 export interface HuaweiMap {
@@ -343,13 +335,24 @@ export interface HuaweiMap {
     syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
-    addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
-    addTileOverlay(tileOverlayOptions: TileOverlayOptions): Promise<TileOverlay>;
+    addGroundOverlay(
+        groundOverlayOptions: GroundOverlayOptions
+    ): Promise<GroundOverlay>;
+    addTileOverlay(
+        tileOverlayOptions: TileOverlayOptions
+    ): Promise<TileOverlay>;
     addPolygon(polygonOptions: PolygonOptions): Promise<Polygon>;
     addPolyline(polylineOptions: PolylineOptions): Promise<Polyline>;
     animateCamera(cameraUpdate: CameraUpdate): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback?: CancelableCallback): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, durationMs?: number, cancelableCallback?: CancelableCallback): Promise<void>;
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        cancelableCallback?: CancelableCallback
+    ): Promise<void>;
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        durationMs?: number,
+        cancelableCallback?: CancelableCallback
+    ): Promise<void>;
     moveCamera(cameraUpdate: CameraUpdate): Promise<void>;
     clear(): Promise<void>;
     resetMinMaxZoomPreference(): Promise<void>;
@@ -367,7 +370,9 @@ export interface HuaweiMap {
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void>;
-    setLatLngBoundsForCameraTarget(latLngBoundsForCameraTarget: LatLngBounds): Promise<void>;
+    setLatLngBoundsForCameraTarget(
+        latLngBoundsForCameraTarget: LatLngBounds
+    ): Promise<void>;
     setLocationSource(locationSource: LocationSource): Promise<void>;
     setMapStyle(mapStyle: MapStyleOptions): Promise<void>;
     setMapType(mapType: MapType): Promise<void>;
@@ -375,9 +380,16 @@ export interface HuaweiMap {
     setMaxZoomPreference(maxZoomPreference: number): Promise<void>;
     setMinZoomPreference(minZoomPreference: number): Promise<void>;
     setMyLocationEnabled(myLocationEnabled: boolean): Promise<void>;
-    setPadding(left: number, top: number, right: number, bottom: number): Promise<void>;
+    setPadding(
+        left: number,
+        top: number,
+        right: number,
+        bottom: number
+    ): Promise<void>;
     setTrafficEnabled(trafficEnabled: boolean): Promise<void>;
-    snapshot(onReadyCallback: (snapshot: SnapshotResult) => void): Promise<void>;
+    snapshot(
+        onReadyCallback: (snapshot: SnapshotResult) => void
+    ): Promise<void>;
     startOverlayInterval(): void;
     startObserver(): void;
     setMapPointersEnabled(mapPointersEnabled: boolean): Promise<void>;
@@ -411,21 +423,32 @@ export interface UiSettings {
     isZoomGesturesEnabled(): Promise<boolean>;
     setAllGesturesEnabled(allGesturesEnabled: boolean): Promise<void>;
     setCompassEnabled(compassEnabled: boolean): Promise<void>;
-    setIndoorLevelPickerEnabled(indoorLevelPickerEnabled: boolean): Promise<void>;
+    setIndoorLevelPickerEnabled(
+        indoorLevelPickerEnabled: boolean
+    ): Promise<void>;
     setMapToolbarEnabled(mapToolbarEnabled: boolean): Promise<void>;
     setMyLocationButtonEnabled(myLocationButtonEnabled: boolean): Promise<void>;
     setRotateGesturesEnabled(rotateGesturesEnabled: boolean): Promise<void>;
     setScrollGesturesEnabled(scrollGesturesEnabled: boolean): Promise<void>;
-    setScrollGesturesEnabledDuringRotateOrZoom(scrollGesturesEnabledDuringRotateOrZoom: boolean): Promise<void>;
+    setScrollGesturesEnabledDuringRotateOrZoom(
+        scrollGesturesEnabledDuringRotateOrZoom: boolean
+    ): Promise<void>;
     setTiltGesturesEnabled(tiltGesturesEnabled: boolean): Promise<void>;
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
-    setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setGestureScaleByMapCenter(
+        gestureScaleByMapCenterEnabled: boolean
+    ): Promise<void>;
     setMarkerClusterColor(markerClusterColor: number): Promise<void>;
     setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
     setLogoPosition(logoPosition: number): Promise<void>;
-    setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void>;
+    setLogoPadding(
+        paddingStart: number,
+        paddingTop: number,
+        paddingEnd: number,
+        paddingBottom: number
+    ): Promise<void>;
 }
 
 /*-------------------------------------------------------------ENUMS----------------------------------------------------------*/
@@ -442,13 +465,13 @@ export enum Color {
     YELLOW = -256,
     CYAN = -16711681,
     GREEN = -16711936,
-    TRANSPARENT = 0
+    TRANSPARENT = 0,
 }
 
 export enum JointType {
     ROUND = 2,
     BEVEL = 1,
-    DEFAULT = 0
+    DEFAULT = 0,
 }
 
 export enum MapEvent {
@@ -477,8 +500,7 @@ export enum MapEvent {
     ON_POLYLINE_CLICK = "onPolylineClick",
     ON_CANCELABLE_CALLBACK_FINISH = "onCancelableCallbackFinish",
     ON_CANCELABLE_CALLBACK_CANCEL = "onCancelableCallbackCancel",
-    ON_SNAPSHOT_READY_CALLBACK = "onSnapshotReadyCallback"
-
+    ON_SNAPSHOT_READY_CALLBACK = "onSnapshotReadyCallback",
 }
 
 export enum InterpolatorType {
@@ -491,34 +513,34 @@ export enum InterpolatorType {
     CYCLE,
     DECELERATE,
     OVERSHOOT,
-    PATH
+    PATH,
 }
 
 export interface ErrorCode {
-    code: number,
-    message: string,
+    code: number;
+    message: string;
 }
 
 export class ErrorCodes {
     public static readonly NO_DOM_ELEMENT_FOUND: ErrorCode = {
         code: 5000,
-        message: "No DOM element found with given divId."
+        message: "No DOM element found with given divId.",
     };
     public static readonly POINTS_PROPERTY_MUST_DEFINED: ErrorCode = {
         code: 5100,
-        message: "Points property must be defined."
+        message: "Points property must be defined.",
     };
     public static readonly CENTER_PROPERTY_MUST_DEFINED: ErrorCode = {
         code: 5101,
-        message: "Center property must be defined."
+        message: "Center property must be defined.",
     };
     public static readonly POSITION_PROPERTY_MUST_DEFINED: ErrorCode = {
         code: 5102,
-        message: "Position property must be defined."
+        message: "Position property must be defined.",
     };
     public static readonly NO_COMPONENT_EXISTS_GIVEN_ID: ErrorCode = {
         code: 5102,
-        message: "No component is found with given id"
+        message: "No component is found with given id",
     };
 
     public static toString(error: ErrorCode): string {
@@ -550,19 +572,19 @@ export enum Hue {
 export enum PatternItemType {
     TYPE_GAP = 2,
     TYPE_DOT = 1,
-    TYPE_DASH = 0
+    TYPE_DASH = 0,
 }
 
 export enum CameraMoveStartedReason {
     REASON_API_ANIMATION = 2,
     REASON_DEVELOPER_ANIMATION = 3,
-    REASON_GESTURE = 1
+    REASON_GESTURE = 1,
 }
 
 export enum TileType {
     URL_TILE,
     REPETITIVE_TILE,
-    LOCAL_TILE
+    LOCAL_TILE,
 }
 
 export enum AnimationConstant {
@@ -570,12 +592,12 @@ export enum AnimationConstant {
     FILL_MODE_BACKWARDS = 1,
     INFINITE = -1,
     RESTART = 1,
-    REVERSE = 2
+    REVERSE = 2,
 }
 
 export enum Gravity {
     TOP = 48,
     BOTTOM = 80,
     START = 8388611,
-    END = 8388613
+    END = 8388613,
 }

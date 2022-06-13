@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,8 +31,11 @@ import java.util.Locale;
 public abstract class MapComponent<T> {
 
     private static final String TAG = MapComponent.class.getSimpleName();
+
     protected T component;
+
     protected int capsuleId;
+
     protected ComponentListener listener;
 
     public MapComponent(MapCapsule mapCapsule, ComponentListener listener) {
@@ -65,12 +68,14 @@ public abstract class MapComponent<T> {
 
     /**
      * Returns string id of this component.
+     *
      * @return id of component
      */
     public abstract String getId();
 
     /**
      * Returns string id of mapCapsule that has this component.
+     *
      * @return id of mapCapsule
      */
     public int getCapsuleId() {

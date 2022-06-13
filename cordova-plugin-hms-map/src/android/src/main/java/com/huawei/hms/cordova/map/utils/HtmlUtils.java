@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,23 +25,18 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 public class HtmlUtils {
+    public final static String HTML_HEAD_TAG = "<head>" + "    <meta charset=\"UTF-8\">" + "    <meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">" + "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">" + "    <title>Document</title>" + "</head>";
     private static final String TAG = HtmlUtils.class.getSimpleName();
 
     private HtmlUtils() {
     }
 
-    public final static String HTML_HEAD_TAG = "<head>\n" +
-            "    <meta charset=\"UTF-8\">\n" +
-            "    <meta name=\"viewport\" content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n" +
-            "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n" +
-            "    <title>Document</title>\n" +
-            "</head>";
-
     public static String htmlFileToString(Context context, String fileName) {
         StringBuilder content = new StringBuilder();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(context.getAssets().open(fileName), StandardCharsets.UTF_8));
+            reader = new BufferedReader(
+                    new InputStreamReader(context.getAssets().open(fileName), StandardCharsets.UTF_8));
             String line;
             while ((line = reader.readLine()) != null) {
                 content.append(line);

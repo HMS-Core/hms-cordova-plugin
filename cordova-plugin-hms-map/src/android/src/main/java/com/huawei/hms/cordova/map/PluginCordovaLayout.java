@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.map;
 
 import android.content.Context;
@@ -35,7 +36,6 @@ public class PluginCordovaLayout extends FrameLayout {
 
     private Map<String, MapCapsule> capsuleMap = new ConcurrentHashMap<>();
 
-
     public PluginCordovaLayout(Context context) {
         super(context);
     }
@@ -48,19 +48,24 @@ public class PluginCordovaLayout extends FrameLayout {
         float x = ev.getX();
         float y = ev.getY();
         for (MapCapsule mapCapsule : capsuleMap.values()) {
-            if(!mapCapsule.isActive() || !mapCapsule.isClickable()) continue;
+            if (!mapCapsule.isActive() || !mapCapsule.isClickable()) {
+                continue;
+            }
             MapCapsuleLayout layout = mapCapsule.getCapsuleLayout();
             float mapX = layout.getX();
             float mapY = layout.getY();
             int mapWidth = layout.getWidth();
             int mapHeight = layout.getHeight();
             boolean isMapClicked = isMapRectInClickedPoint(x, y, mapX, mapY, mapWidth, mapHeight)
-                    && !isHTMLElementInterfering(mapCapsule.getHtmlElementOverlappingSet(), x, y);
+                && !isHTMLElementInterfering(mapCapsule.getHtmlElementOverlappingSet(), x, y);
             /*
-             * if is map clicked then return false because webView shouldn't handle this click
+             * if is map clicked then return false because webView shouldn't handle this
+             * click
              * this click should be handled by map view.
              **/
-            if(isMapClicked) return false;
+            if (isMapClicked) {
+                return false;
+            }
         }
         return super.dispatchTouchEvent(ev);
     }
@@ -75,8 +80,9 @@ public class PluginCordovaLayout extends FrameLayout {
     }
 
     public void removeCapsule(String divId) {
-        if(capsuleMap.containsKey(divId))
+        if (capsuleMap.containsKey(divId)) {
             capsuleMap.remove(divId);
+        }
     }
 
     private boolean isMapRectInClickedPoint(float x, float y, float mapX, float mapY, int mapWidth, int mapHeight) {

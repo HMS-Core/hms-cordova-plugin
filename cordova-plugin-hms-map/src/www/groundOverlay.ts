@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +14,8 @@
     limitations under the License.
 */
 
-import {LatLngBounds, LatLng, BitmapDescriptor} from "./interfaces";
-import {asyncExec} from "./utils";
+import { LatLngBounds, LatLng, BitmapDescriptor } from "./interfaces";
+import { asyncExec } from "./utils";
 
 export interface GroundOverlay {
     getBearing(): Promise<number>;
@@ -46,7 +46,6 @@ export interface GroundOverlay {
 }
 
 export class GroundOverlayImpl implements GroundOverlay {
-
     private readonly mapDivId: string;
     private readonly mapCapsuleId: number;
     private readonly id: string;
@@ -58,15 +57,15 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     getBearing(): Promise<number> {
-        return this.getComponentOptions('getBearing');
+        return this.getComponentOptions("getBearing");
     }
 
     getBounds(): Promise<LatLngBounds> {
-        return this.getComponentOptions('getBounds');
+        return this.getComponentOptions("getBounds");
     }
 
     getHeight(): Promise<number> {
-        return this.getComponentOptions('getHeight');
+        return this.getComponentOptions("getHeight");
     }
 
     getId(): string {
@@ -74,31 +73,31 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     getPosition(): Promise<LatLng> {
-        return this.getComponentOptions('getPosition');
+        return this.getComponentOptions("getPosition");
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
 
     getTransparency(): Promise<number> {
-        return this.getComponentOptions('getTransparency');
+        return this.getComponentOptions("getTransparency");
     }
 
     getWidth(): Promise<number> {
-        return this.getComponentOptions('getWidth');
+        return this.getComponentOptions("getWidth");
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions('isClickable');
+        return this.getComponentOptions("isClickable");
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
 
     remove(): Promise<void> {
@@ -106,11 +105,13 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     setBearing(bearing: number): Promise<void> {
-        return this.setComponentOptions('setBearing', {'bearing': bearing});
+        return this.setComponentOptions("setBearing", { bearing: bearing });
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions('setClickable', {'clickable': clickable});
+        return this.setComponentOptions("setClickable", {
+            clickable: clickable,
+        });
     }
 
     setDimensions(width: number, height?: number): Promise<void>;
@@ -118,44 +119,62 @@ export class GroundOverlayImpl implements GroundOverlay {
     setDimensions(width: number): Promise<void>;
 
     setDimensions(width: any, height?: any): Promise<void> {
-        return this.setComponentOptions("setDimensions", {"width": width, "height": height});
+        return this.setComponentOptions("setDimensions", {
+            width: width,
+            height: height,
+        });
     }
 
     setImage(imageDescriptor: BitmapDescriptor): Promise<void> {
-        return this.setComponentOptions("setImage", {"image": imageDescriptor});
+        return this.setComponentOptions("setImage", { image: imageDescriptor });
     }
 
     setPosition(position: LatLng): Promise<void> {
-        return this.setComponentOptions("setPosition", {"position": position});
+        return this.setComponentOptions("setPosition", { position: position });
     }
 
     setPositionFromBounds(positionLatLngBounds: LatLngBounds): Promise<void> {
-        return this.setComponentOptions("setPositionFromBounds", {"bounds": positionLatLngBounds});
+        return this.setComponentOptions("setPositionFromBounds", {
+            bounds: positionLatLngBounds,
+        });
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", {"tag": tag});
+        return this.setComponentOptions("setTag", { tag: tag });
     }
 
     setTransparency(transparency: number): Promise<void> {
-        return this.setComponentOptions('setTransparency', {"transparency": transparency});
+        return this.setComponentOptions("setTransparency", {
+            transparency: transparency,
+        });
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", {"visible": visible});
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", {"zIndex": zIndex});
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
 
     private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
 
     private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+        const result = await asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "get",
+            func,
+            {},
+        ]);
         return result.value;
     }
-
 }

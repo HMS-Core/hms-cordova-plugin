@@ -1,12 +1,12 @@
 {
     "name": "@hmscore/ionic-native-hms-map",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Map",
-    "version": "6.0.1-304",
-    "zipVersion": "6.0.1.304",
+    "version": "6.0.1-305",
+    "zipVersion": "6.0.1.305",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",

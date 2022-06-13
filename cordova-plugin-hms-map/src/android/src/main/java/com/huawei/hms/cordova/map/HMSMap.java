@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -59,15 +59,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HMSMap extends CordovaPlugin {
-    private String TAG = HMSMap.class.getSimpleName();
-    private CordovaUtils cordovaUtils;
-    private HMSLogger hmsLogger;
-    private PluginLayout pluginLayout;
-    private PluginCordovaLayout pluginCordovaLayout;
     public Map<String, MapCapsule> maps = new HashMap<>();
 
-/////////////////////////////////////////////////////////PLUGIN SECTION/////////////////////////////////////////////////
-/////////////////////////////////////////////////////////PLUGIN SECTION/////////////////////////////////////////////////
+    private String TAG = HMSMap.class.getSimpleName();
+
+    private CordovaUtils cordovaUtils;
+
+    private HMSLogger hmsLogger;
+
+    private PluginLayout pluginLayout;
+
+    private PluginCordovaLayout pluginCordovaLayout;
+
+    // PLUGIN
+
+    // SECTION
+
+    // PLUGIN
+
+    // SECTION
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -79,25 +89,25 @@ public class HMSMap extends CordovaPlugin {
         pluginLayout = new PluginLayout(cordova.getContext());
         pluginCordovaLayout = new PluginCordovaLayout(cordova.getContext());
 
-        cordova.getActivity().runOnUiThread(()->{
-                webView.getView().setBackgroundColor(Color.TRANSPARENT);
-                ViewGroup viewGroup = getWebViewRootLayout();
-                viewGroup.removeView(webView.getView());
-                viewGroup.addView(pluginCordovaLayout, 
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                viewGroup.setBackgroundColor(Color.WHITE);
-                pluginCordovaLayout.addView(webView.getView(), 
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                viewGroup.addView(pluginLayout, 
-                    new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                pluginCordovaLayout.bringToFront();
+        cordova.getActivity().runOnUiThread(() -> {
+            webView.getView().setBackgroundColor(Color.TRANSPARENT);
+            ViewGroup viewGroup = getWebViewRootLayout();
+            viewGroup.removeView(webView.getView());
+            viewGroup.addView(pluginCordovaLayout, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+            viewGroup.setBackgroundColor(Color.WHITE);
+            pluginCordovaLayout.addView(webView.getView(),
+                new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT));
+            viewGroup.addView(pluginLayout, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+            pluginCordovaLayout.bringToFront();
         });
-
 
         webView.getView().getViewTreeObserver().addOnScrollChangedListener(() -> {
             for (MapCapsule mapCapsule : maps.values()) {
                 mapCapsule.getCapsuleLayout()
-                        .scrollXAndY(-webView.getView().getScrollX(), -webView.getView().getScrollY());
+                    .scrollXAndY(-webView.getView().getScrollX(), -webView.getView().getScrollY());
             }
         });
     }
@@ -124,7 +134,8 @@ public class HMSMap extends CordovaPlugin {
         callbackContext.success();
     }
 
-    private void updateOverlappingHTMLElements(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    private void updateOverlappingHTMLElements(JSONArray args, final CallbackContext callbackContext)
+        throws JSONException {
         String mapDivId = args.getString(0);
         JSONArray diffToAdd = args.getJSONArray(1);
         JSONArray diffToDelete = args.getJSONArray(2);
@@ -140,8 +151,13 @@ public class HMSMap extends CordovaPlugin {
         callbackContext.success();
     }
 
-/////////////////////////////////////////////////////////HMS_LOGGER SECTION/////////////////////////////////////////////
-/////////////////////////////////////////////////////////HMS_LOGGER SECTION/////////////////////////////////////////////
+    // HMS_LOGGER
+
+    // SECTION
+
+    // HMS_LOGGER
+
+    // SECTION
 
     private void enableLogger(JSONArray args, CallbackContext callbackContext) {
         if (hmsLogger != null) {
@@ -160,8 +176,14 @@ public class HMSMap extends CordovaPlugin {
             callbackContext.error(ErrorCodes.HMS_LOGGER_IS_NULL.toString());
         }
     }
-/////////////////////////////////////////////////////////MAP SECTION////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////MAP SECTION////////////////////////////////////////////////////
+
+    // MAP
+
+    // SECTION
+
+    // MAP
+
+    // SECTION
 
     private void initMap(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final String mapId = args.getString(0);
@@ -245,16 +267,21 @@ public class HMSMap extends CordovaPlugin {
         final String optionType = args.getString(1);
         final String command = args.getString(2);
         final JSONObject arguments = args.getJSONObject(3);
-        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) return;
+        if (!isMapExistsWithTheGivenId(mapId, callbackContext)) {
+            return;
+        }
         cordova.getActivity().runOnUiThread(() -> {
             MapCapsule mapCapsule = maps.get(mapId);
             try {
                 JSONObject obj = mapCapsule.setMapOptions(optionType, command, arguments);
-                if (obj != null)
+                if (obj != null) {
                     callbackContext.success(obj);
-                else callbackContext.success();
+                } else {
+                    callbackContext.success();
+                }
             } catch (Exception e) {
-                // You can catch every error throwed from function here instead of just catching the exception.
+                // You can catch every error throwed from function here instead of just catching
+                // the exception.
                 hmsLogger.sendSingleEvent(command, e.getMessage());
                 callbackContext.error(e.getMessage());
             }
@@ -335,8 +362,13 @@ public class HMSMap extends CordovaPlugin {
         callbackContext.success(result);
     }
 
-/////////////////////////////////////////////////////////COMPONENT SECTION//////////////////////////////////////////////
-/////////////////////////////////////////////////////////COMPONENT SECTION//////////////////////////////////////////////
+    // COMPONENT
+
+    // SECTION
+
+    // COMPONENT
+
+    // SECTION
 
     private void addComponent(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final String mapId = args.getString(0);
@@ -346,8 +378,8 @@ public class HMSMap extends CordovaPlugin {
         }
         cordova.getActivity().runOnUiThread(() -> {
             MapCapsule mapCapsule = maps.get(mapId);
-            MapComponent component = createComponentToAddOnMap(mapCapsule,
-                    MapComponentType.valueOf(args.optString(1)), args.optJSONObject(2));
+            MapComponent component = createComponentToAddOnMap(mapCapsule, MapComponentType.valueOf(args.optString(1)),
+                args.optJSONObject(2));
             mapCapsule.addComponent(component);
             hmsLogger.sendSingleEvent("addComponent");
             callbackContext.success(component.getId());
@@ -375,7 +407,9 @@ public class HMSMap extends CordovaPlugin {
 
     private void componentOptions(JSONArray args, final CallbackContext callbackContext) throws JSONException {
         // Check if the component with the specified id exists or not.
-        // Because when you remove a component and if user tries to use it still. you have to send an error.
+        // Because when you remove a component and if user tries to use it still. you
+        // have to send an error.
+
         final String mapId = args.getString(0);
         final String componentId = args.getString(1);
         final String command = args.getString(2);
@@ -394,13 +428,17 @@ public class HMSMap extends CordovaPlugin {
                 return;
             }
             JSONObject object = null;
-            if (command.equals("set"))
+            if (command.equals("set")) {
                 component.setProperty(methodName, arg);
-            else
+            } else {
                 object = component.getProperty(methodName);
+            }
             hmsLogger.sendSingleEvent(methodName);
-            if (object != null) callbackContext.success(object);
-            else callbackContext.success();
+            if (object != null) {
+                callbackContext.success(object);
+            } else {
+                callbackContext.success();
+            }
         });
     }
 
@@ -410,17 +448,22 @@ public class HMSMap extends CordovaPlugin {
         try {
             if (type == MapComponentType.MARKER) {
                 componentListener = MarkerListener.getInstance(cordovaUtils);
-                mapComponent = new MarkerCapsule(map, JsonToObject.constructMarkerOptions(map.getContext(), json), componentListener);
-            } else if (type == MapComponentType.CIRCLE)
+                mapComponent = new MarkerCapsule(map, JsonToObject.constructMarkerOptions(map.getContext(), json),
+                    componentListener);
+            } else if (type == MapComponentType.CIRCLE) {
                 mapComponent = new CircleCapsule(map, JsonToObject.constructCircleOptions(json), null);
-            else if (type == MapComponentType.GROUND_OVERLAY)
-                mapComponent = new GroundOverlayCapsule(map, JsonToObject.constructGroundOverlayOptions(map.getContext(), json), null);
-            else if (type == MapComponentType.POLYGON)
+            } else if (type == MapComponentType.GROUND_OVERLAY) {
+                mapComponent = new GroundOverlayCapsule(map,
+                    JsonToObject.constructGroundOverlayOptions(map.getContext(), json), null);
+            } else if (type == MapComponentType.POLYGON) {
                 mapComponent = new PolygonCapsule(map, JsonToObject.constructPolygonOptions(json), null);
-            else if (type == MapComponentType.POLYLINE)
-                mapComponent = new PolylineCapsule(map, JsonToObject.constructPolylineOptions(map.getContext(), json), null);
-            else if (type == MapComponentType.TILE_OVERLAY)
-                mapComponent = new TileOverlayCapsule(map, JsonToObject.constructTileOverlayOptions(json, map.getContext()), null);
+            } else if (type == MapComponentType.POLYLINE) {
+                mapComponent = new PolylineCapsule(map, JsonToObject.constructPolylineOptions(map.getContext(), json),
+                    null);
+            } else if (type == MapComponentType.TILE_OVERLAY) {
+                mapComponent = new TileOverlayCapsule(map,
+                    JsonToObject.constructTileOverlayOptions(json, map.getContext()), null);
+            }
             hmsLogger.sendSingleEvent("createComponentToAddOnMap");
         } catch (JSONException e) {
             hmsLogger.sendSingleEvent("createComponentToAddOnMap", e.getMessage());

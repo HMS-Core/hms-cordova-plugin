@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,38 +41,6 @@ public final class CircleCapsule extends MapComponent<Circle> {
         component.setVisible(json.optBoolean("visible"));
     }
 
-    void setCenter(JSONObject json) {
-        component.setCenter(JsonToObject.constructLatLng(json.optJSONObject("center")));
-    }
-
-    void setFillColor(JSONObject json) {
-        component.setFillColor(json.optInt("fillColor"));
-    }
-
-    void setRadius(JSONObject json) {
-        component.setRadius(json.optDouble("radius"));
-    }
-
-    void setStrokeColor(JSONObject json) {
-        component.setStrokeColor(json.optInt("strokeColor"));
-    }
-
-    void setStrokeWidth(JSONObject json) {
-        component.setStrokeWidth((float) json.optDouble("strokeWidth"));
-    }
-
-    void setStrokePattern(JSONObject json) throws JSONException {
-        component.setStrokePattern(JsonToObject.constructPatternItemList(json.getJSONArray("strokePattern")));
-    }
-
-    void setTag(JSONObject json) {
-        component.setTag(json.opt("tag"));
-    }
-
-    void setZIndex(JSONObject json) {
-        component.setZIndex((float) json.optDouble("zIndex"));
-    }
-
     JSONObject isVisible() throws JSONException {
         return new JSONObject().put("value", component.isVisible());
     }
@@ -90,29 +58,58 @@ public final class CircleCapsule extends MapComponent<Circle> {
         return new JSONObject().put("value", component.getStrokeWidth());
     }
 
+    void setStrokeWidth(JSONObject json) {
+        component.setStrokeWidth((float) json.optDouble("strokeWidth"));
+    }
+
     JSONObject getStrokeColor() throws JSONException {
         return new JSONObject().put("value", component.getStrokeColor());
+    }
+
+    void setStrokeColor(JSONObject json) {
+        component.setStrokeColor(json.optInt("strokeColor"));
     }
 
     JSONObject getStrokePattern() throws JSONException {
         return new JSONObject().put("value", ObjectToJson.constructJsonFromStrokePattern(component.getStrokePattern()));
     }
 
+    void setStrokePattern(JSONObject json) throws JSONException {
+        component.setStrokePattern(JsonToObject.constructPatternItemList(json.getJSONArray("strokePattern")));
+    }
+
     JSONObject getTag() throws JSONException {
         return new JSONObject().put("value", component.getTag());
+    }
+
+    void setTag(JSONObject json) {
+        component.setTag(json.opt("tag"));
     }
 
     JSONObject getFillColor() throws JSONException {
         return new JSONObject().put("value", component.getFillColor());
     }
 
+    void setFillColor(JSONObject json) {
+        component.setFillColor(json.optInt("fillColor"));
+    }
+
     JSONObject getCenter() throws JSONException {
-        JSONObject center = new JSONObject().put("lat", component.getCenter().latitude).put("lng", component.getCenter().longitude);
+        JSONObject center = new JSONObject().put("lat", component.getCenter().latitude)
+            .put("lng", component.getCenter().longitude);
         return new JSONObject().put("value", center);
+    }
+
+    void setCenter(JSONObject json) {
+        component.setCenter(JsonToObject.constructLatLng(json.optJSONObject("center")));
     }
 
     JSONObject getRadius() throws JSONException {
         return new JSONObject().put("value", component.getRadius());
+    }
+
+    void setRadius(JSONObject json) {
+        component.setRadius(json.optDouble("radius"));
     }
 
     @Override
@@ -122,5 +119,9 @@ public final class CircleCapsule extends MapComponent<Circle> {
 
     JSONObject getZIndex() throws JSONException {
         return new JSONObject().put("value", component.getZIndex());
+    }
+
+    void setZIndex(JSONObject json) {
+        component.setZIndex((float) json.optDouble("zIndex"));
     }
 }

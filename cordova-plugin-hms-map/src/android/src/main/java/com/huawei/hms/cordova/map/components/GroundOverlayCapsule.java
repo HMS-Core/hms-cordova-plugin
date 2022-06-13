@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -49,8 +49,16 @@ public final class GroundOverlayCapsule extends MapComponent<GroundOverlay> {
         return new JSONObject().put("value", component.getBearing());
     }
 
+    void setBearing(JSONObject json) {
+        component.setBearing((float) json.optDouble("bearing"));
+    }
+
     JSONObject getPosition() throws JSONException {
         return new JSONObject().put("value", ObjectToJson.constructJsonFromLatLng(component.getPosition()));
+    }
+
+    void setPosition(JSONObject json) throws JSONException {
+        component.setPosition(JsonToObject.constructLatLng(json.getJSONObject("position")));
     }
 
     void setClickable(JSONObject json) {
@@ -58,18 +66,17 @@ public final class GroundOverlayCapsule extends MapComponent<GroundOverlay> {
     }
 
     void setDimensions(JSONObject json) {
-        // if v and v1 are exists call the second function otherwise call the first function.
-        if (!json.has("height")) component.setDimensions((float) json.optDouble("width"));
-        else
+        // if v and v1 are exists call the second function otherwise call the first
+        // function.
+        if (!json.has("height")) {
+            component.setDimensions((float) json.optDouble("width"));
+        } else {
             component.setDimensions((float) json.optDouble("width"), (float) json.optDouble("height"));
+        }
     }
 
     void setVisible(JSONObject json) {
         component.setVisible(json.optBoolean("visible"));
-    }
-
-    void setBearing(JSONObject json) {
-        component.setBearing((float) json.optDouble("bearing"));
     }
 
     JSONObject getBounds() throws JSONException {
@@ -80,29 +87,28 @@ public final class GroundOverlayCapsule extends MapComponent<GroundOverlay> {
         return new JSONObject().put("value", component.getTag());
     }
 
+    void setTag(JSONObject json) {
+        component.setTag(json.opt("tag"));
+    }
+
     JSONObject getTransparency() throws JSONException {
         return new JSONObject().put("value", component.getTransparency());
+    }
+
+    void setTransparency(JSONObject json) {
+        component.setTransparency((float) json.optDouble("transparency"));
     }
 
     JSONObject getZIndex() throws JSONException {
         return new JSONObject().put("value", component.getZIndex());
     }
 
-    void setPosition(JSONObject json) throws JSONException {
-        component.setPosition(JsonToObject.constructLatLng(json.getJSONObject("position")));
-    }
-
-    void setTag(JSONObject json) {
-        component.setTag(json.opt("tag"));
-    }
-
-
-    void setTransparency(JSONObject json) {
-        component.setTransparency((float) json.optDouble("transparency"));
+    void setZIndex(JSONObject json) {
+        component.setZIndex((float) json.optDouble("zIndex"));
     }
 
     void setImage(JSONObject json) {
-        component.setImage(JsonToObject.constructBitmapDescriptor(context,json.optJSONObject("image")));
+        component.setImage(JsonToObject.constructBitmapDescriptor(context, json.optJSONObject("image")));
     }
 
     JSONObject isClickable() throws JSONException {
@@ -115,10 +121,6 @@ public final class GroundOverlayCapsule extends MapComponent<GroundOverlay> {
 
     void setPositionFromBounds(JSONObject json) {
         component.setPositionFromBounds(JsonToObject.constructLatLngBounds(json.optJSONObject("bounds")));
-    }
-
-    void setZIndex(JSONObject json) {
-        component.setZIndex((float) json.optDouble("zIndex"));
     }
 
     @Override

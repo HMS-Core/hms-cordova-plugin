@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ public enum ErrorCodes {
     INVALID_API_KEY(6004, "Invalid API key.");
 
     public final int id;
+
     public final String message;
 
     ErrorCodes(int id, String msg) {

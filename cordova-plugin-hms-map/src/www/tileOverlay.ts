@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import {asyncExec} from "./utils";
+import { asyncExec } from "./utils";
 
 export interface TileOverlay {
     getFadeIn(): Promise<boolean>;
@@ -33,7 +33,6 @@ export interface TileOverlay {
 }
 
 export class TileOverlayImpl implements TileOverlay {
-
     private readonly mapDivId: string;
     private readonly mapCapsuleId: number;
     private readonly id: string;
@@ -45,7 +44,7 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     getFadeIn(): Promise<boolean> {
-        return this.getComponentOptions('getFadeIn');
+        return this.getComponentOptions("getFadeIn");
     }
 
     getId(): string {
@@ -53,15 +52,15 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     getTransparency(): Promise<number> {
-        return this.getComponentOptions('getTransparency');
+        return this.getComponentOptions("getTransparency");
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
 
     remove(): Promise<void> {
@@ -73,28 +72,41 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     setFadeIn(fadeIn: boolean): Promise<void> {
-        return this.setComponentOptions("setFadeIn", {"fadeIn": fadeIn});
+        return this.setComponentOptions("setFadeIn", { fadeIn: fadeIn });
     }
 
     setTransparency(transparency: number): Promise<void> {
-        return this.setComponentOptions("setTransparency", {"transparency": transparency});
+        return this.setComponentOptions("setTransparency", {
+            transparency: transparency,
+        });
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", {"zIndex": zIndex});
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", {"visible": visible});
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
 
     private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
 
     private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+        const result = await asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "get",
+            func,
+            {},
+        ]);
         return result.value;
     }
-
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,88 +14,110 @@
     limitations under the License.
 */
 
-import {Injectable} from '@angular/core';
-import {Cordova, IonicNativePlugin, Plugin} from '@ionic-native/core';
+import { Injectable } from "@angular/core";
+import { Cordova, IonicNativePlugin, Plugin } from "@ionic-native/core";
 
 @Plugin({
-    pluginName: 'HMSMap',
-    plugin: 'cordova-plugin-hms-map',
-    pluginRef: 'HMSMap',
-    repo: 'https://github.com/HMS-Core/hms-cordova-plugin',
-    platforms: ['Android'],
+    pluginName: "HMSMap",
+    plugin: "cordova-plugin-hms-map",
+    pluginRef: "HMSMap",
+    repo: "https://github.com/HMS-Core/hms-cordova-plugin",
+    platforms: ["Android"],
 })
 @Injectable()
 export class HMSMap extends IonicNativePlugin {
-
-    @Cordova({otherPromise: true})
-    getMap(divId: string, huaweiMapOptions: HuaweiMapOptions, bounds?: MapBounds): Promise<HuaweiMap> {
+    @Cordova({ otherPromise: true })
+    getMap(
+        divId: string,
+        huaweiMapOptions: HuaweiMapOptions,
+        bounds?: MapBounds
+    ): Promise<HuaweiMap> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     showMap(divId: string): Promise<HuaweiMap> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     hasPermission(): Promise<boolean> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     requestPermission(): Promise<void> {
         return;
     }
 
-    @Cordova({otherPromise: true})
-    computeDistanceBetween(from: LatLng, to: LatLng): Promise<ComputeDistanceResult> {
+    @Cordova({ otherPromise: true })
+    computeDistanceBetween(
+        from: LatLng,
+        to: LatLng
+    ): Promise<ComputeDistanceResult> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     setApiKey(apiKey: string): Promise<void> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     disableLogger(): Promise<void> {
         return;
     }
 
-    @Cordova({otherPromise: true})
+    @Cordova({ otherPromise: true })
     enableLogger(): Promise<void> {
         return;
     }
 }
 
 @Plugin({
-    pluginName: 'HMSMap',
-    plugin: 'cordova-plugin-hms-map',
-    pluginRef: 'HMSMap.CameraUpdateFactory',
-    repo: 'https://github.com/HMS-Core/hms-cordova-plugin',
-    platforms: ['Android'],
+    pluginName: "HMSMap",
+    plugin: "cordova-plugin-hms-map",
+    pluginRef: "HMSMap.CameraUpdateFactory",
+    repo: "https://github.com/HMS-Core/hms-cordova-plugin",
+    platforms: ["Android"],
 })
 export class CameraUpdateFactory {
-
-    private constructor() {
-    }
+    private constructor() {}
 
     static newCameraPosition(cameraPosition: CameraPosition): CameraUpdate {
-        return HMSMap.getPlugin().CameraUpdateFactory.newCameraPosition(cameraPosition);
+        return HMSMap.getPlugin().CameraUpdateFactory.newCameraPosition(
+            cameraPosition
+        );
     }
 
     static newLatLng(latLng: LatLng): CameraUpdate {
         return HMSMap.getPlugin().CameraUpdateFactory.newLatLng(latLng);
     }
 
-    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number): CameraUpdate;
+    static newLatLngBounds(
+        latLngBounds: LatLngBounds,
+        padding: number
+    ): CameraUpdate;
 
-    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number, width?: number, height?: number): CameraUpdate {
-        return HMSMap.getPlugin().CameraUpdateFactory.newLatLngBounds(latLngBounds, padding, width, height);
+    static newLatLngBounds(
+        latLngBounds: LatLngBounds,
+        padding: number,
+        width?: number,
+        height?: number
+    ): CameraUpdate {
+        return HMSMap.getPlugin().CameraUpdateFactory.newLatLngBounds(
+            latLngBounds,
+            padding,
+            width,
+            height
+        );
     }
 
     static newLatLngZoom(latLng: LatLng, zoom: number): CameraUpdate {
-        return HMSMap.getPlugin().CameraUpdateFactory.newLatLngZoom(latLng, zoom);
+        return HMSMap.getPlugin().CameraUpdateFactory.newLatLngZoom(
+            latLng,
+            zoom
+        );
     }
 
     static scrollBy(xPixel: number, yPixel: number): CameraUpdate {
@@ -173,7 +195,6 @@ export class SquareCap extends Cap {
 }
 
 export class CustomCap extends Cap {
-
     constructor(bitmapDescriptor: BitmapDescriptor, refWidth?: number) {
         super();
         this.type = 3;
@@ -191,25 +212,23 @@ export class CustomCap extends Cap {
 }
 
 export class AnimationSet {
-
     readonly animations: Map<string, Animation> = new Map<string, Animation>();
 
     addRotateAnimation(animation: RotateAnimation): void {
-        this.animations.set('Rotate', animation);
+        this.animations.set("Rotate", animation);
     }
 
     addScaleAnimation(animation: ScaleAnimation): void {
-        this.animations.set('Scale', animation);
+        this.animations.set("Scale", animation);
     }
 
     addTranslateAnimation(animation: TranslateAnimation): void {
-        this.animations.set('Translate', animation);
+        this.animations.set("Translate", animation);
     }
 
     addAlphaAnimation(animation: AlphaAnimation): void {
-        this.animations.set('Alpha', animation);
+        this.animations.set("Alpha", animation);
     }
-
 }
 
 ////////////////////////////////////////////////INTERFACES/////////////////////////////////////////////////////////////
@@ -227,27 +246,38 @@ export interface UiSettings {
     isZoomGesturesEnabled(): Promise<boolean>;
     setAllGesturesEnabled(allGesturesEnabled: boolean): Promise<void>;
     setCompassEnabled(compassEnabled: boolean): Promise<void>;
-    setIndoorLevelPickerEnabled(indoorLevelPickerEnabled: boolean): Promise<void>;
+    setIndoorLevelPickerEnabled(
+        indoorLevelPickerEnabled: boolean
+    ): Promise<void>;
     setMapToolbarEnabled(mapToolbarEnabled: boolean): Promise<void>;
     setMyLocationButtonEnabled(myLocationButtonEnabled: boolean): Promise<void>;
     setRotateGesturesEnabled(rotateGesturesEnabled: boolean): Promise<void>;
     setScrollGesturesEnabled(scrollGesturesEnabled: boolean): Promise<void>;
-    setScrollGesturesEnabledDuringRotateOrZoom(scrollGesturesEnabledDuringRotateOrZoom: boolean): Promise<void>;
+    setScrollGesturesEnabledDuringRotateOrZoom(
+        scrollGesturesEnabledDuringRotateOrZoom: boolean
+    ): Promise<void>;
     setTiltGesturesEnabled(tiltGesturesEnabled: boolean): Promise<void>;
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void>;
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void>;
-    setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void>;
+    setGestureScaleByMapCenter(
+        gestureScaleByMapCenterEnabled: boolean
+    ): Promise<void>;
     setMarkerClusterColor(markerClusterColor: number): Promise<void>;
     setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void>;
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
     setLogoPosition(logoPosition: number): Promise<void>;
-    setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void>;
+    setLogoPadding(
+        paddingStart: number,
+        paddingTop: number,
+        paddingEnd: number,
+        paddingBottom: number
+    ): Promise<void>;
 }
 
 export interface HuaweiMap {
     on(event: MapEvent, callback: (val: any) => void): Promise<void>;
     destroyMap(): Promise<void>;
-    hideMap(): Promise<void>
+    hideMap(): Promise<void>;
     getComponent(key: string): any;
     removeComponent(key: string): void;
     getId(): number;
@@ -255,13 +285,24 @@ export interface HuaweiMap {
     syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
-    addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
-    addTileOverlay(tileOverlayOptions: TileOverlayOptions): Promise<TileOverlay>;
+    addGroundOverlay(
+        groundOverlayOptions: GroundOverlayOptions
+    ): Promise<GroundOverlay>;
+    addTileOverlay(
+        tileOverlayOptions: TileOverlayOptions
+    ): Promise<TileOverlay>;
     addPolygon(polygonOptions: PolygonOptions): Promise<Polygon>;
     addPolyline(polylineOptions: PolylineOptions): Promise<Polyline>;
     animateCamera(cameraUpdate: CameraUpdate): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback: CancelableCallback): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback?: CancelableCallback, durationMs?: number): Promise<void>;
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        cancelableCallback: CancelableCallback
+    ): Promise<void>;
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        cancelableCallback?: CancelableCallback,
+        durationMs?: number
+    ): Promise<void>;
     moveCamera(cameraUpdate: CameraUpdate): Promise<void>;
     clear(): Promise<void>;
     resetMinMaxZoomPreference(): Promise<void>;
@@ -279,7 +320,9 @@ export interface HuaweiMap {
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void>;
-    setLatLngBoundsForCameraTarget(latLngBoundsForCameraTarget: LatLngBounds): Promise<void>;
+    setLatLngBoundsForCameraTarget(
+        latLngBoundsForCameraTarget: LatLngBounds
+    ): Promise<void>;
     setLocationSource(locationSource: LocationSource): Promise<void>;
     setMapStyle(mapStyle: MapStyleOptions): Promise<void>;
     setMapType(mapType: MapType): Promise<void>;
@@ -287,9 +330,16 @@ export interface HuaweiMap {
     setMaxZoomPreference(maxZoomPreference: number): Promise<void>;
     setMinZoomPreference(minZoomPreference: number): Promise<void>;
     setMyLocationEnabled(myLocationEnabled: boolean): Promise<void>;
-    setPadding(left: number, top: number, right: number, bottom: number): Promise<void>;
+    setPadding(
+        left: number,
+        top: number,
+        right: number,
+        bottom: number
+    ): Promise<void>;
     setTrafficEnabled(trafficEnabled: boolean): Promise<void>;
-    snapshot(onReadyCallback: (snapshot: SnapshotResult) => void): Promise<void>;
+    snapshot(
+        onReadyCallback: (snapshot: SnapshotResult) => void
+    ): Promise<void>;
     setMapPointersEnabled(mapPointersEnabled: boolean): Promise<void>;
     isMapPointersEnabled(): Promise<boolean>;
     setPointToCenter(x: number, y: number): Promise<void>;
@@ -392,7 +442,6 @@ export interface Marker {
 }
 
 export interface Polygon {
-
     getFillColor(): Promise<Color>;
     getHoles(): Promise<LatLng[][]>;
     getId(): string;
@@ -477,175 +526,174 @@ export interface Projection {
 }
 
 export interface MapBounds {
-    marginTop?: number,
-    marginBottom?: number
+    marginTop?: number;
+    marginBottom?: number;
 }
 
 export interface HuaweiMapOptions {
-    mapType?: MapType,
-    zoomControlsEnabled?: boolean,
-    compassEnabled?: boolean,
-    zoomGesturesEnabled?: boolean,
-    scrollGesturesEnabled?: boolean,
-    rotateGesturesEnabled?: boolean,
-    tiltGesturesEnabled?: boolean,
-    zOrderOnTop?: boolean,
-    liteMode?: boolean,
-    ambientEnabled?: boolean,
-    minZoomPreference?: number,
-    maxZoomPreference?: number,
-    cameraPosition?: CameraPosition,
-    latLngBounds?: LatLngBounds,
-    styleId?: string,
-    previewId?: string
+    mapType?: MapType;
+    zoomControlsEnabled?: boolean;
+    compassEnabled?: boolean;
+    zoomGesturesEnabled?: boolean;
+    scrollGesturesEnabled?: boolean;
+    rotateGesturesEnabled?: boolean;
+    tiltGesturesEnabled?: boolean;
+    zOrderOnTop?: boolean;
+    liteMode?: boolean;
+    ambientEnabled?: boolean;
+    minZoomPreference?: number;
+    maxZoomPreference?: number;
+    cameraPosition?: CameraPosition;
+    latLngBounds?: LatLngBounds;
+    styleId?: string;
+    previewId?: string;
 }
 
 export interface Location {
-    accuracy: number,
-    altitude: number,
-    bearing: number,
-    elapsedRealtimeNanos: number,
-    latitude: number,
-    longitude: number,
-    provider: string,
-    speed: number,
-    time: number,
-    fromMockProvider: boolean,
-    contents: number,
-    bearingAccuracyDegrees?: number,
-    speedAccuracyMetersPerSecond?: number,
-    verticalAccuracyMeters?: number
+    accuracy: number;
+    altitude: number;
+    bearing: number;
+    elapsedRealtimeNanos: number;
+    latitude: number;
+    longitude: number;
+    provider: string;
+    speed: number;
+    time: number;
+    fromMockProvider: boolean;
+    contents: number;
+    bearingAccuracyDegrees?: number;
+    speedAccuracyMetersPerSecond?: number;
+    verticalAccuracyMeters?: number;
 }
 
 export interface LatLngBounds {
-    southwest: LatLng,
-    northeast: LatLng
+    southwest: LatLng;
+    northeast: LatLng;
 }
 
 export interface CameraPosition {
-    target: LatLng,
-    zoom?: number,
-    bearing?: number,
-    tilt?: number
+    target: LatLng;
+    zoom?: number;
+    bearing?: number;
+    tilt?: number;
 }
 
 export interface LatLng {
-    lat: number,
-    lng: number
+    lat: number;
+    lng: number;
 }
 
 export interface CircleOptions {
-    center: LatLng,
-    clickable?: boolean,
-    fillColor?: Color,
-    radius: number,
-    strokeColor?: Color,
-    strokeWidth?: number,
-    strokePattern?: PatternItem[],
-    visible?: boolean,
-    zIndex?: number
-
+    center: LatLng;
+    clickable?: boolean;
+    fillColor?: Color;
+    radius: number;
+    strokeColor?: Color;
+    strokeWidth?: number;
+    strokePattern?: PatternItem[];
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export interface POI {
-    latLng: LatLng,
-    name?: string,
-    placeId?: string
+    latLng: LatLng;
+    name?: string;
+    placeId?: string;
 }
 
 export interface PatternItem {
-    type: PatternItemType,
-    length: number
+    type: PatternItemType;
+    length: number;
 }
 
 export interface MarkerOptions {
-    anchorMarker?: Anchor,
-    infoWindowAnchor?: Anchor,
-    infoWindowShown?: boolean,
-    alpha?: number,
-    clusterable?: boolean,
-    draggable?: boolean,
-    icon?: BitmapDescriptor,
-    flat?: boolean,
-    position: LatLng,
-    rotation?: number,
-    snippet?: string,
-    title?: string,
-    visible?: boolean,
-    zIndex?: number
+    anchorMarker?: Anchor;
+    infoWindowAnchor?: Anchor;
+    infoWindowShown?: boolean;
+    alpha?: number;
+    clusterable?: boolean;
+    draggable?: boolean;
+    icon?: BitmapDescriptor;
+    flat?: boolean;
+    position: LatLng;
+    rotation?: number;
+    snippet?: string;
+    title?: string;
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export interface ScaledSize {
-    width: number,
-    height: number
+    width: number;
+    height: number;
 }
 
 export interface Asset {
-    fileName: string,
-    scaledSize?: ScaledSize
+    fileName: string;
+    scaledSize?: ScaledSize;
 }
 
 export interface Resource {
-    fileName: string,
-    resourceType: string,
-    scaledSize?: ScaledSize
+    fileName: string;
+    resourceType: string;
+    scaledSize?: ScaledSize;
 }
 
 export interface BitmapDescriptor {
-    hue?: Hue,
-    asset?: Asset,
-    resource?: Resource,
+    hue?: Hue;
+    asset?: Asset;
+    resource?: Resource;
 }
 
 export interface Anchor {
-    u?: number,
-    v?: number
+    u?: number;
+    v?: number;
 }
 
 export interface PolygonOptions {
-    points: LatLng[],
+    points: LatLng[];
     holes?: LatLng[][];
-    clickable?: boolean,
-    geodesic?: boolean,
-    fillColor?: Color,
-    strokeColor?: Color,
-    strokeJointType?: JointType,
-    strokePattern?: PatternItem[],
-    strokeWidth?: number,
-    visible?: true,
+    clickable?: boolean;
+    geodesic?: boolean;
+    fillColor?: Color;
+    strokeColor?: Color;
+    strokeJointType?: JointType;
+    strokePattern?: PatternItem[];
+    strokeWidth?: number;
+    visible?: true;
     zIndex?: number;
 }
 
 export interface PolylineOptions {
-    points: LatLng[],
-    clickable?: boolean,
-    color?: Color,
-    startCap?: Cap,
-    pattern?: PatternItem[],
-    endCap?: Cap,
-    geodesic?: boolean,
-    jointType?: JointType,
-    visible?: boolean,
-    width?: number,
-    zIndex?: number
+    points: LatLng[];
+    clickable?: boolean;
+    color?: Color;
+    startCap?: Cap;
+    pattern?: PatternItem[];
+    endCap?: Cap;
+    geodesic?: boolean;
+    jointType?: JointType;
+    visible?: boolean;
+    width?: number;
+    zIndex?: number;
 }
 
 export interface GroundOverlayOptions {
-    anchor?: Anchor,
-    bearing?: number,
-    clickable?: boolean,
-    image?: BitmapDescriptor,
-    visible?: boolean,
-    transparency?: number,
-    zIndex?: number,
-    position: Position,
-    bounds?: LatLngBounds
+    anchor?: Anchor;
+    bearing?: number;
+    clickable?: boolean;
+    image?: BitmapDescriptor;
+    visible?: boolean;
+    transparency?: number;
+    zIndex?: number;
+    position: Position;
+    bounds?: LatLngBounds;
 }
 
 export interface Position {
-    latLng: LatLng,
-    width: number,
-    height?: number
+    latLng: LatLng;
+    width: number;
+    height?: number;
 }
 
 export interface URLTile {
@@ -669,26 +717,26 @@ export interface RepetitiveTile {
 }
 
 export interface TileProvider {
-    type: TileType,
-    data: Tile[] | URLTile | RepetitiveTile
+    type: TileType;
+    data: Tile[] | URLTile | RepetitiveTile;
 }
 
 export interface TileOverlayOptions {
-    tileProvider: TileProvider,
-    fadeIn?: boolean,
-    transparency?: number,
-    visible?: boolean,
-    zIndex?: number
+    tileProvider: TileProvider;
+    fadeIn?: boolean;
+    transparency?: number;
+    visible?: boolean;
+    zIndex?: number;
 }
 
 export interface Animation {
-    fillMode?: number,
-    duration?: number,
-    repeatCount?: number,
-    repeatMode?: number,
-    interpolator?: Interpolator,
-    animationStart?: () => void,
-    animationEnd?: () => void
+    fillMode?: number;
+    duration?: number;
+    repeatCount?: number;
+    repeatMode?: number;
+    interpolator?: Interpolator;
+    animationStart?: () => void;
+    animationEnd?: () => void;
 }
 
 export interface RotateAnimation extends Animation {
@@ -713,51 +761,49 @@ export interface AlphaAnimation extends Animation {
 }
 
 export interface CancelableCallback {
-    onFinish: () => void,
-    onCancel: () => void
+    onFinish: () => void;
+    onCancel: () => void;
 }
 
 export interface InfoWindowAdapter {
-    file: string,
-    width: number,
-    height: number
+    file: string;
+    width: number;
+    height: number;
 }
 
-export interface LocationSource {
-
-}
+export interface LocationSource {}
 
 export interface ComputeDistanceResult {
-    result: number
+    result: number;
 }
 
 export interface Point {
-    x: number,
-    y: number
+    x: number;
+    y: number;
 }
 
 export interface SnapshotResult {
-    data: string,
+    data: string;
 }
 
 export interface VisibleRegion {
-    farLeft: LatLng,
-    farRight: LatLng,
-    latLngBounds: LatLngBounds,
-    nearLeft: LatLng,
-    nearRight: LatLng
+    farLeft: LatLng;
+    farRight: LatLng;
+    latLngBounds: LatLngBounds;
+    nearLeft: LatLng;
+    nearRight: LatLng;
 }
 
 export interface Interpolator {
-    type: InterpolatorType,
-    args?: any
+    type: InterpolatorType;
+    args?: any;
 }
 
 /*-------------------------------------------------------------ENUMS----------------------------------------------------------*/
 export enum TileType {
     URL_TILE,
     REPETITIVE_TILE,
-    LOCAL_TILE
+    LOCAL_TILE,
 }
 
 export enum Color {
@@ -772,42 +818,42 @@ export enum Color {
     YELLOW = -256,
     CYAN = -16711681,
     GREEN = -16711936,
-    TRANSPARENT = 0
+    TRANSPARENT = 0,
 }
 
 export enum JointType {
     ROUND = 2,
     BEVEL = 1,
-    DEFAULT = 0
+    DEFAULT = 0,
 }
 
 export enum MapEvent {
-    ON_INDOOR_BUILDINGS_FOCUSED = 'onIndoorBuildingsFocused',
-    ON_INDOOR_LEVEL_ACTIVATED = 'onIndoorLevelActivated',
-    ON_MAP_LOADED = 'onMapLoaded',
-    ON_CAMERA_IDLE = 'onCameraIdle',
-    ON_CAMERA_MOVE_CANCELED = 'onCameraMoveCanceled',
-    ON_CAMERA_MOVE = 'onCameraMove',
-    ON_CAMERA_MOVE_STARTED = 'onCameraMoveStarted',
-    ON_CIRCLE_CLICK = 'onCircleClick',
-    ON_GROUND_OVERLAY_CLICK = 'onGroundOverlayClick',
-    ON_INFO_WINDOW_CLICK = 'onInfoWindowClick',
-    ON_INFO_WINDOW_CLOSE = 'onInfoWindowClose',
-    ON_INFO_WINDOW_LONG_CLICK = 'onInfoWindowLongClick',
-    ON_MAP_CLICK = 'onMapClick',
-    ON_MAP_LONG_CLICK = 'onMapLongClick',
-    ON_MARKER_CLICK = 'onMarkerClick',
-    ON_MARKER_DRAG_START = 'onMarkerDragStart',
-    ON_MARKER_DRAG = 'onMarkerDrag',
-    ON_MARKER_DRAG_END = 'onMarkerDragEnd',
-    ON_MY_LOCATION_BUTTON_CLICK = 'onMyLocationButtonClick',
-    ON_MY_LOCATION_CLICK = 'onMyLocationClick',
-    ON_POI_CLICK = 'onPoiClick',
-    ON_POLYGON_CLICK = 'onPolygonClick',
-    ON_POLYLINE_CLICK = 'onPolylineClick',
-    ON_CANCELABLE_CALLBACK_FINISH = 'onCancelableCallbackFinish',
-    ON_CANCELABLE_CALLBACK_CANCEL = 'onCancelableCallbackCancel',
-    ON_SNAPSHOT_READY_CALLBACK = 'onSnapshotReadyCallback'
+    ON_INDOOR_BUILDINGS_FOCUSED = "onIndoorBuildingsFocused",
+    ON_INDOOR_LEVEL_ACTIVATED = "onIndoorLevelActivated",
+    ON_MAP_LOADED = "onMapLoaded",
+    ON_CAMERA_IDLE = "onCameraIdle",
+    ON_CAMERA_MOVE_CANCELED = "onCameraMoveCanceled",
+    ON_CAMERA_MOVE = "onCameraMove",
+    ON_CAMERA_MOVE_STARTED = "onCameraMoveStarted",
+    ON_CIRCLE_CLICK = "onCircleClick",
+    ON_GROUND_OVERLAY_CLICK = "onGroundOverlayClick",
+    ON_INFO_WINDOW_CLICK = "onInfoWindowClick",
+    ON_INFO_WINDOW_CLOSE = "onInfoWindowClose",
+    ON_INFO_WINDOW_LONG_CLICK = "onInfoWindowLongClick",
+    ON_MAP_CLICK = "onMapClick",
+    ON_MAP_LONG_CLICK = "onMapLongClick",
+    ON_MARKER_CLICK = "onMarkerClick",
+    ON_MARKER_DRAG_START = "onMarkerDragStart",
+    ON_MARKER_DRAG = "onMarkerDrag",
+    ON_MARKER_DRAG_END = "onMarkerDragEnd",
+    ON_MY_LOCATION_BUTTON_CLICK = "onMyLocationButtonClick",
+    ON_MY_LOCATION_CLICK = "onMyLocationClick",
+    ON_POI_CLICK = "onPoiClick",
+    ON_POLYGON_CLICK = "onPolygonClick",
+    ON_POLYLINE_CLICK = "onPolylineClick",
+    ON_CANCELABLE_CALLBACK_FINISH = "onCancelableCallbackFinish",
+    ON_CANCELABLE_CALLBACK_CANCEL = "onCancelableCallbackCancel",
+    ON_SNAPSHOT_READY_CALLBACK = "onSnapshotReadyCallback",
 }
 
 export enum MapType {
@@ -829,19 +875,18 @@ export enum Hue {
     HUE_YELLOW = 60,
     HUE_BLUE = 240,
     HUE_RED = 0,
-
 }
 
 export enum PatternItemType {
     TYPE_GAP = 2,
     TYPE_DOT = 1,
-    TYPE_DASH = 0
+    TYPE_DASH = 0,
 }
 
 export enum CameraMoveStartedReason {
     REASON_API_ANIMATION = 2,
     REASON_DEVELOPER_ANIMATION = 3,
-    REASON_GESTURE = 1
+    REASON_GESTURE = 1,
 }
 
 export enum InterpolatorType {
@@ -854,7 +899,7 @@ export enum InterpolatorType {
     CYCLE,
     DECELERATE,
     OVERSHOOT,
-    PATH
+    PATH,
 }
 
 export enum AnimationConstant {
@@ -862,12 +907,12 @@ export enum AnimationConstant {
     FILL_MODE_BACKWARDS = 1,
     INFINITE = -1,
     RESTART = 1,
-    REVERSE = 2
+    REVERSE = 2,
 }
 
 export enum Gravity {
     TOP = 48,
     BOTTOM = 80,
     START = 8388611,
-    END = 8388613
+    END = 8388613,
 }

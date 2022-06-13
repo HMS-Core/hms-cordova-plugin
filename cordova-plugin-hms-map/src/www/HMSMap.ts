@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { asyncExec, Rect, initalPropsOf } from './utils';
+import { asyncExec, Rect, initalPropsOf } from "./utils";
 import {
     BitmapDescriptor,
     CameraPosition,
@@ -44,21 +44,28 @@ import {
     TileType,
     UiSettings,
     URLTile,
-    VisibleRegion
-} from './interfaces';
-import { Circle, CircleImpl } from './circle';
-import { Marker, MarkerImpl } from './marker';
-import { GroundOverlay, GroundOverlayImpl } from './groundOverlay';
-import { TileOverlay, TileOverlayImpl } from './tileOverlay';
-import { Polygon, PolygonImpl } from './polygon';
-import { Polyline, PolylineImpl } from './polyline';
+    VisibleRegion,
+} from "./interfaces";
+import { Circle, CircleImpl } from "./circle";
+import { Marker, MarkerImpl } from "./marker";
+import { GroundOverlay, GroundOverlayImpl } from "./groundOverlay";
+import { TileOverlay, TileOverlayImpl } from "./tileOverlay";
+import { Polygon, PolygonImpl } from "./polygon";
+import { Polyline, PolylineImpl } from "./polyline";
 
-export { Polyline, ButtCap, CustomCap, RoundCap, SquareCap, Cap } from './polyline';
-export { Polygon } from './polygon';
-export { Circle } from './circle';
-export { TileOverlay } from './tileOverlay';
-export { GroundOverlay } from './groundOverlay';
-export { Marker } from './marker';
+export {
+    Polyline,
+    ButtCap,
+    CustomCap,
+    RoundCap,
+    SquareCap,
+    Cap,
+} from "./polyline";
+export { Polygon } from "./polygon";
+export { Circle } from "./circle";
+export { TileOverlay } from "./tileOverlay";
+export { GroundOverlay } from "./groundOverlay";
+export { Marker } from "./marker";
 export {
     AnimationSet,
     RotateAnimation,
@@ -81,13 +88,12 @@ export {
     RepetitiveTile,
     TileType,
     AnimationConstant,
-    Gravity
-} from './interfaces';
+    Gravity,
+} from "./interfaces";
 
 export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
 
 export function sync(mapId: number, mapDiv: string, components: any) {
-
     if (!maps.has(mapId)) {
         const huaweiMap: HuaweiMap = new HuaweiMapImpl(mapDiv, mapId);
         maps.set(mapId, huaweiMap);
@@ -97,47 +103,60 @@ export function sync(mapId: number, mapDiv: string, components: any) {
     const hashMap = (<HuaweiMapImpl>map).components;
 
     for (let i = 0; i < components.length; i++) {
-
-        if (hashMap.has(components[i]['_id'])) continue;
+        if (hashMap.has(components[i]["_id"])) continue;
 
         let obj = null;
-        let id: string = components[i]['_id'];
+        let id: string = components[i]["_id"];
 
-        if (components[i]['_type'] === "circle")
+        if (components[i]["_type"] === "circle")
             obj = new CircleImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'marker')
+        else if (components[i]["_type"] === "marker")
             obj = new MarkerImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'polygon')
+        else if (components[i]["_type"] === "polygon")
             obj = new PolygonImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'polyline')
+        else if (components[i]["_type"] === "polyline")
             obj = new PolylineImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'groundOverlay')
+        else if (components[i]["_type"] === "groundOverlay")
             obj = new GroundOverlayImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'tileOverlay')
+        else if (components[i]["_type"] === "tileOverlay")
             obj = new TileOverlayImpl(mapDiv, mapId, id);
 
-        hashMap.set(components[i]['_id'], obj);
+        hashMap.set(components[i]["_id"], obj);
     }
 }
 
-
-export async function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions): Promise<HuaweiMap> {
+export async function getMap(
+    divId: string,
+    huaweiMapOptions: HuaweiMapOptions
+): Promise<HuaweiMap> {
     const mapElement = document.getElementById(divId);
-    if (!mapElement) return Promise.reject(ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND));
+    if (!mapElement)
+        return Promise.reject(
+            ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND)
+        );
 
     const initialProps = initalPropsOf(mapElement);
 
-    const mapId = await asyncExec('HMSMap', 'initMap', [divId, { 'mapOptions': huaweiMapOptions, 'initialProps': initialProps }]);
+    const mapId = await asyncExec("HMSMap", "initMap", [
+        divId,
+        { mapOptions: huaweiMapOptions, initialProps: initialProps },
+    ]);
     const huaweiMap: HuaweiMap = new HuaweiMapImpl(divId, mapId);
     maps.set(huaweiMap.getId(), huaweiMap);
     return huaweiMap;
 }
 
 export async function showMap(divId: string): Promise<HuaweiMap> {
-    if (!document.getElementById(divId)) return Promise.reject(ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND));
+    if (!document.getElementById(divId))
+        return Promise.reject(
+            ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND)
+        );
     const mapId = await asyncExec("HMSMap", "showMap", [divId]);
     const currentMap: HuaweiMap | undefined = maps.get(mapId);
-    if (currentMap == undefined) return Promise.reject(ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND));
+    if (currentMap == undefined)
+        return Promise.reject(
+            ErrorCodes.toString(ErrorCodes.NO_DOM_ELEMENT_FOUND)
+        );
     currentMap.startOverlayInterval();
     currentMap.startObserver();
     return currentMap;
@@ -152,28 +171,45 @@ export async function requestPermission(): Promise<void> {
     return asyncExec("HMSMap", "requestPermission", []);
 }
 
-export async function computeDistanceBetween(from: LatLng, to: LatLng): Promise<ComputeDistanceResult> {
-    return asyncExec("HMSMap", "computeDistanceBetween", [{ "from": from, "to": to }]);
+export async function computeDistanceBetween(
+    from: LatLng,
+    to: LatLng
+): Promise<ComputeDistanceResult> {
+    return asyncExec("HMSMap", "computeDistanceBetween", [
+        { from: from, to: to },
+    ]);
 }
 
 export async function setApiKey(apiKey: string): Promise<void> {
-    return asyncExec("HMSMap", "setApiKey", [{ "apiKey": apiKey }]);
+    return asyncExec("HMSMap", "setApiKey", [{ apiKey: apiKey }]);
 }
 
 export function disableLogger(): Promise<void> {
-    return asyncExec('HMSMap', 'disableLogger', []);
+    return asyncExec("HMSMap", "disableLogger", []);
 }
 
 export function enableLogger(): Promise<void> {
-    return asyncExec('HMSMap', 'enableLogger', []);
+    return asyncExec("HMSMap", "enableLogger", []);
 }
 
-async function forceUpdateXAndY(x: number, y: number, mapDivId: string): Promise<void> {
+async function forceUpdateXAndY(
+    x: number,
+    y: number,
+    mapDivId: string
+): Promise<void> {
     return asyncExec("HMSMap", "forceUpdateXAndY", [mapDivId, x, y]);
 }
 
-async function forceUpdateWidthAndHeight(width: number, height: number, mapDivId: string): Promise<void> {
-    return asyncExec("HMSMap", "forceUpdateWidthAndHeight", [mapDivId, width, height]);
+async function forceUpdateWidthAndHeight(
+    width: number,
+    height: number,
+    mapDivId: string
+): Promise<void> {
+    return asyncExec("HMSMap", "forceUpdateWidthAndHeight", [
+        mapDivId,
+        width,
+        height,
+    ]);
 }
 
 interface OverlapState {
@@ -201,7 +237,7 @@ class MapOverlayCache {
         let diffToAdd = [];
         let diffToDelete = [];
         for (let [key, value] of this.rects) {
-            if(!this.lastRectsRecord.has(key)) {
+            if (!this.lastRectsRecord.has(key)) {
                 diffToAdd.push(value.rect);
             } else {
                 this.lastRectsRecord.delete(key);
@@ -212,8 +248,12 @@ class MapOverlayCache {
             diffToDelete.push(value.rect);
         }
 
-        if(diffToAdd.length>0 || diffToDelete.length>0){
-            asyncExec("HMSMap", "updateOverlappingHTMLElements", [this.mapDivId, diffToAdd, diffToDelete]);
+        if (diffToAdd.length > 0 || diffToDelete.length > 0) {
+            asyncExec("HMSMap", "updateOverlappingHTMLElements", [
+                this.mapDivId,
+                diffToAdd,
+                diffToDelete,
+            ]);
         }
 
         this.lastRectsRecord.clear();
@@ -226,8 +266,8 @@ class MapOverlayCache {
         this.syncWithJava();
     }
     private refreshCache() {
-        for(let [key, value] of this.rects) {
-            if(!value.visited) {
+        for (let [key, value] of this.rects) {
+            if (!value.visited) {
                 this.removeRect(key, value);
             } else {
                 value.visited = false;
@@ -237,7 +277,7 @@ class MapOverlayCache {
     }
 
     private removeRect(key: string, value: OverlapState) {
-        if(value.count > 1) {
+        if (value.count > 1) {
             value.count--;
             this.rects.set(key, value);
         } else {
@@ -245,24 +285,28 @@ class MapOverlayCache {
         }
     }
 
-
     private fillCacheRecursively(element: HTMLElement) {
-        for(let i=0; i < element.children.length; i++) {
+        for (let i = 0; i < element.children.length; i++) {
             this.fillCacheRecursively(<HTMLElement>element.children[i]);
         }
 
-        if(element.id === this.mapDivId) return;
+        if (element.id === this.mapDivId) return;
         const curr: Rect = Rect.fromDomRect(element.getBoundingClientRect());
-        const map: Rect = Rect.fromDomRect(this.mapElement.getBoundingClientRect());
+        const map: Rect = Rect.fromDomRect(
+            this.mapElement.getBoundingClientRect()
+        );
 
-        if(map.intersects(curr) && this.isAboveMap(element)) {
-
+        if (map.intersects(curr) && this.isAboveMap(element)) {
             let val = this.rects.get(curr.hashCode());
 
             if (val == undefined) {
-                this.rects.set(curr.hashCode(), {rect: curr, visited: true, count: 1});
+                this.rects.set(curr.hashCode(), {
+                    rect: curr,
+                    visited: true,
+                    count: 1,
+                });
             } else {
-                val.count = val.visited ? val.count+1 : 1;
+                val.count = val.visited ? val.count + 1 : 1;
                 val.visited = true;
                 this.rects.set(curr.hashCode(), val);
             }
@@ -270,23 +314,30 @@ class MapOverlayCache {
     }
 
     private isAboveMap(element: HTMLElement): boolean {
-        const isParentOfMap = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_CONTAINED_BY;
+        const isParentOfMap =
+            element.compareDocumentPosition(this.mapElement) &
+            Node.DOCUMENT_POSITION_CONTAINED_BY;
         const elemZIndex = window.getComputedStyle(element).zIndex;
 
-        if( !Boolean(isParentOfMap) && !isNaN(parseInt(elemZIndex)) && parseInt(elemZIndex) > 0)
+        if (
+            !Boolean(isParentOfMap) &&
+            !isNaN(parseInt(elemZIndex)) &&
+            parseInt(elemZIndex) > 0
+        )
             return true;
 
-        const isMapCreatedBefore = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_PRECEDING;
+        const isMapCreatedBefore =
+            element.compareDocumentPosition(this.mapElement) &
+            Node.DOCUMENT_POSITION_PRECEDING;
         return Boolean(isMapCreatedBefore);
     }
 
-    startInterval(){
+    startInterval() {
         this.interval = setInterval(() => this.mapOverlayInterval(), 100);
     }
 
-    stopInterval(){
-        if(this.interval !== -1)
-            clearInterval(this.interval);
+    stopInterval() {
+        if (this.interval !== -1) clearInterval(this.interval);
     }
 }
 
@@ -304,7 +355,9 @@ class MapDomChangeListener {
     }
 
     private addWindowResizeListener() {
-        window.onresize = () => {this.updateWidthAndHeight()};        
+        window.onresize = () => {
+            this.updateWidthAndHeight();
+        };
     }
 
     private removeWindowResizeListener() {
@@ -312,14 +365,18 @@ class MapDomChangeListener {
     }
 
     private createObserver(): MutationObserver {
-        return new MutationObserver(mutations => {
+        return new MutationObserver((mutations) => {
             this.updateXAndY();
             this.updateWidthAndHeight();
         });
     }
 
     startListener() {
-        this.mapDomChangeObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+        this.mapDomChangeObserver.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        });
         this.addWindowResizeListener();
     }
 
@@ -329,9 +386,20 @@ class MapDomChangeListener {
     }
 
     private updateWidthAndHeight() {
-        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
-        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
-        if(this.mapDivRectCache.width != width || this.mapDivRectCache.height != height) {
+        const width = parseInt(
+            window
+                .getComputedStyle(this.mapElement, null)
+                .getPropertyValue("width")
+        );
+        const height = parseInt(
+            window
+                .getComputedStyle(this.mapElement, null)
+                .getPropertyValue("height")
+        );
+        if (
+            this.mapDivRectCache.width != width ||
+            this.mapDivRectCache.height != height
+        ) {
             forceUpdateWidthAndHeight(width, height, this.mapDivId).then(() => {
                 this.mapDivRectCache.width = width;
                 this.mapDivRectCache.height = height;
@@ -343,7 +411,7 @@ class MapDomChangeListener {
         const mapRect = this.mapElement.getBoundingClientRect();
         const x = mapRect.x;
         const y = mapRect.y;
-        if(this.mapDivRectCache.x != x || this.mapDivRectCache.y != y) {
+        if (this.mapDivRectCache.x != x || this.mapDivRectCache.y != y) {
             forceUpdateXAndY(x, y, this.mapDivId).then(() => {
                 this.mapDivRectCache.x = x;
                 this.mapDivRectCache.y = y;
@@ -353,7 +421,6 @@ class MapDomChangeListener {
 }
 
 class HuaweiMapImpl implements HuaweiMap {
-
     public readonly components: Map<string, any> = new Map<string, any>();
     private readonly id: number;
     private readonly divId: string;
@@ -364,14 +431,19 @@ class HuaweiMapImpl implements HuaweiMap {
     private readonly mapListener: MapDomChangeListener;
 
     constructor(divId: string, mapId: number) {
-        console.log(`Huawei map constructed with the div id ${divId} :: and the props ${mapId}`);
+        console.log(
+            `Huawei map constructed with the div id ${divId} :: and the props ${mapId}`
+        );
         this.id = mapId;
         this.divId = divId;
         this.projection = new ProjectionImpl(divId);
         this.uiSettings = new UiSettingsImpl(divId);
 
-        const tempElement: HTMLElement | null = document.getElementById(this.divId);
-        if (tempElement == null) throw Error(`Specified map div could not find: ${divId}`);
+        const tempElement: HTMLElement | null = document.getElementById(
+            this.divId
+        );
+        if (tempElement == null)
+            throw Error(`Specified map div could not find: ${divId}`);
         this.mapElement = tempElement;
         this.overlay = new MapOverlayCache(divId, this.mapElement);
         this.mapListener = new MapDomChangeListener(divId, this.mapElement);
@@ -396,8 +468,16 @@ class HuaweiMapImpl implements HuaweiMap {
 
     syncDimensions(): void {
         if (this.mapElement == null) return;
-        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
-        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
+        const width = parseInt(
+            window
+                .getComputedStyle(this.mapElement, null)
+                .getPropertyValue("width")
+        );
+        const height = parseInt(
+            window
+                .getComputedStyle(this.mapElement, null)
+                .getPropertyValue("height")
+        );
         forceUpdateWidthAndHeight(width, height, this.divId);
     }
 
@@ -417,83 +497,176 @@ class HuaweiMapImpl implements HuaweiMap {
 
     async on(event: MapEvent, callback: (val: any) => void): Promise<void> {
         const fixedFunctionNameForJavaScript: string = `${event}_${this.id}`;
-        const fixedFunctionNameForJava: string = `set${event[0].toUpperCase()}${event.substr(1)}Listener`;
-        return asyncExec('HMSMap', 'mapOptions', [this.divId, 'setListener', fixedFunctionNameForJava, { 'content': callback.toString() }])
-            .then(value => {
-                window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
-            }).catch(err => console.log(err));
+        const fixedFunctionNameForJava: string = `set${event[0].toUpperCase()}${event.substr(
+            1
+        )}Listener`;
+        return asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "setListener",
+            fixedFunctionNameForJava,
+            { content: callback.toString() },
+        ])
+            .then((value) => {
+                window.subscribeHMSEvent(
+                    fixedFunctionNameForJavaScript,
+                    callback
+                );
+            })
+            .catch((err) => console.log(err));
     }
 
     async setMapPointersEnabled(mapPointersEnabled: boolean): Promise<void> {
-        return asyncExec('HMSMap', 'setMapPointersEnabled', [this.divId, mapPointersEnabled]);
+        return asyncExec("HMSMap", "setMapPointersEnabled", [
+            this.divId,
+            mapPointersEnabled,
+        ]);
     }
 
     async isMapPointersEnabled(): Promise<boolean> {
-        const json = await asyncExec('HMSMap', 'isMapPointersEnabled', [this.divId]);
+        const json = await asyncExec("HMSMap", "isMapPointersEnabled", [
+            this.divId,
+        ]);
         return json.result;
     }
 
     async addCircle(circleOptions: CircleOptions): Promise<Circle> {
-        if (!circleOptions["center"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.CENTER_PROPERTY_MUST_DEFINED));
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "CIRCLE", circleOptions]);
+        if (!circleOptions["center"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.CENTER_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "CIRCLE",
+            circleOptions,
+        ]);
         const circle: Circle = new CircleImpl(this.divId, this.id, componentId);
         this.components.set(circle.getId(), circle);
         return circle;
     }
 
     async addMarker(markerOptions: MarkerOptions): Promise<Marker> {
-        if (!markerOptions["position"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "MARKER", markerOptions]);
+        if (!markerOptions["position"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "MARKER",
+            markerOptions,
+        ]);
         const marker: Marker = new MarkerImpl(this.divId, this.id, componentId);
         this.components.set(marker.getId(), marker);
         return marker;
     }
 
-    async addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay> {
-        if (!groundOverlayOptions["position"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "GROUND_OVERLAY", groundOverlayOptions]);
-        const groundOverlay: GroundOverlay = new GroundOverlayImpl(this.divId, this.id, componentId);
+    async addGroundOverlay(
+        groundOverlayOptions: GroundOverlayOptions
+    ): Promise<GroundOverlay> {
+        if (!groundOverlayOptions["position"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.POSITION_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "GROUND_OVERLAY",
+            groundOverlayOptions,
+        ]);
+        const groundOverlay: GroundOverlay = new GroundOverlayImpl(
+            this.divId,
+            this.id,
+            componentId
+        );
         this.components.set(groundOverlay.getId(), groundOverlay);
         return groundOverlay;
     }
 
-    async addTileOverlay(tileOverlayOptions: TileOverlayOptions): Promise<TileOverlay> {
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "TILE_OVERLAY", tileOverlayOptions]);
-        const tileOverlay: TileOverlay = new TileOverlayImpl(this.divId, this.id, componentId);
+    async addTileOverlay(
+        tileOverlayOptions: TileOverlayOptions
+    ): Promise<TileOverlay> {
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "TILE_OVERLAY",
+            tileOverlayOptions,
+        ]);
+        const tileOverlay: TileOverlay = new TileOverlayImpl(
+            this.divId,
+            this.id,
+            componentId
+        );
         this.components.set(tileOverlay.getId(), tileOverlay);
         return tileOverlay;
     }
 
     async addPolygon(polygonOptions: PolygonOptions): Promise<Polygon> {
-        if (!polygonOptions["points"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "POLYGON", polygonOptions]);
-        const polygon: Polygon = new PolygonImpl(this.divId, this.id, componentId);
+        if (!polygonOptions["points"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "POLYGON",
+            polygonOptions,
+        ]);
+        const polygon: Polygon = new PolygonImpl(
+            this.divId,
+            this.id,
+            componentId
+        );
         this.components.set(polygon.getId(), polygon);
         return polygon;
     }
 
     async addPolyline(polylineOptions: PolylineOptions): Promise<Polyline> {
-        if (!polylineOptions["points"]) return Promise.reject(ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
-        const componentId = await asyncExec('HMSMap', 'addComponent', [this.divId, "POLYLINE", polylineOptions]);
-        const polyline: Polyline = new PolylineImpl(this.divId, this.id, componentId);
+        if (!polylineOptions["points"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.POINTS_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "POLYLINE",
+            polylineOptions,
+        ]);
+        const polyline: Polyline = new PolylineImpl(
+            this.divId,
+            this.id,
+            componentId
+        );
         this.components.set(polyline.getId(), polyline);
         return polyline;
     }
 
     animateCamera(cameraUpdate: CameraUpdate): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback: CancelableCallback): Promise<void>;
-    animateCamera(cameraUpdate: CameraUpdate, cancelableCallback?: CancelableCallback, durationMs?: number): Promise<void> {
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        cancelableCallback: CancelableCallback
+    ): Promise<void>;
+    animateCamera(
+        cameraUpdate: CameraUpdate,
+        cancelableCallback?: CancelableCallback,
+        durationMs?: number
+    ): Promise<void> {
         const onFinishEventForJavascript = `${MapEvent.ON_CANCELABLE_CALLBACK_FINISH}_${this.id}`;
         const onCancelEventForJavascript = `${MapEvent.ON_CANCELABLE_CALLBACK_CANCEL}_${this.id}`;
         const props: any = {};
         if (cancelableCallback != undefined) {
-            window.subscribeHMSEvent(onFinishEventForJavascript, cancelableCallback.onFinish);
-            window.subscribeHMSEvent(onCancelEventForJavascript, cancelableCallback.onCancel);
-            if (cancelableCallback.onFinish != undefined) props["isOnFinish"] = true;
-            if (cancelableCallback.onCancel != undefined) props["isOnCancel"] = true;
+            window.subscribeHMSEvent(
+                onFinishEventForJavascript,
+                cancelableCallback.onFinish
+            );
+            window.subscribeHMSEvent(
+                onCancelEventForJavascript,
+                cancelableCallback.onCancel
+            );
+            if (cancelableCallback.onFinish != undefined)
+                props["isOnFinish"] = true;
+            if (cancelableCallback.onCancel != undefined)
+                props["isOnCancel"] = true;
             if (durationMs) props["duration"] = durationMs;
         }
-        return (<CameraUpdateImpl>cameraUpdate).animateCamera(this.divId, props);
+        return (<CameraUpdateImpl>cameraUpdate).animateCamera(
+            this.divId,
+            props
+        );
     }
 
     moveCamera(cameraUpdate: CameraUpdate): Promise<void> {
@@ -502,31 +675,31 @@ class HuaweiMapImpl implements HuaweiMap {
 
     clear(): Promise<void> {
         this.components.clear();
-        return this.getHuaweiMapOptions('clear');
+        return this.getHuaweiMapOptions("clear");
     }
 
     resetMinMaxZoomPreference(): Promise<void> {
-        return this.getHuaweiMapOptions('resetMinMaxZoomPreference');
+        return this.getHuaweiMapOptions("resetMinMaxZoomPreference");
     }
 
     stopAnimation(): Promise<void> {
-        return this.getHuaweiMapOptions('stopAnimation');
+        return this.getHuaweiMapOptions("stopAnimation");
     }
 
     getCameraPosition(): Promise<CameraPosition> {
-        return this.getHuaweiMapOptions('getCameraPosition');
+        return this.getHuaweiMapOptions("getCameraPosition");
     }
 
     getMapType(): Promise<MapType> {
-        return this.getHuaweiMapOptions('getMapType');
+        return this.getHuaweiMapOptions("getMapType");
     }
 
     getMaxZoomLevel(): Promise<number> {
-        return this.getHuaweiMapOptions('getMaxZoomLevel');
+        return this.getHuaweiMapOptions("getMaxZoomLevel");
     }
 
     getMinZoomLevel(): Promise<number> {
-        return this.getHuaweiMapOptions('getMinZoomLevel');
+        return this.getHuaweiMapOptions("getMinZoomLevel");
     }
 
     getProjection() {
@@ -538,83 +711,115 @@ class HuaweiMapImpl implements HuaweiMap {
     }
 
     isBuildingsEnabled(): Promise<boolean> {
-        return this.getHuaweiMapOptions('isBuildingsEnabled');
+        return this.getHuaweiMapOptions("isBuildingsEnabled");
     }
 
     isMyLocationEnabled(): Promise<boolean> {
-        return this.getHuaweiMapOptions('isMyLocationEnabled');
+        return this.getHuaweiMapOptions("isMyLocationEnabled");
     }
 
     isTrafficEnabled(): Promise<boolean> {
-        return this.getHuaweiMapOptions('isTrafficEnabled');
+        return this.getHuaweiMapOptions("isTrafficEnabled");
     }
 
     isIndoorEnabled(): Promise<boolean> {
-        return this.getHuaweiMapOptions('isIndoorEnabled');
+        return this.getHuaweiMapOptions("isIndoorEnabled");
     }
 
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void> {
-        return this.setHuaweiMapOptions('setBuildingsEnabled', { 'buildingsEnabled': buildingsEnabled });
+        return this.setHuaweiMapOptions("setBuildingsEnabled", {
+            buildingsEnabled: buildingsEnabled,
+        });
     }
 
     setContentDescription(contentDescription: string): Promise<void> {
-        return this.setHuaweiMapOptions('setContentDescription', { 'contentDescription': contentDescription });
+        return this.setHuaweiMapOptions("setContentDescription", {
+            contentDescription: contentDescription,
+        });
     }
 
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void> {
-        return this.setHuaweiMapOptions('setInfoWindowAdapter', { 'infoWindowAdapter': infoWindowAdapter })
+        return this.setHuaweiMapOptions("setInfoWindowAdapter", {
+            infoWindowAdapter: infoWindowAdapter,
+        });
     }
 
     setLatLngBoundsForCameraTarget(latLngBounds: LatLngBounds): Promise<void> {
-        return this.setHuaweiMapOptions('setLatLngBoundsForCameraTarget', { 'latLngBounds': latLngBounds });
+        return this.setHuaweiMapOptions("setLatLngBoundsForCameraTarget", {
+            latLngBounds: latLngBounds,
+        });
     }
 
     setLocationSource(locationSource: LocationSource): Promise<void> {
-        return this.setHuaweiMapOptions('setLocationSource', { 'locationSource': locationSource });
+        return this.setHuaweiMapOptions("setLocationSource", {
+            locationSource: locationSource,
+        });
     }
 
     setMapStyle(mapStyle: MapStyleOptions): Promise<void> {
-        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceName() });
+        return this.setHuaweiMapOptions("setMapStyle", {
+            mapStyle: mapStyle.getResourceName(),
+        });
     }
 
     setMapType(mapType: MapType): Promise<void> {
-        return this.setHuaweiMapOptions('setMapType', { 'mapType': mapType });
+        return this.setHuaweiMapOptions("setMapType", { mapType: mapType });
     }
 
     setMarkersClustering(markersClustering: boolean): Promise<void> {
-        return this.setHuaweiMapOptions('setMarkersClustering', { 'markersClustering': markersClustering });
+        return this.setHuaweiMapOptions("setMarkersClustering", {
+            markersClustering: markersClustering,
+        });
     }
 
     setMaxZoomPreference(maxZoomPreference: number): Promise<void> {
-        return this.setHuaweiMapOptions('setMaxZoomPreference', { 'maxZoomPreference': maxZoomPreference });
+        return this.setHuaweiMapOptions("setMaxZoomPreference", {
+            maxZoomPreference: maxZoomPreference,
+        });
     }
 
     setMinZoomPreference(minZoomPreference: number): Promise<void> {
-        return this.setHuaweiMapOptions('setMinZoomPreference', { 'minZoomPreference': minZoomPreference });
+        return this.setHuaweiMapOptions("setMinZoomPreference", {
+            minZoomPreference: minZoomPreference,
+        });
     }
 
     setMyLocationEnabled(myLocationEnabled: boolean): Promise<void> {
-        return this.setHuaweiMapOptions('setMyLocationEnabled', { 'myLocationEnabled': myLocationEnabled });
+        return this.setHuaweiMapOptions("setMyLocationEnabled", {
+            myLocationEnabled: myLocationEnabled,
+        });
     }
 
-    setPadding(left: number, top: number, right: number, bottom: number): Promise<void> {
-        return this.setHuaweiMapOptions('setPadding', { 'left': left, 'top': top, 'right': right, 'bottom': bottom });
+    setPadding(
+        left: number,
+        top: number,
+        right: number,
+        bottom: number
+    ): Promise<void> {
+        return this.setHuaweiMapOptions("setPadding", {
+            left: left,
+            top: top,
+            right: right,
+            bottom: bottom,
+        });
     }
 
     setTrafficEnabled(trafficEnabled: boolean): Promise<void> {
-        return this.setHuaweiMapOptions('setTrafficEnabled', { 'trafficEnabled': trafficEnabled });
+        return this.setHuaweiMapOptions("setTrafficEnabled", {
+            trafficEnabled: trafficEnabled,
+        });
     }
 
     setPointToCenter(x: number, y: number): Promise<void> {
-        return this.setHuaweiMapOptions('setPointToCenter', { 'x': x, 'y': y });
+        return this.setHuaweiMapOptions("setPointToCenter", { x: x, y: y });
     }
 
     setStyleId(styleId: string): Promise<void> {
-        return this.setHuaweiMapOptions('setStyleId', { 'styleId': styleId});
+        return this.setHuaweiMapOptions("setStyleId", { styleId: styleId });
     }
 
     previewId(previewId: string): Promise<void> {
-        return this.setHuaweiMapOptions('previewId', { 'previewId': previewId});
+        return this.setHuaweiMapOptions("previewId", { previewId: previewId });
     }
 
     getComponent(key: string): any {
@@ -625,10 +830,12 @@ class HuaweiMapImpl implements HuaweiMap {
         return this.id;
     }
 
-    snapshot(onReadyCallback: (snapshot: SnapshotResult) => void): Promise<void> {
+    snapshot(
+        onReadyCallback: (snapshot: SnapshotResult) => void
+    ): Promise<void> {
         const eventName = `${MapEvent.ON_SNAPSHOT_READY_CALLBACK}_${this.id}`;
         window.subscribeHMSEvent(eventName, onReadyCallback);
-        return this.getHuaweiMapOptions('snapshot');
+        return this.getHuaweiMapOptions("snapshot");
     }
 
     // INTERNAL INTERNAL INTERNAL
@@ -642,18 +849,26 @@ class HuaweiMapImpl implements HuaweiMap {
     }
 
     private setHuaweiMapOptions(func: string, props: any): Promise<void> {
-        return asyncExec("HMSMap", "mapOptions", [this.divId, 'setHuaweiMapOptions', func, props]);
+        return asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "setHuaweiMapOptions",
+            func,
+            props,
+        ]);
     }
 
     private async getHuaweiMapOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "mapOptions", [this.divId, 'getHuaweiMapOptions', func, {}]);
+        const result = await asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "getHuaweiMapOptions",
+            func,
+            {},
+        ]);
         return result.value;
     }
-
 }
 
 class UiSettingsImpl implements UiSettings {
-
     private readonly mapDivId: string;
 
     constructor(mapDivId: string) {
@@ -661,177 +876,264 @@ class UiSettingsImpl implements UiSettings {
     }
 
     isCompassEnabled(): Promise<boolean> {
-        return this.getUiSettings('isCompassEnabled');
+        return this.getUiSettings("isCompassEnabled");
     }
 
     isIndoorLevelPickerEnabled(): Promise<boolean> {
-        return this.getUiSettings('isIndoorLevelPickerEnabled');
+        return this.getUiSettings("isIndoorLevelPickerEnabled");
     }
 
     isMapToolbarEnabled(): Promise<boolean> {
-        return this.getUiSettings('isMapToolbarEnabled');
+        return this.getUiSettings("isMapToolbarEnabled");
     }
 
     isMyLocationButtonEnabled(): Promise<boolean> {
-        return this.getUiSettings('isMyLocationButtonEnabled');
+        return this.getUiSettings("isMyLocationButtonEnabled");
     }
 
     isRotateGesturesEnabled(): Promise<boolean> {
-        return this.getUiSettings('isRotateGesturesEnabled');
+        return this.getUiSettings("isRotateGesturesEnabled");
     }
 
     isScrollGesturesEnabled(): Promise<boolean> {
-        return this.getUiSettings('isScrollGesturesEnabled');
+        return this.getUiSettings("isScrollGesturesEnabled");
     }
 
     isScrollGesturesEnabledDuringRotateOrZoom(): Promise<boolean> {
-        return this.getUiSettings('isScrollGesturesEnabledDuringRotateOrZoom');
+        return this.getUiSettings("isScrollGesturesEnabledDuringRotateOrZoom");
     }
 
     isTiltGesturesEnabled(): Promise<boolean> {
-        return this.getUiSettings('isTiltGesturesEnabled');
+        return this.getUiSettings("isTiltGesturesEnabled");
     }
 
     isZoomControlsEnabled(): Promise<boolean> {
-        return this.getUiSettings('isZoomControlsEnabled');
+        return this.getUiSettings("isZoomControlsEnabled");
     }
 
     isZoomGesturesEnabled(): Promise<boolean> {
-        return this.getUiSettings('isZoomGesturesEnabled');
+        return this.getUiSettings("isZoomGesturesEnabled");
     }
 
     setAllGesturesEnabled(allGesturesEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setAllGesturesEnabled', { 'allGesturesEnabled': allGesturesEnabled });
+        return this.setUiSettings("setAllGesturesEnabled", {
+            allGesturesEnabled: allGesturesEnabled,
+        });
     }
 
     setCompassEnabled(compassEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setCompassEnabled', { 'compassEnabled': compassEnabled });
-
+        return this.setUiSettings("setCompassEnabled", {
+            compassEnabled: compassEnabled,
+        });
     }
 
-    setIndoorLevelPickerEnabled(indoorLevelPickerEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setIndoorLevelPickerEnabled', { 'indoorLevelPickerEnabled': indoorLevelPickerEnabled });
+    setIndoorLevelPickerEnabled(
+        indoorLevelPickerEnabled: boolean
+    ): Promise<void> {
+        return this.setUiSettings("setIndoorLevelPickerEnabled", {
+            indoorLevelPickerEnabled: indoorLevelPickerEnabled,
+        });
     }
 
     setMapToolbarEnabled(mapToolbarEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setMapToolbarEnabled', { 'mapToolbarEnabled': mapToolbarEnabled });
+        return this.setUiSettings("setMapToolbarEnabled", {
+            mapToolbarEnabled: mapToolbarEnabled,
+        });
     }
 
-    setMyLocationButtonEnabled(myLocationButtonEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setMyLocationButtonEnabled', { 'myLocationButtonEnabled': myLocationButtonEnabled });
+    setMyLocationButtonEnabled(
+        myLocationButtonEnabled: boolean
+    ): Promise<void> {
+        return this.setUiSettings("setMyLocationButtonEnabled", {
+            myLocationButtonEnabled: myLocationButtonEnabled,
+        });
     }
 
     setRotateGesturesEnabled(rotateGesturesEnabled: boolean): Promise<void> {
-        return this.setUiSettings("setRotateGesturesEnabled", { 'rotateGesturesEnabled': rotateGesturesEnabled });
+        return this.setUiSettings("setRotateGesturesEnabled", {
+            rotateGesturesEnabled: rotateGesturesEnabled,
+        });
     }
 
     setScrollGesturesEnabled(scrollGesturesEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setScrollGesturesEnabled', { 'scrollGesturesEnabled': scrollGesturesEnabled });
+        return this.setUiSettings("setScrollGesturesEnabled", {
+            scrollGesturesEnabled: scrollGesturesEnabled,
+        });
     }
 
-    setScrollGesturesEnabledDuringRotateOrZoom(scrollGesturesEnabledDuringRotateOrZoom: boolean): Promise<void> {
-        return this.setUiSettings('setScrollGesturesEnabledDuringRotateOrZoom', { 'scrollGesturesEnabledDuringRotateOrZoom': scrollGesturesEnabledDuringRotateOrZoom });
+    setScrollGesturesEnabledDuringRotateOrZoom(
+        scrollGesturesEnabledDuringRotateOrZoom: boolean
+    ): Promise<void> {
+        return this.setUiSettings(
+            "setScrollGesturesEnabledDuringRotateOrZoom",
+            {
+                scrollGesturesEnabledDuringRotateOrZoom:
+                    scrollGesturesEnabledDuringRotateOrZoom,
+            }
+        );
     }
 
     setTiltGesturesEnabled(tiltGesturesEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setTiltGesturesEnabled', { 'tiltGesturesEnabled': tiltGesturesEnabled });
+        return this.setUiSettings("setTiltGesturesEnabled", {
+            tiltGesturesEnabled: tiltGesturesEnabled,
+        });
     }
 
     setZoomControlsEnabled(zoomControlsEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setZoomControlsEnabled', { 'zoomControlsEnabled': zoomControlsEnabled });
+        return this.setUiSettings("setZoomControlsEnabled", {
+            zoomControlsEnabled: zoomControlsEnabled,
+        });
     }
 
     setZoomGesturesEnabled(zoomGesturesEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setZoomGesturesEnabled', { 'zoomGesturesEnabled': zoomGesturesEnabled });
+        return this.setUiSettings("setZoomGesturesEnabled", {
+            zoomGesturesEnabled: zoomGesturesEnabled,
+        });
     }
 
-    setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled: boolean): Promise<void> {
-        return this.setUiSettings('setGestureScaleByMapCenter', { 'gestureScaleByMapCenterEnabled': gestureScaleByMapCenterEnabled });
+    setGestureScaleByMapCenter(
+        gestureScaleByMapCenterEnabled: boolean
+    ): Promise<void> {
+        return this.setUiSettings("setGestureScaleByMapCenter", {
+            gestureScaleByMapCenterEnabled: gestureScaleByMapCenterEnabled,
+        });
     }
 
     setMarkerClusterColor(markerClusterColor: number): Promise<void> {
-        return this.setUiSettings('setMarkerClusterColor', { 'markerClusterColor': markerClusterColor });
+        return this.setUiSettings("setMarkerClusterColor", {
+            markerClusterColor: markerClusterColor,
+        });
     }
 
     setMarkerClusterIcon(markerClusterIcon: BitmapDescriptor): Promise<void> {
-        return this.setUiSettings('setMarkerClusterIcon', { 'markerClusterIcon': markerClusterIcon });
+        return this.setUiSettings("setMarkerClusterIcon", {
+            markerClusterIcon: markerClusterIcon,
+        });
     }
 
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void> {
-        return this.setUiSettings('setMarkerClusterTextColor', { 'markerClusterTextColor': markerClusterTextColor });
+        return this.setUiSettings("setMarkerClusterTextColor", {
+            markerClusterTextColor: markerClusterTextColor,
+        });
     }
 
     setLogoPosition(logoPosition: number): Promise<void> {
-        return this.setUiSettings('setLogoPosition', { 'logoPosition': logoPosition });
+        return this.setUiSettings("setLogoPosition", {
+            logoPosition: logoPosition,
+        });
     }
 
-    setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void> {
-        return this.setUiSettings('setLogoPadding', { 'paddingStart': paddingStart, 'paddingTop': paddingTop, 'paddingEnd': paddingEnd, 'paddingBottom': paddingBottom });
+    setLogoPadding(
+        paddingStart: number,
+        paddingTop: number,
+        paddingEnd: number,
+        paddingBottom: number
+    ): Promise<void> {
+        return this.setUiSettings("setLogoPadding", {
+            paddingStart: paddingStart,
+            paddingTop: paddingTop,
+            paddingEnd: paddingEnd,
+            paddingBottom: paddingBottom,
+        });
     }
 
     private setUiSettings(func: string, props: any): Promise<void> {
-        return asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
+        return asyncExec("HMSMap", "mapOptions", [
+            this.mapDivId,
+            "setUiSettings",
+            func,
+            props,
+        ]);
     }
 
     private async getUiSettings(func: string) {
-        const result = await asyncExec("HMSMap", "mapOptions", [this.mapDivId, 'getUiSettings', func, {}]);
+        const result = await asyncExec("HMSMap", "mapOptions", [
+            this.mapDivId,
+            "getUiSettings",
+            func,
+            {},
+        ]);
         return result.value;
     }
 }
 
 class CameraUpdateImpl implements CameraUpdate {
-
     props: any;
     event: string = "";
 
     moveCamera(mapId: string): Promise<any> {
-        return asyncExec('HMSMap', 'mapOptions', [mapId, "moveCamera", this.event, this.props]);
+        return asyncExec("HMSMap", "mapOptions", [
+            mapId,
+            "moveCamera",
+            this.event,
+            this.props,
+        ]);
     }
 
     animateCamera(mapId: string, props: any): Promise<any> {
-        return asyncExec('HMSMap', 'mapOptions', [mapId, "animateCamera", this.event, { ...this.props, ...props }]);
+        return asyncExec("HMSMap", "mapOptions", [
+            mapId,
+            "animateCamera",
+            this.event,
+            { ...this.props, ...props },
+        ]);
     }
 }
 
 export class CameraUpdateFactory {
-    private constructor() {
-    }
+    private constructor() {}
 
     static newCameraPosition(cameraPosition: CameraPosition): CameraUpdate {
-        return this.constructCameraUpdateImpl("newCameraPosition", { 'cameraPosition': cameraPosition });
+        return this.constructCameraUpdateImpl("newCameraPosition", {
+            cameraPosition: cameraPosition,
+        });
     }
 
     static newLatLng(latLng: LatLng): CameraUpdate {
-        return this.constructCameraUpdateImpl("newLatLng", { 'latLng': latLng });
+        return this.constructCameraUpdateImpl("newLatLng", { latLng: latLng });
     }
 
-    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number): CameraUpdate;
+    static newLatLngBounds(
+        latLngBounds: LatLngBounds,
+        padding: number
+    ): CameraUpdate;
 
-    static newLatLngBounds(latLngBounds: LatLngBounds, padding: number, width?: number, height?: number): CameraUpdate {
+    static newLatLngBounds(
+        latLngBounds: LatLngBounds,
+        padding: number,
+        width?: number,
+        height?: number
+    ): CameraUpdate {
         let props: any = {};
-        props['bounds'] = latLngBounds;
-        props['padding'] = padding;
+        props["bounds"] = latLngBounds;
+        props["padding"] = padding;
         if (width && height) {
-            props['width'] = width;
-            props['height'] = height;
+            props["width"] = width;
+            props["height"] = height;
         }
         return this.constructCameraUpdateImpl("newLatLngBounds", props);
     }
 
     static newLatLngZoom(latLng: LatLng, zoom: number): CameraUpdate {
-        return this.constructCameraUpdateImpl("newLatLngZoom", { "latLng": latLng, "zoom": zoom });
+        return this.constructCameraUpdateImpl("newLatLngZoom", {
+            latLng: latLng,
+            zoom: zoom,
+        });
     }
 
     static scrollBy(xPixel: number, yPixel: number): CameraUpdate {
-        return this.constructCameraUpdateImpl("scrollBy", { 'xPixel': xPixel, 'yPixel': yPixel });
+        return this.constructCameraUpdateImpl("scrollBy", {
+            xPixel: xPixel,
+            yPixel: yPixel,
+        });
     }
 
     static zoomBy(amount: number): CameraUpdate;
 
     static zoomBy(amount: number, focus?: Point): CameraUpdate {
         let props: any = {};
-        props['amount'] = amount;
-        if (focus) props['focus'] = focus;
+        props["amount"] = amount;
+        if (focus) props["focus"] = focus;
         return this.constructCameraUpdateImpl("zoomBy", props);
     }
 
@@ -844,10 +1146,13 @@ export class CameraUpdateFactory {
     }
 
     static zoomTo(zoom: number): CameraUpdate {
-        return this.constructCameraUpdateImpl("zoomTo", { "zoom": zoom });
+        return this.constructCameraUpdateImpl("zoomTo", { zoom: zoom });
     }
 
-    private static constructCameraUpdateImpl(event: string, props: any): CameraUpdateImpl {
+    private static constructCameraUpdateImpl(
+        event: string,
+        props: any
+    ): CameraUpdateImpl {
         let cameraUpdate = new CameraUpdateImpl();
         cameraUpdate.event = event;
         cameraUpdate.props = props;
@@ -863,15 +1168,30 @@ class ProjectionImpl implements Projection {
     }
 
     fromScreenLocation(point: Point): Promise<LatLng> {
-        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "fromScreenLocation", { "point": point }]);
+        return asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "fromScreenLocation",
+            { point: point },
+        ]);
     }
 
     getVisibleRegion(): Promise<VisibleRegion> {
-        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "getVisibleRegion", {}]);
+        return asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "getVisibleRegion",
+            {},
+        ]);
     }
 
     toScreenLocation(latLng: LatLng): Promise<Point> {
-        return asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "toScreenLocation", { "latLng": latLng }]);
+        return asyncExec("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "toScreenLocation",
+            { latLng: latLng },
+        ]);
     }
 }
 

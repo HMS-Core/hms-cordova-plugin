@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -352,8 +352,8 @@ class HuaweiMapImpl {
             const fixedFunctionNameForJava = `set${event[0].toUpperCase()}${event.substr(1)}Listener`;
             return utils_1.asyncExec('HMSMap', 'mapOptions', [this.divId, 'setListener', fixedFunctionNameForJava, { 'content': callback.toString() }])
                 .then(value => {
-                window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
-            }).catch(err => console.log(err));
+                    window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
+                }).catch(err => console.log(err));
         });
     }
     setMapPointersEnabled(mapPointersEnabled) {

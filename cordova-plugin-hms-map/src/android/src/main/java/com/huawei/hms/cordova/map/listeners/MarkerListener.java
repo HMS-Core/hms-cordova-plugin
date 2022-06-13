@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.Locale;
 public final class MarkerListener implements ComponentListener {
 
     private static volatile MarkerListener instance = null;
+
     private CordovaUtils cordovaUtils;
 
     private MarkerListener(CordovaUtils utils) {
@@ -35,24 +36,31 @@ public final class MarkerListener implements ComponentListener {
     public static synchronized MarkerListener getInstance(CordovaUtils utils) {
         if (instance == null) {
             synchronized (MarkerListener.class) {
-                if (instance == null) instance = new MarkerListener(utils);
+                if (instance == null) {
+                    instance = new MarkerListener(utils);
+                }
             }
         }
         return instance;
     }
 
-    public Animation.AnimationListener buildAnimationListener(String event, int capsuleId, String componentId, JSONObject json) {
+    public Animation.AnimationListener buildAnimationListener(String event, int capsuleId, String componentId,
+        JSONObject json) {
         return new Animation.AnimationListener() {
             @Override
             public void onAnimationStart() {
-                if (json.has("isAnimationStart"))
-                    cordovaUtils.evaluateJs(String.format(Locale.ENGLISH, "on%sAnimationStart", event), capsuleId, componentId, null);
+                if (json.has("isAnimationStart")) {
+                    cordovaUtils.evaluateJs(String.format(Locale.ENGLISH, "on%sAnimationStart", event), capsuleId,
+                        componentId, null);
+                }
             }
 
             @Override
             public void onAnimationEnd() {
-                if (json.has("isAnimationEnd"))
-                    cordovaUtils.evaluateJs(String.format(Locale.ENGLISH, "on%sAnimationEnd", event), capsuleId, componentId, null);
+                if (json.has("isAnimationEnd")) {
+                    cordovaUtils.evaluateJs(String.format(Locale.ENGLISH, "on%sAnimationEnd", event), capsuleId,
+                        componentId, null);
+                }
             }
         };
     }

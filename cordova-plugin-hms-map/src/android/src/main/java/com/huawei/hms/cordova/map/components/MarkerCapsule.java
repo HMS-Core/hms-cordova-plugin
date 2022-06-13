@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -56,18 +56,65 @@ public final class MarkerCapsule extends MapComponent<Marker> {
         this.context = mapCapsule.getContext();
     }
 
-    private void setCommonAnimationPropertiesFromJson(AnimationSet animationSet, Animation animation, String type, JSONObject json) {
+    private static Interpolator getInterpolator(JSONObject interpolator) {
+        int type = interpolator.optInt("type", 0);
+        switch (type) {
+            case 1:
+                return new AccelerateDecelerateInterpolator();
+            case 2:
+                return new AccelerateInterpolator();
+            case 3:
+                return new AnticipateInterpolator();
+            case 4:
+                return new AnticipateOvershootInterpolator();
+            case 5:
+                return new BounceInterpolator();
+            case 6:
+                if (interpolator.has("args") && interpolator.optJSONObject("args").has("cycles")) {
+                    int cycles = interpolator.optJSONObject("args").optInt("cycles");
+                    return new CycleInterpolator(cycles);
+                }
+                return null;
+            case 7:
+                return new DecelerateInterpolator();
+            case 8:
+                return new OvershootInterpolator();
+            case 9:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (interpolator.has("args")) {
+                        JSONObject args = interpolator.optJSONObject("args");
+                        if (args.has("controlX2") && args.has("controlY2")) {
+                            float controlX1 = (float) args.optDouble("controlX1");
+                            float controlY1 = (float) args.optDouble("controlY1");
+                            float controlX2 = (float) args.optDouble("controlX2");
+                            float controlY2 = (float) args.optDouble("controlY2");
+                            return new PathInterpolator(controlX1, controlY1, controlX2, controlY2);
+                        } else if (interpolator.has("controlX") && interpolator.has("controlY")) {
+                            return new PathInterpolator((float) interpolator.optDouble("controlX"),
+                                (float) interpolator.optDouble("controlY"));
+                        }
+                    }
+                }
+                return null;
+            case 0:
+            default:
+                return new LinearInterpolator();
+        }
+    }
+
+    private void setCommonAnimationPropertiesFromJson(AnimationSet animationSet, Animation animation, String type,
+        JSONObject json) {
         animation.setDuration(json.optLong("duration", 250));
         animation.setRepeatCount(json.optInt("repeatCount", 0));
         animation.setFillMode(json.optInt("fillMode", Animation.FILL_MODE_FORWARDS));
         animation.setRepeatMode(json.optInt("repeatMode", Animation.RESTART));
-        if (json.has("interpolator")){
+        if (json.has("interpolator")) {
             Interpolator interpolator = getInterpolator(json.optJSONObject("interpolator"));
             animation.setInterpolator(interpolator);
             animationSet.setInterpolator(interpolator);
         }
-        Animation.AnimationListener animationListener =
-                ((MarkerListener) listener).buildAnimationListener(type, getCapsuleId(), getId(), json);
+        Animation.AnimationListener animationListener = ((MarkerListener) listener).buildAnimationListener(type,
+            getCapsuleId(), getId(), json);
         animation.setAnimationListener(animationListener);
     }
 
@@ -94,7 +141,8 @@ public final class MarkerCapsule extends MapComponent<Marker> {
             JSONObject translateAnimationJSONObject = json.optJSONObject("translateAnimation");
             LatLng target = JsonToObject.constructLatLng(translateAnimationJSONObject.optJSONObject("target"));
             TranslateAnimation translateAnimation = new TranslateAnimation(target);
-            setCommonAnimationPropertiesFromJson(animationSet, translateAnimation, "Translate", translateAnimationJSONObject);
+            setCommonAnimationPropertiesFromJson(animationSet, translateAnimation, "Translate",
+                translateAnimationJSONObject);
             animationSet.addAnimation(translateAnimation);
         }
         if (json.has("scaleAnimation")) {
@@ -129,16 +177,32 @@ public final class MarkerCapsule extends MapComponent<Marker> {
         return new JSONObject().put("value", component.getAlpha());
     }
 
+    void setAlpha(JSONObject json) {
+        component.setAlpha((float) json.optDouble("alpha"));
+    }
+
     JSONObject getRotation() throws JSONException {
         return new JSONObject().put("value", component.getRotation());
+    }
+
+    void setRotation(JSONObject json) {
+        component.setRotation((float) json.optDouble("rotation"));
     }
 
     JSONObject getSnippet() throws JSONException {
         return new JSONObject().put("value", component.getSnippet());
     }
 
+    void setSnippet(JSONObject json) {
+        component.setSnippet(json.optString("snippet"));
+    }
+
     JSONObject getTitle() throws JSONException {
         return new JSONObject().put("value", component.getTitle());
+    }
+
+    void setTitle(JSONObject json) {
+        component.setTitle(json.optString("title"));
     }
 
     JSONObject isVisible() throws JSONException {
@@ -149,12 +213,25 @@ public final class MarkerCapsule extends MapComponent<Marker> {
         return new JSONObject().put("value", component.getZIndex());
     }
 
+    void setZIndex(JSONObject json) {
+        component.setZIndex((float) json.optDouble("zIndex"));
+    }
+
     JSONObject getTag() throws JSONException {
         return new JSONObject().put("value", component.getTag());
     }
 
+    void setTag(JSONObject json) {
+        component.setTag(json.optString("tag"));
+    }
+
     JSONObject getPosition() throws JSONException {
-        return new JSONObject().put("value", new JSONObject().put("lat", component.getPosition().latitude).put("lng", component.getPosition().longitude));
+        return new JSONObject().put("value", new JSONObject().put("lat", component.getPosition().latitude)
+            .put("lng", component.getPosition().longitude));
+    }
+
+    void setPosition(JSONObject json) throws JSONException {
+        component.setPosition(JsonToObject.constructLatLng(json.getJSONObject("position")));
     }
 
     JSONObject isClusterable() throws JSONException {
@@ -199,89 +276,16 @@ public final class MarkerCapsule extends MapComponent<Marker> {
         component.setInfoWindowAnchor((float) json.optDouble("u"), (float) json.optDouble("v"));
     }
 
-    void setPosition(JSONObject json) throws JSONException {
-        component.setPosition(JsonToObject.constructLatLng(json.getJSONObject("position")));
-    }
-
-    void setTag(JSONObject json) {
-        component.setTag(json.optString("tag"));
-    }
-
-    void setAlpha(JSONObject json) {
-        component.setAlpha((float) json.optDouble("alpha"));
-    }
-
-    void setSnippet(JSONObject json) {
-        component.setSnippet(json.optString("snippet"));
-    }
-
-    void setZIndex(JSONObject json) {
-        component.setZIndex((float) json.optDouble("zIndex"));
-    }
-
     @Override
     public void remove() {
         this.component.remove();
-    }
-
-    void setTitle(JSONObject json) {
-        component.setTitle(json.optString("title"));
     }
 
     void setVisible(JSONObject json) {
         component.setVisible(json.optBoolean("visible"));
     }
 
-    void setRotation(JSONObject json) {
-        component.setRotation((float) json.optDouble("rotation"));
-    }
-
     void setMarkerAnchor(JSONObject json) {
         component.setMarkerAnchor((float) json.optDouble("u"), (float) json.optDouble("v"));
-    }
-
-    private static Interpolator getInterpolator(JSONObject interpolator) {
-        int type = interpolator.optInt("type", 0);
-        switch (type) {
-            case 1:
-                return new AccelerateDecelerateInterpolator();
-            case 2:
-                return new AccelerateInterpolator();
-            case 3:
-                return new AnticipateInterpolator();
-            case 4:
-                return new AnticipateOvershootInterpolator();
-            case 5:
-                return new BounceInterpolator();
-            case 6:
-                if (interpolator.has("args") && interpolator.optJSONObject("args").has("cycles")) {
-                    int cycles = interpolator.optJSONObject("args").optInt("cycles");
-                    return new CycleInterpolator(cycles);
-                }
-                return null;
-            case 7:
-                return new DecelerateInterpolator();
-            case 8:
-                return new OvershootInterpolator();
-            case 9:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (interpolator.has("args")) {
-                        JSONObject args = interpolator.optJSONObject("args");
-                        if (args.has("controlX2") && args.has("controlY2")) {
-                            float controlX1 = (float) args.optDouble("controlX1");
-                            float controlY1 = (float) args.optDouble("controlY1");
-                            float controlX2 = (float) args.optDouble("controlX2");
-                            float controlY2 = (float) args.optDouble("controlY2");
-                            return new PathInterpolator(controlX1, controlY1, controlX2, controlY2);
-                        } else if (interpolator.has("controlX") && interpolator.has("controlY")) {
-                            return new PathInterpolator((float) interpolator.optDouble("controlX"), (float) interpolator.optDouble("controlY"));
-                        }
-                    }
-                }
-                return null;
-            case 0:
-            default:
-                return new LinearInterpolator();
-        }
     }
 }

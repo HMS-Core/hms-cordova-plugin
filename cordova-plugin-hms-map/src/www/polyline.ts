@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,8 +14,14 @@
     limitations under the License.
 */
 
-import {LatLng, PatternItem, JointType, Color, BitmapDescriptor} from "./interfaces";
-import {asyncExec} from "./utils";
+import {
+    LatLng,
+    PatternItem,
+    JointType,
+    Color,
+    BitmapDescriptor,
+} from "./interfaces";
+import { asyncExec } from "./utils";
 
 export interface Polyline {
     getColor(): Promise<Color>;
@@ -49,7 +55,6 @@ export interface Polyline {
 }
 
 export class PolylineImpl implements Polyline {
-
     private readonly mapDivId: string;
     private readonly mapCapsuleId: number;
     private readonly id: string;
@@ -61,15 +66,15 @@ export class PolylineImpl implements Polyline {
     }
 
     getColor(): Promise<Color> {
-        return this.getComponentOptions('getColor');
+        return this.getComponentOptions("getColor");
     }
 
     getEndCap(): Promise<Cap> {
-        return this.parseCap(this.getComponentOptions('getEndCap'));
+        return this.parseCap(this.getComponentOptions("getEndCap"));
     }
 
     getStartCap(): Promise<Cap> {
-        return this.parseCap(this.getComponentOptions('getStartCap'));
+        return this.parseCap(this.getComponentOptions("getStartCap"));
     }
 
     getId(): string {
@@ -77,39 +82,39 @@ export class PolylineImpl implements Polyline {
     }
 
     getJointType(): Promise<JointType> {
-        return this.getComponentOptions('getJointType');
+        return this.getComponentOptions("getJointType");
     }
 
     getPattern(): Promise<PatternItem[]> {
-        return this.getComponentOptions('getPattern');
+        return this.getComponentOptions("getPattern");
     }
 
     getPoints(): Promise<LatLng[]> {
-        return this.getComponentOptions('getPoints');
+        return this.getComponentOptions("getPoints");
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
 
     getWidth(): Promise<number> {
-        return this.getComponentOptions('getWidth');
+        return this.getComponentOptions("getWidth");
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions('isClickable');
+        return this.getComponentOptions("isClickable");
     }
 
     isGeodesic(): Promise<boolean> {
-        return this.getComponentOptions('isGeodesic');
+        return this.getComponentOptions("isGeodesic");
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
 
     remove(): Promise<void> {
@@ -117,59 +122,75 @@ export class PolylineImpl implements Polyline {
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {"clickable": clickable});
+        return this.setComponentOptions("setClickable", {
+            clickable: clickable,
+        });
     }
 
     setColor(color: Color): Promise<void> {
-        return this.setComponentOptions("setColor", {"color": color});
+        return this.setComponentOptions("setColor", { color: color });
     }
 
     setStartCap(startCap: Cap): Promise<void> {
-        return this.setCap(startCap, 'setStartCap');
+        return this.setCap(startCap, "setStartCap");
     }
 
     setEndCap(endCap: Cap): Promise<void> {
-        return this.setCap(endCap, 'setEndCap');
+        return this.setCap(endCap, "setEndCap");
     }
 
     setGeodesic(geodesic: boolean): Promise<void> {
-        return this.setComponentOptions("setGeodesic", {"geodesic": geodesic});
+        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
     }
 
     setJointType(jointType: JointType): Promise<void> {
-        return this.setComponentOptions("setJointType", {"jointType": jointType});
+        return this.setComponentOptions("setJointType", {
+            jointType: jointType,
+        });
     }
 
     setPattern(pattern: PatternItem[]): Promise<void> {
-        return this.setComponentOptions("setPattern", {"pattern": pattern});
+        return this.setComponentOptions("setPattern", { pattern: pattern });
     }
 
     setPoints(points: LatLng[]): Promise<void> {
-        return this.setComponentOptions("setPoints", {"points": points});
+        return this.setComponentOptions("setPoints", { points: points });
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", {"tag": tag});
+        return this.setComponentOptions("setTag", { tag: tag });
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", {"visible": visible});
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
 
     setWidth(width: number): Promise<void> {
-        return this.setComponentOptions("setWidth", {"width": width});
+        return this.setComponentOptions("setWidth", { width: width });
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", {"zIndex": zIndex});
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
 
     private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
 
     private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+        const result = await asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "get",
+            func,
+            {},
+        ]);
         return result.value;
     }
 
@@ -184,12 +205,14 @@ export class PolylineImpl implements Polyline {
 
     private setCap(cap: Cap, methodName: string): Promise<void> {
         let props: any = {};
-        props['type'] = cap.getType();
-        if (cap.getType() === Cap.TYPE_CUSTOM_CAP) { // Let's say custom cap
-            props['bitmapDescriptor'] = (<CustomCap>cap).getBitmapDescriptor();
-            if ((<CustomCap>cap).getRefWidth() !== null) props['refWidth'] = (<CustomCap>cap).getRefWidth();
+        props["type"] = cap.getType();
+        if (cap.getType() === Cap.TYPE_CUSTOM_CAP) {
+            // Let's say custom cap
+            props["bitmapDescriptor"] = (<CustomCap>cap).getBitmapDescriptor();
+            if ((<CustomCap>cap).getRefWidth() !== null)
+                props["refWidth"] = (<CustomCap>cap).getRefWidth();
         }
-        return this.setComponentOptions(methodName, {'cap': props});
+        return this.setComponentOptions(methodName, { cap: props });
     }
 }
 
@@ -216,7 +239,7 @@ export class ButtCap extends Cap {
 
 export class RoundCap extends Cap {
     constructor() {
-        super()
+        super();
         this.type = 2;
     }
 }
@@ -229,7 +252,6 @@ export class SquareCap extends Cap {
 }
 
 export class CustomCap extends Cap {
-
     constructor(bitmapDescriptor: BitmapDescriptor, refWidth?: number) {
         super();
         this.type = 3;
@@ -238,10 +260,10 @@ export class CustomCap extends Cap {
     }
 
     getRefWidth(): number {
-        return this.refWidth == null?-1:this.refWidth;
+        return this.refWidth == null ? -1 : this.refWidth;
     }
 
     getBitmapDescriptor(): BitmapDescriptor {
-        return this.bitmapDescriptor==undefined?{}:this.bitmapDescriptor;
+        return this.bitmapDescriptor == undefined ? {} : this.bitmapDescriptor;
     }
 }

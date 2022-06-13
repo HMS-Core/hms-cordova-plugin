@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,18 +30,22 @@ public final class PluginPermissionUtils {
     public static final int REQUEST_LOCATION = 3920;
 
     public static boolean hasLocationPermission(CordovaPlugin plugin) {
-        boolean hasLocationPermission = PermissionHelper.hasPermission(plugin, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                PermissionHelper.hasPermission(plugin, Manifest.permission.ACCESS_COARSE_LOCATION);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-            hasLocationPermission = hasLocationPermission &&
-                    PermissionHelper.hasPermission(plugin, "android.permission.ACCESS_BACKGROUND_LOCATION");
+        boolean hasLocationPermission = PermissionHelper.hasPermission(plugin, Manifest.permission.ACCESS_FINE_LOCATION)
+            && PermissionHelper.hasPermission(plugin, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            hasLocationPermission = hasLocationPermission && PermissionHelper.hasPermission(plugin,
+                "android.permission.ACCESS_BACKGROUND_LOCATION");
+        }
         return hasLocationPermission;
     }
 
     public static void requestLocationPermission(CordovaPlugin plugin) {
-        List<String> permissions = new LinkedList<>(Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        List<String> permissions = new LinkedList<>(
+            Arrays.asList(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             permissions.add("android.permission.ACCESS_BACKGROUND_LOCATION");
-        PermissionHelper.requestPermissions(plugin, REQUEST_LOCATION, permissions.toArray(new String[permissions.size()]));
+        }
+        PermissionHelper.requestPermissions(plugin, REQUEST_LOCATION,
+            permissions.toArray(new String[permissions.size()]));
     }
 }

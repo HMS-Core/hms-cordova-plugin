@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
     limitations under the License.
 */
 
-import {exec} from 'cordova';
+import { exec } from "cordova";
 
-export function asyncExec(clazz: string, func: string, args: any[] = []): Promise<any> {
+export function asyncExec(
+    clazz: string,
+    func: string,
+    args: any[] = []
+): Promise<any> {
     return new Promise((resolve, reject) => {
         exec(resolve, reject, clazz, func, args);
     });
@@ -25,11 +29,14 @@ export function asyncExec(clazz: string, func: string, args: any[] = []): Promis
 declare global {
     interface Window {
         hmsEvents: {
-            [key: string]: (data: any) => void
-        },
-        runHMSEvent: (eventName: string, data: any) => void,
-        subscribeHMSEvent: (eventName: string, callback: (data: any) => void) => void
-        [key: string]: any
+            [key: string]: (data: any) => void;
+        };
+        runHMSEvent: (eventName: string, data: any) => void;
+        subscribeHMSEvent: (
+            eventName: string,
+            callback: (data: any) => void
+        ) => void;
+        [key: string]: any;
     }
 }
 
@@ -49,20 +56,19 @@ function initPlugin() {
     asyncExec("HMSMap", "initPlugin", []);
 }
 
-initEventHandler()
-initPlugin()
+initEventHandler();
+initPlugin();
 
 export function initalPropsOf(element: HTMLElement) {
     const clientRect = element.getBoundingClientRect();
     const computedStyle = window.getComputedStyle(element, null);
     let props: any = {};
-    props['x'] = clientRect.x;
-    props['y'] = clientRect.y;
-    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
-    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
+    props["x"] = clientRect.x;
+    props["y"] = clientRect.y;
+    props["width"] = parseInt(computedStyle.getPropertyValue("width"));
+    props["height"] = parseInt(computedStyle.getPropertyValue("height"));
     return props;
 }
-
 
 export class Rect {
     readonly bottom: number;
@@ -78,29 +84,39 @@ export class Rect {
     }
 
     static fromDomRect(domRect: DOMRect): Rect {
-        return new Rect(domRect.left, domRect.top, domRect.right, domRect.bottom);
+        return new Rect(
+            domRect.left,
+            domRect.top,
+            domRect.right,
+            domRect.bottom
+        );
     }
 
     equals(rect: Rect): boolean {
-        return rect.left == this.left
-            && rect.right == this.right
-            && rect.bottom == this.bottom
-            && rect.top == this.top;
+        return (
+            rect.left == this.left &&
+            rect.right == this.right &&
+            rect.bottom == this.bottom &&
+            rect.top == this.top
+        );
     }
 
     intersects(rect: Rect): boolean {
-        const notIntersects: boolean = this.left > rect.right
-            || this.top > rect.bottom
-            || rect.left > this.right
-            || rect.top > this.bottom;
+        const notIntersects: boolean =
+            this.left > rect.right ||
+            this.top > rect.bottom ||
+            rect.left > this.right ||
+            rect.top > this.bottom;
         return !notIntersects;
     }
 
     contains(rect: Rect): boolean {
-        return this.left <= rect.left
-            && this.right >= rect.right
-            && this.top <= rect.top
-            && this.bottom >= rect.bottom;
+        return (
+            this.left <= rect.left &&
+            this.right >= rect.right &&
+            this.top <= rect.top &&
+            this.bottom >= rect.bottom
+        );
     }
 
     hashCode(): string {

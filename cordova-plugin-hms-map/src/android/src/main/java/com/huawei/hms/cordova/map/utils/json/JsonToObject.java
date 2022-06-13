@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -85,36 +85,41 @@ public final class JsonToObject {
     }
 
     public static HuaweiMapOptions constructMapOptions(JSONObject json) {
-        if (json == null) return new HuaweiMapOptions();
-        return new HuaweiMapOptions()
-                .mapType(json.optInt("mapType", HuaweiMap.MAP_TYPE_NORMAL))
-                .zoomControlsEnabled(json.optBoolean("zoomControlsEnabled", true))
-                .compassEnabled(json.optBoolean("compassEnabled", true))
-                .zoomGesturesEnabled(json.optBoolean("zoomGesturesEnabled", true))
-                .scrollGesturesEnabled(json.optBoolean("scrollGesturesEnabled", true))
-                .rotateGesturesEnabled(json.optBoolean("rotateGesturesEnabled", true))
-                .tiltGesturesEnabled(json.optBoolean("tiltGesturesEnabled", true))
-                .zOrderOnTop(json.optBoolean("zOrderOnTop", false))
-                .liteMode(json.optBoolean("liteMode", false))
-                .ambientEnabled(json.optBoolean("ambientEnabled", false))
-                .minZoomPreference((float) json.optDouble("minZoomPreference", 0.0))
-                .maxZoomPreference((float) json.optDouble("maxZoomPreference", 22.0))
-                .camera(constructCameraPosition(json.optJSONObject("cameraPosition")))
-                .latLngBoundsForCameraTarget(constructLatLngBounds(json.optJSONObject("latLngBounds")))
-                .styleId(json.optString("styleId"))
-                .previewId(json.optString("previewId"));
+        if (json == null) {
+            return new HuaweiMapOptions();
+        }
+        return new HuaweiMapOptions().mapType(json.optInt("mapType", HuaweiMap.MAP_TYPE_NORMAL))
+            .zoomControlsEnabled(json.optBoolean("zoomControlsEnabled", true))
+            .compassEnabled(json.optBoolean("compassEnabled", true))
+            .zoomGesturesEnabled(json.optBoolean("zoomGesturesEnabled", true))
+            .scrollGesturesEnabled(json.optBoolean("scrollGesturesEnabled", true))
+            .rotateGesturesEnabled(json.optBoolean("rotateGesturesEnabled", true))
+            .tiltGesturesEnabled(json.optBoolean("tiltGesturesEnabled", true))
+            .zOrderOnTop(json.optBoolean("zOrderOnTop", false))
+            .liteMode(json.optBoolean("liteMode", false))
+            .ambientEnabled(json.optBoolean("ambientEnabled", false))
+            .minZoomPreference((float) json.optDouble("minZoomPreference", 0.0))
+            .maxZoomPreference((float) json.optDouble("maxZoomPreference", 22.0))
+            .camera(constructCameraPosition(json.optJSONObject("cameraPosition")))
+            .latLngBoundsForCameraTarget(constructLatLngBounds(json.optJSONObject("latLngBounds")))
+            .styleId(json.optString("styleId"))
+            .previewId(json.optString("previewId"));
     }
 
     public static CameraPosition constructCameraPosition(JSONObject json) {
-        if (json == null) return null;
+        if (json == null) {
+            return null;
+        }
         LatLng target = constructLatLng(json.optJSONObject("target"));
-        if (target == null) return null;
+        if (target == null) {
+            return null;
+        }
         return CameraPosition.builder()
-                .target(target)
-                .zoom((float) json.optDouble("zoom", 0.0))
-                .bearing((float) json.optDouble("bearing", 0.0))
-                .tilt((float) json.optDouble("tilt", 0.0))
-                .build();
+            .target(target)
+            .zoom((float) json.optDouble("zoom", 0.0))
+            .bearing((float) json.optDouble("bearing", 0.0))
+            .tilt((float) json.optDouble("tilt", 0.0))
+            .build();
     }
 
     public static LatLng constructLatLng(JSONObject json) {
@@ -125,25 +130,28 @@ public final class JsonToObject {
     }
 
     public static LatLngBounds constructLatLngBounds(JSONObject json) {
-        if (json == null) return null;
+        if (json == null) {
+            return null;
+        }
         LatLng southwest = constructLatLng(json.optJSONObject("southwest"));
         LatLng northeast = constructLatLng(json.optJSONObject("northeast"));
 
-        if (southwest == null || northeast == null) return null;
+        if (southwest == null || northeast == null) {
+            return null;
+        }
         return new LatLngBounds(southwest, northeast);
     }
 
     public static CircleOptions constructCircleOptions(JSONObject json) {
-        return new CircleOptions()
-                .center(constructLatLng(json.optJSONObject("center")))
-                .clickable(json.optBoolean("clickable", false))
-                .fillColor(json.optInt("fillColor", 0))
-                .radius(json.optDouble("radius", 0.0D))
-                .strokeColor(json.optInt("strokeColor", -16777216))
-                .strokeWidth((float) json.optDouble("strokeWidth", 10.0F))
-                .strokePattern(constructPatternItemList(json.optJSONArray("strokePattern")))
-                .visible(json.optBoolean("visible", true))
-                .zIndex((float) json.optDouble("zIndex", 0.0F));
+        return new CircleOptions().center(constructLatLng(json.optJSONObject("center")))
+            .clickable(json.optBoolean("clickable", false))
+            .fillColor(json.optInt("fillColor", 0))
+            .radius(json.optDouble("radius", 0.0D))
+            .strokeColor(json.optInt("strokeColor", -16777216))
+            .strokeWidth((float) json.optDouble("strokeWidth", 10.0F))
+            .strokePattern(constructPatternItemList(json.optJSONArray("strokePattern")))
+            .visible(json.optBoolean("visible", true))
+            .zIndex((float) json.optDouble("zIndex", 0.0F));
     }
 
     public static List<PatternItem> constructPatternItemList(JSONArray json) {
@@ -151,7 +159,9 @@ public final class JsonToObject {
         if (json != null) {
             for (int i = 0; i < json.length(); i++) {
                 PatternItem item = constructPatternItem(json.optJSONObject(i));
-                if (item != null) list.add(item);
+                if (item != null) {
+                    list.add(item);
+                }
             }
         }
         return list;
@@ -160,20 +170,21 @@ public final class JsonToObject {
     public static MarkerOptions constructMarkerOptions(Context context, JSONObject json) {
         JSONObject anchor = optJSONObject(json, "anchorMarker", new JSONObject());
         JSONObject infoWindowAnchor = optJSONObject(json, "infoWindowAnchor", new JSONObject());
-        return new MarkerOptions()
-                .anchorMarker((float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 1.0F))
-                .infoWindowAnchor((float) infoWindowAnchor.optDouble("u", 0.5F), (float) infoWindowAnchor.optDouble("v", 0.0F))
-                .alpha((float) json.optDouble("alpha", 1))
-                .clusterable(json.optBoolean("clusterable", false))
-                .draggable(json.optBoolean("draggable", false))
-                .icon(constructBitmapDescriptor(context, json.optJSONObject("icon")))
-                .flat(json.optBoolean("flat", false))
-                .position(constructLatLng(json.optJSONObject("position")))
-                .rotation((float) json.optDouble("rotation", 0.0F))
-                .snippet(json.optString("snippet"))
-                .title(json.optString("title"))
-                .visible(json.optBoolean("visible", true))
-                .zIndex((float) json.optDouble("zIndex", 0.0F));
+        return new MarkerOptions().anchorMarker((float) anchor.optDouble("u", 0.5F),
+            (float) anchor.optDouble("v", 1.0F))
+            .infoWindowAnchor((float) infoWindowAnchor.optDouble("u", 0.5F),
+                (float) infoWindowAnchor.optDouble("v", 0.0F))
+            .alpha((float) json.optDouble("alpha", 1))
+            .clusterable(json.optBoolean("clusterable", false))
+            .draggable(json.optBoolean("draggable", false))
+            .icon(constructBitmapDescriptor(context, json.optJSONObject("icon")))
+            .flat(json.optBoolean("flat", false))
+            .position(constructLatLng(json.optJSONObject("position")))
+            .rotation((float) json.optDouble("rotation", 0.0F))
+            .snippet(json.optString("snippet"))
+            .title(json.optString("title"))
+            .visible(json.optBoolean("visible", true))
+            .zIndex((float) json.optDouble("zIndex", 0.0F));
     }
 
     public static BitmapDescriptor constructBitmapDescriptor(Context context, JSONObject json) throws OutOfMemoryError {
@@ -186,8 +197,7 @@ public final class JsonToObject {
                     if (json.has("asset")) {
                         JSONObject asset = json.optJSONObject("asset");
                         AssetManager manager = context.getAssets();
-                        try (InputStream inputStream = manager.open(asset.optString("fileName"));
-                        ) {
+                        try (InputStream inputStream = manager.open(asset.optString("fileName"));) {
                             bitmap = BitmapFactory.decodeStream(inputStream);
                         } catch (final OutOfMemoryError e) {
                             Log.d(TAG, e.getLocalizedMessage());
@@ -202,15 +212,15 @@ public final class JsonToObject {
                         bitmap = bitmapDrawable.getBitmap();
                     }
                     JSONObject scaledSize = null;
-                    if (json.has("asset") && json.optJSONObject("asset").has("scaledSize"))
+                    if (json.has("asset") && json.optJSONObject("asset").has("scaledSize")) {
                         scaledSize = json.optJSONObject("asset").optJSONObject("scaledSize");
-                    if (json.has("resource") && json.optJSONObject("resource").has("scaledSize"))
+                    }
+                    if (json.has("resource") && json.optJSONObject("resource").has("scaledSize")) {
                         scaledSize = json.optJSONObject("resource").optJSONObject("scaledSize");
+                    }
                     if (scaledSize != null) {
-                        bitmap = Bitmap.createScaledBitmap(bitmap,
-                                scaledSize.optInt("width"),
-                                scaledSize.optInt("height"),
-                                false);
+                        bitmap = Bitmap.createScaledBitmap(bitmap, scaledSize.optInt("width"),
+                            scaledSize.optInt("height"), false);
                     }
                     return BitmapDescriptorFactory.fromBitmap(bitmap);
                 } catch (Resources.NotFoundException | IOException e) {
@@ -229,7 +239,8 @@ public final class JsonToObject {
     }
 
     public static PointOfInterest constructPOI(JSONObject json) throws JSONException {
-        return new PointOfInterest(constructLatLng(json.getJSONObject("latLng")), json.getString("name"), json.getString("placeId"));
+        return new PointOfInterest(constructLatLng(json.getJSONObject("latLng")), json.getString("name"),
+            json.getString("placeId"));
     }
 
     public static List<LatLng> constructPoints(JSONArray arr) {
@@ -237,24 +248,25 @@ public final class JsonToObject {
         if (arr != null) {
             for (int i = 0; i < arr.length(); i++) {
                 LatLng latLng = constructLatLng(arr.optJSONObject(i));
-                if (latLng != null) points.add(latLng);
+                if (latLng != null) {
+                    points.add(latLng);
+                }
             }
         }
         return points;
     }
 
     public static PolygonOptions constructPolygonOptions(JSONObject json) throws JSONException {
-        PolygonOptions polygonOptions = new PolygonOptions()
-                .addAll(constructPoints(json.getJSONArray("points")))
-                .clickable(json.optBoolean("clickable", false))
-                .geodesic(json.optBoolean("geodesic", false))
-                .fillColor(json.optInt("fillColor", 0))
-                .strokeColor(json.optInt("strokeColor", -16777216))
-                .strokeJointType(json.optInt("strokeJointType", 0))
-                .strokePattern(constructPatternItemList(json.optJSONArray("strokePattern")))
-                .strokeWidth((float) json.optDouble("strokeWidth", 10.0F))
-                .visible(json.optBoolean("visible", true))
-                .zIndex((float) json.optDouble("zIndex", 0.0F));
+        PolygonOptions polygonOptions = new PolygonOptions().addAll(constructPoints(json.getJSONArray("points")))
+            .clickable(json.optBoolean("clickable", false))
+            .geodesic(json.optBoolean("geodesic", false))
+            .fillColor(json.optInt("fillColor", 0))
+            .strokeColor(json.optInt("strokeColor", -16777216))
+            .strokeJointType(json.optInt("strokeJointType", 0))
+            .strokePattern(constructPatternItemList(json.optJSONArray("strokePattern")))
+            .strokeWidth((float) json.optDouble("strokeWidth", 10.0F))
+            .visible(json.optBoolean("visible", true))
+            .zIndex((float) json.optDouble("zIndex", 0.0F));
         List<List<LatLng>> holes = constructHoles(json.optJSONArray("holes"));
         for (int i = 0; i < holes.size(); i++) {
             polygonOptions.addHole(holes.get(i));
@@ -285,9 +297,11 @@ public final class JsonToObject {
                     return new RoundCap();
                 case Cap.TYPE_CUSTOM_CAP:
                     if (json.has("refWidth")) {
-                        return new CustomCap(constructBitmapDescriptor(context, json.optJSONObject("bitmapDescriptor")), (float) json.optDouble("refWidth"));
+                        return new CustomCap(constructBitmapDescriptor(context, json.optJSONObject("bitmapDescriptor")),
+                            (float) json.optDouble("refWidth"));
                     } else {
-                        return new CustomCap(constructBitmapDescriptor(context, json.optJSONObject("bitmapDescriptor")));
+                        return new CustomCap(
+                            constructBitmapDescriptor(context, json.optJSONObject("bitmapDescriptor")));
                     }
             }
         }
@@ -295,40 +309,39 @@ public final class JsonToObject {
     }
 
     public static PolylineOptions constructPolylineOptions(Context context, JSONObject json) {
-        return new PolylineOptions()
-                .addAll(constructPoints(json.optJSONArray("points")))
-                .clickable(json.optBoolean("clickable", false))
-                .color(json.optInt("color", -16777216))
-                .endCap(constructCap(context, json.optJSONObject("endCap")))
-                .startCap(constructCap(context, json.optJSONObject("startCap")))
-                .geodesic(json.optBoolean("geodesic", false))
-                .jointType(json.optInt("jointType", 0))
-                .visible(json.optBoolean("visible", true))
-                .width((float) json.optDouble("width", 10.0F))
-                .zIndex((float) json.optDouble("zIndex", 0.0F));
+        return new PolylineOptions().addAll(constructPoints(json.optJSONArray("points")))
+            .clickable(json.optBoolean("clickable", false))
+            .color(json.optInt("color", -16777216))
+            .endCap(constructCap(context, json.optJSONObject("endCap")))
+            .startCap(constructCap(context, json.optJSONObject("startCap")))
+            .geodesic(json.optBoolean("geodesic", false))
+            .jointType(json.optInt("jointType", 0))
+            .visible(json.optBoolean("visible", true))
+            .width((float) json.optDouble("width", 10.0F))
+            .zIndex((float) json.optDouble("zIndex", 0.0F));
     }
 
-    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json) throws JSONException {
+    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json)
+        throws JSONException {
         JSONObject anchor = optJSONObject(json, "anchor", new JSONObject());
-        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions()
-                .anchor((float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
-                .bearing((float) json.optDouble("bearing", 0.0F))
-                .clickable(json.optBoolean("clickable", false))
-                .image(constructBitmapDescriptor(context, json.optJSONObject("image")))
-                .visible(json.optBoolean("visible", true))
-                .transparency((float) json.optDouble("transparency", 0.0F))
-                .zIndex((float) json.optDouble("zIndex", 0.0F));
+        GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions().anchor(
+            (float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
+            .bearing((float) json.optDouble("bearing", 0.0F))
+            .clickable(json.optBoolean("clickable", false))
+            .image(constructBitmapDescriptor(context, json.optJSONObject("image")))
+            .visible(json.optBoolean("visible", true))
+            .transparency((float) json.optDouble("transparency", 0.0F))
+            .zIndex((float) json.optDouble("zIndex", 0.0F));
         if (json.has("position")) {
             JSONObject positionJSON = json.getJSONObject("position");
             if (positionJSON.has("width") && positionJSON.has("height")) {
                 groundOverlayOptions.position(constructLatLng(positionJSON.getJSONObject("latLng")),
-                        (float) positionJSON.getDouble("width"),
-                        (float) positionJSON.getDouble("height"));
+                    (float) positionJSON.getDouble("width"), (float) positionJSON.getDouble("height"));
             } else if (positionJSON.has("width")) {
                 groundOverlayOptions.position(constructLatLng(positionJSON.getJSONObject("latLng")),
-                        (float) positionJSON.getDouble("width"));
+                    (float) positionJSON.getDouble("width"));
             }
-        } 
+        }
         if (json.has("bounds")) {
             groundOverlayOptions.positionFromBounds(constructLatLngBounds(json.getJSONObject("bounds")));
         }
@@ -378,10 +391,7 @@ public final class JsonToObject {
             @Override
             public URL getTileUrl(int x, int y, int zoom) {
                 try {
-                    return new URL(path
-                            .replace("${z}", zoom + "")
-                            .replace("${x}", x + "")
-                            .replace("${y}", y + ""));
+                    return new URL(path.replace("${z}", zoom + "").replace("${x}", x + "").replace("${y}", y + ""));
                 } catch (MalformedURLException | OutOfMemoryError e) {
                     Log.d(TAG, e.getMessage());
                 }
@@ -425,42 +435,35 @@ public final class JsonToObject {
         AnimationSet animationSet = new AnimationSet(true);
         if (json.has("rotateAnimation")) {
             JSONObject rotateAnimation = json.optJSONObject("rotateAnimation");
-            animationSet.addAnimation(
-                    new RotateAnimation(
-                            (float) rotateAnimation.optDouble("fromDegree"),
-                            (float) rotateAnimation.optDouble("toDegree")));
+            animationSet.addAnimation(new RotateAnimation((float) rotateAnimation.optDouble("fromDegree"),
+                (float) rotateAnimation.optDouble("toDegree")));
         }
         if (json.has("scaleAnimation")) {
             JSONObject scaleAnimation = json.optJSONObject("scaleAnimation");
             animationSet.addAnimation(
-                    new ScaleAnimation(
-                            (float) scaleAnimation.optDouble("fromX"),
-                            (float) scaleAnimation.optDouble("toX"),
-                            (float) scaleAnimation.optDouble("fromY"),
-                            (float) scaleAnimation.optDouble("toY")));
+                new ScaleAnimation((float) scaleAnimation.optDouble("fromX"), (float) scaleAnimation.optDouble("toX"),
+                    (float) scaleAnimation.optDouble("fromY"), (float) scaleAnimation.optDouble("toY")));
         }
         if (json.has("alphaAnimation")) {
             JSONObject alphaAnimation = json.optJSONObject("alphaAnimation");
-            animationSet.addAnimation(
-                    new AlphaAnimation(
-                            (float) alphaAnimation.optDouble("fromAlpha"),
-                            (float) alphaAnimation.optDouble("toAlpha")));
+            animationSet.addAnimation(new AlphaAnimation((float) alphaAnimation.optDouble("fromAlpha"),
+                (float) alphaAnimation.optDouble("toAlpha")));
         }
         if (json.has("translateAnimation")) {
             JSONObject translateAnimation = json.optJSONObject("translateAnimation");
             animationSet.addAnimation(
-                    new TranslateAnimation(constructLatLng(translateAnimation.optJSONObject("target"))));
+                new TranslateAnimation(constructLatLng(translateAnimation.optJSONObject("target"))));
         }
         return animationSet;
     }
 
-    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context) throws JSONException {
-        return new TileOverlayOptions()
-                .tileProvider(constructTileProvider(json.getJSONObject("tileProvider"), context))
-                .fadeIn(json.optBoolean("fadeIn", false))
-                .transparency((float) json.optDouble("transparency", 0))
-                .visible(json.optBoolean("visible", true))
-                .zIndex((float) json.optDouble("zIndex", 0));
+    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context)
+        throws JSONException {
+        return new TileOverlayOptions().tileProvider(constructTileProvider(json.getJSONObject("tileProvider"), context))
+            .fadeIn(json.optBoolean("fadeIn", false))
+            .transparency((float) json.optDouble("transparency", 0))
+            .visible(json.optBoolean("visible", true))
+            .zIndex((float) json.optDouble("zIndex", 0));
     }
 
     public static CameraUpdate constructCameraUpdate(String eventName, JSONObject json) throws JSONException {
@@ -469,14 +472,20 @@ public final class JsonToObject {
         } else if (eventName.equals("newLatLng")) {
             return CameraUpdateFactory.newLatLng(constructLatLng(json.getJSONObject("latLng")));
         } else if (eventName.equals("newLatLngBounds")) {
-            if (!json.has("width") && !json.has("width"))
-                return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")), json.getInt("padding"));
-            return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")), json.getInt("width"), json.getInt("height"), json.getInt("padding"));
+            if (!json.has("width") && !json.has("width")) {
+                return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")),
+                    json.getInt("padding"));
+            }
+            return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")),
+                json.getInt("width"), json.getInt("height"), json.getInt("padding"));
         } else if (eventName.equals("newLatLngZoom")) {
-            return CameraUpdateFactory.newLatLngZoom(constructLatLng(json.getJSONObject("latLng")), (float) json.getDouble("zoom"));
+            return CameraUpdateFactory.newLatLngZoom(constructLatLng(json.getJSONObject("latLng")),
+                (float) json.getDouble("zoom"));
         } else if (eventName.equals("zoomBy")) {
-            if (json.has("focus"))
-                return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"), constructPoint(json.getJSONObject("focus")));
+            if (json.has("focus")) {
+                return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"),
+                    constructPoint(json.getJSONObject("focus")));
+            }
             return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"));
         } else if (eventName.equals("zoomIn")) {
             return CameraUpdateFactory.zoomIn();
@@ -496,7 +505,9 @@ public final class JsonToObject {
 
     public static Rect json2Rect(JSONObject json) {
         Rect r = new Rect();
-        if (json == null) return r;
+        if (json == null) {
+            return r;
+        }
 
         r.left = PxToPixelConverter.pxToPixel(json.optInt("left"));
         r.top = PxToPixelConverter.pxToPixel(json.optInt("top"));
@@ -507,7 +518,9 @@ public final class JsonToObject {
 
     public static List<Rect> jsonArray2RectArray(JSONArray jsonArr) {
         List<Rect> rects = new ArrayList<>();
-        if (jsonArr == null) return rects;
+        if (jsonArr == null) {
+            return rects;
+        }
 
         for (int i = 0; i < jsonArr.length(); i++) {
             rects.add(json2Rect(jsonArr.optJSONObject(i)));

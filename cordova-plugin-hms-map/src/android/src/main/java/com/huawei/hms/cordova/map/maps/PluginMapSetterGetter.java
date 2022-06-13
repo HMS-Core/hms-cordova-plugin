@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,15 +42,19 @@ import java.util.Locale;
 
 class PluginMapSetterGetter {
     private static final String TAG = PluginMapSetterGetter.class.getSimpleName();
+
     private final HuaweiMapSetter huaweiMapSetter = new HuaweiMapSetter();
+
     private final HuaweiMapGetter huaweiMapGetter = new HuaweiMapGetter();
+
     private MapCapsule mapCapsule;
 
     public PluginMapSetterGetter(MapCapsule mapCapsule) {
         this.mapCapsule = mapCapsule;
     }
 
-    JSONObject run(String option, String methodName, JSONObject object) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    JSONObject run(String option, String methodName, JSONObject object)
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         JSONObject json;
         if (option.equals("getter")) {
             json = huaweiMapGetter.run(methodName);
@@ -59,8 +63,13 @@ class PluginMapSetterGetter {
         }
         return json;
     }
-    ////////////////////////////////////////////////////////////HUAWEI MAP SETTERS CAPSULE///////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////HUAWEI MAP SETTERS CAPSULE/////////////////////////////////////////////////
+    // HUAWEI MAP SETTERS
+
+    // CAPSULE
+
+    // HUAWEI MAP SETTERS
+
+    // CAPSULE
 
     private class HuaweiMapSetter {
         void setLocationSource() {
@@ -75,7 +84,8 @@ class PluginMapSetterGetter {
         }
 
         void setPadding(JSONObject json) throws JSONException {
-            mapCapsule.getHuaweiMap().setPadding(json.getInt("left"), json.getInt("top"), json.getInt("right"), json.getInt("bottom"));
+            mapCapsule.getHuaweiMap()
+                    .setPadding(json.getInt("left"), json.getInt("top"), json.getInt("right"), json.getInt("bottom"));
         }
 
         void setTrafficEnabled(JSONObject json) throws JSONException {
@@ -100,15 +110,20 @@ class PluginMapSetterGetter {
 
         void setMapStyle(JSONObject json) throws JSONException {
             String filename = json.getString("mapStyle");
-            if (filename.endsWith(".json")){
+            if (filename.endsWith(".json")) {
                 filename = filename.substring(0, filename.length() - 5);
             }
-            int styleId = mapCapsule.getContext().getResources().getIdentifier(filename, "raw", mapCapsule.getContext().getPackageName());
-            mapCapsule.getHuaweiMap().setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), styleId));
+            int styleId = mapCapsule.getContext()
+                    .getResources()
+                    .getIdentifier(filename, "raw", mapCapsule.getContext().getPackageName());
+            mapCapsule.getHuaweiMap()
+                    .setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), styleId));
         }
 
         void setLatLngBoundsForCameraTarget(JSONObject json) throws JSONException {
-            mapCapsule.getHuaweiMap().setLatLngBoundsForCameraTarget(JsonToObject.constructLatLngBounds(json.getJSONObject("latLngBounds")));
+            mapCapsule.getHuaweiMap()
+                    .setLatLngBoundsForCameraTarget(
+                            JsonToObject.constructLatLngBounds(json.getJSONObject("latLngBounds")));
         }
 
         void setLanguage(JSONObject json) throws JSONException {
@@ -138,13 +153,17 @@ class PluginMapSetterGetter {
                     webView.getSettings().setJavaScriptEnabled(true);
                     JSONObject params = json.optJSONObject("infoWindowAdapter");
                     String fileName = params.optString("file");
-                    int width = PxToPixelConverter.pxToPixel(params.optInt("width", ViewGroup.LayoutParams.WRAP_CONTENT));
-                    int height = PxToPixelConverter.pxToPixel(params.optInt("height", ViewGroup.LayoutParams.WRAP_CONTENT));
+                    int width = PxToPixelConverter.pxToPixel(
+                            params.optInt("width", ViewGroup.LayoutParams.WRAP_CONTENT));
+                    int height = PxToPixelConverter.pxToPixel(
+                            params.optInt("height", ViewGroup.LayoutParams.WRAP_CONTENT));
                     String html = HtmlUtils.htmlFileToString(mapCapsule.getContext(), fileName);
                     String markerInfoWindowScript = String.format(Locale.ENGLISH,
                             "<script>function getMarkerInfo(){return %s;}</script>",
                             ObjectToJson.constructJsonFromMarker(marker));
-                    if (!html.contains("<head>")) html += HtmlUtils.HTML_HEAD_TAG + html;
+                    if (!html.contains("<head>")) {
+                        html += HtmlUtils.HTML_HEAD_TAG + html;
+                    }
                     html = html.replace("<head>", "<head>" + markerInfoWindowScript);
                     webView.loadData(html, "text/html; charset=utf-8", "UTF-8");
                     parent.addView(webView, width, height);
@@ -171,13 +190,23 @@ class PluginMapSetterGetter {
             mapCapsule.getHuaweiMap().setPointToCenter(x, y);
         }
 
-        JSONObject run(String methodName, JSONObject object) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        JSONObject run(String methodName, JSONObject object)
+                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName, JSONObject.class);
             return (JSONObject) m.invoke(this, object);
         }
     }
-    ///////////////////////////////////////////////////////////////HUAWEI MAP GETTERS CAPSULE///////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////HUAWEI MAP GETTERS CAPSULE//////////////////////////////////////////////////////////
+    // HUAWEI MAP
+
+    // GETTERS
+
+    // CAPSULE
+
+    // HUAWEI MAP
+
+    // GETTERS
+
+    // CAPSULE
 
     private class HuaweiMapGetter {
         JSONObject clear() {
@@ -197,11 +226,11 @@ class PluginMapSetterGetter {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] bitmapArray = stream.toByteArray();
-                    String data = new StringBuilder()
-                            .append("data:image/png;base64,")
+                    String data = new StringBuilder().append("data:image/png;base64,")
                             .append(Base64.encodeToString(bitmapArray, Base64.NO_WRAP))
                             .toString();
-                    mapCapsule.getMapListener().snapshotReadyCallback(mapCapsule.getCapsuleId(), new JSONObject().put("data", data));
+                    mapCapsule.getMapListener()
+                            .snapshotReadyCallback(mapCapsule.getCapsuleId(), new JSONObject().put("data", data));
                 } catch (JSONException e) {
                     Log.d(TAG, e.getMessage());
                 }
@@ -215,7 +244,8 @@ class PluginMapSetterGetter {
         }
 
         public JSONObject getCameraPosition() throws JSONException {
-            return new JSONObject().put("value", ObjectToJson.constructJsonFromCameraPosition(mapCapsule.getHuaweiMap().getCameraPosition()));
+            return new JSONObject().put("value",
+                    ObjectToJson.constructJsonFromCameraPosition(mapCapsule.getHuaweiMap().getCameraPosition()));
         }
 
         public JSONObject getMapType() throws JSONException {
@@ -246,7 +276,8 @@ class PluginMapSetterGetter {
             return new JSONObject().put("value", mapCapsule.getHuaweiMap().isIndoorEnabled());
         }
 
-        JSONObject run(String methodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        JSONObject run(String methodName)
+                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName);
             return (JSONObject) m.invoke(this);
         }

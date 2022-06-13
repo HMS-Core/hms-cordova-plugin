@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,21 +45,33 @@ public final class MapCapsule {
     private final static String TAG = MapCapsule.class.getSimpleName();
 
     private static int id = 0;
+
     private final String divId;
+
     private int capsuleId;
+
     private boolean isActive;
+
     private boolean isClickable;
 
     private TextureMapView textureMapView;
+
     private HuaweiMap huaweiMap;
+
     private Context context;
+
     private PluginMapUISettings uiSettingsSetter;
+
     private PluginMapSetterGetter pluginMapSetterGetter;
+
     private PluginProjection pluginProjection;
+
     private MapListener mapListener;
+
     private MapCapsuleLayout capsuleLayout;
 
     private Map<String, MapComponent> componentMap = new ConcurrentHashMap<>();
+
     private Set<Rect> htmlElementOverlappingSet = new HashSet<>();
 
     public MapCapsule(Context mContext, MapListener mapListener, String divId, JSONObject mapOptions) {
@@ -67,7 +79,8 @@ public final class MapCapsule {
         this.capsuleId = MapCapsule.getNewId();
         this.mapListener = mapListener;
         this.divId = divId;
-        this.textureMapView = new TextureMapView(mContext, JsonToObject.constructMapOptions(mapOptions.optJSONObject("mapOptions")));
+        this.textureMapView = new TextureMapView(mContext,
+            JsonToObject.constructMapOptions(mapOptions.optJSONObject("mapOptions")));
         this.textureMapView.onCreate(null);
         this.uiSettingsSetter = new PluginMapUISettings(this);
         this.pluginMapSetterGetter = new PluginMapSetterGetter(this);
@@ -77,6 +90,10 @@ public final class MapCapsule {
 
         InitialProps props = json2InitialProps(mapOptions.optJSONObject("initialProps"));
         this.capsuleLayout = new MapCapsuleLayout(textureMapView, context, props);
+    }
+
+    private synchronized static int getNewId() {
+        return ++MapCapsule.id;
     }
 
     private InitialProps json2InitialProps(JSONObject j) {
@@ -91,12 +108,8 @@ public final class MapCapsule {
         htmlElementOverlappingSet.removeAll(rectList);
     }
 
-    private synchronized static int getNewId(){
-        return ++MapCapsule.id;
-    }
-
-
-    public JSONObject setMapListener(String eventName) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public JSONObject setMapListener(String eventName)
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         mapListener.bindListener(this.huaweiMap, eventName, this.capsuleId);
         return null;
     }
@@ -106,7 +119,9 @@ public final class MapCapsule {
     }
 
     public boolean removeComponent(String componentId) {
-        if (!componentMap.containsKey(componentId)) return false;
+        if (!componentMap.containsKey(componentId)) {
+            return false;
+        }
         componentMap.get(componentId).remove();
         componentMap.remove(componentId);
         return true;
@@ -120,11 +135,12 @@ public final class MapCapsule {
     public JSONObject animateCamera(String eventName, JSONObject json) throws JSONException {
         int duration = json.optInt("duration", 250);
         huaweiMap.animateCamera(JsonToObject.constructCameraUpdate(eventName, json), duration,
-                mapListener.cancelableCallback(capsuleId, json));
+            mapListener.cancelableCallback(capsuleId, json));
         return null;
     }
 
-    public JSONObject setMapOptions(String optionType, String methodName, JSONObject args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, JSONException {
+    public JSONObject setMapOptions(String optionType, String methodName, JSONObject args)
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, JSONException {
         switch (optionType) {
             case "setUiSettings":
                 return setMapUiSettings(methodName, args);
@@ -146,23 +162,28 @@ public final class MapCapsule {
         return null;
     }
 
-    private JSONObject handleProjections(String methodName, JSONObject json) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    private JSONObject handleProjections(String methodName, JSONObject json)
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return pluginProjection.run(methodName, json);
     }
 
-    private JSONObject getMapSettings(String methodName) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    private JSONObject getMapSettings(String methodName)
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return pluginMapSetterGetter.run("getter", methodName, null);
     }
 
-    public JSONObject setMapSettings(String methodName, JSONObject json) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public JSONObject setMapSettings(String methodName, JSONObject json)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return pluginMapSetterGetter.run("setter", methodName, json);
     }
 
-    public JSONObject setMapUiSettings(String methodName, JSONObject json) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public JSONObject setMapUiSettings(String methodName, JSONObject json)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return uiSettingsSetter.run("setter", methodName, json);
     }
 
-    public JSONObject getMapUiSettings(String methodName, JSONObject json) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public JSONObject getMapUiSettings(String methodName, JSONObject json)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         return uiSettingsSetter.run("getter", methodName, null);
     }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,11 +15,20 @@
 */
 
 import {
-    LatLng, BitmapDescriptor, AnimationSet, Animation,
-    RotateAnimation, ScaleAnimation, TranslateAnimation, AlphaAnimation,
-    _rotateAnimation, _scaleAnimation, _translateAnimation, _alphaAnimation
+    LatLng,
+    BitmapDescriptor,
+    AnimationSet,
+    Animation,
+    RotateAnimation,
+    ScaleAnimation,
+    TranslateAnimation,
+    AlphaAnimation,
+    _rotateAnimation,
+    _scaleAnimation,
+    _translateAnimation,
+    _alphaAnimation,
 } from "./interfaces";
-import {asyncExec} from "./utils";
+import { asyncExec } from "./utils";
 
 export interface Marker {
     getAlpha(): Promise<number>;
@@ -58,7 +67,6 @@ export interface Marker {
 }
 
 export class MarkerImpl implements Marker {
-
     private readonly mapDivId: string;
     private readonly mapCapsuleId: number;
     private readonly id: string;
@@ -71,7 +79,7 @@ export class MarkerImpl implements Marker {
     }
 
     getAlpha(): Promise<number> {
-        return this.getComponentOptions('getAlpha');
+        return this.getComponentOptions("getAlpha");
     }
 
     getId(): string {
@@ -79,51 +87,51 @@ export class MarkerImpl implements Marker {
     }
 
     getPosition(): Promise<LatLng> {
-        return this.getComponentOptions('getPosition');
+        return this.getComponentOptions("getPosition");
     }
 
     getRotation(): Promise<number> {
-        return this.getComponentOptions('getRotation');
+        return this.getComponentOptions("getRotation");
     }
 
     getSnippet(): Promise<string> {
-        return this.getComponentOptions('getSnippet');
+        return this.getComponentOptions("getSnippet");
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
 
     getTitle(): Promise<string> {
-        return this.getComponentOptions('getTitle');
+        return this.getComponentOptions("getTitle");
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
 
     isClusterable(): Promise<boolean> {
-        return this.getComponentOptions('isClusterable');
+        return this.getComponentOptions("isClusterable");
     }
 
     isDraggable(): Promise<boolean> {
-        return this.getComponentOptions('isDraggable');
+        return this.getComponentOptions("isDraggable");
     }
 
     isFlat(): Promise<boolean> {
-        return this.getComponentOptions('isFlat');
+        return this.getComponentOptions("isFlat");
     }
 
     isInfoWindowShown(): Promise<boolean> {
-        return this.getComponentOptions('isInfoWindowShown');
+        return this.getComponentOptions("isInfoWindowShown");
     }
 
     startAnimation(): Promise<void> {
-        return this.getComponentOptions('startAnimation');
+        return this.getComponentOptions("startAnimation");
     }
 
     remove(): Promise<void> {
@@ -139,71 +147,102 @@ export class MarkerImpl implements Marker {
     }
 
     setAlpha(alpha: number): Promise<void> {
-        return this.setComponentOptions("setAlpha", {"alpha": alpha});
+        return this.setComponentOptions("setAlpha", { alpha: alpha });
     }
 
     setAnimation(animation: AnimationSet): Promise<void> {
-
         interface _animationSet {
-            rotateAnimation?: _rotateAnimation,
-            scaleAnimation?: _scaleAnimation,
-            translateAnimation?: _translateAnimation,
-            alphaAnimation?: _alphaAnimation
+            rotateAnimation?: _rotateAnimation;
+            scaleAnimation?: _scaleAnimation;
+            translateAnimation?: _translateAnimation;
+            alphaAnimation?: _alphaAnimation;
         }
 
         const _animations = {} as _animationSet;
 
-        if (animation.animations.has('Rotate'))
-            _animations['rotateAnimation'] = {} as _rotateAnimation;
-        if (animation.animations.has('Scale'))
-            _animations['scaleAnimation'] = {} as _scaleAnimation;
-        if (animation.animations.has('Translate'))
-            _animations['translateAnimation'] = {} as _translateAnimation;
-        if (animation.animations.has('Alpha'))
-            _animations['alphaAnimation'] = {} as _alphaAnimation;
+        if (animation.animations.has("Rotate"))
+            _animations["rotateAnimation"] = {} as _rotateAnimation;
+        if (animation.animations.has("Scale"))
+            _animations["scaleAnimation"] = {} as _scaleAnimation;
+        if (animation.animations.has("Translate"))
+            _animations["translateAnimation"] = {} as _translateAnimation;
+        if (animation.animations.has("Alpha"))
+            _animations["alphaAnimation"] = {} as _alphaAnimation;
 
         animation.animations.forEach((value: Animation, key: string) => {
-            if (key === "Rotate"  && _animations.rotateAnimation != undefined) {
-                _animations.rotateAnimation.fromDegree = (<RotateAnimation>value).fromDegree;
-                _animations.rotateAnimation.toDegree = (<RotateAnimation>value).toDegree;
+            if (key === "Rotate" && _animations.rotateAnimation != undefined) {
+                _animations.rotateAnimation.fromDegree = (<RotateAnimation>(
+                    value
+                )).fromDegree;
+                _animations.rotateAnimation.toDegree = (<RotateAnimation>(
+                    value
+                )).toDegree;
                 _animations.rotateAnimation.fillMode = value.fillMode;
                 _animations.rotateAnimation.duration = value.duration;
                 _animations.rotateAnimation.repeatCount = value.repeatCount;
                 _animations.rotateAnimation.repeatMode = value.repeatMode;
                 _animations.rotateAnimation.interpolator = value.interpolator;
-                if (value.animationEnd) _animations.rotateAnimation.isAnimationEnd = true;
-                if (value.animationStart) _animations.rotateAnimation.isAnimationStart = true;
-            } else if (key === "Scale" && _animations.scaleAnimation != undefined) {
-                _animations.scaleAnimation.fromX = (<ScaleAnimation>value).fromX;
+                if (value.animationEnd)
+                    _animations.rotateAnimation.isAnimationEnd = true;
+                if (value.animationStart)
+                    _animations.rotateAnimation.isAnimationStart = true;
+            } else if (
+                key === "Scale" &&
+                _animations.scaleAnimation != undefined
+            ) {
+                _animations.scaleAnimation.fromX = (<ScaleAnimation>(
+                    value
+                )).fromX;
                 _animations.scaleAnimation.toX = (<ScaleAnimation>value).toX;
-                _animations.scaleAnimation.fromY = (<ScaleAnimation>value).fromY;
+                _animations.scaleAnimation.fromY = (<ScaleAnimation>(
+                    value
+                )).fromY;
                 _animations.scaleAnimation.toY = (<ScaleAnimation>value).toY;
                 _animations.scaleAnimation.fillMode = value.fillMode;
                 _animations.scaleAnimation.duration = value.duration;
                 _animations.scaleAnimation.repeatCount = value.repeatCount;
                 _animations.scaleAnimation.repeatMode = value.repeatMode;
                 _animations.scaleAnimation.interpolator = value.interpolator;
-                if (value.animationEnd) _animations.scaleAnimation.isAnimationEnd = true;
-                if (value.animationStart) _animations.scaleAnimation.isAnimationStart = true;
-            } else if (key === "Translate" && _animations.translateAnimation != undefined) {
-                _animations.translateAnimation.target = (<TranslateAnimation>value).target;
+                if (value.animationEnd)
+                    _animations.scaleAnimation.isAnimationEnd = true;
+                if (value.animationStart)
+                    _animations.scaleAnimation.isAnimationStart = true;
+            } else if (
+                key === "Translate" &&
+                _animations.translateAnimation != undefined
+            ) {
+                _animations.translateAnimation.target = (<TranslateAnimation>(
+                    value
+                )).target;
                 _animations.translateAnimation.fillMode = value.fillMode;
                 _animations.translateAnimation.duration = value.duration;
                 _animations.translateAnimation.repeatCount = value.repeatCount;
                 _animations.translateAnimation.repeatMode = value.repeatMode;
-                _animations.translateAnimation.interpolator = value.interpolator;
-                if (value.animationEnd) _animations.translateAnimation.isAnimationEnd = true;
-                if (value.animationStart) _animations.translateAnimation.isAnimationStart = true;
-            } else if (key === "Alpha" && _animations.alphaAnimation != undefined) {
-                _animations.alphaAnimation.fromAlpha = (<AlphaAnimation>value).fromAlpha;
-                _animations.alphaAnimation.toAlpha = (<AlphaAnimation>value).toAlpha;
+                _animations.translateAnimation.interpolator =
+                    value.interpolator;
+                if (value.animationEnd)
+                    _animations.translateAnimation.isAnimationEnd = true;
+                if (value.animationStart)
+                    _animations.translateAnimation.isAnimationStart = true;
+            } else if (
+                key === "Alpha" &&
+                _animations.alphaAnimation != undefined
+            ) {
+                _animations.alphaAnimation.fromAlpha = (<AlphaAnimation>(
+                    value
+                )).fromAlpha;
+                _animations.alphaAnimation.toAlpha = (<AlphaAnimation>(
+                    value
+                )).toAlpha;
                 _animations.alphaAnimation.fillMode = value.fillMode;
                 _animations.alphaAnimation.duration = value.duration;
                 _animations.alphaAnimation.repeatCount = value.repeatCount;
                 _animations.alphaAnimation.repeatMode = value.repeatMode;
                 _animations.alphaAnimation.interpolator = value.interpolator;
-                if (value.animationEnd) _animations.alphaAnimation.isAnimationEnd = true;
-                if (value.animationStart) _animations.alphaAnimation.isAnimationStart = true;
+                if (value.animationEnd)
+                    _animations.alphaAnimation.isAnimationEnd = true;
+                if (value.animationStart)
+                    _animations.alphaAnimation.isAnimationStart = true;
             }
             let eventName = "";
             if (value.animationEnd) {
@@ -216,64 +255,79 @@ export class MarkerImpl implements Marker {
             }
         });
 
-        return this.setComponentOptions("setAnimation", {"animation": _animations});
+        return this.setComponentOptions("setAnimation", {
+            animation: _animations,
+        });
     }
 
     setDraggable(draggable: boolean): Promise<void> {
-        return this.setComponentOptions("setDraggable", {"draggable": draggable});
+        return this.setComponentOptions("setDraggable", {
+            draggable: draggable,
+        });
     }
 
     setFlat(flat: boolean): Promise<void> {
-        return this.setComponentOptions("setFlat", {"flat": flat});
+        return this.setComponentOptions("setFlat", { flat: flat });
     }
 
     setIcon(icon: BitmapDescriptor): Promise<void> {
-        return this.setComponentOptions("setIcon", {"icon": icon});
+        return this.setComponentOptions("setIcon", { icon: icon });
     }
 
     setInfoWindowAnchor(u: number, v: number): Promise<void> {
-        return this.setComponentOptions("setInfoWindowAnchor", {"u": u, "v": v});
+        return this.setComponentOptions("setInfoWindowAnchor", { u: u, v: v });
     }
 
     setMarkerAnchor(u: number, v: number): Promise<void> {
-        return this.setComponentOptions("setMarkerAnchor", {"u": u, "v": v});
+        return this.setComponentOptions("setMarkerAnchor", { u: u, v: v });
     }
 
     setPosition(latLng: LatLng): Promise<void> {
-        return this.setComponentOptions("setPosition", {"position": latLng});
+        return this.setComponentOptions("setPosition", { position: latLng });
     }
 
     setRotation(rotation: number): Promise<void> {
-        return this.setComponentOptions("setRotation", {"rotation": rotation});
+        return this.setComponentOptions("setRotation", { rotation: rotation });
     }
 
     setSnippet(snippet: String): Promise<void> {
-        return this.setComponentOptions("setSnippet", {"snippet": snippet});
+        return this.setComponentOptions("setSnippet", { snippet: snippet });
     }
 
     setTitle(title: string): Promise<void> {
-        return this.setComponentOptions("setTitle", {"title": title});
+        return this.setComponentOptions("setTitle", { title: title });
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", {"tag": tag});
+        return this.setComponentOptions("setTag", { tag: tag });
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", {"visible": visible});
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", {"zIndex": zIndex});
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
 
     private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
 
     private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+        const result = await asyncExec("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "get",
+            func,
+            {},
+        ]);
         return result.value;
     }
-
 }

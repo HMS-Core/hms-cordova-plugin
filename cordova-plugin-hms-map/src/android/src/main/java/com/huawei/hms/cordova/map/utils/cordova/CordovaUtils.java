@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,10 +26,13 @@ import java.util.Locale;
 import java.util.Set;
 
 public class CordovaUtils {
-    private static volatile CordovaUtils cordovaUtils = null;
-    private CordovaWebView webView;
-    private Set<String> componentEvents = new HashSet<>();
     private static final String RUN_HMS_EVENT_PREFIX = "javascript:window.runHMSEvent";
+
+    private static volatile CordovaUtils cordovaUtils = null;
+
+    private CordovaWebView webView;
+
+    private Set<String> componentEvents = new HashSet<>();
 
     private CordovaUtils(CordovaWebView webView) {
         this.webView = webView;
@@ -39,13 +42,15 @@ public class CordovaUtils {
     public static synchronized CordovaUtils getInstance(CordovaWebView webView) {
         if (cordovaUtils == null) {
             synchronized (CordovaUtils.class) {
-                if (cordovaUtils == null) cordovaUtils = new CordovaUtils(webView);
+                if (cordovaUtils == null) {
+                    cordovaUtils = new CordovaUtils(webView);
+                }
             }
         }
         return cordovaUtils;
     }
 
-    public static void destroy(){
+    public static void destroy() {
         cordovaUtils = null;
     }
 
@@ -64,23 +69,30 @@ public class CordovaUtils {
     }
 
     public void evaluateJs(String event, int capsuleId, String componentId, JSONObject json) {
-        if (json == null)
-            webView.loadUrl(String.format(Locale.ENGLISH, "%s('%s_%d_%s');", RUN_HMS_EVENT_PREFIX, event, capsuleId, componentId));
-        else
-            webView.loadUrl(String.format(Locale.ENGLISH, "%s('%s_%d_%s',%s);", RUN_HMS_EVENT_PREFIX, event, capsuleId, componentId, json));
+        if (json == null) {
+            webView.loadUrl(
+                String.format(Locale.ENGLISH, "%s('%s_%d_%s');", RUN_HMS_EVENT_PREFIX, event, capsuleId, componentId));
+        } else {
+            webView.loadUrl(
+                String.format(Locale.ENGLISH, "%s('%s_%d_%s',%s);", RUN_HMS_EVENT_PREFIX, event, capsuleId, componentId,
+                    json));
+        }
     }
 
     public boolean evaluateJs(String event, int capsuleId, JSONObject json) {
-        if (json == null)
+        if (json == null) {
             webView.loadUrl(String.format(Locale.ENGLISH, "%s('%s_%d');", RUN_HMS_EVENT_PREFIX, event, capsuleId));
-        else if (componentEvents.contains(event))
+        } else if (componentEvents.contains(event)) {
             webView.loadUrl(codeToSendMapComponentToJavaScriptInsteadOfJson(event, capsuleId, json.optString("id")));
-        else
-            webView.loadUrl(String.format(Locale.ENGLISH, "%s('%s_%d',%s);", RUN_HMS_EVENT_PREFIX, event, capsuleId, json));
+        } else {
+            webView.loadUrl(
+                String.format(Locale.ENGLISH, "%s('%s_%d',%s);", RUN_HMS_EVENT_PREFIX, event, capsuleId, json));
+        }
         return true;
     }
 
     private String codeToSendMapComponentToJavaScriptInsteadOfJson(String event, int capsuleId, String componentId) {
-        return String.format(Locale.ENGLISH, "%s('%s_%d',HMSMap.maps.get(%d).getComponent('%s'));", RUN_HMS_EVENT_PREFIX, event, capsuleId, capsuleId, componentId);
+        return String.format(Locale.ENGLISH, "%s('%s_%d',HMSMap.maps.get(%d).getComponent('%s'));",
+            RUN_HMS_EVENT_PREFIX, event, capsuleId, capsuleId, componentId);
     }
 }

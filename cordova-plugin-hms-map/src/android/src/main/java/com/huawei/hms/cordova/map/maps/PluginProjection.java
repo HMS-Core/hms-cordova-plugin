@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -36,19 +36,24 @@ public class PluginProjection {
         this.mapCapsule = mapCapsule;
     }
 
-    JSONObject run(String methodName, JSONObject object) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    JSONObject run(String methodName, JSONObject object)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method m = this.getClass().getDeclaredMethod(methodName, JSONObject.class);
         return (JSONObject) m.invoke(this, object);
 
     }
 
     public JSONObject fromScreenLocation(JSONObject json) throws JSONException {
-        LatLng latLng = mapCapsule.getHuaweiMap().getProjection().fromScreenLocation(JsonToObject.constructPoint(json.getJSONObject("point")));
+        LatLng latLng = mapCapsule.getHuaweiMap()
+            .getProjection()
+            .fromScreenLocation(JsonToObject.constructPoint(json.getJSONObject("point")));
         return ObjectToJson.constructJsonFromLatLng(latLng);
     }
 
     public JSONObject toScreenLocation(JSONObject json) throws JSONException {
-        Point point = mapCapsule.getHuaweiMap().getProjection().toScreenLocation(JsonToObject.constructLatLng(json.getJSONObject("latLng")));
+        Point point = mapCapsule.getHuaweiMap()
+            .getProjection()
+            .toScreenLocation(JsonToObject.constructLatLng(json.getJSONObject("latLng")));
         return ObjectToJson.constructJsonFromPoint(point);
     }
 

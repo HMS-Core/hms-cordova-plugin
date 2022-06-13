@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ import java.util.List;
 
 public class PolygonCapsule extends MapComponent<Polygon> {
 
-
     public PolygonCapsule(MapCapsule mapCapsule, PolygonOptions options, ComponentListener listener) {
         super(mapCapsule, listener);
         component = mapCapsule.getHuaweiMap().addPolygon(options);
@@ -58,20 +57,12 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         return new JSONObject().put("value", component.getFillColor());
     }
 
-    JSONObject isGeodesic() throws JSONException {
-        return new JSONObject().put("value", component.isGeodesic());
-    }
-
     void setFillColor(JSONObject json) {
         component.setFillColor(json.optInt("fillColor"));
     }
 
-    void setHoles(JSONObject json) {
-        component.setHoles(JsonToObject.constructHoles(json.optJSONArray("holes")));
-    }
-
-    void setPoints(JSONObject json) {
-        component.setPoints(JsonToObject.constructPoints(json.optJSONArray("points")));
+    JSONObject isGeodesic() throws JSONException {
+        return new JSONObject().put("value", component.isGeodesic());
     }
 
     JSONObject getHoles() throws JSONException {
@@ -89,8 +80,16 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         return new JSONObject().put("value", outerArr);
     }
 
+    void setHoles(JSONObject json) {
+        component.setHoles(JsonToObject.constructHoles(json.optJSONArray("holes")));
+    }
+
     JSONObject getStrokeColor() throws JSONException {
         return new JSONObject().put("value", component.getStrokeColor());
+    }
+
+    void setStrokeColor(JSONObject json) {
+        component.setStrokeColor(json.optInt("strokeColor"));
     }
 
     JSONObject getPoints() throws JSONException {
@@ -102,8 +101,8 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         return new JSONObject().put("value", array);
     }
 
-    void setStrokeColor(JSONObject json) {
-        component.setStrokeColor(json.optInt("strokeColor"));
+    void setPoints(JSONObject json) {
+        component.setPoints(JsonToObject.constructPoints(json.optJSONArray("points")));
     }
 
     @Override
@@ -111,16 +110,12 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         return component.getId();
     }
 
-    void setStrokePattern(JSONObject json) {
-        component.setStrokePattern(JsonToObject.constructPatternItemList(json.optJSONArray("strokePattern")));
+    JSONObject getStrokeJointType() throws JSONException {
+        return new JSONObject().put("value", component.getStrokeJointType());
     }
 
     void setStrokeJointType(JSONObject json) {
         component.setStrokeJointType(json.optInt("strokeJointType"));
-    }
-
-    JSONObject getStrokeJointType() throws JSONException {
-        return new JSONObject().put("value", component.getStrokeJointType());
     }
 
     JSONObject getStrokePattern() throws JSONException {
@@ -134,6 +129,10 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         return new JSONObject().put("value", obj);
     }
 
+    void setStrokePattern(JSONObject json) {
+        component.setStrokePattern(JsonToObject.constructPatternItemList(json.optJSONArray("strokePattern")));
+    }
+
     JSONObject getStrokeWidth() throws JSONException {
         return new JSONObject().put("value", component.getStrokeWidth());
     }
@@ -142,16 +141,12 @@ public class PolygonCapsule extends MapComponent<Polygon> {
         component.setStrokeWidth((float) json.optDouble("strokeWidth"));
     }
 
-    void setTag(JSONObject json) {
-        component.setTag(json.opt("tag"));
-    }
-
-    void setZIndex(JSONObject json) {
-        component.setZIndex((float) json.optDouble("zIndex"));
-    }
-
     JSONObject getTag() throws JSONException {
         return new JSONObject().put("value", component.getTag());
+    }
+
+    void setTag(JSONObject json) {
+        component.setTag(json.opt("tag"));
     }
 
     JSONObject isVisible() throws JSONException {
@@ -160,6 +155,10 @@ public class PolygonCapsule extends MapComponent<Polygon> {
 
     JSONObject getZIndex() throws JSONException {
         return new JSONObject().put("value", component.getZIndex());
+    }
+
+    void setZIndex(JSONObject json) {
+        component.setZIndex((float) json.optDouble("zIndex"));
     }
 
     @Override

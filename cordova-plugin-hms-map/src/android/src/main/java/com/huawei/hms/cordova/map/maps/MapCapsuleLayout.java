@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,16 +33,27 @@ import java.util.Locale;
 final public class MapCapsuleLayout {
 
     private static final String TAG = MapCapsuleLayout.class.getSimpleName();
+
     private View view;
+
     private int x;
+
     private int y;
+
     private int marginTop;
+
     private int marginBottom;
+
     private int width;
+
     private int height;
+
     private int currentScrollY = 0;
+
     private int currentScrollX = 0;
+
     private int currX = 0;
+
     private int currY = 0;
 
     MapCapsuleLayout(View view, Context ctx, InitialProps props) {
@@ -51,10 +62,11 @@ final public class MapCapsuleLayout {
         this.marginTop = props.marginTop;
         this.x = props.x;
         this.y = props.y - marginTop;
-        this.height =props.height;
+        this.height = props.height;
         this.width = props.width;
         Log.d(TAG, "MapCapsuleLayout: " + toString());
-        ViewGroup.MarginLayoutParams parentLayoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        ViewGroup.MarginLayoutParams parentLayoutParams = new ViewGroup.MarginLayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         parentLayoutParams.setMargins(0, marginTop, 0, marginBottom);
         ViewGroup.MarginLayoutParams mapLayoutParams = new ViewGroup.MarginLayoutParams(props.width, props.height);
         this.view.setLayoutParams(mapLayoutParams);
@@ -95,8 +107,9 @@ final public class MapCapsuleLayout {
     public View getView() {
         return view;
     }
+
     public int getY() {
-        return (int)this.view.getY();
+        return (int) this.view.getY();
     }
 
     public void updateXAndY(int x, int y) {
@@ -104,8 +117,12 @@ final public class MapCapsuleLayout {
         this.view.setY(PxToPixelConverter.pxToPixel(y) - marginTop);
         this.x = (int) this.view.getX();
         this.y = (int) this.view.getY();
-        if (currentScrollY != 0) this.y -= currentScrollY;
-        if (currentScrollX != 0) this.x -= currentScrollX;
+        if (currentScrollY != 0) {
+            this.y -= currentScrollY;
+        }
+        if (currentScrollX != 0) {
+            this.x -= currentScrollX;
+        }
     }
 
     public void updateWidthAndHeight(int width, int height) {
@@ -118,15 +135,9 @@ final public class MapCapsuleLayout {
         this.view.requestLayout();
     }
 
-
     @Override
     public String toString() {
-        return "MapCapsuleLayout{" +
-                ", x=" + x +
-                ", y=" + y +
-                ", width=" + width +
-                ", height=" + height +
-                '}';
+        return "MapCapsuleLayout{" + ", x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + '}';
     }
 
     public int getX() {
@@ -136,18 +147,23 @@ final public class MapCapsuleLayout {
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
 }
 
-
 class InitialProps {
     protected int x;
+
     protected int y;
+
     protected int marginTop;
+
     protected int marginBottom;
+
     protected int width;
+
     protected int height;
 
     InitialProps(int x, int y, int width, int height) {

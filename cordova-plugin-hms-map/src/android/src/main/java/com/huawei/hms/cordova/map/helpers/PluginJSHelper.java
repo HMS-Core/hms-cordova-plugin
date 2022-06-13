@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,9 +32,13 @@ import java.util.Set;
 public class PluginJSHelper {
 
     private static final String TAG = PluginJSHelper.class.getSimpleName();
+
     private CordovaWebView webView;
+
     private int capsuleId;
+
     private String divId;
+
     private Set<String> components;
 
     public PluginJSHelper(CordovaWebView webView, MapCapsule capsule) {
@@ -44,18 +48,23 @@ public class PluginJSHelper {
         this.components = capsule.getComponentMap().keySet();
     }
 
-
     private JSONObject componentJSONObjectFrom(String component) throws JSONException {
         String type = "UNKNOWN";
-        if (component.startsWith("Circle")) type = MapComponentType.CIRCLE.getName();
-        else if (component.startsWith("Marker")) type = MapComponentType.MARKER.getName();
-        else if (component.startsWith("Polygon")) type = MapComponentType.POLYGON.getName();
-        else if (component.startsWith("Polyline")) type = MapComponentType.POLYLINE.getName();
-        else if (component.startsWith("GroundOverlay"))
+        if (component.startsWith("Circle")) {
+            type = MapComponentType.CIRCLE.getName();
+        } else if (component.startsWith("Marker")) {
+            type = MapComponentType.MARKER.getName();
+        } else if (component.startsWith("Polygon")) {
+            type = MapComponentType.POLYGON.getName();
+        } else if (component.startsWith("Polyline")) {
+            type = MapComponentType.POLYLINE.getName();
+        } else if (component.startsWith("GroundOverlay")) {
             type = MapComponentType.GROUND_OVERLAY.getName();
-        else if (component.startsWith("TileOverlay"))
+        } else if (component.startsWith("TileOverlay")) {
             type = MapComponentType.TILE_OVERLAY.getName();
-        Log.d(TAG, "componentJSONObjectFrom: ---->>  " + String.format(Locale.ENGLISH,"_type: %s, _id: %s", type, component));
+        }
+        Log.d(TAG,
+            "componentJSONObjectFrom: ---->>  " + String.format(Locale.ENGLISH, "_type: %s, _id: %s", type, component));
         return new JSONObject().put("_type", type).put("_id", component);
     }
 
@@ -70,15 +79,16 @@ public class PluginJSHelper {
     }
 
     private void runJSToFillPluginComponentsHashMap() throws JSONException {
-        webView.loadUrl(String.format(Locale.ENGLISH, "javascript: HMSMap.sync(%d, '%s', %s);",
-                this.capsuleId, this.divId, mapsComponentsInfoJSONArray()));
+        webView.loadUrl(
+            String.format(Locale.ENGLISH, "javascript: HMSMap.sync(%d, '%s', %s);", this.capsuleId, this.divId,
+                mapsComponentsInfoJSONArray()));
     }
 
-    public void syncComponents()  {
+    public void syncComponents() {
         try {
             runJSToFillPluginComponentsHashMap();
         } catch (JSONException e) {
-            Log.e(TAG, "Sync components failed of map with id="+divId );
+            Log.e(TAG, "Sync components failed of map with id=" + divId);
         }
     }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,7 +34,9 @@ import java.lang.reflect.Method;
 public final class MapListener {
 
     private static final String TAG = MapListener.class.getSimpleName();
+
     private static volatile MapListener instance;
+
     private CordovaUtils cordovaUtils;
 
     private MapListener(CordovaUtils cordovaUtils) {
@@ -44,33 +46,42 @@ public final class MapListener {
     public static synchronized MapListener getInstance(CordovaUtils cordovaUtils) {
         if (instance == null) {
             synchronized (MapListener.class) {
-                if (instance == null) instance = new MapListener(cordovaUtils);
+                if (instance == null) {
+                    instance = new MapListener(cordovaUtils);
+                }
             }
         }
         return instance;
     }
 
-    public static void destroy(){
+    public static void destroy() {
         instance = null;
     }
 
-    public void bindListener(HuaweiMap map, String eventName, int capsuleId) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void bindListener(HuaweiMap map, String eventName, int capsuleId)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = this.getClass().getDeclaredMethod(eventName, HuaweiMap.class, int.class);
         method.invoke(this, map, capsuleId);
     }
 
     private void setOnMarkerClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnMarkerClickListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_MARKER_CLICK, capsuleId, ObjectToJson.constructJsonFromMarker(marker)));
+        map.setOnMarkerClickListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_MARKER_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromMarker(marker)));
     }
 
     /**
      * We are using reflection to set listeners because we didn't want to create
      * a complex structure with if elses. But in here if listeners exists with
-     * multiple functions inside reflection can't find them. Actually as you can guess
-     * we can set all of the functions when we run the listener function because it is already
-     * initializing its inner functions but the problem here is JavaScript don't know that
-     * so instead of writing some ugly code we tried to write a better ugly code here and we
-     * did set listeners seperate but also not seperate but it doesn't matter with the code
+     * multiple functions inside reflection can't find them. Actually as you can
+     * guess
+     * we can set all of the functions when we run the listener function because it
+     * is already
+     * initializing its inner functions but the problem here is JavaScript don't
+     * know that
+     * so instead of writing some ugly code we tried to write a better ugly code
+     * here and we
+     * did set listeners seperate but also not seperate but it doesn't matter with
+     * the code
      * because the listener name is still the same.
      */
     private void setOnMarkerDragStartListener(HuaweiMap map, int capsuleId) {
@@ -89,47 +100,58 @@ public final class MapListener {
         map.setOnMarkerDragListener(new HuaweiMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
-                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG_START, capsuleId, ObjectToJson.constructJsonFromMarker(marker));
+                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG_START, capsuleId,
+                    ObjectToJson.constructJsonFromMarker(marker));
             }
 
             @Override
             public void onMarkerDrag(Marker marker) {
-                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG, capsuleId, ObjectToJson.constructJsonFromMarker(marker));
+                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG, capsuleId,
+                    ObjectToJson.constructJsonFromMarker(marker));
             }
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG_END, capsuleId, ObjectToJson.constructJsonFromMarker(marker));
+                cordovaUtils.evaluateJs(MapEvents.ON_MARKER_DRAG_END, capsuleId,
+                    ObjectToJson.constructJsonFromMarker(marker));
             }
         });
     }
 
     private void setOnPolygonClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnPolygonClickListener(polygon -> cordovaUtils.evaluateJs(MapEvents.ON_POLYGON_CLICK, capsuleId, ObjectToJson.constructJsonFromPolygon(polygon)));
+        map.setOnPolygonClickListener(polygon -> cordovaUtils.evaluateJs(MapEvents.ON_POLYGON_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromPolygon(polygon)));
     }
 
     private void setOnCircleClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnCircleClickListener(circle -> cordovaUtils.evaluateJs(MapEvents.ON_CIRCLE_CLICK, capsuleId, ObjectToJson.constructJsonFromCircle(circle)));
+        map.setOnCircleClickListener(circle -> cordovaUtils.evaluateJs(MapEvents.ON_CIRCLE_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromCircle(circle)));
     }
 
     private void setOnGroundOverlayClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnGroundOverlayClickListener(groundOverlay -> cordovaUtils.evaluateJs(MapEvents.ON_GROUND_OVERLAY_CLICK, capsuleId, ObjectToJson.constructJsonFromGroundOverlay(groundOverlay)));
+        map.setOnGroundOverlayClickListener(
+            groundOverlay -> cordovaUtils.evaluateJs(MapEvents.ON_GROUND_OVERLAY_CLICK, capsuleId,
+                ObjectToJson.constructJsonFromGroundOverlay(groundOverlay)));
     }
 
     private void setOnPolylineClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnPolylineClickListener(polyline -> cordovaUtils.evaluateJs(MapEvents.ON_POLYLINE_CLICK, capsuleId, ObjectToJson.constructJsonFromPolyline(polyline)));
+        map.setOnPolylineClickListener(polyline -> cordovaUtils.evaluateJs(MapEvents.ON_POLYLINE_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromPolyline(polyline)));
     }
 
     private void setOnPoiClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnPoiClickListener(pointOfInterest -> cordovaUtils.evaluateJs(MapEvents.ON_POI_CLICK, capsuleId, ObjectToJson.constructJsonFromPOI(pointOfInterest)));
+        map.setOnPoiClickListener(pointOfInterest -> cordovaUtils.evaluateJs(MapEvents.ON_POI_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromPOI(pointOfInterest)));
     }
 
     private void setOnMapClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnMapClickListener(latLng -> cordovaUtils.evaluateJs(MapEvents.ON_MAP_CLICK, capsuleId, ObjectToJson.constructJsonFromLatLng(latLng)));
+        map.setOnMapClickListener(latLng -> cordovaUtils.evaluateJs(MapEvents.ON_MAP_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromLatLng(latLng)));
     }
 
     private void setOnMapLongClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnMapLongClickListener(latLng -> cordovaUtils.evaluateJs(MapEvents.ON_MAP_LONG_CLICK, capsuleId, ObjectToJson.constructJsonFromLatLng(latLng)));
+        map.setOnMapLongClickListener(latLng -> cordovaUtils.evaluateJs(MapEvents.ON_MAP_LONG_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromLatLng(latLng)));
     }
 
     private void setOnCameraIdleListener(HuaweiMap map, int capsuleId) {
@@ -151,8 +173,8 @@ public final class MapListener {
     }
 
     private void setOnCameraMoveCancelListener(HuaweiMap map, int capsuleId) {
-        map.setOnCameraMoveCanceledListener(() ->
-                cordovaUtils.evaluateJs(MapEvents.ON_CAMERA_MOVE_CANCELED, capsuleId, null));
+        map.setOnCameraMoveCanceledListener(
+            () -> cordovaUtils.evaluateJs(MapEvents.ON_CAMERA_MOVE_CANCELED, capsuleId, null));
     }
 
     private void setOnIndoorLevelActivated(HuaweiMap map, int capsuleId) {
@@ -172,29 +194,36 @@ public final class MapListener {
 
             @Override
             public void onIndoorLevelActivated(IndoorBuilding indoorBuilding) {
-                cordovaUtils.evaluateJs(MapEvents.ON_INDOOR_LEVEL_ACTIVATED, capsuleId, ObjectToJson.constructJsonFromIndoorBuilding(indoorBuilding));
+                cordovaUtils.evaluateJs(MapEvents.ON_INDOOR_LEVEL_ACTIVATED, capsuleId,
+                    ObjectToJson.constructJsonFromIndoorBuilding(indoorBuilding));
             }
         });
     }
 
     private void setOnInfoWindowClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnInfoWindowClickListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_CLICK, capsuleId, ObjectToJson.constructJsonFromMarker(marker)));
+        map.setOnInfoWindowClickListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromMarker(marker)));
     }
 
     private void setOnInfoWindowCloseListener(HuaweiMap map, int capsuleId) {
-        map.setOnInfoWindowCloseListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_CLOSE, capsuleId, ObjectToJson.constructJsonFromMarker(marker)));
+        map.setOnInfoWindowCloseListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_CLOSE, capsuleId,
+            ObjectToJson.constructJsonFromMarker(marker)));
     }
 
     private void setOnInfoWindowLongClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnInfoWindowLongClickListener(marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_LONG_CLICK, capsuleId, ObjectToJson.constructJsonFromMarker(marker)));
+        map.setOnInfoWindowLongClickListener(
+            marker -> cordovaUtils.evaluateJs(MapEvents.ON_INFO_WINDOW_LONG_CLICK, capsuleId,
+                ObjectToJson.constructJsonFromMarker(marker)));
     }
 
     private void setOnMyLocationButtonClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnMyLocationButtonClickListener(() -> cordovaUtils.evaluateJs(MapEvents.ON_MY_LOCATION_BUTTON_CLICK, capsuleId, null));
+        map.setOnMyLocationButtonClickListener(
+            () -> cordovaUtils.evaluateJs(MapEvents.ON_MY_LOCATION_BUTTON_CLICK, capsuleId, null));
     }
 
     private void setOnMyLocationClickListener(HuaweiMap map, int capsuleId) {
-        map.setOnMyLocationClickListener(location -> cordovaUtils.evaluateJs(MapEvents.ON_MY_LOCATION_CLICK, capsuleId, ObjectToJson.constructJsonFromLocation(location)));
+        map.setOnMyLocationClickListener(location -> cordovaUtils.evaluateJs(MapEvents.ON_MY_LOCATION_CLICK, capsuleId,
+            ObjectToJson.constructJsonFromLocation(location)));
     }
 
     private void setOnMapLoadedCallback(HuaweiMap map, int capsuleId) {
@@ -205,14 +234,16 @@ public final class MapListener {
         return new HuaweiMap.CancelableCallback() {
             @Override
             public void onFinish() {
-                if (json.has("isOnFinish"))
+                if (json.has("isOnFinish")) {
                     cordovaUtils.evaluateJs(MapEvents.ON_CANCELABLE_CALLBACK_FINISH, capsuleId, null);
+                }
             }
 
             @Override
             public void onCancel() {
-                if (json.has("isOnCancel"))
+                if (json.has("isOnCancel")) {
                     cordovaUtils.evaluateJs(MapEvents.ON_CANCELABLE_CALLBACK_CANCEL, capsuleId, null);
+                }
             }
         };
     }
