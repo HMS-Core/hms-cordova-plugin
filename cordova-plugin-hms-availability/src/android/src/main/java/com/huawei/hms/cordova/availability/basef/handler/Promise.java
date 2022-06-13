@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,20 +13,24 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.availability.basef.handler;
+
+import static org.apache.cordova.PluginResult.Status.OK;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import static org.apache.cordova.PluginResult.Status.OK;
-
 public class Promise {
 
     private final CallbackContext callbackContext;
+
     private final HMSLogger hmsLogger;
+
     private final String methodName;
+
     private final boolean isLoggerRunning;
 
     public Promise(final CallbackContext callbackContext, final HMSLogger logger, String method, boolean isActive) {
@@ -97,9 +101,14 @@ public class Promise {
     }
 
     private void sendLogEvent(String nullable) {
-        if (!isLoggerRunning) return;
-        if (nullable == null) hmsLogger.sendSingleEvent(methodName);
-        else hmsLogger.sendSingleEvent(methodName, nullable);
+        if (!isLoggerRunning) {
+            return;
+        }
+        if (nullable == null) {
+            hmsLogger.sendSingleEvent(methodName);
+        } else {
+            hmsLogger.sendSingleEvent(methodName, nullable);
+        }
     }
 
 }

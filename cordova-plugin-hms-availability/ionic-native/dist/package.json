@@ -1,12 +1,12 @@
 {
     "name": "@hmscore/ionic-native-hms-availability",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Availability",
-    "version": "5.2.0-301",
-    "zipVersion": "5.2.0.301",
+    "version": "6.4.0-303",
+    "zipVersion": "6.4.0.303",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",

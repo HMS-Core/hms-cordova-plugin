@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,7 +35,9 @@ import java.util.Map;
 
 public class HMSAvailabilityImpl extends CordovaBaseModule {
     private static final String TAG = HMSAvailability.class.getName();
+
     private final Activity activity;
+
     private final Context context;
 
     public HMSAvailabilityImpl(Activity activity, Context context) {
@@ -81,7 +83,8 @@ public class HMSAvailabilityImpl extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void isUserResolvableError(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void isUserResolvableError(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         int errorCode = args.getInt(0);
         boolean result = HuaweiApiAvailability.getInstance().isUserResolvableError(errorCode);
         promise.success(result);
@@ -96,13 +99,16 @@ public class HMSAvailabilityImpl extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void isHuaweiMobileServicesAvailable(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void isHuaweiMobileServicesAvailable(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         final int isHuaweiMobileServicesAvailable;
         if (args.length() > 0) {
             int minApkVersion = args.getInt(0);
-            isHuaweiMobileServicesAvailable = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context, minApkVersion);
+            isHuaweiMobileServicesAvailable = HuaweiApiAvailability.getInstance()
+                .isHuaweiMobileServicesAvailable(context, minApkVersion);
         } else {
-            isHuaweiMobileServicesAvailable = HuaweiApiAvailability.getInstance().isHuaweiMobileServicesAvailable(context);
+            isHuaweiMobileServicesAvailable = HuaweiApiAvailability.getInstance()
+                .isHuaweiMobileServicesAvailable(context);
         }
         promise.success(isHuaweiMobileServicesAvailable);
     }
@@ -118,7 +124,8 @@ public class HMSAvailabilityImpl extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void setServicesVersionCode(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void setServicesVersionCode(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         int code = args.getInt(0);
         HuaweiApiAvailability.setServicesVersionCode(code);
         promise.success();
@@ -135,10 +142,13 @@ public class HMSAvailabilityImpl extends CordovaBaseModule {
                     int errorCode = args.getInt(0);
                     int requestCode = args.getInt(1);
                     if (args.length() > 2) {
-                        result = HuaweiApiAvailability.getInstance().showErrorDialogFragment(activity, errorCode, requestCode,
-                                dialog -> corPack.getCordovaWebView().loadUrl("javascript:window.runHMSEvent('onCancel')"));
+                        result = HuaweiApiAvailability.getInstance()
+                            .showErrorDialogFragment(activity, errorCode, requestCode,
+                                dialog -> corPack.getCordovaWebView()
+                                    .loadUrl("javascript:window.runHMSEvent('onCancel')"));
                     } else {
-                        result = HuaweiApiAvailability.getInstance().showErrorDialogFragment(activity, errorCode, requestCode);
+                        result = HuaweiApiAvailability.getInstance()
+                            .showErrorDialogFragment(activity, errorCode, requestCode);
                     }
                     promise.success(result);
                 } catch (JSONException e) {
@@ -150,7 +160,8 @@ public class HMSAvailabilityImpl extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void showErrorNotification(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void showErrorNotification(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
         int errorCode = args.getInt(0);
         HuaweiApiAvailability.getInstance().showErrorNotification(context, errorCode);
         promise.success();

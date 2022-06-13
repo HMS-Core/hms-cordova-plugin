@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.showErrorNotification = exports.showErrorDialogFragment = exports.setServicesVersionCode = exports.resolveError = exports.isUserResolvableError = exports.isHuaweiMobileNoticeAvailable = exports.isHuaweiMobileServicesAvailable = exports.getErrorString = exports.getServicesVersionCode = exports.getApiMap = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.

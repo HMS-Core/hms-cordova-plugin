@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.availability.basef.handler;
 
 import android.util.Log;
@@ -28,8 +29,9 @@ public class CorLog {
     }
 
     public static void log(int priority, String tag, String message) {
-        if (enable)
+        if (enable) {
             Log.println(priority, tag, message);
+        }
     }
 
     public static void info(String tag, String message) {
