@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -50,12 +50,19 @@ import java.util.List;
 
 public class MLDocumentSkewCorrectionAnalyser extends HMSProvider {
     private static final String TAG = MLDocumentSkewCorrectionAnalyser.class.getSimpleName();
+
     private MLDocumentSkewCorrectionAnalyzer analyzer;
+
     private MLDocumentSkewCorrectionCoordinateInput input;
+
     private MLFrame mlFrame;
+
     private Bitmap bitmap;
+
     private CallbackContext callbackContext;
+
     private CordovaInterface cordovaInterface;
+
     private int syncMode = 0;
 
     public MLDocumentSkewCorrectionAnalyser(Context ctx) {
@@ -129,7 +136,7 @@ public class MLDocumentSkewCorrectionAnalyser extends HMSProvider {
         String message = null;
         if (errorCode == MLDocumentSkewCorrectionConstant.IMAGE_DATA_ERROR) {
             message = "Image data error:" + "" + errorCode;
-        } else if (errorCode == MLDocumentSkewCorrectionConstant.CORRECTION_FAILD) {
+        } else if (errorCode == MLDocumentSkewCorrectionConstant.CORRECTION_FAILED) {
             message = "Correction failed" + "" + errorCode;
         } else {
             message = "Detect failed" + "" + errorCode;

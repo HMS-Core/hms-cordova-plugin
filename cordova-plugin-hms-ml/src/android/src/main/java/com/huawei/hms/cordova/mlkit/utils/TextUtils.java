@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.google.gson.Gson;
 import com.huawei.hms.common.size.Size;
 import com.huawei.hms.cordova.mlkit.providers.imageproviders.product.MLRealProductBean;
 import com.huawei.hms.mlsdk.card.bcr.MLBankCard;
@@ -58,6 +57,8 @@ import com.huawei.hms.mlsdk.text.MLText;
 import com.huawei.hms.mlsdk.text.TextLanguage;
 import com.huawei.hms.mlsdk.textimagesuperresolution.MLTextImageSuperResolution;
 
+import com.google.gson.Gson;
+
 import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,12 +86,14 @@ public class TextUtils {
             }
             return map;
         }, new JSONObject());
+
     public static final Mapper<MLTextImageSuperResolution, JSONObject> FROM_TISR_TO_JSON_OBJECT = mapperWrapper(
         (MLTextImageSuperResolution mlTextImageSuperResolution) -> {
             JSONObject map = new JSONObject();
             map.put("superBitmap", HMSMLUtils.bitmapToBase64(mlTextImageSuperResolution.getBitmap()));
             return map;
         }, new JSONObject());
+
     public static final Mapper<MLImageSegmentation, JSONObject> FROM_IMGSEG_TO_JSON_OBJECT = mapperWrapper(
         (MLImageSegmentation mlImageSegmentation) -> {
             JSONObject map = new JSONObject();
@@ -103,12 +106,14 @@ public class TextUtils {
             map.putOpt("bitmapOriginal", HMSMLUtils.bitmapToBase64(bitmapOriginal));
             return map;
         }, new JSONObject());
+
     public static final Mapper<MLImageSuperResolutionResult, JSONObject> FROM_ISR_TO_JSON_OBJECT = mapperWrapper(
         (MLImageSuperResolutionResult mlImageSuperResolutionResult) -> {
             JSONObject map = new JSONObject();
             map.put("bitmap", HMSMLUtils.bitmapToBase64(mlImageSuperResolutionResult.getBitmap()));
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLImageClassification>, JSONObject> FROM_MLCLASS_TO_JSON_OBJECT = mapperWrapper(
         (List<MLImageClassification> mlImageClassification) -> {
             JSONObject map = new JSONObject();
@@ -125,6 +130,7 @@ public class TextUtils {
 
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLSceneDetection>, JSONObject> FROM_MLSCEN_TO_JSON_OBJECT = mapperWrapper(
         (List<MLSceneDetection> mlSceneDetections) -> {
             JSONObject map = new JSONObject();
@@ -132,6 +138,7 @@ public class TextUtils {
             map.putOpt("result", array);
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLSkeleton>, JSONObject> FROM_MLSKELETON_TO_JSON_OBJECT = mapperWrapper(
         (List<MLSkeleton> mlSkeletons) -> {
             JSONObject map = new JSONObject();
@@ -139,6 +146,7 @@ public class TextUtils {
             map.putOpt("result", array);
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<ML3DFace>, JSONObject> FROM_ML3DFACE_TO_JSON_OBJECT = mapperWrapper(
         (List<ML3DFace> mlFace) -> {
             JSONObject map = new JSONObject();
@@ -147,7 +155,9 @@ public class TextUtils {
 
             return map;
         }, new JSONObject());
+
     private static final String TAG = TextUtils.class.getSimpleName();
+
     public static final Mapper<List<MLObject>, JSONObject> FROM_MLOBJECT_TO_JSON_OBJECT = mapperWrapper(
         (List<MLObject> mlObjects) -> {
             JSONObject map = new JSONObject();
@@ -155,12 +165,14 @@ public class TextUtils {
             map.putOpt("result", array);
             return map;
         }, new JSONObject());
+
     public static final Mapper<MLText, JSONObject> FROM_MLTEXT_TO_JSON_OBJECT = mapperWrapper((MLText mlText) -> {
         JSONObject map = new JSONObject();
         map.put("stringValue", mlText.getStringValue());
         map.put("blocks", HMSMLUtils.listToJSONArray(mlText.getBlocks(), TextUtils::fromMLTextBlockToJSON));
         return map;
     }, new JSONObject());
+
     public static final Mapper<MLDocument, JSONObject> FROM_MLDOC_TO_JSON_OBJECT = mapperWrapper(
         (MLDocument mlDocument) -> {
             JSONObject map = new JSONObject();
@@ -168,6 +180,7 @@ public class TextUtils {
             map.put("blocks", HMSMLUtils.listToJSONArray(mlDocument.getBlocks(), TextUtils::fromMLDocumentBlockToJSON));
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLFace>, JSONObject> FROM_MLFACE_TO_JSON_OBJECT = mapperWrapper(
         (List<MLFace> mlFace) -> {
             JSONObject map = new JSONObject();
@@ -176,6 +189,7 @@ public class TextUtils {
 
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLRemoteLandmark>, JSONObject> FROM_MLREMOTELANDMARK_TO_JSON_OBJECT = mapperWrapper(
         (List<MLRemoteLandmark> mlRemoteLandmarks) -> {
             JSONObject map = new JSONObject();
@@ -184,6 +198,7 @@ public class TextUtils {
 
             return map;
         }, new JSONObject());
+
     public static final Mapper<List<MLHandKeypoints>, JSONObject> FROM_MLHAND_TO_JSON_OBJECT = mapperWrapper(
         (List<MLHandKeypoints> mlHandKeypoints) -> {
             JSONObject map = new JSONObject();

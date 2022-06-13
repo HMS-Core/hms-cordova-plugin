@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,8 +23,8 @@ import android.util.Log;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
-import com.huawei.hms.mlsdk.sounddect.MLSoundDectListener;
-import com.huawei.hms.mlsdk.sounddect.MLSoundDector;
+import com.huawei.hms.mlsdk.sounddect.MLSoundDetectListener;
+import com.huawei.hms.mlsdk.sounddect.MLSoundDetector;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONException;
@@ -32,13 +32,15 @@ import org.json.JSONObject;
 
 public class MLSoundDetectionAnalyser extends HMSProvider {
     private static final String TAG = MLSoundDetectionAnalyser.class.getName();
-    private MLSoundDector soundDetector;
+
+    private MLSoundDetector soundDetector;
+
     private CallbackContext callbackContext;
 
-    private MLSoundDectListener listener = new MLSoundDectListener() {
+    private MLSoundDetectListener listener = new MLSoundDetectListener() {
         @Override
         public void onSoundSuccessResult(Bundle result) {
-            int soundType = result.getInt(MLSoundDector.RESULTS_RECOGNIZED);
+            int soundType = result.getInt(MLSoundDetector.RESULTS_RECOGNIZED);
             JSONObject sound = new JSONObject();
             try {
                 sound.putOpt("soundType", soundType);
@@ -67,8 +69,8 @@ public class MLSoundDetectionAnalyser extends HMSProvider {
         boolean startType = params.getBoolean("startType");
         this.callbackContext = callbackContext;
 
-        soundDetector = MLSoundDector.createSoundDector();
-        soundDetector.setSoundDectListener(listener);
+        soundDetector = MLSoundDetector.createSoundDetector();
+        soundDetector.setSoundDetectListener(listener);
         if (startType) {
             boolean startSuccess = soundDetector.start(getContext());
             if (startSuccess) {

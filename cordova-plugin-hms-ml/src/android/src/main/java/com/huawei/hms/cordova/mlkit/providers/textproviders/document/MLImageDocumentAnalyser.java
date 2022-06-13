@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,15 +21,15 @@ import android.content.Context;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
-import com.huawei.hms.mlsdk.document.MLDocument;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
+import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
-import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
 import com.huawei.hms.mlsdk.MLAnalyzerFactory;
 import com.huawei.hms.mlsdk.common.MLFrame;
+import com.huawei.hms.mlsdk.document.MLDocument;
 import com.huawei.hms.mlsdk.document.MLDocumentAnalyzer;
 import com.huawei.hms.mlsdk.document.MLDocumentSetting;
 
@@ -41,8 +41,11 @@ import java.io.IOException;
 
 public class MLImageDocumentAnalyser extends HMSProvider {
     private static final String TAG = MLImageDocumentAnalyser.class.getName();
+
     private MLDocumentAnalyzer analyzer;
+
     private MLDocumentSetting setting;
+
     ;
 
     public MLImageDocumentAnalyser(Context ctx) {

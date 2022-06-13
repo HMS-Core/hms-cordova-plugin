@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,11 +45,17 @@ import java.io.IOException;
 
 public class MLImageSuperResolutionAnalyser extends HMSProvider {
     private static final int INDEX_1X = 0;
+
     private static final int INDEX_ORIGINAL = 2;
+
     private MLImageSuperResolutionAnalyzer analyzer;
+
     private Bitmap srcBitmap;
+
     private CordovaInterface cordovaInterface;
+
     private int selectItem = INDEX_1X;
+
     private MLImageSuperResolutionAnalyzerSetting setting;
 
     public MLImageSuperResolutionAnalyser(Context ctx) {

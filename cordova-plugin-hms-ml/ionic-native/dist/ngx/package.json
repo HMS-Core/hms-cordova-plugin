@@ -1,12 +1,12 @@
 {
     "name": "@hmscore/ionic-native-hms-ml",
     "description": "Ionic Native wrappers for Cordova Plugin HMS ML",
-    "version": "2.0.5-302",
-    "zipVersion": "2.0.5.302",
+    "version": "2.0.5-303",
+    "zipVersion": "2.0.5.303",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "repository": {
         "type": "git",
         "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",

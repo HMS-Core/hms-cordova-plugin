@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -31,11 +31,17 @@ import java.io.IOException;
 
 public class LensEnginePreview extends ViewGroup {
     private static final String TAG = LensEnginePreview.class.getSimpleName();
+
     private Context mContext;
+
     private SurfaceView mSurfaceView;
+
     private boolean mStartRequested;
+
     private boolean mSurfaceAvailable;
+
     private LensEngine mLensEngine;
+
     private GraphicOverlay mOverlay;
 
     public LensEnginePreview(final Context context, final AttributeSet attrs) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
-import com.huawei.hms.mlplugin.productvisionsearch.MLProductVisionSearchCapture;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
+import com.huawei.hms.mlplugin.productvisionsearch.MLProductVisionSearchCapture;
 import com.huawei.hms.mlsdk.productvisionsearch.MLProductVisionSearch;
 import com.huawei.hms.mlsdk.productvisionsearch.MLVisionSearchProduct;
 
@@ -43,12 +43,19 @@ import java.util.List;
 
 public class MLProductFragment extends MLProductVisionSearchCapture.AbstractProductFragment<MLRealProductBean> {
     private static String TAG = MLProductFragment.class.getSimpleName();
+
     private View root;
+
     private Context context;
+
     private CallbackContext callbackContext;
+
     private List<MLRealProductBean> mlProducts = new ArrayList<>();
+
     private GridView gridView;
+
     private CordovaInterface cordovaInterface;
+
     private BottomSheetAdapter adapter;
 
     public MLProductFragment(Context context, CallbackContext callbackContext, CordovaInterface cordovaInterface) {

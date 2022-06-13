@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import android.content.Context;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.huawei.hms.cordova.mlkit.HMSImageServiceProvider;
 import com.huawei.hms.cordova.mlkit.HMSMLPlugin;
 import com.huawei.hms.cordova.mlkit.camera.GraphicOverlay;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
@@ -40,9 +39,13 @@ import java.util.List;
 
 public class ObjectAnalyzerTransactor implements MLAnalyzer.MLTransactor<MLObject> {
     private static String TAG = ObjectAnalyzerTransactor.class.getSimpleName();
+
     private GraphicOverlay objectGraphicOverlay;
+
     private boolean mlsNeedToDetect = true;
+
     private JSONObject objectGraphicSetting;
+
     private Context context;
 
     public ObjectAnalyzerTransactor(GraphicOverlay graphicOverlay, JSONObject objectGraphicSetting, Context context) {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,12 +41,19 @@ import java.util.TimerTask;
 
 public class MLAftAnalyser extends HMSProvider {
     private static final String TAG = MLAftAnalyser.class.getName();
+
     private static final int THRESHOLD_TIME = 60000;
+
     private static volatile Timer mTimer;
+
     private CallbackContext callbackContext;
+
     private String taskId;
+
     private MLRemoteAftEngine engine;
+
     private MLRemoteAftSetting setting;
+
     private MLRemoteAftListener aftListener = new MLRemoteAftListener() {
         @Override
         public void onInitComplete(String taskId, Object ext) {
@@ -156,6 +163,7 @@ public class MLAftAnalyser extends HMSProvider {
             Log.e(TAG, "MLAsrCallBack onError." + errorCode + " task:" + taskId);
         }
     };
+
     private MLRemoteAftListener aftLongListener = new MLRemoteAftListener() {
         @Override
         public void onInitComplete(String taskId, Object ext) {

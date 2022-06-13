@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -28,28 +28,51 @@ import java.util.Objects;
 public class CordovaErrors {
 
     public static final int UNKNOWN = -1;
+
     public static final int SUCCESS = 0;
+
     public static final int DISCARDED = 1;
+
     public static final int INNER = 2;
+
     public static final int INACTIVE = 3;
+
     public static final int NOT_SUPPORTED = 4;
+
     public static final int ILLEGAL_PARAMETER = 5;
+
     public static final int OVERDUE = 6;
+
     public static final int NO_FOUND = 7;
+
     public static final int DUPLICATE_FOUND = 8;
+
     public static final int NO_PERMISSION = 9;
+
     public static final int INSUFFICIENT_RESOURCE = 10;
+
     public static final int ANALYSIS_FAILURE = 11;
+
     public static final int INTERRUPTED = 12;
+
     public static final int EXCEED_RANGE = 13;
+
     public static final int DATA_MISSING = 14;
+
     public static final int AUTHENTICATION_REQUIRED = 15;
+
     public static final int TFLITE_NOT_COMPATIBLE = 16;
+
     public static final int INSUFFICIENT_SPACE = 17;
+
     public static final int HASH_MISS = 18;
+
     public static final int TOKEN_INVALID = 19;
+
     public static final int SERVICE_FAILURE = 20;
+
     public static final int ANALYSIS_NULL = 21;
+
     static final Map<Integer, String> ERROR_MSGS = new HashMap<>();
 
     static {

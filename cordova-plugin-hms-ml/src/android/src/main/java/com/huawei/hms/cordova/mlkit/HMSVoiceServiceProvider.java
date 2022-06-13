@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -40,12 +40,19 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
     public static final String TAG = HMSVoiceServiceProvider.class.getSimpleName();
 
     private PermissionUtils permissionUtils = new PermissionUtils();
+
     private MLTranslatorAnalyser translator;
+
     private MLLangDetectionAnalyser langDetection;
+
     private MLTtsAnalyser ttsAnalyse;
+
     private MLAftAnalyser aftAnalyse;
+
     private MLAsrAnalyser asrAnalyse = new MLAsrAnalyser();
+
     private MLSoundDetectionAnalyser soundDectAnalyse;
+
     private MLRttAnalyser rttAnalyser;
 
     public void pluginInitialize() {

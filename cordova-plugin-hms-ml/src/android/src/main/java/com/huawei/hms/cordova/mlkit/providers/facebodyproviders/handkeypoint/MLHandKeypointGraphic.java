@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,8 +32,11 @@ import java.util.List;
 
 public class MLHandKeypointGraphic extends GraphicOverlay.Graphic {
     private static final float BOX_STROKE_WIDTH = 5.0f;
+
     private final Paint rectPaint;
+
     private final Paint idPaintnew;
+
     private List<MLHandKeypoints> handKeypoints;
 
     public MLHandKeypointGraphic(GraphicOverlay overlay, List<MLHandKeypoints> handKeypoints,
@@ -110,7 +113,8 @@ public class MLHandKeypointGraphic extends GraphicOverlay.Graphic {
             Rect rect = translateRect(handKeypoints.get(i).getRect());
             canvas.drawRect(rect, rectPaint);
             for (MLHandKeypoint handKeypoint : mHandKeypoints.getHandKeypoints()) {
-                if (!(Math.abs(handKeypoint.getPointX() - (float)0) == 0 && Math.abs(handKeypoint.getPointY() - (float)0) == 0)) {
+                if (!(Math.abs(handKeypoint.getPointX() - (float) 0) == 0
+                    && Math.abs(handKeypoint.getPointY() - (float) 0) == 0)) {
                     canvas.drawCircle(translateX(handKeypoint.getPointX()), translateY(handKeypoint.getPointY()), 24f,
                         idPaintnew);
                 }

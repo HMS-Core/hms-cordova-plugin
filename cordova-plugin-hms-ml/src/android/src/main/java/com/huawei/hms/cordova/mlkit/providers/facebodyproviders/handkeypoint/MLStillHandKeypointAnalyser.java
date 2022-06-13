@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,12 +24,12 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
-import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypointAnalyzer;
-import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypointAnalyzerFactory;
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
 import com.huawei.hms.mlsdk.common.MLFrame;
+import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypointAnalyzer;
+import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypointAnalyzerFactory;
 import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypointAnalyzerSetting;
 import com.huawei.hms.mlsdk.handkeypoint.MLHandKeypoints;
 
@@ -42,9 +42,13 @@ import java.util.List;
 
 public class MLStillHandKeypointAnalyser extends HMSProvider {
     private String TAG = MLStillHandKeypointAnalyser.class.getName();
+
     private MLFrame mlFrame;
+
     private MLHandKeypointAnalyzer mAnalyzer;
+
     private CallbackContext callbackContext;
+
     private MLHandKeypointAnalyzerSetting setting;
 
     public MLStillHandKeypointAnalyser(Context ctx) {

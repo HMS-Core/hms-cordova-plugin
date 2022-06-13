@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ public class MLSkeletonUtils {
             List<MLJoint> mJoints = new ArrayList<>();
             List<MLJoint> joints = skeleton.getJoints();
             for (MLJoint joint : joints) {
-                if (!(Math.abs(joint.getPointX() - (float)0) == 0 && Math.abs(joint.getPointY() - (float)0) == 0)
+                if (!(Math.abs(joint.getPointX() - (float) 0) == 0 && Math.abs(joint.getPointY() - (float) 0) == 0)
                     && joint.getScore() >= MIN_JOINT_SCORE) {
                     mJoints.add(joint);
                 } else {

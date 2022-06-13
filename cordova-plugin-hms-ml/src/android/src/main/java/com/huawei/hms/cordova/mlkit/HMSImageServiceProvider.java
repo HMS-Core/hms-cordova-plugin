@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,15 +42,25 @@ import java.io.IOException;
 public class HMSImageServiceProvider extends CordovaPlugin {
 
     public static final String TAG = HMSImageServiceProvider.class.getSimpleName();
+
     private PermissionUtils permissionUtils = new PermissionUtils();
+
     private MLImageClassificationAnalyser imageClassificationAnalyse;
+
     private MLImageSegmentationAnalyser imageSegmentation;
+
     private MLImageLandMarkAnalyser imageLandMarkAnalyse;
+
     private MLImageObjectAnalyser imageObjectAnalyser;
+
     private MLDocumentSkewCorrectionAnalyser documentSkewCorrection;
+
     private MLImageSuperResolutionAnalyser imageSuperResolution;
+
     private MLStillSceneDetectionAnalyser sceneDetectionStillAnalyse;
+
     private MLTextImageSuperResolutionAnalyser textImageSuperResolution;
+
     private MLProductVisionAnalyser productVisionAnalyser;
 
     public void pluginInitialize() {

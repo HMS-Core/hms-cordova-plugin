@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -22,16 +22,15 @@ import android.util.SparseArray;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
-import com.huawei.hms.mlsdk.common.MLFrame;
-import com.huawei.hms.mlsdk.objects.MLObject;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
-import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
+import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
 import com.huawei.hms.mlsdk.MLAnalyzerFactory;
-
+import com.huawei.hms.mlsdk.common.MLFrame;
+import com.huawei.hms.mlsdk.objects.MLObject;
 import com.huawei.hms.mlsdk.objects.MLObjectAnalyzer;
 import com.huawei.hms.mlsdk.objects.MLObjectAnalyzerSetting;
 
@@ -45,7 +44,9 @@ import java.util.List;
 public class MLImageObjectAnalyser extends HMSProvider {
 
     private String TAG = MLImageObjectAnalyser.class.getName();
+
     private MLObjectAnalyzer analyzer;
+
     private MLObjectAnalyzerSetting setting;
 
     public MLImageObjectAnalyser(Context ctx) {

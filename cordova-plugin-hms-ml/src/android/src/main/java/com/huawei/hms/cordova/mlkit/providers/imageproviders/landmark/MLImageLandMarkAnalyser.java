@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,16 +21,15 @@ import android.content.Context;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
-import com.huawei.hms.mlsdk.common.MLFrame;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
-import com.huawei.hms.mlsdk.landmark.MLRemoteLandmark;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
-import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
+import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
 import com.huawei.hms.mlsdk.MLAnalyzerFactory;
-
+import com.huawei.hms.mlsdk.common.MLFrame;
+import com.huawei.hms.mlsdk.landmark.MLRemoteLandmark;
 import com.huawei.hms.mlsdk.landmark.MLRemoteLandmarkAnalyzer;
 import com.huawei.hms.mlsdk.landmark.MLRemoteLandmarkAnalyzerSetting;
 
@@ -43,7 +42,9 @@ import java.util.List;
 
 public class MLImageLandMarkAnalyser extends HMSProvider {
     private static final String TAG = MLImageLandMarkAnalyser.class.getName();
+
     private MLRemoteLandmarkAnalyzer analyzer;
+
     private MLRemoteLandmarkAnalyzerSetting settings;
 
     public MLImageLandMarkAnalyser(Context ctx) {

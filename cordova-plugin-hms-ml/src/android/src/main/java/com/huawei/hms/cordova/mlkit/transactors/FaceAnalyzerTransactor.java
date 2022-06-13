@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import android.content.Context;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.huawei.hms.cordova.mlkit.HMSFaceBodyProvider;
 import com.huawei.hms.cordova.mlkit.HMSMLPlugin;
 import com.huawei.hms.cordova.mlkit.camera.GraphicOverlay;
 import com.huawei.hms.cordova.mlkit.providers.facebodyproviders.face.MLFaceGraphic;
@@ -38,8 +37,11 @@ import java.util.List;
 
 public class FaceAnalyzerTransactor implements MLAnalyzer.MLTransactor<MLFace> {
     private static String TAG = FaceAnalyzerTransactor.class.getSimpleName();
+
     private GraphicOverlay mGraphicOverlay;
+
     private JSONObject setting;
+
     private Context context;
 
     public FaceAnalyzerTransactor(GraphicOverlay ocrGraphicOverlay, JSONObject setting, Context context) {

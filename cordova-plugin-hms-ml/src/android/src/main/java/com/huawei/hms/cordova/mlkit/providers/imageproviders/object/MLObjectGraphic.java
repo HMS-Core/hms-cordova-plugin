@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,9 +29,13 @@ import org.json.JSONObject;
 
 public class MLObjectGraphic extends GraphicOverlay.Graphic {
     private static final float TEXT_SIZE = 54.0f;
+
     private static final float STROKE_WIDTH = 4.0f;
+
     private final MLObject object;
+
     private final Paint boxPaint;
+
     private final Paint textPaint;
 
     public MLObjectGraphic(final GraphicOverlay overlay, final MLObject object, final JSONObject objectGraphicSetting)

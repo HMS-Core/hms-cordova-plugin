@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,13 +26,13 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
-import com.huawei.hms.mlplugin.card.bcr.MLBcrCaptureResult;
-import com.huawei.hms.mlplugin.card.bcr.MLBcrCapture;
-import com.huawei.hms.mlplugin.card.bcr.MLBcrCaptureConfig;
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
+import com.huawei.hms.mlplugin.card.bcr.MLBcrCapture;
+import com.huawei.hms.mlplugin.card.bcr.MLBcrCaptureConfig;
 import com.huawei.hms.mlplugin.card.bcr.MLBcrCaptureFactory;
+import com.huawei.hms.mlplugin.card.bcr.MLBcrCaptureResult;
 import com.huawei.hms.mlsdk.card.MLBcrAnalyzerFactory;
 import com.huawei.hms.mlsdk.card.bcr.MLBankCard;
 import com.huawei.hms.mlsdk.card.bcr.MLBcrAnalyzer;
@@ -46,10 +46,15 @@ import org.json.JSONObject;
 
 public class MLBankCardAnalyser extends HMSProvider {
     private static final String TAG = MLBankCardAnalyser.class.getName();
+
     private MLBcrAnalyzer sdkAnalyzer;
+
     private CallbackContext callbackContext;
+
     private int detectType;
+
     private MLBcrAnalyzerSetting mlBcrAnalyzerSetting;
+
     private MLBcrCaptureConfig config;
 
     private MLBcrCapture.Callback banCallback = new MLBcrCapture.Callback() {

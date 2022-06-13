@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
-import com.huawei.hms.mlsdk.text.MLRemoteTextSetting;
-import com.huawei.hms.mlsdk.text.MLText;
 import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
 import com.huawei.hms.mlsdk.MLAnalyzerFactory;
 import com.huawei.hms.mlsdk.common.MLFrame;
 import com.huawei.hms.mlsdk.text.MLLocalTextSetting;
+import com.huawei.hms.mlsdk.text.MLRemoteTextSetting;
+import com.huawei.hms.mlsdk.text.MLText;
 import com.huawei.hms.mlsdk.text.MLTextAnalyzer;
 
 import org.apache.cordova.CallbackContext;
@@ -44,11 +44,17 @@ import java.io.IOException;
 
 public class MLImageTextAnalyser extends HMSProvider {
     private String TAG = MLImageTextAnalyser.class.getSimpleName();
+
     private MLTextAnalyzer analyzer;
+
     private boolean flag = false;
+
     private MLLocalTextSetting mlLocalTextSetting;
+
     private MLRemoteTextSetting mlRemoteTextSetting;
+
     private String language = "rm";
+
     private int ocrMode = 1;
 
     public MLImageTextAnalyser(Context context) {

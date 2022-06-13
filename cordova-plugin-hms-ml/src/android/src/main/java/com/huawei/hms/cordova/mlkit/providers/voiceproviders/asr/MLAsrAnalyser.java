@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,8 +21,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.mlplugin.asr.MLAsrCaptureConstants;
@@ -41,9 +39,13 @@ import java.util.Arrays;
 
 public class MLAsrAnalyser extends CordovaPlugin {
     private static final String TAG = MLAsrAnalyser.class.getSimpleName();
+
     private static final int ML_ASR_CAPTURE_CODE = 2;
+
     private CallbackContext callbackContext;
+
     private CordovaInterface cordovaInterface;
+
     private MLAsrRecognizer mSpeechRecognizer;
 
     public void initializeASRAnalyser(final JSONObject params, final CallbackContext callbackContext,

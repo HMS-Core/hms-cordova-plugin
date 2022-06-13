@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.huawei.hms.cordova.mlkit.providers.textproviders.formrecognition;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.google.gson.JsonObject;
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
@@ -31,6 +30,8 @@ import com.huawei.hms.mlsdk.fr.MLFormRecognitionAnalyzer;
 import com.huawei.hms.mlsdk.fr.MLFormRecognitionAnalyzerFactory;
 import com.huawei.hms.mlsdk.fr.MLFormRecognitionConstant;
 
+import com.google.gson.JsonObject;
+
 import org.apache.cordova.CallbackContext;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,7 @@ import java.io.IOException;
 
 public class MLFormRecognitionAnalyser extends HMSProvider {
     private static final String TAG = MLFormRecognitionAnalyser.class.getName();
+
     private MLFormRecognitionAnalyzer analyzer;
 
     public MLFormRecognitionAnalyser(Context ctx) {

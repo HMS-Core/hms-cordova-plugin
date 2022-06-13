@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import org.json.JSONObject;
 public class HMSLanguageServiceProvider extends CordovaPlugin {
 
     public static final String TAG = HMSTextServiceProvider.class.getSimpleName();
+
     private MLTextEmbeddingAnalyser textEmbeddingAnalyse;
 
     public void pluginInitialize() {
@@ -53,7 +54,7 @@ public class HMSLanguageServiceProvider extends CordovaPlugin {
                 boolean writeExternalStorage = PermissionUtils.hasPermission("writeExternalStorage", this);
                 if (writeExternalStorage && readExternalStorage) {
                     HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("textEmbeddingAnalyser");
-                    if (textEmbeddingAnalyse!=null){
+                    if (textEmbeddingAnalyse != null) {
                         textEmbeddingAnalyse.initializeTextEmbeddingAnalyser(action, callbackContext, params);
                         return true;
                     }
@@ -63,7 +64,7 @@ public class HMSLanguageServiceProvider extends CordovaPlugin {
             }
             if (action.equals("ACTION_TEXTEMBEDDING_SETIING")) {
                 HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("textEmbeddingAnalyserSetting");
-                if (textEmbeddingAnalyse!=null){
+                if (textEmbeddingAnalyse != null) {
                     textEmbeddingAnalyse.getTextEmbediingSetting(callbackContext);
                     return true;
                 }

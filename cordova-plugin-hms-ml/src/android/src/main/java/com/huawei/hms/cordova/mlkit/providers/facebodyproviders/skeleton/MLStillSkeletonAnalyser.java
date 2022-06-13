@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,8 +45,11 @@ import java.util.List;
 
 public class MLStillSkeletonAnalyser extends HMSProvider {
     private static final String TAG = MLStillHandKeypointAnalyser.class.getName();
+
     private MLSkeletonAnalyzer analyzer;
+
     private MLFrame mFrame;
+
     private MLSkeletonAnalyzerSetting setting;
 
     public MLStillSkeletonAnalyser(Context ctx) {
@@ -71,7 +74,7 @@ public class MLStillSkeletonAnalyser extends HMSProvider {
             case 2: {
                 MLFrame mlFrame2 = HMSMLUtils.getFrame2(getContext(), params);
                 CordovaHelpers.frameController(mlFrame2, getContext(), callbackContext, "stillSkeletonAnalyse");
-                calculateSimilarity(mlFrame2,callbackContext);
+                calculateSimilarity(mlFrame2, callbackContext);
             }
             break;
             default:
@@ -110,7 +113,7 @@ public class MLStillSkeletonAnalyser extends HMSProvider {
 
     }
 
-    private void calculateSimilarity(MLFrame mlFrame2,final CallbackContext callbackContext) throws JSONException {
+    private void calculateSimilarity(MLFrame mlFrame2, final CallbackContext callbackContext) throws JSONException {
         List<MLSkeleton> list1 = new ArrayList<>();
         if (analyzer != null) {
             SparseArray<MLSkeleton> sparseArray1 = analyzer.analyseFrame(mFrame);

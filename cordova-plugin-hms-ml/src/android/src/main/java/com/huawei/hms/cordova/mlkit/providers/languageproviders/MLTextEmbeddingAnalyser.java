@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -43,9 +43,13 @@ import java.util.Set;
 
 public class MLTextEmbeddingAnalyser extends HMSProvider {
     private static final String TAG = MLTextEmbeddingAnalyser.class.getName();
+
     private MLTextEmbeddingAnalyzer analyzer;
+
     private CallbackContext callbackContext;
+
     private JSONObject params;
+
     private MLTextEmbeddingSetting setting;
 
     public MLTextEmbeddingAnalyser(Context ctx) {

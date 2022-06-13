@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,11 +34,17 @@ import java.util.List;
 
 public class ML3DFaceGraphic extends GraphicOverlay.Graphic {
     private static final String TAG = ML3DFaceGraphic.class.getSimpleName();
+
     private final GraphicOverlay overlay;
+
     private final Paint keypointPaint;
+
     private final Paint boxPaint;
+
     private float line_width;
+
     private volatile ML3DFace mLFace;
+
     private Context mContext;
 
     public ML3DFaceGraphic(GraphicOverlay overlay, ML3DFace face, Context context, JSONObject graphicSetting)
@@ -117,7 +123,7 @@ public class ML3DFaceGraphic extends GraphicOverlay.Graphic {
     }
 
     public float dp2px(Context context, float dipValue) {
-        return dipValue * context.getResources().getDisplayMetrics().density + (float)0.5;
+        return dipValue * context.getResources().getDisplayMetrics().density + (float) 0.5;
     }
 
     @Override

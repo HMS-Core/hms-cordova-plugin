@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,18 +45,31 @@ import java.util.Set;
 
 public class MLFaceGraphic extends GraphicOverlay.Graphic {
     private static final String TAG = "MLFaceGraphic";
+
     private final GraphicOverlay overlay;
+
     private final Paint keypointPaint;
+
     private final Paint boxPaint;
+
     private final Paint facePaint;
+
     private final Paint eyePaint;
+
     private final Paint eyebrowPaint;
+
     private final Paint lipPaint;
+
     private final Paint nosePaint;
+
     private final Paint noseBasePaint;
+
     private final Paint textPaint;
+
     private final Paint faceFeaturePaintText;
+
     private volatile MLFace mFace;
+
     private Context mContext;
 
     public MLFaceGraphic(GraphicOverlay overlay, MLFace face, Context context, JSONObject faceGraphicSetting)
@@ -394,7 +407,7 @@ public class MLFaceGraphic extends GraphicOverlay.Graphic {
     }
 
     public static float dp2px(Context context, float dipValue) {
-        return dipValue * context.getResources().getDisplayMetrics().density + (float)0.5;
+        return dipValue * context.getResources().getDisplayMetrics().density + (float) 0.5;
     }
 
     private boolean isLandScape() {
@@ -431,20 +444,20 @@ public class MLFaceGraphic extends GraphicOverlay.Graphic {
     }
 
     private void paintFeatures(Canvas canvas) {
-        float start = this.overlay.getWidth() / (float)4;
+        float start = this.overlay.getWidth() / (float) 4;
         float x = start;
-        float width = this.overlay.getWidth() / (float)3;
+        float width = this.overlay.getWidth() / (float) 3;
         float y;
         if (this.isLandScape()) {
-            y = (dp2px(this.mContext, this.overlay.getHeight() / (float)8)) < 130
+            y = (dp2px(this.mContext, this.overlay.getHeight() / (float) 8)) < 130
                 ? 130
-                : (dp2px(this.mContext, this.overlay.getHeight() / (float)8));
+                : (dp2px(this.mContext, this.overlay.getHeight() / (float) 8));
         } else {
-            y = (dp2px(this.mContext, this.overlay.getHeight() / (float)16)) < 350.0
+            y = (dp2px(this.mContext, this.overlay.getHeight() / (float) 16)) < 350.0
                 ? 350
-                : (dp2px(this.mContext, this.overlay.getHeight() / (float)16));
+                : (dp2px(this.mContext, this.overlay.getHeight() / (float) 16));
             if (this.overlay.getHeight() > 2500) {
-                y = dp2px(this.mContext, this.overlay.getHeight() / (float)10);
+                y = dp2px(this.mContext, this.overlay.getHeight() / (float) 10);
             }
         }
         float space = dp2px(this.mContext, 12);
@@ -464,7 +477,7 @@ public class MLFaceGraphic extends GraphicOverlay.Graphic {
         canvas.drawText("Glass Probability: " + decimalFormat.format(mFace.getFeatures().getSunGlassProbability()), x,
             y, this.faceFeaturePaintText);
         x = x + width;
-        String sex = (mFace.getFeatures().getSexProbability() > (float)0.5) ? "Female" : "Male";
+        String sex = (mFace.getFeatures().getSexProbability() > (float) 0.5) ? "Female" : "Male";
         canvas.drawText("Gender: " + sex, x, y, this.faceFeaturePaintText);
         y = y - space;
         x = start;

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -79,13 +79,21 @@ import java.io.IOException;
 
 public class MLHMSLensEngine extends HMSProvider {
     public static final String TAG = MLHMSLensEngine.class.getSimpleName();
+
     private LensEngine lensEngine;
+
     private LensEnginePreview lensEnginePreview;
+
     private GraphicOverlay graphicOverlay;
+
     private MLCompositeAnalyzer compositeAnalyzer;
+
     private InitialProps props;
+
     private int currentScrollY = 0;
+
     private int currentScrollX = 0;
+
     private CallbackContext callbackContext;
 
     public MLHMSLensEngine(Context ctx) {

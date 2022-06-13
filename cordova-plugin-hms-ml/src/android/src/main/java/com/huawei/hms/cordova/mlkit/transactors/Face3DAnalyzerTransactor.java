@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,8 +30,11 @@ import org.json.JSONObject;
 
 public class Face3DAnalyzerTransactor implements MLAnalyzer.MLTransactor<ML3DFace> {
     private static String TAG = Face3DAnalyzerTransactor.class.getSimpleName();
+
     private GraphicOverlay mGraphicOverlay;
+
     private JSONObject setting;
+
     private Context context;
 
     public Face3DAnalyzerTransactor(GraphicOverlay ocrGraphicOverlay, JSONObject setting, Context context) {

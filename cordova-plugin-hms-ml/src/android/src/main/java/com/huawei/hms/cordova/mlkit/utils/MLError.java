@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,8 +26,11 @@ import java.util.Map;
 
 public class MLError {
     public static final int ERROR_NO_CAMERA_PERMISSION = 1;
+
     public static final int ERROR_NO_READ_PERMISSION = 2;
+
     public static final int ERROR_NO_WRITE_PERMISSION = 3;
+
     public static final int ERROR_NO_AUDIO_PERMISSION = 4;
 
     static final Map<Integer, String> ERROR_MSGS = new HashMap<>();

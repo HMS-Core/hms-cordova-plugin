@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package com.huawei.hms.cordova.mlkit;
 
 import android.util.Log;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.huawei.hms.cordova.mlkit.common.MLHMSAnalyzer;
 import com.huawei.hms.cordova.mlkit.common.MLHMSApplication;
 import com.huawei.hms.cordova.mlkit.common.MLHMSCompositeAnalyzer;
@@ -28,10 +27,11 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaHelpers;
 import com.huawei.hms.cordova.mlkit.helpers.PluginLayout;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.providers.custommodel.MLCustomModel;
-import com.huawei.hms.cordova.mlkit.providers.voiceproviders.tts.MLTtsAnalyser;
 import com.huawei.hms.cordova.mlkit.utils.CordovaUtils;
 import com.huawei.hms.cordova.mlkit.utils.PermissionUtils;
 import com.huawei.hms.mlsdk.common.MLApplication;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -46,19 +46,33 @@ import java.util.List;
 
 public class HMSMLPlugin extends CordovaPlugin {
     private static final String TAG = HMSMLPlugin.class.getSimpleName();
+
     List<String> permissionLists = new ArrayList<>();
+
     private CordovaInterface cordovaInterface;
+
     private PermissionUtils permissionUtils = new PermissionUtils();
+
     private CallbackContext callbackContext;
+
     private MLHMSLensEngine mlLensEngine;
+
     private PluginLayout pluginLayout = new PluginLayout();
+
     private MLHMSApplication mlhmsApplication;
+
     private MLHMSCompositeAnalyzer compositeAnalyzer;
+
     private MLHMSAnalyzer mlhmsAnalyzer;
+
     private MLCustomModel customModel;
+
     private MLHMSFrame mlhmsFrame;
+
     private static CallbackContext callbackCtx;
+
     private boolean isStart = false;
+
     public static CallbackContext getCallbackContext() {
         return callbackCtx;
     }
@@ -84,7 +98,7 @@ public class HMSMLPlugin extends CordovaPlugin {
             this);
         mlhmsAnalyzer = CordovaHelpers.initializeProvider(new MLHMSAnalyzer(cordova.getContext()), cordova, this);
         mlhmsFrame = CordovaHelpers.initializeProvider(new MLHMSFrame(cordova.getContext()), cordova, this);
-        customModel= CordovaHelpers.initializeProvider(new MLCustomModel(cordova.getContext()), cordova, this);
+        customModel = CordovaHelpers.initializeProvider(new MLCustomModel(cordova.getContext()), cordova, this);
     }
 
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) {

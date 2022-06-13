@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,7 +34,9 @@ import java.util.List;
 
 public class MLSkeletonGraphic extends GraphicOverlay.Graphic {
     private List<MLSkeleton> skeletons;
+
     private Paint circlePaint;
+
     private Paint linePaint;
 
     public MLSkeletonGraphic(final GraphicOverlay overlay, final List<MLSkeleton> skeletons,
@@ -158,8 +160,9 @@ public class MLSkeletonGraphic extends GraphicOverlay.Graphic {
             }
 
             for (MLJoint joint : skeleton.getJoints()) {
-                if (!(Math.abs(joint.getPointX() - (float)0) == 0 && Math.abs(joint.getPointY() - (float)0) == 0)) {
-                    canvas.drawCircle(translateX(joint.getPointX()), translateY(joint.getPointY()), (float)24, circlePaint);
+                if (!(Math.abs(joint.getPointX() - (float) 0) == 0 && Math.abs(joint.getPointY() - (float) 0) == 0)) {
+                    canvas.drawCircle(translateX(joint.getPointX()), translateY(joint.getPointY()), (float) 24,
+                        circlePaint);
                 }
             }
         }

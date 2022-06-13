@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -48,16 +48,27 @@ import java.util.concurrent.Executors;
 
 public class MLTranslatorAnalyser extends HMSProvider {
     private final static long M = 1024 * 1024;
+
     private JSONObject params;
+
     private CallbackContext callbackContext;
+
     private String TAG = MLTranslatorAnalyser.class.getSimpleName();
+
     private MLRemoteTranslator remoteTranslator;
+
     private MLLocalTranslator localTranslator;
+
     private MLModelDownloadListener modelDownloadListener;
+
     private MLModelDownloadStrategy downloadStrategy;
+
     private MLLocalModelManager manager;
+
     private ExecutorService mExecutorService;
+
     private String targetLangCode;
+
     private String sourceLangCode;
 
     public MLTranslatorAnalyser(Context ctx) {
