@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Cordova Account Demo</title>
+</head>
+
+<body>
+    <div class="app">
+        <span><b>HMSAccount</b></span>
+        <input type="submit" value="HWID Sign In With Id Token" id="btn_sign_in_with_id_token">
+        <input type="submit" value="HWID Sign In With Authorization Code" id="btn_sign_in_with_authorization_code">
+        <input type="submit" value="HWID Sign Out" id="btn_sign_out">
+        <input type="submit" value="HWID Silent Sign In" id="btn_silent_sign_in">
+        <input type="submit" value="HWID Cancel Authorization" id="btn_cancel_authorization">
+        <input type="submit" value="Get HuaweiIdAuthButton" id="btn_huawei_id_auth_button"><br><br>
+        <div id="btn_auth_button"></div><br><br>
+
+        <span><b>HMSAccountAuthService</b></span>
+        <input type="submit" value="Account Sign In" id="btn_account_sign_in_with_id_token">
+        <input type="submit" value="Account Sign Out" id="btn_account_sign_out">
+        <input type="submit" value="Account Silent Sign In" id="btn_account_silent_sign_in">
+        <input type="submit" value="Account Cancel Authorization" id="btn_account_cancel_authorization">
+        <input type="submit" value="Get Channel" id="btn_get_channel">
+        <input type="submit" value="Get Independent Sign In" id="btn_independent_sign_in"></br></br>
+        <img src="" id="img_bitmap" width="50" height="50" /><br><br>
+
+        <span><b>HMSAccountAuthManager</b></span>
+        <input type="submit" value="Contain Scopes" id="btn_account_contain_scopes">
+        <input type="submit" value="Last Auth Result" id="btn_auth_result">
+        <input type="submit" value="Auth Result With Scopes" id="btn_auth_result_with_scopes">
+        <input type="submit" value="Add Auth Scopes" id="btn_add_auth_scopes"><br><br>
+
+        <span><b>HMSHuaweiIdAuthManager</b></span>
+        <input type="submit" value="Contain Scopes" id="btn_hwid_contain_scopes">
+        <input type="submit" value="Last Auth Result" id="btn_hwid_auth_result">
+        <input type="submit" value="Add Auth Scopes" id="btn_hwid_add_auth_scopes">
+        <input type="submit" value="Auth Result With Scopes" id="btn_hwid_auth_result_with_scopes"><br><br>
+
+        <span><b>HMSHuaweiIdAuthTool</b></span>
+        <input type="submit" value="Request Union Id" id="btn_request_union_id">
+        <input type="submit" value="Request Access Token" id="btn_request_access_token">
+        <input type="submit" value="Delete Auth Info" id="btn_delete_auth_info"><br><br>
+
+        <span><b>HMSNetworkTool</b></span>
+        <input type="submit" value="Build Network URL" id="btn_build_network_url">
+        <input type="submit" value="Build Network Cookie" id="btn_build_network_cookie"><br><br>
+
+        <span><b>HMSReadSMSManager</b></span>
+        <input type="submit" value="Obtain Hash Code" id="btn_obtain_hash_code">
+        <input type="submit" value="SMS Verification" id="btn_sms_verification_code">
+        <input type="submit" value="Start Consent" id="btn_start_consent">
+
+        <br><br><br>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,202 @@
+<!--
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ion-header [translucent]="true">
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <br>
+    <div id="container">
+
+        <div id="line">
+            <br>
+            <ion-button (click)="getInstance()" color="#957DAD" id="getInstance">getInstance
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-item id="boolSetAnalyticsEnabled">
+                <ion-select [(ngModel)]="boolSetAnalyticsEnabled">
+                    <ion-select-option value="true">True</ion-select-option>
+                    <ion-select-option value="false">False</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="setAnalyticsEnabled()" color="#957DAD" id="setAnalyticsEnabled">Set
+                Analytics Enabled
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-button (click)="getAAID()" color="#957DAD" id="getAAID">Get AAID</ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="onEvent()" color="#957DAD" id="onEvent">On Event</ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="onPredefinedEvent()" color="#957DAD" id="onPredefinedEvent">Send
+                Predefined Event
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="userId" id="userId"
+                       placeholder="Enter User Id please"></ion-input>
+            <ion-button (click)="setUserId()" color="#957DAD" id="setUserId">Set User Id
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="name" id="name" placeholder="Enter name please"></ion-input>
+            <ion-input [(ngModel)]="value" id="value" placeholder="Enter value please"></ion-input>
+            <ion-button (click)="setUserProfile()" color="#957DAD" id="setUserProfile">Set User
+                Profile
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="deleteName" id="deleteName"
+                       placeholder="Enter name please"></ion-input>
+            <ion-button (click)="deleteUserProfile()" color="#957DAD" id="deleteUserProfile">Delete
+                User Profile
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-item id="profile">
+                <ion-select [(ngModel)]="profile">
+                    <ion-select-option value="true">True</ion-select-option>
+                    <ion-select-option value="false">False</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="getUserProfiles()" color="#957DAD" id="getUserProfiles">Get User
+                Profiles
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-button (click)="setPushToken()" color="#957DAD" id="setPushToken">Set Push Token
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="milliSecondsForActivitySessions" id="milliSecondsForActivitySessions"
+                       placeholder="Enter milliseconds please"
+                       type="number"></ion-input>
+            <ion-button (click)="setMinActivitySessions()" color="#957DAD"
+                        id="setMinActivitySessions">Set
+                Min Activity Session
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="milliSecondsForSessionDuration" id="milliSecondsForSessionDuration"
+                       placeholder="Enter milliseconds please"
+                       type="number"></ion-input>
+            <ion-button (click)="setSessionDuration()" color="#957DAD" id="setSessionDuration">Set
+                Session Duration
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="clearCachedData()" color="#957DAD" id="clearCachedData">Clear
+                Cached Data
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-item id="selectedLevel">
+                <ion-select [(ngModel)]="selectedLevel">
+                    <ion-select-option value="DEBUG">DEBUG</ion-select-option>
+                    <ion-select-option value="INFO">INFO</ion-select-option>
+                    <ion-select-option value="WARN">WARN</ion-select-option>
+                    <ion-select-option value="ERROR">ERROR</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="enableLog()" color="#957DAD" id="enableLog">Enable Log With Level
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="startPageName" id="startPageName"
+                       placeholder="Enter Start Page Name"></ion-input>
+            <ion-input [(ngModel)]="startPageClassOverride" id="startPageClassOverride"
+                       placeholder="Enter Start Page Class Override"></ion-input>
+            <ion-button (click)="pageStart()" color="#957DAD" id="pageStart">Page Start</ion-button>
+        </div>
+        <div id="line">
+            <ion-input [(ngModel)]="endPageName" id="endPageName"
+                       placeholder="Enter End Page Name"></ion-input>
+            <ion-button (click)="pageEnd()" color="#957DAD" id="pageEnd">Page End</ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="setReportPolicies()" color="#957DAD" id="setReportPolicies">Set
+                Report Policies
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-item id="reportPolicyType">
+                <ion-select [(ngModel)]="reportPolicyType">
+                    <ion-select-option value="ON_SCHEDULED_TIME_POLICY">ON_SCHEDULED_TIME_POLICY
+                    </ion-select-option>
+                    <ion-select-option value="ON_APP_LAUNCH_POLICY">ON_APP_LAUNCH_POLICY
+                    </ion-select-option>
+                    <ion-select-option value="ON_MOVE_BACKGROUND_POLICY">ON_MOVE_BACKGROUND_POLICY
+                    </ion-select-option>
+                    <ion-select-option value="ON_CACHE_THRESHOLD_POLICY">ON_CACHE_THRESHOLD_POLICY
+                    </ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="getReportPolicyThreshold()" color="#957DAD"
+                        id="getReportPolicyThreshold">Get Report Policy Threshold
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-item id="restrictionIsEnabled">
+                <ion-select [(ngModel)]="restrictionIsEnabled">
+                    <ion-select-option value="true">True</ion-select-option>
+                    <ion-select-option value="false">False</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="setRestrictionEnabled()" color="#957DAD"
+                        id="setRestrictionEnabled">Set Restriction Enabled
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-button (click)="isRestrictionEnabled()" color="#957DAD" id="isRestrictionEnabled">
+                Is Restriction Enabled
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-item id="collectAdsIdEnabled">
+                <ion-select [(ngModel)]="collectAdsIdEnabled">
+                    <ion-select-option value="true">True</ion-select-option>
+                    <ion-select-option value="false">False</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="setCollectAdsIdEnabled()" color="#957DAD"
+                        id="setCollectAdsIdEnabled">Set Collect AdsId Enabled
+            </ion-button>
+            <br>
+        </div>
+        <div id="line">
+            <ion-button (click)="addDefaultEventParams()" color="#957DAD"
+                        id="addDefaultEventParams">Add Default Event Params
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="HAParamType()" color="#957DAD" id="HAParamType">HAParamType
+            </ion-button>
+        </div>
+        <div id="line">
+            <ion-button (click)="HAEventType()" color="#957DAD" id="HAEventType">HaEventType
+            </ion-button>
+        </div>
+    </div>
+
+</ion-content>
