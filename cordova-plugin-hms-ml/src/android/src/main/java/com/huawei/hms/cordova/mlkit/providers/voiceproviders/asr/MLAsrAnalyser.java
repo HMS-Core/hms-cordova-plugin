@@ -36,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MLAsrAnalyser extends CordovaPlugin {
     private static final String TAG = MLAsrAnalyser.class.getSimpleName();
@@ -49,7 +50,7 @@ public class MLAsrAnalyser extends CordovaPlugin {
     private MLAsrRecognizer mSpeechRecognizer;
 
     public void initializeASRAnalyser(final JSONObject params, final CallbackContext callbackContext,
-        final CordovaInterface cordovaInterface) {
+            final CordovaInterface cordovaInterface) {
         this.callbackContext = callbackContext;
         this.cordovaInterface = cordovaInterface;
         String language = params.optString("language", "en-US");
@@ -57,7 +58,7 @@ public class MLAsrAnalyser extends CordovaPlugin {
         mSpeechRecognizer = MLAsrRecognizer.createAsrRecognizer(cordovaInterface.getContext());
         mSpeechRecognizer.setAsrListener(new SpeechRecognitionListener());
         Intent intentSdk = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(MLAsrConstants.LANGUAGE,
-            language).putExtra(MLAsrConstants.FEATURE, feature);
+                language).putExtra(MLAsrConstants.FEATURE, feature);
         mSpeechRecognizer.startRecognizing(intentSdk);
 
     }
@@ -131,12 +132,39 @@ public class MLAsrAnalyser extends CordovaPlugin {
         if (mSpeechRecognizer == null) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ANALYSIS_FAILURE));
             HMSLogger.getInstance(cordovaInterface.getContext())
-                .sendSingleEvent("asrAnalyserStop", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
+                    .sendSingleEvent("asrAnalyserStop", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
         } else {
             mSpeechRecognizer.destroy();
             mSpeechRecognizer = null;
             HMSLogger.getInstance(cordovaInterface.getContext()).sendSingleEvent("asrAnalyserStop");
         }
+    }
+
+    public void getLanguages(CallbackContext callbackContext) {
+        if (mSpeechRecognizer != null) {
+            mSpeechRecognizer.getLanguages(new MLAsrRecognizer.LanguageCallback() {
+                @Override
+                public void onResult(List<String> result) {
+                    Log.i(TAG, "support languages==" + result.toString());
+                    callbackContext.success(result.toString());
+                }
+
+                @Override
+                public void onError(int errorCode, String errorMsg) {
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(errorMsg, errorCode);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "MLAsrRecognizer.LanguageCallback: error ->" + e.getMessage());
+                    }
+                    Log.e(TAG, "errorCode:" + errorCode + "errorMsg:" + errorMsg);
+                    callbackContext.error(jsonObject);
+                }
+            });
+        } else {
+            callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.UNKNOWN));
+        }
+
     }
 
     class SpeechRecognitionListener implements MLAsrListener {

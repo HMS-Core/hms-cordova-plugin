@@ -168,13 +168,13 @@ public class ML3DFaceGraphic extends GraphicOverlay.Graphic {
         for (int i = 0; i < face3dPoints.size(); i++) {
             MLPosition curPoint = face3dPoints.get(i);
             float[] curVec = {curPoint.getX(), curPoint.getY(), curPoint.getZ(), 1};
-            //1 V*Vec
+            // 1 V*Vec
             float[] temp1 = matrixMulti(viewMatrix, 4, 4, curVec);
-            //2 P*(V*Vec)
+            // 2 P*(V*Vec)
             float[] temp2 = matrixMulti(projectionMatrix, 4, 4, temp1);
-            //3 calculations x’ y'
+            // 3 calculations x’ y'
             float[] temp3 = {temp2[0] / temp2[3], temp2[1] / temp2[3], 1};
-            //4 calculations X Y coordinates
+            // 4 calculations X Y coordinates
             float[] point = matrixMulti(adaptMatrix, 3, 3, temp3);
             face2dPoints.add(new MLPosition(point[0], point[1]));
         }

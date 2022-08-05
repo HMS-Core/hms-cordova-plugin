@@ -19,6 +19,7 @@ package com.huawei.hms.cordova.mlkit.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 
@@ -60,7 +61,8 @@ public class HMSMLUtils {
                 String filePath = json.getString("filePath");
                 Uri uri = Uri.parse(filePath);
                 if (!Uri.EMPTY.equals(uri)) {
-                    return MLFrame.fromFilePath(context, uri);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+                    return new MLFrame.Creator().setBitmap(bitmap).create();
                 }
             } else {
                 Log.e(TAG, "getFrame: error -> invalid action");

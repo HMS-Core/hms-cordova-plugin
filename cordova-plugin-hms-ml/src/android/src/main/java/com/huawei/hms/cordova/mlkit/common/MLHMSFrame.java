@@ -44,6 +44,7 @@ public class MLHMSFrame extends HMSProvider {
         String actionName = params.getString("actionName");
         this.callbackContext = callbackContext;
         this.frame = HMSMLUtils.getFrame(getContext(), params);
+
         CordovaHelpers.frameController(frame, getContext(), callbackContext, "initializeMLFrame");
         switch (actionName) {
             case "getPreviewBitmap":

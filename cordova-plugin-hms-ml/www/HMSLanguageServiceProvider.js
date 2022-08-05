@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24,11 +25,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTextEmbeddingSetting = exports.textEmbeddingWordBatchVector = exports.textEmbeddingSimilarWords = exports.textEmbeddingSentenceSimilarity = exports.textEmbeddingWordSimilarity = exports.textEmbeddingSentencetoVector = exports.textEmbeddingWordtoVector = exports.textEmbeddingDictionaryInfo = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.LANGUAGE = void 0;
+exports.getTextEmbeddingSetting = exports.textEmbeddingWordBatchVector = exports.textEmbeddingSimilarWords = exports.textEmbeddingSentenceSimilarity = exports.textEmbeddingWordSimilarity = exports.textEmbeddingSentencetoVector = exports.textEmbeddingWordtoVector = exports.textEmbeddingDictionaryInfo = exports.MLSpeechRealTimeTranscriptionConstants = exports.MLTtsError = exports.MLTtsAudioFragmentConstant = exports.MLBcrCaptureErrorCode = exports.CordovaErrors = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLAftConstants = exports.MLTtsConstants = exports.LANGUAGE = void 0;
 const util_1 = require("./util");
 var Interfaces_1 = require("./Interfaces");
 Object.defineProperty(exports, "LANGUAGE", { enumerable: true, get: function () { return Interfaces_1.LANGUAGE; } });
 Object.defineProperty(exports, "MLTtsConstants", { enumerable: true, get: function () { return Interfaces_1.MLTtsConstants; } });
+Object.defineProperty(exports, "MLAftConstants", { enumerable: true, get: function () { return Interfaces_1.MLAftConstants; } });
 Object.defineProperty(exports, "Colors", { enumerable: true, get: function () { return Interfaces_1.Colors; } });
 Object.defineProperty(exports, "MLFaceSetting", { enumerable: true, get: function () { return Interfaces_1.MLFaceSetting; } });
 Object.defineProperty(exports, "MLSkeletonConfig", { enumerable: true, get: function () { return Interfaces_1.MLSkeletonConfig; } });
@@ -48,52 +50,57 @@ Object.defineProperty(exports, "MLRemoteTextSetting", { enumerable: true, get: f
 Object.defineProperty(exports, "MLLocalTextSetting", { enumerable: true, get: function () { return Interfaces_1.MLLocalTextSetting; } });
 Object.defineProperty(exports, "MLImageClassificationConfig", { enumerable: true, get: function () { return Interfaces_1.MLImageClassificationConfig; } });
 Object.defineProperty(exports, "MLImageSegmentationSetting", { enumerable: true, get: function () { return Interfaces_1.MLImageSegmentationSetting; } });
+Object.defineProperty(exports, "CordovaErrors", { enumerable: true, get: function () { return Interfaces_1.CordovaErrors; } });
+Object.defineProperty(exports, "MLBcrCaptureErrorCode", { enumerable: true, get: function () { return Interfaces_1.MLBcrCaptureErrorCode; } });
+Object.defineProperty(exports, "MLTtsAudioFragmentConstant", { enumerable: true, get: function () { return Interfaces_1.MLTtsAudioFragmentConstant; } });
+Object.defineProperty(exports, "MLTtsError", { enumerable: true, get: function () { return Interfaces_1.MLTtsError; } });
+Object.defineProperty(exports, "MLSpeechRealTimeTranscriptionConstants", { enumerable: true, get: function () { return Interfaces_1.MLSpeechRealTimeTranscriptionConstants; } });
 //Language Provider
 function textEmbeddingDictionaryInfo(textEmbeddingDicInfoReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_DICINFO_ANALYSER', [textEmbeddingDicInfoReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_DICINFO_ANALYSER", [textEmbeddingDicInfoReq]);
     });
 }
 exports.textEmbeddingDictionaryInfo = textEmbeddingDictionaryInfo;
 function textEmbeddingWordtoVector(textEmbeddingWordtoVectorReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_WORDTOVECTOR_ANALYSER', [textEmbeddingWordtoVectorReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_WORDTOVECTOR_ANALYSER", [textEmbeddingWordtoVectorReq]);
     });
 }
 exports.textEmbeddingWordtoVector = textEmbeddingWordtoVector;
 function textEmbeddingSentencetoVector(textEmbeddingSentencetoVectorReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_SENTENCETOVECTOR_ANALYSER', [textEmbeddingSentencetoVectorReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_SENTENCETOVECTOR_ANALYSER", [textEmbeddingSentencetoVectorReq]);
     });
 }
 exports.textEmbeddingSentencetoVector = textEmbeddingSentencetoVector;
 function textEmbeddingWordSimilarity(textEmbeddingWordSimilarityReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_WORDSIMILARTY_ANALYSER', [textEmbeddingWordSimilarityReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_WORDSIMILARTY_ANALYSER", [textEmbeddingWordSimilarityReq]);
     });
 }
 exports.textEmbeddingWordSimilarity = textEmbeddingWordSimilarity;
 function textEmbeddingSentenceSimilarity(textEmbeddingSentenceSimilartyReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_SENTENCESIMILARTY_ANALYSER', [textEmbeddingSentenceSimilartyReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_SENTENCESIMILARTY_ANALYSER", [textEmbeddingSentenceSimilartyReq]);
     });
 }
 exports.textEmbeddingSentenceSimilarity = textEmbeddingSentenceSimilarity;
 function textEmbeddingSimilarWords(textEmbeddingSimilarWordsReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_SIMILARWORDS_ANALYSER', [textEmbeddingSimilarWordsReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_SIMILARWORDS_ANALYSER", [textEmbeddingSimilarWordsReq]);
     });
 }
 exports.textEmbeddingSimilarWords = textEmbeddingSimilarWords;
 function textEmbeddingWordBatchVector(textEmbeddingWordBatchReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_WORDBATCH_ANALYSER', [textEmbeddingWordBatchReq]);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_WORDBATCH_ANALYSER", [textEmbeddingWordBatchReq]);
     });
 }
 exports.textEmbeddingWordBatchVector = textEmbeddingWordBatchVector;
 function getTextEmbeddingSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSLanguageServiceProvider', 'ACTION_TEXTEMBEDDING_SETIING', []);
+        return (0, util_1.asyncExec)("HMSLanguageServiceProvider", "ACTION_TEXTEMBEDDING_SETIING", []);
     });
 }
 exports.getTextEmbeddingSetting = getTextEmbeddingSetting;

@@ -20,6 +20,7 @@ import static com.huawei.hms.mlsdk.livenessdetection.MLLivenessDetectView.DETECT
 
 import android.content.Context;
 
+import com.huawei.hms.cordova.mlkit.helpers.MLLivenessCaptureErrors;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
@@ -55,7 +56,7 @@ public class MLLivenessDetectionAnalyser extends HMSProvider {
             }
 
             public void onFailure(int errorCode) {
-                callbackContext.error("Error: " + errorCode);
+                callbackContext.error(MLLivenessCaptureErrors.toErrorJSON(MLLivenessCaptureErrors.USER_CANCEL));
                 HMSLogger.getInstance(getContext()).sendSingleEvent("livenessDetection", "-1");
             }
         });

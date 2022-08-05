@@ -49,7 +49,7 @@ public class CompositeAnalyzerTransactor implements MLAnalyzer.MLTransactor<Obje
             jsonObject.putOpt("isAnalyzerAvaliable", result.isAnalyzerAvaliable());
             callbackContext.success(jsonObject);
         } catch (JSONException e) {
-            Log.e(TAG, "" + e.getMessage());
+            Log.e(TAG, " compositeAnalyzerTransactor :" + e.getMessage());
         }
 
     }

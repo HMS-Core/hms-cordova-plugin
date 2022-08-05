@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24,7 +25,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getObjectSetting = exports.getLandmarkSetting = exports.getSegmentationSetting = exports.getISRSetting = exports.getImageClassificationAnalyserSetting = exports.stillSceneAnalyserStop = exports.TISRAnalyserStop = exports.ISRAnalyserStop = exports.docSkewAnalyserStop = exports.productAnalyserStop = exports.objectAnalyserStop = exports.productVisionAnalyser = exports.imageSuperResolution = exports.textImageSuperResolution = exports.documentSkewCorrectionAnalyser = exports.stillSceneAnalyser = exports.objectAnalyser = exports.imgLandMarkAnalyserStop = exports.imgLandMarkAnalyser = exports.stopImgSegmentation = exports.imgSegmentation = exports.stopImageClassificationAnalyser = exports.imageClassificationAnalyser = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.MLFormRecogitionConfig = exports.LANGUAGE = exports.MLProductConfig = void 0;
+exports.getLandmarkSetting = exports.getSegmentationSetting = exports.getISRSetting = exports.getImageClassificationAnalyserSetting = exports.stillSceneAnalyserStop = exports.TISRAnalyserStop = exports.ISRAnalyserStop = exports.docSkewAnalyserStop = exports.productAnalyserStop = exports.objectAnalyserStop = exports.productVisionAnalyser = exports.imageSuperResolution = exports.textImageSuperResolution = exports.documentSkewCorrectionAnalyser = exports.stillSceneAnalyser = exports.objectAnalyser = exports.imgLandMarkAnalyserStop = exports.imgLandMarkAnalyser = exports.stopImgSegmentation = exports.imgSegmentation = exports.stopImageClassificationAnalyser = exports.imageClassificationAnalyser = exports.MLSpeechRealTimeTranscriptionConstants = exports.MLTtsError = exports.MLTtsAudioFragmentConstant = exports.MLBcrCaptureErrorCode = exports.CordovaErrors = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.MLFormRecogitionConfig = exports.LANGUAGE = exports.MLProductConfig = void 0;
+exports.getObjectSetting = void 0;
 const util_1 = require("./util");
 var Interfaces_1 = require("./Interfaces");
 Object.defineProperty(exports, "MLProductConfig", { enumerable: true, get: function () { return Interfaces_1.MLProductConfig; } });
@@ -50,141 +52,152 @@ Object.defineProperty(exports, "MLRemoteTextSetting", { enumerable: true, get: f
 Object.defineProperty(exports, "MLLocalTextSetting", { enumerable: true, get: function () { return Interfaces_1.MLLocalTextSetting; } });
 Object.defineProperty(exports, "MLImageClassificationConfig", { enumerable: true, get: function () { return Interfaces_1.MLImageClassificationConfig; } });
 Object.defineProperty(exports, "MLImageSegmentationSetting", { enumerable: true, get: function () { return Interfaces_1.MLImageSegmentationSetting; } });
+Object.defineProperty(exports, "CordovaErrors", { enumerable: true, get: function () { return Interfaces_1.CordovaErrors; } });
+Object.defineProperty(exports, "MLBcrCaptureErrorCode", { enumerable: true, get: function () { return Interfaces_1.MLBcrCaptureErrorCode; } });
+Object.defineProperty(exports, "MLTtsAudioFragmentConstant", { enumerable: true, get: function () { return Interfaces_1.MLTtsAudioFragmentConstant; } });
+Object.defineProperty(exports, "MLTtsError", { enumerable: true, get: function () { return Interfaces_1.MLTtsError; } });
+Object.defineProperty(exports, "MLSpeechRealTimeTranscriptionConstants", { enumerable: true, get: function () { return Interfaces_1.MLSpeechRealTimeTranscriptionConstants; } });
 function imageClassificationAnalyser(imageClassificationReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_CLASSIFICATION_ANALYSER', [imageClassificationReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_CLASSIFICATION_ANALYSER", [imageClassificationReq]);
     });
 }
 exports.imageClassificationAnalyser = imageClassificationAnalyser;
 function stopImageClassificationAnalyser() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_CLOSE_IMAGE_CLASSIFICATION_ANALYSER', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_CLOSE_IMAGE_CLASSIFICATION_ANALYSER", []);
     });
 }
 exports.stopImageClassificationAnalyser = stopImageClassificationAnalyser;
 function imgSegmentation(imgSegmentationReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_SEGMENTATION', [imgSegmentationReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_SEGMENTATION", [
+            imgSegmentationReq,
+        ]);
     });
 }
 exports.imgSegmentation = imgSegmentation;
 function stopImgSegmentation() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'STOP_IMAGE_SEGMENTATION', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "STOP_IMAGE_SEGMENTATION", []);
     });
 }
 exports.stopImgSegmentation = stopImgSegmentation;
 function imgLandMarkAnalyser(imgLandMarkReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_LANDMARK_ANALYSE', [imgLandMarkReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_LANDMARK_ANALYSE", [imgLandMarkReq]);
     });
 }
 exports.imgLandMarkAnalyser = imgLandMarkAnalyser;
 function imgLandMarkAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_LANDMARK_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_LANDMARK_STOP", []);
     });
 }
 exports.imgLandMarkAnalyserStop = imgLandMarkAnalyserStop;
 function objectAnalyser(objectReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_OBJECT_ANALYSER', [objectReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_OBJECT_ANALYSER", [
+            objectReq,
+        ]);
     });
 }
 exports.objectAnalyser = objectAnalyser;
 function stillSceneAnalyser(stillSceneReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_STILL_SCENE_ANALYSE', [stillSceneReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_STILL_SCENE_ANALYSE", [
+            stillSceneReq,
+        ]);
     });
 }
 exports.stillSceneAnalyser = stillSceneAnalyser;
 function documentSkewCorrectionAnalyser(documentSkewCorrectionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_DOCUMENT_SKEW_ANALYSE', [documentSkewCorrectionReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_DOCUMENT_SKEW_ANALYSE", [documentSkewCorrectionReq]);
     });
 }
 exports.documentSkewCorrectionAnalyser = documentSkewCorrectionAnalyser;
 function textImageSuperResolution(textImageSuperResolutionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_TEXTIMAGE_SUPER_RESOLUTION_ANALYSE', [textImageSuperResolutionReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_TEXTIMAGE_SUPER_RESOLUTION_ANALYSE", [textImageSuperResolutionReq]);
     });
 }
 exports.textImageSuperResolution = textImageSuperResolution;
 function imageSuperResolution(imageSuperResolutionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE', [imageSuperResolutionReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE", [imageSuperResolutionReq]);
     });
 }
 exports.imageSuperResolution = imageSuperResolution;
 function productVisionAnalyser(productReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_PRODUCT_VISION_ANALYSE', [productReq]);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_PRODUCT_VISION_ANALYSE", [productReq]);
     });
 }
 exports.productVisionAnalyser = productVisionAnalyser;
 function objectAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_OBJECT_ANALYSER_CLOSE', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_OBJECT_ANALYSER_CLOSE", []);
     });
 }
 exports.objectAnalyserStop = objectAnalyserStop;
 function productAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_PRODUCT_VISION_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_PRODUCT_VISION_ANALYSE_STOP", []);
     });
 }
 exports.productAnalyserStop = productAnalyserStop;
 function docSkewAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_DOCUMENT_SKEW_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_DOCUMENT_SKEW_ANALYSE_STOP", []);
     });
 }
 exports.docSkewAnalyserStop = docSkewAnalyserStop;
 function ISRAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE_STOP", []);
     });
 }
 exports.ISRAnalyserStop = ISRAnalyserStop;
 function TISRAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_TEXTIMAGE_SUPER_RESOLUTION_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_TEXTIMAGE_SUPER_RESOLUTION_ANALYSE_STOP", []);
     });
 }
 exports.TISRAnalyserStop = TISRAnalyserStop;
 function stillSceneAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_STILL_SCENE_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_STILL_SCENE_ANALYSE_STOP", []);
     });
 }
 exports.stillSceneAnalyserStop = stillSceneAnalyserStop;
 function getImageClassificationAnalyserSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_GET_IMAGE_CLASSIFICATION_ANALYSER_SETTING', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_GET_IMAGE_CLASSIFICATION_ANALYSER_SETTING", []);
     });
 }
 exports.getImageClassificationAnalyserSetting = getImageClassificationAnalyserSetting;
 function getISRSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_SUPER_RESOLUTION_ANALYSE_SETTING", []);
     });
 }
 exports.getISRSetting = getISRSetting;
 function getSegmentationSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_GET_IMAGE_SEGMENTATION_SETTING', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_GET_IMAGE_SEGMENTATION_SETTING", []);
     });
 }
 exports.getSegmentationSetting = getSegmentationSetting;
 function getLandmarkSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_IMAGE_LANDMARK_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_IMAGE_LANDMARK_ANALYSE_SETTING", []);
     });
 }
 exports.getLandmarkSetting = getLandmarkSetting;
 function getObjectSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSImageServiceProvider', 'ACTION_OBJECT_ANALYSER_SETTING', []);
+        return (0, util_1.asyncExec)("HMSImageServiceProvider", "ACTION_OBJECT_ANALYSER_SETTING", []);
     });
 }
 exports.getObjectSetting = getObjectSetting;

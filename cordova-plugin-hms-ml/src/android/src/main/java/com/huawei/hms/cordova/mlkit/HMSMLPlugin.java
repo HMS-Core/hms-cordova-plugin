@@ -47,6 +47,8 @@ import java.util.List;
 public class HMSMLPlugin extends CordovaPlugin {
     private static final String TAG = HMSMLPlugin.class.getSimpleName();
 
+    private static CallbackContext callbackCtx;
+
     List<String> permissionLists = new ArrayList<>();
 
     private CordovaInterface cordovaInterface;
@@ -68,8 +70,6 @@ public class HMSMLPlugin extends CordovaPlugin {
     private MLCustomModel customModel;
 
     private MLHMSFrame mlhmsFrame;
-
-    private static CallbackContext callbackCtx;
 
     private boolean isStart = false;
 
@@ -202,7 +202,20 @@ public class HMSMLPlugin extends CordovaPlugin {
                             pluginLayout.layoutParams(CordovaHelpers.initialPropsFrom(userProps)), userProps);
                         isStart = true;
                     } catch (JSONException e) {
-                        Log.e(TAG, "" + e.getMessage());
+                        Log.e(TAG, "liveAnalyser" + e.getMessage());
+                    }
+                });
+                return true;
+            }
+            if (action.equals("ACTION_GESTURE_LIVE_ANALYSE")) {
+                HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("GestureliveAnalyse");
+                cordova.getActivity().runOnUiThread(() -> {
+                    try {
+                        mlLensEngine.createLensEngine(params, callbackContext, webView,
+                            pluginLayout.layoutParams(CordovaHelpers.initialPropsFrom(userProps)), userProps);
+                        isStart = true;
+                    } catch (JSONException e) {
+                        Log.e(TAG, " gestureLiveAnalyse" + e.getMessage());
                     }
                 });
                 return true;
@@ -221,7 +234,7 @@ public class HMSMLPlugin extends CordovaPlugin {
                         mlLensEngine.initializeLiveCompositeAnalyzer(params, callbackContext, webView,
                             pluginLayout.layoutParams(CordovaHelpers.initialPropsFrom(userProps)));
                     } catch (JSONException e) {
-                        Log.e(TAG, "" + e.getMessage());
+                        Log.e(TAG, "liveCompositeAnalyse" + e.getMessage());
                     }
                 });
                 return true;
@@ -240,7 +253,7 @@ public class HMSMLPlugin extends CordovaPlugin {
                     try {
                         mlLensEngine.doZoomLensEngine(params, callbackContext);
                     } catch (JSONException e) {
-                        Log.e(TAG, "" + e.getMessage());
+                        Log.e(TAG, "liveDoZoom" + e.getMessage());
                     }
                 });
                 return true;
@@ -251,7 +264,7 @@ public class HMSMLPlugin extends CordovaPlugin {
                     try {
                         mlLensEngine.getDisplayDimension(callbackContext);
                     } catch (JSONException e) {
-                        Log.e(TAG, "" + e.getMessage());
+                        Log.e(TAG, "liveDısplayDimension" + e.getMessage());
                     }
                 });
                 return true;

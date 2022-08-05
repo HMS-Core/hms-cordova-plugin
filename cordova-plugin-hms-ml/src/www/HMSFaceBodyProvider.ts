@@ -13,44 +13,231 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { MLBounds,faceReq,MLFace,MLconfig,LANGUAGE,MLFaceConfigs,livenessDetectionReq,MLLivenessConfig,MLTtsConstants,Colors,MLFaceSetting,MLSkeletonConfig,RectStyle,DownloadStrategyCustom,FEATURE,MlObjectAnalyserConfig,ImgSuperResolutionConfig,MLBcrResultConfig,HandkeyPointConfig,MLGcrCaptureUIConfig,MLRemoteLandmarkSetting,MLBcrCaptureConfig,MLImageSegmentationScene,MLTextConfig,MLRemoteTextSetting,MLLocalTextSetting,MLImageClassificationConfig,MLImageSegmentationSetting} from './Interfaces';
-import { asyncExec } from './util'
-import * as MLKit from './Interfaces';
-export{MLBounds,faceReq,MLFace,MLconfig,MLFaceConfigs,livenessDetectionReq,MLLivenessConfig,LANGUAGE,MLTtsConstants,Colors,MLFaceSetting,MLSkeletonConfig,RectStyle,DownloadStrategyCustom,FEATURE,MlObjectAnalyserConfig,ImgSuperResolutionConfig,MLBcrResultConfig,HandkeyPointConfig,MLGcrCaptureUIConfig,MLRemoteLandmarkSetting,MLBcrCaptureConfig,MLImageSegmentationScene,MLTextConfig,MLRemoteTextSetting,MLLocalTextSetting,MLImageClassificationConfig,MLImageSegmentationSetting} from './Interfaces';
 
+import {
+    MLBounds,
+    faceReq,
+    faceVerificationReq,
+    maxFaceVerificationReq,
+    MLFace,
+    MLJoint,
+    MLJointPoints,
+    MLFaceVerificationResult,
+    MLSkeleton,
+    MLGesture,
+    MLHandKeypoints,
+    MLLivenessCaptureResult,
+    MLconfig,
+    LANGUAGE,
+    MLFaceConfigs,
+    livenessDetectionReq,
+    MLLivenessConfig,
+    MLTtsConstants,
+    MLAftConstants,
+    MLDocumentSkewCorrectionConstant,
+    Colors,
+    MLFaceSetting,
+    MLSkeletonConfig,
+    RectStyle,
+    DownloadStrategyCustom,
+    FEATURE,
+    MlObjectAnalyserConfig,
+    ImgSuperResolutionConfig,
+    MLBcrResultConfig,
+    HandkeyPointConfig,
+    MLGcrCaptureUIConfig,
+    MLRemoteLandmarkSetting,
+    MLBcrCaptureConfig,
+    MLImageSegmentationScene,
+    MLTextConfig,
+    MLRemoteTextSetting,
+    MLLocalTextSetting,
+    MLImageClassificationConfig,
+    MLImageSegmentationSetting,
+    MLFaceVerificationAnalyzerSetting,
+    MLBcrCaptureResult,
+    CordovaErrors,
+    MLBcrCaptureErrorCode,
+    MLTtsAudioFragmentConstant,
+    MLTtsAudioFragment,
+    MLTtsSpeaker,
+    MLTtsError,
+    MLSpeechRealTimeTranscriptionConstants,
+} from "./Interfaces";
+import { asyncExec } from "./util";
+import * as MLKit from "./Interfaces";
+export {
+    MLBounds,
+    faceReq,
+    faceVerificationReq,
+    maxFaceVerificationReq,
+    MLFace,
+    MLJoint,
+    MLJointPoints,
+    MLGesture,
+    MLFaceVerificationResult,
+    MLSkeleton,
+    MLHandKeypoints,
+    MLLivenessCaptureResult,
+    MLconfig,
+    MLFaceConfigs,
+    livenessDetectionReq,
+    MLLivenessConfig,
+    LANGUAGE,
+    MLTtsConstants,
+    MLAftConstants,
+    MLDocumentSkewCorrectionConstant,
+    Colors,
+    MLFaceSetting,
+    MLSkeletonConfig,
+    RectStyle,
+    DownloadStrategyCustom,
+    FEATURE,
+    MlObjectAnalyserConfig,
+    ImgSuperResolutionConfig,
+    MLBcrResultConfig,
+    HandkeyPointConfig,
+    MLGcrCaptureUIConfig,
+    MLRemoteLandmarkSetting,
+    MLBcrCaptureConfig,
+    MLImageSegmentationScene,
+    MLTextConfig,
+    MLRemoteTextSetting,
+    MLLocalTextSetting,
+    MLImageClassificationConfig,
+    MLImageSegmentationSetting,
+    MLFaceVerificationAnalyzerSetting,
+    MLBcrCaptureResult,
+    CordovaErrors,
+    MLBcrCaptureErrorCode,
+    MLTtsAudioFragmentConstant,
+    MLTtsAudioFragment,
+    MLTtsSpeaker,
+    MLTtsError,
+    MLSpeechRealTimeTranscriptionConstants,
+} from "./Interfaces";
 
-export async function stillFaceAnalyser(faceReq:MLKit.faceReq): Promise<MLKit.MLFace> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_ANALYSER', [faceReq]);
-     
-  }
-export async function stilFaceAnalyserInfo(): Promise<any> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_INFO', []);
-     
-  }
-export  function stopStillFaceAnalyser(): Promise<any> {
-   return asyncExec('HMSFaceBodyProvider', 'ACTION_STOP_STILL_FACE_ANALYSER', []);
-  }
-export async function stillSkeletonAnalyser(stillSkeletonReq:MLKit.stillSkeletonReq|MLKit.stillSkeletonSimilarityReq): Promise<MLKit.MLSkeleton> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_SKELETON_ANALYSE', [stillSkeletonReq]);
-     
-  }
-export async function liveLivenessAnalyser(livenessDetectionReq:MLKit.livenessDetectionReq): Promise<MLKit.MLLivenessCaptureResult> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_LIVENESS_DETECTION', [livenessDetectionReq]);
-     
-  }
-export async function stillHandkeyAnalyser(stillHandKeypointReq: MLKit.stillHandKeypointReq): Promise<MLKit.MLHandKeypoints> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE', [stillHandKeypointReq]);
-     
-  }
-export  function stopStillHandKeyAnalyser(): Promise<any> {
-    return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE_STOP', []);
+export async function stillFaceAnalyser(
+    faceReq: MLKit.faceReq
+): Promise<MLKit.MLFace> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_STILL_FACE_ANALYSER", [
+        faceReq,
+    ]);
 }
-export  function getFaceAnalyserSetting(): Promise<any> {
-  return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_ANALYSER_SETTING', []);
+
+export async function stillFaceVerificationAnalyser(
+    faceVerificationReq: MLKit.faceVerificationReq
+): Promise<MLKit.MLFaceVerificationResult> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_STILL_FACE_VERIFICATION", [
+        faceVerificationReq,
+    ]);
 }
-export  function getHandKeyAnalyserSetting(): Promise<any> {
-  return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE_SETTING', []);
+
+export async function setFaceDetected(
+    maxFaceVerificationReq: MLKit.maxFaceVerificationReq
+): Promise<MLKit.MLFaceVerificationResult> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_FACE_VERIFICATION_FACEDETECTED",
+        [maxFaceVerificationReq]
+    );
 }
-export  function stopStillSkeletonAnalyser(): Promise<any> {
-  return asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_SKELETON_ANALYSE_STOP', []);
+export function getFaceVerificationAnalyserSetting(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_FACE_VERIFICATION_ANALYSE_SETTING",
+        []
+    );
+}
+
+export function stopStillFaceVerificationAnalyser(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STOP_STILL_FACE_VERIFICATION",
+        []
+    );
+}
+export async function stillFaceAnalyserInfo(): Promise<any> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_STILL_FACE_INFO", []);
+}
+
+export function stopStillFaceAnalyser(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STOP_STILL_FACE_ANALYSER",
+        []
+    );
+}
+
+export async function stillSkeletonAnalyser(
+    stillSkeletonReq: MLKit.stillSkeletonReq | MLKit.stillSkeletonSimilarityReq
+): Promise<MLKit.MLSkeleton> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_STILL_SKELETON_ANALYSE", [
+        stillSkeletonReq,
+    ]);
+}
+export async function liveLivenessAnalyser(
+    livenessDetectionReq: MLKit.livenessDetectionReq
+): Promise<MLKit.MLLivenessCaptureResult> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_LIVENESS_DETECTION", [
+        livenessDetectionReq,
+    ]);
+}
+export async function stillGestureAnalyser(
+    stillGestureReq: MLKit.stillGestureReq
+): Promise<MLKit.MLGesture> {
+    return asyncExec("HMSFaceBodyProvider", "ACTION_STILL_GESTURE_ANALYSE", [
+        stillGestureReq,
+    ]);
+}
+export function stopStillGestureAnalyser(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_GESTURE_ANALYSE_STOP",
+        []
+    );
+}
+export async function stillHandkeyAnalyser(
+    stillHandKeypointReq: MLKit.stillHandKeypointReq
+): Promise<MLKit.MLHandKeypoints> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_HANDKEYPOINT_ANALYSE",
+        [stillHandKeypointReq]
+    );
+}
+export function stopStillHandKeyAnalyser(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_HANDKEYPOINT_ANALYSE_STOP",
+        []
+    );
+}
+export function getFaceAnalyserSetting(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_FACE_ANALYSER_SETTING",
+        []
+    );
+}
+export function getHandKeyAnalyserSetting(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_HANDKEYPOINT_ANALYSE_SETTING",
+        []
+    );
+}
+export function getGestureAnalyserSetting(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_GESTURE_ANALYSE_SETTING",
+        []
+    );
+}
+export function stopStillSkeletonAnalyser(): Promise<any> {
+    return asyncExec(
+        "HMSFaceBodyProvider",
+        "ACTION_STILL_SKELETON_ANALYSE_STOP",
+        []
+    );
 }

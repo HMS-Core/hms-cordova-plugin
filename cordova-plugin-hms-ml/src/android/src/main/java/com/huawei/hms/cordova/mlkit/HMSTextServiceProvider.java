@@ -24,6 +24,9 @@ import com.huawei.hms.cordova.mlkit.providers.textproviders.bankcard.MLBankCardA
 import com.huawei.hms.cordova.mlkit.providers.textproviders.document.MLImageDocumentAnalyser;
 import com.huawei.hms.cordova.mlkit.providers.textproviders.formrecognition.MLFormRecognitionAnalyser;
 import com.huawei.hms.cordova.mlkit.providers.textproviders.generalcard.MLGeneralCardAnalyser;
+import com.huawei.hms.cordova.mlkit.providers.textproviders.idcard.MLIcrCardAnalyser;
+import com.huawei.hms.cordova.mlkit.providers.textproviders.idcard.MLIcrCnCardAnalyser;
+import com.huawei.hms.cordova.mlkit.providers.textproviders.idcard.MLIcrVnCardAnalyser;
 import com.huawei.hms.cordova.mlkit.providers.textproviders.text.MLImageTextAnalyser;
 import com.huawei.hms.cordova.mlkit.utils.PermissionUtils;
 
@@ -51,6 +54,12 @@ public class HMSTextServiceProvider extends CordovaPlugin {
 
     private MLGeneralCardAnalyser generalCardAnalyse;
 
+    private MLIcrVnCardAnalyser icrVnCardAnalyser;
+
+    private MLIcrCardAnalyser mlIcrCardAnalyser;
+
+    private MLIcrCnCardAnalyser mlIcrCnCardAnalyser;
+
     private MLFormRecognitionAnalyser formRecognitionAnalyser;
 
     public static CallbackContext getCallbackContext() {
@@ -70,6 +79,13 @@ public class HMSTextServiceProvider extends CordovaPlugin {
         formRecognitionAnalyser = CordovaHelpers.initializeProvider(new MLFormRecognitionAnalyser(cordova.getContext()),
             cordova, this);
         bcrAnalyse = CordovaHelpers.initializeProvider(new MLBankCardAnalyser(cordova.getContext()), cordova, this);
+        icrVnCardAnalyser = CordovaHelpers.initializeProvider(new MLIcrVnCardAnalyser(cordova.getContext()), cordova,
+            this);
+        mlIcrCnCardAnalyser = CordovaHelpers.initializeProvider(new MLIcrCnCardAnalyser(cordova.getContext()), cordova,
+            this);
+
+        mlIcrCardAnalyser = CordovaHelpers.initializeProvider(new MLIcrCardAnalyser(cordova.getContext()), cordova,
+            this);
 
     }
 
@@ -135,7 +151,7 @@ public class HMSTextServiceProvider extends CordovaPlugin {
                             try {
                                 mlDocumentService.stopDocumentAnalyser(callbackContext);
                             } catch (IOException e) {
-                                Log.e(TAG, "" + e.getMessage());
+                                Log.e(TAG, "documentImageAnalyserStop" + e.getMessage());
                             }
                         });
                         return true;
@@ -157,7 +173,7 @@ public class HMSTextServiceProvider extends CordovaPlugin {
                             try {
                                 formRecognitionAnalyser.initializeFormRecognitionAnalyser(params, callbackContext);
                             } catch (JSONException e) {
-                                Log.i(TAG, "" + e.getMessage());
+                                Log.i(TAG, "formRecognition :" + e.getMessage());
                             }
                         });
                         return true;
@@ -169,7 +185,7 @@ public class HMSTextServiceProvider extends CordovaPlugin {
                             try {
                                 formRecognitionAnalyser.stop(callbackContext);
                             } catch (IOException e) {
-                                Log.e(TAG, "" + e.getMessage());
+                                Log.e(TAG, "formRecognitionStop :" + e.getMessage());
                             }
                         });
                         return true;
@@ -185,6 +201,22 @@ public class HMSTextServiceProvider extends CordovaPlugin {
                         HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("bankCardDetectorStop");
                         bcrAnalyse.stopBankCardAnalyser(callbackContext, cordova);
                         return true;
+                    case "ACTION_BANK_CARD_SET_RESULT_CALLBACK":
+                        HMSLogger.getInstance(cordova.getContext())
+                            .startMethodExecutionTimer("bankCardDetectorResultCallback");
+                        bcrAnalyse.setOnBcrResultCallback(callbackContext);
+                        return true;
+                    case "ACTION_BANK_CARD_SET_RESULT_TYPE":
+                        HMSLogger.getInstance(cordova.getContext())
+                            .startMethodExecutionTimer("bankCardDetectorSetResultType");
+                        bcrAnalyse.setResultType(callbackContext, params);
+                        return true;
+                    case "ACTION_BANK_CARD_SET_RECMODE":
+                        HMSLogger.getInstance(cordova.getContext())
+                            .startMethodExecutionTimer("bankCardDetectorRecMode");
+                        bcrAnalyse.setRecMode(callbackContext, params);
+                        return true;
+
                     case "ACTION_GET_BANK_CARD_SETTING":
                         HMSLogger.getInstance(cordova.getContext())
                             .startMethodExecutionTimer("bankCardDetectorSetting");
@@ -194,6 +226,63 @@ public class HMSTextServiceProvider extends CordovaPlugin {
                         HMSLogger.getInstance(cordova.getContext())
                             .startMethodExecutionTimer("generalcardPluginDetector");
                         generalCardAnalyse.initializeGeneralCardAnalyser(params, callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRVN_PLUGIN_DETECTOR": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("icrVnPluginDetector");
+                        icrVnCardAnalyser.initializeIcrVnCardAnalyser(params, callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRVN_CREATE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("icrVnPluginCreate");
+                        icrVnCardAnalyser.create(callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRVN_CAPTURE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getIcrCapture()");
+                        icrVnCardAnalyser.getIcrVnCapture(callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRVN_GET_INSTANCE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getIcrCapture()");
+                        icrVnCardAnalyser.getInstance(callbackContext);
+                        return true;
+                    }
+
+                    case "ACTION_ICRCN_PLUGIN_DETECTOR": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("icrCnPluginDetector");
+                        mlIcrCnCardAnalyser.initializeIcrCnCardAnalyser(params, callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRCN_CAPTURE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getIcrCapture()");
+                        mlIcrCnCardAnalyser.getIcrCnCapture(callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRCN_CREATE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getIcrCreate()");
+                        mlIcrCnCardAnalyser.create(callbackContext);
+                        return true;
+                    }
+                    case "ACTION_ICRCN_GET_INSTANCE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getIcrCapture()");
+                        mlIcrCnCardAnalyser.getInstance(callbackContext);
+                        return true;
+                    }
+
+                    case "ACTION_LOCAL_ANALYSER": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("localAnalyser");
+                        mlIcrCardAnalyser.initializeIcrCardAnalyser(params, callbackContext);
+                        return true;
+                    }
+                    case "ACTION_LOCAL_ANALYSER_CREATE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("localAnalyserCreate");
+                        mlIcrCardAnalyser.createIdCard(params, callbackContext);
+                        return true;
+                    }
+                    case "ACTION_LOCAL_ANALYSER_STOP": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("localAnalyserStop");
+                        mlIcrCardAnalyser.stopIcrCard(callbackContext);
                         return true;
                     }
 

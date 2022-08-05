@@ -114,6 +114,10 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
                         HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("ttsAnalyserStop");
                         ttsAnalyse.stopTTSAnalyser(callbackContext, cordova);
                         return true;
+                    case "ACTION_TTS_ANALYSE_SETPLAYER_VOLUME":
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("ttsAnalyserStop");
+                        ttsAnalyse.setPlayerVolume(callbackContext, params);
+                        return true;
                     case "ACTION_TTS_ANALYSE_DSETTING":
                         HMSLogger.getInstance(cordova.getContext())
                             .startMethodExecutionTimer("ttsAnalyserDownloadSetting");
@@ -157,13 +161,56 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
                         }
                         return true;
                     }
+                    case "ACTION_GET_SHORTAFT_LANGUAGE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getShortAftLanguages");
+                        try {
+                            aftAnalyse.getShortAftLanguages(callbackContext);
+                        } catch (Exception e) {
+                            MLException mlException = (MLException) e;
+                            Log.i(TAG, "SHORT AFT LANGUAGE:" + mlException.getMessage());
+                        }
+                        return true;
+                    }
+
+                    case "ACTION_LONG_AFT_LANGUAGE": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("getLongAftLanguages");
+                        try {
+                            aftAnalyse.getLongAftLanguages(callbackContext);
+                        } catch (Exception e) {
+                            MLException mlException = (MLException) e;
+                            Log.i(TAG, "LONG AFT LANGUAGE:" + mlException.getMessage());
+                        }
+                        return true;
+                    }
+
                     case "ACTION_LANG_ANALYSE_SETTING": {
                         HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("langSetting");
                         try {
                             langDetection.getLangDetectionSetting(callbackContext);
                         } catch (Exception e) {
                             MLException mlException = (MLException) e;
-                            Log.i(TAG, "AFT:" + mlException.getMessage());
+                            Log.i(TAG, "LANG ANALYSE:" + mlException.getMessage());
+                        }
+                        return true;
+                    }
+                    case "ACTION_SYNC_FIRST_DETECT": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("langSetting");
+                        try {
+                            langDetection.syncFirstBestDetect(callbackContext, params);
+                        } catch (Exception e) {
+                            MLException mlException = (MLException) e;
+
+                        }
+                        return true;
+                    }
+
+                    case "ACTION_SYNC_PROBABILITY_DETECT": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("mlLangDetection");
+                        try {
+                            langDetection.syncProbabilityDetect(callbackContext, params);
+                        } catch (Exception e) {
+                            MLException mlException = (MLException) e;
+
                         }
                         return true;
                     }
@@ -173,17 +220,28 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
                             rttAnalyser.getRTTSetting(callbackContext);
                         } catch (Exception e) {
                             MLException mlException = (MLException) e;
-                            Log.i(TAG, "AFT:" + mlException.getMessage());
+                            Log.i(TAG, "RTT:" + mlException.getMessage());
                         }
                         return true;
                     }
+                    case "ACTION_RTT_LANGUAGES": {
+                        HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("rttLanguages");
+                        try {
+                            rttAnalyser.getRttLanguages(callbackContext);
+                        } catch (Exception e) {
+                            MLException mlException = (MLException) e;
+                            Log.i(TAG, "RTT:" + mlException.getMessage());
+                        }
+                        return true;
+                    }
+
                     case "ACTION_TTS_ANALYSE_SETTING": {
                         HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("ttsSetting");
                         try {
                             ttsAnalyse.getTTSAnalyserSetting(callbackContext);
                         } catch (Exception e) {
                             MLException mlException = (MLException) e;
-                            Log.i(TAG, "AFT:" + mlException.getMessage());
+                            Log.i(TAG, "TTS:" + mlException.getMessage());
                         }
                         return true;
                     }
@@ -245,6 +303,13 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
                         });
                         return true;
                     }
+                    case "ACTION_ASR_ANALYSE_GET_LANGUAGES": {
+                        cordova.getThreadPool().execute(() -> {
+                            HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("asrAnalyser");
+                            asrAnalyse.getLanguages(callbackContext);
+                        });
+                        return true;
+                    }
                     case "ACTION_ASR_ANALYSE_STOP": {
                         cordova.getThreadPool().execute(() -> {
                             HMSLogger.getInstance(cordova.getContext()).startMethodExecutionTimer("asrAnalyserStop");
@@ -267,7 +332,7 @@ public class HMSVoiceServiceProvider extends CordovaPlugin {
                 }
                 return false;
             } catch (JSONException e) {
-                Log.e(TAG, "" + e.getMessage());
+                Log.e(TAG, "Initialize Error: " + e.getMessage());
             }
         }
         return false;

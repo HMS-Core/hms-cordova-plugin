@@ -13,9 +13,63 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { MLBounds, MLconfig } from './Interfaces';
-import * as MLKit from './Interfaces';
-export { MLBounds, faceReq, MLFace, MLconfig, lensEngineReq, MLAnalyzerName, MLStillCompositerName, MLFrame, MLconfigComposite, MLLensEngineSetting, MLLensType, compositeAnalyserReq, doZoomReq, MLFlashMode, appSettingReq, MLFaceConfigs, livenessDetectionReq, MLLivenessConfig, LANGUAGE, MLTtsConstants, Colors, MLFaceSetting, MLSkeletonConfig, RectStyle, DownloadStrategyCustom, FEATURE, MlObjectAnalyserConfig, ImgSuperResolutionConfig, MLBcrResultConfig, HandkeyPointConfig, MLGcrCaptureUIConfig, MLRemoteLandmarkSetting, MLBcrCaptureConfig, MLImageSegmentationScene, MLTextConfig, MLRemoteTextSetting, MLLocalTextSetting, MLImageClassificationConfig, MLImageSegmentationSetting } from './Interfaces';
+
+import { MLBounds, MLconfig } from "./Interfaces";
+import * as MLKit from "./Interfaces";
+export {
+    MLBounds,
+    faceReq,
+    MLFace,
+    MLJoint,
+    MLJointPoints,
+    MLconfig,
+    lensEngineReq,
+    MLAnalyzerName,
+    MLStillCompositerName,
+    MLFrame,
+    MLconfigComposite,
+    MLLensEngineSetting,
+    MLLensType,
+    compositeAnalyserReq,
+    doZoomReq,
+    MLFlashMode,
+    appSettingReq,
+    MLFaceConfigs,
+    livenessDetectionReq,
+    MLLivenessConfig,
+    LANGUAGE,
+    MLTtsConstants,
+    MLAftConstants,
+    Colors,
+    MLFaceSetting,
+    MLSkeletonConfig,
+    RectStyle,
+    DownloadStrategyCustom,
+    FEATURE,
+    MlObjectAnalyserConfig,
+    ImgSuperResolutionConfig,
+    MLBcrResultConfig,
+    HandkeyPointConfig,
+    MLGcrCaptureUIConfig,
+    MLRemoteLandmarkSetting,
+    MLBcrCaptureConfig,
+    MLImageSegmentationScene,
+    MLTextConfig,
+    MLRemoteTextSetting,
+    MLLocalTextSetting,
+    MLImageClassificationConfig,
+    MLImageSegmentationSetting,
+    MLGesture,
+    MLBcrCaptureResult,
+    CordovaErrors,
+    MLBcrCaptureErrorCode,
+    MLTtsAudioFragmentConstant,
+    MLTtsAudioFragment,
+    MLTtsSpeaker,
+    MLTtsError,
+    MLSpeechRealTimeTranscriptionConstants,
+    syncRequestLocalLangDetect,
+} from "./Interfaces";
 export declare abstract class MLLive {
     protected scene: string;
     protected divId: string;
@@ -28,6 +82,9 @@ export declare abstract class MLLive {
     scroll(): Promise<void>;
     private forceUpdateXAndY;
 }
+export declare class gestureliveEngineAnalyser extends MLLive {
+    constructor(divId: string);
+}
 export declare class liveEngineAnalyser extends MLLive {
     constructor(divId: string);
 }
@@ -36,12 +93,22 @@ export declare function photograph(): Promise<any>;
 export declare function destroy(): Promise<any>;
 export declare function getDisplayDimension(): Promise<any>;
 export declare function getLensType(): Promise<any>;
-export declare function hasPermissions(permissionListReq: MLKit.CheckPermissionReq): Promise<any>;
-export declare function requestPermissions(permissionListReq: MLKit.RequestPermissionReq): Promise<any>;
-export declare function serviceInitializer(params: MLKit.configReq): Promise<any>;
-export declare function customModelAnalyser(customModelReq: MLKit.downloadModelReq | MLKit.ownCustomModelReq): Promise<any>;
+export declare function hasPermissions(
+    permissionListReq: MLKit.CheckPermissionReq
+): Promise<any>;
+export declare function requestPermissions(
+    permissionListReq: MLKit.RequestPermissionReq
+): Promise<any>;
+export declare function serviceInitializer(
+    params: MLKit.configReq
+): Promise<any>;
+export declare function customModelAnalyser(
+    customModelReq: MLKit.downloadModelReq | MLKit.ownCustomModelReq
+): Promise<any>;
 export declare function mlFrame(mlFrameReq: MLKit.mlFrameReq): Promise<any>;
-export declare function appSetting(appSettingReq: MLKit.appSettingReq): Promise<any>;
+export declare function appSetting(
+    appSettingReq: MLKit.appSettingReq
+): Promise<any>;
 export declare function setStatistic(any: any): Promise<any>;
 export declare function getStatistic(any: any): Promise<any>;
 export declare function enableLogger(): Promise<void>;

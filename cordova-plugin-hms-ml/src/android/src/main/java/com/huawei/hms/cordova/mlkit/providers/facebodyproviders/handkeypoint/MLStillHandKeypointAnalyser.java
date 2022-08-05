@@ -57,9 +57,10 @@ public class MLStillHandKeypointAnalyser extends HMSProvider {
 
     public void initializeStillHandKeyAnalyser(final JSONObject params, final CallbackContext callbackContext)
         throws JSONException {
-        this.callbackContext = callbackContext;
 
+        this.callbackContext = callbackContext;
         mlFrame = HMSMLUtils.getFrame(getContext(), params);
+
         JSONObject mlHandkeyAnalyserSetting = params.optJSONObject("handkeySetting");
 
         if (mlHandkeyAnalyserSetting != null) {

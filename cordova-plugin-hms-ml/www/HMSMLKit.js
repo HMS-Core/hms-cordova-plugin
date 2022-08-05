@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24,9 +25,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.getStatistic = exports.setStatistic = exports.appSetting = exports.mlFrame = exports.customModelAnalyser = exports.serviceInitializer = exports.requestPermissions = exports.hasPermissions = exports.getLensType = exports.getDisplayDimension = exports.destroy = exports.photograph = exports.doZoom = exports.liveEngineAnalyser = exports.MLLive = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.LANGUAGE = exports.MLLivenessConfig = exports.MLFaceConfigs = exports.MLFlashMode = exports.MLLensType = exports.MLFrame = exports.MLStillCompositerName = exports.MLAnalyzerName = void 0;
+exports.setStatistic = exports.appSetting = exports.mlFrame = exports.customModelAnalyser = exports.serviceInitializer = exports.requestPermissions = exports.hasPermissions = exports.getLensType = exports.getDisplayDimension = exports.destroy = exports.photograph = exports.doZoom = exports.liveEngineAnalyser = exports.gestureliveEngineAnalyser = exports.MLLive = exports.MLSpeechRealTimeTranscriptionConstants = exports.MLTtsError = exports.MLTtsAudioFragmentConstant = exports.MLBcrCaptureErrorCode = exports.CordovaErrors = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLAftConstants = exports.MLTtsConstants = exports.LANGUAGE = exports.MLLivenessConfig = exports.MLFaceConfigs = exports.MLFlashMode = exports.MLLensType = exports.MLFrame = exports.MLStillCompositerName = exports.MLAnalyzerName = exports.MLJointPoints = void 0;
+exports.disableLogger = exports.enableLogger = exports.getStatistic = void 0;
 const util_1 = require("./util");
 var Interfaces_1 = require("./Interfaces");
+Object.defineProperty(exports, "MLJointPoints", { enumerable: true, get: function () { return Interfaces_1.MLJointPoints; } });
 Object.defineProperty(exports, "MLAnalyzerName", { enumerable: true, get: function () { return Interfaces_1.MLAnalyzerName; } });
 Object.defineProperty(exports, "MLStillCompositerName", { enumerable: true, get: function () { return Interfaces_1.MLStillCompositerName; } });
 Object.defineProperty(exports, "MLFrame", { enumerable: true, get: function () { return Interfaces_1.MLFrame; } });
@@ -36,6 +39,7 @@ Object.defineProperty(exports, "MLFaceConfigs", { enumerable: true, get: functio
 Object.defineProperty(exports, "MLLivenessConfig", { enumerable: true, get: function () { return Interfaces_1.MLLivenessConfig; } });
 Object.defineProperty(exports, "LANGUAGE", { enumerable: true, get: function () { return Interfaces_1.LANGUAGE; } });
 Object.defineProperty(exports, "MLTtsConstants", { enumerable: true, get: function () { return Interfaces_1.MLTtsConstants; } });
+Object.defineProperty(exports, "MLAftConstants", { enumerable: true, get: function () { return Interfaces_1.MLAftConstants; } });
 Object.defineProperty(exports, "Colors", { enumerable: true, get: function () { return Interfaces_1.Colors; } });
 Object.defineProperty(exports, "MLFaceSetting", { enumerable: true, get: function () { return Interfaces_1.MLFaceSetting; } });
 Object.defineProperty(exports, "MLSkeletonConfig", { enumerable: true, get: function () { return Interfaces_1.MLSkeletonConfig; } });
@@ -55,6 +59,11 @@ Object.defineProperty(exports, "MLRemoteTextSetting", { enumerable: true, get: f
 Object.defineProperty(exports, "MLLocalTextSetting", { enumerable: true, get: function () { return Interfaces_1.MLLocalTextSetting; } });
 Object.defineProperty(exports, "MLImageClassificationConfig", { enumerable: true, get: function () { return Interfaces_1.MLImageClassificationConfig; } });
 Object.defineProperty(exports, "MLImageSegmentationSetting", { enumerable: true, get: function () { return Interfaces_1.MLImageSegmentationSetting; } });
+Object.defineProperty(exports, "CordovaErrors", { enumerable: true, get: function () { return Interfaces_1.CordovaErrors; } });
+Object.defineProperty(exports, "MLBcrCaptureErrorCode", { enumerable: true, get: function () { return Interfaces_1.MLBcrCaptureErrorCode; } });
+Object.defineProperty(exports, "MLTtsAudioFragmentConstant", { enumerable: true, get: function () { return Interfaces_1.MLTtsAudioFragmentConstant; } });
+Object.defineProperty(exports, "MLTtsError", { enumerable: true, get: function () { return Interfaces_1.MLTtsError; } });
+Object.defineProperty(exports, "MLSpeechRealTimeTranscriptionConstants", { enumerable: true, get: function () { return Interfaces_1.MLSpeechRealTimeTranscriptionConstants; } });
 //ML
 function getInitialProps(divId) {
     const element = document.getElementById(divId);
@@ -63,10 +72,10 @@ function getInitialProps(divId) {
     const clientRect = element.getBoundingClientRect();
     const computedStyle = window.getComputedStyle(element, null);
     let props = {};
-    props['x'] = clientRect.x;
-    props['y'] = clientRect.y;
-    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
-    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
+    props["x"] = clientRect.x;
+    props["y"] = clientRect.y;
+    props["width"] = parseInt(computedStyle.getPropertyValue("width"));
+    props["height"] = parseInt(computedStyle.getPropertyValue("height"));
     return props;
 }
 class MLLive {
@@ -75,132 +84,158 @@ class MLLive {
         this.divId = divId;
     }
     execHelper(func, args) {
-        return util_1.asyncExec('HMSMLPlugin', func, args);
+        return (0, util_1.asyncExec)("HMSMLPlugin", func, args);
     }
     on(call) {
         window.subscribeHMSEvent(`${this.scene}_${this.divId}`, call);
-        return this.execHelper('setCallback', [this.scene, this.divId, call.toString()]);
+        return this.execHelper("setCallback", [
+            this.scene,
+            this.divId,
+            call.toString(),
+        ]);
     }
     startMLLive(config, bounds) {
         const initialProps = getInitialProps(this.divId);
         if (bounds) {
             if (bounds.marginLeft)
-                initialProps['marginLeft'] = bounds.marginLeft;
+                initialProps["marginLeft"] = bounds.marginLeft;
             if (bounds.marginTop)
-                initialProps['marginTop'] = bounds.marginTop;
+                initialProps["marginTop"] = bounds.marginTop;
             if (bounds.marginBottom)
-                initialProps['marginBottom'] = bounds.marginBottom;
+                initialProps["marginBottom"] = bounds.marginBottom;
             if (bounds.marginRight)
-                initialProps['marginRight'] = bounds.marginRight;
+                initialProps["marginRight"] = bounds.marginRight;
         }
         this.mutationObserver = new MutationObserver(() => {
-            const sceneRect = document.getElementById(this.divId).getBoundingClientRect();
+            const sceneRect = document
+                .getElementById(this.divId)
+                .getBoundingClientRect();
             this.forceUpdateXAndY(sceneRect.x, sceneRect.y);
         });
-        const mutationObserverConfig = { attributes: true, childList: true, subtree: true };
+        const mutationObserverConfig = {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        };
         this.mutationObserver.observe(document.body, mutationObserverConfig);
         return this.execHelper(this.scene, [config, initialProps]);
     }
     setConfig(config) {
-        return this.execHelper('setConfig', [this.scene, config]);
+        return this.execHelper("setConfig", [this.scene, config]);
     }
     scroll() {
-        const sceneRect = document.getElementById(this.divId).getBoundingClientRect();
+        const sceneRect = document
+            .getElementById(this.divId)
+            .getBoundingClientRect();
         return this.forceUpdateXAndY(sceneRect.x, sceneRect.y);
     }
     forceUpdateXAndY(x, y) {
-        return this.execHelper('forceUpdateXAndY', [this.scene, x, y]);
+        return this.execHelper("forceUpdateXAndY", [this.scene, x, y]);
     }
 }
 exports.MLLive = MLLive;
+class gestureliveEngineAnalyser extends MLLive {
+    constructor(divId) {
+        super("ACTION_GESTURE_LIVE_ANALYSE", divId);
+    }
+}
+exports.gestureliveEngineAnalyser = gestureliveEngineAnalyser;
 class liveEngineAnalyser extends MLLive {
-    constructor(divId) { super("ACTION_LIVE_ANALYSE", divId); }
+    constructor(divId) {
+        super("ACTION_LIVE_ANALYSE", divId);
+    }
 }
 exports.liveEngineAnalyser = liveEngineAnalyser;
 function doZoom(doZoomReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_LIVE_DOZOOM', [doZoomReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_LIVE_DOZOOM", [doZoomReq]);
     });
 }
 exports.doZoom = doZoom;
 function photograph() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_LIVE_PHOTOGRAPHY_ANALYSE', []);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_LIVE_PHOTOGRAPHY_ANALYSE", []);
     });
 }
 exports.photograph = photograph;
 function destroy() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_LIVE_DESTROY', []);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_LIVE_DESTROY", []);
     });
 }
 exports.destroy = destroy;
 function getDisplayDimension() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_LIVE_DISPLAYDIMENSION', []);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_LIVE_DISPLAYDIMENSION", []);
     });
 }
 exports.getDisplayDimension = getDisplayDimension;
 function getLensType() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_LIVE_GETLENSTYPE', []);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_LIVE_GETLENSTYPE", []);
     });
 }
 exports.getLensType = getLensType;
 function hasPermissions(permissionListReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_CHECK_PERMISSION', [permissionListReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_CHECK_PERMISSION", [
+            permissionListReq,
+        ]);
     });
 }
 exports.hasPermissions = hasPermissions;
 function requestPermissions(permissionListReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_REQUEST_PERMISSION', [permissionListReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_REQUEST_PERMISSION", [
+            permissionListReq,
+        ]);
     });
 }
 exports.requestPermissions = requestPermissions;
 function serviceInitializer(params) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'HMSMLKIT_INITILALIZER', [params]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "HMSMLKIT_INITILALIZER", [params]);
     });
 }
 exports.serviceInitializer = serviceInitializer;
 function customModelAnalyser(customModelReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_CUSTOMMODEL_ANALYSER', [customModelReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_CUSTOMMODEL_ANALYSER", [
+            customModelReq,
+        ]);
     });
 }
 exports.customModelAnalyser = customModelAnalyser;
 function mlFrame(mlFrameReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_MLFRAME', [mlFrameReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_MLFRAME", [mlFrameReq]);
     });
 }
 exports.mlFrame = mlFrame;
 function appSetting(appSettingReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_APP_SETTING', [appSettingReq]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_APP_SETTING", [appSettingReq]);
     });
 }
 exports.appSetting = appSetting;
 function setStatistic(any) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_MLANALYSER_SETSTATISTIC', [any]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_MLANALYSER_SETSTATISTIC", [any]);
     });
 }
 exports.setStatistic = setStatistic;
 function getStatistic(any) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSMLPlugin', 'ACTION_MLANALYSER_GETSTATISTIC', [any]);
+        return (0, util_1.asyncExec)("HMSMLPlugin", "ACTION_MLANALYSER_GETSTATISTIC", [any]);
     });
 }
 exports.getStatistic = getStatistic;
 function enableLogger() {
-    return util_1.asyncExec('HMSMLPlugin', 'enableLogger', []);
+    return (0, util_1.asyncExec)("HMSMLPlugin", "enableLogger", []);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return util_1.asyncExec('HMSMLPlugin', 'disableLogger', []);
+    return (0, util_1.asyncExec)("HMSMLPlugin", "disableLogger", []);
 }
 exports.disableLogger = disableLogger;
 //# sourceMappingURL=HMSMLKit.js.map

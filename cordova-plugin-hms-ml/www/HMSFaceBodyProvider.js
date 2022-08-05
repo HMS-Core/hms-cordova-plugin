@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24,13 +25,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stopStillSkeletonAnalyser = exports.getHandKeyAnalyserSetting = exports.getFaceAnalyserSetting = exports.stopStillHandKeyAnalyser = exports.stillHandkeyAnalyser = exports.liveLivenessAnalyser = exports.stillSkeletonAnalyser = exports.stopStillFaceAnalyser = exports.stilFaceAnalyserInfo = exports.stillFaceAnalyser = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.LANGUAGE = exports.MLLivenessConfig = exports.MLFaceConfigs = void 0;
+exports.stopStillSkeletonAnalyser = exports.getGestureAnalyserSetting = exports.getHandKeyAnalyserSetting = exports.getFaceAnalyserSetting = exports.stopStillHandKeyAnalyser = exports.stillHandkeyAnalyser = exports.stopStillGestureAnalyser = exports.stillGestureAnalyser = exports.liveLivenessAnalyser = exports.stillSkeletonAnalyser = exports.stopStillFaceAnalyser = exports.stillFaceAnalyserInfo = exports.stopStillFaceVerificationAnalyser = exports.getFaceVerificationAnalyserSetting = exports.setFaceDetected = exports.stillFaceVerificationAnalyser = exports.stillFaceAnalyser = exports.MLSpeechRealTimeTranscriptionConstants = exports.MLTtsError = exports.MLTtsAudioFragmentConstant = exports.MLBcrCaptureErrorCode = exports.CordovaErrors = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLDocumentSkewCorrectionConstant = exports.MLAftConstants = exports.MLTtsConstants = exports.LANGUAGE = exports.MLLivenessConfig = exports.MLFaceConfigs = exports.MLJointPoints = void 0;
 const util_1 = require("./util");
 var Interfaces_1 = require("./Interfaces");
+Object.defineProperty(exports, "MLJointPoints", { enumerable: true, get: function () { return Interfaces_1.MLJointPoints; } });
 Object.defineProperty(exports, "MLFaceConfigs", { enumerable: true, get: function () { return Interfaces_1.MLFaceConfigs; } });
 Object.defineProperty(exports, "MLLivenessConfig", { enumerable: true, get: function () { return Interfaces_1.MLLivenessConfig; } });
 Object.defineProperty(exports, "LANGUAGE", { enumerable: true, get: function () { return Interfaces_1.LANGUAGE; } });
 Object.defineProperty(exports, "MLTtsConstants", { enumerable: true, get: function () { return Interfaces_1.MLTtsConstants; } });
+Object.defineProperty(exports, "MLAftConstants", { enumerable: true, get: function () { return Interfaces_1.MLAftConstants; } });
+Object.defineProperty(exports, "MLDocumentSkewCorrectionConstant", { enumerable: true, get: function () { return Interfaces_1.MLDocumentSkewCorrectionConstant; } });
 Object.defineProperty(exports, "Colors", { enumerable: true, get: function () { return Interfaces_1.Colors; } });
 Object.defineProperty(exports, "MLFaceSetting", { enumerable: true, get: function () { return Interfaces_1.MLFaceSetting; } });
 Object.defineProperty(exports, "MLSkeletonConfig", { enumerable: true, get: function () { return Interfaces_1.MLSkeletonConfig; } });
@@ -50,54 +54,103 @@ Object.defineProperty(exports, "MLRemoteTextSetting", { enumerable: true, get: f
 Object.defineProperty(exports, "MLLocalTextSetting", { enumerable: true, get: function () { return Interfaces_1.MLLocalTextSetting; } });
 Object.defineProperty(exports, "MLImageClassificationConfig", { enumerable: true, get: function () { return Interfaces_1.MLImageClassificationConfig; } });
 Object.defineProperty(exports, "MLImageSegmentationSetting", { enumerable: true, get: function () { return Interfaces_1.MLImageSegmentationSetting; } });
+Object.defineProperty(exports, "CordovaErrors", { enumerable: true, get: function () { return Interfaces_1.CordovaErrors; } });
+Object.defineProperty(exports, "MLBcrCaptureErrorCode", { enumerable: true, get: function () { return Interfaces_1.MLBcrCaptureErrorCode; } });
+Object.defineProperty(exports, "MLTtsAudioFragmentConstant", { enumerable: true, get: function () { return Interfaces_1.MLTtsAudioFragmentConstant; } });
+Object.defineProperty(exports, "MLTtsError", { enumerable: true, get: function () { return Interfaces_1.MLTtsError; } });
+Object.defineProperty(exports, "MLSpeechRealTimeTranscriptionConstants", { enumerable: true, get: function () { return Interfaces_1.MLSpeechRealTimeTranscriptionConstants; } });
 function stillFaceAnalyser(faceReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_ANALYSER', [faceReq]);
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_ANALYSER", [
+            faceReq,
+        ]);
     });
 }
 exports.stillFaceAnalyser = stillFaceAnalyser;
-function stilFaceAnalyserInfo() {
+function stillFaceVerificationAnalyser(faceVerificationReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_INFO', []);
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_VERIFICATION", [
+            faceVerificationReq,
+        ]);
     });
 }
-exports.stilFaceAnalyserInfo = stilFaceAnalyserInfo;
+exports.stillFaceVerificationAnalyser = stillFaceVerificationAnalyser;
+function setFaceDetected(maxFaceVerificationReq) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_VERIFICATION_FACEDETECTED", [maxFaceVerificationReq]);
+    });
+}
+exports.setFaceDetected = setFaceDetected;
+function getFaceVerificationAnalyserSetting() {
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_VERIFICATION_ANALYSE_SETTING", []);
+}
+exports.getFaceVerificationAnalyserSetting = getFaceVerificationAnalyserSetting;
+function stopStillFaceVerificationAnalyser() {
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STOP_STILL_FACE_VERIFICATION", []);
+}
+exports.stopStillFaceVerificationAnalyser = stopStillFaceVerificationAnalyser;
+function stillFaceAnalyserInfo() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_INFO", []);
+    });
+}
+exports.stillFaceAnalyserInfo = stillFaceAnalyserInfo;
 function stopStillFaceAnalyser() {
-    return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STOP_STILL_FACE_ANALYSER', []);
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STOP_STILL_FACE_ANALYSER", []);
 }
 exports.stopStillFaceAnalyser = stopStillFaceAnalyser;
 function stillSkeletonAnalyser(stillSkeletonReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_SKELETON_ANALYSE', [stillSkeletonReq]);
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_SKELETON_ANALYSE", [
+            stillSkeletonReq,
+        ]);
     });
 }
 exports.stillSkeletonAnalyser = stillSkeletonAnalyser;
 function liveLivenessAnalyser(livenessDetectionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_LIVENESS_DETECTION', [livenessDetectionReq]);
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_LIVENESS_DETECTION", [
+            livenessDetectionReq,
+        ]);
     });
 }
 exports.liveLivenessAnalyser = liveLivenessAnalyser;
+function stillGestureAnalyser(stillGestureReq) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_GESTURE_ANALYSE", [
+            stillGestureReq,
+        ]);
+    });
+}
+exports.stillGestureAnalyser = stillGestureAnalyser;
+function stopStillGestureAnalyser() {
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_GESTURE_ANALYSE_STOP", []);
+}
+exports.stopStillGestureAnalyser = stopStillGestureAnalyser;
 function stillHandkeyAnalyser(stillHandKeypointReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE', [stillHandKeypointReq]);
+        return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_HANDKEYPOINT_ANALYSE", [stillHandKeypointReq]);
     });
 }
 exports.stillHandkeyAnalyser = stillHandkeyAnalyser;
 function stopStillHandKeyAnalyser() {
-    return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE_STOP', []);
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_HANDKEYPOINT_ANALYSE_STOP", []);
 }
 exports.stopStillHandKeyAnalyser = stopStillHandKeyAnalyser;
 function getFaceAnalyserSetting() {
-    return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_FACE_ANALYSER_SETTING', []);
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_FACE_ANALYSER_SETTING", []);
 }
 exports.getFaceAnalyserSetting = getFaceAnalyserSetting;
 function getHandKeyAnalyserSetting() {
-    return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_HANDKEYPOINT_ANALYSE_SETTING', []);
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_HANDKEYPOINT_ANALYSE_SETTING", []);
 }
 exports.getHandKeyAnalyserSetting = getHandKeyAnalyserSetting;
+function getGestureAnalyserSetting() {
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_GESTURE_ANALYSE_SETTING", []);
+}
+exports.getGestureAnalyserSetting = getGestureAnalyserSetting;
 function stopStillSkeletonAnalyser() {
-    return util_1.asyncExec('HMSFaceBodyProvider', 'ACTION_STILL_SKELETON_ANALYSE_STOP', []);
+    return (0, util_1.asyncExec)("HMSFaceBodyProvider", "ACTION_STILL_SKELETON_ANALYSE_STOP", []);
 }
 exports.stopStillSkeletonAnalyser = stopStillSkeletonAnalyser;
 //# sourceMappingURL=HMSFaceBodyProvider.js.map

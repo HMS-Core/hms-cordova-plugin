@@ -236,7 +236,7 @@ public class MLCustomModel extends HMSProvider {
                     final MLModelExecutor modelExecutor = MLModelExecutor.getInstance(settings);
                     executorImpl(modelExecutor, bitmap);
                 } catch (MLException e) {
-                    callbackContext.error("" + e.getMessage());
+                    callbackContext.error("modelExecuter :" + e.getMessage());
                 }
                 return null;
             });

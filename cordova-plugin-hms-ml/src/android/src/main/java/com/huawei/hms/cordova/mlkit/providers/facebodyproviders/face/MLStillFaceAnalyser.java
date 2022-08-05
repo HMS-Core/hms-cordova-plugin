@@ -73,17 +73,17 @@ public class MLStillFaceAnalyser extends HMSProvider {
         switch (analyseMode) {
             case 0: {
                 analyzer = createAnalyzer(mlFaceAnalyserSetting);
-                Task<List<MLFace>> task = analyzer.asyncAnalyseFrame(faceFrame);
-                task.addOnSuccessListener(PlatformUtils.successListener(method, getActivity(), callbackContext,
-                    TextUtils.FROM_MLFACE_TO_JSON_OBJECT))
-                    .addOnFailureListener(PlatformUtils.failureListener(method, getActivity(), callbackContext));
+                SparseArray<MLFace> analyseFrame = analyzer.analyseFrame(faceFrame);
+                callbackContext.success(TextUtils.fromSparseArrayStillFaceAnalyseToJSON(analyseFrame));
+                HMSLogger.getInstance(getContext()).sendSingleEvent("stillFaceAnalyser");
                 break;
             }
             case 1: {
                 analyzer = createAnalyzer(mlFaceAnalyserSetting);
-                SparseArray<MLFace> analyseFrame = analyzer.analyseFrame(faceFrame);
-                callbackContext.success(TextUtils.fromSparseArrayStillFaceAnalyseToJSON(analyseFrame));
-                HMSLogger.getInstance(getContext()).sendSingleEvent("stillFaceAnalyser");
+                Task<List<MLFace>> task = analyzer.asyncAnalyseFrame(faceFrame);
+                task.addOnSuccessListener(PlatformUtils.successListener(method, getActivity(), callbackContext,
+                    TextUtils.FROM_MLFACE_TO_JSON_OBJECT))
+                    .addOnFailureListener(PlatformUtils.failureListener(method, getActivity(), callbackContext));
                 break;
             }
             case 2: {

@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MLRttAnalyser extends HMSProvider {
     private static final String TAG = MLRttAnalyser.class.getName();
@@ -59,9 +60,9 @@ public class MLRttAnalyser extends HMSProvider {
             config = TextUtils.toObject(mLSpeechRealTimeTranscriptionConfig, MLSpeechRealTimeTranscriptionConfig.class);
         } else {
             config = new MLSpeechRealTimeTranscriptionConfig.Factory().enablePunctuation(true)
-                .enableSentenceTimeOffset(true)
-                .enableWordTimeOffset(true)
-                .create();
+                    .enableSentenceTimeOffset(true)
+                    .enableWordTimeOffset(true)
+                    .create();
         }
         MLSpeechRealTimeTranscription.getInstance().startRecognizing(config);
         MLSpeechRealTimeTranscription.getInstance().setRealTimeTranscriptionListener(new SpeechRecognitionListener());
@@ -69,6 +70,10 @@ public class MLRttAnalyser extends HMSProvider {
 
     public void destroyRTT() {
         MLSpeechRealTimeTranscription.getInstance().destroy();
+    }
+
+    public MLSpeechRealTimeTranscription getInstance() {
+        return MLSpeechRealTimeTranscription.getInstance();
     }
 
     public void getRTTSetting(final CallbackContext callbackContext) throws JSONException {
@@ -80,6 +85,30 @@ public class MLRttAnalyser extends HMSProvider {
         jsonObject.putOpt("scenes", config.getScenes());
         callbackContext.success(jsonObject);
         HMSLogger.getInstance(getContext()).sendSingleEvent("rttSetting");
+
+    }
+
+    public void getRttLanguages(final CallbackContext callbackContext) {
+        MLSpeechRealTimeTranscription.getInstance().getLanguages(new MLSpeechRealTimeTranscription.LanguageCallback() {
+            @Override
+            public void onResult(List<String> result) {
+                Log.i(TAG, "support languages==" + result.toString());
+                callbackContext.success(result.toString());
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                Log.e(TAG, "errorCode:" + errorCode + "errorMsg:" + errorMsg);
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("errorCode", errorCode);
+                    json.put("errorMsg", errorMsg);
+                } catch (JSONException e) {
+                    Log.e(TAG, "MLSpeechRealTimeTranscription.LanguageCallback: error ->" + e.getMessage());
+                }
+                callbackContext.error(json);
+            }
+        });
 
     }
 
@@ -102,9 +131,9 @@ public class MLRttAnalyser extends HMSProvider {
             }
             if (isFinal) {
                 ArrayList<MLSpeechRealTimeTranscriptionResult> wordOffset = partialResults.getParcelableArrayList(
-                    MLSpeechRealTimeTranscriptionConstants.RESULTS_WORD_OFFSET);
+                        MLSpeechRealTimeTranscriptionConstants.RESULTS_WORD_OFFSET);
                 ArrayList<MLSpeechRealTimeTranscriptionResult> sentenceOffset = partialResults.getParcelableArrayList(
-                    MLSpeechRealTimeTranscriptionConstants.RESULTS_SENTENCE_OFFSET);
+                        MLSpeechRealTimeTranscriptionConstants.RESULTS_SENTENCE_OFFSET);
 
                 if (wordOffset != null) {
                     for (int i = 0; i < wordOffset.size(); i++) {

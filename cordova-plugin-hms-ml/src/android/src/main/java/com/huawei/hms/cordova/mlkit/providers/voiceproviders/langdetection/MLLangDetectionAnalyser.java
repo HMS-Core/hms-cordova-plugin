@@ -23,20 +23,24 @@ import com.huawei.hms.cordova.mlkit.helpers.CordovaErrors;
 import com.huawei.hms.cordova.mlkit.interfaces.HMSProvider;
 import com.huawei.hms.cordova.mlkit.logger.HMSLogger;
 import com.huawei.hms.cordova.mlkit.logger.HMSMethod;
+import com.huawei.hms.cordova.mlkit.utils.HMSMLUtils;
 import com.huawei.hms.cordova.mlkit.utils.PlatformUtils;
 import com.huawei.hms.cordova.mlkit.utils.TextUtils;
+import com.huawei.hms.mlsdk.common.MLException;
+import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationResult;
 import com.huawei.hms.mlsdk.langdetect.MLDetectedLang;
 import com.huawei.hms.mlsdk.langdetect.MLLangDetectorFactory;
 import com.huawei.hms.mlsdk.langdetect.cloud.MLRemoteLangDetector;
 import com.huawei.hms.mlsdk.langdetect.cloud.MLRemoteLangDetectorSetting;
 import com.huawei.hms.mlsdk.langdetect.local.MLLocalLangDetector;
 import com.huawei.hms.mlsdk.langdetect.local.MLLocalLangDetectorSetting;
-
+import android.util.Log;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MLLangDetectionAnalyser extends HMSProvider {
@@ -52,16 +56,19 @@ public class MLLangDetectionAnalyser extends HMSProvider {
 
     private boolean flag = false;
 
+    private CallbackContext callbackContext;
+
     public MLLangDetectionAnalyser(Context ctx) {
         super(ctx);
     }
 
     public void initializeRemoteLangDetectionAnalyser(final JSONObject params, final CallbackContext callbackContext)
-        throws JSONException {
+            throws JSONException {
+
         if (!params.has("sourceText") || params.isNull("sourceText")) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ILLEGAL_PARAMETER));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("remoteLangDetection", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
+                    .sendSingleEvent("remoteLangDetection", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
             return;
         }
         String sourceText = params.getString("sourceText");
@@ -88,9 +95,46 @@ public class MLLangDetectionAnalyser extends HMSProvider {
                 HMSMethod method = new HMSMethod("remoteLangDetection");
                 Task<List<MLDetectedLang>> probabilityDetectTask = remotelangDetector.probabilityDetect(sourceText);
                 probabilityDetectTask.addOnSuccessListener(
-                    PlatformUtils.successListener(method, getActivity(), callbackContext,
-                        TextUtils.FROM_MLLANG_TO_JSON_OBJECT))
-                    .addOnFailureListener(PlatformUtils.failureListener(method, getActivity(), callbackContext));
+                        PlatformUtils.successListener(method, getActivity(), callbackContext,
+                                TextUtils.FROM_MLLANG_TO_JSON_OBJECT))
+                        .addOnFailureListener(PlatformUtils.failureListener(method, getActivity(), callbackContext));
+                break;
+            case 2:
+                trustedThreshold = (float) params.optDouble("trustedThreshold", 0.01f);
+                setting = new MLRemoteLangDetectorSetting.Factory().setTrustedThreshold(trustedThreshold).create();
+                remotelangDetector = MLLangDetectorFactory.getInstance().getRemoteLangDetector(setting);
+                List<MLDetectedLang> mlList = new ArrayList<>();
+                List<MLDetectedLang> result = null;
+                try {
+                    result = remotelangDetector.syncProbabilityDetect(sourceText);
+                    for (int i = 0; i < result.size(); i++) {
+                        mlList.add(result.get(i));
+                    }
+                    if (!mlList.isEmpty()) {
+                        callbackContext.success(HMSMLUtils.listToJSONArray(mlList, TextUtils::mlLangDetectToJSON));
+                        HMSLogger.getInstance(getContext()).sendSingleEvent("mlLangDetection");
+                    } else {
+                        processFailure();
+                    }
+                } catch (MLException e) {
+                    Log.e(TAG, "remotelangDetector.syncProbabilityDetect: error ->" + e.getMessage());
+                }
+                break;
+            case 3:
+                trustedThreshold = (float) params.optDouble("trustedThreshold", 0.01f);
+                setting = new MLRemoteLangDetectorSetting.Factory().setTrustedThreshold(trustedThreshold).create();
+                remotelangDetector = MLLangDetectorFactory.getInstance().getRemoteLangDetector(setting);
+                try {
+                    String resultFirstBestDetect = null;
+                    resultFirstBestDetect = remotelangDetector.syncFirstBestDetect(sourceText);
+                    if (resultFirstBestDetect != null) {
+                        callbackContext.success(resultFirstBestDetect);
+                    } else {
+                        processFailure();
+                    }
+                } catch (MLException e) {
+                    Log.e(TAG, "remotelangDetector.syncFirstBestDetect: error ->" + e.getMessage());
+                }
                 break;
             default:
                 break;
@@ -98,12 +142,12 @@ public class MLLangDetectionAnalyser extends HMSProvider {
     }
 
     public void initializeLocalLangDetectionAnalyser(final JSONObject params, final CallbackContext callbackContext,
-        final CordovaInterface cordovaInterface) throws JSONException {
+            final CordovaInterface cordovaInterface) throws JSONException {
         flag = true;
         if (!params.has("sourceText") || params.isNull("sourceText")) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ILLEGAL_PARAMETER));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("localLangDetection", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
+                    .sendSingleEvent("localLangDetection", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
             return;
         }
 
@@ -116,18 +160,34 @@ public class MLLangDetectionAnalyser extends HMSProvider {
         } else {
             localLangDetector = factory.getLocalLangDetector();
         }
+        int taskMode = params.optInt("taskMode", 1);
+        switch (taskMode) {
+            case 0:
+                localLangDetector.firstBestDetect(sourceText).addOnSuccessListener(s -> {
+                    callbackContext.success(s);
+                    HMSLogger.getInstance(cordovaInterface.getContext()).sendSingleEvent("localLangDetection");
+                }).addOnFailureListener(e -> {
+                    callbackContext.error(e.getMessage());
+                    HMSLogger.getInstance(cordovaInterface.getContext())
+                            .sendSingleEvent("localLangDetection", e.getMessage());
+                });
+                break;
+            case 1:
+                HMSMethod method = new HMSMethod("LocalLanngDetection");
+                Task<List<MLDetectedLang>> probabilityDetectTask = localLangDetector.probabilityDetect(sourceText);
+                probabilityDetectTask.addOnSuccessListener(
+                        PlatformUtils.successListener(method, getActivity(), callbackContext,
+                                TextUtils.FROM_MLLANG_TO_JSON_OBJECT))
+                        .addOnFailureListener(PlatformUtils.failureListener(method, getActivity(), callbackContext));
+                break;
+            default:
+                break;
+        }
 
-        localLangDetector.firstBestDetect(sourceText).addOnSuccessListener(s -> {
-            callbackContext.success(s);
-            HMSLogger.getInstance(cordovaInterface.getContext()).sendSingleEvent("localLangDetection");
-        }).addOnFailureListener(e -> {
-            callbackContext.error(e.getMessage());
-            HMSLogger.getInstance(cordovaInterface.getContext()).sendSingleEvent("localLangDetection", e.getMessage());
-        });
     }
 
     public void stopLangDetectionService(final CallbackContext callbackContext,
-        final CordovaInterface cordovaInterface) {
+            final CordovaInterface cordovaInterface) {
         if (remotelangDetector != null) {
             remotelangDetector.stop();
             remotelangDetector = null;
@@ -155,4 +215,55 @@ public class MLLangDetectionAnalyser extends HMSProvider {
         HMSLogger.getInstance(getContext()).sendSingleEvent("langSetting");
 
     }
-}
+
+    public void syncFirstBestDetect(CallbackContext context, JSONObject params) throws JSONException, MLException {
+        float trustedThreshold;
+        MLLangDetectorFactory factory = MLLangDetectorFactory.getInstance();
+        trustedThreshold = (float) params.optDouble("trustedThreshold", 0.01f);
+        MLLocalLangDetectorSetting setting = new MLLocalLangDetectorSetting.Factory().setTrustedThreshold(
+                trustedThreshold).create();
+        localLangDetector = factory.getLocalLangDetector(setting);
+        final String input = params.getString("sourceText");
+        if (input != null) {
+            String result = localLangDetector.syncFirstBestDetect(input);
+            context.success(result);
+        } else {
+            context.error(CordovaErrors.toErrorJSON(CordovaErrors.ILLEGAL_PARAMETER));
+        }
+
+    }
+
+    public void syncProbabilityDetect(CallbackContext context, JSONObject params) throws JSONException, MLException {
+        float trustedThreshold;
+        MLLangDetectorFactory factory = MLLangDetectorFactory.getInstance();
+        trustedThreshold = (float) params.optDouble("trustedThreshold", 0.01f);
+        MLLocalLangDetectorSetting setting = new MLLocalLangDetectorSetting.Factory().setTrustedThreshold(
+                trustedThreshold).create();
+        localLangDetector = factory.getLocalLangDetector(setting);
+        final String input = params.getString("sourceText");
+        if (input != null) {
+            List<MLDetectedLang> mlList = new ArrayList<>();
+            List<MLDetectedLang> result = localLangDetector.syncProbabilityDetect(input);
+            for (int i = 0; i < result.size(); i++) {
+                mlList.add(result.get(i));
+            }
+            if (!mlList.isEmpty()) {
+                context.success(HMSMLUtils.listToJSONArray(mlList, TextUtils::mlLangDetectToJSON));
+                HMSLogger.getInstance(getContext()).sendSingleEvent("mlLangDetection");
+            } else {
+                processFailure();
+            }
+            HMSLogger.getInstance(getContext()).sendSingleEvent("mlLangDetection");
+        } else {
+            context.error(CordovaErrors.toErrorJSON(CordovaErrors.ILLEGAL_PARAMETER));
+        }
+
+    }
+
+    private void processFailure() {
+        callbackContext.error(CordovaErrors.SERVICE_FAILURE);
+        HMSLogger.getInstance(getContext())
+                .sendSingleEvent("mlLangDetection", String.valueOf(CordovaErrors.SERVICE_FAILURE));
+    }
+
+};

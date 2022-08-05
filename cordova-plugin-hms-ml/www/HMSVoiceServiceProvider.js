@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -24,27 +25,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.rttAnalyserStop = exports.rttAnalyserStart = exports.asrAnalyser = exports.getDownloadStrategy = exports.aftAnalyser = exports.ttsOfflineAnalyser = exports.aftAnalyserPause = exports.soundDectAnalyserDestroy = exports.aftAnalyserDestroy = exports.asrAnalyserStop = exports.aftAnalyserClose = exports.ttsAnalyserDownloadSetting = exports.ttsAnalyserEngineSetting = exports.ttsAnalysershutDown = exports.ttsAnalyserResume = exports.ttsAnalyserPause = exports.ttsAnalyserStop = exports.ttsAnalyser = exports.soundDectAnalyser = exports.stopLangDetectionService = exports.getLangDetectionSetting = exports.getAFTSetting = exports.getTTSSetting = exports.getRTTSetting = exports.stopTranslatorService = exports.translatorRemoteAllLang = exports.translatorLocalAllLang = exports.translatorDeleteModel = exports.translatorDownloadModel = exports.localLangDetection = exports.remoteLangDetection = exports.remoteTranslator = exports.localTranslator = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLTtsConstants = exports.LANGUAGE = void 0;
-/*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+exports.ttsAnalyserEngineSetting = exports.ttsAnalysershutDown = exports.ttsAnalyserResume = exports.ttsAnalyserPause = exports.ttsAnalyserStop = exports.ttsAnalyser = exports.soundDectAnalyser = exports.syncProbabilityDetect = exports.syncFirstBestDetect = exports.stopLangDetectionService = exports.getLangDetectionSetting = exports.getAFTSetting = exports.getTTSSetting = exports.getRTTSetting = exports.stopTranslatorService = exports.translatorRemoteAllLang = exports.translatorLocalAllLang = exports.translatorDeleteModel = exports.translatorDownloadModel = exports.localLangDetection = exports.remoteLangDetection = exports.remoteTranslator = exports.localTranslator = exports.MLSpeechRealTimeTranscriptionConstants = exports.MLTtsError = exports.MLTtsAudioFragmentConstant = exports.MLBcrCaptureErrorCode = exports.CordovaErrors = exports.MLImageSegmentationSetting = exports.MLImageClassificationConfig = exports.MLLocalTextSetting = exports.MLRemoteTextSetting = exports.MLTextConfig = exports.MLImageSegmentationScene = exports.MLBcrCaptureConfig = exports.MLRemoteLandmarkSetting = exports.MLGcrCaptureUIConfig = exports.HandkeyPointConfig = exports.MLBcrResultConfig = exports.ImgSuperResolutionConfig = exports.MlObjectAnalyserConfig = exports.FEATURE = exports.DownloadStrategyCustom = exports.RectStyle = exports.MLSkeletonConfig = exports.MLFaceSetting = exports.Colors = exports.MLAftConstants = exports.MLTtsConstants = exports.LANGUAGE = void 0;
+exports.rttAnalyserStop = exports.rttAnalyserStart = exports.asrAnalyser = exports.getShortAftLanguages = exports.getLongAftLanguages = exports.getDownloadStrategy = exports.aftAnalyser = exports.ttsOfflineAnalyser = exports.aftAnalyserPause = exports.soundDectAnalyserDestroy = exports.aftAnalyserDestroy = exports.asrAnalyserGetLanguages = exports.asrAnalyserStop = exports.aftAnalyserClose = exports.ttsAnalyserDownloadSetting = exports.ttsAnalyserSetPLayerVolume = void 0;
 const cordova_1 = require("cordova");
 const util_1 = require("./util");
 var Interfaces_1 = require("./Interfaces");
 Object.defineProperty(exports, "LANGUAGE", { enumerable: true, get: function () { return Interfaces_1.LANGUAGE; } });
 Object.defineProperty(exports, "MLTtsConstants", { enumerable: true, get: function () { return Interfaces_1.MLTtsConstants; } });
+Object.defineProperty(exports, "MLAftConstants", { enumerable: true, get: function () { return Interfaces_1.MLAftConstants; } });
 Object.defineProperty(exports, "Colors", { enumerable: true, get: function () { return Interfaces_1.Colors; } });
 Object.defineProperty(exports, "MLFaceSetting", { enumerable: true, get: function () { return Interfaces_1.MLFaceSetting; } });
 Object.defineProperty(exports, "MLSkeletonConfig", { enumerable: true, get: function () { return Interfaces_1.MLSkeletonConfig; } });
@@ -64,200 +52,262 @@ Object.defineProperty(exports, "MLRemoteTextSetting", { enumerable: true, get: f
 Object.defineProperty(exports, "MLLocalTextSetting", { enumerable: true, get: function () { return Interfaces_1.MLLocalTextSetting; } });
 Object.defineProperty(exports, "MLImageClassificationConfig", { enumerable: true, get: function () { return Interfaces_1.MLImageClassificationConfig; } });
 Object.defineProperty(exports, "MLImageSegmentationSetting", { enumerable: true, get: function () { return Interfaces_1.MLImageSegmentationSetting; } });
+Object.defineProperty(exports, "CordovaErrors", { enumerable: true, get: function () { return Interfaces_1.CordovaErrors; } });
+Object.defineProperty(exports, "MLBcrCaptureErrorCode", { enumerable: true, get: function () { return Interfaces_1.MLBcrCaptureErrorCode; } });
+Object.defineProperty(exports, "MLTtsAudioFragmentConstant", { enumerable: true, get: function () { return Interfaces_1.MLTtsAudioFragmentConstant; } });
+Object.defineProperty(exports, "MLTtsError", { enumerable: true, get: function () { return Interfaces_1.MLTtsError; } });
+Object.defineProperty(exports, "MLSpeechRealTimeTranscriptionConstants", { enumerable: true, get: function () { return Interfaces_1.MLSpeechRealTimeTranscriptionConstants; } });
 //Voice Provider
 function localTranslator(localTranslateReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_LOCAL_TRANSLATOR', [localTranslateReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_LOCAL_TRANSLATOR", [
+            localTranslateReq,
+        ]);
     });
 }
 exports.localTranslator = localTranslator;
 function remoteTranslator(remotetranslateReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_REMOTE_TRANSLATOR', [remotetranslateReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_REMOTE_TRANSLATOR", [
+            remotetranslateReq,
+        ]);
     });
 }
 exports.remoteTranslator = remoteTranslator;
 function remoteLangDetection(remoteLangDetectionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_REMOTE_LANG_DETECTION', [remoteLangDetectionReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_REMOTE_LANG_DETECTION", [remoteLangDetectionReq]);
     });
 }
 exports.remoteLangDetection = remoteLangDetection;
 function localLangDetection(localLangDetectionReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_LOCAL_LANG_DETECTION', [localLangDetectionReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_LOCAL_LANG_DETECTION", [
+            localLangDetectionReq,
+        ]);
     });
 }
 exports.localLangDetection = localLangDetection;
 function translatorDownloadModel(downloadTranslateReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_DOWNLOAD_MODEL', [downloadTranslateReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_DOWNLOAD_MODEL", [
+            downloadTranslateReq,
+        ]);
     });
 }
 exports.translatorDownloadModel = translatorDownloadModel;
 function translatorDeleteModel(deleteTranslateReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_DELETE_MODEL', [deleteTranslateReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_DELETE_MODEL", [
+            deleteTranslateReq,
+        ]);
     });
 }
 exports.translatorDeleteModel = translatorDeleteModel;
 function translatorLocalAllLang(localAllLangReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_LOCAL_GETLANG', [localAllLangReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_LOCAL_GETLANG", [
+            localAllLangReq,
+        ]);
     });
 }
 exports.translatorLocalAllLang = translatorLocalAllLang;
 function translatorRemoteAllLang(remoteAllLangReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_REMOTE_GETLANG', [remoteAllLangReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_REMOTE_GETLANG", [
+            remoteAllLangReq,
+        ]);
     });
 }
 exports.translatorRemoteAllLang = translatorRemoteAllLang;
 function stopTranslatorService() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_STOP_TRANSLATOR_SERVICE', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_STOP_TRANSLATOR_SERVICE", []);
     });
 }
 exports.stopTranslatorService = stopTranslatorService;
 function getRTTSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_RTT_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_RTT_ANALYSE_SETTING", []);
     });
 }
 exports.getRTTSetting = getRTTSetting;
 function getTTSSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_SETTING", []);
     });
 }
 exports.getTTSSetting = getTTSSetting;
 function getAFTSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_AFT_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_AFT_ANALYSE_SETTING", []);
     });
 }
 exports.getAFTSetting = getAFTSetting;
 function getLangDetectionSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_LANG_ANALYSE_SETTING', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_LANG_ANALYSE_SETTING", []);
     });
 }
 exports.getLangDetectionSetting = getLangDetectionSetting;
 function stopLangDetectionService() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_STOP_LANGDETECTION_SERVICE', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_STOP_LANGDETECTION_SERVICE", []);
     });
 }
 exports.stopLangDetectionService = stopLangDetectionService;
+function syncFirstBestDetect(syncRequest) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_SYNC_FIRST_DETECT", [
+            syncRequest,
+        ]);
+    });
+}
+exports.syncFirstBestDetect = syncFirstBestDetect;
+function syncProbabilityDetect(syncRequest) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_SYNC_PROBABILITY_DETECT", [syncRequest]);
+    });
+}
+exports.syncProbabilityDetect = syncProbabilityDetect;
 function soundDectAnalyser(soundDectReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_SOUNDDECT_ANALYSE', [soundDectReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_SOUNDDECT_ANALYSE", [
+            soundDectReq,
+        ]);
     });
 }
 exports.soundDectAnalyser = soundDectAnalyser;
 function ttsAnalyser(ttsReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE', [ttsReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE", [ttsReq]);
     });
 }
 exports.ttsAnalyser = ttsAnalyser;
 function ttsAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_STOP", []);
     });
 }
 exports.ttsAnalyserStop = ttsAnalyserStop;
 function ttsAnalyserPause() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_PAUSE', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_PAUSE", []);
     });
 }
 exports.ttsAnalyserPause = ttsAnalyserPause;
 function ttsAnalyserResume() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_RESUME', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_RESUME", []);
     });
 }
 exports.ttsAnalyserResume = ttsAnalyserResume;
 function ttsAnalysershutDown() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_SHUTDOWN', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_SHUTDOWN", []);
     });
 }
 exports.ttsAnalysershutDown = ttsAnalysershutDown;
 function ttsAnalyserEngineSetting(ttsEngineReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_ENGINESETTING', [ttsEngineReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_ENGINESETTING", [ttsEngineReq]);
     });
 }
 exports.ttsAnalyserEngineSetting = ttsAnalyserEngineSetting;
+function ttsAnalyserSetPLayerVolume(ttsEngineReq) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_SETPLAYER_VOLUME", [ttsEngineReq]);
+    });
+}
+exports.ttsAnalyserSetPLayerVolume = ttsAnalyserSetPLayerVolume;
 function ttsAnalyserDownloadSetting() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_ANALYSE_DSETTING', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_ANALYSE_DSETTING", []);
     });
 }
 exports.ttsAnalyserDownloadSetting = ttsAnalyserDownloadSetting;
 function aftAnalyserClose() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_AFT_ANALYSE_CLOSE', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_AFT_ANALYSE_CLOSE", []);
     });
 }
 exports.aftAnalyserClose = aftAnalyserClose;
 function asrAnalyserStop() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_ASR_ANALYSE_STOP', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_ASR_ANALYSE_STOP", []);
     });
 }
 exports.asrAnalyserStop = asrAnalyserStop;
+function asrAnalyserGetLanguages() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_ASR_ANALYSE_GET_LANGUAGES", []);
+    });
+}
+exports.asrAnalyserGetLanguages = asrAnalyserGetLanguages;
 function aftAnalyserDestroy() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_AFT_ANALYSE_DESTROY', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_AFT_ANALYSE_DESTROY", []);
     });
 }
 exports.aftAnalyserDestroy = aftAnalyserDestroy;
 function soundDectAnalyserDestroy() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_SOUNDDECT_ANALYSE_DESTROY', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_SOUNDDECT_ANALYSE_DESTROY", []);
     });
 }
 exports.soundDectAnalyserDestroy = soundDectAnalyserDestroy;
 function aftAnalyserPause() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_AFT_ANALYSE_PAUSE', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_AFT_ANALYSE_PAUSE", []);
     });
 }
 exports.aftAnalyserPause = aftAnalyserPause;
 function ttsOfflineAnalyser(ttsReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_TTS_OFFLINE_ANALYSE', [ttsReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_TTS_OFFLINE_ANALYSE", [
+            ttsReq,
+        ]);
     });
 }
 exports.ttsOfflineAnalyser = ttsOfflineAnalyser;
 function aftAnalyser(aftReq) {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_AFT_ANALYSE', [aftReq]);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_AFT_ANALYSE", [aftReq]);
     });
 }
 exports.aftAnalyser = aftAnalyser;
 function getDownloadStrategy() {
     return __awaiter(this, void 0, void 0, function* () {
-        return util_1.asyncExec('HMSVoiceServiceProvider', 'ACTION_GET_DSTRATEGY', []);
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_GET_DSTRATEGY", []);
     });
 }
 exports.getDownloadStrategy = getDownloadStrategy;
+function getLongAftLanguages() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_LONG_AFT_LANGUAGE", []);
+    });
+}
+exports.getLongAftLanguages = getLongAftLanguages;
+function getShortAftLanguages() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, util_1.asyncExec)("HMSVoiceServiceProvider", "ACTION_GET_SHORTAFT_LANGUAGE", []);
+    });
+}
+exports.getShortAftLanguages = getShortAftLanguages;
 function asrAnalyser(asrReq, success, error) {
-    cordova_1.exec(success, error, "HMSVoiceServiceProvider", "ACTION_ASR_ANALYSE", [asrReq]);
+    (0, cordova_1.exec)(success, error, "HMSVoiceServiceProvider", "ACTION_ASR_ANALYSE", [
+        asrReq,
+    ]);
 }
 exports.asrAnalyser = asrAnalyser;
-;
 function rttAnalyserStart(rttReq, success, error) {
-    cordova_1.exec(success, error, "HMSVoiceServiceProvider", "ACTION_RTT_ANALYSE", [rttReq]);
+    (0, cordova_1.exec)(success, error, "HMSVoiceServiceProvider", "ACTION_RTT_ANALYSE", [
+        rttReq,
+    ]);
 }
 exports.rttAnalyserStart = rttAnalyserStart;
-;
 function rttAnalyserStop(success, error) {
-    cordova_1.exec(success, error, "HMSVoiceServiceProvider", "ACTION_RTT_ANALYSE_STOP");
+    (0, cordova_1.exec)(success, error, "HMSVoiceServiceProvider", "ACTION_RTT_ANALYSE_STOP");
 }
 exports.rttAnalyserStop = rttAnalyserStop;
-;
 //# sourceMappingURL=HMSVoiceServiceProvider.js.map

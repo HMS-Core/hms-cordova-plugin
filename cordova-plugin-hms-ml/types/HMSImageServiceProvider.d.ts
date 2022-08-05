@@ -13,20 +13,77 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import * as MLKit from './Interfaces';
-export { MLBounds, faceReq, MLFace, MLconfig, MLProductConfig, LANGUAGE, MLFormRecogitionConfig, MLTtsConstants, Colors, MLFaceSetting, MLSkeletonConfig, RectStyle, DownloadStrategyCustom, FEATURE, MlObjectAnalyserConfig, ImgSuperResolutionConfig, MLBcrResultConfig, HandkeyPointConfig, MLGcrCaptureUIConfig, MLRemoteLandmarkSetting, MLBcrCaptureConfig, MLImageSegmentationScene, MLTextConfig, MLRemoteTextSetting, MLLocalTextSetting, MLImageClassificationConfig, MLImageSegmentationSetting } from './Interfaces';
-export declare function imageClassificationAnalyser(imageClassificationReq: MLKit.localImageClassificationReq | MLKit.remoteImageClassificationReq): Promise<MLKit.MLImageClassification>;
+
+import * as MLKit from "./Interfaces";
+export {
+    MLBounds,
+    faceReq,
+    MLFace,
+    MLconfig,
+    MLProductConfig,
+    LANGUAGE,
+    MLFormRecogitionConfig,
+    MLTtsConstants,
+    Colors,
+    MLFaceSetting,
+    MLSkeletonConfig,
+    RectStyle,
+    DownloadStrategyCustom,
+    FEATURE,
+    MlObjectAnalyserConfig,
+    ImgSuperResolutionConfig,
+    MLBcrResultConfig,
+    HandkeyPointConfig,
+    MLGcrCaptureUIConfig,
+    MLRemoteLandmarkSetting,
+    MLBcrCaptureConfig,
+    MLImageSegmentationScene,
+    MLTextConfig,
+    MLRemoteTextSetting,
+    MLLocalTextSetting,
+    MLImageClassificationConfig,
+    MLImageSegmentationSetting,
+    MLBcrCaptureResult,
+    CordovaErrors,
+    MLBcrCaptureErrorCode,
+    MLTtsAudioFragmentConstant,
+    MLTtsAudioFragment,
+    MLTtsSpeaker,
+    MLTtsError,
+    MLSpeechRealTimeTranscriptionConstants,
+} from "./Interfaces";
+export declare function imageClassificationAnalyser(
+    imageClassificationReq:
+        | MLKit.localImageClassificationReq
+        | MLKit.remoteImageClassificationReq
+): Promise<MLKit.MLImageClassification>;
 export declare function stopImageClassificationAnalyser(): Promise<string>;
-export declare function imgSegmentation(imgSegmentationReq: MLKit.imgSegmentationReq): Promise<MLKit.MLImageSegmentation>;
+export declare function imgSegmentation(
+    imgSegmentationReq: MLKit.imgSegmentationReq
+): Promise<MLKit.MLImageSegmentation>;
 export declare function stopImgSegmentation(): Promise<any>;
-export declare function imgLandMarkAnalyser(imgLandMarkReq: MLKit.imgLandMarkReq): Promise<MLKit.MLRemoteLandmark>;
+export declare function imgLandMarkAnalyser(
+    imgLandMarkReq: MLKit.imgLandMarkReq
+): Promise<MLKit.MLRemoteLandmark>;
 export declare function imgLandMarkAnalyserStop(): Promise<any>;
-export declare function objectAnalyser(objectReq: MLKit.objectReq): Promise<MLKit.MLObject>;
-export declare function stillSceneAnalyser(stillSceneReq: MLKit.stillSceneReq): Promise<MLKit.MLSceneDetectionResult>;
-export declare function documentSkewCorrectionAnalyser(documentSkewCorrectionReq: MLKit.documentSkewCorrectionReq): Promise<MLKit.MLDocumentSkewDetectResult>;
-export declare function textImageSuperResolution(textImageSuperResolutionReq: MLKit.textImageSuperResolutionReq): Promise<any>;
-export declare function imageSuperResolution(imageSuperResolutionReq: MLKit.imageSuperResolutionReq): Promise<any>;
-export declare function productVisionAnalyser(productReq: MLKit.productReq): Promise<any>;
+export declare function objectAnalyser(
+    objectReq: MLKit.objectReq
+): Promise<MLKit.MLObject>;
+export declare function stillSceneAnalyser(
+    stillSceneReq: MLKit.stillSceneReq
+): Promise<MLKit.MLSceneDetectionResult>;
+export declare function documentSkewCorrectionAnalyser(
+    documentSkewCorrectionReq: MLKit.documentSkewCorrectionReq
+): Promise<MLKit.MLDocumentSkewDetectResult>;
+export declare function textImageSuperResolution(
+    textImageSuperResolutionReq: MLKit.textImageSuperResolutionReq
+): Promise<any>;
+export declare function imageSuperResolution(
+    imageSuperResolutionReq: MLKit.imageSuperResolutionReq
+): Promise<any>;
+export declare function productVisionAnalyser(
+    productReq: MLKit.productReq
+): Promise<any>;
 export declare function objectAnalyserStop(): Promise<any>;
 export declare function productAnalyserStop(): Promise<any>;
 export declare function docSkewAnalyserStop(): Promise<any>;

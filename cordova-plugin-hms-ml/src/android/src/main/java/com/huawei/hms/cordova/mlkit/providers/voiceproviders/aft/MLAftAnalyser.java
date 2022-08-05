@@ -40,6 +40,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MLAftAnalyser extends HMSProvider {
+
     private static final String TAG = MLAftAnalyser.class.getName();
 
     private static final int THRESHOLD_TIME = 60000;
@@ -117,7 +118,7 @@ public class MLAftAnalyser extends HMSProvider {
                     if (words != null && words.size() != 0) {
                         for (MLRemoteAftResult.Segment word : words) {
                             Log.e(TAG, "MLAsrCallBack word  text is : " + word.getText() + ", startTime is : "
-                                + word.getStartTime() + ". endTime is : " + word.getEndTime());
+                                    + word.getStartTime() + ". endTime is : " + word.getEndTime());
                         }
                     }
 
@@ -125,7 +126,7 @@ public class MLAftAnalyser extends HMSProvider {
                     if (sentences != null && sentences.size() != 0) {
                         for (MLRemoteAftResult.Segment sentence : sentences) {
                             Log.e(TAG, "MLAsrCallBack sentence  text is : " + sentence.getText() + ", startTime is : "
-                                + sentence.getStartTime() + ". endTime is : " + sentence.getEndTime());
+                                    + sentence.getStartTime() + ". endTime is : " + sentence.getEndTime());
                         }
                     }
                     callbackContext.success(aftResult);
@@ -238,13 +239,13 @@ public class MLAftAnalyser extends HMSProvider {
     }
 
     public void initializeAFTAnalyser(final JSONObject params, final CallbackContext callbackContext)
-        throws JSONException {
+            throws JSONException {
         this.callbackContext = callbackContext;
 
         if (!params.has("audioPath")) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ILLEGAL_PARAMETER));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("aftAnalyser", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
+                    .sendSingleEvent("aftAnalyser", String.valueOf(CordovaErrors.ILLEGAL_PARAMETER));
             return;
         }
 
@@ -255,15 +256,14 @@ public class MLAftAnalyser extends HMSProvider {
             setting = TextUtils.toObject(aftSetting, MLRemoteAftSetting.class);
         } else {
             setting = new MLRemoteAftSetting.Factory().setLanguageCode("en-US")
-                .enablePunctuation(true)
-                .enableWordTimeOffset(true)
-                .enableSentenceTimeOffset(true)
-                .create();
+                    .enablePunctuation(true)
+                    .enableWordTimeOffset(true)
+                    .enableSentenceTimeOffset(true)
+                    .create();
         }
 
         this.engine = MLRemoteAftEngine.getInstance();
         this.engine.init(getContext());
-
         int audioTime = getAudioFileTimeFromUri(uri);
         if (!Uri.EMPTY.equals(uri)) {
             if (audioTime < THRESHOLD_TIME) {
@@ -282,7 +282,7 @@ public class MLAftAnalyser extends HMSProvider {
         if (this.engine == null) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ANALYSIS_FAILURE));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("aftAnalyserClose", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
+                    .sendSingleEvent("aftAnalyserClose", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
         } else {
             this.engine.close();
             HMSLogger.getInstance(getContext()).sendSingleEvent("aftAnalyserClose");
@@ -293,7 +293,7 @@ public class MLAftAnalyser extends HMSProvider {
         if (this.engine == null) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ANALYSIS_FAILURE));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("aftAnalyserDestroy", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
+                    .sendSingleEvent("aftAnalyserDestroy", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
         } else {
             this.engine.destroyTask(this.taskId);
             HMSLogger.getInstance(getContext()).sendSingleEvent("aftAnalyserDestroy");
@@ -304,7 +304,7 @@ public class MLAftAnalyser extends HMSProvider {
         if (this.engine == null) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ANALYSIS_FAILURE));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("aftAnalyserPause", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
+                    .sendSingleEvent("aftAnalyserPause", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
         } else {
             this.engine.pauseTask(this.taskId);
             HMSLogger.getInstance(getContext()).sendSingleEvent("aftAnalyserPause");
@@ -338,7 +338,7 @@ public class MLAftAnalyser extends HMSProvider {
         if (this.engine == null) {
             callbackContext.error(CordovaErrors.toErrorJSON(CordovaErrors.ANALYSIS_FAILURE));
             HMSLogger.getInstance(getContext())
-                .sendSingleEvent("aftAnalyserSetting", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
+                    .sendSingleEvent("aftAnalyserSetting", String.valueOf(CordovaErrors.ANALYSIS_FAILURE));
         } else {
             JSONObject object = new JSONObject();
             object.putOpt("languageCode", setting.getLanguageCode());
@@ -348,6 +348,54 @@ public class MLAftAnalyser extends HMSProvider {
             callbackContext.success(object);
             HMSLogger.getInstance(getContext()).sendSingleEvent("aftAnalyserSetting");
         }
+    }
+
+    public void getLongAftLanguages(final CallbackContext context) {
+
+        MLRemoteAftEngine.getInstance().getLongAftLanguages(new MLRemoteAftEngine.LanguageCallback() {
+            @Override
+            public void onResult(final List<String> result) {
+                Log.i(TAG, "support languages==" + result.toString());
+                context.success(result.toString());
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                Log.e(TAG, "errorCode:" + errorCode + "errorMsg:" + errorMsg);
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("errorCode", errorCode);
+                    json.put("errorMsg", errorMsg);
+                } catch (JSONException e) {
+                    Log.e(TAG, "MLRemoteAftEngine.LanguageCallback: error ->" + e.getMessage());
+                }
+                context.error(json);
+            }
+        });
+
+    }
+
+    public void getShortAftLanguages(final CallbackContext context) {
+        MLRemoteAftEngine.getInstance().getShortAftLanguages(new MLRemoteAftEngine.LanguageCallback() {
+            @Override
+            public void onResult(final List<String> result) {
+                Log.i(TAG, "support languages==" + result.toString());
+                context.success(result.toString());
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                Log.e(TAG, "errorCode:" + errorCode + "errorMsg:" + errorMsg);
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("errorCode", errorCode);
+                    json.put("errorMsg", errorMsg);
+                } catch (JSONException e) {
+                    Log.e(TAG, "MLRemoteAftEngine.LanguageCallback: error ->" + e.getMessage());
+                }
+                context.error(json);
+            }
+        });
     }
 
 }
