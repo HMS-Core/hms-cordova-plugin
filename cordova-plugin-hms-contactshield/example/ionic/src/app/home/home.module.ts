@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,29 +14,19 @@
     limitations under the License.
 */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
-import { HmsContactShield } from '@hmscore/ionic-native-hms-contactshield/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { IonicModule } from "@ionic/angular";
+import { FormsModule } from "@angular/forms";
+import { HomePage } from "./home.page";
+import { HmsContactShield } from "@hmscore/ionic-native-hms-contactshield/ngx";
+import { FileChooser } from "@ionic-native/file-chooser/ngx";
 
-
-import { HomePageRoutingModule } from './home-routing.module';
-
+import { HomePageRoutingModule } from "./home-routing.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule
-  ],
-  providers: [
-    HmsContactShield,
-    FileChooser
-  ],
-  declarations: [HomePage]
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  providers: [HmsContactShield, FileChooser],
+  declarations: [HomePage],
 })
-export class HomePageModule { }
+export class HomePageModule {}

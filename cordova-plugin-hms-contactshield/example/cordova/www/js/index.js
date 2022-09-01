@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ var app = {
         document.getElementById('btn_get_contact_detail').addEventListener('click', getContactDetail);
         document.getElementById('btn_get_contact_sketch').addEventListener('click', getContactSketch);
         document.getElementById('btn_get_contact_window').addEventListener('click', getContactWindow);
-
         document.getElementById('getStatus').addEventListener('click', getStatus);
         document.getElementById('getContactShieldVersion').addEventListener('click', getContactShieldVersion);
         document.getElementById('getDeviceCalibrationConfidence').addEventListener('click', getDeviceCalibrationConfidence);
@@ -37,7 +36,7 @@ var app = {
         document.getElementById('getDailySketch').addEventListener('click', getDailySketch);
         document.getElementById('putSharedKeyFilesKeys').addEventListener('click', putSharedKeyFilesKeys);
         document.getElementById('putSharedKeyFilesProvider').addEventListener('click', putSharedKeyFilesProvider);
-
+        document.getElementById('btn_put_shared_key_files_keyprovider').addEventListener('click', putSharedKeyFilesKeysProvider);
         document.getElementById('btn_get_periodic_key').addEventListener('click', getPeriodicKey);
         document.getElementById('btn_handle_callback').addEventListener('click', handleCallback);
         document.getElementById('btn_is_contact_shield_running').addEventListener('click', isContactShieldRunning);
@@ -50,6 +49,7 @@ var app = {
         document.getElementById('btn_enable_logger').addEventListener('click', enableLogger);
         document.getElementById('btn_disable_logger').addEventListener('click', disableLogger);
         document.getElementById('btn_unregister_receiver').addEventListener('click', unregisterReceiver);
+
 
         HMSContactShield.registerReceiver()
     }
@@ -326,7 +326,7 @@ async function putSharedKeyFilesKeys() {
                 token: "TOKEN_TEST",
                 diagnosisConfiguration: {},
                 fileList: [uri],
-                publicKeys: ["123","1345"],
+                publicKeys: ["123", "1345"],
             };
             const res = await HMSContactShield.putSharedKeyFilesKeys(args);
             alert("putSharedKeyFilesKeys -> success " + res);
@@ -346,4 +346,21 @@ async function putSharedKeyFilesProvider() {
         alert(JSON.stringify(ex));
     }
 }
+
+async function putSharedKeyFilesKeysProvider() {
+    try {
+        fileChooser.open(async function (uri) {
+            const args = {
+                token: "TOKEN_TEST",
+                fileList: [uri],
+                publicKeys: ["123", "1234"],
+            };
+            const res = await HMSContactShield.putSharedKeyFilesKeysProvider(args);
+            alert("putSharedKeyFilesKeysProvider -> success, " + res);
+        });
+    } catch (ex) {
+        alert(JSON.stringify(ex));
+    }
+}
+
 app.initialize();

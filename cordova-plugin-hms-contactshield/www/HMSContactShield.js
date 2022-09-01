@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.putSharedKeyFilesProvider = exports.putSharedKeyFilesKeys = exports.getDailySketch = exports.getSharedKeysDataMapping = exports.setSharedKeysDataMapping = exports.isSupportScanningWithoutLocation = exports.getDeviceCalibrationConfidence = exports.getContactShieldVersion = exports.getStatus = exports.requestPermissions = exports.hasPermission = exports.unregisterReceiver = exports.registerReceiver = exports.handleCallback = exports.enableLogger = exports.disableLogger = exports.putSharedKeyFilesOld = exports.putSharedKeyFiles = exports.isContactShieldRunning = exports.getPeriodicKey = exports.getContactWindow = exports.getContactSketch = exports.stopContactShield = exports.startContactShieldNoPersistent = exports.startContactShieldOld = exports.startContactShield = exports.getContactDetail = exports.clearData = exports.HMSStatusCode = exports.RiskLevel = exports.HMSPermission = exports.ContactShieldEngine = exports.ContactShieldSetting = void 0;
+exports.putSharedKeyFilesKeysProvider = exports.putSharedKeyFilesProvider = exports.putSharedKeyFilesKeys = exports.getDailySketch = exports.getSharedKeysDataMapping = exports.setSharedKeysDataMapping = exports.isSupportScanningWithoutLocation = exports.getDeviceCalibrationConfidence = exports.getContactShieldVersion = exports.getStatus = exports.requestPermissions = exports.hasPermission = exports.unregisterReceiver = exports.registerReceiver = exports.handleCallback = exports.enableLogger = exports.disableLogger = exports.putSharedKeyFilesOld = exports.putSharedKeyFiles = exports.isContactShieldRunning = exports.getPeriodicKey = exports.getContactWindow = exports.getContactSketch = exports.stopContactShield = exports.startContactShieldNoPersistent = exports.startContactShieldOld = exports.startContactShield = exports.getContactDetail = exports.clearData = exports.HMSStatusCode = exports.RiskLevel = exports.HMSPermission = exports.ContactShieldEngine = exports.ContactShieldSetting = void 0;
+
 const utils_1 = require("./utils");
 var ContactShieldSetting;
 (function (ContactShieldSetting) {
@@ -61,51 +62,83 @@ var HMSStatusCode;
     HMSStatusCode[HMSStatusCode["STATUS_API_DISORDER"] = 8001] = "STATUS_API_DISORDER";
     HMSStatusCode[HMSStatusCode["STATUS_APP_QUOTA_LIMITED"] = 8100] = "STATUS_APP_QUOTA_LIMITED";
     HMSStatusCode[HMSStatusCode["STATUS_DISK_FULL"] = 8101] = "STATUS_DISK_FULL";
-    HMSStatusCode[HMSStatusCode["STATUS_BLUETOOTH_OPERATION_ERROR"] = 8102] = "STATUS_BLUETOOTH_OPERATION_ERROR";
+    HMSStatusCode[HMSStatusCode["STATUS_BLUETOOTHW_OPERATION_ERROR"] = 8102] = "STATUS_BLUETOOTHW_OPERATION_ERROR";
+    HMSStatusCode[HMSStatusCode["STATUS_MISSING_PERMISSION_LOCATION"] = 8103] = "STATUS_MISSING_PERMISSION_LOCATION";
+    HMSStatusCode[HMSStatusCode["STATUS_SIGNATURE_VERIFY_FAILED"] = 8104] = "STATUS_SIGNATURE_VERIFY_FAILED";
+    HMSStatusCode[HMSStatusCode["STATUS_UNAUTHORIZED"] = 8105] = "STATUS_UNAUTHORIZED";
+    HMSStatusCode[HMSStatusCode["STATUS_EMUI_RESTRICTED"] = 8106] = "STATUS_EMUI_RESTRICTED";
     HMSStatusCode[HMSStatusCode["STATUS_MISSING_PERMISSION_BLUETOOTH"] = 8016] = "STATUS_MISSING_PERMISSION_BLUETOOTH";
     HMSStatusCode[HMSStatusCode["STATUS_MISSING_SETTING_LOCATION_ON"] = 8020] = "STATUS_MISSING_SETTING_LOCATION_ON";
     HMSStatusCode[HMSStatusCode["STATUS_INTERNAL_ERROR"] = 8060] = "STATUS_INTERNAL_ERROR";
     HMSStatusCode[HMSStatusCode["STATUS_MISSING_PERMISSION_INTERNET"] = 8064] = "STATUS_MISSING_PERMISSION_INTERNET";
 })(HMSStatusCode = exports.HMSStatusCode || (exports.HMSStatusCode = {}));
 function clearData() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ["clearData"]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", ["clearData"]);
 }
 exports.clearData = clearData;
 function getContactDetail(token) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactDetail', token ? token : ""]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getContactDetail",
+        token ? token : "",
+    ]);
 }
 exports.getContactDetail = getContactDetail;
 function startContactShield(incubationPeriod) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShield', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "startContactShield",
+        incubationPeriod
+            ? incubationPeriod
+            : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD,
+    ]);
 }
 exports.startContactShield = startContactShield;
 function startContactShieldOld(incubationPeriod) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShieldOld', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "startContactShieldOld",
+        incubationPeriod
+            ? incubationPeriod
+            : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD,
+    ]);
 }
 exports.startContactShieldOld = startContactShieldOld;
 function startContactShieldNoPersistent(incubationPeriod) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['startContactShieldNoPersistent', incubationPeriod ? incubationPeriod : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "startContactShieldNoPersistent",
+        incubationPeriod
+            ? incubationPeriod
+            : ContactShieldSetting.DEFAULT_INCUBATION_PERIOD,
+    ]);
 }
 exports.startContactShieldNoPersistent = startContactShieldNoPersistent;
 function stopContactShield() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['stopContactShield']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "stopContactShield",
+    ]);
 }
 exports.stopContactShield = stopContactShield;
 function getContactSketch(token) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactSketch', token ? token : ""]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getContactSketch",
+        token ? token : "",
+    ]);
 }
 exports.getContactSketch = getContactSketch;
 function getContactWindow(token) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactWindow', token ? token : ""]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getContactWindow",
+        token ? token : "",
+    ]);
 }
 exports.getContactWindow = getContactWindow;
 function getPeriodicKey() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getPeriodicKey']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getPeriodicKey",
+    ]);
 }
 exports.getPeriodicKey = getPeriodicKey;
 function isContactShieldRunning() {
     return __awaiter(this, void 0, void 0, function* () {
-        const { result } = yield utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['isContactShieldRunning']);
+        const { result } = yield (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", ["isContactShieldRunning"]);
         return result;
     });
 }
@@ -122,9 +155,12 @@ function putSharedKeyFiles(sharedKeyData) {
         durationWeight: 50,
         initialRiskLevelRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
         initialRiskLevelWeight: 50,
-        minimumRiskValueThreshold: 1
+        minimumRiskValueThreshold: 1,
     }, sharedKeyData.diagnosisConfiguration);
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFiles', sharedKeyData]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "putSharedKeyFiles",
+        sharedKeyData,
+    ]);
 }
 exports.putSharedKeyFiles = putSharedKeyFiles;
 function putSharedKeyFilesOld(sharedKeyData) {
@@ -139,17 +175,24 @@ function putSharedKeyFilesOld(sharedKeyData) {
         durationWeight: 50,
         initialRiskLevelRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
         initialRiskLevelWeight: 50,
-        minimumRiskValueThreshold: 1
+        minimumRiskValueThreshold: 1,
     }, sharedKeyData.diagnosisConfiguration);
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesOld', sharedKeyData]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "putSharedKeyFilesOld",
+        sharedKeyData,
+    ]);
 }
 exports.putSharedKeyFilesOld = putSharedKeyFilesOld;
 function disableLogger() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['disableLogger']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "disableLogger",
+    ]);
 }
 exports.disableLogger = disableLogger;
 function enableLogger() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['enableLogger']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "enableLogger",
+    ]);
 }
 exports.enableLogger = enableLogger;
 function handleCallback(event, callback) {
@@ -157,43 +200,64 @@ function handleCallback(event, callback) {
 }
 exports.handleCallback = handleCallback;
 function registerReceiver() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['registerReceiver']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "registerReceiver",
+    ]);
 }
 exports.registerReceiver = registerReceiver;
 function unregisterReceiver() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['unregisterReceiver']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "unregisterReceiver",
+    ]);
 }
 exports.unregisterReceiver = unregisterReceiver;
 function hasPermission(permission) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['hasPermission', permission]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "hasPermission",
+        permission,
+    ]);
 }
 exports.hasPermission = hasPermission;
 function requestPermissions(permissions) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['requestPermissions', permissions]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "requestPermissions",
+        permissions,
+    ]);
 }
 exports.requestPermissions = requestPermissions;
 function getStatus() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getStatus']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", ["getStatus"]);
 }
 exports.getStatus = getStatus;
 function getContactShieldVersion() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getContactShieldVersion']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getContactShieldVersion",
+    ]);
 }
 exports.getContactShieldVersion = getContactShieldVersion;
 function getDeviceCalibrationConfidence() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getDeviceCalibrationConfidence']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getDeviceCalibrationConfidence",
+    ]);
 }
 exports.getDeviceCalibrationConfidence = getDeviceCalibrationConfidence;
 function isSupportScanningWithoutLocation() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['isSupportScanningWithoutLocation']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "isSupportScanningWithoutLocation",
+    ]);
 }
 exports.isSupportScanningWithoutLocation = isSupportScanningWithoutLocation;
 function setSharedKeysDataMapping(sharedKey) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['setSharedKeysDataMapping', sharedKey]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "setSharedKeysDataMapping",
+        sharedKey,
+    ]);
 }
 exports.setSharedKeysDataMapping = setSharedKeysDataMapping;
 function getSharedKeysDataMapping() {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getSharedKeysDataMapping']);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getSharedKeysDataMapping",
+    ]);
 }
 exports.getSharedKeysDataMapping = getSharedKeysDataMapping;
 function getDailySketch(dailySketch) {
@@ -206,7 +270,10 @@ function getDailySketch(dailySketch) {
         thresholdOfDaysSinceHit: 0,
         minWindowScore: 0,
     }, dailySketch);
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['getDailySketch', dailySketch]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "getDailySketch",
+        dailySketch,
+    ]);
 }
 exports.getDailySketch = getDailySketch;
 function putSharedKeyFilesKeys(sharedKeyFiles) {
@@ -221,13 +288,26 @@ function putSharedKeyFilesKeys(sharedKeyFiles) {
         durationWeight: 50,
         initialRiskLevelRiskValues: [4, 4, 4, 4, 4, 4, 4, 4],
         initialRiskLevelWeight: 50,
-        minimumRiskValueThreshold: 1
+        minimumRiskValueThreshold: 1,
     }, sharedKeyFiles.diagnosisConfiguration);
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesKeys', sharedKeyFiles]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "putSharedKeyFilesKeys",
+        sharedKeyFiles,
+    ]);
 }
 exports.putSharedKeyFilesKeys = putSharedKeyFilesKeys;
 function putSharedKeyFilesProvider(files) {
-    return utils_1.asyncExec('HMSContactShield', 'ContactShieldModule', ['putSharedKeyFilesProvider', files]);
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "putSharedKeyFilesProvider",
+        files,
+    ]);
 }
 exports.putSharedKeyFilesProvider = putSharedKeyFilesProvider;
+function putSharedKeyFilesKeysProvider(sharedKeyFilesProvider) {
+    return (0, utils_1.asyncExec)("HMSContactShield", "ContactShieldModule", [
+        "putSharedKeyFilesKeysProvider",
+        sharedKeyFilesProvider,
+    ]);
+}
+exports.putSharedKeyFilesKeysProvider = putSharedKeyFilesKeysProvider;
 //# sourceMappingURL=HMSContactShield.js.map

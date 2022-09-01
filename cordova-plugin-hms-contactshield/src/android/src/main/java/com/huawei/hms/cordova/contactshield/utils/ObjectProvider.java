@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import com.huawei.hms.contactshield.ContactShieldSetting;
 import com.huawei.hms.contactshield.DailySketchConfiguration;
 import com.huawei.hms.contactshield.DiagnosisConfiguration;
@@ -54,15 +55,18 @@ public class ObjectProvider {
         return new ContactShieldSetting.Builder().setIncubationPeriod(incubationPeriod).build();
     }
 
-    public static DiagnosisConfiguration getDiagnosisConfiguration(final JSONObject diagnosisConfigJson, final Gson gson) {
+    public static DiagnosisConfiguration getDiagnosisConfiguration(final JSONObject diagnosisConfigJson,
+        final Gson gson) {
         return gson.fromJson(diagnosisConfigJson.toString(), DiagnosisConfiguration.class);
     }
 
-    public static DailySketchConfiguration dailySketchConfiguration(final JSONObject dailySketchConfigurationJson, final Gson gson) {
+    public static DailySketchConfiguration dailySketchConfiguration(final JSONObject dailySketchConfigurationJson,
+        final Gson gson) {
         return gson.fromJson(dailySketchConfigurationJson.toString(), DailySketchConfiguration.class);
     }
 
-    public static List<File> getFileList(final ContentResolver resolver, final JSONArray filePaths) throws JSONException, IOException {
+    public static List<File> getFileList(final ContentResolver resolver, final JSONArray filePaths)
+        throws JSONException, IOException {
         if (filePaths != null) {
             final List<File> files = new ArrayList<>();
             for (int i = 0; i < filePaths.length(); i++) {
@@ -138,9 +142,7 @@ public class ObjectProvider {
     }
 
     public static Map<Integer, Integer> getMapObject(JSONObject daysSinceCreationToContagiousness) {
-        return new Gson().fromJson(
-                String.valueOf(daysSinceCreationToContagiousness), new TypeToken<HashMap<Integer, Integer>>() {
-                }.getType()
-        );
+        return new Gson().fromJson(String.valueOf(daysSinceCreationToContagiousness),
+            new TypeToken<HashMap<Integer, Integer>>() { }.getType());
     }
 }

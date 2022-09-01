@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,12 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import 'zone.js/dist/zone-testing';
-import { getTestBed } from '@angular/core/testing';
+import "zone.js/dist/zone-testing";
+import { getTestBed } from "@angular/core/testing";
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
-} from '@angular/platform-browser-dynamic/testing';
+  platformBrowserDynamicTesting,
+} from "@angular/platform-browser-dynamic/testing";
 
 declare const require: any;
 
@@ -28,6 +28,6 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
+const context = require.context("./", true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);

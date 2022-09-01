@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,19 +13,24 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Component, OnInit } from '@angular/core';
-import { HmsContactShield, HMSPermission, ContactShieldEngine } from '@hmscore/ionic-native-hms-contactshield/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { Component, OnInit } from "@angular/core";
+import {
+  HmsContactShield,
+  HMSPermission,
+  ContactShieldEngine,
+} from "@hmscore/ionic-native-hms-contactshield/ngx";
+import { FileChooser } from "@ionic-native/file-chooser/ngx";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: "app-home",
+  templateUrl: "home.page.html",
+  styleUrls: ["home.page.scss"],
 })
 export class HomePage implements OnInit {
-
-  constructor(private engine: HmsContactShield, private fileChooser: FileChooser) {
-  }
+  constructor(
+    private engine: HmsContactShield,
+    private fileChooser: FileChooser
+  ) {}
 
   ngOnInit() {
     this.engine.registerReceiver();
@@ -44,12 +49,14 @@ export class HomePage implements OnInit {
 
   async requestPermissions() {
     try {
-      const permission = [HMSPermission.BLUETOOTH,
-      HMSPermission.ACCESS_NETWORK_STATE,
-      HMSPermission.BLUETOOTH,
-      HMSPermission.BLUETOOTH_ADMIN,
-      HMSPermission.ACCESS_COARSE_LOCATION,
-      HMSPermission.ACCESS_FINE_LOCATION];
+      const permission = [
+        HMSPermission.BLUETOOTH,
+        HMSPermission.ACCESS_NETWORK_STATE,
+        HMSPermission.BLUETOOTH,
+        HMSPermission.BLUETOOTH_ADMIN,
+        HMSPermission.ACCESS_COARSE_LOCATION,
+        HMSPermission.ACCESS_FINE_LOCATION,
+      ];
       await this.engine.requestPermissions(permission);
       alert("requestPermissions-> success");
     } catch (ex) {
@@ -58,7 +65,7 @@ export class HomePage implements OnInit {
   }
 
   async startContactShield() {
-    console.log('startContactShield clicked!');
+    console.log("startContactShield clicked!");
 
     try {
       const incubationPeriod = 14;
@@ -70,7 +77,7 @@ export class HomePage implements OnInit {
   }
 
   async clearData() {
-    console.log('clearData clicked!');
+    console.log("clearData clicked!");
     try {
       await this.engine.clearData();
       alert("clearData-> success");
@@ -78,7 +85,6 @@ export class HomePage implements OnInit {
       alert(JSON.stringify(ex));
     }
   }
-
 
   async getStatus() {
     try {
@@ -107,7 +113,9 @@ export class HomePage implements OnInit {
   async isSupportScanningWithoutLocation() {
     try {
       const res = await this.engine.isSupportScanningWithoutLocation();
-      alert("isSupportScanningWithoutLocation -> success " + JSON.stringify(res));
+      alert(
+        "isSupportScanningWithoutLocation -> success " + JSON.stringify(res)
+      );
     } catch (ex) {
       alert(JSON.stringify(ex));
     }
@@ -120,8 +128,8 @@ export class HomePage implements OnInit {
           1: 2,
         },
         defaultContagiousness: 1,
-        defaultReportType: 0
-      }
+        defaultReportType: 0,
+      };
       await this.engine.setSharedKeysDataMapping(params);
       alert("setSharedKeysDataMapping -> success ");
     } catch (ex) {
@@ -157,7 +165,7 @@ export class HomePage implements OnInit {
       const res = await this.engine.putSharedKeyFilesKeys(args);
       alert("putSharedKeyFilesKeys -> success " + res);
     } catch (e) {
-      alert(JSON.stringify(e))
+      alert(JSON.stringify(e));
     }
   }
 
@@ -169,12 +177,28 @@ export class HomePage implements OnInit {
       const res = await this.engine.putSharedKeyFilesProvider(fileList);
       alert(res);
     } catch (e) {
-      alert(JSON.stringify(e))
+      alert(JSON.stringify(e));
+    }
+  }
+
+  async putSharedKeyFilesKeysProvider() {
+    try {
+      const uri = await this.fileChooser.open();
+      const args = {
+        token: "TOKEN_TEST",
+        diagnosisConfiguration: {},
+        fileList: [uri],
+        publicKeys: ["123", "1345"],
+      };
+      const res = await this.engine.putSharedKeyFilesKeysProvider(args);
+      alert("putSharedKeyFilesKeysProvider -> success " + res);
+    } catch (e) {
+      alert(JSON.stringify(e));
     }
   }
 
   async getContactDetail() {
-    console.log('getContactDetail clicked!');
+    console.log("getContactDetail clicked!");
     try {
       const token = "TOKEN_TEST";
       const res = await this.engine.getContactDetail(token);
@@ -185,7 +209,7 @@ export class HomePage implements OnInit {
   }
 
   async getContactSketch() {
-    console.log('getContactSketch clicked!');
+    console.log("getContactSketch clicked!");
 
     try {
       const token = "TOKEN_TEST";
@@ -197,7 +221,7 @@ export class HomePage implements OnInit {
   }
 
   async getContactWindow() {
-    console.log('getContactWindow clicked!');
+    console.log("getContactWindow clicked!");
 
     try {
       const token = ContactShieldEngine.TOKEN_A;
@@ -209,7 +233,7 @@ export class HomePage implements OnInit {
   }
 
   async getPeriodicKey() {
-    console.log('getPeriodicKey clicked!');
+    console.log("getPeriodicKey clicked!");
 
     try {
       const res = await this.engine.getPeriodicKey();
@@ -220,20 +244,19 @@ export class HomePage implements OnInit {
   }
 
   handleCallback() {
-    console.log('handleCallback clicked!');
+    console.log("handleCallback clicked!");
 
     this.engine.handleCallback("onHasContact", (data) => {
-      alert("Event -> onHasContact, " + data)
-    })
+      alert("Event -> onHasContact, " + data);
+    });
 
     this.engine.handleCallback("onNoContact", (data) => {
-      alert("Event -> onNoContact, " + data)
-    })
+      alert("Event -> onNoContact, " + data);
+    });
   }
 
-
   async isContactShieldRunning() {
-    console.log('isContactShieldRunning clicked!');
+    console.log("isContactShieldRunning clicked!");
 
     try {
       const res = await this.engine.isContactShieldRunning();
@@ -244,7 +267,7 @@ export class HomePage implements OnInit {
   }
 
   async startContactShieldOld() {
-    console.log('startContactShieldOld clicked!');
+    console.log("startContactShieldOld clicked!");
 
     try {
       const incubationPeriod = 14;
@@ -256,7 +279,7 @@ export class HomePage implements OnInit {
   }
 
   async startContactShieldNoPersistent() {
-    console.log('startContactShieldNoPersistent clicked!');
+    console.log("startContactShieldNoPersistent clicked!");
 
     try {
       const incubationPeriod = 14;
@@ -268,7 +291,7 @@ export class HomePage implements OnInit {
   }
 
   async stopContactShield() {
-    console.log('stopContactShield clicked!');
+    console.log("stopContactShield clicked!");
 
     try {
       await this.engine.stopContactShield();
@@ -279,7 +302,7 @@ export class HomePage implements OnInit {
   }
 
   async unregisterReceiver() {
-    console.log('unregisterReceiver clicked!');
+    console.log("unregisterReceiver clicked!");
 
     try {
       await this.engine.unregisterReceiver();
@@ -289,49 +312,47 @@ export class HomePage implements OnInit {
     }
   }
 
-
   async putSharedKeyFilesOld() {
-    console.log('putSharedKeyFilesOld clicked!');
+    console.log("putSharedKeyFilesOld clicked!");
 
     try {
       const uri = await this.fileChooser.open();
 
-      console.log(uri)
+      console.log(uri);
 
       const args = {
         token: "TOKEN_TEST",
         diagnosisConfiguration: {},
-        fileList: [uri]
+        fileList: [uri],
       };
 
       const result = await this.engine.putSharedKeyFilesOld(args);
       alert(result);
     } catch (e) {
-      alert(JSON.stringify(e))
+      alert(JSON.stringify(e));
     }
   }
 
   async putSharedKeyFiles() {
-    console.log('putSharedKeyFiles clicked!');
+    console.log("putSharedKeyFiles clicked!");
 
     try {
-      const uri = await this.fileChooser.open()
+      const uri = await this.fileChooser.open();
       const args = {
         token: "TOKEN_TEST",
         diagnosisConfiguration: {},
-        fileList: [uri]
+        fileList: [uri],
       };
 
       const result = await this.engine.putSharedKeyFiles(args);
       alert(result);
     } catch (e) {
-      alert(JSON.stringify(e))
+      alert(JSON.stringify(e));
     }
-
   }
 
   async enableLogger() {
-    console.log('enableLogger clicked!');
+    console.log("enableLogger clicked!");
 
     try {
       await this.engine.enableLogger();
@@ -342,7 +363,7 @@ export class HomePage implements OnInit {
   }
 
   async disableLogger() {
-    console.log('disableLogger clicked!');
+    console.log("disableLogger clicked!");
 
     try {
       await this.engine.disableLogger();

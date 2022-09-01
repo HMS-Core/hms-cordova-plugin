@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ function updateRepositoriesGradle(file) {
 
             repoGradleContent =
                 repoGradleContent.substring(0, lastIndexOfCurlyBracket) +
-                "    maven { url 'https://developer.huawei.com/repo/' } "+COMMENT+" \n}" +
+                "    maven { url 'https://developer.huawei.com/repo/' } " + COMMENT + " \n}" +
                 repoGradleContent.substring(lastIndexOfCurlyBracket + 1);
 
             FSUtils.writeFile(file, repoGradleContent);

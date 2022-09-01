@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.huawei.hms.cordova.contactshield.constants.IntentAction;
 
 public class ContactShieldBroadcastReceiver extends BroadcastReceiver {
     public final ContactShieldEngine engine;
+
     ContactShieldCallback callback;
 
     public ContactShieldBroadcastReceiver(final Context context, final ContactShieldCallback callback) {
@@ -36,9 +37,8 @@ public class ContactShieldBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if ((intent != null)
-                && (intent.getAction().equals(IntentAction.CHECK_CONTACT_STATUS_OLD)
-                || intent.getAction().equals(IntentAction.CHECK_CONTACT_STATUS))) {
+        if ((intent != null) && (intent.getAction().equals(IntentAction.CHECK_CONTACT_STATUS_OLD) || intent.getAction()
+            .equals(IntentAction.CHECK_CONTACT_STATUS))) {
             engine.handleIntent(intent, this.callback);
         }
     }

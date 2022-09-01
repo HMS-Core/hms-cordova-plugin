@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,27 +19,30 @@ package com.huawei.hms.cordova.contactshield.basef.handler;
 import android.util.Log;
 
 public final class CorLog {
-    private CorLog(){}
     private static boolean enable = false;
+
+    private CorLog() {
+    }
 
     public static void setEnable(boolean enable) {
         CorLog.enable = enable;
     }
 
     public static void log(int priority, String tag, String message) {
-        if(enable)
+        if (enable) {
             Log.println(priority, tag, message);
+        }
     }
 
     public static void info(String tag, String message) {
         log(Log.INFO, tag, message);
     }
 
-    public static void warn(String tag, String message){
+    public static void warn(String tag, String message) {
         log(Log.WARN, tag, message);
     }
 
-    public static void debug(String tag, String message){
+    public static void debug(String tag, String message) {
         log(Log.DEBUG, tag, message);
     }
 
@@ -51,9 +54,8 @@ public final class CorLog {
         log(Log.VERBOSE, tag, message);
     }
 
-    public static void asst(String tag, String message){
+    public static void asst(String tag, String message) {
         log(Log.ASSERT, tag, message);
     }
 
 }
-

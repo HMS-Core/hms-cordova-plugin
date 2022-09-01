@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,9 +34,9 @@ public class HMSContactShield extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         final String kit = "ContactShield";
-        final String version = "5.2.1.301";
+        final String version = "6.4.0.300";
         cordovaController = new CordovaController(this, kit, version,
-                Arrays.asList(new ContactShieldModule(webView.getContext())));
+            Arrays.asList(new ContactShieldModule(webView.getContext())));
     }
 
     @Override

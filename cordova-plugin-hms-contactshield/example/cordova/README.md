@@ -20,29 +20,29 @@ This demo application demonstrates the usage of the HMS Contact Shield Kit Cordo
 
 1. Install Cordova CLI if haven't done before.
 
-    ```bash
-    npm install -g cordova
-    ```
+   ```bash
+   npm install -g cordova
+   ```
 
 2. Open the demo project's root folder.
 
 3. Add the **Android platform** to the project if haven't done before.
 
-    ```bash
-    cordova platform add android
-    ```
+   ```bash
+   cordova platform add android
+   ```
 
 4. Install `HMS Contact Shield plugin` to the project.
 
-    ```bash
-    cordova plugin add @hmscore/cordova-plugin-hms-contactshield
-    ```
+   ```bash
+   cordova plugin add @hmscore/cordova-plugin-hms-contactshield
+   ```
 
 5. Run the app.
 
-    ```bash
-    cordova run android --device
-    ```
+   ```bash
+   cordova run android --device
+   ```
 
 ---
 
@@ -50,11 +50,16 @@ This demo application demonstrates the usage of the HMS Contact Shield Kit Cordo
 
 ### Configuring Obfuscation Scripts
 
-Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK from being obfuscated.
+Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK
+from being obfuscated.
 
-**NOTE**: This step is required only if you want to minify and obfuscate your app. By default obfuscation is disabled in Cordova and Ionic apps.
+**NOTE**: This step is required only if you want to minify and obfuscate your app. By default
+obfuscation is disabled in Cordova and Ionic apps.
 
-The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled. Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard plugins. If ProGuard is enabled in your project, the Huawei Cordova Contact Shield plugin's ProGuard rules need to be added to your project. These rules are as follows:
+The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled.
+Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard
+plugins. If ProGuard is enabled in your project, the Huawei Cordova Contact Shield plugin's ProGuard
+rules need to be added to your project. These rules are as follows:
 
 ```text
 -ignorewarnings
@@ -77,15 +82,22 @@ The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps P
 
 If you have questions about how to use HMS samples, try the following options:
 
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question with **`huawei-mobile-services`**.
-- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001&ha_source=hms1) HMS Core Module is great for general questions, or seeking recommendations and opinions.
-- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1) is place to official documentation for all HMS Core Kits, you can find detailed documentations in there.
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best
+  place for any programming questions. Be sure to tag your question
+  with **`huawei-mobile-services`**.
+- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these
+  plugins, You can open an issue or submit your ideas.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001&ha_source=hms1)
+  HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1)
+  is place to official documentation for all HMS Core Kits, you can find detailed documentations in
+  there.
 
-If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+If you run into a bug in our samples, please submit an issue to
+the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ---
 
 ## 5. Licensing and Terms
 
-Huawei Contact Shield Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+Huawei Contact Shield Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,19 +13,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { IonicNativePlugin } from '@ionic-native/core';
+import { IonicNativePlugin } from "@ionic-native/core";
 export declare enum ContactShieldSetting {
-    DEFAULT_INCUBATION_PERIOD = 14
+    DEFAULT_INCUBATION_PERIOD = 14,
 }
 export declare enum ContactShieldEngine {
-    TOKEN_A = "TOKEN_WINDOW_MODE"
+    TOKEN_A = "TOKEN_WINDOW_MODE",
 }
 export declare enum HMSPermission {
     ACCESS_NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE",
     BLUETOOTH = "android.permission.BLUETOOTH",
     BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN",
     ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
-    ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION"
+    ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
 }
 export declare enum RiskLevel {
     RISK_LEVEL_INVALID = 0,
@@ -36,7 +36,7 @@ export declare enum RiskLevel {
     RISK_LEVEL_MEDIUM_HIGH = 5,
     RISK_LEVEL_HIGH = 6,
     RISK_LEVEL_EXT_HIGH = 7,
-    RISK_LEVEL_HIGHEST = 8
+    RISK_LEVEL_HIGHEST = 8,
 }
 export declare enum HMSStatusCode {
     STATUS_SUCCESS = 0,
@@ -44,11 +44,15 @@ export declare enum HMSStatusCode {
     STATUS_API_DISORDER = 8001,
     STATUS_APP_QUOTA_LIMITED = 8100,
     STATUS_DISK_FULL = 8101,
-    STATUS_BLUETOOTH_OPERATION_ERROR = 8102,
+    STATUS_BLUETOOTHW_OPERATION_ERROR = 8102,
+    STATUS_MISSING_PERMISSION_LOCATION = 8103,
+    STATUS_SIGNATURE_VERIFY_FAILED = 8104,
+    STATUS_UNAUTHORIZED = 8105,
+    STATUS_EMUI_RESTRICTED = 8106,
     STATUS_MISSING_PERMISSION_BLUETOOTH = 8016,
     STATUS_MISSING_SETTING_LOCATION_ON = 8020,
     STATUS_INTERNAL_ERROR = 8060,
-    STATUS_MISSING_PERMISSION_INTERNET = 8064
+    STATUS_MISSING_PERMISSION_INTERNET = 8064,
 }
 export interface PeriodicKey {
     content: Int8Array;
@@ -65,6 +69,11 @@ export interface SharedKeyData {
 export interface SharedKeyDataKeys {
     token: string;
     diagnosisConfiguration: DiagnosisConfiguration;
+    fileList: string[];
+    publicKeys: string[];
+}
+export interface SharedKeyDataKeysProvider {
+    token: string;
     fileList: string[];
     publicKeys: string[];
 }
@@ -122,6 +131,23 @@ export interface StatusCode {
     statusCode: number;
     statusMessage: string;
 }
+export declare enum ContactShieldStatus {
+    RUNNING = 1,
+    NOT_RUNNING = 2,
+    BLUETOOTH_OFF = 4,
+    LOCATION_OFF = 8,
+    NO_LOCATION_PERMISSION = 16,
+    HARDWARE_NOT_SUPPORT = 32,
+    STORAGE_LIMITED = 64,
+    RUNNING_FOR_ANOTHER_APP = 128,
+    UNKNOWN = 1024,
+}
+export declare enum CalibrationConfidence {
+    LOWEST = 0,
+    LOW = 1,
+    MEDIUM = 2,
+    HIGH = 3,
+}
 export declare class HmsContactShieldOriginal extends IonicNativePlugin {
     clearData(): Promise<void>;
     getContactDetail(token: string): Promise<ContactDetail[]>;
@@ -137,10 +163,13 @@ export declare class HmsContactShieldOriginal extends IonicNativePlugin {
     putSharedKeyFilesOld(sharedKeyData: SharedKeyData): Promise<void>;
     putSharedKeyFilesKeys(sharedKeyData: SharedKeyDataKeys): Promise<void>;
     putSharedKeyFilesProvider(files: string[]): Promise<void>;
+    putSharedKeyFilesKeysProvider(
+        sharedKeyFilesProvider: SharedKeyDataKeysProvider
+    ): Promise<void>;
     getDailySketch(dailySketch: DailySketchConfiguration): Promise<any>;
     setSharedKeysDataMapping(sharedKey: SharedKeyDataMapping): Promise<void>;
     getSharedKeysDataMapping(): Promise<any>;
-    getStatus(): Promise<any>;
+    getStatus(): Promise<ContactShieldStatus>;
     getContactShieldVersion(): Promise<number>;
     getDeviceCalibrationConfidence(): Promise<number>;
     isSupportScanningWithoutLocation(): Promise<boolean>;
