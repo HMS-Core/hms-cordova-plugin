@@ -1,0 +1,80 @@
+<!--
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"
+          http-equiv="Content-Security-Policy">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="no" name="msapplication-tap-highlight">
+    <meta content="initial-scale=1, width=device-width, viewport-fit=cover" name="viewport">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <title>Cordova Contact Shield Demo</title>
+</head>
+
+<body>
+<div class="app">
+    <h1>Contact Shield Kit</h1>
+
+    <input class="btn" id="btn_has_bluetooth_permission" type="submit" value="Has Permission ?">
+    <input class="btn" id="btn_request_bluetooth_permission" type="submit"
+           value="Request Permissions">
+    <input class="btn" id="btn_start_contact_shield" type="submit" value="Start Contact Shield">
+    <input class="btn" id="btn_clear_data" type="submit" value="Clear Data">
+
+    <input class="btn" id="getStatus" type="submit" value="Get Status">
+    <input class="btn" id="getContactShieldVersion" type="submit"
+           value="Get Contact Shield Version">
+    <input class="btn" id="getDeviceCalibrationConfidence" type="submit"
+           value="Get Device Calibration Confidance">
+    <input class="btn" id="isSupportScanningWithoutLocation" type="submit"
+           value="Is Support Scanning Without Location">
+    <input class="btn" id="setSharedKeysDataMapping" type="submit"
+           value="Set shared Keys Data mapping">
+    <input class="btn" id="getSharedKeysDataMapping" type="submit"
+           value="Get shared Keys Data mapping">
+    <input class="btn" id="getDailySketch" type="submit" value="Get Daily Sketch">
+    <input class="btn" id="putSharedKeyFilesKeys" type="submit" value="Put Shared Key Files Keys">
+    <input class="btn" id="putSharedKeyFilesProvider" type="submit"
+           value="Put Shared Key Files Provider">
+    <input class="btn" id="btn_put_shared_key_files_keyprovider" type="submit"
+           value="Put Shared Key Key Provider">
+
+    <input class="btn" id="btn_get_contact_detail" type="submit" value="Get Contact Detail">
+    <input class="btn" id="btn_get_contact_sketch" type="submit" value="Get Contact Sketch">
+    <input class="btn" id="btn_get_contact_window" type="submit" value="Get Contact Window">
+    <input class="btn" id="btn_get_periodic_key" type="submit" value="Get Periodic Key">
+    <input class="btn" id="btn_handle_callback" type="submit" value="Handle Callback">
+    <input class="btn" id="btn_is_contact_shield_running" type="submit"
+           value="Is Contact Shield Running">
+    <input class="btn" id="btn_put_shared_key_files_depricated" type="submit"
+           value="Put Shared Key Files Old">
+    <input class="btn" id="btn_put_shared_key_files" type="submit" value="Put Shared Key Files">
+    <input class="btn" id="btn_start_contact_shield_depricated" type="submit"
+           value="Start Contact Shield Old">
+    <input class="btn" id="btn_start_contact_shield_no_persistent" type="submit"
+           value="Start Contact Shield No Persistent">
+    <input class="btn" id="btn_stop_contact_shield" type="submit" value="Stop Contact Shield">
+    <input class="btn" id="btn_enable_logger" type="submit" value="Enable Logger">
+    <input class="btn" id="btn_disable_logger" type="submit" value="Disable Logger">
+    <input class="btn" id="btn_unregister_receiver" type="submit" value="unregister Receiver">
+</div>
+<script src="cordova.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+</body>
+
+</html>
