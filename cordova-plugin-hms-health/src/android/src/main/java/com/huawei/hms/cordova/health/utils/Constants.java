@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,7 +21,9 @@ import java.util.Map;
 
 public final class Constants {
     public static final int ERR_CAN_NOT_LOG_IN = 722;
+
     public static final int ERR_INTENT_DATA_EMPTY = 723;
+
     public static final int REQUEST_SIGN_IN_LOGIN = 1002;
 
     public static final int SIGN_IN_REQUEST_ID = 8888;

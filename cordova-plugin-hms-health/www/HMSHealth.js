@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.DataType = exports.HuaweiHiHealth = exports.on = exports.disableLogger = exports.enableLogger = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.signIn = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,93 +13,241 @@ exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthAc
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.HealthFields = exports.DataType = exports.HealthDataTypes = exports.HuaweiHiHealth = exports.on = exports.disableLogger = exports.enableLogger = exports.HealthRecordController = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.DeviceInfo = exports.AppInfo = exports.signIn = void 0;
+
 const utils_1 = require("./utils");
 function signIn(scopes) {
-    return utils_1.asyncExec('HMSHealth', 'AuthController', ['signIn', scopes]);
+    return (0, utils_1.asyncExec)("HMSHealth", "AuthController", ["signIn", scopes]);
 }
 exports.signIn = signIn;
+exports.AppInfo = {
+    createApp: function createApp(AppInfo) {
+        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["createApp", AppInfo]);
+    },
+    getDetailsUrl: function getDetailsUrl() {
+        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getDetailsUrl"]);
+    },
+    getDomainName: function getDomainName() {
+        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getDomainName"]);
+    },
+    getPackageName: function getPackageName() {
+        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getPackageName"]);
+    },
+    getVersion: function getVersion() {
+        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getVersion"]);
+    },
+};
+exports.DeviceInfo = {
+    createDeviceInfo: function createDeviceInfo(createDeviceInfoReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "DeviceInfo", [
+            "createDeviceInfo",
+            createDeviceInfoReq,
+        ]);
+    },
+};
 exports.ActivityRecordController = {
     addActivityRecord: function addActivityRecord(addActivityRecordReq) {
-        return utils_1.asyncExec('HMSHealth', 'ActivityRecordController', ['addActivityRecord', addActivityRecordReq]);
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "addActivityRecord",
+            addActivityRecordReq,
+        ]);
+    },
+    deleteActivityRecord: function deleteActivityRecord(deketeActivityRecordReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "deleteActivityRecord",
+            deketeActivityRecordReq,
+        ]);
     },
     beginActivityRecord: function beginActivityRecord(activityRecordData) {
-        return utils_1.asyncExec('HMSHealth', 'ActivityRecordController', ['beginActivityRecord', activityRecordData]);
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "beginActivityRecord",
+            activityRecordData,
+        ]);
+    },
+    beginBackgroundActivityRecord: function beginBackgroundActivityRecord(activityRecordData) {
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "beginBackgroundActivityRecord",
+            activityRecordData,
+        ]);
     },
     endActivityRecord: function endActivityRecord(activityRecordId) {
-        return utils_1.asyncExec('HMSHealth', 'ActivityRecordController', ['endActivityRecord', activityRecordId]);
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "endActivityRecord",
+            activityRecordId,
+        ]);
+    },
+    endBackgroundActivityRecord: function endBackgroundActivityRecord(activityRecordId) {
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "endBackgroundActivityRecord",
+            activityRecordId,
+        ]);
     },
     getActivityRecord: function getActivityRecord(activityRecordJSON) {
-        return utils_1.asyncExec('HMSHealth', 'ActivityRecordController', ['getActivityRecord', activityRecordJSON]);
-    }
+        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+            "getActivityRecord",
+            activityRecordJSON,
+        ]);
+    },
 };
 exports.AutoRecorderController = {
     startRecord: function startRecord(startRecordReq) {
-        return utils_1.asyncExec('HMSHealth', 'AutoRecorderController', ['startRecord', startRecordReq]);
+        return (0, utils_1.asyncExec)("HMSHealth", "AutoRecorderController", [
+            "startRecord",
+            startRecordReq,
+        ]);
     },
     stopRecord: function stopRecord(stopRecordReq) {
-        return utils_1.asyncExec('HMSHealth', 'AutoRecorderController', ['stopRecord', stopRecordReq]);
-    }
+        return (0, utils_1.asyncExec)("HMSHealth", "AutoRecorderController", [
+            "stopRecord",
+            stopRecordReq,
+        ]);
+    },
 };
 exports.ConsentsController = {
     getPermissions: function getPermissions(getPermissionsReq) {
-        return utils_1.asyncExec('HMSHealth', 'ConsentsController', ['getPermissions', getPermissionsReq]);
+        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+            "getPermissions",
+            getPermissionsReq,
+        ]);
     },
     revokeAll: function revokeAll(appId) {
-        return utils_1.asyncExec('HMSHealth', 'ConsentsController', ['revokeAll', appId]);
+        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+            "revokeAll",
+            appId,
+        ]);
     },
     revoke: function revoke(revokeReq) {
-        return utils_1.asyncExec('HMSHealth', 'ConsentsController', ['revoke', revokeReq]);
-    }
+        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+            "revoke",
+            revokeReq,
+        ]);
+    },
+    cancelAuthorizationAll: function revokeAll(cancelAuthAllReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+            "cancelAuthorizationAll",
+            cancelAuthAllReq,
+        ]);
+    },
+    cancelAuthorization: function cancelAuthorization(cancelAuthReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+            "cancelAuthorization",
+            cancelAuthReq,
+        ]);
+    },
 };
 exports.DataController = {
     initDataController: function initDataController(jsonArray) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['initDataController', jsonArray]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+            "initDataController",
+            jsonArray,
+        ]);
     },
     read: function read(readReq) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['read', readReq]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["read", readReq]);
     },
     insert: function insert(insertReq) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['insert', insertReq]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["insert", insertReq]);
     },
     update: function update(jsonObject) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['update', jsonObject]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["update", jsonObject]);
     },
     deleteData: function deleteData(jsonObject) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['deleteData', jsonObject]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+            "deleteData",
+            jsonObject,
+        ]);
     },
     readTodaySummation: function readTodaySummation(dataTypeStr) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['readTodaySummation', dataTypeStr]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+            "readTodaySummation",
+            dataTypeStr,
+        ]);
     },
     readDailySummation: function readDailySummation(jsonObject) {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['readDailySummation', jsonObject]);
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+            "readDailySummation",
+            jsonObject,
+        ]);
     },
     clearAll: function clearAll() {
-        return utils_1.asyncExec('HMSHealth', 'DataController', ['clearAll']);
-    }
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["clearAll"]);
+    },
+    readLatestData: function readLatestData(jsonObject) {
+        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+            "readLatestData",
+            jsonObject,
+        ]);
+    },
 };
 exports.SettingsController = {
     addDataType: function addDataType(jsonObject) {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['addNewDataType', jsonObject]);
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "addNewDataType",
+            jsonObject,
+        ]);
     },
     disableHiHealth: function disableHiHealth() {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['disableHiHealth']);
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "disableHiHealth",
+        ]);
     },
     readDataType: function readDataType(dataTypeName) {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['readDataType', dataTypeName]);
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "readDataType",
+            dataTypeName,
+        ]);
     },
     checkHealthAppAuthorization: function checkHealthAppAuthorization() {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['checkHealthAppAuthorization']);
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "checkHealthAppAuthorization",
+        ]);
     },
     getHealthAppAuthorization: function getHealthAppAuthorization() {
-        return utils_1.asyncExec('HMSHealth', 'SettingsController', ['getHealthAppAuthorization']);
-    }
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "getHealthAppAuthorization",
+        ]);
+    },
+    requestAuthorizationIntent: function requestAuthorizationIntent(AuthReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+            "requestAuthorizationIntent",
+            AuthReq,
+        ]);
+    },
+};
+exports.HealthRecordController = {
+    addHealthRecord: function addHealthRecord(AddHRReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+            "addHealthRecord",
+            AddHRReq,
+        ]);
+    },
+    deleteHealthRecord: function deleteHealthRecord(DeleteHRReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+            "deleteHealthRecord",
+            DeleteHRReq,
+        ]);
+    },
+    getHealthRecord: function getHealthRecord(HRReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+            "getHealthRecord",
+            HRReq,
+        ]);
+    },
+    updateHealthRecord: function updateHealthRecord(UpdateHRReq) {
+        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+            "updateHealthRecord",
+            UpdateHRReq,
+        ]);
+    },
 };
 function enableLogger() {
-    return utils_1.asyncExec('HMSHealth', 'HMSLogger', ['enableLogger']);
+    return (0, utils_1.asyncExec)("HMSHealth", "HMSLogger", ["enableLogger"]);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return utils_1.asyncExec('HMSHealth', 'HMSLogger', ['disableLogger']);
+    return (0, utils_1.asyncExec)("HMSHealth", "HMSLogger", ["disableLogger"]);
 }
 exports.disableLogger = disableLogger;
 // EVENT REGISTERATION FUNCTION FOR SINGLE FILE
@@ -110,7 +255,13 @@ function on(event, callback) {
     window.subscribeHMSEvent(event, callback);
 }
 exports.on = on;
+const HiHealthOptions = {
+    ACCESS_READ: 0,
+    ACCESS_WRITE: 1,
+};
 exports.HuaweiHiHealth = {
+    HEALTHKIT_HEARTHEALTH_READ: "https://www.huawei.com/healthkit/hearthealth.read",
+    HEALTHKIT_HEARTHEALTH_WRITE: "https://www.huawei.com/healthkit/hearthealth.write",
     HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
     HEALTHKIT_HEIGHTWEIGHT_WRITE: "https://www.huawei.com/healthkit/heightweight.write",
     HEALTHKIT_HEIGHTWEIGHT_BOTH: "https://www.huawei.com/healthkit/heightweight.both",
@@ -172,13 +323,138 @@ exports.HuaweiHiHealth = {
     HEALTHKIT_STRESS_WRITE: "https://www.huawei.com/healthkit/stress.write",
     HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
     HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
-    ALL_SCOPES: ["https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both"],
-    MAX_SCOPES: ["https://www.huawei.com/healthkit/heightweight.read", "https://www.huawei.com/healthkit/heightweight.write", "https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.read", "https://www.huawei.com/healthkit/step.write", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.read", "https://www.huawei.com/healthkit/location.write", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.read", "https://www.huawei.com/healthkit/heartrate.write", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.read", "https://www.huawei.com/healthkit/bloodglucose.write", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.read", "https://www.huawei.com/healthkit/distance.write", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.read", "https://www.huawei.com/healthkit/speed.write", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.read", "https://www.huawei.com/healthkit/calories.write", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.read", "https://www.huawei.com/healthkit/pulmonary.write", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.read", "https://www.huawei.com/healthkit/strength.write", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.read", "https://www.huawei.com/healthkit/activity.write", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.read", "https://www.huawei.com/healthkit/bodyfat.write", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.read", "https://www.huawei.com/healthkit/sleep.write", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.read", "https://www.huawei.com/healthkit/nutrition.write", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.read", "https://www.huawei.com/healthkit/bloodpressure.write", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.read", "https://www.huawei.com/healthkit/oxygensaturation.write", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.read", "https://www.huawei.com/healthkit/bodytemperature.write", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.read", "https://www.huawei.com/healthkit/reproductive.write", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both", "https://www.huawei.com/healthkit/activity.both"]
+    ALL_SCOPES: [
+        "https://www.huawei.com/healthkit/heightweight.both",
+        "https://www.huawei.com/healthkit/step.both",
+        "https://www.huawei.com/healthkit/location.both",
+        "https://www.huawei.com/healthkit/heartrate.both",
+        "https://www.huawei.com/healthkit/bloodglucose.both",
+        "https://www.huawei.com/healthkit/distance.both",
+        "https://www.huawei.com/healthkit/speed.both",
+        "https://www.huawei.com/healthkit/calories.both",
+        "https://www.huawei.com/healthkit/pulmonary.both",
+        "https://www.huawei.com/healthkit/strength.both",
+        "https://www.huawei.com/healthkit/activity.both",
+        "https://www.huawei.com/healthkit/bodyfat.both",
+        "https://www.huawei.com/healthkit/sleep.both",
+        "https://www.huawei.com/healthkit/nutrition.both",
+        "https://www.huawei.com/healthkit/bloodpressure.both",
+        "https://www.huawei.com/healthkit/oxygensaturation.both",
+        "https://www.huawei.com/healthkit/bodytemperature.both",
+        "https://www.huawei.com/healthkit/reproductive.both",
+        "https://www.huawei.com/healthkit/activityrecord.read",
+        "https://www.huawei.com/healthkit/activityrecord.write",
+        "https://www.huawei.com/healthkit/activityrecord.both",
+        "https://www.huawei.com/healthkit/stress.read",
+        "https://www.huawei.com/healthkit/stress.write",
+        "https://www.huawei.com/healthkit/stress.both",
+    ],
+    MAX_SCOPES: [
+        "https://www.huawei.com/healthkit/heightweight.read",
+        "https://www.huawei.com/healthkit/heightweight.write",
+        "https://www.huawei.com/healthkit/heightweight.both",
+        "https://www.huawei.com/healthkit/step.read",
+        "https://www.huawei.com/healthkit/step.write",
+        "https://www.huawei.com/healthkit/step.both",
+        "https://www.huawei.com/healthkit/location.read",
+        "https://www.huawei.com/healthkit/location.write",
+        "https://www.huawei.com/healthkit/location.both",
+        "https://www.huawei.com/healthkit/heartrate.read",
+        "https://www.huawei.com/healthkit/heartrate.write",
+        "https://www.huawei.com/healthkit/heartrate.both",
+        "https://www.huawei.com/healthkit/bloodglucose.read",
+        "https://www.huawei.com/healthkit/bloodglucose.write",
+        "https://www.huawei.com/healthkit/bloodglucose.both",
+        "https://www.huawei.com/healthkit/distance.read",
+        "https://www.huawei.com/healthkit/distance.write",
+        "https://www.huawei.com/healthkit/distance.both",
+        "https://www.huawei.com/healthkit/speed.read",
+        "https://www.huawei.com/healthkit/speed.write",
+        "https://www.huawei.com/healthkit/speed.both",
+        "https://www.huawei.com/healthkit/calories.read",
+        "https://www.huawei.com/healthkit/calories.write",
+        "https://www.huawei.com/healthkit/calories.both",
+        "https://www.huawei.com/healthkit/pulmonary.read",
+        "https://www.huawei.com/healthkit/pulmonary.write",
+        "https://www.huawei.com/healthkit/pulmonary.both",
+        "https://www.huawei.com/healthkit/strength.read",
+        "https://www.huawei.com/healthkit/strength.write",
+        "https://www.huawei.com/healthkit/strength.both",
+        "https://www.huawei.com/healthkit/activity.read",
+        "https://www.huawei.com/healthkit/activity.write",
+        "https://www.huawei.com/healthkit/activity.both",
+        "https://www.huawei.com/healthkit/bodyfat.read",
+        "https://www.huawei.com/healthkit/bodyfat.write",
+        "https://www.huawei.com/healthkit/bodyfat.both",
+        "https://www.huawei.com/healthkit/sleep.read",
+        "https://www.huawei.com/healthkit/sleep.write",
+        "https://www.huawei.com/healthkit/sleep.both",
+        "https://www.huawei.com/healthkit/nutrition.read",
+        "https://www.huawei.com/healthkit/nutrition.write",
+        "https://www.huawei.com/healthkit/nutrition.both",
+        "https://www.huawei.com/healthkit/bloodpressure.read",
+        "https://www.huawei.com/healthkit/bloodpressure.write",
+        "https://www.huawei.com/healthkit/bloodpressure.both",
+        "https://www.huawei.com/healthkit/oxygensaturation.read",
+        "https://www.huawei.com/healthkit/oxygensaturation.write",
+        "https://www.huawei.com/healthkit/oxygensaturation.both",
+        "https://www.huawei.com/healthkit/bodytemperature.read",
+        "https://www.huawei.com/healthkit/bodytemperature.write",
+        "https://www.huawei.com/healthkit/bodytemperature.both",
+        "https://www.huawei.com/healthkit/reproductive.read",
+        "https://www.huawei.com/healthkit/reproductive.write",
+        "https://www.huawei.com/healthkit/reproductive.both",
+        "https://www.huawei.com/healthkit/activityrecord.read",
+        "https://www.huawei.com/healthkit/activityrecord.write",
+        "https://www.huawei.com/healthkit/activityrecord.both",
+        "https://www.huawei.com/healthkit/stress.read",
+        "https://www.huawei.com/healthkit/stress.write",
+    ],
+};
+exports.HealthDataTypes = {
+    DT_INSTANTANEOUS_BLOOD_PRESSURE: "DT_INSTANTANEOUS_BLOOD_PRESSURE",
+    DT_INSTANTANEOUS_BLOOD_GLUCOSE: "DT_INSTANTANEOUS_BLOOD_GLUCOSE",
+    DT_INSTANTANEOUS_SPO2: "DT_INSTANTANEOUS_SPO2",
+    DT_INSTANTANEOUS_BODY_TEMPERATURE: "DT_INSTANTANEOUS_BODY_TEMPERATURE",
+    DT_INSTANTANEOUS_SKIN_TEMPERATURE: "DT_INSTANTANEOUS_SKIN_TEMPERATURE",
+    DT_INSTANTANEOUS_BODY_TEMPERATURE_REST: "DT_INSTANTANEOUS_BODY_TEMPERATURE_REST",
+    DT_INSTANTANEOUS_CERVICAL_MUCUS: "DT_INSTANTANEOUS_CERVICAL_MUCUS",
+    DT_INSTANTANEOUS_CERVICAL_STATUS: "DT_INSTANTANEOUS_CERVICAL_STATUS",
+    DT_CONTINUOUS_MENSTRUAL_FLOW: "DT_CONTINUOUS_MENSTRUAL_FLOW",
+    DT_INSTANTANEOUS_OVULATION_DETECTION: "DT_INSTANTANEOUS_OVULATION_DETECTION",
+    DT_INSTANTANEOUS_VAGINAL_SPECKLE: "DT_INSTANTANEOUS_VAGINAL_SPECKLE",
+    DT_INSTANTANEOUS_URIC_ACID: "DT_INSTANTANEOUS_URIC_ACID",
+    DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE: "DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE",
+    DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN: "DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN",
+    DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN: "DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN",
+    DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE: "DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE",
+    DT_HEALTH_RECORD_TACHYCARDIA: "DT_HEALTH_RECORD_TACHYCARDIA",
+    DT_HEALTH_RECORD_BRADYCARDIA: "DT_HEALTH_RECORD_BRADYCARDIA",
+    DT_HEALTH_RECORD_SLEEP: "DT_HEALTH_RECORD_SLEEP",
+    DT_HEALTH_RECORD_MENSTRUAL_CYCLE: "DT_HEALTH_RECORD_MENSTRUAL_CYCLE",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS",
+    POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS",
+    POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS",
+    POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW: "POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW",
+    POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION: "POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION",
+    POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE: "POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE",
+    DT_DYSMENORRHOEA: "DT_DYSMENORRHOEA",
+    DT_PHYSICAL_SYMPTOMS: "DT_PHYSICAL_SYMPTOMS",
+    DT_MOOD: "DT_MOOD",
+    DT_SKIN_STATUS: "DT_SKIN_STATUS",
+    DT_APPETITE: "DT_APPETITE",
+    DT_SEXUAL_ACTIVITY: "DT_SEXUAL_ACTIVITY",
 };
 exports.DataType = {
     DT_UNUSED_DATA_TYPE: "DT_UNUSED_DATA_TYPE",
     DT_CONTINUOUS_STEPS_DELTA: "DT_CONTINUOUS_STEPS_DELTA",
     DT_CONTINUOUS_STEPS_TOTAL: "DT_CONTINUOUS_STEPS_TOTAL",
+    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
     DT_INSTANTANEOUS_STEPS_RATE: "DT_INSTANTANEOUS_STEPS_RATE",
     DT_CONTINUOUS_STEPS_RATE_STATISTIC: "DT_CONTINUOUS_STEPS_RATE_STATISTIC",
     DT_CONTINUOUS_ACTIVITY_SEGMENT: "DT_CONTINUOUS_ACTIVITY_SEGMENT",
@@ -204,12 +480,47 @@ exports.DataType = {
     DT_INSTANTANEOUS_BODY_FAT_RATE: "DT_INSTANTANEOUS_BODY_FAT_RATE",
     DT_INSTANTANEOUS_NUTRITION_FACTS: "DT_INSTANTANEOUS_NUTRITION_FACTS",
     DT_INSTANTANEOUS_HYDRATE: "DT_INSTANTANEOUS_HYDRATE",
+    DT_CONTINUOUS_HYDRATE_TOTAL: "DT_CONTINUOUS_HYDRATE_TOTAL",
     DT_CONTINUOUS_WORKOUT_DURATION: "DT_CONTINUOUS_WORKOUT_DURATION",
     DT_CONTINUOUS_EXERCISE_INTENSITY: "DT_CONTINUOUS_EXERCISE_INTENSITY",
     DT_STATISTICS_SLEEP: "DT_STATISTICS_SLEEP",
     DT_CONTINUOUS_SLEEP: "DT_CONTINUOUS_SLEEP",
     DT_INSTANTANEOUS_STRESS: "DT_INSTANTANEOUS_STRESS",
     DT_INSTANTANEOUS_STRESS_STATISTICS: "DT_INSTANTANEOUS_STRESS_STATISTICS",
+    DT_CONTINUOUS_EXERCISE_INTENSITY_V2: "DT_CONTINUOUS_EXERCISE_INTENSITY_V2",
+    DT_STATISTICS_EXERCISE_INTENSITY_V2: "DT_STATISTICS_EXERCISE_INTENSITY_V2",
+    DT_INSTANTANEOUS_RESTING_HEART_RATE: "DT_INSTANTANEOUS_RESTING_HEART_RATE",
+    DT_RESTING_HEART_RATE_STATISTICS: "DT_RESTING_HEART_RATE_STATISTICS",
+    DT_CONTINUOUS_JUMP: "DT_CONTINUOUS_JUMP",
+    DT_CONTINUOUS_JUMP_STATISTICS: "DT_CONTINUOUS_JUMP_STATISTICS",
+    DT_INSTANTANEOUS_EXERCISE_HEART_RATE: "DT_INSTANTANEOUS_EXERCISE_HEART_RATE",
+    DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS: "DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS",
+    DT_INSTANTANEOUS_ALTITUDE: "DT_INSTANTANEOUS_ALTITUDE",
+    DT_INSTANTANEOUS_SKIP_SPEED: "DT_INSTANTANEOUS_SKIP_SPEED",
+    DT_CONTINUOUS_SKIP_SPEED_STATISTICS: "DT_CONTINUOUS_SKIP_SPEED_STATISTICS",
+    DT_CONTINUOUS_ALTITUDE_STATISTICS: "DT_CONTINUOUS_ALTITUDE_STATISTICS",
+    DT_CONTINUOUS_RUN_POSTURE: "DT_CONTINUOUS_RUN_POSTURE",
+    DT_CONTINUOUS_RUN_POSTURE_STATISTICS: "DT_CONTINUOUS_RUN_POSTURE_STATISTICS",
+    DT_ACTIVITY_FEATURE_JUMPING_ROPE: "DT_ACTIVITY_FEATURE_JUMPING_ROPE",
+    DT_ACTIVITY_FEATURE_BASKETBALL: "DT_ACTIVITY_FEATURE_BASKETBALL",
+    DT_RESISTANCE: "DT_RESISTANCE",
+    DT_RESISTANCE_STATISTICS: "DT_RESISTANCE_STATISTICS",
+    DT_ACTIVITY_FEATURE_ROWING: "DT_ACTIVITY_FEATURE_ROWING",
+    DT_INSTANTANEOUS_STROKE_RATE: "DT_INSTANTANEOUS_STROKE_RATE",
+    DT_INSTANTANEOUS_PEDALING_RATE: "DT_INSTANTANEOUS_PEDALING_RATE",
+    DT_CONTINUOUS_STROKE_RATE_STATISTICS: "DT_CONTINUOUS_STROKE_RATE_STATISTICS",
+    DT_CONTINUOUS_PEDALING_RATE_STATISTICS: "DT_CONTINUOUS_PEDALING_RATE_STATISTICS",
+    DT_INSTANTANEOUS_SWIMMING_STROKE_RATE: "DT_INSTANTANEOUS_SWIMMING_STROKE_RATE",
+    DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS: "DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS",
+    DT_INSTANTANEOUS_SWIMMING_SWOLF: "DT_INSTANTANEOUS_SWIMMING_SWOLF",
+    DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS: "DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS",
+    DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER: "DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER",
+    DT_ACTIVITY_FEATURE_SWIMMING_POOL: "DT_ACTIVITY_FEATURE_SWIMMING_POOL",
+    DT_ACTIVITY_FEATURE_SKIING: "DT_ACTIVITY_FEATURE_SKIING",
+    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN",
+    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
+    DT_VO2MAX: "DT_VO2MAX",
+    DT_VO2MAX_STATISTICS: "DT_VO2MAX_STATISTICS",
     POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
     POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
     POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
@@ -226,7 +537,78 @@ exports.DataType = {
     POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS",
     POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS",
     POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS: "POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS",
-    POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION"
+    POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
+};
+exports.HealthFields = {
+    FIELD_SYSTOLIC_PRESSURE: "FIELD_SYSTOLIC_PRESSURE",
+    FIELD_SYSTOLIC_PRESSURE_AVG: "FIELD_SYSTOLIC_PRESSURE_AVG",
+    FIELD_SYSTOLIC_PRESSURE_MIN: "FIELD_SYSTOLIC_PRESSURE_MIN",
+    FIELD_SYSTOLIC_PRESSURE_MAX: "FIELD_SYSTOLIC_PRESSURE_MAX",
+    FIELD_SYSTOLIC_PRESSURE_LAST: "FIELD_SYSTOLIC_PRESSURE_LAST",
+    FIELD_DIASTOLIC_PRESSURE: "FIELD_DIASTOLIC_PRESSURE",
+    FIELD_DIASTOLIC_PRESSURE_AVG: "FIELD_DIASTOLIC_PRESSURE_AVG",
+    FIELD_DIASTOLIC_PRESSURE_MIN: "FIELD_DIASTOLIC_PRESSURE_MIN",
+    FIELD_DIASTOLIC_PRESSURE_MAX: "FIELD_DIASTOLIC_PRESSURE_MAX",
+    FIELD_DIASTOLIC_PRESSURE_LAST: "FIELD_DIASTOLIC_PRESSURE_LAST",
+    FIELD_SPHYGMUS: "FIELD_SPHYGMUS",
+    FIELD_SPHYGMUS_AVG: "FIELD_SPHYGMUS_AVG",
+    FIELD_SPHYGMUS_MIN: "FIELD_SPHYGMUS_MIN",
+    FIELD_SPHYGMUS_MAX: "FIELD_SPHYGMUS_MAX",
+    FIELD_SPHYGMUS_LAST: "FIELD_SPHYGMUS_LAST",
+    FIELD_BODY_POSTURE: "FIELD_BODY_POSTURE",
+    FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE: "FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE",
+    FIELD_MEASUREMENT_ANOMALY_FLAG: "FIELD_MEASUREMENT_ANOMALY_FLAG",
+    FIELD_MEASUREMENT_REMINDER: "FIELD_MEASUREMENT_REMINDER",
+    FIELD_BEFORE_MEASURE_ACTIVITY: "FIELD_BEFORE_MEASURE_ACTIVITY",
+    FIELD_LEVEL: "FIELD_LEVEL",
+    FIELD_MEASURE_TIME: "FIELD_MEASURE_TIME",
+    FIELD_CORRELATION_WITH_MEALTIME: "FIELD_CORRELATION_WITH_MEALTIME",
+    FIELD_CORRELATION_WITH_SLEEP_STATE: "FIELD_CORRELATION_WITH_SLEEP_STATE",
+    FIELD_SAMPLE_SOURCE: "FIELD_SAMPLE_SOURCE",
+    FIELD_SATURATION: "FIELD_SATURATION",
+    FIELD_SATURATION_AVG: "FIELD_SATURATION_AVG",
+    FIELD_SATURATION_MIN: "FIELD_SATURATION_MIN",
+    FIELD_SATURATION_MAX: "FIELD_SATURATION_MAX",
+    FIELD_SATURATION_LAST: "FIELD_SATURATION_LAST",
+    FIELD_OXYGEN_SUPPLY_FLOW_RATE: "FIELD_OXYGEN_SUPPLY_FLOW_RATE",
+    FIELD_OXYGEN_SUPPLY_FLOW_RATE_AVG: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_AVG",
+    FIELD_OXYGEN_SUPPLY_FLOW_RATE_MIN: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_MIN",
+    FIELD_OXYGEN_SUPPLY_FLOW_RATE_MAX: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_MAX",
+    FIELD_OXYGEN_THERAPY: "FIELD_OXYGEN_THERAPY",
+    FIELD_SPO2_MEASUREMENT_MECHANISM: "FIELD_SPO2_MEASUREMENT_MECHANISM",
+    FIELD_SPO2_MEASUREMENT_APPROACH: "FIELD_SPO2_MEASUREMENT_APPROACH",
+    FIELD_TEMPERATURE: "FIELD_TEMPERATURE",
+    FIELD_MEASURE_BODY_PART_OF_TEMPERATURE: "FIELD_MEASURE_BODY_PART_OF_TEMPERATURE",
+    FIELD_TEXTURE: "FIELD_TEXTURE",
+    FIELD_AMOUNT: "FIELD_AMOUNT",
+    FIELD_POSITION: "FIELD_POSITION",
+    FIELD_DILATION_STATUS: "FIELD_DILATION_STATUS",
+    FIELD_FIRMNESS_LEVEL: "FIELD_FIRMNESS_LEVEL",
+    FIELD_VOLUME: "FIELD_VOLUME",
+    FIELD_DETECTION_RESULT: "FIELD_DETECTION_RESULT",
+    FIELD_URIC_ACID: "FIELD_URIC_ACID",
+    FIELD_NITRITE: "FIELD_NITRITE",
+    FIELD_UROBILINOGEN: "FIELD_UROBILINOGEN",
+    FIELD_BILIRUBIN: "FIELD_BILIRUBIN",
+    FIELD_GLUCOSE: "FIELD_GLUCOSE",
+    FIELD_THRESHOLD: "FIELD_THRESHOLD",
+    FIELD_AVG_HEART_RATE: "FIELD_AVG_HEART_RATE",
+    FIELD_MAX_HEART_RATE: "FIELD_MAX_HEART_RATE",
+    FIELD_MIN_HEART_RATE: "FIELD_MIN_HEART_RATE",
+    FIELD_RECORD_DAY: "FIELD_RECORD_DAY",
+    FIELD_STATUS: "FIELD_STATUS",
+    FIELD_SUB_STATUS: "FIELD_SUB_STATUS",
+    FIELD_REMARKS: "FIELD_REMARKS",
+    FIELD_TIME_ZONE: "FIELD_TIME_ZONE",
+    FIELD_START_FLAG: "FIELD_START_FLAG",
+    FIELD_END_FLAG: "FIELD_END_FLAG",
+    FIELD_DYSMENORRHOEA_LEVEL: "FIELD_DYSMENORRHOEA_LEVEL",
+    FIELD_PHYSICAL_SYMPTOMS: "FIELD_PHYSICAL_SYMPTOMS",
+    FIELD_MOOD: "FIELD_MOOD",
+    FIELD_SKIN_STATUS: "FIELD_SKIN_STATUS",
+    FIELD_APPETITE: "FIELD_APPETITE",
+    FIELD_CONTRACEPTIVE_MEASURES: "FIELD_CONTRACEPTIVE_MEASURES",
 };
 exports.HiHealthActivities = {
     MIME_TYPE_PREFIX: "vnd.huawei.hihealth.activity/",
@@ -363,8 +745,10 @@ exports.HiHealthActivities = {
     INDOOR_WALK: "indoor_walk",
     INDOOR_RUNNING: "indoor_running",
     MOUNTIN_CLIMBING: "mountin_climbing",
+    MOUNTAIN_CLIMBING: "mountain_climbing",
     CROSS_COUNTRY_RACE: "cross_country_race",
     ROLLER_SKATING: "roller_skatting",
+    ROLLER_SKAING: "roller_skating",
     HUNTING: "hunting",
     FLY_A_KITE: "fly_a_kite",
     SWING: "swing",
@@ -386,7 +770,10 @@ exports.HiHealthActivities = {
     KARATE: "karate",
     BODY_COMBAT: "body_combat",
     KENDO: "kendo",
-    TAI_CHI: "tai_chi"
+    TAI_CHI: "tai_chi",
+    FREE_DIVING: "freediving",
+    APNEA_TRAINING: "apnea_training",
+    APNEA_TEST: "apnea_test",
 };
 exports.DataGenerateType = {
     DATA_TYPE_INIT: 1,
@@ -395,7 +782,17 @@ exports.DataGenerateType = {
     DATA_TYPE_CLEAN: 2,
     DATA_TYPE_CONVERTED: 3,
     DATA_TYPE_MERGED: 4,
-    DATA_TYPE_POLYMERIZED: 5
+    DATA_TYPE_POLYMERIZED: 5,
+    EXTRA_DATA_SOURCE: "vnd.huawei.hihealth.data_collector",
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_ESH2002: 1,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_ESH2010: 2,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_AAMI: 3,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_BHS_A_A: 4,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_BHS_A_B: 5,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_BHS_B_A: 6,
+    HEALTH_DATA_QUALITY_BLOOD_PRESSURE_BHS_B_B: 7,
+    HEALTH_DATA_QUALITY_BLOOD_GLUCOSE_ISO151972003: 8,
+    HEALTH_DATA_QUALITY_BLOOD_GLUCOSE_ISO151972013: 9,
 };
 exports.TimeUnit = {
     HOURS: "HOURS",
@@ -404,7 +801,7 @@ exports.TimeUnit = {
     MILLISECONDS: "MILLISECONDS",
     MINUTES: "MINUTES",
     NANOSECONDS: "NANOSECONDS",
-    SECONDS: "SECONDS"
+    SECONDS: "SECONDS",
 };
 exports.Field = {
     FORMAT_INT32: 1,
@@ -455,9 +852,11 @@ exports.Field = {
     FIELD_HEIGHT: "FIELD_HEIGHT",
     FIELD_STEPS_DELTA: "FIELD_STEPS_DELTA",
     FIELD_STEPS: "FIELD_STEPS",
+    FIELD_DURATION: "FIELD_DURATION",
     FIELD_STEP_LENGTH: "FIELD_STEP_LENGTH",
     FIELD_LATITUDE: "FIELD_LATITUDE",
     FIELD_LONGITUDE: "FIELD_LONGITUDE",
+    FIELD_COORDINATE: "FIELD_COORDINATE",
     FIELD_BODY_WEIGHT: "FIELD_BODY_WEIGHT",
     FIELD_BMI: "FIELD_BMI",
     FIELD_BODY_FAT: "FIELD_BODY_FAT",
@@ -482,24 +881,49 @@ exports.Field = {
     FIELD_CALORIES_TOTAL: "FIELD_CALORIES_TOTAL",
     FIELD_POWER: "FIELD_POWER",
     FIELD_HYDRATE: "FIELD_HYDRATE",
+    FIELD_HYDRATE_TOTAL: "FIELD_HYDRATE_TOTAL",
     FIELD_MEAL: "FIELD_MEAL",
     FIELD_FOOD: "FIELD_FOOD",
     FIELD_NUTRIENTS: "FIELD_NUTRIENTS",
     FIELD_NUTRIENTS_FACTS: "FIELD_NUTRIENTS_FACTS",
+    FIELD_FRAGMENTS: "FIELD_FRAGMENTS",
     FIELD_AVG: "FIELD_AVG",
     FIELD_MAX: "FIELD_MAX",
+    FIELD_LAST: "FIELD_LAST",
+    FIELD_AVG_BODY_FAT_RATE: "FIELD_AVG_BODY_FAT_RATE",
+    FIELD_MAX_BODY_FAT_RATE: "FIELD_MAX_BODY_FAT_RATE",
+    FIELD_MIN_BODY_FAT_RATE: "FIELD_MIN_BODY_FAT_RATE",
+    FIELD_AVG_SKELETAL_MUSCLEL_MASS: "FIELD_AVG_SKELETAL_MUSCLEL_MASS",
+    FIELD_MAX_SKELETAL_MUSCLEL_MASS: "FIELD_MAX_SKELETAL_MUSCLEL_MASS",
+    FIELD_MIN_SKELETAL_MUSCLEL_MASS: "FIELD_MIN_SKELETAL_MUSCLEL_MASS",
+    FIELD_JUMP_HEIGHT: "FIELD_JUMP_HEIGHT",
+    FIELD_PASSAGE_DURATION: "FIELD_PASSAGE_DURATION",
+    FIELD_JUMP_TIMES: "FIELD_JUMP_TIMES",
+    FIELD_MIN_JUMP_HEIGHT: "FIELD_MIN_JUMP_HEIGHT",
+    FIELD_AVG_JUMP_HEIGHT: "FIELD_AVG_JUMP_HEIGHT",
+    FIELD_MAX_JUMP_HEIGHT: "FIELD_MAX_JUMP_HEIGHT",
+    FIELD_MIN_PASSAGE_DURATION: "FIELD_MIN_PASSAGE_DURATION",
+    FIELD_AVG_PASSAGE_DURATION: "FIELD_AVG_PASSAGE_DURATION",
+    FIELD_MAX_PASSAGE_DURATION: "FIELD_MAX_PASSAGE_DURATION",
     FIELD_MIN: "FIELD_MIN",
+    FIELD_ASCENT_TOTAL: "FIELD_ASCENT_TOTAL",
+    FIELD_DESCENT_TOTAL: "FIELD_DESCENT_TOTAL",
     FIELD_MIN_LATITUDE: "FIELD_MIN_LATITUDE",
     FIELD_MIN_LONGITUDE: "FIELD_MIN_LONGITUDE",
     FIELD_MAX_LATITUDE: "FIELD_MAX_LATITUDE",
     FIELD_MAX_LONGITUDE: "FIELD_MAX_LONGITUDE",
     FIELD_APPEARANCE: "FIELD_APPEARANCE",
     FIELD_INTENSITY: "FIELD_INTENSITY",
+    EXERCISE_TYPE: "EXERCISE_TYPE",
+    INTENSITY_MAP: "INTENSITY_MAP",
     FALL_ASLEEP_TIME: "FALL_ASLEEP_TIME",
     WAKE_UP_TIME: "WAKE_UP_TIME",
     SLEEP_SCORE: "SLEEP_SCORE",
     SLEEP_LATENCY: "SLEEP_LATENCY",
     GO_BED_TIME: "GO_BED_TIME",
+    PREPARE_SLEEP_TIME: "PREPARE_SLEEP_TIME",
+    OFF_BED_TIME: "OFF_BED_TIME",
+    GO_BED_TIME_NEW: "GO_BED_TIME_NEW",
     SLEEP_EFFICIENCY: "SLEEP_EFFICIENCY",
     LIGHT_SLEEP_TIME: "LIGHT_SLEEP_TIME",
     DEEP_SLEEP_TIME: "DEEP_SLEEP_TIME",
@@ -517,5 +941,103 @@ exports.Field = {
     STRESS_MIN: "STRESS_MIN",
     STRESS_LAST: "STRESS_LAST",
     MEASURE_COUNT: "MEASURE_COUNT",
+    VDOT: "VDOT",
+    TRAINING_INDEX: "TRAINING_INDEX",
+    FATIGUE_INDEX: "FATIGUE_INDEX",
+    PHYSICAL_FITNESS_INDEX: "PHYSICAL_FITNESS_INDEX",
+    STATE_INDEX: "STATE_INDEX",
+    ALTITUDE: "ALTITUDE",
+    SKIP_SPEED: "SKIP_SPEED",
+    AVG: "AVG",
+    MAX: "MAX",
+    MIN: "MIN",
+    LAST: "LAST",
+    SKIP_NUM: "SKIP_NUM",
+    STUMBLING_ROPE: "STUMBLING_ROPE",
+    MAX_SKIPPING_TIMES: "MAX_SKIPPING_TIMES",
+    DOUBLE_SHAKE: "DOUBLE_SHAKE",
+    TRIPLE_SHAKE: "TRIPLE_SHAKE",
+    LAOVERALL_SCOREST: "OVERALL_SCORE",
+    BURST_SCORE: "BURST_SCORE",
+    LJUMP_SCOREAST: "JUMP_SCORE",
+    RUN_SCORE: "RUN_SCORE",
+    BREAKTHROUGH_SCORE: "BREAKTHROUGH_SCORE",
+    SPORT_INTENSITY_SCORE: "SPORT_INTENSITY_SCORE",
+    DIVING_TIME: "DIVING_TIME",
+    DIVING_COUNT: "DIVING_COUNT",
+    MAX_DEPTH: "MAX_DEPTH",
+    AVG_DEPTH: "AVG_DEPTH",
+    MAX_UNDERWATER_TIME: "MAX_UNDERWATER_TIME",
+    NO_FLY_TIME: "NO_FLY_TIME",
+    WATER_TYPE: "WATER_TYPE",
+    SURFACE_TIME: "SURFACE_TIME",
+    START_LAT: "START_LAT",
+    START_LON: "START_LON",
+    END_LAT: "END_LAT",
+    END_LON: "END_LON",
+    STARTBREATH_TIME_LAT: "BREATH_TIME",
+    BREATH_HOLDING_TIME: "BREATH_HOLDING_TIME",
+    BREATH_HOLDING_TRAIN_RHYTHM: "BREATH_HOLDING_TRAIN_RHYTHM",
+    DIAPHRAGM_TIME: "DIAPHRAGM_TIME",
+    ASCENT_RATE: "ASCENT_RATE",
+    DESCENT_RATE: "DESCENT_RATE",
+    GROUND_CONTACT_TIME: "GROUND_CONTACT_TIME",
+    GROUND_IMPACT_ACCELERATION: "GROUND_IMPACT_ACCELERATION",
+    EVERSION_EXCURSION: "EVERSION_EXCURSION",
+    SWING_ANGLE: "SWING_ANGLE",
+    HANG_TIME: "HANG_TIME",
+    GROUND_HANG_TIME_RATE: "GROUND_HANG_TIME_RATE",
+    FORE_FOOT_STRIKE_PATTERN: "FORE_FOOT_STRIKE_PATTERN",
+    HIND_FOOT_STRIKE_PATTERN: "HIND_FOOT_STRIKE_PATTERN",
+    WHOLE_FOOT_STRIKE_PATTERN: "WHOLE_FOOT_STRIKE_PATTERN",
+    IMPACVERTICAL_OSCILLATIONT_PEAK: "VERTICAL_OSCILLATION",
+    VERTICAL_RATIO: "VERTICAL_RATIO",
+    IMPACT_PEAK: "IMPACT_PEAK",
+    GC_TIME_BALANCE: "GC_TIME_BALANCE",
+    IMPAAVG_VERTICAL_IMPACT_RATECT_PEAK: "AVG_VERTICAL_IMPACT_RATE",
+    AVG_GROUND_CONTACT_TIME: "AVG_GROUND_CONTACT_TIME",
+    IMPACTAVG_GROUND_IMPACT_ACCELERATION_PEAK: "AVG_GROUND_IMPACT_ACCELERATION",
+    IMPAAVG_SWING_ANGLECT_PEAK: "AVG_SWING_ANGLE",
+    AVG_EVERSION_EXCURSION: "AVG_EVERSION_EXCURSION",
+    IMPACAVG_HANG_TIMET_PEAK: "AVG_HANG_TIME",
+    AVG_IMPACT_PEAK: "AVG_IMPACT_PEAK",
+    AVG_IAVG_GC_TIME_BALANCEMPACT_PEAK: "AVG_GC_TIME_BALANCE",
+    AVG_IMAVG_VERTICAL_OSCILLATIONPACT_PEAK: "AVG_VERTICAL_OSCILLATION",
+    AVG_IMPACT_PAVG_VERTICAL_RATIOEAK: "AVG_VERTICAL_RATIO",
+    AVG_IMPACTAVG_GROUND_HANG_TIME_RATE_PEAK: "AVG_GROUND_HANG_TIME_RATE",
+    RESISTANCE_LEVEL: "RESISTANCE_LEVEL",
+    AVG_IMPMAX_RESACT_PEAK: "MAX_RES",
+    MIN_RES: "MIN_RES",
+    RESISTANCE_LEVEL_ONE_LOWER_LIMIT: "RESISTANCE_LEVEL_ONE_LOWER_LIMIT",
+    RESISTANCE_LEVEL_TWO_LOWER_LIMIT: "RESISTANCE_LEVEL_TWO_LOWER_LIMIT",
+    RESISTANCE_LEVEL_THREE_LOWER_LIMIT: "RESISTANCE_LEVEL_THREE_LOWER_LIMIT",
+    RESISTANCE_LEVEL_FOUR_LOWER_LIMIT: "RESISTANCE_LEVEL_FOUR_LOWER_LIMIT",
+    RESISTANCE_LEVEL_FIVE_LOWER_LIMIT: "RESISTANCE_LEVEL_FIVE_LOWER_LIMIT",
+    RESISTANCE_LEVEL_FIVE_UPPER_LIMIT: "RESISTANCE_LEVEL_FIVE_UPPER_LIMIT",
+    RESISTANCE_LEVEL_ONE_TIME: "RESISTANCE_LEVEL_ONE_TIME",
+    RESISTANCE_LEVEL_TWO_TIMES: "RESISTANCE_LEVEL_TWO_TIME",
+    RESISTANCE_LEVEL_THREE_TIME: "RESISTANCE_LEVEL_THREE_TIME",
+    RESISTANCE_LEVEL_FOUR_TIME: "RESISTANCE_LEVEL_FOUR_TIME",
+    RESISTANCE_LEVEL_FIVE_TIME: "RESISTANCE_LEVEL_FIVE_TIME",
+    VO2MAXS: "VO2MAX",
+    STROKES_NUM: "STROKES_NUM",
+    SPM: "SPM",
+    RPM: "RPM",
+    SWOLF: "SWOLF",
+    PULL_TIMES: "PULL_TIMES",
+    SWIMMING_STROKE: "SWIMMING_STROKE",
+    POOL_LENGTH: "POOL_LENGTH",
+    TRIP_TIMES: "TRIP_TIMES",
+    MAX_SLOPE_PERCENT: "MAX_SLOPE_PERCENT",
+    SLEEP_TYPE: "SLEEP_TYPE",
+    MAX_SLOPE_DEGREE: "MAX_SLOPE_DEGREE",
+    SKIING_TOTAL_TIME: "SKIING_TOTAL_TIME",
+    SKIING_TOTAL_DISTANCE: "SKIING_TOTAL_DISTANCE",
+    GOLF_SWING_COUNT: "GOLF_SWING_COUNT",
+    GOLF_SWING_SPEED: "GOLF_SWING_SPEED",
+    GOLF_MAX_SWING_SPEED: "GOLF_MAX_SWING_SPEED",
+    GOLF_SWING_TEMPO: "GOLF_SWING_TEMPO",
+    GOLF_DOWN_SWING_TIME: "GOLF_DOWN_SWING_TIME",
+    GOLF_BACK_SWING_TIME: "GOLF_BACK_SWING_TIME",
 };
 //# sourceMappingURL=HMSHealth.js.map

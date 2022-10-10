@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-health",
     "description": "Cordova HMS Health Plugin",
-    "version": "5.0.5-302",
+    "version": "6.7.0-300",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {
@@ -12,7 +12,7 @@
     "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "readmeFilename": "README.md",
     "cordova": {
         "id": "cordova-plugin-hms-health",
@@ -36,13 +36,14 @@
         "src",
         "types",
         "www",
-        "LICENCE",
+        "LICENSE",
         "package.json",
         "plugin.xml",
         "README.md"
     ],
     "dependencies": {
-        "@types/cordova": "0.0.34"
+        "@types/cordova": "0.0.34",
+        "cordova": "^11.0.0"
     },
     "devDependencies": {
         "typescript": "3.9.5"

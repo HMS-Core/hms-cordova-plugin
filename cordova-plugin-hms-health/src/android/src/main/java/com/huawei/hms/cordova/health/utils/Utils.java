@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,20 +16,31 @@
 
 package com.huawei.hms.cordova.health.utils;
 
+import android.content.Context;
 import android.util.Log;
+
 import com.huawei.hms.cordova.health.constants.Constants;
 import com.huawei.hms.hihealth.data.ActivityRecord;
 import com.huawei.hms.hihealth.data.ActivitySummary;
+import com.huawei.hms.hihealth.data.AppInfo;
 import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.data.DeviceInfo;
 import com.huawei.hms.hihealth.data.Field;
 import com.huawei.hms.hihealth.data.Group;
+import com.huawei.hms.hihealth.data.HealthRecord;
+import com.huawei.hms.hihealth.data.MapValue;
 import com.huawei.hms.hihealth.data.PaceSummary;
 import com.huawei.hms.hihealth.data.SamplePoint;
 import com.huawei.hms.hihealth.data.SampleSet;
 import com.huawei.hms.hihealth.data.ScopeLangItem;
+import com.huawei.hms.hihealth.data.Value;
 import com.huawei.hms.hihealth.result.ReadReply;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,9 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public enum Utils {
     INSTANCE;
@@ -49,7 +57,102 @@ public enum Utils {
         return variable != null ? variable.getTimeUnitType() : TimeUnit.MILLISECONDS;
     }
 
-    public static JSONObject getJSONFromReadReply(final ReadReply readReply, final TimeUnit timeUnit, final DataType dataType) {
+    public static SamplePoint valueSetterSample(Field field, Object fieldValue, SamplePoint samplePointForSet) {
+        if (field != null) {
+            Integer format = field.getFormat();
+            switch (format) {
+                case Field.FORMAT_INT32:
+                    samplePointForSet.getFieldValue(field).setIntValue(((Number) fieldValue).intValue());
+                    break;
+                case Field.FORMAT_FLOAT:
+                    samplePointForSet.getFieldValue(field)
+                            .setFloatValue(((Number) fieldValue).floatValue());
+                    break;
+                case Field.FORMAT_STRING:
+                    samplePointForSet.getFieldValue(field).setStringValue((String) fieldValue);
+                    break;
+                case Field.FORMAT_MAP:
+                    Map<String, Double> doubleMap = (Map<String, Double>) fieldValue;
+                    Map<String, Float> floatMap = new HashMap<>();
+                    for (Map.Entry<String, Double> entry : doubleMap.entrySet()) {
+                        floatMap.put(entry.getKey(), entry.getValue().floatValue());
+                    }
+                    samplePointForSet.getFieldValue(field).setStringValue(String.valueOf(floatMap));
+                    break;
+                case Field.FORMAT_LONG:
+                    samplePointForSet.getFieldValue(field).setDoubleValue(((Number) fieldValue).longValue());
+                    break;
+                default:
+                    break;
+            }
+        }
+        return samplePointForSet;
+    }
+
+    public static SamplePoint.Builder valueSetter(Field field, Object fieldValue, SamplePoint.Builder builder) {
+        if (field != null) {
+            switch (field.getFormat()) {
+                case Field.FORMAT_INT32:
+                    builder.setFieldValue(field, ((Number) fieldValue).intValue());
+                    break;
+                case Field.FORMAT_FLOAT:
+                    builder.setFieldValue(field, ((Number) fieldValue).floatValue());
+                    break;
+                case Field.FORMAT_STRING:
+                    builder.setFieldValue(field, (String) fieldValue);
+                    break;
+                case Field.FORMAT_MAP:
+                    Map<String, Double> doubleMap = (Map<String, Double>) fieldValue;
+                    Map<String, Float> floatMap = new HashMap<>();
+                    for (Map.Entry<String, Double> entry : doubleMap.entrySet()) {
+                        floatMap.put(entry.getKey(), entry.getValue().floatValue());
+                    }
+                    builder.setFieldValue(field, String.valueOf(floatMap));
+                    break;
+                case Field.FORMAT_LONG:
+                    builder.setFieldValue(field, ((Number) fieldValue).longValue());
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        return builder;
+    }
+
+    public static void valueHealthRecordSetter(Field field, Object fieldValue, HealthRecord.Builder hr) {
+        if (field != null) {
+            switch (field.getFormat()) {
+                case Field.FORMAT_INT32:
+                    hr.setFieldValue(field, ((Number) fieldValue).intValue());
+                    break;
+                case Field.FORMAT_FLOAT:
+                    hr.setFieldValue(field, ((Number) fieldValue).floatValue());
+                    break;
+                case Field.FORMAT_STRING:
+                    hr.setFieldValue(field, (String) fieldValue);
+                    break;
+                case Field.FORMAT_MAP:
+                    Map<String, Double> doubleMap = (Map<String, Double>) fieldValue;
+                    Map<String, Float> floatMap = new HashMap<>();
+                    for (Map.Entry<String, Double> entry : doubleMap.entrySet()) {
+                        floatMap.put(entry.getKey(), entry.getValue().floatValue());
+                    }
+                    hr.setFieldValue(field, String.valueOf(floatMap));
+                    break;
+                case Field.FORMAT_LONG:
+                    hr.setFieldValue(field, ((Number) fieldValue).longValue());
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    public static JSONObject getJSONFromReadReply(final ReadReply readReply, final TimeUnit timeUnit,
+            final DataType dataType) {
         final JSONObject jsonObject = new JSONObject();
         try {
             final JSONArray groups = new JSONArray();
@@ -73,13 +176,23 @@ public enum Utils {
         return variable != null ? variable.getDataType() : null;
     }
 
+    public static DataType toHealthDataType(final String dataTypeStr) {
+        final Constants.HealthDataTypesConstant variable = Constants.HealthDataTypesConstant.fromString(dataTypeStr);
+        return variable != null ? variable.getDataType() : null;
+    }
+
     public static Field toFieldType(final String fieldTypeStr) {
         final Constants.FieldConstants variable = Constants.FieldConstants.fromString(fieldTypeStr);
         return variable != null ? variable.getFieldType() : null;
     }
 
+    public static Field toHealthFieldType(final String fieldTypeStr) {
+        final Constants.HealthFieldsConstants variable = Constants.HealthFieldsConstants.fromString(fieldTypeStr);
+        return variable != null ? variable.getFieldType() : null;
+    }
+
     public static SampleSet toSampleSet(final JSONArray jsonArray, final DataCollector dataCollector,
-                                        final String packageName) {
+            final String packageName) {
         final SampleSet sampleSet = SampleSet.create(dataCollector);
 
         try {
@@ -90,8 +203,15 @@ public enum Utils {
                     list.add(jsonArray.getJSONObject(i));
                 }
             }
+            JSONObject metaData = null;
             for (final JSONObject sampleSetObj : list) {
                 final SamplePoint samplePoint = Utils.toSamplePoint(sampleSetObj, packageName);
+                if (sampleSetObj.has("metaData")) {
+                    metaData = sampleSetObj.getJSONObject("metaData");
+                    String key = metaData.getString("metaDataKey");
+                    String value = metaData.getString("metaDataValue");
+                    samplePoint.addMetadata(key, value);
+                }
                 sampleSet.addSample(samplePoint);
             }
         } catch (final JSONException e) {
@@ -100,18 +220,197 @@ public enum Utils {
         return sampleSet;
     }
 
+    public static DeviceInfo deviceInfoFromJson(JSONObject jsonObject) throws JSONException {
+
+        final JSONObject appInfoJson = jsonObject.getJSONObject("deviceInfo");
+        String deviceManufacturer = null;
+        String modelName = null;
+        String uuid = null;
+        Integer deviceType = null;
+        Integer platformType;
+        Boolean isBleDevice;
+        com.huawei.hms.hihealth.data.DeviceInfo deviceInfo = null;
+
+        try {
+            deviceManufacturer = appInfoJson.getString("deviceManufacturer");
+            modelName = appInfoJson.getString("modelName");
+            uuid = appInfoJson.getString("uuid");
+            deviceType = appInfoJson.getInt("deviceType");
+        } catch (JSONException e) {
+            Log.i("TAG", "Null value");
+        }
+        boolean check = check(appInfoJson);
+
+        if (check) {
+            if (!appInfoJson.has("isBleDevice") && !appInfoJson.has("platformType")) {
+                if (deviceType != null) {
+                    deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
+                            deviceType);
+                }
+
+            }
+            if (appInfoJson.has("platformType") && !appInfoJson.has("isBleDevice")) {
+                platformType = appInfoJson.getInt("platformType");
+                if (platformType != null && deviceType != null) {
+                    deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
+                            deviceType, platformType);
+                }
+            }
+            if (appInfoJson.has("platformType") && appInfoJson.has("isBleDevice")) {
+                platformType = appInfoJson.getInt("platformType");
+                isBleDevice = appInfoJson.getBoolean("isBleDevice");
+
+                if (platformType != null && isBleDevice != null && deviceType != null) {
+
+                    deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
+                            deviceType, platformType, isBleDevice);
+                }
+            }
+
+        } else {
+            Log.i("TAG", "You can't set null value");
+        }
+
+        return deviceInfo;
+    }
+
+    public static boolean check(JSONObject jsonObject) {
+
+        if (jsonObject.isNull("deviceManufacturer")) {
+            return false;
+        }
+        if (jsonObject.isNull("modelName")) {
+            return false;
+        }
+        if (jsonObject.isNull("uuid")) {
+            return false;
+        }
+        if (jsonObject.isNull("deviceType")) {
+            return false;
+        }
+        return true;
+    }
+
+    public static JSONObject hrToJson(HealthRecord record, TimeUnit timeUnit) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("dataCollector", Utils.getJSONFromDataCollector(record.getDataCollector()));
+            jsonObject.put("startTime", record.getStartTime(timeUnit));
+            jsonObject.put("endTime", record.getEndTime(timeUnit));
+            jsonObject.put("fieldValues", Utils.fieldValuesToJson(record.getFieldValues()));
+            jsonObject.put("healthRecordId", record.getHealthRecordId());
+            jsonObject.put("metaData", record.getMetadata());
+
+            final JSONArray subDataDetails = new JSONArray();
+            for (SampleSet set : record.getSubDataDetails()) {
+                subDataDetails.put(Utils.getJSONFromSampleSet(set, timeUnit));
+            }
+            jsonObject.put("subDataDetails", subDataDetails);
+
+            final JSONArray dataSummary = new JSONArray();
+            for (final SamplePoint samplePoint : record.getSubDataSummary()) {
+                dataSummary.put(Utils.getJSONFromSamplePoint(samplePoint, timeUnit));
+            }
+            jsonObject.put("subDataSummary", dataSummary);
+        } catch (JSONException e) {
+
+            Log.i("error", e.getMessage());
+        }
+
+        return jsonObject;
+    }
+
+    public static synchronized JSONObject fieldValuesToJson(Map<String, Value> fieldValue) throws JSONException {
+        JSONObject resultMap = new JSONObject();
+        for (Map.Entry<String, Value> pair : fieldValue.entrySet()) {
+            Value value = pair.getValue();
+            switch (value.getFormat()) {
+                case Field.FORMAT_INT32:
+                    resultMap.put(pair.getKey(), value.asIntValue());
+                    break;
+                case Field.FORMAT_FLOAT:
+                    resultMap.put(pair.getKey(), value.asDoubleValue());
+                    break;
+                case Field.FORMAT_STRING:
+                    resultMap.put(pair.getKey(), value.asStringValue());
+                    break;
+                case Field.FORMAT_MAP:
+                    HashMap<String, MapValue> floatMap = new HashMap<>();
+                    for (String key : value.getMap().keySet()) {
+                        floatMap.put(key, value.getMapValue(key));
+                    }
+                    resultMap.put(pair.getKey(), floatMap);
+                    break;
+                case Field.FORMAT_LONG:
+                    resultMap.put(pair.getKey(), (int) (value).asLongValue());
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + value.getFormat());
+            }
+        }
+        return resultMap;
+    }
+
     public static DataCollector toDataCollector(final JSONObject dc, final String packageName) throws JSONException {
+        DataCollector.Builder builder = new DataCollector.Builder();
+
         final String dataTypeParam = dc.getString("dataType");
         final String dataCollectorName = dc.getString("name");
         final int dataGenerateType = dc.getInt("dataGenerateType");
+        final String dataStreamName;
         final DataType dataType = Utils.toDataType(dataTypeParam);
 
-        return new DataCollector.Builder()
-            .setDataType(dataType)
-            .setDataGenerateType(dataGenerateType)
-            .setPackageName(packageName)
-            .setDataCollectorName(dataCollectorName)
-            .build();
+        if (dc.has("dataStreamName")) {
+            dataStreamName = dc.getString("dataStreamName");
+            builder.setDataStreamName(dataStreamName);
+        }
+        builder.setDataType(dataType)
+                .setDataGenerateType(dataGenerateType)
+                .setPackageName(packageName)
+                .setDataCollectorName(dataCollectorName);
+        return builder.build();
+    }
+
+    public static DataCollector toDataCollector2(final JSONObject dc, final Context packageName) throws JSONException {
+        DataCollector.Builder builder = new DataCollector.Builder();
+
+        final String dataTypeParam = dc.getString("dataType");
+        final String dataCollectorName = dc.getString("name");
+        final int dataGenerateType = dc.getInt("dataGenerateType");
+        final String dataStreamName;
+        final DataType dataType = Utils.toDataType(dataTypeParam);
+
+        if (dc.has("dataStreamName")) {
+            dataStreamName = dc.getString("dataStreamName");
+            builder.setDataStreamName(dataStreamName);
+        }
+        builder.setDataType(dataType)
+                .setDataGenerateType(dataGenerateType)
+                .setPackageName(packageName)
+                .setDataCollectorName(dataCollectorName);
+        return builder.build();
+    }
+
+    public static DataCollector toHealthDataCollector(final JSONObject dc, final String packageName)
+            throws JSONException {
+        DataCollector.Builder builder = new DataCollector.Builder();
+
+        final String dataTypeParam = dc.getString("dataType");
+        final String dataCollectorName = dc.getString("name");
+        final int dataGenerateType = dc.getInt("dataGenerateType");
+        final String dataStreamName;
+        final DataType dataType = Utils.toHealthDataType(dataTypeParam);
+
+        if (dc.has("dataStreamName")) {
+            dataStreamName = dc.getString("dataStreamName");
+            builder.setDataStreamName(dataStreamName);
+        }
+        builder.setDataType(dataType)
+                .setDataGenerateType(dataGenerateType)
+                .setPackageName(packageName)
+                .setDataCollectorName(dataCollectorName);
+        return builder.build();
     }
 
     public static JSONObject getJSONFromGroup(final Group group, final TimeUnit timeUnit, final DataType dataType) {
@@ -119,13 +418,13 @@ public enum Utils {
         try {
             jsonObject.put("activity", group.getActivity());
             jsonObject.put("activityRecord",
-                Utils.getJSONFromActivityRecord(Objects.requireNonNull(group.getActivityRecord()), timeUnit));
+                    Utils.getJSONFromActivityRecord(Objects.requireNonNull(group.getActivityRecord()), timeUnit));
             jsonObject.put("activityType", group.getActivityType());
             jsonObject.put("endTime", group.getEndTime(timeUnit));
             jsonObject.put("groupType", group.getGroupType());
             jsonObject.put("groupTypeString", Group.getGroupTypeString(group.getGroupType()));
             jsonObject.put("sampleSet",
-                Utils.getJSONFromSampleSet(Objects.requireNonNull(group.getSampleSet(dataType)), timeUnit));
+                    Utils.getJSONFromSampleSet(Objects.requireNonNull(group.getSampleSet(dataType)), timeUnit));
             final JSONArray sampleSetArr = new JSONArray();
             for (final SampleSet sampleSet : group.getSampleSets()) {
                 final JSONObject sampleSetData = Utils.getJSONFromSampleSet(sampleSet, timeUnit);
@@ -147,19 +446,23 @@ public enum Utils {
             jsonObject.put("appDetailsUrl", activityRecord.getAppDetailsUrl());
             jsonObject.put("appDomainName", activityRecord.getAppDomainName());
             jsonObject.put("appVersion", activityRecord.getAppVersion());
+            jsonObject.put("appInfo", activityRecord.getAppInfo());
             jsonObject.put("description", activityRecord.getDesc());
+            jsonObject.put("deviceInfo", activityRecord.getDeviceInfo());
             jsonObject.put("durationTime", activityRecord.getDurationTime(timeUnit));
+            jsonObject.put("startTime", activityRecord.getStartTime(timeUnit));
             jsonObject.put("endTime", activityRecord.getEndTime(timeUnit));
             jsonObject.put("id", activityRecord.getId());
             jsonObject.put("name", activityRecord.getName());
             jsonObject.put("packageName", activityRecord.getPackageName());
-            jsonObject.put("startTime", activityRecord.getStartTime(timeUnit));
             if (activityRecord.getActivitySummary() != null) {
                 jsonObject.put("activitySummary",
-                    Utils.getJSONFromActivitySummary(activityRecord.getActivitySummary(), timeUnit));
+                        Utils.getJSONFromActivitySummary(activityRecord.getActivitySummary(), timeUnit));
             }
             jsonObject.put("timeZone", activityRecord.getTimeZone());
             jsonObject.put("durationTime", activityRecord.hasDurationTime());
+            jsonObject.put("activeTime", activityRecord.getActiveTime(timeUnit));
+            jsonObject.put("metaData", activityRecord.getMetadata());
             jsonObject.put("isKeepGoing", activityRecord.isKeepGoing());
         } catch (final JSONException e) {
             Log.e("Utils", e.toString());
@@ -168,7 +471,7 @@ public enum Utils {
     }
 
     public static JSONObject getJSONFromActivitySummary(final ActivitySummary activitySummary,
-                                                        final TimeUnit timeUnit) {
+            final TimeUnit timeUnit) {
         final JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("paceSummary", Utils.getJSONFromPaceSummary(activitySummary.getPaceSummary()));
@@ -203,8 +506,7 @@ public enum Utils {
         final JSONObject jsonObject = new JSONObject();
         try {
             if (sampleSet.getDataCollector() != null) {
-                jsonObject.put("dataCollector",
-                    Utils.getJSONFromDataCollector(sampleSet.getDataCollector()));
+                jsonObject.put("dataCollector", Utils.getJSONFromDataCollector(sampleSet.getDataCollector()));
             }
             jsonObject.put("dataType", sampleSet.getDataType());
             final JSONArray samplePoints = new JSONArray();
@@ -223,8 +525,7 @@ public enum Utils {
         final JSONObject jsonObject = new JSONObject();
         try {
             if (samplePoint.getDataCollector() != null) {
-                jsonObject.put("dataCollector",
-                    Utils.getJSONFromDataCollector(samplePoint.getDataCollector()));
+                jsonObject.put("dataCollector", Utils.getJSONFromDataCollector(samplePoint.getDataCollector()));
             }
             jsonObject.put("dataType", Utils.getJSONFromDataType(samplePoint.getDataType()));
             jsonObject.put("dataTypeId", samplePoint.getDataTypeId());
@@ -251,11 +552,11 @@ public enum Utils {
             jsonObject.put("dataType", Utils.getJSONFromDataType(dataCollector.getDataType()));
             jsonObject.put("deviceId", dataCollector.getDeviceId());
             if (dataCollector.getDeviceInfo() != null) {
-                jsonObject.put("deviceInfo",
-                    Utils.getJSONFromDeviceInfo(dataCollector.getDeviceInfo()));
+                jsonObject.put("deviceInfo", Utils.getJSONFromDeviceInfo(dataCollector.getDeviceInfo()));
             }
             jsonObject.put("packageName", dataCollector.getPackageName());
-            jsonObject.put("dataCollectorName", DataCollector.getStandardByType(dataCollector.getDataGenerateType()));
+            jsonObject.put("standardByType", DataCollector.getStandardByType(dataCollector.getDataGenerateType()));
+            jsonObject.put("isLocalized", dataCollector.isLocalized());
         } catch (final JSONException e) {
             Log.e("Utils", e.toString());
         }
@@ -270,7 +571,7 @@ public enum Utils {
             jsonObject.put("name", dataType.getName());
             jsonObject.put("packageName", dataType.getPackageName());
             jsonObject.put("polymerizesForInput",
-                Utils.mapList(DataType.getPolymerizesForInput(dataType), Utils::getJSONFromDataType));
+                    Utils.mapList(DataType.getPolymerizesForInput(dataType), Utils::getJSONFromDataType));
             jsonObject.put("scopeNameBoth", dataType.getScopeNameBoth());
             jsonObject.put("scopeNameRead", dataType.getScopeNameRead());
             jsonObject.put("scopeNameWrite", dataType.getScopeNameWrite());
@@ -296,15 +597,34 @@ public enum Utils {
 
     public static JSONObject getJSONFromDeviceInfo(final DeviceInfo deviceInfo) {
         final JSONObject jsonObject = new JSONObject();
+
         try {
-            jsonObject.put("deviceIdentifier", deviceInfo.getDeviceIdentifier());
-            jsonObject.put("deviceType", deviceInfo.getDeviceType());
-            jsonObject.put("deviceTypeString", DeviceInfo.getDeviceTypeStringById(deviceInfo.getDeviceType()));
-            jsonObject.put("manufacturer", deviceInfo.getManufacturer());
-            jsonObject.put("modelName", deviceInfo.getModelName());
-            jsonObject.put("platformType", deviceInfo.getPlatformType());
-            jsonObject.put("uuid", deviceInfo.getUuid());
-            jsonObject.put("isFromBleDevice", deviceInfo.isFromBleDevice());
+            if (deviceInfo != null) {
+                jsonObject.put("deviceIdentifier", deviceInfo.getDeviceIdentifier());
+                jsonObject.put("deviceType", deviceInfo.getDeviceType());
+                jsonObject.put("deviceTypeString", DeviceInfo.getDeviceTypeStringById(deviceInfo.getDeviceType()));
+                jsonObject.put("manufacturer", deviceInfo.getManufacturer());
+                jsonObject.put("modelName", deviceInfo.getModelName());
+                jsonObject.put("platformType", deviceInfo.getPlatformType());
+                jsonObject.put("uuid", deviceInfo.getUuid());
+                jsonObject.put("isFromBleDevice", deviceInfo.isFromBleDevice());
+            }
+
+        } catch (final JSONException e) {
+            Log.e("Utils", e.toString());
+        }
+        return jsonObject;
+    }
+
+    public static JSONObject getJSONFromAppInfo(final AppInfo appInfo) {
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("detailsUrl", appInfo.getDetailsUrl());
+            jsonObject.put("appId", appInfo.getAppId());
+            jsonObject.put("packageName", appInfo.getPackageName());
+            jsonObject.put("domainName", appInfo.getDomainName());
+            jsonObject.put("version", appInfo.getVersion());
+
         } catch (final JSONException e) {
             Log.e("Utils", e.toString());
         }
@@ -352,15 +672,14 @@ public enum Utils {
 
             final ActivitySummary activitySummary = Utils.getActivitySummary(activitySummaryJson, packageName);
 
-            activityRecord
-                .setName(name)
-                .setDesc(description)
-                .setId(id)
-                .setActivityTypeId(activityType)
-                .setStartTime(Long.parseLong(startTime), timeUnit)
-                .setEndTime(Long.parseLong(endTime), timeUnit)
-                .setActivitySummary(activitySummary)
-                .setTimeZone(timeZone);
+            activityRecord.setName(name)
+                    .setDesc(description)
+                    .setId(id)
+                    .setActivityTypeId(activityType)
+                    .setStartTime(Long.parseLong(startTime), timeUnit)
+                    .setEndTime(Long.parseLong(endTime), timeUnit)
+                    .setActivitySummary(activitySummary)
+                    .setTimeZone(timeZone);
 
         } catch (final JSONException e) {
             Log.e("Utils", Objects.requireNonNull(e.getMessage()));
@@ -412,9 +731,10 @@ public enum Utils {
     }
 
     public static SamplePoint toSamplePoint(final JSONObject jsonObject, final String packageName)
-        throws JSONException {
-        final DataCollector dataCollector =
-            Utils.toDataCollector(jsonObject.getJSONObject("dataCollector"), packageName);
+            throws JSONException {
+
+        final DataCollector dataCollector = Utils.toDataCollector(jsonObject.getJSONObject("dataCollector"),
+                packageName);
         final SamplePoint.Builder samplePoint = new SamplePoint.Builder(dataCollector);
         final String startTime = jsonObject.getString("startTime");
         final String endTime = jsonObject.getString("endTime");
@@ -423,9 +743,8 @@ public enum Utils {
         final String fieldValue = jsonObject.getString("fieldValue");
         final TimeUnit timeUnit = Utils.toTimeUnit(timeUnitParam);
         final Field field = Utils.toFieldType(fieldName);
-        samplePoint
-            .setFieldValue(field, Integer.parseInt(fieldValue))
-            .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
+        samplePoint.setFieldValue(field, Integer.parseInt(fieldValue))
+                .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
         return samplePoint.build();
     }
 
@@ -439,4 +758,5 @@ public enum Utils {
         }
         return map;
     }
+
 }

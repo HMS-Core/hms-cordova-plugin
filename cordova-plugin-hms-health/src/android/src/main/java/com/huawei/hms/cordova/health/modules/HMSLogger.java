@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,11 +18,13 @@ package com.huawei.hms.cordova.health.modules;
 
 import android.content.Context;
 import android.content.Intent;
+
 import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.CordovaMethod;
 import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
 import com.huawei.hms.cordova.health.basef.handler.Promise;
+
 import org.json.JSONArray;
 
 public class HMSLogger extends CordovaBaseModule {

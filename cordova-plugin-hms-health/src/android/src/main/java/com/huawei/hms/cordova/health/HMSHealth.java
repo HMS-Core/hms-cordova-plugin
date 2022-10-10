@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,25 +17,33 @@
 package com.huawei.hms.cordova.health;
 
 import android.content.Intent;
+
 import com.huawei.hms.cordova.health.basef.handler.CordovaController;
 import com.huawei.hms.cordova.health.modules.ActivityRecordController;
+import com.huawei.hms.cordova.health.modules.AppInfo;
 import com.huawei.hms.cordova.health.modules.AuthController;
 import com.huawei.hms.cordova.health.modules.AutoRecorderController;
 import com.huawei.hms.cordova.health.modules.ConsentsController;
 import com.huawei.hms.cordova.health.modules.DataController;
+import com.huawei.hms.cordova.health.modules.DeviceInfo;
+import com.huawei.hms.cordova.health.modules.HealthRecordController;
 import com.huawei.hms.cordova.health.modules.SettingsController;
-import java.util.Arrays;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 
+import java.util.Arrays;
+
 public class HMSHealth extends CordovaPlugin {
     private static final String SERVICE = "Health";
-    private static final String VERSION = "5.0.5.302";
+
+    private static final String VERSION = "6.7.0.300";
 
     private CordovaController cordovaController;
+
     private OnActivityResultCallback onActivityResultCallback;
 
     @Override
@@ -43,12 +51,14 @@ public class HMSHealth extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         cordovaController = new CordovaController(this, HMSHealth.SERVICE, HMSHealth.VERSION,
-            Arrays.asList(new ActivityRecordController(webView.getContext()),
-                new AuthController(this),
-                new AutoRecorderController(webView.getContext()),
-                new ConsentsController(webView.getContext()),
-                new DataController(webView.getContext()),
-                new SettingsController(webView.getContext())));
+            Arrays.asList(new ActivityRecordController(cordova.getActivity(), webView.getContext()),
+                new AuthController(this, webView.getContext(), cordova.getActivity()),
+                new AutoRecorderController(cordova.getActivity()),
+                new ConsentsController(cordova.getActivity(), webView.getContext()),
+                new DataController(webView.getContext()), new DeviceInfo(cordova.getContext()),
+                new AppInfo(cordova.getContext()),
+                new SettingsController(this, webView.getContext(), cordova.getActivity()),
+                new HealthRecordController(cordova.getActivity(), webView.getContext())));
     }
 
     @Override

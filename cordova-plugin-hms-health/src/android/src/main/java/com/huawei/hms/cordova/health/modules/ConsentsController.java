@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,24 +13,25 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 package com.huawei.hms.cordova.health.modules;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
-import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.CordovaMethod;
-import com.huawei.hms.cordova.health.basef.handler.Promise;
+import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
+import com.huawei.hms.cordova.health.basef.handler.Promise;
 import com.huawei.hms.cordova.health.utils.Utils;
-import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.HuaweiHiHealth;
 import com.huawei.hms.hihealth.data.ScopeLangItem;
-import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
-import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,12 +41,17 @@ import java.util.ArrayList;
 
 public class ConsentsController extends CordovaBaseModule {
     private String TAG = ConsentsController.class.getSimpleName();
+
     private com.huawei.hms.hihealth.ConsentsController consentsController;
 
-    public ConsentsController(Context context) {
-        com.huawei.hms.hihealth.HiHealthOptions fitnessOptions = HiHealthOptions.builder().build();
-        AuthHuaweiId signInHuaweiId = HuaweiIdAuthManager.getExtendedAuthResult(fitnessOptions);
-        consentsController = HuaweiHiHealth.getConsentsController(context, signInHuaweiId);
+    private Activity activity;
+
+    private Context context;
+
+    public ConsentsController(Activity activity, Context context) {
+        this.activity = activity;
+        this.context = context;
+        consentsController = HuaweiHiHealth.getConsentsController(activity);
     }
 
     @HMSLog
@@ -69,6 +75,7 @@ public class ConsentsController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
+    @Deprecated
     public void revokeAll(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         String appId = args.getString(0);
 
@@ -84,6 +91,7 @@ public class ConsentsController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
+    @Deprecated
     public void revoke(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject jsonObject = args.getJSONObject(0);
         JSONArray scopes = jsonObject.getJSONArray("scopes");
@@ -105,7 +113,59 @@ public class ConsentsController extends CordovaBaseModule {
         });
     }
 
+    @HMSLog
+    @CordovaMethod
+    public void cancelAuthorization(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject jsonObject = args.getJSONObject(0);
+        JSONArray scopes = jsonObject.getJSONArray("scopes");
+        String appId = jsonObject.getString("appId");
+
+        ArrayList<String> list = new ArrayList<>();
+        int len = scopes.length();
+        for (int i = 0; i < len; i++) {
+            list.add(scopes.get(i).toString());
+        }
+
+        Task<Void> task = consentsController.cancelAuthorization(appId, list);
+        task.addOnSuccessListener(aVoid -> {
+            Log.i(TAG, "cancelAuthorization success");
+            promise.success();
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "cancelAuthorization exception");
+            promise.error(e.getMessage());
+        });
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void cancelAuthorizationAll(final CorPack corPack, JSONArray args, final Promise promise)
+            throws JSONException {
+
+        JSONObject jsonObject = args.getJSONObject(0);
+        boolean deleteData = jsonObject.getBoolean("deleteData");
+
+        Task<Void> task = consentsController.cancelAuthorization(deleteData);
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i(TAG, "cancelAuthorization success");
+                if (deleteData) {
+                    Log.i(TAG, "clearUserData success");
+                }
+                promise.success();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.e(TAG, "cancelAuthorization exception");
+                promise.error("Error");
+            }
+        });
+
+    }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {}
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    }
 
 }

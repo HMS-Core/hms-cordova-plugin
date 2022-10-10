@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ public final class JSONUtils {
         return scopes;
     }
 
-    private static List<String> mapJSONArray(final JSONArray jsonArray) {
+    public static List<String> mapJSONArray(final JSONArray jsonArray) {
         final List<String> list = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -53,6 +53,14 @@ public final class JSONUtils {
             }
         }
         return list;
+    }
+
+    public static String[] toStringArray(List<String> strings) {
+        String[] res = new String[strings.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = strings.get(i);
+        }
+        return res;
     }
 
     public static JSONObject error(final int errorCode) {

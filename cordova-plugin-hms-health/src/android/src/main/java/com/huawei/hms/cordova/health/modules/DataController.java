@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.huawei.hms.cordova.health.modules;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.health.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.health.basef.CordovaMethod;
@@ -29,23 +30,29 @@ import com.huawei.hms.cordova.health.utils.Utils;
 import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
+import com.huawei.hms.hihealth.data.SamplePoint;
 import com.huawei.hms.hihealth.data.SampleSet;
 import com.huawei.hms.hihealth.options.DeleteOptions;
 import com.huawei.hms.hihealth.options.ReadOptions;
 import com.huawei.hms.hihealth.options.UpdateOptions;
 import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
 import com.huawei.hms.support.hwid.result.AuthHuaweiId;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
 
 public class DataController extends CordovaBaseModule {
     private final Context context;
+
     private final String TAG = DataController.class.getSimpleName();
+
     private com.huawei.hms.hihealth.DataController dataController;
 
     public DataController(final Context context) {
@@ -54,7 +61,8 @@ public class DataController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void initDataController(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
+    public void initDataController(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
         final JSONArray jsonArray = args.getJSONArray(0);
 
         final HiHealthOptions.Builder hiHealthOptions = com.huawei.hms.hihealth.HiHealthOptions.builder();
@@ -134,10 +142,8 @@ public class DataController extends CordovaBaseModule {
         final DataCollector dataCollector = Utils.toDataCollector(dataCollectorJSON, context.getPackageName());
         final SampleSet sampleSet = Utils.toSampleSet(sampleSetJSON, dataCollector, context.getPackageName());
 
-        final UpdateOptions updateOption = new UpdateOptions.Builder()
-            .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit)
-            .setSampleSet(sampleSet)
-            .build();
+        final UpdateOptions updateOption = new UpdateOptions.Builder().setTimeInterval(Long.parseLong(startTime),
+            Long.parseLong(endTime), timeUnit).setSampleSet(sampleSet).build();
 
         final Task<Void> updateTask = dataController.update(updateOption);
         updateTask.addOnSuccessListener(result -> {
@@ -163,7 +169,8 @@ public class DataController extends CordovaBaseModule {
         final DataCollector dataCollector = Utils.toDataCollector(dataCollectorJSON, context.getPackageName());
 
         final DeleteOptions deleteOptions = new DeleteOptions.Builder().addDataCollector(dataCollector)
-            .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit).build();
+            .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit)
+            .build();
 
         final Task<Void> deleteTask = dataController.delete(deleteOptions);
         deleteTask.addOnSuccessListener(result -> {
@@ -174,7 +181,8 @@ public class DataController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void readTodaySummation(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
+    public void readTodaySummation(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
         final String dataTypeStr = args.getString(0);
         final DataType dataType = Utils.toDataType(dataTypeStr);
 
@@ -188,7 +196,8 @@ public class DataController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
-    public void readDailySummation(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
+    public void readDailySummation(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
         final JSONObject jsonObject = args.getJSONObject(0);
 
         final int startDate = jsonObject.getInt("startDate");
@@ -206,6 +215,45 @@ public class DataController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
+    public void readLatestData(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
+        final JSONArray jsonArray = args.getJSONArray(0);
+        final List<JSONObject> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getJSONObject(i));
+        }
+
+        List<DataType> dataTypes = new ArrayList<>();
+        for (final JSONObject object : list) {
+            final DataType dataType = Utils.toDataType(object.getString("dataType"));
+            dataTypes.add(dataType);
+        }
+
+        Task<Map<DataType, SamplePoint>> readLatestDatas = dataController.readLatestData(dataTypes);
+
+        readLatestDatas.addOnSuccessListener(result -> {
+            JSONObject readLatestDatasObject = new JSONObject();
+            if (result != null) {
+                for (DataType dataType : dataTypes) {
+                    if (result.containsKey(dataType)) {
+                        try {
+                            readLatestDatasObject.put(dataType.getName(),
+                                Utils.getJSONFromSamplePoint(result.get(dataType), TimeUnit.MILLISECONDS));
+                        } catch (JSONException e) {
+                            Log.i(TAG, e.getMessage());
+                        }
+                    } else {
+                        Log.i(TAG, "No latest data");
+                    }
+                }
+            }
+            Log.i(TAG, "Success readLatestDatas sample data from HMS core");
+            promise.success(readLatestDatasObject);
+        }).addOnFailureListener((e) -> promise.error(e.getMessage()));
+    }
+
+    @HMSLog
+    @CordovaMethod
     public void clearAll(final CorPack corPack, final JSONArray args, final Promise promise) {
         final Task<Void> syncTask = dataController.clearAll();
         syncTask.addOnSuccessListener(result -> {
@@ -218,4 +266,3 @@ public class DataController extends CordovaBaseModule {
     public void onActivityResult(final int requestCode, final int resultCode, final Intent intent) {
     }
 }
-

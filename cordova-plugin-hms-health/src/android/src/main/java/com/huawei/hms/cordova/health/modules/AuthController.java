@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,8 +17,11 @@
 package com.huawei.hms.cordova.health.modules;
 
 import android.accounts.Account;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.health.HMSHealth;
 import com.huawei.hms.cordova.health.OnActivityResultCallback;
@@ -47,12 +50,20 @@ import java.util.List;
 import java.util.Objects;
 
 public class AuthController extends CordovaBaseModule implements OnActivityResultCallback {
+    private final Context context;
+
     private String TAG = AuthController.class.getSimpleName();
+
     private CordovaPlugin plugin;
+
     private Promise promise;
 
-    public AuthController(HMSHealth hmsHealth) {
+    private Activity activity;
+
+    public AuthController(HMSHealth hmsHealth, Context context, Activity activity) {
         plugin = hmsHealth;
+        this.context = context;
+        this.activity = activity;
         hmsHealth.setOnActivityResultCallback(this);
     }
 
@@ -68,7 +79,7 @@ public class AuthController extends CordovaBaseModule implements OnActivityResul
 
                 try {
                     JSONObject signinObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
-                    Account account = authHuaweiId.getHuaweiAccount();
+                    Account account = authHuaweiId.getHuaweiAccount(plugin.webView.getContext());
                     if (account != null) {
                         signinObject.put("account", HMSAccountUtils.fromAccountToJSONObject(account));
                     } else {
@@ -97,8 +108,12 @@ public class AuthController extends CordovaBaseModule implements OnActivityResul
         List<Scope> scopeList = JSONUtils.toScopeList(scopes);
 
         // Configure authorization parameters.
-        HuaweiIdAuthParamsHelper authParamsHelper = new HuaweiIdAuthParamsHelper(HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM);
-        HuaweiIdAuthParams authParams = authParamsHelper.setIdToken().setAccessToken().setScopeList(scopeList).createParams();
+        HuaweiIdAuthParamsHelper authParamsHelper = new HuaweiIdAuthParamsHelper(
+            HuaweiIdAuthParams.DEFAULT_AUTH_REQUEST_PARAM);
+        HuaweiIdAuthParams authParams = authParamsHelper.setIdToken()
+            .setAccessToken()
+            .setScopeList(scopeList)
+            .createParams();
         // Initialize the HuaweiIdAuthService object.
         final HuaweiIdAuthService authService = HuaweiIdAuthManager.getService(plugin.webView.getContext(), authParams);
         Task<AuthHuaweiId> taskSilentSignIn = authService.silentSignIn();
@@ -106,7 +121,7 @@ public class AuthController extends CordovaBaseModule implements OnActivityResul
         taskSilentSignIn.addOnSuccessListener(authHuaweiId -> {
             try {
                 JSONObject userData = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
-                Account account = authHuaweiId.getHuaweiAccount();
+                Account account = authHuaweiId.getHuaweiAccount(plugin.webView.getContext());
                 if (account != null) {
                     userData.put("account", HMSAccountUtils.fromAccountToJSONObject(account));
                 } else {
@@ -122,17 +137,18 @@ public class AuthController extends CordovaBaseModule implements OnActivityResul
 
         }).addOnFailureListener(e -> {
             // The silent sign-in fails.
-            // This indicates that the authorization has not been granted by the current account.
+            // This indicates that the authorization has not been granted by the current
+            // account.
             Log.i(TAG, "begin sign in by intent");
 
             // Call the sign-in API using the getSignInIntent() method.
             Intent signInIntent = authService.getSignInIntent();
 
-            // Display the authorization screen by using the startActivityForResult() method of the activity.
+            // Display the authorization screen by using the startActivityForResult() method
+            // of the activity.
             // Developers can change HealthKitAuthClientActivity to the actual activity.
             plugin.cordova.setActivityResultCallback(plugin);
-            plugin.cordova.getActivity().startActivityForResult(signInIntent, Constants.REQUEST_SIGN_IN_LOGIN);
+            activity.startActivityForResult(signInIntent, Constants.REQUEST_SIGN_IN_LOGIN);
         });
     }
 }
-
