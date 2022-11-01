@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,9 +25,13 @@ import android.widget.FrameLayout;
 public class PluginLayoutManager {
 
     private View view;
+
     private FrameLayout parent;
+
     private InitialProps props;
+
     private int currentScrollY = 0;
+
     private int currentScrollX = 0;
 
     public PluginLayoutManager(View view, Context ctx, InitialProps props) {
@@ -36,8 +40,9 @@ public class PluginLayoutManager {
         this.props = props;
         this.props.x = props.x - props.marginLeft + props.marginRight;
         this.props.y = props.y - props.marginTop + props.marginBottom;
-        //Parent view layout params
-        ViewGroup.MarginLayoutParams parentLayoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        // Parent view layout params
+        ViewGroup.MarginLayoutParams parentLayoutParams = new ViewGroup.MarginLayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         parentLayoutParams.setMargins(props.marginLeft, props.marginTop, props.marginRight, props.marginBottom);
         this.parent.setLayoutParams(parentLayoutParams);
         this.parent.setBackgroundColor(Color.TRANSPARENT);
@@ -81,22 +86,34 @@ public class PluginLayoutManager {
         this.view.setY(PxToPixelConverter.pxToPixel(y) - this.props.marginTop + this.props.marginBottom);
         this.props.x = (int) this.view.getX();
         this.props.y = (int) this.view.getY();
-        if (currentScrollY != 0) this.props.y -= currentScrollY;
-        if (currentScrollX != 0) this.props.x -= currentScrollX;
+        if (currentScrollY != 0) {
+            this.props.y -= currentScrollY;
+        }
+        if (currentScrollX != 0) {
+            this.props.x -= currentScrollX;
+        }
     }
 
     public static class InitialProps {
         int x;
+
         int y;
+
         int width;
+
         int height;
+
         // parent layout stuff.
         int marginLeft;
+
         int marginTop;
+
         int marginBottom;
+
         int marginRight;
 
-        public InitialProps(int x, int y, int width, int height, int marginLeft, int marginTop, int marginBottom, int marginRight) {
+        public InitialProps(int x, int y, int width, int height, int marginLeft, int marginTop, int marginBottom,
+            int marginRight) {
             this.x = PxToPixelConverter.pxToPixel(x);
             this.y = PxToPixelConverter.pxToPixel(y);
             this.width = PxToPixelConverter.pxToPixel(width);

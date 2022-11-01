@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,16 +18,17 @@ package com.huawei.hms.cordova.ar;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Locale;
+import java.util.Map;
 
 public final class CordovaListenerHelper {
     private static final String TAG = CordovaListenerHelper.class.getSimpleName();
 
     private final CordovaWebView webView;
+
     private final CordovaInterface cordova;
 
     public CordovaListenerHelper(CordovaWebView webView, CordovaInterface cordova) {
@@ -43,16 +44,22 @@ public final class CordovaListenerHelper {
         runJSEvent(eventName, array);
     }
 
+    public void sendEvent(String eventName, Map<String, Object> jsonMap) {
+        runJSEvent(eventName, jsonMap);
+    }
+
     public void sendEvent(String eventName) {
         runJSEvent(eventName, null);
     }
 
     private void runJSEvent(String eventName, Object nullable) {
         cordova.getActivity().runOnUiThread(() -> {
-            if (nullable == null)
+            if (nullable == null) {
                 webView.loadUrl(String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s');", eventName));
-            else
-                webView.loadUrl(String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s', %s)", eventName, nullable));
+            } else {
+                webView.loadUrl(
+                    String.format(Locale.ENGLISH, "javascript:window.runHMSEvent('%s', %s)", eventName, nullable));
+            }
         });
     }
 

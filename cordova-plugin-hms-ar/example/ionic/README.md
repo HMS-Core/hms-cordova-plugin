@@ -131,6 +131,12 @@ This demo application demonstrates the usage of HMS AR Kit Cordova plugin.
             */
             maven { url 'https://developer.huawei.com/repo/' }
         }
+        dependencies {
+            /*
+                <Other dependencies>
+            */
+            classpath 'com.huawei.agconnect:agcp:1.5.0.300'
+        }
     }
 
     /*
@@ -174,4 +180,4 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ## 5. Licencing and Terms
 
-Huawei AR Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+Huawei AR Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).

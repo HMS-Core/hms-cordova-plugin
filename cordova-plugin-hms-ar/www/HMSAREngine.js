@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.navigateToAppMarket = exports.isAREngineServiceAPKReady = exports.hasCameraPermission = exports.requestCameraPermission = exports.ARBodyScene = exports.ARFaceScene = exports.ARWorldScene = exports.ARHandScene = exports.ARScene = exports.Events = exports.SemanticPlaneLabel = exports.PlaneType = exports.ARHandType = exports.ARCoordinateSystemType = exports.TrackingState = void 0;
+exports.disableLogger = exports.enableLogger = exports.navigateToAppMarket = exports.isAREngineServiceAPKReady = exports.hasCameraPermission = exports.requestCameraPermission = exports.ARCloud3DObjectScene = exports.ARSceneMeshScene = exports.ARWorldBodyScene = exports.ARAugmentedImageScene = exports.ARBodyScene = exports.ARFaceScene = exports.ARWorldScene = exports.ARHandScene = exports.ARScene = exports.Events = exports.PlaneFindingMode = exports.TargetShapeType = exports.TargetLabel = exports.UpdateMode = exports.FocusMode = exports.PowerMode = exports.SemanticMode = exports.CameraLensFacing = exports.LightMode = exports.FaceHealthCheckState = exports.HealthParameter = exports.SemanticPlaneLabel = exports.PlaneType = exports.ARHandType = exports.ARCoordinateSystemType = exports.TrackingState = void 0;
 const util_1 = require("./util");
 var interfaces_1 = require("./interfaces");
 Object.defineProperty(exports, "TrackingState", { enumerable: true, get: function () { return interfaces_1.TrackingState; } });
@@ -32,6 +32,17 @@ Object.defineProperty(exports, "ARCoordinateSystemType", { enumerable: true, get
 Object.defineProperty(exports, "ARHandType", { enumerable: true, get: function () { return interfaces_1.ARHandType; } });
 Object.defineProperty(exports, "PlaneType", { enumerable: true, get: function () { return interfaces_1.PlaneType; } });
 Object.defineProperty(exports, "SemanticPlaneLabel", { enumerable: true, get: function () { return interfaces_1.SemanticPlaneLabel; } });
+Object.defineProperty(exports, "HealthParameter", { enumerable: true, get: function () { return interfaces_1.HealthParameter; } });
+Object.defineProperty(exports, "FaceHealthCheckState", { enumerable: true, get: function () { return interfaces_1.FaceHealthCheckState; } });
+Object.defineProperty(exports, "LightMode", { enumerable: true, get: function () { return interfaces_1.LightMode; } });
+Object.defineProperty(exports, "CameraLensFacing", { enumerable: true, get: function () { return interfaces_1.CameraLensFacing; } });
+Object.defineProperty(exports, "SemanticMode", { enumerable: true, get: function () { return interfaces_1.SemanticMode; } });
+Object.defineProperty(exports, "PowerMode", { enumerable: true, get: function () { return interfaces_1.PowerMode; } });
+Object.defineProperty(exports, "FocusMode", { enumerable: true, get: function () { return interfaces_1.FocusMode; } });
+Object.defineProperty(exports, "UpdateMode", { enumerable: true, get: function () { return interfaces_1.UpdateMode; } });
+Object.defineProperty(exports, "TargetLabel", { enumerable: true, get: function () { return interfaces_1.TargetLabel; } });
+Object.defineProperty(exports, "TargetShapeType", { enumerable: true, get: function () { return interfaces_1.TargetShapeType; } });
+Object.defineProperty(exports, "PlaneFindingMode", { enumerable: true, get: function () { return interfaces_1.PlaneFindingMode; } });
 Object.defineProperty(exports, "Events", { enumerable: true, get: function () { return interfaces_1.Events; } });
 function getInitialProps(divId) {
     const htmlElement = document.getElementById(divId);
@@ -80,7 +91,7 @@ class ARScene {
         return this.forceUpdateXAndY(sceneRect.x, sceneRect.y);
     }
     execHelper(func, args) {
-        return util_1.asyncExec('HMSAREngine', func, args);
+        return (0, util_1.asyncExec)('HMSAREngine', func, args);
     }
     forceUpdateXAndY(x, y) {
         return this.execHelper('forceUpdateXAndY', [this.scene, x, y]);
@@ -111,34 +122,58 @@ class ARBodyScene extends ARScene {
     }
 }
 exports.ARBodyScene = ARBodyScene;
+class ARAugmentedImageScene extends ARScene {
+    constructor(divId) {
+        super("ARAugmentedImage", divId);
+    }
+}
+exports.ARAugmentedImageScene = ARAugmentedImageScene;
+class ARWorldBodyScene extends ARScene {
+    constructor(divId) {
+        super("ARWorldBody", divId);
+    }
+}
+exports.ARWorldBodyScene = ARWorldBodyScene;
+class ARSceneMeshScene extends ARScene {
+    constructor(divId) {
+        super("ARSceneMesh", divId);
+    }
+}
+exports.ARSceneMeshScene = ARSceneMeshScene;
+class ARCloud3DObjectScene extends ARScene {
+    constructor(divId) {
+        super("ARCloud3DObject", divId);
+    }
+}
+exports.ARCloud3DObjectScene = ARCloud3DObjectScene;
 function requestCameraPermission() {
-    return util_1.asyncExec('HMSAREngine', 'requestPermission', []);
+    return (0, util_1.asyncExec)('HMSAREngine', 'requestPermission', []);
 }
 exports.requestCameraPermission = requestCameraPermission;
 function hasCameraPermission() {
     return __awaiter(this, void 0, void 0, function* () {
-        const out = yield util_1.asyncExec('HMSAREngine', 'hasPermission', []);
+        const out = yield (0, util_1.asyncExec)('HMSAREngine', 'hasPermission', []);
         return out.result;
     });
 }
 exports.hasCameraPermission = hasCameraPermission;
 function isAREngineServiceAPKReady() {
     return __awaiter(this, void 0, void 0, function* () {
-        const out = yield util_1.asyncExec('HMSAREngine', 'isAREngineServiceAPKReady', []);
+        const out = yield (0, util_1.asyncExec)('HMSAREngine', 'isAREngineServiceAPKReady', []);
         return out.result;
     });
 }
 exports.isAREngineServiceAPKReady = isAREngineServiceAPKReady;
 function navigateToAppMarket() {
-    return util_1.asyncExec('HMSAREngine', 'navigateToAppMarket', []);
+    return (0, util_1.asyncExec)('HMSAREngine', 'navigateToAppMarket', []);
 }
 exports.navigateToAppMarket = navigateToAppMarket;
 function enableLogger() {
-    return util_1.asyncExec('HMSAREngine', 'enableLogger', []);
+    return (0, util_1.asyncExec)('HMSAREngine', 'enableLogger', []);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return util_1.asyncExec('HMSAREngine', 'disableLogger', []);
+    return (0, util_1.asyncExec)('HMSAREngine', 'disableLogger', []);
 }
 exports.disableLogger = disableLogger;
 //# sourceMappingURL=HMSAREngine.js.map

@@ -55,5 +55,5 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ## License
 
-Huawei AR Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+Huawei AR Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
 

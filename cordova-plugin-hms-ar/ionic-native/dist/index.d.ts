@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { IonicNativePlugin } from '@ionic-native/core';
 export declare class HMSAROriginal extends IonicNativePlugin {
     requestCameraPermission(): Promise<void>;
@@ -22,11 +23,10 @@ export declare class HMSAROriginal extends IonicNativePlugin {
     enableLogger(): Promise<void>;
     disableLogger(): Promise<void>;
 }
-declare type ARBase = ARHand | ARFace | ARBody | ARPlane;
 export declare abstract class ARScene {
     private arScene;
     constructor(scene: string, divId: string);
-    on(eventName: Events, call: (value: ARBase[]) => void): Promise<void>;
+    on(eventName: Events, call: (value: any) => void): Promise<void>;
     startARScene(config?: ARSceneConfig, bounds?: SceneBounds): Promise<void>;
     destroy(): Promise<void>;
     setConfig(config: ARSceneConfig): Promise<void>;
@@ -42,6 +42,18 @@ export declare class ARBodyScene extends ARScene {
     constructor(divId: string);
 }
 export declare class ARWorldScene extends ARScene {
+    constructor(divId: string);
+}
+export declare class ARAugmentedImageScene extends ARScene {
+    constructor(divId: string);
+}
+export declare class ARWorldBodyScene extends ARScene {
+    constructor(divId: string);
+}
+export declare class ARSceneMeshScene extends ARScene {
+    constructor(divId: string);
+}
+export declare class ARCloud3DObjectScene extends ARScene {
     constructor(divId: string);
 }
 export interface ColorRGBA {
@@ -60,34 +72,78 @@ export interface ARHandConfig extends ARSceneConfig {
     drawBox?: boolean;
     boxColor?: ColorRGBA;
     lineWidth?: number;
+    drawLine?: boolean;
+    drawPoint?: boolean;
+    lineWidthSkeleton?: number;
+    pointSize?: number;
+    lineColor?: ColorRGBA;
+    pointColor?: ColorRGBA;
+    cameraLensFacing?: CameraLensFacing;
+    lightMode?: LightMode;
+    semantic?: Semantic;
+    powerMode?: PowerMode;
+    focusMode?: FocusMode;
+    updateMode?: UpdateMode;
 }
 export interface ARWorldConfig extends ARSceneConfig {
     objPath: string;
     texturePath: string;
-    labelDraw?: boolean;
-    imageOther?: string;
-    imageWall?: string;
-    imageFloor?: string;
-    imageSeat?: string;
-    imageTable?: string;
-    imageCeiling?: string;
-    textOther?: string;
-    textWall?: string;
-    textFloor?: string;
-    textSeat?: string;
-    textTable?: string;
-    textCeiling?: string;
-    colorOther?: ColorRGBA;
-    colorWall?: ColorRGBA;
-    colorFloor?: ColorRGBA;
-    colorSeat?: ColorRGBA;
-    colorTable?: ColorRGBA;
-    colorCeiling?: ColorRGBA;
+    labelDraw: boolean;
+    imageOther: string;
+    imageWall: string;
+    imageFloor: string;
+    imageSeat: string;
+    imageTable: string;
+    imageCeiling: string;
+    imageDoor: string;
+    imageWindow: string;
+    imageBed: string;
+    textOther: string;
+    textWall: string;
+    textFloor: string;
+    textSeat: string;
+    textTable: string;
+    textCeiling: string;
+    textDoor: string;
+    textWindow: string;
+    textBed: string;
+    colorOther: ColorRGBA;
+    colorWall: ColorRGBA;
+    colorFloor: ColorRGBA;
+    colorSeat: ColorRGBA;
+    colorTable: ColorRGBA;
+    colorCeiling: ColorRGBA;
+    colorDoor: ColorRGBA;
+    colorWindow: ColorRGBA;
+    colorBed: ColorRGBA;
+    maxMapSize: number;
+    augmentedImages: AugmentedImage[];
+    planeFindingMode: PlaneFindingMode;
+    drawLine: boolean;
+    drawPoint: boolean;
+    lineWidth: number;
+    pointSize: number;
+    lineColor: ColorRGBA;
+    pointColor: ColorRGBA;
+    semantic: Semantic;
+    lightMode: LightMode;
+    focusMode: FocusMode;
+    powerMode: PowerMode;
+    updateMode: UpdateMode;
 }
 export interface ARFaceConfig extends ARSceneConfig {
     pointSize?: number;
     depthColor?: ColorRGBA;
     texturePath?: string;
+    drawFace: boolean;
+    cameraLensFacing: CameraLensFacing;
+    enableHealthDevice: boolean;
+    multiFace: boolean;
+    semantic: Semantic;
+    lightMode: LightMode;
+    focusMode: FocusMode;
+    powerMode: PowerMode;
+    updateMode: UpdateMode;
 }
 export interface ARBodyConfig extends ARSceneConfig {
     drawLine?: boolean;
@@ -96,6 +152,39 @@ export interface ARBodyConfig extends ARSceneConfig {
     pointSize?: number;
     lineColor?: ColorRGBA;
     pointColor?: ColorRGBA;
+    semantic: Semantic;
+    lightMode: LightMode;
+    focusMode: FocusMode;
+    powerMode: PowerMode;
+    updateMode: UpdateMode;
+}
+export interface ARAugmentedImageConfig extends ARSceneConfig {
+    augmentedImages: AugmentedImage[];
+    drawLine: boolean;
+    drawPoint: boolean;
+    lineWidth: number;
+    pointSize: number;
+    lineColor: ColorRGBA;
+    pointColor: ColorRGBA;
+    semantic: Semantic;
+    lightMode: LightMode;
+    focusMode: FocusMode;
+    powerMode: PowerMode;
+    updateMode: UpdateMode;
+}
+export interface ARWorldBodyConfig extends ARWorldConfig {
+}
+export interface ARSceneMeshConfig extends ARSceneConfig {
+    objPath: string;
+    texturePath: string;
+    semantic: Semantic;
+    lightMode: LightMode;
+    focusMode: FocusMode;
+    powerMode: PowerMode;
+    updateMode: UpdateMode;
+}
+export interface ARCloud3DObjectConfig extends ARSceneConfig {
+    fileName: string;
 }
 export interface Anchor {
     pose: ARPose;
@@ -142,6 +231,54 @@ export interface ARFace {
     healthParameterCount: number;
     healthParameters: Map<HealthParameter, number>;
 }
+export interface ARBody {
+    bodyAction: number;
+    anchors: Anchor[];
+    bodySkeletonTypes: number[];
+    skeletonPoint2D: number[];
+    skeletonPoint3D: number[];
+    skeletonConfidince: number[];
+    bodySkeletonConnection: number[];
+    skeletonPointIsExist2D: number[];
+    skeletonPointIsExist3D: number[];
+    coordinateSystemType: ARCoordinateSystemType;
+    trackingState: TrackingState;
+}
+export interface ARAugmentedImage {
+    anchors: Anchor[];
+    centerPose: ARPose;
+    extentX: number;
+    extentZ: number;
+    index: number;
+    name: string;
+    trackingState: TrackingState;
+}
+export interface ARSceneMesh {
+    sceneDepth: ArrayBuffer;
+    sceneDepthHeight: number;
+    sceneDepthWidth: number;
+    triangleIndices: ArrayBuffer;
+    vertexNormals: ArrayBuffer;
+    vertices: ArrayBuffer;
+}
+export interface Semantic {
+    mode?: SemanticMode;
+    showSemanticModeSupportedInfo?: boolean;
+}
+export interface AugmentedImage {
+    imgFileFromAsset: string;
+    widthInMeters: number;
+    imgName: string;
+}
+export interface ARTarget {
+    anchors: Anchor[];
+    axisAlignBoundingBox: number[];
+    centerPose: ARPose;
+    label: number;
+    radius: number;
+    shapeType: number;
+    trackingState: TrackingState;
+}
 export declare enum HealthParameter {
     UNKNOWN_TYPE = -1,
     PARAMETER_INVALID = 0,
@@ -156,22 +293,15 @@ export declare enum HealthParameter {
     PARAMETER_GENDER_FEMALE_WEIGHT = 9,
     PARAMETER_HEART_WAVE = 15
 }
-export interface ARBody {
-    bodyAction: number;
-    anchors: Anchor[];
-    bodySkeletonTypes: number[];
-    skeletonPoint2D: number[];
-    skeletonPoint3D: number[];
-    skeletonConfidince: number[];
-    bodySkeletonConnection: number[];
-    skeletonPointIsExist2D: number[];
-    skeletonPointIsExist3D: number[];
-    coordinateSystemType: ARCoordinateSystemType;
-    trackingState: TrackingState;
-}
 export declare enum Events {
     ON_DRAW_FRAME = "onDrawFrame",
-    ON_FACE_HEALTH_PROGRESS_CHANGED = "onFaceHealthProgressChanged"
+    ON_FACE_HEALTH_PROGRESS_CHANGED = "onFaceHealthProgressChanged",
+    HANDLE_CAMERA_CONFIG_DATA = "handleCameraConfigData",
+    HANDLE_CAMERA_INTRINSICS_DATA = "handleCameraIntrinsicsData",
+    HANDLE_EVENT = "handleEvent",
+    HANDLE_RESULT = "handleResult",
+    HANDLE_PROCESS_PROGRESS_EVENT = "handleProcessProgressEvent",
+    HANDLE_MESSAGE_DATA = "handleMessageData"
 }
 export declare enum TrackingState {
     UNKNOWN_STATE = -1,
@@ -190,7 +320,10 @@ export declare enum SemanticPlaneLabel {
     PLANE_FLOOR = 2,
     PLANE_SEAT = 3,
     PLANE_TABLE = 4,
-    PLANE_CEILING = 5
+    PLANE_CEILING = 5,
+    PLANE_DOOR = 6,
+    PLANE_WINDOW = 7,
+    PLANE_BED = 8
 }
 export declare enum PlaneType {
     HORIZONTAL_UPWARD_FACING = 0,
@@ -205,6 +338,71 @@ export declare enum ARCoordinateSystemType {
     COORDINATE_SYSTEM_TYPE_2D_IMAGE = 2,
     COORDINATE_SYSTEM_TYPE_3D_CAMERA = 3
 }
-export {};
+export declare enum FaceHealthCheckState {
+    DETECT_FAILED = -1,
+    DETECT_SUCCESS = 0,
+    NO_AVAILABLE_HEALTH_DATA = 1,
+    FACE_WITH_EXPRESSION = 10,
+    IMAGE_SIZE_WRONG = 20,
+    FACE_NOT_IN_ELLIPSE = 21,
+    FACE_MOTION_TOO_MUCH = 22,
+    EFFECTIVE_PIXEEL_TOO_LOW = 23,
+    LIGHT_TOO_DARK = 24,
+    LIGHT_NOT_UNIFORM = 25,
+    POSE_TOO_LARGE = 26,
+    SIGNAL_CAPTURE_FAILED = 27,
+    SIGNAL_NAN = 28,
+    FINGER_OUTSIDE_CAMERA = 29
+}
+export declare enum LightMode {
+    NONE = 0,
+    AMBIENT_INTENSITY = 1,
+    ENVIRONMENT_LIGHTING = 2,
+    ENVIRONMENT_TEXTURE = 4,
+    ALL = 65535
+}
+export declare enum CameraLensFacing {
+    REAR = 1,
+    FRONT = 2
+}
+export declare enum SemanticMode {
+    NONE = 0,
+    PLANE = 1,
+    TARGET = 2,
+    ALL = 3
+}
+export declare enum PowerMode {
+    NORMAL = 1,
+    POWER_SAVING = 2,
+    ULTRA_POWER_SAVING = 3,
+    PERFORMANCE_FIRST = 4
+}
+export declare enum FocusMode {
+    FIXED_FOCUS = 1,
+    AUTO_FOCUS = 2
+}
+export declare enum UpdateMode {
+    BLOCKING = 1,
+    LATEST_CAMERA_IMAGE = 2
+}
+export declare enum TargetLabel {
+    TARGET_INVALID = -1,
+    TARGET_OTHER = 0,
+    TARGET_SEAT = 1,
+    TARGET_TABLE = 2
+}
+export declare enum TargetShapeType {
+    TARGET_SHAPE_INVALID = -1,
+    TARGET_SHAPE_OTHER = 0,
+    TARGET_SHAPE_CUBE = 1,
+    TARGET_SHAPE_CIRCLE = 2,
+    TARGET_SHAPE_RECT = 3
+}
+export declare enum PlaneFindingMode {
+    DISABLED = 0,
+    HORIZONTAL_ONLY = 1,
+    VERTICAL_ONLY = 2,
+    ENABLE = 3
+}
 
 export declare const HMSAR: HMSAROriginal;

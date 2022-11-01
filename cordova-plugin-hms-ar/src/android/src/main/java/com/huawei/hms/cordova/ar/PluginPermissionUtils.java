@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package com.huawei.hms.cordova.ar;
 import android.Manifest;
 
 import org.apache.cordova.CordovaPlugin;
-
 import org.apache.cordova.PermissionHelper;
 
 public final class PluginPermissionUtils {
@@ -27,11 +26,13 @@ public final class PluginPermissionUtils {
     public static final int REQUEST_LOCATION = 3920;
 
     public static boolean hasCameraPermission(CordovaPlugin plugin) {
-        return PermissionHelper.hasPermission(plugin, Manifest.permission.CAMERA) ;
+        return PermissionHelper.hasPermission(plugin, Manifest.permission.CAMERA);
     }
 
     public static boolean requestCameraPermission(CordovaPlugin plugin) {
-        if (hasCameraPermission(plugin)) return true;
+        if (hasCameraPermission(plugin)) {
+            return true;
+        }
         PermissionHelper.requestPermission(plugin, REQUEST_LOCATION, Manifest.permission.CAMERA);
         return hasCameraPermission(plugin);
     }

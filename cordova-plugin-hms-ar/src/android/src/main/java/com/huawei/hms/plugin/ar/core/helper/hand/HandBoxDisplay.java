@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@
     limitations under the License.
 */
 
-package com.huawei.hms.plugin.ar.core.helper;
+package com.huawei.hms.plugin.ar.core.helper.hand;
 
 import android.opengl.GLES20;
 import android.util.Log;
 
+import com.huawei.hiar.ARHand;
+import com.huawei.hiar.ARTrackable;
 import com.huawei.hms.plugin.ar.core.config.ARPluginConfigBase;
 import com.huawei.hms.plugin.ar.core.config.ARPluginConfigHand;
 import com.huawei.hms.plugin.ar.core.config.ColorRGBA;
 import com.huawei.hms.plugin.ar.core.util.ErrorUtil;
+import com.huawei.hms.plugin.ar.core.util.HandShaderUtil;
 import com.huawei.hms.plugin.ar.core.util.MatrixUtil;
-
-import com.huawei.hiar.ARHand;
-import com.huawei.hiar.ARTrackable;
 import com.huawei.hms.plugin.ar.core.util.OpenGLUtil;
 
 import java.nio.FloatBuffer;
@@ -35,37 +35,29 @@ import java.util.Collection;
 
 public class HandBoxDisplay {
     private static final String TAG = HandBoxDisplay.class.getSimpleName();
-    private static final int BYTES_PER_POINT = 4 * 3;
-    private static final int INITIAL_BUFFER_POINTS = 150;
-    private static final int COORDINATE_DIMENSION = 3;
-    public static final String LS = System.lineSeparator();
-    public static final String HAND_VERTEX =
-            "uniform vec4 inColor;" + LS
-                    + "attribute vec4 inPosition;" + LS
-                    + "uniform float inPointSize;" + LS
-                    + "varying vec4 varColor;" + LS
-                    + "uniform mat4 inMVPMatrix;" + LS
-                    + "void main() {" + LS
-                    + "    gl_PointSize = inPointSize;" + LS
-                    + "    gl_Position = inMVPMatrix * vec4(inPosition.xyz, 1.0);" + LS
-                    + "    varColor = inColor;" + LS
-                    + "}";
 
-    public static final String HAND_FRAGMENT =
-            "precision mediump float;" + LS
-                    + "varying vec4 varColor;" + LS
-                    + "void main() {" + LS
-                    + "    gl_FragColor = varColor;" + LS
-                    + "}";
+    private static final int BYTES_PER_POINT = 4 * 3;
+
+    private static final int INITIAL_BUFFER_POINTS = 150;
+
+    private static final int COORDINATE_DIMENSION = 3;
 
     private int vbo;
+
     private int vboSize = INITIAL_BUFFER_POINTS * BYTES_PER_POINT;
+
     private int program;
+
     private int position;
+
     private int color;
+
     private int modelViewProjectionMatrix;
+
     private int pointSize;
+
     private int numPoints = 0;
+
     private float[] mvpMatrix;
 
     private ARPluginConfigHand configHand = new ARPluginConfigHand();
@@ -92,7 +84,7 @@ public class HandBoxDisplay {
 
     private void createProgram() {
         ErrorUtil.checkGLError(TAG, "Create program start.");
-        program = OpenGLUtil.createGlProgram(HAND_VERTEX, HAND_FRAGMENT);
+        program = OpenGLUtil.createGlProgram(HandShaderUtil.HAND_VERTEX, HandShaderUtil.HAND_FRAGMENT);
         position = GLES20.glGetAttribLocation(program, "inPosition");
         color = GLES20.glGetUniformLocation(program, "inColor");
         pointSize = GLES20.glGetUniformLocation(program, "inPointSize");
@@ -101,24 +93,26 @@ public class HandBoxDisplay {
     }
 
     public void onDrawFrame(Collection<ARHand> arHandCollection, float[] projectionMatrix) {
-        if (arHandCollection.size() == 0) return;
-        if (projectionMatrix != null)
+        if (arHandCollection.size() == 0) {
+            return;
+        }
+        if (projectionMatrix != null) {
             Log.d(TAG, "Camera projection matrix: " + Arrays.toString(projectionMatrix));
+        }
 
-        for (ARHand hand : arHandCollection)
+        for (ARHand hand : arHandCollection) {
             if (hand.getTrackingState() == ARTrackable.TrackingState.TRACKING) {
                 updateHandBoundingBoxCoordinates(hand.getGestureHandBox());
                 renderHandBoundingBox();
             }
+        }
     }
 
     private void updateHandBoundingBoxCoordinates(float[] gesturePoints) {
         ErrorUtil.checkGLError(TAG, "Update hand box data start.");
         float[] glGesturePoints = {
-                gesturePoints[0], gesturePoints[1], gesturePoints[2],
-                gesturePoints[3], gesturePoints[1], gesturePoints[2],
-                gesturePoints[3], gesturePoints[4], gesturePoints[5],
-                gesturePoints[0], gesturePoints[4], gesturePoints[5],
+            gesturePoints[0], gesturePoints[1], gesturePoints[2], gesturePoints[3], gesturePoints[1], gesturePoints[2],
+            gesturePoints[3], gesturePoints[4], gesturePoints[5], gesturePoints[0], gesturePoints[4], gesturePoints[5]
         };
         int gesturePointsNum = glGesturePoints.length / COORDINATE_DIMENSION;
 
@@ -126,7 +120,9 @@ public class HandBoxDisplay {
 
         numPoints = gesturePointsNum;
         if (vboSize < numPoints * BYTES_PER_POINT) {
-            while (vboSize < numPoints * BYTES_PER_POINT) vboSize *= 2;
+            while (vboSize < numPoints * BYTES_PER_POINT) {
+                vboSize *= 2;
+            }
             GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, vboSize, null, GLES20.GL_DYNAMIC_DRAW);
         }
         Log.d(TAG, "gesture.getGestureHandPointsNum()" + numPoints);

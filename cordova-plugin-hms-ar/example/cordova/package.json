@@ -4,7 +4,7 @@
     "version": "2.15.0-5",
     "description": "A demo application which shows the usage of HMS AR plugin.",
     "license": "Apache-2.0",
-    "licenseFilename": "LICENCE",
+    "licenseFilename": "LICENSE",
     "readmeFilename": "README.md",
     "main": "index.js",
     "keywords": [
@@ -27,7 +27,7 @@
         ".docs",
         "www",
         "config.xml",
-        "LICENCE",
+        "LICENSE",
         "package.json",
         "README.md"
     ]

@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-ar",
   "description": "Huawei Augmented Reality Cordova Plugin",
-  "version": "2.15.0-5",
+  "version": "3.7.0-3",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {
@@ -12,7 +12,7 @@
   "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
+  "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "cordova": {
     "id": "cordova-plugin-hms-ar",
@@ -39,7 +39,7 @@
     "src",
     "types",
     "www",
-    "LICENCE",
+    "LICENSE",
     "package.json",
     "plugin.xml",
     "README.md",

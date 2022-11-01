@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,12 +16,17 @@
 
 package com.huawei.hms.plugin.ar.core.config;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.os.Build;
 
 public class ColorRGBA {
     public float red;
+
     public float green;
+
     public float blue;
+
     public float alpha;
 
     public ColorRGBA(int red, int green, int blue, int alpha) {
@@ -31,6 +36,7 @@ public class ColorRGBA {
         this.alpha = (float) alpha / 256;
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public Color getColor() {
         return Color.valueOf(this.red, this.green, this.blue, this.alpha);
     }

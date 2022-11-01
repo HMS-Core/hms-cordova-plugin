@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,19 +14,16 @@
     limitations under the License.
 */
 
-package com.huawei.hms.plugin.ar.core.helper;
+package com.huawei.hms.plugin.ar.core.helper.body;
 
 import android.opengl.GLES20;
 
-import com.huawei.hms.plugin.ar.core.config.ARPluginConfigBase;
-import com.huawei.hms.plugin.ar.core.config.ARPluginConfigBody;
+import com.huawei.hiar.ARBody;
+import com.huawei.hiar.ARCoordinateSystemType;
+import com.huawei.hiar.ARTrackable;
 import com.huawei.hms.plugin.ar.core.config.ColorRGBA;
 import com.huawei.hms.plugin.ar.core.util.BodyShaderUtil;
 import com.huawei.hms.plugin.ar.core.util.ErrorUtil;
-
-import com.huawei.hiar.ARTrackable;
-import com.huawei.hiar.ARBody;
-import com.huawei.hiar.ARCoordinateSystemType;
 import com.huawei.hms.plugin.ar.core.util.OpenGLUtil;
 
 import java.nio.FloatBuffer;
@@ -36,27 +33,42 @@ public class BodySkeletonLineDisplay {
     private static final String TAG = BodySkeletonLineDisplay.class.getSimpleName();
 
     private static final int BYTES_PER_POINT = 4 * 3;
+
     private static final int INITIAL_BUFFER_POINTS = 150;
+
     private static final float COORDINATE_SYSTEM_TYPE_3D_FLAG = 2.0f;
+
     private static final int LINE_POINT_RATIO = 6;
 
     private int mVbo;
-    private int mVboSize = INITIAL_BUFFER_POINTS * BYTES_PER_POINT;
-    private int mProgram;
-    private int mPosition;
-    private int mProjectionMatrix;
-    private int mColor;
-    private int mPointSize;
-    private int mCoordinateSystem;
-    private int mNumPoints = 0;
-    private int mPointsLineNum = 0;
-    private FloatBuffer mLinePoints;
-    private ARPluginConfigBody configBase = new ARPluginConfigBody();
 
-    public BodySkeletonLineDisplay(ARPluginConfigBase configBase) {
-        if (configBase instanceof ARPluginConfigBody) {
-            this.configBase = (ARPluginConfigBody) configBase;
-        }
+    private int mVboSize = INITIAL_BUFFER_POINTS * BYTES_PER_POINT;
+
+    private int mProgram;
+
+    private int mPosition;
+
+    private int mProjectionMatrix;
+
+    private int mColor;
+
+    private int mPointSize;
+
+    private int mCoordinateSystem;
+
+    private int mNumPoints = 0;
+
+    private int mPointsLineNum = 0;
+
+    private FloatBuffer mLinePoints;
+
+    private ColorRGBA lineColor;
+
+    private float lineWidth;
+
+    public BodySkeletonLineDisplay(ColorRGBA lineColor, float lineWidth) {
+        this.lineColor = lineColor;
+        this.lineWidth = lineWidth;
     }
 
     public void init() {
@@ -92,11 +104,9 @@ public class BodySkeletonLineDisplay {
         GLES20.glEnableVertexAttribArray(mColor);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, mVbo);
 
-        GLES20.glLineWidth(configBase.getLineWidth());
+        GLES20.glLineWidth(lineWidth);
 
-        GLES20.glVertexAttribPointer(
-                mPosition, 4, GLES20.GL_FLOAT, false, BYTES_PER_POINT, 0);
-        ColorRGBA lineColor = configBase.getLineColor();
+        GLES20.glVertexAttribPointer(mPosition, 4, GLES20.GL_FLOAT, false, BYTES_PER_POINT, 0);
         GLES20.glUniform4f(mColor, lineColor.red, lineColor.green, lineColor.blue, lineColor.alpha);
         GLES20.glUniformMatrix4fv(mProjectionMatrix, 1, false, projectionMatrix, 0);
 

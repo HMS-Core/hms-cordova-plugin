@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-package com.huawei.hms.plugin.ar.core.helper;
+package com.huawei.hms.plugin.ar.core.helper.face;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -24,15 +24,14 @@ import android.opengl.GLUtils;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import com.huawei.hms.plugin.ar.core.config.ARPluginConfigBase;
-import com.huawei.hms.plugin.ar.core.config.ARPluginConfigFace;
-import com.huawei.hms.plugin.ar.core.config.ColorRGBA;
-import com.huawei.hms.plugin.ar.core.util.ErrorUtil;
-
 import com.huawei.hiar.ARCamera;
 import com.huawei.hiar.ARFace;
 import com.huawei.hiar.ARFaceGeometry;
 import com.huawei.hiar.ARPose;
+import com.huawei.hms.plugin.ar.core.config.ARPluginConfigBase;
+import com.huawei.hms.plugin.ar.core.config.ARPluginConfigFace;
+import com.huawei.hms.plugin.ar.core.config.ColorRGBA;
+import com.huawei.hms.plugin.ar.core.util.ErrorUtil;
 import com.huawei.hms.plugin.ar.core.util.OpenGLUtil;
 
 import java.io.IOException;
@@ -45,61 +44,60 @@ public class FaceGeometryDisplay {
 
     private static final String LS = System.lineSeparator();
 
-    private static final String FACE_GEOMETRY_VERTEX =
-            "attribute vec2 inTexCoord;" + LS
-                    + "uniform mat4 inMVPMatrix;" + LS
-                    + "uniform float inPointSize;" + LS
-                    + "attribute vec4 inPosition;" + LS
-                    + "uniform vec4 inColor;" + LS
-                    + "varying vec4 varAmbient;" + LS
-                    + "varying vec4 varColor;" + LS
-                    + "varying vec2 varCoord;" + LS
-                    + "void main() {" + LS
-                    + "    varAmbient = vec4(1.0, 1.0, 1.0, 1.0);" + LS
-                    + "    gl_Position = inMVPMatrix * vec4(inPosition.xyz, 1.0);" + LS
-                    + "    varColor = inColor;" + LS
-                    + "    gl_PointSize = inPointSize;" + LS
-                    + "    varCoord = inTexCoord;" + LS
-                    + "}";
+    private static final String FACE_GEOMETRY_VERTEX = "attribute vec2 inTexCoord;" + LS + "uniform mat4 inMVPMatrix;"
+        + LS + "uniform float inPointSize;" + LS + "attribute vec4 inPosition;" + LS + "uniform vec4 inColor;" + LS
+        + "varying vec4 varAmbient;" + LS + "varying vec4 varColor;" + LS + "varying vec2 varCoord;" + LS
+        + "void main() {" + LS + "    varAmbient = vec4(1.0, 1.0, 1.0, 1.0);" + LS
+        + "    gl_Position = inMVPMatrix * vec4(inPosition.xyz, 1.0);" + LS + "    varColor = inColor;" + LS
+        + "    gl_PointSize = inPointSize;" + LS + "    varCoord = inTexCoord;" + LS + "}";
 
-    private static final String FACE_GEOMETRY_FRAGMENT =
-            "precision mediump float;" + LS
-                    + "uniform sampler2D inTexture;" + LS
-                    + "varying vec4 varColor;" + LS
-                    + "varying vec2 varCoord;" + LS
-                    + "varying vec4 varAmbient;" + LS
-                    + "void main() {" + LS
-                    + "    vec4 objectColor = texture2D(inTexture, vec2(varCoord.x, 1.0 - varCoord.y));" + LS
-                    + "    if(varColor.x != 0.0) {" + LS
-                    + "        gl_FragColor = varColor * varAmbient;" + LS
-                    + "    }" + LS
-                    + "    else {" + LS
-                    + "        gl_FragColor = objectColor * varAmbient;" + LS
-                    + "    }" + LS
-                    + "}";
+    private static final String FACE_GEOMETRY_FRAGMENT = "precision mediump float;" + LS
+        + "uniform sampler2D inTexture;" + LS + "varying vec4 varColor;" + LS + "varying vec2 varCoord;" + LS
+        + "varying vec4 varAmbient;" + LS + "void main() {" + LS
+        + "    vec4 objectColor = texture2D(inTexture, vec2(varCoord.x, 1.0 - varCoord.y));" + LS
+        + "    if(varColor.x != 0.0) {" + LS + "        gl_FragColor = varColor * varAmbient;" + LS + "    }" + LS
+        + "    else {" + LS + "        gl_FragColor = objectColor * varAmbient;" + LS + "    }" + LS + "}";
 
     private static final int BYTES_PER_POINT = 4 * 3;
 
     private static final int BYTES_PER_COORD = 4 * 2;
+
     private static final int BUFFER_OBJECT_NUMBER = 2;
+
     private static final int POSITION_COMPONENTS_NUMBER = 4;
+
     private static final int TEXCOORD_COMPONENTS_NUMBER = 2;
+
     private static final float PROJECTION_MATRIX_NEAR = 0.1f;
+
     private static final float PROJECTION_MATRIX_FAR = 100.0f;
 
     private int verticeId;
+
     private int verticeBufferSize = 8000;
+
     private int triangleId;
+
     private int triangleBufferSize = 5000;
+
     private int program;
+
     private int textureName;
+
     private int positionAttribute;
+
     private int colorUniform;
+
     private int modelViewProjectionUniform;
+
     private int pointSizeUniform;
+
     private int textureUniform;
+
     private int textureCoordAttribute;
+
     private int numberOfGeometricVertices = 0;
+
     private int trianglesNum = 0;
 
     private float[] modelViewProjections = new float[16];
@@ -151,7 +149,8 @@ public class FaceGeometryDisplay {
 
     private void createProgram() {
         ErrorUtil.checkGLError(TAG, "Create gl program start..");
-        program = OpenGLUtil.createGlProgram(FACE_GEOMETRY_VERTEX, FACE_GEOMETRY_FRAGMENT);;
+        program = OpenGLUtil.createGlProgram(FACE_GEOMETRY_VERTEX, FACE_GEOMETRY_FRAGMENT);
+        ;
         positionAttribute = GLES20.glGetAttribLocation(program, "inPosition");
         colorUniform = GLES20.glGetUniformLocation(program, "inColor");
         modelViewProjectionUniform = GLES20.glGetUniformLocation(program, "inMVPMatrix");
@@ -182,14 +181,15 @@ public class FaceGeometryDisplay {
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, verticeId);
         if (verticeBufferSize < (numberOfGeometricVertices + numOfGeoTextures) * BYTES_PER_POINT) {
-            while (verticeBufferSize < (numberOfGeometricVertices + numOfGeoTextures) * BYTES_PER_POINT)
+            while (verticeBufferSize < (numberOfGeometricVertices + numOfGeoTextures) * BYTES_PER_POINT) {
                 verticeBufferSize *= 2;
+            }
 
             GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, verticeBufferSize, null, GLES20.GL_DYNAMIC_DRAW);
         }
         GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, 0, numberOfGeometricVertices * BYTES_PER_POINT, faceVertices);
         GLES20.glBufferSubData(GLES20.GL_ARRAY_BUFFER, numberOfGeometricVertices * BYTES_PER_POINT,
-                numOfGeoTextures * BYTES_PER_COORD, textureCoordinates);
+            numOfGeoTextures * BYTES_PER_COORD, textureCoordinates);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
         trianglesNum = arFaceGeometry.getTriangleCount();
@@ -198,8 +198,9 @@ public class FaceGeometryDisplay {
 
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, triangleId);
         if (triangleBufferSize < trianglesNum * BYTES_PER_POINT) {
-            while (triangleBufferSize < trianglesNum * BYTES_PER_POINT)
+            while (triangleBufferSize < trianglesNum * BYTES_PER_POINT) {
                 triangleBufferSize *= 2;
+            }
             GLES20.glBufferData(GLES20.GL_ELEMENT_ARRAY_BUFFER, triangleBufferSize, null, GLES20.GL_DYNAMIC_DRAW);
         }
         GLES20.glBufferSubData(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0, trianglesNum * BYTES_PER_POINT, faceTriangleIndices);
@@ -235,16 +236,16 @@ public class FaceGeometryDisplay {
         GLES20.glEnableVertexAttribArray(colorUniform);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, verticeId);
         GLES20.glVertexAttribPointer(positionAttribute, POSITION_COMPONENTS_NUMBER, GLES20.GL_FLOAT, false,
-                BYTES_PER_POINT, 0);
+            BYTES_PER_POINT, 0);
         GLES20.glVertexAttribPointer(textureCoordAttribute, TEXCOORD_COMPONENTS_NUMBER, GLES20.GL_FLOAT, false,
-                BYTES_PER_COORD, 0);
+            BYTES_PER_COORD, 0);
 
-        if (configBase.getTexturePath().isEmpty()){
+        if (configBase.getTexturePath().isEmpty()) {
             ColorRGBA depthColor = configBase.getDepthColor();
             GLES20.glUniform4f(colorUniform, depthColor.red > 0 ? depthColor.red : 0.0001f, depthColor.green,
-                    depthColor.blue, depthColor.alpha);
+                depthColor.blue, depthColor.alpha);
         }
-        
+
         GLES20.glUniformMatrix4fv(modelViewProjectionUniform, 1, false, modelViewProjections, 0);
         GLES20.glUniform1f(pointSizeUniform, configBase.getPointSize()); // Set the size of Point to 5.
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, numberOfGeometricVertices);

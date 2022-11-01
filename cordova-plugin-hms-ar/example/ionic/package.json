@@ -4,7 +4,7 @@
   "version": "2.15.0-5",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
+  "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "scripts": {
     "ng": "ng",
@@ -65,7 +65,7 @@
     "tsconfig.app.json",
     "tsconfig.spec.json",
     "tslint.json",
-    "LICENCE",
+    "LICENSE",
     "README.md"
   ]
 }

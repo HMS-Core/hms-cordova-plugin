@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -23,10 +23,17 @@ export {
     ARBodyConfig,
     ARFaceConfig,
     ARWorldConfig,
+    ARAugmentedImageConfig,
+    ARSceneMeshConfig,
+    ARWorldBodyConfig,
+    ARCloud3DObjectConfig,
     ARBody,
     ARFace,
     ARHand,
+    ARAugmentedImage,
+    ARSceneMesh,
     ARPlane,
+    ARTarget,
     ARFaceBlendShapes,
     ARPose,
     TrackingState,
@@ -36,6 +43,17 @@ export {
     SemanticPlaneLabel,
     Anchor,
     ColorRGBA,
+    HealthParameter,
+    FaceHealthCheckState,
+    LightMode,
+    CameraLensFacing,
+    SemanticMode,
+    PowerMode,
+    FocusMode,
+    UpdateMode,
+    TargetLabel,
+    TargetShapeType,
+    PlaneFindingMode,
     Events
 } from './interfaces';
 
@@ -127,6 +145,30 @@ export class ARFaceScene extends ARScene {
 export class ARBodyScene extends ARScene {
     constructor(divId: string) {
         super("ARBody", divId);
+    }
+}
+
+export class ARAugmentedImageScene extends ARScene {
+    constructor(divId: string) {
+        super("ARAugmentedImage", divId);
+    }
+}
+
+export class ARWorldBodyScene extends ARScene {
+    constructor(divId: string) {
+        super("ARWorldBody", divId);
+    }
+}
+
+export class ARSceneMeshScene extends ARScene {
+    constructor(divId: string) {
+        super("ARSceneMesh", divId);
+    }
+}
+
+export class ARCloud3DObjectScene extends ARScene {
+    constructor(divId: string) {
+        super("ARCloud3DObject", divId);
     }
 }
 
