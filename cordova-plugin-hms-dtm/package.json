@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-dtm",
   "description": "Cordova HMS DTM Plugin",
-  "version": "5.2.0-301",
+  "version": "6.6.0-300",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {
@@ -12,7 +12,7 @@
   "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
+  "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "cordova": {
     "id": "cordova-plugin-hms-dtm",
@@ -36,7 +36,7 @@
     "src",
     "types",
     "www",
-    "LICENCE",
+    "LICENSE",
     "package.json",
     "plugin.xml",
     "README.md"

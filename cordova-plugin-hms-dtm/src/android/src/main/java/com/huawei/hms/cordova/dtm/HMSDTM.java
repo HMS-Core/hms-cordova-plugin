@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,19 +18,17 @@ package com.huawei.hms.cordova.dtm;
 
 import com.huawei.hms.cordova.dtm.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.dtm.basef.handler.CordovaController;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
-
 import java.util.Arrays;
 
 public class HMSDTM extends CordovaPlugin {
 
     private static final String KIT = "DTM";
-    private static final String VERSION = "5.2.0.301";
+    private static final String VERSION = "6.6.0.300";
     private CordovaController cordovaController;
 
     private static CordovaPlugin mPlugin;

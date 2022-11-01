@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 
 package com.huawei.hms.cordova.dtm;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.huawei.hms.analytics.HiAnalytics;
 import com.huawei.hms.analytics.HiAnalyticsInstance;
 import com.huawei.hms.cordova.dtm.basef.CordovaBaseModule;
@@ -27,13 +25,11 @@ import com.huawei.hms.cordova.dtm.basef.CordovaMethod;
 import com.huawei.hms.cordova.dtm.basef.HMSLog;
 import com.huawei.hms.cordova.dtm.basef.handler.CorPack;
 import com.huawei.hms.cordova.dtm.basef.handler.Promise;
-
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

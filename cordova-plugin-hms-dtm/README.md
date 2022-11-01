@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-dtm"><img src="https://img.shields.io/npm/dm/@hmscore/cordova-plugin-hms-dtm?color=%23007EC6&style=for-the-badge" alt="downloads"></a>
   <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-dtm"><img src="https://img.shields.io/npm/v/@hmscore/cordova-plugin-hms-dtm?color=%23ed2a1c&style=for-the-badge" alt="NPM version"></a>
-  <a href="./LICENCE"><img src="https://img.shields.io/npm/l/@hmscore/cordova-plugin-hms-dtm.svg?color=%3bcc62&style=for-the-badge" alt="License"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@hmscore/cordova-plugin-hms-dtm.svg?color=%3bcc62&style=for-the-badge" alt="License"></a>
 </p>
 
 </p>
@@ -65,6 +65,6 @@ If you have questions about how to use HMS samples, try the following options:
 
 If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
-## Licence
+## LICENSE
 
-Huawei DTM Kit Cordova Plugin is licensed under the [Apache 2.0 licence](LICENCE).
+Huawei DTM Kit Cordova Plugin is licensed under the [Apache 2.0 LICENSE](LICENSE).
