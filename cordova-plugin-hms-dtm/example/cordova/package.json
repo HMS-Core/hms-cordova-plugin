@@ -1,0 +1,36 @@
+{
+  "name": "cordova-hms-dtm-demo",
+  "displayName": "HMSDtmDemo",
+  "version": "6.6.0-300",
+  "description": "A demo application which shows the usage of HMS Dtm Plugin.",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "main": "./www/js/index.js",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "dtm",
+    "huawei-dtm",
+    "hms-dtm",
+    "hms",
+    "huawei"
+  ],
+  "devDependencies": {
+
+  },
+  "cordova": {
+    "plugins": {
+
+    },
+    "platforms": []
+  },
+  "files": [
+    ".docs",
+    "www",
+    "config.xml",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ]
+}
