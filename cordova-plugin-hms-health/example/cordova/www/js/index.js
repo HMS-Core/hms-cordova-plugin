@@ -16,13 +16,15 @@
 
 document.addEventListener('deviceready', onDeviceReady, false);
 
-const packageName = '<package_name>'
+const packageName = 'com.cordova.health_with_permissions';
 
 const HiHealthOptions = {
   ACCESS_READ: 0,
   ACCESS_WRITE: 1
 }
 const HuaweiHiHealth = {
+  HEALTHKIT_HEARTHEALTH_READ: "https://www.huawei.com/healthkit/hearthealth.read",
+  HEALTHKIT_HEARTHEALTH_WRITE: "https://www.huawei.com/healthkit/hearthealth.write",
   HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
   HEALTHKIT_HEIGHTWEIGHT_WRITE: "https://www.huawei.com/healthkit/heightweight.write",
   HEALTHKIT_HEIGHTWEIGHT_BOTH: "https://www.huawei.com/healthkit/heightweight.both",
@@ -85,12 +87,56 @@ const HuaweiHiHealth = {
   HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
   HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
   ALL_SCOPES: ["https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both"],
-  MAX_SCOPES: ["https://www.huawei.com/healthkit/heightweight.read", "https://www.huawei.com/healthkit/heightweight.write", "https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.read", "https://www.huawei.com/healthkit/step.write", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.read", "https://www.huawei.com/healthkit/location.write", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.read", "https://www.huawei.com/healthkit/heartrate.write", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.read", "https://www.huawei.com/healthkit/bloodglucose.write", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.read", "https://www.huawei.com/healthkit/distance.write", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.read", "https://www.huawei.com/healthkit/speed.write", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.read", "https://www.huawei.com/healthkit/calories.write", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.read", "https://www.huawei.com/healthkit/pulmonary.write", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.read", "https://www.huawei.com/healthkit/strength.write", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.read", "https://www.huawei.com/healthkit/activity.write", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.read", "https://www.huawei.com/healthkit/bodyfat.write", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.read", "https://www.huawei.com/healthkit/sleep.write", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.read", "https://www.huawei.com/healthkit/nutrition.write", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.read", "https://www.huawei.com/healthkit/bloodpressure.write", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.read", "https://www.huawei.com/healthkit/oxygensaturation.write", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.read", "https://www.huawei.com/healthkit/bodytemperature.write", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.read", "https://www.huawei.com/healthkit/reproductive.write", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write", "https://www.huawei.com/healthkit/stress.both", "https://www.huawei.com/healthkit/activity.both"]
+  MAX_SCOPES: ["https://www.huawei.com/healthkit/heightweight.read", "https://www.huawei.com/healthkit/heightweight.write", "https://www.huawei.com/healthkit/heightweight.both", "https://www.huawei.com/healthkit/step.read", "https://www.huawei.com/healthkit/step.write", "https://www.huawei.com/healthkit/step.both", "https://www.huawei.com/healthkit/location.read", "https://www.huawei.com/healthkit/location.write", "https://www.huawei.com/healthkit/location.both", "https://www.huawei.com/healthkit/heartrate.read", "https://www.huawei.com/healthkit/heartrate.write", "https://www.huawei.com/healthkit/heartrate.both", "https://www.huawei.com/healthkit/bloodglucose.read", "https://www.huawei.com/healthkit/bloodglucose.write", "https://www.huawei.com/healthkit/bloodglucose.both", "https://www.huawei.com/healthkit/distance.read", "https://www.huawei.com/healthkit/distance.write", "https://www.huawei.com/healthkit/distance.both", "https://www.huawei.com/healthkit/speed.read", "https://www.huawei.com/healthkit/speed.write", "https://www.huawei.com/healthkit/speed.both", "https://www.huawei.com/healthkit/calories.read", "https://www.huawei.com/healthkit/calories.write", "https://www.huawei.com/healthkit/calories.both", "https://www.huawei.com/healthkit/pulmonary.read", "https://www.huawei.com/healthkit/pulmonary.write", "https://www.huawei.com/healthkit/pulmonary.both", "https://www.huawei.com/healthkit/strength.read", "https://www.huawei.com/healthkit/strength.write", "https://www.huawei.com/healthkit/strength.both", "https://www.huawei.com/healthkit/activity.read", "https://www.huawei.com/healthkit/activity.write", "https://www.huawei.com/healthkit/activity.both", "https://www.huawei.com/healthkit/bodyfat.read", "https://www.huawei.com/healthkit/bodyfat.write", "https://www.huawei.com/healthkit/bodyfat.both", "https://www.huawei.com/healthkit/sleep.read", "https://www.huawei.com/healthkit/sleep.write", "https://www.huawei.com/healthkit/sleep.both", "https://www.huawei.com/healthkit/nutrition.read", "https://www.huawei.com/healthkit/nutrition.write", "https://www.huawei.com/healthkit/nutrition.both", "https://www.huawei.com/healthkit/bloodpressure.read", "https://www.huawei.com/healthkit/bloodpressure.write", "https://www.huawei.com/healthkit/bloodpressure.both", "https://www.huawei.com/healthkit/oxygensaturation.read", "https://www.huawei.com/healthkit/oxygensaturation.write", "https://www.huawei.com/healthkit/oxygensaturation.both", "https://www.huawei.com/healthkit/bodytemperature.read", "https://www.huawei.com/healthkit/bodytemperature.write", "https://www.huawei.com/healthkit/bodytemperature.both", "https://www.huawei.com/healthkit/reproductive.read", "https://www.huawei.com/healthkit/reproductive.write", "https://www.huawei.com/healthkit/reproductive.both", "https://www.huawei.com/healthkit/activityrecord.read", "https://www.huawei.com/healthkit/activityrecord.write", "https://www.huawei.com/healthkit/activityrecord.both", "https://www.huawei.com/healthkit/stress.read", "https://www.huawei.com/healthkit/stress.write"]
+
 }
+
+const HealthDataTypes = {
+  DT_INSTANTANEOUS_BLOOD_PRESSURE: "DT_INSTANTANEOUS_BLOOD_PRESSURE",
+  DT_INSTANTANEOUS_BLOOD_GLUCOSE: "DT_INSTANTANEOUS_BLOOD_GLUCOSE",
+  DT_INSTANTANEOUS_SPO2: "DT_INSTANTANEOUS_SPO2",
+  DT_INSTANTANEOUS_BODY_TEMPERATURE: "DT_INSTANTANEOUS_BODY_TEMPERATURE",
+  DT_INSTANTANEOUS_SKIN_TEMPERATURE: "DT_INSTANTANEOUS_SKIN_TEMPERATURE",
+  DT_INSTANTANEOUS_BODY_TEMPERATURE_REST: "DT_INSTANTANEOUS_BODY_TEMPERATURE_REST",
+  DT_INSTANTANEOUS_CERVICAL_MUCUS: "DT_INSTANTANEOUS_CERVICAL_MUCUS",
+  DT_INSTANTANEOUS_CERVICAL_STATUS: "DT_INSTANTANEOUS_CERVICAL_STATUS",
+  DT_CONTINUOUS_MENSTRUAL_FLOW: "DT_CONTINUOUS_MENSTRUAL_FLOW",
+  DT_INSTANTANEOUS_OVULATION_DETECTION: "DT_INSTANTANEOUS_OVULATION_DETECTION",
+  DT_INSTANTANEOUS_VAGINAL_SPECKLE: "DT_INSTANTANEOUS_VAGINAL_SPECKLE",
+  DT_INSTANTANEOUS_URIC_ACID: "DT_INSTANTANEOUS_URIC_ACID",
+  DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE: "DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE",
+  DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN: "DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN",
+  DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN: "DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN",
+  DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE: "DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE",
+  DT_HEALTH_RECORD_TACHYCARDIA: "DT_HEALTH_RECORD_TACHYCARDIA",
+  DT_HEALTH_RECORD_BRADYCARDIA: "DT_HEALTH_RECORD_BRADYCARDIA",
+  DT_HEALTH_RECORD_SLEEP: "DT_HEALTH_RECORD_SLEEP",
+  DT_HEALTH_RECORD_MENSTRUAL_CYCLE: "DT_HEALTH_RECORD_MENSTRUAL_CYCLE",
+  POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
+  POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS",
+  POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
+  POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS",
+  POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS",
+  POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS",
+  POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS",
+  POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS",
+  POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW: "POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW",
+  POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION: "POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION",
+  POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE: "POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE",
+  DT_DYSMENORRHOEA: "DT_DYSMENORRHOEA",
+  DT_PHYSICAL_SYMPTOMS: "DT_PHYSICAL_SYMPTOMS",
+  DT_MOOD: "DT_MOOD",
+  DT_SKIN_STATUS: "DT_SKIN_STATUS",
+  DT_APPETITE: "DT_APPETITE",
+  DT_SEXUAL_ACTIVITY: "DT_SEXUAL_ACTIVITY"
+}
+
+
 const DataType = {
   DT_UNUSED_DATA_TYPE: "DT_UNUSED_DATA_TYPE",
   DT_CONTINUOUS_STEPS_DELTA: "DT_CONTINUOUS_STEPS_DELTA",
   DT_CONTINUOUS_STEPS_TOTAL: "DT_CONTINUOUS_STEPS_TOTAL",
+  POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
   DT_INSTANTANEOUS_STEPS_RATE: "DT_INSTANTANEOUS_STEPS_RATE",
   DT_CONTINUOUS_STEPS_RATE_STATISTIC: "DT_CONTINUOUS_STEPS_RATE_STATISTIC",
   DT_CONTINUOUS_ACTIVITY_SEGMENT: "DT_CONTINUOUS_ACTIVITY_SEGMENT",
@@ -116,12 +162,58 @@ const DataType = {
   DT_INSTANTANEOUS_BODY_FAT_RATE: "DT_INSTANTANEOUS_BODY_FAT_RATE",
   DT_INSTANTANEOUS_NUTRITION_FACTS: "DT_INSTANTANEOUS_NUTRITION_FACTS",
   DT_INSTANTANEOUS_HYDRATE: "DT_INSTANTANEOUS_HYDRATE",
+  DT_CONTINUOUS_HYDRATE_TOTAL: "DT_CONTINUOUS_HYDRATE_TOTAL",
   DT_CONTINUOUS_WORKOUT_DURATION: "DT_CONTINUOUS_WORKOUT_DURATION",
   DT_CONTINUOUS_EXERCISE_INTENSITY: "DT_CONTINUOUS_EXERCISE_INTENSITY",
   DT_STATISTICS_SLEEP: "DT_STATISTICS_SLEEP",
   DT_CONTINUOUS_SLEEP: "DT_CONTINUOUS_SLEEP",
   DT_INSTANTANEOUS_STRESS: "DT_INSTANTANEOUS_STRESS",
   DT_INSTANTANEOUS_STRESS_STATISTICS: "DT_INSTANTANEOUS_STRESS_STATISTICS",
+  DT_CONTINUOUS_EXERCISE_INTENSITY_V2: "DT_CONTINUOUS_EXERCISE_INTENSITY_V2",
+  DT_STATISTICS_EXERCISE_INTENSITY_V2: "DT_STATISTICS_EXERCISE_INTENSITY_V2",
+  DT_INSTANTANEOUS_RESTING_HEART_RATE: "DT_INSTANTANEOUS_RESTING_HEART_RATE",
+  DT_RESTING_HEART_RATE_STATISTICS: "DT_RESTING_HEART_RATE_STATISTICS",
+  DT_CONTINUOUS_JUMP: "DT_CONTINUOUS_JUMP",
+  DT_CONTINUOUS_JUMP_STATISTICS: "DT_CONTINUOUS_JUMP_STATISTICS",
+  DT_INSTANTANEOUS_EXERCISE_HEART_RATE:
+    "DT_INSTANTANEOUS_EXERCISE_HEART_RATE",
+  DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS:
+    "DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS",
+  DT_INSTANTANEOUS_ALTITUDE: "DT_INSTANTANEOUS_ALTITUDE",
+  DT_INSTANTANEOUS_SKIP_SPEED: "DT_INSTANTANEOUS_SKIP_SPEED",
+  DT_CONTINUOUS_SKIP_SPEED_STATISTICS: "DT_CONTINUOUS_SKIP_SPEED_STATISTICS",
+  DT_CONTINUOUS_ALTITUDE_STATISTICS: "DT_CONTINUOUS_ALTITUDE_STATISTICS",
+  DT_CONTINUOUS_RUN_POSTURE: "DT_CONTINUOUS_RUN_POSTURE",
+  DT_CONTINUOUS_RUN_POSTURE_STATISTICS:
+    "DT_CONTINUOUS_RUN_POSTURE_STATISTICS",
+  DT_ACTIVITY_FEATURE_JUMPING_ROPE: "DT_ACTIVITY_FEATURE_JUMPING_ROPE",
+  DT_ACTIVITY_FEATURE_BASKETBALL: "DT_ACTIVITY_FEATURE_BASKETBALL",
+  DT_RESISTANCE: "DT_RESISTANCE",
+  DT_RESISTANCE_STATISTICS: "DT_RESISTANCE_STATISTICS",
+  DT_ACTIVITY_FEATURE_ROWING: "DT_ACTIVITY_FEATURE_ROWING",
+  DT_INSTANTANEOUS_STROKE_RATE: "DT_INSTANTANEOUS_STROKE_RATE",
+  DT_INSTANTANEOUS_PEDALING_RATE: "DT_INSTANTANEOUS_PEDALING_RATE",
+  DT_CONTINUOUS_STROKE_RATE_STATISTICS:
+    "DT_CONTINUOUS_STROKE_RATE_STATISTICS",
+  DT_CONTINUOUS_PEDALING_RATE_STATISTICS:
+    "DT_CONTINUOUS_PEDALING_RATE_STATISTICS",
+  DT_INSTANTANEOUS_SWIMMING_STROKE_RATE:
+    "DT_INSTANTANEOUS_SWIMMING_STROKE_RATE",
+  DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS:
+    "DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS",
+  DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS:
+    "DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS",
+  DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER:
+    "DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER",
+  DT_ACTIVITY_FEATURE_SWIMMING_POOL: "DT_ACTIVITY_FEATURE_SWIMMING_POOL",
+  DT_ACTIVITY_FEATURE_SKIING: "DT_ACTIVITY_FEATURE_SKIING",
+  DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN:
+    "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN",
+  DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST:
+    "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
+  DT_VO2MAX: "DT_VO2MAX",
+  DT_VO2MAX_STATISTICS: "DT_VO2MAX_STATISTICS",
+  DT_INSTANTANEOUS_SWIMMING_SWOLF: "DT_INSTANTANEOUS_SWIMMING_SWOLF",
   POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
   POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
   POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
@@ -138,8 +230,81 @@ const DataType = {
   POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS",
   POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS",
   POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS: "POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS",
-  POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION"
+  POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION",
+  POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
 }
+
+const HealthFields = {
+  FIELD_SYSTOLIC_PRESSURE: "FIELD_SYSTOLIC_PRESSURE",
+  FIELD_SYSTOLIC_PRESSURE_AVG: "FIELD_SYSTOLIC_PRESSURE_AVG",
+  FIELD_SYSTOLIC_PRESSURE_MIN: "FIELD_SYSTOLIC_PRESSURE_MIN",
+  FIELD_SYSTOLIC_PRESSURE_MAX: "FIELD_SYSTOLIC_PRESSURE_MAX",
+  FIELD_SYSTOLIC_PRESSURE_LAST: "FIELD_SYSTOLIC_PRESSURE_LAST",
+  FIELD_DIASTOLIC_PRESSURE: "FIELD_DIASTOLIC_PRESSURE",
+  FIELD_DIASTOLIC_PRESSURE_AVG: "FIELD_DIASTOLIC_PRESSURE_AVG",
+  FIELD_DIASTOLIC_PRESSURE_MIN: "FIELD_DIASTOLIC_PRESSURE_MIN",
+  FIELD_DIASTOLIC_PRESSURE_MAX: "FIELD_DIASTOLIC_PRESSURE_MAX",
+  FIELD_DIASTOLIC_PRESSURE_LAST: "FIELD_DIASTOLIC_PRESSURE_LAST",
+  FIELD_SPHYGMUS: "FIELD_SPHYGMUS",
+  FIELD_SPHYGMUS_AVG: "FIELD_SPHYGMUS_AVG",
+  FIELD_SPHYGMUS_MIN: "FIELD_SPHYGMUS_MIN",
+  FIELD_SPHYGMUS_MAX: "FIELD_SPHYGMUS_MAX",
+  FIELD_SPHYGMUS_LAST: "FIELD_SPHYGMUS_LAST",
+  FIELD_BODY_POSTURE: "FIELD_BODY_POSTURE",
+  FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE: "FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE",
+  FIELD_MEASUREMENT_ANOMALY_FLAG: "FIELD_MEASUREMENT_ANOMALY_FLAG",
+  FIELD_MEASUREMENT_REMINDER: "FIELD_MEASUREMENT_REMINDER",
+  FIELD_BEFORE_MEASURE_ACTIVITY: "FIELD_BEFORE_MEASURE_ACTIVITY",
+  FIELD_LEVEL: "FIELD_LEVEL",
+  FIELD_MEASURE_TIME: "FIELD_MEASURE_TIME",
+  FIELD_CORRELATION_WITH_MEALTIME: "FIELD_CORRELATION_WITH_MEALTIME",
+  FIELD_CORRELATION_WITH_SLEEP_STATE: "FIELD_CORRELATION_WITH_SLEEP_STATE",
+  FIELD_SAMPLE_SOURCE: "FIELD_SAMPLE_SOURCE",
+  FIELD_SATURATION: "FIELD_SATURATION",
+  FIELD_SATURATION_AVG: "FIELD_SATURATION_AVG",
+  FIELD_SATURATION_MIN: "FIELD_SATURATION_MIN",
+  FIELD_SATURATION_MAX: "FIELD_SATURATION_MAX",
+  FIELD_SATURATION_LAST: "FIELD_SATURATION_LAST",
+  FIELD_OXYGEN_SUPPLY_FLOW_RATE: "FIELD_OXYGEN_SUPPLY_FLOW_RATE",
+  FIELD_OXYGEN_SUPPLY_FLOW_RATE_AVG: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_AVG",
+  FIELD_OXYGEN_SUPPLY_FLOW_RATE_MIN: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_MIN",
+  FIELD_OXYGEN_SUPPLY_FLOW_RATE_MAX: "FIELD_OXYGEN_SUPPLY_FLOW_RATE_MAX",
+  FIELD_OXYGEN_THERAPY: "FIELD_OXYGEN_THERAPY",
+  FIELD_SPO2_MEASUREMENT_MECHANISM: "FIELD_SPO2_MEASUREMENT_MECHANISM",
+  FIELD_SPO2_MEASUREMENT_APPROACH: "FIELD_SPO2_MEASUREMENT_APPROACH",
+  FIELD_TEMPERATURE: "FIELD_TEMPERATURE",
+  FIELD_MEASURE_BODY_PART_OF_TEMPERATURE: "FIELD_MEASURE_BODY_PART_OF_TEMPERATURE",
+  FIELD_TEXTURE: "FIELD_TEXTURE",
+  FIELD_AMOUNT: "FIELD_AMOUNT",
+  FIELD_POSITION: "FIELD_POSITION",
+  FIELD_DILATION_STATUS: "FIELD_DILATION_STATUS",
+  FIELD_FIRMNESS_LEVEL: "FIELD_FIRMNESS_LEVEL",
+  FIELD_VOLUME: "FIELD_VOLUME",
+  FIELD_DETECTION_RESULT: "FIELD_DETECTION_RESULT",
+  FIELD_URIC_ACID: "FIELD_URIC_ACID",
+  FIELD_NITRITE: "FIELD_NITRITE",
+  FIELD_UROBILINOGEN: "FIELD_UROBILINOGEN",
+  FIELD_BILIRUBIN: "FIELD_BILIRUBIN",
+  FIELD_GLUCOSE: "FIELD_GLUCOSE",
+  FIELD_THRESHOLD: "FIELD_THRESHOLD",
+  FIELD_AVG_HEART_RATE: "FIELD_AVG_HEART_RATE",
+  FIELD_MAX_HEART_RATE: "FIELD_MAX_HEART_RATE",
+  FIELD_MIN_HEART_RATE: "FIELD_MIN_HEART_RATE",
+  FIELD_RECORD_DAY: "FIELD_RECORD_DAY",
+  FIELD_STATUS: "FIELD_STATUS",
+  FIELD_SUB_STATUS: "FIELD_SUB_STATUS",
+  FIELD_REMARKS: "FIELD_REMARKS",
+  FIELD_TIME_ZONE: "FIELD_TIME_ZONE",
+  FIELD_START_FLAG: "FIELD_START_FLAG",
+  FIELD_END_FLAG: "FIELD_END_FLAG",
+  FIELD_DYSMENORRHOEA_LEVEL: "FIELD_DYSMENORRHOEA_LEVEL",
+  FIELD_PHYSICAL_SYMPTOMS: "FIELD_PHYSICAL_SYMPTOMS",
+  FIELD_MOOD: "FIELD_MOOD",
+  FIELD_SKIN_STATUS: "FIELD_SKIN_STATUS",
+  FIELD_APPETITE: "FIELD_APPETITE",
+  FIELD_CONTRACEPTIVE_MEASURES: "FIELD_CONTRACEPTIVE_MEASURES",
+}
+
 const HiHealthActivities = {
   MIME_TYPE_PREFIX: "vnd.huawei.hihealth.activity/",
   EXTRA_ACTION_STATUS: "actionStatus",
@@ -152,7 +317,7 @@ const HiHealthActivities = {
   BASKETBALL: "basketball",
   BIATHLON: "biathlon",
   BOXING: "boxing",
-  CALISTHENICS: "calisthenics",
+  LISTHENICS: "calisthenics",
   CIRCUIT_TRAINING: "circuit_training",
   CRICKET: "cricket",
   CROSSFIT: "crossfit",
@@ -275,8 +440,10 @@ const HiHealthActivities = {
   INDOOR_WALK: "indoor_walk",
   INDOOR_RUNNING: "indoor_running",
   MOUNTIN_CLIMBING: "mountin_climbing",
+  MOUNTAIN_CLIMBING: "mountain_climbing",
   CROSS_COUNTRY_RACE: "cross_country_race",
   ROLLER_SKATING: "roller_skatting",
+  ROLLER_SKAING: "roller_skating",
   HUNTING: "hunting",
   FLY_A_KITE: "fly_a_kite",
   SWING: "swing",
@@ -298,7 +465,11 @@ const HiHealthActivities = {
   KARATE: "karate",
   BODY_COMBAT: "body_combat",
   KENDO: "kendo",
-  TAI_CHI: "tai_chi"
+  TAI_CHI: "tai_chi",
+  FREE_DIVING: "freediving",
+  APNEA_TRAINING: "apnea_training",
+  APNEA_TEST: "apnea_test",
+
 }
 const DataGenerateType = {
   DATA_TYPE_INIT: 1,
@@ -367,9 +538,11 @@ const Field = {
   FIELD_HEIGHT: "FIELD_HEIGHT",
   FIELD_STEPS_DELTA: "FIELD_STEPS_DELTA",
   FIELD_STEPS: "FIELD_STEPS",
+  FIELD_DURATION: "FIELD_DURATION",
   FIELD_STEP_LENGTH: "FIELD_STEP_LENGTH",
   FIELD_LATITUDE: "FIELD_LATITUDE",
   FIELD_LONGITUDE: "FIELD_LONGITUDE",
+  FIELD_COORDINATE: "FIELD_COORDINATE",
   FIELD_BODY_WEIGHT: "FIELD_BODY_WEIGHT",
   FIELD_BMI: "FIELD_BMI",
   FIELD_BODY_FAT: "FIELD_BODY_FAT",
@@ -394,24 +567,49 @@ const Field = {
   FIELD_CALORIES_TOTAL: "FIELD_CALORIES_TOTAL",
   FIELD_POWER: "FIELD_POWER",
   FIELD_HYDRATE: "FIELD_HYDRATE",
+  FIELD_HYDRATE_TOTAL: "FIELD_HYDRATE_TOTAL",
   FIELD_MEAL: "FIELD_MEAL",
   FIELD_FOOD: "FIELD_FOOD",
   FIELD_NUTRIENTS: "FIELD_NUTRIENTS",
   FIELD_NUTRIENTS_FACTS: "FIELD_NUTRIENTS_FACTS",
+  FIELD_FRAGMENTS: "FIELD_FRAGMENTS",
   FIELD_AVG: "FIELD_AVG",
   FIELD_MAX: "FIELD_MAX",
+  FIELD_LAST: "FIELD_LAST",
+  FIELD_AVG_BODY_FAT_RATE: "FIELD_AVG_BODY_FAT_RATE",
+  FIELD_MAX_BODY_FAT_RATE: "FIELD_MAX_BODY_FAT_RATE",
+  FIELD_MIN_BODY_FAT_RATE: "FIELD_MIN_BODY_FAT_RATE",
+  FIELD_AVG_SKELETAL_MUSCLEL_MASS: "FIELD_AVG_SKELETAL_MUSCLEL_MASS",
+  FIELD_MAX_SKELETAL_MUSCLEL_MASS: "FIELD_MAX_SKELETAL_MUSCLEL_MASS",
+  FIELD_MIN_SKELETAL_MUSCLEL_MASS: "FIELD_MIN_SKELETAL_MUSCLEL_MASS",
+  FIELD_JUMP_HEIGHT: "FIELD_JUMP_HEIGHT",
+  FIELD_PASSAGE_DURATION: "FIELD_PASSAGE_DURATION",
+  FIELD_JUMP_TIMES: "FIELD_JUMP_TIMES",
+  FIELD_MIN_JUMP_HEIGHT: "FIELD_MIN_JUMP_HEIGHT",
+  FIELD_AVG_JUMP_HEIGHT: "FIELD_AVG_JUMP_HEIGHT",
+  FIELD_MAX_JUMP_HEIGHT: "FIELD_MAX_JUMP_HEIGHT",
+  FIELD_MIN_PASSAGE_DURATION: "FIELD_MIN_PASSAGE_DURATION",
+  FIELD_AVG_PASSAGE_DURATION: "FIELD_AVG_PASSAGE_DURATION",
+  FIELD_MAX_PASSAGE_DURATION: "FIELD_MAX_PASSAGE_DURATION",
   FIELD_MIN: "FIELD_MIN",
+  FIELD_ASCENT_TOTAL: "FIELD_ASCENT_TOTAL",
+  FIELD_DESCENT_TOTAL: "FIELD_DESCENT_TOTAL",
   FIELD_MIN_LATITUDE: "FIELD_MIN_LATITUDE",
   FIELD_MIN_LONGITUDE: "FIELD_MIN_LONGITUDE",
   FIELD_MAX_LATITUDE: "FIELD_MAX_LATITUDE",
   FIELD_MAX_LONGITUDE: "FIELD_MAX_LONGITUDE",
   FIELD_APPEARANCE: "FIELD_APPEARANCE",
   FIELD_INTENSITY: "FIELD_INTENSITY",
+  EXERCISE_TYPE: "EXERCISE_TYPE",
+  INTENSITY_MAP: "INTENSITY_MAP",
   FALL_ASLEEP_TIME: "FALL_ASLEEP_TIME",
   WAKE_UP_TIME: "WAKE_UP_TIME",
   SLEEP_SCORE: "SLEEP_SCORE",
   SLEEP_LATENCY: "SLEEP_LATENCY",
   GO_BED_TIME: "GO_BED_TIME",
+  PREPARE_SLEEP_TIME: "PREPARE_SLEEP_TIME",
+  OFF_BED_TIME: "OFF_BED_TIME",
+  GO_BED_TIME_NEW: "GO_BED_TIME_NEW",
   SLEEP_EFFICIENCY: "SLEEP_EFFICIENCY",
   LIGHT_SLEEP_TIME: "LIGHT_SLEEP_TIME",
   DEEP_SLEEP_TIME: "DEEP_SLEEP_TIME",
@@ -429,6 +627,104 @@ const Field = {
   STRESS_MIN: "STRESS_MIN",
   STRESS_LAST: "STRESS_LAST",
   MEASURE_COUNT: "MEASURE_COUNT",
+  VDOT: "VDOT",
+  TRAINING_INDEX: "TRAINING_INDEX",
+  FATIGUE_INDEX: "FATIGUE_INDEX",
+  PHYSICAL_FITNESS_INDEX: "PHYSICAL_FITNESS_INDEX",
+  STATE_INDEX: "STATE_INDEX",
+  ALTITUDE: "ALTITUDE",
+  SKIP_SPEED: "SKIP_SPEED",
+  AVG: "AVG",
+  MAX: "MAX",
+  MIN: "MIN",
+  LAST: "LAST",
+  SKIP_NUM: "SKIP_NUM",
+  STUMBLING_ROPE: "STUMBLING_ROPE",
+  MAX_SKIPPING_TIMES: "MAX_SKIPPING_TIMES",
+  DOUBLE_SHAKE: "DOUBLE_SHAKE",
+  TRIPLE_SHAKE: "TRIPLE_SHAKE",
+  LAOVERALL_SCOREST: "OVERALL_SCORE",
+  BURST_SCORE: "BURST_SCORE",
+  LJUMP_SCOREAST: "JUMP_SCORE",
+  RUN_SCORE: "RUN_SCORE",
+  BREAKTHROUGH_SCORE: "BREAKTHROUGH_SCORE",
+  SPORT_INTENSITY_SCORE: "SPORT_INTENSITY_SCORE",
+  DIVING_TIME: "DIVING_TIME",
+  DIVING_COUNT: "DIVING_COUNT",
+  MAX_DEPTH: "MAX_DEPTH",
+  AVG_DEPTH: "AVG_DEPTH",
+  MAX_UNDERWATER_TIME: "MAX_UNDERWATER_TIME",
+  NO_FLY_TIME: "NO_FLY_TIME",
+  WATER_TYPE: "WATER_TYPE",
+  SURFACE_TIME: "SURFACE_TIME",
+  START_LAT: "START_LAT",
+  START_LON: "START_LON",
+  END_LAT: "END_LAT",
+  END_LON: "END_LON",
+  STARTBREATH_TIME_LAT: "BREATH_TIME",
+  BREATH_HOLDING_TIME: "BREATH_HOLDING_TIME",
+  BREATH_HOLDING_TRAIN_RHYTHM: "BREATH_HOLDING_TRAIN_RHYTHM",
+  DIAPHRAGM_TIME: "DIAPHRAGM_TIME",
+  ASCENT_RATE: "ASCENT_RATE",
+  DESCENT_RATE: "DESCENT_RATE",
+  GROUND_CONTACT_TIME: "GROUND_CONTACT_TIME",
+  GROUND_IMPACT_ACCELERATION: "GROUND_IMPACT_ACCELERATION",
+  EVERSION_EXCURSION: "EVERSION_EXCURSION",
+  SWING_ANGLE: "SWING_ANGLE",
+  HANG_TIME: "HANG_TIME",
+  GROUND_HANG_TIME_RATE: "GROUND_HANG_TIME_RATE",
+  FORE_FOOT_STRIKE_PATTERN: "FORE_FOOT_STRIKE_PATTERN",
+  HIND_FOOT_STRIKE_PATTERN: "HIND_FOOT_STRIKE_PATTERN",
+  WHOLE_FOOT_STRIKE_PATTERN: "WHOLE_FOOT_STRIKE_PATTERN",
+  IMPACVERTICAL_OSCILLATIONT_PEAK: "VERTICAL_OSCILLATION",
+  VERTICAL_RATIO: "VERTICAL_RATIO",
+  IMPACT_PEAK: "IMPACT_PEAK",
+  GC_TIME_BALANCE: "GC_TIME_BALANCE",
+  IMPAAVG_VERTICAL_IMPACT_RATECT_PEAK: "AVG_VERTICAL_IMPACT_RATE",
+  AVG_GROUND_CONTACT_TIME: "AVG_GROUND_CONTACT_TIME",
+  IMPACTAVG_GROUND_IMPACT_ACCELERATION_PEAK: "AVG_GROUND_IMPACT_ACCELERATION",
+  IMPAAVG_SWING_ANGLECT_PEAK: "AVG_SWING_ANGLE",
+  AVG_EVERSION_EXCURSION: "AVG_EVERSION_EXCURSION",
+  IMPACAVG_HANG_TIMET_PEAK: "AVG_HANG_TIME",
+  AVG_IMPACT_PEAK: "AVG_IMPACT_PEAK",
+  AVG_IAVG_GC_TIME_BALANCEMPACT_PEAK: "AVG_GC_TIME_BALANCE",
+  AVG_IMAVG_VERTICAL_OSCILLATIONPACT_PEAK: "AVG_VERTICAL_OSCILLATION",
+  AVG_IMPACT_PAVG_VERTICAL_RATIOEAK: "AVG_VERTICAL_RATIO",
+  AVG_IMPACTAVG_GROUND_HANG_TIME_RATE_PEAK: "AVG_GROUND_HANG_TIME_RATE",
+  RESISTANCE_LEVEL: "RESISTANCE_LEVEL",
+  AVG_IMPMAX_RESACT_PEAK: "MAX_RES",
+  MIN_RES: "MIN_RES",
+  RESISTANCE_LEVEL_ONE_LOWER_LIMIT: "RESISTANCE_LEVEL_ONE_LOWER_LIMIT",
+  RESISTANCE_LEVEL_TWO_LOWER_LIMIT: "RESISTANCE_LEVEL_TWO_LOWER_LIMIT",
+  RESISTANCE_LEVEL_THREE_LOWER_LIMIT: "RESISTANCE_LEVEL_THREE_LOWER_LIMIT",
+  RESISTANCE_LEVEL_FOUR_LOWER_LIMIT: "RESISTANCE_LEVEL_FOUR_LOWER_LIMIT",
+  RESISTANCE_LEVEL_FIVE_LOWER_LIMIT: "RESISTANCE_LEVEL_FIVE_LOWER_LIMIT",
+  RESISTANCE_LEVEL_FIVE_UPPER_LIMIT: "RESISTANCE_LEVEL_FIVE_UPPER_LIMIT",
+  RESISTANCE_LEVEL_ONE_TIME: "RESISTANCE_LEVEL_ONE_TIME",
+  RESISTANCE_LEVEL_TWO_TIMES: "RESISTANCE_LEVEL_TWO_TIME",
+  RESISTANCE_LEVEL_THREE_TIME: "RESISTANCE_LEVEL_THREE_TIME",
+  RESISTANCE_LEVEL_FOUR_TIME: "RESISTANCE_LEVEL_FOUR_TIME",
+  RESISTANCE_LEVEL_FIVE_TIME: "RESISTANCE_LEVEL_FIVE_TIME",
+  VO2MAXS: "VO2MAX",
+  STROKES_NUM: "STROKES_NUM",
+  SPM: "SPM",
+  RPM: "RPM",
+  SWOLF: "SWOLF",
+  PULL_TIMES: "PULL_TIMES",
+  SWIMMING_STROKE: "SWIMMING_STROKE",
+  POOL_LENGTH: "POOL_LENGTH",
+  TRIP_TIMES: "TRIP_TIMES",
+  MAX_SLOPE_PERCENT: "MAX_SLOPE_PERCENT",
+  SLEEP_TYPE: "SLEEP_TYPE",
+  MAX_SLOPE_DEGREE: "MAX_SLOPE_DEGREE",
+  SKIING_TOTAL_TIME: "SKIING_TOTAL_TIME",
+  SKIING_TOTAL_DISTANCE: "SKIING_TOTAL_DISTANCE",
+  GOLF_SWING_COUNT: "GOLF_SWING_COUNT",
+  GOLF_SWING_SPEED: "GOLF_SWING_SPEED",
+  GOLF_MAX_SWING_SPEED: "GOLF_MAX_SWING_SPEED",
+  GOLF_SWING_TEMPO: "GOLF_SWING_TEMPO",
+  GOLF_DOWN_SWING_TIME: "GOLF_DOWN_SWING_TIME",
+  GOLF_BACK_SWING_TIME: "GOLF_BACK_SWING_TIME",
 }
 
 async function onDeviceReady() {
@@ -451,100 +747,196 @@ async function onDeviceReady() {
   console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
   document.getElementById('deviceready').classList.add('ready');
 
-let signInButton = document.getElementById('signIn');
-signInButton.onclick = function () {
-  signIn()
-};
-let addActivityRecordButton = document.getElementById('addActivityRecord');
-addActivityRecordButton.onclick = function () {
-  addActivityRecord()
-};
-let beginActivityRecordButton = document.getElementById('beginActivityRecord');
-beginActivityRecordButton.onclick = function () {
-  beginActivityRecord()
-};
-let endActivityRecordButton = document.getElementById('endActivityRecord');
-endActivityRecordButton.onclick = function () {
-  endActivityRecord()
-};
-let getActivityRecordButton = document.getElementById('getActivityRecord');
-getActivityRecordButton.onclick = function () {
-  getActivityRecord()
-};
-let startRecordButton = document.getElementById('startRecord');
-startRecordButton.onclick = function () {
-  startAutoRecorder()
-};
-let stopRecordButton = document.getElementById('stopRecord');
-stopRecordButton.onclick = function () {
-  stopAutoRecorder()
-};
-let getPermissionsButton = document.getElementById('getPermissions');
-getPermissionsButton.onclick = function () {
-  getPermissions()
-};
-let revokeButton = document.getElementById('revoke');
-revokeButton.onclick = function () {
-  revoke()
-};
-let revokeAllButton = document.getElementById('revokeAll');
-revokeAllButton.onclick = function () {
-  revokeAll()
-};
-let initDataControllerButton = document.getElementById('initDataController');
-initDataControllerButton.onclick = function () {
-  initDataController()
-};
-let readButton = document.getElementById('read');
-readButton.onclick = function () {
-  read()
-};
-let insertButton = document.getElementById('insert');
-insertButton.onclick = function () {
-  insert()
-};
-let updateButton = document.getElementById('update');
-updateButton.onclick = function () {
-  update()
-};
-let deleteButton = document.getElementById('delete');
-deleteButton.onclick = function () {
-  deleteData()
-};
-let readDailySummationButton = document.getElementById('readDailySummation');
-readDailySummationButton.onclick = function () {
-  readDailySummation()
-};
-let readTodaySummationButton = document.getElementById('readTodaySummation');
-readTodaySummationButton.onclick = function () {
-  readTodaySummation()
-};
-let clearAllButton = document.getElementById('clearAll');
-clearAllButton.onclick = function () {
-  clearAll()
-};
-let addDataTypeButton = document.getElementById('addDataType');
-addDataTypeButton.onclick = function () {
-  addDataType()
-};
-let readDataTypeButton = document.getElementById('readDataType');
-readDataTypeButton.onclick = function () {
-  readDataType()
-};
-let disableHiHealthButton = document.getElementById('disableHiHealth');
-disableHiHealthButton.onclick = function () {
-  disableHiHealth()
-};
-let getHealthAppAuthorizationButton = document.getElementById('getHealthAppAuthorization');
-getHealthAppAuthorizationButton.onclick = function () {
-  getHealthAppAuthorization()
-};
+  let signInButton = document.getElementById('signIn');
+  signInButton.onclick = function () {
+    signIn()
+  };
 
-let checkHealthAppAuthorizationButton = document.getElementById('checkHealthAppAuthorization');
-checkHealthAppAuthorizationButton.onclick = function () {
-  checkHealthAppAuthorization()
-};
+  let createDeviceInfoButton = document.getElementById('createDeviceInfo');
+  createDeviceInfoButton.onclick = function () {
+    createDeviceInfo()
+  };
+
+  let createAppButton = document.getElementById('createApp');
+  createAppButton.onclick = function () {
+    createApp()
+  };
+
+  let getDetailsUrlButton = document.getElementById('getDetailsUrl');
+  getDetailsUrlButton.onclick = function () {
+    getDetailsUrl()
+  };
+
+  let getDomainNameButton = document.getElementById('getDomainName');
+  getDomainNameButton.onclick = function () {
+    getDomainName()
+  };
+
+  let getPackageNameButton = document.getElementById('getPackageName');
+  getPackageNameButton.onclick = function () {
+    getPackageName()
+  };
+
+  let getVersionButton = document.getElementById('getVersion');
+  getVersionButton.onclick = function () {
+    getVersion()
+  };
+
+
+  let addActivityRecordButton = document.getElementById('addActivityRecord');
+  addActivityRecordButton.onclick = function () {
+    addActivityRecord()
+  };
+  let beginActivityRecordButton = document.getElementById('beginActivityRecord');
+  beginActivityRecordButton.onclick = function () {
+    beginActivityRecord()
+  };
+
+  let beginBackgroundActivityRecordButton = document.getElementById('beginBackgroundActivityRecord');
+  beginBackgroundActivityRecordButton.onclick = function () {
+    beginBackgroundActivityRecord()
+  };
+
+  let endActivityRecordButton = document.getElementById('endActivityRecord');
+  endActivityRecordButton.onclick = function () {
+    endActivityRecord()
+  };
+  let endBackgroundActivityRecordButton = document.getElementById('endBackgroundActivityRecord');
+  endBackgroundActivityRecordButton.onclick = function () {
+    endBackgroundActivityRecord()
+  };
+
+  let getActivityRecordButton = document.getElementById('getActivityRecord');
+  getActivityRecordButton.onclick = function () {
+    getActivityRecord()
+  };
+
+  let deleteActivityRecordButton = document.getElementById('deleteActivityRecord');
+  deleteActivityRecordButton.onclick = function () {
+    deleteActivityRecord()
+  };
+
+  let startRecordButton = document.getElementById('startRecord');
+  startRecordButton.onclick = function () {
+    startAutoRecorder()
+  };
+  let stopRecordButton = document.getElementById('stopRecord');
+  stopRecordButton.onclick = function () {
+    stopAutoRecorder()
+  };
+  let getPermissionsButton = document.getElementById('getPermissions');
+  getPermissionsButton.onclick = function () {
+    getPermissions()
+  };
+  let revokeButton = document.getElementById('revoke');
+  revokeButton.onclick = function () {
+    revoke()
+  };
+  let revokeAllButton = document.getElementById('revokeAll');
+  revokeAllButton.onclick = function () {
+    revokeAll()
+  };
+
+  let cancelAuthorizationButton = document.getElementById('cancelAuthorization');
+  cancelAuthorizationButton.onclick = function () {
+    cancelAuthorization()
+  };
+
+  let cancelAuthorizationAllButton = document.getElementById('cancelAuthorizationAll');
+  cancelAuthorizationAllButton.onclick = function () {
+    cancelAuthorizationAll()
+  };
+
+
+
+  let initDataControllerButton = document.getElementById('initDataController');
+  initDataControllerButton.onclick = function () {
+    initDataController()
+  };
+  let readButton = document.getElementById('read');
+  readButton.onclick = function () {
+    read()
+  };
+  let insertButton = document.getElementById('insert');
+  insertButton.onclick = function () {
+    insert()
+  };
+  let updateButton = document.getElementById('update');
+  updateButton.onclick = function () {
+    update()
+  };
+  let deleteButton = document.getElementById('delete');
+  deleteButton.onclick = function () {
+    deleteData()
+  };
+  let readDailySummationButton = document.getElementById('readDailySummation');
+  readDailySummationButton.onclick = function () {
+    readDailySummation()
+  };
+  let readTodaySummationButton = document.getElementById('readTodaySummation');
+  readTodaySummationButton.onclick = function () {
+    readTodaySummation()
+  };
+  let clearAllButton = document.getElementById('clearAll');
+  clearAllButton.onclick = function () {
+    clearAll()
+  };
+
+  let readLatestDataButton = document.getElementById('readLatestData');
+  readLatestDataButton.onclick = function () {
+    readLatestData()
+  };
+
+
+  let addDataTypeButton = document.getElementById('addDataType');
+  addDataTypeButton.onclick = function () {
+    addDataType()
+  };
+  let readDataTypeButton = document.getElementById('readDataType');
+  readDataTypeButton.onclick = function () {
+    readDataType()
+  };
+  let disableHiHealthButton = document.getElementById('disableHiHealth');
+  disableHiHealthButton.onclick = function () {
+    disableHiHealth()
+  };
+  let getHealthAppAuthorizationButton = document.getElementById('getHealthAppAuthorization');
+  getHealthAppAuthorizationButton.onclick = function () {
+    getHealthAppAuthorization()
+  };
+
+  let checkHealthAppAuthorizationButton = document.getElementById('checkHealthAppAuthorization');
+  checkHealthAppAuthorizationButton.onclick = function () {
+    checkHealthAppAuthorization()
+  };
+
+  let requestAuthButton = document.getElementById('requestAuth');
+  requestAuthButton.onclick = function () {
+    requestAuth()
+  };
+
+  let addHealthRecordButton = document.getElementById('addHealthRecord');
+  addHealthRecordButton.onclick = function () {
+    addHealthRecord()
+  };
+
+  let deleteHealthRecordButton = document.getElementById('deleteHealthRecord');
+  deleteHealthRecordButton.onclick = function () {
+    deleteHealthRecord()
+  };
+
+  let getHealthRecordButton = document.getElementById('getHealthRecord');
+  getHealthRecordButton.onclick = function () {
+    getHealthRecord()
+  };
+
+  let updateHealthRecordButton = document.getElementById('updateHealthRecord');
+  updateHealthRecordButton.onclick = function () {
+    updateHealthRecord()
+  };
+
 }
+
 
 function signIn() {
   HMSHealth.signIn(HuaweiHiHealth.MAX_SCOPES).then(user => {
@@ -556,6 +948,101 @@ function signIn() {
     console.log(error);
   })
 }
+
+// Device Info
+
+function createDeviceInfo() {
+
+  let request = {
+    deviceManufacturer: "Huawei",
+    modelName: "PSmart Pro",
+    uuid: "test",
+    deviceType: 1,
+    isBleDevice: true,
+    platformType: 1,
+  }
+
+  HMSHealth.DeviceInfo.createDeviceInfo(request).then(url => {
+    console.log("createDeviceInfo Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("createDeviceInfo Success : " + JSON.stringify(url))
+  }).catch(error => {
+    console.log(error);
+  })
+
+}
+// App Info
+
+function createApp() {
+
+  let request = {
+    detailsUrl: "detailsUrl",
+    domainName: "domainName",
+    packageName: "packageName",
+    version: "version"
+
+  }
+
+  HMSHealth.AppInfo.createApp(request).then(url => {
+    console.log("createApp Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("createApp Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+
+}
+
+function getDetailsUrl() {
+
+  HMSHealth.AppInfo.getDetailsUrl().then(url => {
+    console.log("getDetailsUrl Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("Detail Url Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+}
+
+function getDomainName() {
+
+  HMSHealth.AppInfo.getDomainName().then(url => {
+    console.log("getDomainName Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("getDomainName Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+
+}
+
+function getPackageName() {
+  HMSHealth.AppInfo.getPackageName().then(url => {
+    console.log("getPackageName Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("Detail PackageName Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+}
+function getVersion() {
+
+  HMSHealth.AppInfo.getVersion().then(url => {
+    console.log("getVersion Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("Detail Version Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+}
+
+
 
 // Auto Recorder
 function startAutoRecorder() {
@@ -586,6 +1073,7 @@ function stopAutoRecorder() {
 }
 
 // Activity Recorder
+
 function addActivityRecord() {
   let startDate = new Date();
   let endDate = new Date();
@@ -602,8 +1090,8 @@ function addActivityRecord() {
       endTime: endDate.getTime(),
       timeUnit: TimeUnit.MILLISECONDS,
       timeZone: "+0800",
-      id: 'ActivityRecordRun1923',
-      name: 'BeginActivityRecord',
+      id: 'MyBackgroundActivityRecordId',
+      name: 'ActivityRecordRun',
       description: 'This is a test for ActivityRecord',
       activityType: HiHealthActivities.RUNNING,
       activitySummary: {
@@ -641,11 +1129,15 @@ function addActivityRecord() {
       }
     },
     sampleSet: [{
+
+
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
       fieldName: Field.FIELD_STEPS,
       fieldValue: "352",
       timeUnit: TimeUnit.MILLISECONDS,
+
+
       dataCollector: {
         dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
         name: "DT_CONTINUOUS_STEPS_TOTAL",
@@ -662,6 +1154,8 @@ function addActivityRecord() {
   });
 }
 
+
+
 function beginActivityRecord() {
   let startDate = new Date();
   startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000))
@@ -670,8 +1164,8 @@ function beginActivityRecord() {
     startTime: startDate.getTime(),
     timeUnit: TimeUnit.MILLISECONDS,
     timeZone: "+0800",
-    id: 'ActivityRecordRun',
-    name: 'BeginActivityRecord',
+    id: 'MyBackgroundActivityRecordId',
+    name: 'ActivityRecordRun',
     description: 'This is a test for ActivityRecord',
     activityType: HiHealthActivities.RUNNING,
   }
@@ -683,21 +1177,104 @@ function beginActivityRecord() {
   });
 }
 
-function endActivityRecord() {
-  let activityRecordId = "ActivityRecordRun";
+function beginBackgroundActivityRecord() {
+  let startDate = new Date();
+  startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000))
 
-  HMSHealth.ActivityRecordController.endActivityRecord(activityRecordId).then(() => {
-    console.log("End Activity Record Success!");
-    alert("End Activity Record Success!");
+  let activityRecord = {
+    startTime: startDate.getTime(),
+    timeUnit: TimeUnit.MILLISECONDS,
+    timeZone: "+0800",
+    id: 'MyBackgroundActivityRecordId',
+    name: 'ActivityRecordRun',
+    description: 'This is a test for ActivityRecord',
+    activityType: HiHealthActivities.RUNNING,
+  }
+  HMSHealth.ActivityRecordController.beginBackgroundActivityRecord(activityRecord).then(() => {
+    console.log("Begin Activity Record Success!");
+    alert("beginBackgroundActivityRecord Success!");
   }).catch(error => {
     console.log(error);
+  });
+}
+
+
+
+function endActivityRecord() {
+  let request = {
+    activityRecordId: 'MyBackgroundActivityRecordId',
+    timeUnit: TimeUnit.MILLISECONDS,
+  }
+
+  HMSHealth.ActivityRecordController.endActivityRecord(request).then((res) => {
+    console.log("End Activity Record Success!");
+    alert("End Activity Record Success!" + JSON.stringify(res));
+
+  }).catch(error => {
+    console.log(error);
+  });
+}
+
+function endBackgroundActivityRecord() {
+  let request = {
+    activityRecordId: 'MyBackgroundActivityRecordId',
+    timeUnit: TimeUnit.MILLISECONDS,
+  }
+
+  HMSHealth.ActivityRecordController.endBackgroundActivityRecord(request).then((res) => {
+    console.log("endBackgroundActivityRecord Record Success!");
+    alert("endBackgroundActivityRecord Record Success!" + JSON.stringify(res));
+
+  }).catch(error => {
+    console.log(error);
+  });
+}
+
+
+
+function deleteActivityRecord() {
+
+  let startDate = new Date();
+  let endDate = new Date();
+  startDate.setTime(startDate.getTime() - (3 * 60 * 60 * 60 * 1000))
+
+  let activityRecord = {
+    startTime: startDate.getTime(),
+    endTime: endDate.getTime(),
+    activityRecordIds: [{
+      activityRecord: "MyBackgroundActivityRecordId"
+    }
+    ],
+    dataTypes: [{
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+      hiHealthOption: HiHealthOptions.ACCESS_READ
+    },
+    {
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+      hiHealthOption: HiHealthOptions.ACCESS_READ
+    }
+    ],
+    timeUnit: TimeUnit.MILLISECONDS,
+    isDeleteSubData: true
+
+  }
+
+
+  HMSHealth.ActivityRecordController.deleteActivityRecord(activityRecord).then((ar) => {
+    console.log(" deleteActivityRecord  Success!");
+    console.log(ar);
+    console.log(JSON.stringify(ar));
+    alert("deleteActivityRecord Success!");
+  }).catch(error => {
+    console.log(error);
+    alert(error);
   });
 }
 
 function getActivityRecord() {
   let startDate = new Date();
   let endDate = new Date();
-  startDate.setTime(startDate.getTime() - (3 * 60 * 60 * 1000))
+  startDate.setTime(startDate.getTime() - (3 * 60 * 60 * 60 * 1000))
 
   let activityRecord = {
     startTime: startDate.getTime(),
@@ -710,7 +1287,7 @@ function getActivityRecord() {
     console.log("Get Activity Record Success!");
     console.log(ar);
     console.log(JSON.stringify(ar));
-    alert("Get Activity Record Success!");
+    alert("Get Activity Record Success!" + JSON.stringify(ar));
 
   }).catch(error => {
     console.log(error);
@@ -720,20 +1297,23 @@ function getActivityRecord() {
 // Data Collector
 function initDataController() {
   let dataTypes = [{
-      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-      hiHealthOption: HiHealthOptions.ACCESS_READ
-    },
-    {
-      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-      hiHealthOption: HiHealthOptions.ACCESS_WRITE
-    }
+    dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+    hiHealthOption: HiHealthOptions.ACCESS_READ
+  },
+  {
+    dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+    hiHealthOption: HiHealthOptions.ACCESS_READ
+  }
   ];
+
   HMSHealth.DataController.initDataController(dataTypes).then(() => {
     console.log("initDataController Success!");
     alert("initDataController Success!");
   }).catch(error => {
     console.log(error);
   });
+
+
 }
 
 function read() {
@@ -776,6 +1356,10 @@ function insert() {
       dataGenerateType: DataGenerateType.DATA_TYPE_RAW
     },
     sampleSet: [{
+      metaData: {
+        metaDataKey: "metaData",
+        metaDataValue: "metaData"
+      },
       startTime: startDate.getTime(),
       endTime: endDate.getTime(),
       fieldName: Field.FIELD_STEPS_DELTA,
@@ -897,11 +1481,30 @@ function clearAll() {
   });
 }
 
+function readLatestData() {
+  let dataTypes = [{
+    dataType: DataType.DT_INSTANTANEOUS_HEIGHT
+  },
+  {
+    dataType: DataType.DT_INSTANTANEOUS_BODY_WEIGHT
+  }
+  ];
+
+  HMSHealth.DataController.readLatestData(dataTypes).then((res) => {
+    alert("readLatestData" + JSON.stringify(res));
+    console.log("readLatestData Success!");
+    alert("readLatestData Success!");
+  })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
 // ConsentsController
 function getPermissions() {
   let options = {
     language: "en-us",
-    appId: "103345931"
+    appId: "107024979"
   }
   HMSHealth.ConsentsController.getPermissions(options).then((data) => {
     console.log("getPermissions Success!");
@@ -914,7 +1517,7 @@ function getPermissions() {
 }
 
 function revokeAll() {
-  HMSHealth.ConsentsController.revokeAll("103345931").then((data) => {
+  HMSHealth.ConsentsController.revokeAll("107024979").then((data) => {
     console.log("revokeAll Success!");
     console.log(data);
     console.log(JSON.stringify(data));
@@ -926,7 +1529,7 @@ function revokeAll() {
 
 function revoke() {
   let options = {
-    appId: "103345931",
+    appId: "107024979",
     scopes: [
       HuaweiHiHealth.HEALTHKIT_STEP_READ,
       HuaweiHiHealth.HEALTHKIT_STEP_WRITE
@@ -940,6 +1543,40 @@ function revoke() {
   }).catch(error => {
     console.log(error);
   });
+}
+
+function cancelAuthorization() {
+  let cancelAuthReq = {
+    appId: "107024979",
+    scopes: [
+      HuaweiHiHealth.HEALTHKIT_STEP_READ,
+      HuaweiHiHealth.HEALTHKIT_STEP_WRITE
+    ]
+  }
+  HMSHealth.ConsentsController.cancelAuthorization(cancelAuthReq).then((data) => {
+    console.log("cancelAuthorization Success!");
+    console.log(data);
+    console.log(JSON.stringify(data));
+    alert("cancelAuthorization Success!");
+  }).catch(error => {
+    console.log(error);
+  });
+}
+
+function cancelAuthorizationAll() {
+  let cancelAuthAllReq = {
+    deleteData: true
+
+  }
+  HMSHealth.ConsentsController.cancelAuthorizationAll(cancelAuthAllReq).then((data) => {
+    console.log("cancelAuthorizationAll Success!");
+    console.log(data);
+    console.log(JSON.stringify(data));
+    alert("cancelAuthorizationAll Success!");
+  }).catch(error => {
+    console.log(error);
+  });
+
 }
 
 // Settings Controller
@@ -994,3 +1631,351 @@ function getHealthAppAuthorization() {
     console.log(error);
   });
 }
+
+function requestAuth() {
+  let request = {
+    scopes: [
+      HuaweiHiHealth.HEALTHKIT_STEP_READ,
+      HuaweiHiHealth.HEALTHKIT_STEP_WRITE,
+      HuaweiHiHealth.HEALTHKIT_HEIGHTWEIGHT_READ,
+      HuaweiHiHealth.HEALTHKIT_HEIGHTWEIGHT_WRITE,
+      HuaweiHiHealth.HEALTHKIT_HEARTRATE_READ,
+      HuaweiHiHealth.HEALTHKIT_HEARTRATE_WRITE,
+      HuaweiHiHealth.HEALTHKIT_ACTIVITY_RECORD_READ,
+      HuaweiHiHealth.HEALTHKIT_ACTIVITY_RECORD_WRITE,
+      HuaweiHiHealth.HEALTHKIT_HEARTHEALTH_READ,
+      HuaweiHiHealth.HEALTHKIT_HEARTHEALTH_WRITE
+    ],
+    enableHealthAuth: true
+  };
+
+  HMSHealth.SettingsController.requestAuthorizationIntent(request).then(url => {
+    console.log("requestAuthorizationIntent Success");
+    console.log(url);
+    console.log(JSON.stringify(url));
+    alert("requestAuthorizationIntent Success : " + url)
+  }).catch(error => {
+    console.log(error);
+  })
+
+}
+
+// HealthRecord Controller
+let resultId;
+function addHealthRecord() {
+  let startDate = new Date();
+  startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+  let endDate = new Date();
+
+  let request = {
+    dataCollector: {
+      dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,  // HealthDataTypes olacak kesin
+      name: "cordova",
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+    },
+    options: {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      metaData: "Data",
+    },
+
+    healthFields: [
+      {
+        healthFieldName: HealthFields.FIELD_THRESHOLD,
+        healthFieldValue: 42,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_AVG_HEART_RATE,
+        healthFieldValue: 45,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_MAX_HEART_RATE,
+        healthFieldValue: 48,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_MIN_HEART_RATE,
+        healthFieldValue: 42,
+      }
+    ],
+    //HealthField burası da liste olacak
+    // java tarfında en son dönerek set edicez 
+    // fieldvalue tip kontrol edilecek   string,double,ınt vs.  hangi tipte geliyorsa casting yapılmalı
+    sampleSets: [
+      {
+        dataCollector: {
+          dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,  //datatype normalde
+          name: "cordova",
+          dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+        },
+        fields: [
+          {
+            fieldName: Field.FIELD_BPM,
+            fieldValue: 42,
+          },
+
+        ],
+
+        //     fieldName: Field.FIELD_BPM,
+        //     fieldValue: 88, //liste mi olacak yoksa tek mi olacak
+        samplePoints: [
+          {
+            startTime: startDate.getTime(),
+            endTime: endDate.getTime(),
+            fields: [
+              {
+                fieldName: Field.FIELD_AVG,
+                fieldValue: 90,
+              }, {
+                fieldName: Field.FIELD_MAX,
+                fieldValue: 100,
+              }, {
+                fieldName: Field.FIELD_MIN,
+                fieldValue: 80,
+              }
+            ],
+            timeUnit: TimeUnit.MILLISECONDS,
+            dataCollector: {
+              dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+              name: "cordova",
+              dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+
+            },
+          },
+          {
+            startTime: startDate.getTime(),
+            endTime: endDate.getTime(),
+            fields: [
+              {
+                fieldName: Field.FIELD_AVG,
+                fieldValue: 90,
+              }, {
+                fieldName: Field.FIELD_MAX,
+                fieldValue: 100,
+              }, {
+                fieldName: Field.FIELD_MIN,
+                fieldValue: 80,
+              }
+            ],
+            timeUnit: TimeUnit.MILLISECONDS,
+            dataCollector: {
+              dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+              name: "cordova",
+              dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+
+            },
+          },]
+      },
+
+    ]
+
+
+  }
+
+  HMSHealth.HealthRecordController.addHealthRecord(request).then(res => {
+    resultId = res;
+    alert("addHealthRecord Success" + res)
+  });
+}
+
+function deleteHealthRecord() {
+  let startDate = new Date();
+  startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+  let endDate = new Date();
+
+  let request = {
+    options: {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+    },
+    isDeleteSubData: true,
+    dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+    dataTypes: [{
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+      hiHealthOption: HiHealthOptions.ACCESS_READ
+    },
+    {
+      dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+      hiHealthOption: HiHealthOptions.ACCESS_READ
+    }
+    ],
+    activityRecordIds:
+      [
+        {
+          activityRecord: resultId
+        },
+        {
+          activityRecord: "healthRecordId1"
+        }
+      ],
+  }
+
+  HMSHealth.HealthRecordController.deleteHealthRecord(request).then(res => {
+    alert("deleteHealthRecord Success : " + res)
+    console.log(res);
+    console.log(JSON.stringify(res));
+  }).catch(error => {
+    alert(error);
+    console.log(error);
+  });
+
+}
+function getHealthRecord() {
+  let startDate = new Date();
+  startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 60 * 1000));
+  let endDate = new Date();
+
+  let request = {
+    options: {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+    },
+
+    dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+    dataTypes: [{
+      dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,
+      hiHealthOption: HiHealthOptions.ACCESS_READ
+    },
+    ],
+
+  }
+
+  HMSHealth.HealthRecordController.getHealthRecord(request)
+    .then(res => {
+      alert("getHealthRecord Success : " + JSON.stringify(res));
+      console.log(res);
+      console.log(JSON.stringify(res));
+
+    }).catch(error => {
+      alert(error);
+      console.log(error);
+    });
+
+}
+function updateHealthRecord() {
+
+  let startDate = new Date();
+  startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+  let endDate = new Date();
+
+  let request = {
+    healthRecordId: resultId,
+    dataCollector: {
+      dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,  // HealthDataTypes olacak kesin
+      name: "cordova",
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+    },
+    options: {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      metaData: "Data",
+    },
+
+    healthFields: [
+      {
+        healthFieldName: HealthFields.FIELD_THRESHOLD,
+        healthFieldValue: 43,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_AVG_HEART_RATE,
+        healthFieldValue: 46,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_MAX_HEART_RATE,
+        healthFieldValue: 47,
+      },
+      {
+        healthFieldName: HealthFields.FIELD_MIN_HEART_RATE,
+        healthFieldValue: 48,
+      }
+    ],
+    //HealthField burası da liste olacak
+    // java tarfında en son dönerek set edicez
+    // fieldvalue tip kontrol edilecek   string,double,ınt vs.  hangi tipte geliyorsa casting yapılmalı
+    sampleSets: [
+      {
+        dataCollector: {
+          dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,  //datatype normalde
+          name: "cordova",
+          dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+        },
+        fields: [
+          {
+            fieldName: Field.FIELD_BPM,
+            fieldValue: 44,
+          },
+
+        ],
+
+        //     fieldName: Field.FIELD_BPM,
+        //     fieldValue: 88, //liste mi olacak yoksa tek mi olacak
+        samplePoints: [
+          {
+            startTime: startDate.getTime(),
+            endTime: endDate.getTime(),
+            fields: [
+              {
+                fieldName: Field.FIELD_AVG,
+                fieldValue: 91,
+              }, {
+                fieldName: Field.FIELD_MAX,
+                fieldValue: 99,
+              }, {
+                fieldName: Field.FIELD_MIN,
+                fieldValue: 89,
+              }
+            ],
+            timeUnit: TimeUnit.MILLISECONDS,
+            dataCollector: {
+              dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+              name: "cordova",
+              dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+
+            },
+          },
+          {
+            startTime: startDate.getTime(),
+            endTime: endDate.getTime(),
+            fields: [
+              {
+                fieldName: Field.FIELD_AVG,
+                fieldValue: 96,
+              }, {
+                fieldName: Field.FIELD_MAX,
+                fieldValue: 99,
+              }, {
+                fieldName: Field.FIELD_MIN,
+                fieldValue: 89,
+              }
+            ],
+            timeUnit: TimeUnit.MILLISECONDS,
+            dataCollector: {
+              dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+              name: "cordova",
+              dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+
+            },
+          },]
+      },
+
+    ]
+
+
+  }
+
+  HMSHealth.HealthRecordController.updateHealthRecord(request)
+    .then(res => {
+      alert("updateHealthRecord Success : " + res)
+      console.log(res);
+      console.log(JSON.stringify(res));
+
+    }).catch(error => {
+      alert(error);
+      console.log(error);
+    });
+}
+
+

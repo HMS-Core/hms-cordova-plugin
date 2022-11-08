@@ -18,9 +18,10 @@
     under the License.
 -->
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <!--
+  <meta charset="utf-8">
+  <!--
     Customize this policy to fit your own app's needs. For more guidance, see:
         https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
     Some notes:
@@ -29,33 +30,70 @@
         * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
             * Enable inline JS: add 'unsafe-inline' to default-src
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-    <meta name="color-scheme" content="light dark">
-    <link rel="stylesheet" href="css/index.css">
-    <title>Hello World</title>
-    <style>
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="css/index.css">
+  <title>Hello World</title>
+  <style>
 
-    </style>
+  </style>
 </head>
+
 <body style="text-align: center">
-<div id="deviceready" class="blink" style="width:100%">
+  <div id="deviceready" class="blink" style="width:100%">
     <p class="event listening">Connecting to Device</p>
     <p class="event received">
-        Device is Ready
+      Device is Ready
     </p>
-</div>
+  </div>
 
-<div class="equalHWrap eqWrap">
+  <div class="equalHWrap eqWrap">
     <div class="equalHW eq">
-        <button style="margin: 3px; font-size: 14px" id="signIn">Sign In</button>
+      <button style="margin: 3px; font-size: 14px" id="signIn">Sign In</button>
     </div>
-</div>
-<br/>
-<span style="font-size: 20px; font-weight: bold">ActivityRecordsController<span/>
+  </div>
+  <br />
+
+  <span style="font-size: 20px; font-weight: bold">Device Info<span />
+    <div class="equalHWrap eqWrap">
+      <div class="equalHW eq">
+        <button style="margin: 3px; font-size: 14px" id="createDeviceInfo">createDeviceInfo</button>
+      </div>
+    </div>
+
+    <span style="font-size: 20px; font-weight: bold">AppInfo<span />
       <div class="equalHWrap eqWrap">
+        <div class="equalHW eq">
+          <button style="margin: 3px; font-size: 14px" id="createApp">createApp</button>
+        </div>
+      </div>
+      <div class="equalHWrap eqWrap">
+        <div class="equalHW eq">
+          <button style="margin: 3px; font-size: 14px" id="getDetailsUrl">getDetailsUrl</button>
+        </div>
+      </div>
+      <div class="equalHWrap eqWrap">
+        <div class="equalHW eq">
+          <button style="margin: 3px; font-size: 14px" id="getDomainName">getDomainName</button>
+        </div>
+      </div>
+      <div class="equalHWrap eqWrap">
+        <div class="equalHW eq">
+          <button style="margin: 3px; font-size: 14px" id="getPackageName">getPackageName</button>
+        </div>
+      </div>
+      <div class="equalHWrap eqWrap">
+        <div class="equalHW eq">
+          <button style="margin: 3px; font-size: 14px" id="getVersion">getVersion</button>
+        </div>
+      </div>
+
+      <span style="font-size: 20px; font-weight: bold">ActivityRecordsController<span />
+        <div class="equalHWrap eqWrap">
           <div class="equalHW eq">
             <button style="margin: 3px; font-size: 14px" id="addActivityRecord">addActivityRecord</button>
           </div>
@@ -63,84 +101,129 @@
             <button style="margin: 3px; font-size: 14px" id="beginActivityRecord">beginActivityRecord</button>
           </div>
           <div class="equalHW eq">
+            <button style="margin: 3px; font-size: 14px"
+              id="beginBackgroundActivityRecord">beginBackgroundActivityRecord</button>
+          </div>
+
+          <div class="equalHW eq">
             <button style="margin: 3px; font-size: 14px" id="endActivityRecord">endActivityRecord</button>
+          </div>
+          <div class="equalHW eq">
+            <button style="margin: 3px; font-size: 14px"
+              id="endBackgroundActivityRecord">endBackgroundActivityRecord</button>
           </div>
           <div class="equalHW eq">
             <button style="margin: 3px; font-size: 14px" id="getActivityRecord">getActivityRecord</button>
           </div>
-        </div>
-        <br/>
-        <span style="font-size: 20px; font-weight: bold">AutoRecorderController<span/>
-        <div class="equalHWrap eqWrap">
           <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="startRecord">startRecord</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="stopRecord">stopRecord</button>
+            <button style="margin: 3px; font-size: 14px" id="deleteActivityRecord">deleteActivityRecord</button>
           </div>
         </div>
-        <br/>
-        <span style="font-size: 20px; font-weight: bold">ConsentsController<span/>
-        <div class="equalHWrap eqWrap">
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="getPermissions">getPermissions</button>
+        <br />
+        <span style="font-size: 20px; font-weight: bold">AutoRecorderController<span />
+          <div class="equalHWrap eqWrap">
+            <div class="equalHW eq">
+              <button style="margin: 3px; font-size: 14px" id="startRecord">startRecord</button>
+            </div>
+            <div class="equalHW eq">
+              <button style="margin: 3px; font-size: 14px" id="stopRecord">stopRecord</button>
+            </div>
           </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="revoke">revoke</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="revokeAll">revokeAll</button>
-          </div>
-        </div>
-        <br/>
-        <span style="font-size: 20px; font-weight: bold">DataController<span/>
-        <div class="equalHWrap eqWrap">
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="initDataController">initDataController</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="read">read</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="insert">insert</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="update">update</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="delete">delete</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="readDailySummation">readDailySummation</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="readTodaySummation">readTodaySummation</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="clearAll">clearAll</button>
-          </div>
-        </div>
-        <br/>
-        <span style="font-size: 20px; font-weight: bold">SettingController<span/>
-        <div class="equalHWrap eqWrap">
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="addDataType">addDataType</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="readDataType">readDataType</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="disableHiHealth">disableHiHealth</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="getHealthAppAuthorization">getHealthAppAuthorization</button>
-          </div>
-          <div class="equalHW eq">
-            <button style="margin: 3px; font-size: 14px" id="checkHealthAppAuthorization">checkHealthAppAuthorization</button>
-          </div>
-        </div>
-         <br/>
-          <script src="cordova.js"></script>
-        <script src="js/index.js"></script>
+          <br />
+          <span style="font-size: 20px; font-weight: bold">ConsentsController<span />
+            <div class="equalHWrap eqWrap">
+              <div class="equalHW eq">
+                <button style="margin: 3px; font-size: 14px" id="getPermissions">getPermissions</button>
+              </div>
+              <div class="equalHW eq">
+                <button style="margin: 3px; font-size: 14px" id="revoke">revoke</button>
+              </div>
+              <div class="equalHW eq">
+                <button style="margin: 3px; font-size: 14px" id="revokeAll">revokeAll</button>
+              </div>
+              <div class="equalHW eq">
+                <button style="margin: 3px; font-size: 14px" id="cancelAuthorization">cancelAuthorization</button>
+              </div>
+              <div class="equalHW eq">
+                <button style="margin: 3px; font-size: 14px" id="cancelAuthorizationAll">cancelAuthorizationAll</button>
+              </div>
+
+            </div>
+            <br />
+            <span style="font-size: 20px; font-weight: bold">DataController<span />
+              <div class="equalHWrap eqWrap">
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="initDataController">initDataController</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="read">read</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="insert">insert</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="update">update</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="delete">delete</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="readDailySummation">readDailySummation</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="readTodaySummation">readTodaySummation</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="clearAll">clearAll</button>
+                </div>
+                <div class="equalHW eq">
+                  <button style="margin: 3px; font-size: 14px" id="readLatestData"> readLatestData</button>
+                </div>
+              </div>
+              <br />
+              <span style="font-size: 20px; font-weight: bold">SettingController<span />
+                <div class="equalHWrap eqWrap">
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px" id="addDataType">addDataType</button>
+                  </div>
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px" id="readDataType">readDataType</button>
+                  </div>
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px" id="disableHiHealth">disableHiHealth</button>
+                  </div>
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px"
+                      id="getHealthAppAuthorization">getHealthAppAuthorization</button>
+                  </div>
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px"
+                      id="checkHealthAppAuthorization">checkHealthAppAuthorization</button>
+                  </div>
+                  <div class="equalHW eq">
+                    <button style="margin: 3px; font-size: 14px" id="requestAuth">requestAuth</button>
+                  </div>
+                </div>
+                <br />
+                <span style="font-size: 20px; font-weight: bold">HealthRecord Controller<span />
+                  <div class="equalHWrap eqWrap">
+                    <div class="equalHW eq">
+                      <button style="margin: 3px; font-size: 14px" id="addHealthRecord">addHealthRecord</button>
+                    </div>
+                    <div class="equalHW eq">
+                      <button style="margin: 3px; font-size: 14px" id="deleteHealthRecord">deleteHealthRecord</button>
+                    </div>
+                    <div class="equalHW eq">
+                      <button style="margin: 3px; font-size: 14px" id="getHealthRecord">getHealthRecord</button>
+                    </div>
+                    <div class="equalHW eq">
+                      <button style="margin: 3px; font-size: 14px" id="updateHealthRecord">updateHealthRecord</button>
+                    </div>
+
+                  </div>
+                  <br />
+                  <script src="cordova.js"></script>
+                  <script src="js/index.js"></script>
 </body>
+
 </html>

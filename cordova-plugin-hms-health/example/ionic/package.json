@@ -1,10 +1,10 @@
 {
   "name": "ionic-hms-health-demo",
   "description": "A demo application which shows the usage of HMS Health plugin.",
-  "version": "5.0.5-302",
+  "version": "6.7.0-300",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
-  "licenseFilename": "LICENCE",
+  "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "scripts": {
     "ng": "ng",
@@ -62,7 +62,7 @@
     "browserslist",
     "ionic.config.json",
     "karma.conf.js",
-    "LICENCE",
+    "LICENSE",
     "package.json",
     "README.md",
     "tsconfig.app.json",

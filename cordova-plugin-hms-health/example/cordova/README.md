@@ -28,10 +28,10 @@ Before you get started, you must register as a HUAWEI Developer and complete ide
 
 Creating an app in AppGallery Connect is required in order to communicate with the Huawei services. To create an app, perform the following steps:
 
-1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1)  and select **My projects**.
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1) and select **My projects**.
 2. Select your project from the project list or create a new one by clicking the **Add Project** button.
 3. Go to **Project Setting** > **General information**, and click **Add app**.
-    - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+   - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
 4. On the **Add app** page, enter the app information, and click **OK**.
 
 ### 2.2. Configuring the Signing Certificate Fingerprint
@@ -51,16 +51,16 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 3. Click Apply for Health Kit, agree to the agreement, and the screen for data permission application is displayed.
 
 4. Select the data access permissions that must be applied for the product.
-  
-    - When adding Health Kit, comply with the least privilege principle. The data access permissions must be consistent with the business. Do not apply for any permission that is beyond the business scope or is not yet needed.
+
+   - When adding Health Kit, comply with the least privilege principle. The data access permissions must be consistent with the business. Do not apply for any permission that is beyond the business scope or is not yet needed.
 
 5. Wait while your application is under approval.
 
-    - It normally takes about 15 minutes for an application involving data types other than restricted ones to be automatically activated. If permissions for restricted data types are required, the application will be subject to approval. For applications that involve the write permissions of restricted data types, the approval process may take a couple of weeks, depending on the number of data types for which permissions are required and the app release regions.
+   - It normally takes about 15 minutes for an application involving data types other than restricted ones to be automatically activated. If permissions for restricted data types are required, the application will be subject to approval. For applications that involve the write permissions of restricted data types, the approval process may take a couple of weeks, depending on the number of data types for which permissions are required and the app release regions.
 
-    - An application won't be approved if the submitted materials do not meet the requirements. Once the application is approved, the app development and test phases can start and the app can be released once the related procedures are completed.
+   - An application won't be approved if the submitted materials do not meet the requirements. Once the application is approved, the app development and test phases can start and the app can be released once the related procedures are completed.
 
-    - If your business scope changes and you need to modify the corresponding data permissions, click Modify to submit the application again.
+   - If your business scope changes and you need to modify the corresponding data permissions, click Modify to submit the application again.
 
 > **NOTE:** Please save the public key obtained during the process of enabling the IAP service. It will be used for verifying the signature of data returned by the IAP SDK, ensuring that the data is not tampered with.
 
@@ -68,9 +68,9 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 
 1. Install Cordova CLI if haven't done before.
 
-    ```bash
-    npm install -g cordova
-    ```
+   ```bash
+   npm install -g cordova
+   ```
 
 2. Open the demo project's root folder.
 
@@ -78,46 +78,46 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 
 4. Add the **Android platform** to the project.
 
-    ```bash
-    cordova platform add android
-    ```
+   ```bash
+   cordova platform add android
+   ```
 
 5. Install `HMS Health plugin` to the project.
 
-    ```bash
-    cordova plugin add @hmscore/cordova-plugin-hms-health
-    ```
+   ```bash
+   cordova plugin add @hmscore/cordova-plugin-hms-health
+   ```
 
 6. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
-    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
+   - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
 
-    - Fill **`build.json`** file according to your keystore. For example:
+   - Fill **`build.json`** file according to your keystore. For example:
 
-    ```json
-    {
-        "android": {
-            "debug": {
-                "keystore": "<keystore_file>.jks",
-                "storePassword": "<keystore_password>",
-                "alias": "<key_alias>",
-                "password": "<key_password>"
-            },
-            "release": {
-                "keystore": "<keystore_file>.jks",
-                "storePassword": "<keystore_password>",
-                "alias": "<key_alias>",
-                "password": "<key_password>"
-            }
-        }
-    }
-    ```
+   ```json
+   {
+     "android": {
+       "debug": {
+         "keystore": "<keystore_file>.jks",
+         "storePassword": "<keystore_password>",
+         "alias": "<key_alias>",
+         "password": "<key_password>"
+       },
+       "release": {
+         "keystore": "<keystore_file>.jks",
+         "storePassword": "<keystore_password>",
+         "alias": "<key_alias>",
+         "password": "<key_password>"
+       }
+     }
+   }
+   ```
 
 7. Run the app.
 
-    ```bash
-    cordova run android --device
-    ```
+   ```bash
+   cordova run android --device
+   ```
 
 ---
 
@@ -162,4 +162,4 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ## 5. Licensing and Terms
 
-Huawei Health Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+Huawei Health Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
