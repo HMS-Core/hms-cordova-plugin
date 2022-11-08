@@ -34,6 +34,61 @@
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-button fill="clear" (click)="signIn()">Sign In with Huawei ID</ion-button>
     </ion-chip>
+    <ion-list>
+      <ion-list-header style="text-align: center;font-weight: 500;text-transform: uppercase;">
+        <ion-label>
+          <ion-chip>
+            Device Info
+          </ion-chip>
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="createDeviceInfo()">createDeviceInfo</ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header style="text-align: center;font-weight: 500;text-transform: uppercase;">
+        <ion-label>
+          <ion-chip>
+            AppInfo
+          </ion-chip>
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="createApp()">createApp</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="getDetailsUrl()">getDetailsUrl</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="getDomainName()">getDomainName</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="getPackageName()">getPackageName</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="getVersion()">getVersion</ion-button>
+        </ion-label>
+      </ion-item>
+
+
+
+    </ion-list>
+
 
     <ion-list>
       <ion-list-header style="text-align: center;font-weight: 500;text-transform: uppercase;">
@@ -84,6 +139,12 @@
           <ion-button shape="block" fill="outline" (click)="clearAll()">clearAll</ion-button>
         </ion-label>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="readLatestData()">readLatestData</ion-button>
+        </ion-label>
+      </ion-item>
+
     </ion-list>
 
     <ion-list>
@@ -107,12 +168,25 @@
       </ion-item>
       <ion-item>
         <ion-label>
+          <ion-button shape="block" fill="outline" (click)="beginBackgroundActivityRecord()">
+            beginBackgroundActivityRecord
+          </ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
           <ion-button shape="block" fill="outline" (click)="endActivityRecord()">endActivityRecord</ion-button>
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>
           <ion-button shape="block" fill="outline" (click)="getActivityRecord()">getActivityRecord</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="deleteActivityRecord()">deleteActivityRecord
+          </ion-button>
         </ion-label>
       </ion-item>
     </ion-list>
@@ -138,7 +212,7 @@
       </ion-item>
     </ion-list>
 
-    
+
     <ion-list>
       <ion-list-header style="text-align: center;font-weight: 500;text-transform: uppercase;">
         <ion-label>
@@ -163,6 +237,18 @@
           <ion-button shape="block" fill="outline" (click)="revoke()">revoke</ion-button>
         </ion-label>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="cancelAuthorization()">cancelAuthorization</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="cancelAuthorizationAll()">cancelAuthorizationAll
+          </ion-button>
+        </ion-label>
+      </ion-item>
+
     </ion-list>
 
     <ion-list>
@@ -191,14 +277,56 @@
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="checkHealthAppAuthorization()">checkHealthAppAuthorization</ion-button>
+          <ion-button shape="block" fill="outline" (click)="checkHealthAppAuthorization()">checkHealthAppAuthorization
+          </ion-button>
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="getHealthAppAuthorization()">getHealthAppAuthorization</ion-button>
+          <ion-button shape="block" fill="outline" (click)="getHealthAppAuthorization()">getHealthAppAuthorization
+          </ion-button>
         </ion-label>
       </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="requestAuth()">requestAuth
+          </ion-button>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header style="text-align: center;font-weight: 500;text-transform: uppercase;">
+        <ion-label>
+          <ion-chip>
+            HealthRecord Controller
+          </ion-chip>
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="addNewDataType()">addHealthRecord</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="disableHiHealth()">deleteHealthRecord</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="readDataType()">getHealthRecord</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <ion-button shape="block" fill="outline" (click)="checkHealthAppAuthorization()">updateHealthRecord
+          </ion-button>
+        </ion-label>
+      </ion-item>
+
+
     </ion-list>
   </div>
 </ion-content>

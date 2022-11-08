@@ -30,10 +30,10 @@ Before you get started, you must register as a HUAWEI Developer and complete ide
 
 Creating an app in AppGallery Connect is required in order to communicate with the Huawei services. To create an app, perform the following steps:
 
-1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1)  and select **My projects**.
+1. Sign in to [AppGallery Connect](https://developer.huawei.com/consumer/en/service/josp/agc/index.html?ha_source=hms1) and select **My projects**.
 2. Select your project from the project list or create a new one by clicking the **Add Project** button.
 3. Go to **Project Setting** > **General information**, and click **Add app**.
-    - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
+   - If an app exists in the project and you need to add a new one, expand the app selection area on the top of the page and click **Add app**.
 4. On the **Add app** page, enter the app information, and click **OK**.
 
 ### 2.2. Configuring the Signing Certificate Fingerprint
@@ -53,16 +53,16 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 3. Click Apply for Health Kit, agree to the agreement, and the screen for data permission application is displayed.
 
 4. Select the data access permissions that must be applied for the product.
-  
-    - When adding Health Kit, comply with the least privilege principle. The data access permissions must be consistent with the business. Do not apply for any permission that is beyond the business scope or is not yet needed.
+
+   - When adding Health Kit, comply with the least privilege principle. The data access permissions must be consistent with the business. Do not apply for any permission that is beyond the business scope or is not yet needed.
 
 5. Wait while your application is under approval.
 
-    - It normally takes about 15 minutes for an application involving data types other than restricted ones to be automatically activated. If permissions for restricted data types are required, the application will be subject to approval. For applications that involve the write permissions of restricted data types, the approval process may take a couple of weeks, depending on the number of data types for which permissions are required and the app release regions.
+   - It normally takes about 15 minutes for an application involving data types other than restricted ones to be automatically activated. If permissions for restricted data types are required, the application will be subject to approval. For applications that involve the write permissions of restricted data types, the approval process may take a couple of weeks, depending on the number of data types for which permissions are required and the app release regions.
 
-    - An application won't be approved if the submitted materials do not meet the requirements. Once the application is approved, the app development and test phases can start and the app can be released once the related procedures are completed.
+   - An application won't be approved if the submitted materials do not meet the requirements. Once the application is approved, the app development and test phases can start and the app can be released once the related procedures are completed.
 
-    - If your business scope changes and you need to modify the corresponding data permissions, click Modify to submit the application again.
+   - If your business scope changes and you need to modify the corresponding data permissions, click Modify to submit the application again.
 
 > **NOTE:** Please save the public key obtained during the process of enabling the IAP service. It will be used for verifying the signature of data returned by the IAP SDK, ensuring that the data is not tampered with.
 
@@ -70,76 +70,76 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 
 1. Install Ionic CLI and other required tools if haven't done before.
 
-    ```bash
-    npm install -g @ionic/cli cordova-res native-run
-    ```
+   ```bash
+   npm install -g @ionic/cli cordova-res native-run
+   ```
 
 2. Open the demo project's root directory.
 
 3. Install project dependencies.
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 #### 2.4.1. With Cordova Runtime
 
 1. Enable the **Cordova integration**.
 
-    ```bash
-    ionic integrations enable cordova
-    ```
+   ```bash
+   ionic integrations enable cordova
+   ```
 
 2. Update the widget **`id`** property which is specified in the **`config.xml`** file. It must be the package name which used when applying for the HUAWEI ID service.
 
 3. Add the **Android platform** to the project.
 
-    ```bash
-    ionic cordova platform add android
-    ```
+   ```bash
+   ionic cordova platform add android
+   ```
 
 4. Install `HMS Health plugin` to the project.
 
-    ```bash
-    ionic cordova plugin add @hmscore/cordova-plugin-hms-health
-    ```
+   ```bash
+   ionic cordova plugin add @hmscore/cordova-plugin-hms-health
+   ```
 
 5. Install HMS Health Ionic Native wrappers.
 
-    ```bash
-    npm install @ionic-native/core @hmscore/ionic-native-hms-health
-    ```
+   ```bash
+   npm install @ionic-native/core @hmscore/ionic-native-hms-health
+   ```
 
 6. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
-    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
+   - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
 
-    - Fill **`build.json`** file according to your keystore. For example:
+   - Fill **`build.json`** file according to your keystore. For example:
 
-    ```json
-    {
-        "android": {
-            "debug": {
-                "keystore": "<keystore_file>.jks",
-                "storePassword": "<keystore_password>",
-                "alias": "<key_alias>",
-                "password": "<key_password>"
-            },
-            "release": {
-                "keystore": "<keystore_file>.jks",
-                "storePassword": "<keystore_password>",
-                "alias": "<key_alias>",
-                "password": "<key_password>"
-            }
-        }
-    }
-    ```
+   ```json
+   {
+     "android": {
+       "debug": {
+         "keystore": "<keystore_file>.jks",
+         "storePassword": "<keystore_password>",
+         "alias": "<key_alias>",
+         "password": "<key_password>"
+       },
+       "release": {
+         "keystore": "<keystore_file>.jks",
+         "storePassword": "<keystore_password>",
+         "alias": "<key_alias>",
+         "password": "<key_password>"
+       }
+     }
+   }
+   ```
 
 7. Build Ionic app to generate resource files.
 
-    ```bash
-    ionic build
-    ```
+   ```bash
+   ionic build
+   ```
 
 8. Run the app.
 
@@ -157,78 +157,78 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
 
 2. Initialize **Capacitor**.
 
-    ```bash
-    npx cap init [appName] [appId]
-    ```
+   ```bash
+   npx cap init [appName] [appId]
+   ```
 
-    - For more details please follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information).
+   - For more details please follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information).
 
 3. Update the **`appId`** property which is specified in the **`capacitor.config.json`** file. It should be the package name which used when applying for the HUAWEI ID service
 
 4. Install `HMS Health plugin` to the project.
 
-    ```bash
-    npm install @hmscore/cordova-plugin-hms-health
-    ```
+   ```bash
+   npm install @hmscore/cordova-plugin-hms-health
+   ```
 
 5. Install HMS Health Ionic Native wrappers.
 
-    ```bash
-    npm install @ionic-native/core @hmscore/ionic-native-hms-health
-    ```
+   ```bash
+   npm install @ionic-native/core @hmscore/ionic-native-hms-health
+   ```
 
 6. Build Ionic app to generate resource files.
 
-    ```bash
-    ionic build
-    ```
+   ```bash
+   ionic build
+   ```
 
 7. Add the **Android platform** to the project.
 
-    ```bash
-    npx cap add android
-    ```
+   ```bash
+   npx cap add android
+   ```
 
 8. Copy **`keystore(.jks)`** file to **`<project_root>/android/app`** directory.
 
-    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html?ha_source=hms1#2) Codelab tutorial page for generating keystore file.
+   - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html?ha_source=hms1#2) Codelab tutorial page for generating keystore file.
 
 9. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
 
-    - Add `signingConfigs` entry to the **android** section and modify it according to your keystore.
+   - Add `signingConfigs` entry to the **android** section and modify it according to your keystore.
 
-    - Enable `signingConfig` configuration for **debug** and **release** flavors.
+   - Enable `signingConfig` configuration for **debug** and **release** flavors.
 
-    ```groovy
-    ...
+   ```groovy
+   ...
 
-    android {
+   android {
 
-        ...
+       ...
 
-        // Modify signingConfigs according to your keystore
-        signingConfigs {
-            config {
-                storeFile file('<keystore_file>.jks')
-                storePassword '<keystore_password>'
-                keyAlias '<key_alias>'
-                keyPassword '<key_password>'
-            }
-        }
-        buildTypes {
-            debug {
-                signingConfig signingConfigs.config // Enable signingConfig for debug flavor
-            }
-            release {
-                signingConfig signingConfigs.config // Enable signingConfig for release flavor
-                minifyEnabled false
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-        }
-    }
+       // Modify signingConfigs according to your keystore
+       signingConfigs {
+           config {
+               storeFile file('<keystore_file>.jks')
+               storePassword '<keystore_password>'
+               keyAlias '<key_alias>'
+               keyPassword '<key_password>'
+           }
+       }
+       buildTypes {
+           debug {
+               signingConfig signingConfigs.config // Enable signingConfig for debug flavor
+           }
+           release {
+               signingConfig signingConfigs.config // Enable signingConfig for release flavor
+               minifyEnabled false
+               proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+           }
+       }
+   }
 
-    ...
-    ```
+   ...
+   ```
 
 10. Open the **`build.gradle`** file in the **`<project_root>/android`** directory. Add **Huawei's maven repositories** and **agconnect classpath** to the file.
 
@@ -317,4 +317,4 @@ If you run into a bug in our samples, please submit an issue to the [GitHub repo
 
 ## 5. Licensing and Terms
 
-Huawei Health Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENCE).
+Huawei Health Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
