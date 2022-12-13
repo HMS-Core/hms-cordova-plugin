@@ -50,7 +50,7 @@ public class HMSAds extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         final String kit = "Ads";
-        final String version = "13.4.54.300";
+        final String version = "13.4.56.302";
 
         pluginAdLayout = new PluginAdLayout(webView.getContext());
         pluginAdLayout.setLayoutParams(
@@ -65,8 +65,8 @@ public class HMSAds extends CordovaPlugin {
 
         boolean isIonicCapacitor = false;
         try {
-            isIonicCapacitor = Objects.requireNonNull(cordova.getContext().getAssets().list("public")).length >
-                Objects.requireNonNull(cordova.getContext().getAssets().list("www")).length;
+            isIonicCapacitor = Objects.requireNonNull(cordova.getContext().getAssets().list("public")).length
+                > Objects.requireNonNull(cordova.getContext().getAssets().list("www")).length;
         } catch (IOException e) {
             Log.e(TAG, "isIonicCapacitor -> " + e.getMessage());
             return;

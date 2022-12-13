@@ -34,20 +34,7 @@ public enum PluginBannerAdSize {
     BANNER_SIZE_SMART(BannerAdSize.BANNER_SIZE_SMART, "BANNER_SIZE_SMART"),
     BANNER_SIZE_160_600(BannerAdSize.BANNER_SIZE_160_600, "BANNER_SIZE_160_600");
 
-    BannerAdSize adSize;
-
-    String adSizeString;
-
     private static final Map<BannerAdSize, PluginBannerAdSize> AD_SIZE_MAP = new HashMap<>();
-
-    PluginBannerAdSize(BannerAdSize adSize, String adSizeString) {
-        this.adSize = adSize;
-        this.adSizeString = adSizeString;
-    }
-
-    public static String fromBannerAdSize(BannerAdSize adSize) {
-        return AD_SIZE_MAP.get(adSize).adSizeString;
-    }
 
     static {
         AD_SIZE_MAP.put(BannerAdSize.BANNER_SIZE_360_57, BANNER_SIZE_360_57);
@@ -61,5 +48,18 @@ public enum PluginBannerAdSize {
         AD_SIZE_MAP.put(BannerAdSize.BANNER_SIZE_300_250, BANNER_SIZE_300_250);
         AD_SIZE_MAP.put(BannerAdSize.BANNER_SIZE_SMART, BANNER_SIZE_SMART);
         AD_SIZE_MAP.put(BannerAdSize.BANNER_SIZE_160_600, BANNER_SIZE_160_600);
+    }
+
+    BannerAdSize adSize;
+
+    String adSizeString;
+
+    PluginBannerAdSize(BannerAdSize adSize, String adSizeString) {
+        this.adSize = adSize;
+        this.adSizeString = adSizeString;
+    }
+
+    public static String fromBannerAdSize(BannerAdSize adSize) {
+        return AD_SIZE_MAP.get(adSize).adSizeString;
     }
 }

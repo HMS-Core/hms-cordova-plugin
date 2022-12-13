@@ -16,16 +16,27 @@
 
 "use strict";
 
+
+
 var FSUtils = require("./FSUtils");
+//const { require } = require("cordova");
 
 var ROOT_BUILD_GRADLE_FILE = "platforms/android/build.gradle";
 var ROOT_REPOSITORIES_GRADLE_FILE = "platforms/android/repositories.gradle";
 var APP_REPOSITORIES_GRADLE_FILE = "platforms/android/app/repositories.gradle";
+var APP_ANDROID_MANIFEST_FILE = "platforms/android/app/src/main/AndroidManifest.xml" 
 var COMMENT = "//This line is added by cordova-plugin-hms-adsprime plugin";
 var NEW_LINE = "\n";
 
+var TARGET_ATTRIBUTE = 'android:usesCleartextTraffic';
+var TARGET_VALUE = TARGET_ATTRIBUTE+'="true"';
+var TARGET_REGEX = new RegExp(TARGET_ATTRIBUTE+'="([^"]+)"');
+
+
+
 module.exports = function (context) {
-    if (!FSUtils.exists(ROOT_BUILD_GRADLE_FILE)) {
+    
+ if (!FSUtils.exists(ROOT_BUILD_GRADLE_FILE)) {
         console.log("root gradle file does not exist. after_plugin_install script wont be executed.");
     }
 
@@ -37,12 +48,35 @@ module.exports = function (context) {
 
     FSUtils.writeFile(ROOT_BUILD_GRADLE_FILE, repoAddedLines.join(NEW_LINE));
 
+    addAndroidManifestAttribute(APP_ANDROID_MANIFEST_FILE);
     updateRepositoriesGradle(ROOT_REPOSITORIES_GRADLE_FILE);
     updateRepositoriesGradle(APP_REPOSITORIES_GRADLE_FILE);
 };
 
+
+function addAndroidManifestAttribute(param){
+
+    if (FSUtils.exists(param)) {
+        var data = FSUtils.readFile(param, 'utf8');
+        var result;
+        if(!data.match(TARGET_ATTRIBUTE)) { 
+          result = data.replace(/<application/g, '<application ' + TARGET_VALUE); 
+        }else if (data.match(TARGET_REGEX) && !data.match(TARGET_VALUE)){
+          result = data.replace(TARGET_REGEX, TARGET_VALUE);
+        }
+    
+        if(result){
+            FSUtils.writeFile(param, result, 'utf8', function (err) {
+            if (err) throw new Error('Unable to write AndroidManifest.xml: ' + err);
+          })
+        };
+    } else {
+        console.log("Check Android Manifest file exist or not.")
+    }
+}
+
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.5.2.300' " + COMMENT;
+    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.7.3.300' " + COMMENT;
     var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 

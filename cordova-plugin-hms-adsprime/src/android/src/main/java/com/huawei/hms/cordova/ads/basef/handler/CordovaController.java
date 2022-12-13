@@ -34,8 +34,6 @@ import java.util.List;
 public class CordovaController {
     private static final String TAG = CordovaController.class.getSimpleName();
 
-    private CordovaModuleGroupHandler groupHandler;
-
     private final HMSLogger hmsLogger;
 
     private final CordovaEventRunner eventRunner;
@@ -43,6 +41,8 @@ public class CordovaController {
     private final CordovaPlugin cordovaPlugin;
 
     private final List<String> moduleReferences = new ArrayList<>();
+
+    private CordovaModuleGroupHandler groupHandler;
 
     public <T extends CordovaBaseModule> CordovaController(CordovaPlugin cordovaPlugin, String service, String version,
         List<T> cordovaModules) {

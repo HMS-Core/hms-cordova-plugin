@@ -30,6 +30,8 @@ import com.huawei.hms.ads.vast.player.misc.utils.AudioUtil;
 
 public class CustomeVideoController extends BaseVideoController {
 
+    private static final String VAST_VIDEO_PLAYER_TEMPLATE = "vast_video_player_template";
+
     private CheckBox btnMute;
 
     private ViewGroup clContent;
@@ -39,8 +41,6 @@ public class CustomeVideoController extends BaseVideoController {
     private Button btnScreen;
 
     private Button btnPlay;
-
-    private static final String VAST_VIDEO_PLAYER_TEMPLATE = "vast_video_player_template";
 
     public CustomeVideoController(Context context) {
         this(context, null);
@@ -75,8 +75,10 @@ public class CustomeVideoController extends BaseVideoController {
 
     private int getTemplate() {
         try {
-            return getContext().getResources().getIdentifier((String) CustomeVideoController.class.getDeclaredField(
-                "VAST_VIDEO_PLAYER_TEMPLATE").get(null), "layout", getContext().getPackageName());
+            return getContext().getResources()
+                .getIdentifier(
+                    (String) CustomeVideoController.class.getDeclaredField("VAST_VIDEO_PLAYER_TEMPLATE").get(null),
+                    "layout", getContext().getPackageName());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, e.getMessage());
             return -1;

@@ -58,10 +58,6 @@ public enum ErrorAndStateCodes {
     SCREEN_STATE_NORMAL(1001, "normal screen mode"),
     SCREEN_STATE_FULL(1002, "full screen mode");
 
-    private String message;
-
-    private int code;
-
     private static final Map<Integer, ErrorAndStateCodes> ERROR_AD_PARAM = new HashMap<>();
 
     private static final Map<Integer, ErrorAndStateCodes> ERROR_AD_REWARD_STATUS = new HashMap<>();
@@ -72,17 +68,44 @@ public enum ErrorAndStateCodes {
 
     private static final Map<Integer, ErrorAndStateCodes> SCREEN_STATE_CHANGED = new HashMap<>();
 
+    static {
+        ERROR_AD_PARAM.put(0, AD_PARAM_INNER);
+        ERROR_AD_PARAM.put(1, AD_PARAM_INVALID_REQUEST);
+        ERROR_AD_PARAM.put(2, AD_PARAM_NETWORK_ERROR);
+        ERROR_AD_PARAM.put(3, AD_PARAM_NO_AD);
+        ERROR_AD_PARAM.put(4, AD_PARAM_AD_LOADING);
+        ERROR_AD_PARAM.put(5, AD_PARAM_LOW_API);
+        ERROR_AD_PARAM.put(6, AD_PARAM_BANNER_AD_EXPIRE);
+        ERROR_AD_PARAM.put(7, AD_PARAM_BANNER_AD_CANCEL);
+        ERROR_AD_PARAM.put(8, AD_PARAM_HMS_NOT_SUPPORT_SET_APP);
+
+        ERROR_AD_REWARD_STATUS.put(0, REWARD_AD_STATUS_INTERNAL);
+        ERROR_AD_REWARD_STATUS.put(1, REWARD_AD_STATUS_REUSED);
+        ERROR_AD_REWARD_STATUS.put(2, REWARD_AD_STATUS_NOT_LOADED);
+        ERROR_AD_REWARD_STATUS.put(3, REWARD_AD_STATUS_BACKGROUND);
+
+        ERROR_VAST_ADS_REQUEST.put(4000, LOAD_AD_FAILED);
+        ERROR_VAST_ADS_REQUEST.put(4003, MAIN_AD_LOAD_FAILED);
+        ERROR_VAST_ADS_REQUEST.put(4004, CREATIVE_TYPE_ERROR);
+        ERROR_VAST_ADS_REQUEST.put(4005, AD_SLOT_MORE_THAN_CREATIVE);
+
+        PLAY_STATE_CHANGED.put(2001, PLAY_STATE_CREATIVE_TYPE_NOT_SPECIFIED_PLAYED);
+        PLAY_STATE_CHANGED.put(2002, PLAY_STATE_PLAYBACK_PAUSE);
+        PLAY_STATE_CHANGED.put(2006, PLAY_STATE_VIDEO_PLAYED);
+        PLAY_STATE_CHANGED.put(2007, PLAY_STATE_IMAGE_PLAYED);
+
+        SCREEN_STATE_CHANGED.put(1001, SCREEN_STATE_NORMAL);
+        SCREEN_STATE_CHANGED.put(1001, SCREEN_STATE_FULL);
+
+    }
+
+    private String message;
+
+    private int code;
+
     ErrorAndStateCodes(int code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    public JSONObject toJson() {
-        try {
-            return new JSONObject().put("code", code).put("message", message);
-        } catch (JSONException e) {
-            return new JSONObject();
-        }
     }
 
     public static ErrorAndStateCodes fromCode(int code) {
@@ -120,34 +143,11 @@ public enum ErrorAndStateCodes {
         return SCREEN_STATE_CHANGED.get(code);
     }
 
-    static {
-        ERROR_AD_PARAM.put(0, AD_PARAM_INNER);
-        ERROR_AD_PARAM.put(1, AD_PARAM_INVALID_REQUEST);
-        ERROR_AD_PARAM.put(2, AD_PARAM_NETWORK_ERROR);
-        ERROR_AD_PARAM.put(3, AD_PARAM_NO_AD);
-        ERROR_AD_PARAM.put(4, AD_PARAM_AD_LOADING);
-        ERROR_AD_PARAM.put(5, AD_PARAM_LOW_API);
-        ERROR_AD_PARAM.put(6, AD_PARAM_BANNER_AD_EXPIRE);
-        ERROR_AD_PARAM.put(7, AD_PARAM_BANNER_AD_CANCEL);
-        ERROR_AD_PARAM.put(8, AD_PARAM_HMS_NOT_SUPPORT_SET_APP);
-
-        ERROR_AD_REWARD_STATUS.put(0, REWARD_AD_STATUS_INTERNAL);
-        ERROR_AD_REWARD_STATUS.put(1, REWARD_AD_STATUS_REUSED);
-        ERROR_AD_REWARD_STATUS.put(2, REWARD_AD_STATUS_NOT_LOADED);
-        ERROR_AD_REWARD_STATUS.put(3, REWARD_AD_STATUS_BACKGROUND);
-
-        ERROR_VAST_ADS_REQUEST.put(4000, LOAD_AD_FAILED);
-        ERROR_VAST_ADS_REQUEST.put(4003, MAIN_AD_LOAD_FAILED);
-        ERROR_VAST_ADS_REQUEST.put(4004, CREATIVE_TYPE_ERROR);
-        ERROR_VAST_ADS_REQUEST.put(4005, AD_SLOT_MORE_THAN_CREATIVE);
-
-        PLAY_STATE_CHANGED.put(2001, PLAY_STATE_CREATIVE_TYPE_NOT_SPECIFIED_PLAYED);
-        PLAY_STATE_CHANGED.put(2002, PLAY_STATE_PLAYBACK_PAUSE);
-        PLAY_STATE_CHANGED.put(2006, PLAY_STATE_VIDEO_PLAYED);
-        PLAY_STATE_CHANGED.put(2007, PLAY_STATE_IMAGE_PLAYED);
-
-        SCREEN_STATE_CHANGED.put(1001, SCREEN_STATE_NORMAL);
-        SCREEN_STATE_CHANGED.put(1001, SCREEN_STATE_FULL);
-
+    public JSONObject toJson() {
+        try {
+            return new JSONObject().put("code", code).put("message", message);
+        } catch (JSONException e) {
+            return new JSONObject();
+        }
     }
 }

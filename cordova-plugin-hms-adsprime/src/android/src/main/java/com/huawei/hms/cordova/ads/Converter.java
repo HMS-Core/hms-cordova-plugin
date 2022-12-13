@@ -157,7 +157,8 @@ public class Converter {
             requestOptionsJsonObject.put("nonPersonalizedAd", requestOptions.getNonPersonalizedAd());
             requestOptionsJsonObject.put("consent", requestOptions.getConsent());
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+
         }
 
         return requestOptionsJsonObject;
@@ -260,7 +261,8 @@ public class Converter {
                 }
             }
         } catch (final JSONException e) {
-            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+
         }
         return bundle;
     }
@@ -329,7 +331,7 @@ public class Converter {
         }
         final NativeAdConfiguration.Builder nativeAdConfigurationBuilder
             = new NativeAdConfiguration.Builder().setAdSize(
-            Converter.fromJSONObjectToAdSize(json.optJSONObject("adSize")))
+                Converter.fromJSONObjectToAdSize(json.optJSONObject("adSize")))
             .setChoicesPosition(json.optInt("choicesPosition", NativeAdConfiguration.ChoicesPosition.TOP_LEFT))
             .setReturnUrlsForImages(json.optBoolean("returnUrlsForImages", false))
             .setRequestCustomDislikeThisAd(json.optBoolean("requestCustomDislikeThisAd", false))
@@ -370,7 +372,7 @@ public class Converter {
             return null;
         }
         return new VideoConfiguration.Builder().setAudioFocusType(
-            json.optInt("audioFocusType", AudioFocusType.NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE))
+                json.optInt("audioFocusType", AudioFocusType.NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE))
             .setClickToFullScreenRequested(json.optBoolean("clickToFullScreenRequested", false))
             .setCustomizeOperateRequested(json.optBoolean("customizeOperateRequested", false))
             .setStartMuted(json.optBoolean("isStartMuted", false))

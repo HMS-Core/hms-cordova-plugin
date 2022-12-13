@@ -46,6 +46,54 @@ public class InitialProps {
         this.pageYOffset = PxToPixelConverter.pxToPixel(pageYOffset);
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getPageXOffset() {
+        return pageXOffset;
+    }
+
+    public int getPageYOffset() {
+        return pageYOffset;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getMarginLeft() {
+        return marginLeft;
+    }
+
+    public int getMarginRight() {
+        return marginRight;
+    }
+
+    public int getMarginTop() {
+        return marginTop;
+    }
+
+    public int getMarginBottom() {
+        return marginBottom;
+    }
+
     public static class Builder {
         private InitialProps props;
 
@@ -76,54 +124,6 @@ public class InitialProps {
         public InitialProps build() {
             return props;
         }
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getPageXOffset() {
-        return pageXOffset;
-    }
-
-    public int getPageYOffset() {
-        return pageYOffset;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public int getMarginLeft() {
-        return marginLeft;
-    }
-
-    public int getMarginRight() {
-        return marginRight;
-    }
-
-    public int getMarginTop() {
-        return marginTop;
-    }
-
-    public int getMarginBottom() {
-        return marginBottom;
     }
 
 }

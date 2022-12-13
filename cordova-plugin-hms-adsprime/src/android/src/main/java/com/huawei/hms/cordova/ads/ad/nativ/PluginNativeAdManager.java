@@ -46,6 +46,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class PluginNativeAdManager extends PluginAbstractAdManager {
+    public static final String NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE = "native_button_rounded_corners_shape";
+
     private static final String NATIVE_AD_SMALL_TEMPLATE = "native_ad_small_template";
 
     private static final String NATIVE_AD_FULL_TEMPLATE = "native_ad_full_template";
@@ -55,8 +57,6 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
     private static final String NATIVE_AD_VIDEO_TEMPLATE = "native_ad_video_template";
 
     private static final String NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE = "native_ad_with_app_download_btn_template";
-
-    public static final String NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE = "native_button_rounded_corners_shape";
 
     private NativeAd nativeAd;
 
@@ -104,7 +104,7 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         try {
             return context.getResources()
                 .getIdentifier((String) PluginNativeAdManager.class.getDeclaredField(
-                    json.optString("template", "NATIVE_AD_SMALL_TEMPLATE")).get(null), "layout",
+                        json.optString("template", "NATIVE_AD_SMALL_TEMPLATE")).get(null), "layout",
                     context.getPackageName());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, e.getMessage());
@@ -150,7 +150,7 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
     public void loadAd(JSONObject json, final Promise promise) throws JSONException {
         nativeAdConfiguration = Converter.setNativeAdOptions(json.optJSONObject("nativeAdOptions"));
         nativeAdLoader = new NativeAdLoader.Builder(context, json.optString("adId")).setNativeAdLoadedListener(
-            listener.getNativeAdLoadedListener())
+                listener.getNativeAdLoadedListener())
             .setAdListener(listener.getAdListener())
             .setNativeAdOptions(nativeAdConfiguration)
             .build();
@@ -205,27 +205,6 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
             nativeView.getCallToActionView().setVisibility(View.VISIBLE);
         }
         promise.success();
-    }
-
-    private static class MyAppDownloadStyle extends AppDownloadButtonStyle {
-
-        public MyAppDownloadStyle(Context context) {
-            super(context);
-            normalStyle.setTextColor(Color.parseColor("WHITE"));
-            normalStyle.setBackground(context.getResources().getDrawable(getDrawableId(context)));
-            processingStyle.setTextColor(Color.parseColor("BLACK"));
-        }
-
-        private int getDrawableId(Context context) {
-            try {
-                return context.getResources().getIdentifier((String) PluginNativeAdManager.class.getDeclaredField(
-                    "NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE").get(null), "drawable",
-                    context.getPackageName());
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                Log.e("PluginNativeAdManager", e.getMessage());
-                return -1;
-            }
-        }
     }
 
     public void videoOperatorGetAspectRatio(JSONObject json, final Promise promise) throws JSONException {
@@ -437,6 +416,28 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
         appDownloadButton.continueDownload();
         promise.success();
+    }
+
+    private static class MyAppDownloadStyle extends AppDownloadButtonStyle {
+
+        public MyAppDownloadStyle(Context context) {
+            super(context);
+            normalStyle.setTextColor(Color.parseColor("WHITE"));
+            normalStyle.setBackground(context.getResources().getDrawable(getDrawableId(context)));
+            processingStyle.setTextColor(Color.parseColor("BLACK"));
+        }
+
+        private int getDrawableId(Context context) {
+            try {
+                return context.getResources()
+                    .getIdentifier(
+                        (String) PluginNativeAdManager.class.getDeclaredField("NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE")
+                            .get(null), "drawable", context.getPackageName());
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                Log.e("PluginNativeAdManager", e.getMessage());
+                return -1;
+            }
+        }
     }
 
 }

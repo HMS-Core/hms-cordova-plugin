@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.huawei.hms.ads.nativead.NativeView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/native_app_download_button_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:background="#FFFFFF"
-    android:orientation="vertical">
+        android:id="@+id/native_app_download_button_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <com.huawei.hms.ads.nativead.MediaView
                 android:id="@+id/ad_media"
@@ -18,10 +18,10 @@
                 android:layout_height="wrap_content" />
 
         <RelativeLayout
-            android:id="@+id/left_bottom_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ad_media">
+                android:id="@+id/left_bottom_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ad_media">
 
             <TextView
                     android:id="@+id/ad_title"
@@ -80,8 +80,7 @@
                     progress_button:hiad_maxWidth="96dp"
                     progress_button:hiad_minWidth="48dp"
                     progress_button:hiad_textColor="#FFFFFF"
-                    progress_button:hiad_textSize="12sp"
-                    />
+                    progress_button:hiad_textSize="12sp" />
 
             <Button
                     android:id="@+id/ad_call_to_action"

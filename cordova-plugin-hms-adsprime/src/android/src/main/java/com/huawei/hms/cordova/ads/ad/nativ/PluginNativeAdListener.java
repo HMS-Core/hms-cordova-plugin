@@ -61,12 +61,12 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
 
     private NativeAd globalNativeAd = null;
 
-    public NativeAd getNativeAd() {
-        return globalNativeAd;
-    }
-
     public PluginNativeAdListener(CordovaEventRunner listenerManager, int objectId) {
         super(listenerManager, objectId);
+    }
+
+    public NativeAd getNativeAd() {
+        return globalNativeAd;
     }
 
     public DislikeAdListener getDislikeAdListener() {
@@ -162,7 +162,8 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
         return new AppDownloadButton.OnDownloadStatusChangedListener() {
             @Override
             public void onStatusChanged(AppDownloadStatus appDownloadStatus) {
-                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_STATUS_CHANGED, appDownloadStatus);
+                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_STATUS_CHANGED,
+                    appDownloadStatus);
             }
         };
     }

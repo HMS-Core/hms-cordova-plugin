@@ -81,7 +81,7 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         listener = new PluginRollAdListener(pluginListenerManager, managerId);
 
         instreamAdLoader = new InstreamAdLoader.Builder(context, rollAdLoaderParams.optString("adId")).setTotalDuration(
-            rollAdLoaderParams.optInt("totalDuration"))
+                rollAdLoaderParams.optInt("totalDuration"))
             .setMaxCount(rollAdLoaderParams.optInt("maxDuration"))
             .setInstreamAdLoadListener(listener.getInstreamAdLoadListener())
             .build();
@@ -144,89 +144,6 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
 
         listener.setWebView(webView);
         instreamLayoutManager = new PluginLayoutManager(parent, frameLayout, props);
-
-    }
-
-    public class InstreamAdJsInterface {
-
-        public InstreamAdJsInterface() {
-        }
-
-        @JavascriptInterface
-        public void pause() {
-            corPack.startMethodExecution("hmsrollad-pause");
-            instreamView.pause();
-            corPack.sendSingleEvent("hmsrollad-pause");
-        }
-
-        @JavascriptInterface
-        public void play() {
-            corPack.startMethodExecution("hmsrollad-play");
-            instreamView.play();
-            corPack.sendSingleEvent("hmsrollad-play");
-        }
-
-        @JavascriptInterface
-        public void stop() {
-            corPack.startMethodExecution("hmsrollad-stop");
-
-            instreamView.stop();
-            corPack.sendSingleEvent("hmsrollad-stop");
-        }
-
-        @JavascriptInterface
-        public void mute() {
-            corPack.startMethodExecution("hmsrollad-mute");
-
-            instreamView.mute();
-            corPack.sendSingleEvent("hmsrollad-mute");
-        }
-
-        @JavascriptInterface
-        public void unmute() {
-            corPack.startMethodExecution("hmsrollad-unmute");
-
-            instreamView.unmute();
-            corPack.sendSingleEvent("hmsrollad-unmute");
-        }
-
-        @JavascriptInterface
-        public void whyThisAd() {
-            corPack.startMethodExecution("hmsrollad-whyThisAd");
-
-            pluginListenerManager.sendEvent(String.format(Locale.ENGLISH, "roll_ad_why_this_ad_%d", managerId),
-                new JSONArray().put(listener.getCurrentInstreamAd().getWhyThisAd()));
-            corPack.sendSingleEvent("hmsrollad-whyThisAd");
-        }
-
-        @JavascriptInterface
-        public void skip() {
-            corPack.startMethodExecution("hmsrollad-skip");
-
-            activity.runOnUiThread(() -> {
-                frameLayout.setVisibility(View.GONE);
-                if (instreamLayoutManager != null) {
-                    instreamLayoutManager.removeChildView(frameLayout);
-                }
-                webView.destroy();
-                instreamView.onClose();
-                instreamView.destroy();
-            });
-            corPack.sendSingleEvent("hmsrollad-skip");
-        }
-
-        @JavascriptInterface
-        public void onClick() {
-            activity.runOnUiThread(() -> instreamView.performClick());
-        }
-
-        @JavascriptInterface
-        public boolean isPlaying() {
-            corPack.startMethodExecution("hmsrollad-isPlaying");
-            boolean isPlaying = instreamView.isPlaying();
-            corPack.sendSingleEvent("hmsrollad-isPlaying");
-            return isPlaying;
-        }
 
     }
 
@@ -412,6 +329,89 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
             ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(listener.getCurrentInstreamAd().getCallToAction());
+    }
+
+    public class InstreamAdJsInterface {
+
+        public InstreamAdJsInterface() {
+        }
+
+        @JavascriptInterface
+        public void pause() {
+            corPack.startMethodExecution("hmsrollad-pause");
+            instreamView.pause();
+            corPack.sendSingleEvent("hmsrollad-pause");
+        }
+
+        @JavascriptInterface
+        public void play() {
+            corPack.startMethodExecution("hmsrollad-play");
+            instreamView.play();
+            corPack.sendSingleEvent("hmsrollad-play");
+        }
+
+        @JavascriptInterface
+        public void stop() {
+            corPack.startMethodExecution("hmsrollad-stop");
+
+            instreamView.stop();
+            corPack.sendSingleEvent("hmsrollad-stop");
+        }
+
+        @JavascriptInterface
+        public void mute() {
+            corPack.startMethodExecution("hmsrollad-mute");
+
+            instreamView.mute();
+            corPack.sendSingleEvent("hmsrollad-mute");
+        }
+
+        @JavascriptInterface
+        public void unmute() {
+            corPack.startMethodExecution("hmsrollad-unmute");
+
+            instreamView.unmute();
+            corPack.sendSingleEvent("hmsrollad-unmute");
+        }
+
+        @JavascriptInterface
+        public void whyThisAd() {
+            corPack.startMethodExecution("hmsrollad-whyThisAd");
+
+            pluginListenerManager.sendEvent(String.format(Locale.ENGLISH, "roll_ad_why_this_ad_%d", managerId),
+                new JSONArray().put(listener.getCurrentInstreamAd().getWhyThisAd()));
+            corPack.sendSingleEvent("hmsrollad-whyThisAd");
+        }
+
+        @JavascriptInterface
+        public void skip() {
+            corPack.startMethodExecution("hmsrollad-skip");
+
+            activity.runOnUiThread(() -> {
+                frameLayout.setVisibility(View.GONE);
+                if (instreamLayoutManager != null) {
+                    instreamLayoutManager.removeChildView(frameLayout);
+                }
+                webView.destroy();
+                instreamView.onClose();
+                instreamView.destroy();
+            });
+            corPack.sendSingleEvent("hmsrollad-skip");
+        }
+
+        @JavascriptInterface
+        public void onClick() {
+            activity.runOnUiThread(() -> instreamView.performClick());
+        }
+
+        @JavascriptInterface
+        public boolean isPlaying() {
+            corPack.startMethodExecution("hmsrollad-isPlaying");
+            boolean isPlaying = instreamView.isPlaying();
+            corPack.sendSingleEvent("hmsrollad-isPlaying");
+            return isPlaying;
+        }
+
     }
 
 }

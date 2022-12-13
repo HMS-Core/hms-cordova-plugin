@@ -27,13 +27,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public abstract class PluginAbstractAdManager {
-    protected CordovaEventRunner pluginListenerManager;
+    private static int managerIdCounter = 0;
 
     protected final int managerId;
 
-    private static int managerIdCounter = 0;
-
     protected final String TAG;
+
+    protected CordovaEventRunner pluginListenerManager;
 
     public PluginAbstractAdManager() {
         managerId = getManagerIdCounter();

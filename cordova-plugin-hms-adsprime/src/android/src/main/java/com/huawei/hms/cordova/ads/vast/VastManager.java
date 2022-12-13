@@ -47,6 +47,18 @@ public class VastManager extends PluginAbstractAdManager {
 
     private static final String VAST_LOAD_FAILED = "vast_load_failed_%d";
 
+    private static final String VAST_TEMPLATE = "vast_template";
+
+    protected PlayerConfig playerConfig;
+
+    protected AdsData mAdsData;
+
+    protected LinearAdSlot linearAdSlot;
+
+    protected CustomeVideoController customeVideoController;
+
+    protected DefaultVideoController defaultVideoController;
+
     private View vastView;
 
     private Context context;
@@ -59,16 +71,6 @@ public class VastManager extends PluginAbstractAdManager {
 
     private ProgressBar progressBar;
 
-    protected PlayerConfig playerConfig;
-
-    protected AdsData mAdsData;
-
-    protected LinearAdSlot linearAdSlot;
-
-    protected CustomeVideoController customeVideoController;
-
-    protected DefaultVideoController defaultVideoController;
-
     private boolean isCustomVideoPlayer = false;
 
     private boolean isAdLoadWithAdsData = false;
@@ -78,8 +80,6 @@ public class VastManager extends PluginAbstractAdManager {
     private PluginAdLayout parent;
 
     private PluginLayoutManager vastLayoutManager;
-
-    private static final String VAST_TEMPLATE = "vast_template";
 
     public VastManager(Context context, Activity activity, PluginAdLayout parent, CordovaEventRunner manager,
         JSONObject json) {
@@ -181,8 +181,9 @@ public class VastManager extends PluginAbstractAdManager {
 
     private int getTemplate() {
         try {
-            return context.getResources().getIdentifier((String) VastManager.class.getDeclaredField(
-                "VAST_TEMPLATE").get(null), "layout", context.getPackageName());
+            return context.getResources()
+                .getIdentifier((String) VastManager.class.getDeclaredField("VAST_TEMPLATE").get(null), "layout",
+                    context.getPackageName());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, e.getMessage());
             return -1;
