@@ -1,0 +1,55 @@
+{
+    "name": "@hmscore/cordova-plugin-hms-adsprime",
+    "description": "Cordova HMS Ads Prime Plugin",
+    "version": "13.4.56-302",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-adsprime"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENSE",
+    "readmeFilename": "README.md",
+    "cordova": {
+        "id": "cordova-plugin-hms-adsprime",
+        "platforms": [
+            "android"
+        ]
+    },
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "ads",
+        "hms-adsprime",
+        "huawei-ads",
+        "hms",
+        "huawei"
+    ],
+    "files": [
+        "hooks",
+        "ionic-native",
+        "src",
+        "types",
+        "www",
+        "LICENSE",
+        "package.json",
+        "plugin.xml",
+        "README.md"
+    ],
+    "dependencies": {
+        "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
+}
