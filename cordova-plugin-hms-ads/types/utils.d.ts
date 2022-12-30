@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 export declare function asyncExec(clazz: string, reference: string, args?: any[]): Promise<any>;
 declare global {
     interface Window {

@@ -59,7 +59,11 @@ $("startClient").onclick = async() => {
 };
 
 $("getReferrerDetails").onclick = () => {
-    HMSAds.getInstallReferrer()
+    var reqOpt = {
+        installChannel : "test",
+    };
+
+    HMSAds.getInstallReferrer(reqOpt)
         .then((result) => alert("getInstallReferrer :: " + JSON.stringify(result)))
         .catch((error) => alert("getInstallReferrer :: Error!" + error));
 

@@ -157,7 +157,8 @@ public class Converter {
             requestOptionsJsonObject.put("nonPersonalizedAd", requestOptions.getNonPersonalizedAd());
             requestOptionsJsonObject.put("consent", requestOptions.getConsent());
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+
         }
 
         return requestOptionsJsonObject;
@@ -260,7 +261,8 @@ public class Converter {
                 }
             }
         } catch (final JSONException e) {
-            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+
         }
         return bundle;
     }
@@ -294,7 +296,8 @@ public class Converter {
             return new JSONObject().put("responseCode", InstallReferrerClient.InstallReferrerResponse.OK)
                 .put("installReferrer", referrerDetails.getInstallReferrer())
                 .put("referrerClickTimestamp", referrerDetails.getReferrerClickTimestampMillisecond())
-                .put("installBeginTimestamp", referrerDetails.getInstallBeginTimestampMillisecond());
+                .put("installBeginTimestamp", referrerDetails.getInstallBeginTimestampMillisecond())
+                .put("installChannel", referrerDetails.getInstallChannel());
         } catch (JSONException ignored) {
             return null;
         }

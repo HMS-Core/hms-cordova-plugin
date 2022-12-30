@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { HMSRequestOptions, OaidResult, ReferrerDetails, ConsentUpdateResult, VastSdkConfiguration } from './interfaces';
 import { ConsentStatus, DebugNeedConsent } from './HMSConstants';
 export { HMSInterstitialAd } from './HMSInterstitialAd';
@@ -46,7 +45,7 @@ export declare function getAdvertisingIdInfo(): Promise<OaidResult>;
 export declare function referrerClientStartConnection(isTest?: boolean): Promise<number>;
 export declare function referrerClientEndConnection(): Promise<void>;
 export declare function referrerClientIsReady(): Promise<boolean>;
-export declare function getInstallReferrer(): Promise<ReferrerDetails>;
+export declare function getInstallReferrer(reqOpt?: String): Promise<ReferrerDetails>;
 export declare function initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
 export declare function getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
 export declare function updateSdkServerConfig(slotId: string): Promise<void>;

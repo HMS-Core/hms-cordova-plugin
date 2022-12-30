@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { LayoutBounds, NativeAdLoadOptions, NativeAdOptions, Props, VideoOperatorAspectRatio, NativeAdConfiguration } from './interfaces';
 import { NativeAdEvents } from './HMSConstants';
 import { Ads } from './ads';

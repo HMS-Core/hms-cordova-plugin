@@ -96,7 +96,10 @@ export class HomePage {
   }
 
   getReferrerDetails() {
-    this.hmsAds.getInstallReferrer()
+    const reqOpt = {
+      installChannel : "test",
+  };
+    this.hmsAds.getInstallReferrer(reqOpt)
         .then((result) => alert('getInstallReferrer :: ' + JSON.stringify(result)))
         .catch((error) => alert('getInstallReferrer :: Error!' + error));
 

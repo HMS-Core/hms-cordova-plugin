@@ -30,6 +30,8 @@ import com.huawei.hms.cordova.ads.basef.handler.CorPack;
 import com.huawei.hms.cordova.ads.basef.handler.Promise;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -89,9 +91,11 @@ public class InstallReferrerModule extends CordovaBaseModule {
         promise.success(client.isReady());
     }
 
+
     @CordovaMethod
     @HMSLog
-    public void getInstallReferrer(final CorPack corPack, JSONArray args, final Promise promise) {
+    public void getInstallReferrer(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject jsonObject = args.getJSONObject(0);
         if (respCode != InstallReferrerClient.InstallReferrerResponse.OK) {
             promise.success(respCode);
             return;
@@ -99,6 +103,9 @@ public class InstallReferrerModule extends CordovaBaseModule {
         ReferrerDetails referrerDetails = null;
         try {
             referrerDetails = client.getInstallReferrer();
+            if (jsonObject.has("installChannel")){
+                referrerDetails.setInstallChannel(jsonObject.getString("installChannel"));
+            }
         } catch (RemoteException | IOException e) {
             Log.e(TAG, "getInstallReferrer() :: error : " + e.getMessage());
         }

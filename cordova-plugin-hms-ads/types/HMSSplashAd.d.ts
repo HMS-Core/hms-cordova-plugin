@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { SplashAdEvents, AudioFocusType } from './HMSConstants';
 import { SplashAdLoadOptions } from './interfaces';
 import { Ads } from './ads';

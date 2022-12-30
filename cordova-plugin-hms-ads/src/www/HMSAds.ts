@@ -15,7 +15,7 @@
 */
 
 import { asyncExec } from './utils'
-import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult,VastSdkConfiguration } from './interfaces'
+import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult,VastSdkConfiguration, InstallReferrerReq } from './interfaces'
 import { ConsentStatus, DebugNeedConsent, ActivateStyle } from './HMSConstants'
 
 
@@ -119,8 +119,8 @@ export function referrerClientEndConnection(): Promise<void> {
 export function referrerClientIsReady(): Promise<boolean> {
 	return asyncExec('HMSAds', 'InstallReferrerModule', ['referrerClientIsReady']);
 }
-export function getInstallReferrer(): Promise<ReferrerDetails> {
-	return asyncExec('HMSAds', 'InstallReferrerModule', ['getInstallReferrer']);
+export function getInstallReferrer(reqOpt : InstallReferrerReq): Promise<ReferrerDetails> {
+	return asyncExec('HMSAds', 'InstallReferrerModule', ['getInstallReferrer',reqOpt]);
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -487,6 +487,10 @@ export interface VastSdkConfiguration{
     vastEventRetryUploadTimes:number
 }
 
+export interface InstallReferrerReq{
+    installChannel ?: String
+}
+
 
 ///////////////////////////////////////////////////////////////
 // Modules
@@ -602,7 +606,7 @@ export class HMSAds extends IonicNativePlugin {
         return;
     }
     @Cordova({ otherPromise: true })
-    getInstallReferrer(): Promise<ReferrerDetails> {
+    getInstallReferrer(reqOpt?: InstallReferrerReq): Promise<ReferrerDetails> {
         return;
     }
     @Cordova({ otherPromise: true })

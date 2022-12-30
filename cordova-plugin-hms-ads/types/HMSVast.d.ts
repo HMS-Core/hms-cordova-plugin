@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { Ads } from './ads';
 import { VastEvents } from './HMSConstants';
 import { VastLoadOptions, Props, LayoutBounds } from './interfaces';

@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { LayoutBounds, RollAdLoaderParams, RollAdLoadOptions, Props, Duration } from './interfaces';
 import { RollAdEvents } from './HMSConstants';
 import { Ads } from './ads';

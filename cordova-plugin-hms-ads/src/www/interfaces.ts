@@ -76,6 +76,8 @@ export interface AdParam {
 
 }
 
+
+
 export interface Location {
     lat: number,
     lng: number
@@ -118,6 +120,10 @@ export interface HMSRewardVerifyConfig {
 export interface OaidResult {
     id: string,
     isLimitAdTracingEnabled: boolean
+}
+
+export interface InstallReferrerReq{
+    installChannel ?: String
 }
 
 export interface Duration {

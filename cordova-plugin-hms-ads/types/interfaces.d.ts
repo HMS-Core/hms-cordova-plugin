@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { ChildProtection, NonPersonalizedAd, UnderAgeOfPromise, AdContentClassification, Gender, AudioFocusType, MediaAspect, MediaDirection, ChoicesPosition, Color, NativeAdTemplate, InstallReferrerResponses, ConsentStatus, HMSScreenOrientation, Anchor, DetailedCreativeType, CreativeMatchType } from './HMSConstants';
 export interface LayoutBounds {
     marginLeft?: number;

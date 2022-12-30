@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 export declare abstract class Ads {
     id: number;
     objectName: string;

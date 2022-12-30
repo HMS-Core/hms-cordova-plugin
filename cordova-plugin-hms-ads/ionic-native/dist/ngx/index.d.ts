@@ -462,6 +462,9 @@ export interface VastSdkConfiguration {
     vastEventRetryIntervalSeconds: number;
     vastEventRetryUploadTimes: number;
 }
+export interface InstallReferrerReq {
+    installChannel?: String;
+}
 export declare class HMSAds extends IonicNativePlugin {
     HMSInterstitialAd: typeof HMSInterstitialAd;
     HMSBannerAd: typeof HMSBannerAd;
@@ -493,7 +496,7 @@ export declare class HMSAds extends IonicNativePlugin {
     referrerClientStartConnection(isTest?: boolean): Promise<number>;
     referrerClientEndConnection(): Promise<void>;
     referrerClientIsReady(): Promise<boolean>;
-    getInstallReferrer(): Promise<ReferrerDetails>;
+    getInstallReferrer(reqOpt?: InstallReferrerReq): Promise<ReferrerDetails>;
     initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
     getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
     updateSdkServerConfig(slotId: string): Promise<void>;

@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 export declare enum AdParamErrorCodes {
     AD_PARAM_INNER = 0,
     AD_PARAM_INVALID_REQUEST = 1,
