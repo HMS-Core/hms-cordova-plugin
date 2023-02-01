@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package com.huawei.hms.cordova.push.local;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -25,10 +24,8 @@ import androidx.annotation.RequiresApi;
 
 import com.huawei.hms.cordova.push.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.push.basef.CordovaMethod;
-import com.huawei.hms.cordova.push.basef.HMSLog;
 import com.huawei.hms.cordova.push.basef.handler.CorPack;
 import com.huawei.hms.cordova.push.basef.handler.Promise;
-import com.huawei.hms.cordova.push.constants.Core;
 import com.huawei.hms.cordova.push.constants.ResultCode;
 import com.huawei.hms.cordova.push.utils.ArrayUtil;
 import com.huawei.hms.cordova.push.utils.MapUtils;
@@ -41,7 +38,7 @@ public class HmsLocalNotification extends CordovaBaseModule {
 
     private final String TAG = HmsLocalNotification.class.getSimpleName();
 
-    private HmsLocalNotificationController hmsLocalNotificationController;
+    private final HmsLocalNotificationController hmsLocalNotificationController;
 
     public HmsLocalNotification(Context context) {
         hmsLocalNotificationController = new HmsLocalNotificationController(context);

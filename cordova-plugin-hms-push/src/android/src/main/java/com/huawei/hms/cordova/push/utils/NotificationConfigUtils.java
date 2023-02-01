@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ import com.huawei.hms.cordova.push.constants.Core;
 import com.huawei.hms.cordova.push.constants.LocalNotification;
 import com.huawei.hms.cordova.push.constants.NotificationConstants;
 
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
@@ -176,13 +177,15 @@ public class NotificationConfigUtils {
     public static int configImportance(Bundle bundle) {
 
         if (Build.VERSION_CODES.N < Build.VERSION.SDK_INT) {
-            return 4; // NotificationManager.IMPORTANCE_HIGH;
+            // High Importance Notification
+            return 4;
         }
 
         final String value = BundleUtils.get(bundle, NotificationConstants.IMPORTANCE);
 
         if (value == null) {
-            return 4; // notificationManager.IMPORTANCE_HIGH;
+            // High Importance Notification
+            return 4;
         }
 
         try {
@@ -236,6 +239,6 @@ public class NotificationConfigUtils {
     }
 
     public static String generateNotificationId() {
-        return String.valueOf(RANDOM.nextInt());
+        return String.valueOf(new SecureRandom().nextInt(1000000));
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -52,15 +52,15 @@ public class HtmlUtils {
     }
 
     public static String onBackgroundRemoteMessageReceived() {
-        String onBackgroundRemoteMessageReceived = "function onBackgroundRemoteMessageReceived(callback) {"
+        return "function onBackgroundRemoteMessageReceived(callback) {"
             + "window['BACKGROUND_REMOTE_DATA_MESSAGE_RECEIVED'] = callback;" + "}";
-        return onBackgroundRemoteMessageReceived;
+
     }
 
     public static String getItemResponseListener() {
-        String getItemResponseListener = "function onGetItemResponse(callback) {"
+        return "function onGetItemResponse(callback) {"
             + "window['ON_GET_ITEM_RESPONSE_EVENT'] = callback;" + "}";
-        return getItemResponseListener;
+
     }
 
     public static String wrapInsideScriptTag(String data) {

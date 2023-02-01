@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,49 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ERROR_PERMISSION_EXPIRED =
-  exports.ERROR_PERMISSION_NOT_AUTHORIZED =
-  exports.ERROR_PERMISSION_NOT_EXIST =
-  exports.ERROR_CERT_FINGERPRINT_ERROR =
-  exports.ERROR_AUTH_INFO_NOT_EXIST =
-  exports.ERROR_PERMISSION_LIST_EMPTY =
-  exports.ERROR_CERT_FINGERPRINT_EMPTY =
-  exports.ERROR_SCOPE_LIST_EMPTY =
-  exports.ERROR_GET_SCOPE_ERROR =
-  exports.ERROR_API_NOT_SPECIFIED =
-  exports.ERROR_SESSION_INVALID =
-  exports.ERROR_NOT_IN_SERVICE =
-  exports.ERROR_EXECUTE_TIMEOUT =
-  exports.ERROR_CLIENT_API_INVALID =
-  exports.ERROR_NAMING_INVALID =
-  exports.ERROR_INTERNAL_ERROR =
-  exports.ERROR_ARGUMENTS_INVALID =
-  exports.ERROR_AUTO_INITIALIZING =
-  exports.ERROR_BIND_SERVICE_SELF_MAPPING =
-  exports.ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING =
-  exports.ERROR_MAIN_THREAD =
-  exports.ERROR_OPERATION_NOT_SUPPORTED =
-  exports.ERROR_HMS_CLIENT_API =
-  exports.ERROR_TTL_EXCEEDED =
-  exports.ERROR_TOO_MANY_MESSAGES =
-  exports.ERROR_INVALID_PARAMETERS =
-  exports.ERROR_SIZE =
-  exports.ERROR_NOT_ALLOW_CROSS_APPLY =
-  exports.ERROR_STORAGE_LOCATION_EMPTY =
-  exports.ERROR_GET_TOKEN_ERR =
-  exports.ERROR_NO_RIGHT =
-  exports.ERROR_TOPIC_SEND =
-  exports.ERROR_TOPIC_EXCEED =
-  exports.ERROR_UNKNOWN =
-  exports.ERROR_PUSH_SERVER =
-  exports.ERROR_SERVICE_NOT_AVAILABLE =
-  exports.ERROR_TOKEN_INVALID =
-  exports.ERROR_NO_NETWORK =
-  exports.ERROR_NO_TOKEN =
-  exports.NULL_BUNDLE =
-  exports.ERROR =
-  exports.SUCCESS =
-    void 0;
+exports.ERROR_PERMISSION_EXPIRED = exports.ERROR_PERMISSION_NOT_AUTHORIZED = exports.ERROR_PERMISSION_NOT_EXIST = exports.ERROR_CERT_FINGERPRINT_ERROR = exports.ERROR_AUTH_INFO_NOT_EXIST = exports.ERROR_PERMISSION_LIST_EMPTY = exports.ERROR_CERT_FINGERPRINT_EMPTY = exports.ERROR_SCOPE_LIST_EMPTY = exports.ERROR_GET_SCOPE_ERROR = exports.ERROR_API_NOT_SPECIFIED = exports.ERROR_SESSION_INVALID = exports.ERROR_NOT_IN_SERVICE = exports.ERROR_EXECUTE_TIMEOUT = exports.ERROR_CLIENT_API_INVALID = exports.ERROR_NAMING_INVALID = exports.ERROR_INTERNAL_ERROR = exports.ERROR_ARGUMENTS_INVALID = exports.ERROR_AUTO_INITIALIZING = exports.ERROR_BIND_SERVICE_SELF_MAPPING = exports.ERROR_HMS_DEVICE_AUTH_FAILED_SELF_MAPPING = exports.ERROR_MAIN_THREAD = exports.ERROR_OPERATION_NOT_SUPPORTED = exports.ERROR_HMS_CLIENT_API = exports.ERROR_TTL_EXCEEDED = exports.ERROR_TOO_MANY_MESSAGES = exports.ERROR_INVALID_PARAMETERS = exports.ERROR_SIZE = exports.ERROR_NOT_ALLOW_CROSS_APPLY = exports.ERROR_STORAGE_LOCATION_EMPTY = exports.ERROR_GET_TOKEN_ERR = exports.ERROR_NO_RIGHT = exports.ERROR_TOPIC_SEND = exports.ERROR_TOPIC_EXCEED = exports.ERROR_UNKNOWN = exports.ERROR_PUSH_SERVER = exports.ERROR_SERVICE_NOT_AVAILABLE = exports.ERROR_TOKEN_INVALID = exports.ERROR_NO_NETWORK = exports.ERROR_NO_TOKEN = exports.NULL_BUNDLE = exports.ERROR = exports.SUCCESS = void 0;
 // Success
 exports.SUCCESS = "0";
 // Error

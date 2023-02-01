@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,26 +30,20 @@ export declare function localNotificationSchedule(
 export declare function cancelAllNotifications(): Promise<boolean>;
 export declare function cancelNotifications(): Promise<boolean>;
 export declare function cancelScheduledNotifications(): Promise<boolean>;
-export declare function cancelNotificationsWithId(
-  id: number[]
-): Promise<boolean>;
-export declare function cancelNotificationsWithIdTag(
-  idTag: IdTag[]
-): Promise<boolean>;
-export declare function cancelNotificationsWithTag(
-  tag: string
-): Promise<boolean>;
+export declare function cancelNotificationsWithId(id: number[]): Promise<boolean>;
+export declare function cancelNotificationsWithIdTag(idTag: IdTag[]): Promise<boolean>;
+export declare function cancelNotificationsWithTag(tag: string): Promise<boolean>;
 export declare function getNotifications(): Promise<any>;
 export declare function getScheduledNotifications(): Promise<any>;
 export declare function getChannels(): Promise<any>;
 export declare function channelExists(channelId: string): Promise<boolean>;
 export declare function channelBlocked(channelId: string): Promise<boolean>;
 export declare function deleteChannel(channelId: string): Promise<boolean>;
-declare type LocalNotificationObject = {
-  [key in Attr]?: any;
+type LocalNotificationObject = {
+    [key in Attr]?: any;
 };
 interface IdTag {
-  id: number;
-  tag: string;
+    id: number;
+    tag: string;
 }
 export { Attr, Importance, Priority, RepeatType, Visibility };

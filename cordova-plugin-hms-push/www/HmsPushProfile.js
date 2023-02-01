@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,53 +15,42 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProfileWithSubjectId =
-  exports.deleteProfile =
-  exports.addProfileWithSubjectId =
-  exports.addProfile =
-  exports.isSupportProfile =
-  exports.UNDEFINED_PROFILE =
-  exports.CUSTOM_PROFILE =
-  exports.HUAWEI_PROFILE =
-    void 0;
+exports.deleteProfileWithSubjectId = exports.deleteProfile = exports.addProfileWithSubjectId = exports.addProfile = exports.isSupportProfile = exports.UNDEFINED_PROFILE = exports.CUSTOM_PROFILE = exports.HUAWEI_PROFILE = void 0;
 const utils_1 = require("./utils");
 exports.HUAWEI_PROFILE = 1;
 exports.CUSTOM_PROFILE = 2;
 exports.UNDEFINED_PROFILE = -1;
 function isSupportProfile() {
-  return utils_1.asyncExec("HMSPush", "HmsPushProfile", ["isSupportProfile"]);
+    return (0, utils_1.asyncExec)("HMSPush", "HmsPushProfile", ["isSupportProfile"]);
 }
 exports.isSupportProfile = isSupportProfile;
 function addProfile(type, profileId) {
-  return utils_1.asyncExec("HMSPush", "HmsPushProfile", [
-    "addProfile",
-    type,
-    profileId,
-  ]);
+    return (0, utils_1.asyncExec)("HMSPush", "HmsPushProfile", [
+        "addProfile",
+        type,
+        profileId,
+    ]);
 }
 exports.addProfile = addProfile;
 function addProfileWithSubjectId(subjectId, type, profileId) {
-  return utils_1.asyncExec("HMSPush", "HmsPushProfile", [
-    "addProfileWithSubjectId",
-    subjectId,
-    type,
-    profileId,
-  ]);
+    return (0, utils_1.asyncExec)("HMSPush", "HmsPushProfile", [
+        "addProfileWithSubjectId",
+        subjectId,
+        type,
+        profileId,
+    ]);
 }
 exports.addProfileWithSubjectId = addProfileWithSubjectId;
 function deleteProfile(profileId) {
-  return utils_1.asyncExec("HMSPush", "HmsPushProfile", [
-    "deleteProfile",
-    profileId,
-  ]);
+    return (0, utils_1.asyncExec)("HMSPush", "HmsPushProfile", ["deleteProfile", profileId]);
 }
 exports.deleteProfile = deleteProfile;
 function deleteProfileWithSubjectId(subjectId, profileId) {
-  return utils_1.asyncExec("HMSPush", "HmsPushProfile", [
-    "deleteProfileWithSubjectId",
-    subjectId,
-    profileId,
-  ]);
+    return (0, utils_1.asyncExec)("HMSPush", "HmsPushProfile", [
+        "deleteProfileWithSubjectId",
+        subjectId,
+        profileId,
+    ]);
 }
 exports.deleteProfileWithSubjectId = deleteProfileWithSubjectId;
 //# sourceMappingURL=HmsPushProfile.js.map

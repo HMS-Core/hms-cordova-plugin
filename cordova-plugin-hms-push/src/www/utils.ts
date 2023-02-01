@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ function initEventHandler() {
     if (window.hmsEventHandlers === undefined) window.hmsEventHandlers = {};
 
     window.hmsEventHandler = (eventName, data) => {
-        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
+        if (Object.prototype.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].forEach((handler: Handler) => {
                 handler(data);
             });
@@ -55,7 +55,7 @@ function initEventHandler() {
     };
 
     window.registerHMSEvent = (eventName, handler) => {
-        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
+        if (Object.prototype.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].push(handler);
         } else {
             window.hmsEventHandlers[eventName] = [handler];
@@ -63,7 +63,7 @@ function initEventHandler() {
     };
 
     window.unregisterHMSEvent = (eventName, handler) => {
-        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
+        if (Object.prototype.hasOwnProperty(eventName)) {
             if (handler) {
                 const idx = window.hmsEventHandlers[eventName].indexOf(handler);
                 if (idx > -1) {

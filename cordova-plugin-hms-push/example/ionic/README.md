@@ -219,7 +219,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.4.2.301'
+            classpath 'com.huawei.agconnect:agcp:1.7.3.300'
         }
     }
 

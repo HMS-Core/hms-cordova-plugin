@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,17 +18,7 @@ export declare const HUAWEI_PROFILE = 1;
 export declare const CUSTOM_PROFILE = 2;
 export declare const UNDEFINED_PROFILE = -1;
 export declare function isSupportProfile(): Promise<boolean>;
-export declare function addProfile(
-  type: number,
-  profileId: string
-): Promise<any>;
-export declare function addProfileWithSubjectId(
-  subjectId: string,
-  type: number,
-  profileId: string
-): Promise<any>;
+export declare function addProfile(type: number, profileId: string): Promise<any>;
+export declare function addProfileWithSubjectId(subjectId: string, type: number, profileId: string): Promise<any>;
 export declare function deleteProfile(profileId: string): Promise<any>;
-export declare function deleteProfileWithSubjectId(
-  subjectId: string,
-  profileId: string
-): Promise<any>;
+export declare function deleteProfileWithSubjectId(subjectId: string, profileId: string): Promise<any>;
