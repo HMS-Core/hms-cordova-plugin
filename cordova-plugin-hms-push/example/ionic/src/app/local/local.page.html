@@ -1,0 +1,196 @@
+<!--
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title> HMSPush</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-grid class="container">
+    <ion-row>
+        <ion-text class="text">Title:</ion-text>
+        <ion-input
+                [(ngModel)]="titleText"
+                class="text-input"
+                ion
+                placeholder="HMSPush"
+        ></ion-input>
+        <ion-input
+                [(ngModel)]="tagText"
+                class="text-input"
+                placeholder="tag"
+        ></ion-input>
+    </ion-row>
+    <ion-row>
+        <ion-text class="text">Message:</ion-text>
+        <ion-input
+                [(ngModel)]="messageText"
+                class="text-input"
+                placeholder="This is Local Notification"
+        ></ion-input>
+    </ion-row>
+    <ion-row>
+        <ion-text class="text">BigText:</ion-text>
+        <ion-input
+                [(ngModel)]="bigText"
+                class="text-input"
+                placeholder="This is a bigText"
+        ></ion-input>
+    </ion-row>
+    <ion-row>
+        <ion-text class="text">SubText:</ion-text>
+        <ion-input
+                [(ngModel)]="subText"
+                class="text-input"
+                placeholder="This is a subText"
+        ></ion-input>
+    </ion-row>
+
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding">
+            <ion-button (click)="localNotification();" expand="block"
+            >Local Notification(Default)
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationOngoing();" expand="block"
+            >Ongoing
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationSound();" expand="block"
+            >Sound
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationVibrate();" expand="block"
+            >Vibrate
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationBigImage();" expand="block"
+            >BigImage
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationRepeat();" expand="block"
+            >Repeat
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="4">
+            <ion-button (click)="localNotificationSchedule();" expand="block"
+            >Scheduled
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button
+                    (click)="cancelAllNotifications();"
+                    color="medium"
+                    expand="block"
+            >cancelAllNotifications
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button (click)="getNotifications();" color="medium" expand="block"
+            >getNotifications
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button
+                    (click)="cancelScheduledNotifications();"
+                    color="medium"
+                    expand="block"
+            >cancelScheduledNotifications
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button
+                    (click)="getScheduledNotifications();"
+                    color="medium"
+                    expand="block"
+            >getScheduledNotifications
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button
+                    (click)="cancelNotificationsWithTag();"
+                    color="medium"
+                    expand="block"
+            >cancelNotificationsWithTag(tag)
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding" size="6">
+            <ion-button (click)="getChannels();" color="medium" expand="block"
+            >getChannels
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding">
+            <ion-button (click)="cancelNotifications();" color="medium" expand="block"
+            >cancelNotifications
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding">
+            <ion-button (click)="deleteChannel();" color="medium" expand="block"
+            >deleteChannel
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+    <ion-row class="topRow">
+        <ion-col class="ion-no-padding">
+            <ion-button (click)="channelBlocked();" color="medium" expand="block"
+            >channelBlocked
+            </ion-button
+            >
+        </ion-col>
+        <ion-col class="ion-no-padding">
+            <ion-button (click)="channelExists();" color="medium" expand="block"
+            >channelExists
+            </ion-button
+            >
+        </ion-col>
+    </ion-row>
+</ion-grid>
+<ion-content class="content">
+    <ion-text class="pre-line"> {{message}}</ion-text>
+</ion-content>
