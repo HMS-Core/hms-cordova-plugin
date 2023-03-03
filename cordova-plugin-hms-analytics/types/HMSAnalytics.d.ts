@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,6 +42,18 @@ export declare function setAnalyticsEnabled(enabled: boolean): Promise<void>;
  */
 export declare function setUserId(userId: string): Promise<void>;
 /**
+ * Sets a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * @param id : Custom referrer, a string containing a maximum of 256 characters. The value cannot be    empty.
+ */
+export declare function setCustomReferrer(customReferrer: string): Promise<void>;
+/**
+ * Sets a custom referrer.
+ * @param channel:App installation source, a string containing a maximum of 128 characters.
+ * The value cannot be empty. The value can consist of only letters, digits, underscores (_), hyphens (-), and spaces. It cannot start or end with a space.
+ */
+export declare function setChannel(channel: string): Promise<void>;
+/**
  * Sets user attributes.
  * The values of user attributes remain unchanged throughout the app lifecycle and during
  * each session.
@@ -52,6 +64,14 @@ export declare function setUserId(userId: string): Promise<void>;
  * @param value : User attribute value, a string containing a maximum of 256 characters.
  */
 export declare function setUserProfile(name: string, value: string): Promise<void>;
+/**
+ * Sets whether to collect system attributes. Currently, this method applies only to the userAgent attribute.
+ * @param property  :  System attribute. Only userAgent is supported now.
+ * @param enabled : Indicates whether to collect system attributes. The default value is true.
+ * true: yes
+ * false: no
+ */
+export declare function setPropertyCollection(property: string, enabled: boolean): Promise<void>;
 /**
  * Delete user profile.
  *
@@ -108,6 +128,10 @@ export declare function clearCachedData(): Promise<void>;
  * Obtains the AAID from AppGallery Connect.
  */
 export declare function getAAID(): Promise<string>;
+/**
+ * Obtains the processing location of the uploaded data.
+ */
+export declare function getDataUploadSiteInfo(): Promise<string>;
 /**
  * Obtains the automatically collected or custom user attributes.
  *
@@ -221,8 +245,8 @@ export declare function disableLogger(): Promise<void>;
 interface GenericObject {
     [key: string]: any;
 }
-export declare type UserProfiles = GenericObject;
-export declare type EventParams = GenericObject;
+export type UserProfiles = GenericObject;
+export type EventParams = GenericObject;
 /**
  * ReportPolicy types for Sets automatic event reporting policies.
  */
@@ -287,6 +311,8 @@ export declare enum HAEventType {
     UPDATECHECKOUTOPTION = "$UpdateCheckoutOption",
     SHARECONTENT = "$ShareContent",
     REGISTERACCOUNT = "$RegisterAccount",
+    REGISTERFAILED = "$RegisterFailed",
+    PERMISSIONAPPLICATION = "$PermissionApplication",
     CONSUMEVIRTUALCOIN = "$ConsumeVirtualCoin",
     STARTTUTORIAL = "$StartTutorial",
     COMPLETETUTORIAL = "$CompleteTutorial",
@@ -301,6 +327,9 @@ export declare enum HAEventType {
     CANCELORDER = "$CancelOrder",
     COMPLETEORDER = "$CompleteOrder",
     CANCELCHECKOUT = "$CancelCheckout",
+    VIPCLICK = "$VipCclick",
+    VIPFAILED = "$VipFailed",
+    VIPSUC = "$VipSuc",
     OBTAINVOUCHER = "$ObtainVoucher",
     CONTACTCUSTOMSERVICE = "$ContactCustomService",
     RATE = "$Rate",
@@ -495,6 +524,12 @@ export declare enum HAParamType {
     DISCOUNT = "$Discount",
     FIRSTPAY = "$FirstPay",
     TASKID = "$TaskId",
+    VIPCLICK = "$VipCclick",
+    VIPLOCATION = "$VipLocation",
+    VIPFAILED = "$VipFailed",
+    VIPMONEY = "$VipMoney",
+    REGISTERFAILED = "$RegisterFailed",
+    PERMISSIONAPPLICATION = "$PermissionApplication",
     FRIENDNUMBER = "$FriendNumber",
     USERGROUPNAME = "$UserGroupName",
     USERGROUPLEVEL = "$UserGroupLevel",

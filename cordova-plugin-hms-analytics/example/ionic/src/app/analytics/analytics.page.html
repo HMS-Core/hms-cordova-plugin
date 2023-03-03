@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,6 +42,9 @@
             <ion-button (click)="getAAID()" color="#957DAD" id="getAAID">Get AAID</ion-button>
         </div>
         <div id="line">
+            <ion-button (click)="getDataUploadSiteInfo()" color="#957DAD" id="getDataUploadSiteInfo">getDataUploadSiteInfo</ion-button>
+        </div>
+        <div id="line">
             <ion-button (click)="onEvent()" color="#957DAD" id="onEvent">On Event</ion-button>
         </div>
         <div id="line">
@@ -56,12 +59,39 @@
             </ion-button>
         </div>
         <div id="line">
+            <ion-input [(ngModel)]="customReferrer" id="customReferrer"
+                       placeholder="Enter Custom Referrer please"></ion-input>
+            <ion-button (click)="setCustomReferrer()" color="#957DAD" id="setCustomReferrer">Set Custom Referrer
+            </ion-button>
+        </div>
+
+        <div id="line">
+            <ion-input [(ngModel)]="channel" id="channel"
+                       placeholder="Enter Channel please"></ion-input>
+            <ion-button (click)="setChannel()" color="#957DAD" id="setChannel">Set Channel
+            </ion-button>
+        </div>
+
+        <div id="line">
             <ion-input [(ngModel)]="name" id="name" placeholder="Enter name please"></ion-input>
             <ion-input [(ngModel)]="value" id="value" placeholder="Enter value please"></ion-input>
             <ion-button (click)="setUserProfile()" color="#957DAD" id="setUserProfile">Set User
                 Profile
             </ion-button>
         </div>
+
+        <div id="line">
+            <ion-input [(ngModel)]="property" id="property" placeholder="Enter property "></ion-input>
+            <ion-item id="enabled">
+                <ion-select [(ngModel)]="enabled">
+                    <ion-select-option value="true">True</ion-select-option>
+                    <ion-select-option value="false">False</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-button (click)="setPropertyCollection()" color="#957DAD" id="setPropertyCollection">Set Property Collection
+            </ion-button>
+        </div>
+
         <div id="line">
             <ion-input [(ngModel)]="deleteName" id="deleteName"
                        placeholder="Enter name please"></ion-input>

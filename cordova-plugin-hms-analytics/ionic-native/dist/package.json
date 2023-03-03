@@ -1,8 +1,8 @@
 {
   "name": "@hmscore/ionic-native-hms-analytics",
   "description": "Ionic Native wrappers for Cordova Plugin HMS Analytics",
-  "version": "6.3.2-301",
-  "zipVersion": "6.3.2.301",
+  "version": "6.9.0-302",
+  "zipVersion": "6.9.0.302",
   "module": "index.js",
   "typings": "index.d.ts",
   "license": "Apache-2.0",

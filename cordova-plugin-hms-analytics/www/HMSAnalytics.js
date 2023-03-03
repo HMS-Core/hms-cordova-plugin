@@ -1,6 +1,6 @@
 "use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
     limitations under the License.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HAParamType = exports.HAEventType = exports.HAUserProfileType = exports.LogLevelType = exports.ReportPolicyType = exports.disableLogger = exports.enableLogger = exports.enableLog = exports.addDefaultEventParams = exports.setCollectAdsIdEnabled = exports.isRestrictionEnabled = exports.setRestrictionEnabled = exports.getReportPolicyThreshold = exports.setReportPolicies = exports.pageEnd = exports.pageStart = exports.getUserProfiles = exports.getAAID = exports.clearCachedData = exports.onEvent = exports.setSessionDuration = exports.setMinActivitySessions = exports.setPushToken = exports.deleteUserProfile = exports.setUserProfile = exports.setUserId = exports.setAnalyticsEnabled = exports.getInstance = void 0;
+exports.HAParamType = exports.HAEventType = exports.HAUserProfileType = exports.LogLevelType = exports.ReportPolicyType = exports.disableLogger = exports.enableLogger = exports.enableLog = exports.addDefaultEventParams = exports.setCollectAdsIdEnabled = exports.isRestrictionEnabled = exports.setRestrictionEnabled = exports.getReportPolicyThreshold = exports.setReportPolicies = exports.pageEnd = exports.pageStart = exports.getUserProfiles = exports.getDataUploadSiteInfo = exports.getAAID = exports.clearCachedData = exports.onEvent = exports.setSessionDuration = exports.setMinActivitySessions = exports.setPushToken = exports.deleteUserProfile = exports.setPropertyCollection = exports.setUserProfile = exports.setChannel = exports.setCustomReferrer = exports.setUserId = exports.setAnalyticsEnabled = exports.getInstance = void 0;
 const utils_1 = require("./utils");
 ///////////////////////////////////////////////////////////////////////////
 // HMSAnalytics
@@ -59,6 +59,24 @@ function setUserId(userId) {
 }
 exports.setUserId = setUserId;
 /**
+ * Sets a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * @param id : Custom referrer, a string containing a maximum of 256 characters. The value cannot be    empty.
+ */
+function setCustomReferrer(customReferrer) {
+    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setCustomReferrer', { 'customReferrer': customReferrer }]);
+}
+exports.setCustomReferrer = setCustomReferrer;
+/**
+ * Sets a custom referrer.
+ * @param channel:App installation source, a string containing a maximum of 128 characters.
+ * The value cannot be empty. The value can consist of only letters, digits, underscores (_), hyphens (-), and spaces. It cannot start or end with a space.
+ */
+function setChannel(channel) {
+    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setChannel', { 'channel': channel }]);
+}
+exports.setChannel = setChannel;
+/**
  * Sets user attributes.
  * The values of user attributes remain unchanged throughout the app lifecycle and during
  * each session.
@@ -72,6 +90,17 @@ function setUserProfile(name, value) {
     return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setUserProfile', { 'name': name, 'value': value }]);
 }
 exports.setUserProfile = setUserProfile;
+/**
+ * Sets whether to collect system attributes. Currently, this method applies only to the userAgent attribute.
+ * @param property  :  System attribute. Only userAgent is supported now.
+ * @param enabled : Indicates whether to collect system attributes. The default value is true.
+ * true: yes
+ * false: no
+ */
+function setPropertyCollection(property, enabled) {
+    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setPropertyCollection', { 'property': property, 'enabled': enabled }]);
+}
+exports.setPropertyCollection = setPropertyCollection;
 /**
  * Delete user profile.
  *
@@ -149,6 +178,13 @@ function getAAID() {
     return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
 }
 exports.getAAID = getAAID;
+/**
+ * Obtains the processing location of the uploaded data.
+ */
+function getDataUploadSiteInfo() {
+    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getDataUploadSiteInfo']);
+}
+exports.getDataUploadSiteInfo = getDataUploadSiteInfo;
 /**
  * Obtains the automatically collected or custom user attributes.
  *
@@ -358,6 +394,8 @@ var HAEventType;
     HAEventType["UPDATECHECKOUTOPTION"] = "$UpdateCheckoutOption";
     HAEventType["SHARECONTENT"] = "$ShareContent";
     HAEventType["REGISTERACCOUNT"] = "$RegisterAccount";
+    HAEventType["REGISTERFAILED"] = "$RegisterFailed";
+    HAEventType["PERMISSIONAPPLICATION"] = "$PermissionApplication";
     HAEventType["CONSUMEVIRTUALCOIN"] = "$ConsumeVirtualCoin";
     HAEventType["STARTTUTORIAL"] = "$StartTutorial";
     HAEventType["COMPLETETUTORIAL"] = "$CompleteTutorial";
@@ -372,6 +410,9 @@ var HAEventType;
     HAEventType["CANCELORDER"] = "$CancelOrder";
     HAEventType["COMPLETEORDER"] = "$CompleteOrder";
     HAEventType["CANCELCHECKOUT"] = "$CancelCheckout";
+    HAEventType["VIPCLICK"] = "$VipCclick";
+    HAEventType["VIPFAILED"] = "$VipFailed";
+    HAEventType["VIPSUC"] = "$VipSuc";
     HAEventType["OBTAINVOUCHER"] = "$ObtainVoucher";
     HAEventType["CONTACTCUSTOMSERVICE"] = "$ContactCustomService";
     HAEventType["RATE"] = "$Rate";
@@ -567,6 +608,12 @@ var HAParamType;
     HAParamType["DISCOUNT"] = "$Discount";
     HAParamType["FIRSTPAY"] = "$FirstPay";
     HAParamType["TASKID"] = "$TaskId";
+    HAParamType["VIPCLICK"] = "$VipCclick";
+    HAParamType["VIPLOCATION"] = "$VipLocation";
+    HAParamType["VIPFAILED"] = "$VipFailed";
+    HAParamType["VIPMONEY"] = "$VipMoney";
+    HAParamType["REGISTERFAILED"] = "$RegisterFailed";
+    HAParamType["PERMISSIONAPPLICATION"] = "$PermissionApplication";
     HAParamType["FRIENDNUMBER"] = "$FriendNumber";
     HAParamType["USERGROUPNAME"] = "$UserGroupName";
     HAParamType["USERGROUPLEVEL"] = "$UserGroupLevel";

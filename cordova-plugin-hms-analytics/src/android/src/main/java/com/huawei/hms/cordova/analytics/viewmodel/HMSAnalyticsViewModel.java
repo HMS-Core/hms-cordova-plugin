@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import java.util.Set;
  * HMSAnalyticsViewModel works as a mediator between
  * {@link HMSAnalyticsContract.Presenter} and HMSAnalyticsModule.
  *
- * @since v.6.3.2.301
+ * @since v.6.9.0.302
  */
 public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
 
@@ -69,6 +69,18 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     @Override
     public void setAnalyticsEnabled(boolean enabled) {
         analyticsInstance.setAnalyticsEnabled(enabled);
+    }
+
+    /**
+     * Sets whether to collect system attributes.
+     * Currently, this method applies only to the userAgent attribute.
+     *
+     * @param property: System attribute. Only userAgent is supported now.
+     * @param enabled: Indicates whether to collect system attributes. The default value is true.
+     */
+    @Override
+    public void setPropertyCollection(String property, boolean enabled) {
+        analyticsInstance.setPropertyCollection(property, enabled);
     }
 
     /**
@@ -136,6 +148,36 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     @Override
     public void setMinActivitySessions(long milliseconds) {
         analyticsInstance.setMinActivitySessions(milliseconds);
+    }
+
+    /**
+     * Sets a custom referrer.
+     * <p>
+     * NOTE: This method takes effect only when it is called for the first time.
+     *
+     * @param customReferrer: Custom referrer, a string containing a maximum of 256 characters.
+     * he value cannot be empty.
+     */
+    @Override
+    public void setCustomReferrer(String customReferrer) {
+        analyticsInstance.setCustomReferrer(customReferrer);
+    }
+
+    /**
+     * Sets a channel
+     * <p>
+     * Sets the app installation source. The setting takes effect only when the method is called for the first time.
+     * NOTE
+     * To set the app installation source, you can also add the meta-data configuration to set the value of install_channel in the AndroidManifest.xml file.
+     * If you have already set an installation source in the AndroidManifest.xml file, the value of channel set through this method will not take effect.
+     *
+     * @param channel:App installation source, a string containing a maximum of 128 characters.
+     * The value cannot be empty. The value can consist of only letters, digits, underscores (_), hyphens (-), and spaces.
+     * It cannot start or end with a space.
+     */
+    @Override
+    public void setChannel(String channel) {
+        analyticsInstance.setChannel(channel);
     }
 
     /**
@@ -338,6 +380,17 @@ public class HMSAnalyticsViewModel implements HMSAnalyticsContract.Presenter {
     @Override
     public void addDefaultEventParams(Bundle params) {
         analyticsInstance.addDefaultEventParams(params);
+    }
+
+    /**
+     * Obtains the processing location of the uploaded data.
+     * <p>
+     */
+    @Override
+    public void getDataUploadSiteInfo(ResultListener<String> resultListener) {
+        String dataUploadSiteInfo = analyticsInstance.getDataUploadSiteInfo();
+        resultListener.onSuccess(dataUploadSiteInfo);
+
     }
 
     /**

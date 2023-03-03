@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ const $ = (id) => document.getElementById(id);
 function onDeviceReady() {
     console.log("onDeviceReady");
 }
+
 
 /**
  * getInstance
@@ -65,6 +66,43 @@ $("setUserId").onclick = async() => {
 };
 
 /**
+ * Set a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * Sets a custom referrer.
+ */
+$("setCustomReferrer").onclick = async() => {
+    const CustomReferrer = $("txt_custom_referrer").value;
+    if (CustomReferrer === "") {
+        alert("Please fill out empty area");
+    } else {
+        HMSAnalytics.setCustomReferrer(CustomReferrer)
+            .then(() => {
+                alert("setCustomReferrer :: Success");
+            })
+            .catch((error) => alert("setCustomReferrer :: Error! " + JSON.stringify(error,null,1)));
+    }
+};
+
+/**
+ * Set a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * Sets a custom referrer.
+ */
+$("setChannel").onclick = async() => {
+    const channel = $("txt_channel").value;
+    if (channel === "") {
+        alert("Please fill out empty area");
+    } else {
+        HMSAnalytics.setChannel(channel)
+            .then(() => {
+                alert("setChannel :: Success");
+            })
+            .catch((error) => alert("channel :: Error! " + JSON.stringify(error,null,1)));
+    }
+};
+
+
+/**
  * User attribute values remain unchanged throughout the app's lifecycle and session.
  * A maximum of 25 user attribute names are supported.
  * If an attribute name is duplicate with an existing one, the attribute names needs to be changed.
@@ -82,6 +120,24 @@ $("setUserProfile").onclick = async() => {
             .catch((error) => alert("setUserProfile :: Error! " + JSON.stringify(error,null,1)));
     }
 };
+
+/**
+ * Sets whether to collect system attributes. Currently, this method applies only to the userAgent attribute.
+ */
+$("setPropertyCollection").onclick = async() => {
+    const property = $("propertyCollection").value;
+    const enabled = $("set_property_enabled").value;
+    if (property === "" || enabled === "") {
+        alert("Please fill out empty area");
+    } else {
+        HMSAnalytics.setPropertyCollection(property, enabled)
+            .then(() => {
+                alert("setPropertyCollection :: Success");
+            })
+            .catch((error) => alert("setPropertyCollection :: Error! " + JSON.stringify(error,null,1)));
+    }
+};
+
 
 /**
  * User attribute name
@@ -403,4 +459,15 @@ $("HAParamType").onclick = () => {
  */
 $("HAEventType").onclick = () => {
     alert(JSON.stringify(HMSAnalytics.HAEventType));
+};
+
+/**
+ * getDataUploadSiteInfo
+ */
+$("getDataUploadSiteInfo").onclick = async() => {
+    HMSAnalytics.getDataUploadSiteInfo()
+        .then((res) => {
+            alert("getDataUploadSiteInfo :: Success  -->> "+ JSON.stringify(res,null,1));
+        })
+        .catch((error) => alert("getDataUploadSiteInfo :: Error! " + JSON.stringify(error,null,1)));
 };

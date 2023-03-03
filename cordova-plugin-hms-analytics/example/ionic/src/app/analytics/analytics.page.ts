@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import {
   Component
 } from '@angular/core';
@@ -33,6 +32,8 @@ import {
 export class HomePage {
   boolSetAnalyticsEnabled: string = '';
   userId: string = '';
+  customReferrer: string = '';
+  channel: string = '';
   name: string = '';
   value: string = '';
   deleteName: string = '';
@@ -46,7 +47,8 @@ export class HomePage {
   reportPolicyType: string = '';
   restrictionIsEnabled: string = '';
   collectAdsIdEnabled: string = '';
-
+  property : string ="";
+  enabled: string = '';
   constructor(private hmsAnalytics: HMSAnalytics) {}
   
   /**
@@ -94,6 +96,41 @@ export class HomePage {
     }
   }
 
+/**
+ * Set a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * Sets a custom referrer.
+ */
+setCustomReferrer() {
+      if (this.customReferrer === '') {
+        alert("Please fill out requred field");
+      } else {
+        this.hmsAnalytics.setCustomReferrer(this.customReferrer)
+        .then(() => {
+          alert("setCustomReferrer :: Success");
+        })
+        .catch((error) => alert("setCustomReferrer :: Error! " + JSON.stringify(error,null,1)));
+      }
+    }
+
+/**
+ * Set a custom referrer.
+ * @important: This method takes effect only when it is called for the first time.
+ * Sets a custom referrer.
+ */
+setChannel() {
+  if (this.channel === '') {
+    alert("Please fill out requred field");
+  } else {
+    this.hmsAnalytics.setChannel(this.channel)
+    .then(() => {
+      alert("setChannel :: Success");
+    })
+    .catch((error) => alert("setChannel :: Error! " + JSON.stringify(error,null,1)));
+  }
+}
+
+
   /**
    * User attribute values remain unchanged throughout the app's lifecycle and session.
    * A maximum of 25 user attribute names are supported.
@@ -110,6 +147,23 @@ export class HomePage {
       .catch((error) => alert("setUserProfile :: Error! " + JSON.stringify(error,null,1)));
     }
   }
+
+  /**
+   * Sets whether to collect system attributes. Currently, this method applies only to the userAgent attribute.
+   */
+  setPropertyCollection() {
+    if (this.property === '' || this.enabled === '') {
+        alert("Please fill out requred field");
+    }
+    else {
+        let enabled = (this.enabled === "true");
+        this.hmsAnalytics.setPropertyCollection(this.property, enabled)
+            .then(() => {
+            alert("setPropertyCollection :: Success");
+        })
+            .catch((error) => alert("setPropertyCollection :: Error! " + JSON.stringify(error, null, 1)));
+    }
+}
 
   /**
    * User attribute name
@@ -238,6 +292,18 @@ export class HomePage {
     })
     .catch((error) => alert("getAAID :: Error! " + JSON.stringify(error,null,1)));
   }
+
+    /**
+   * Obtains the processing location of the uploaded data.
+   */
+    getDataUploadSiteInfo() {
+      this.hmsAnalytics.getDataUploadSiteInfo()
+      .then((res) => {
+        alert("getDataUploadSiteInfo :: Success  -->> "+ JSON.stringify(res,null,1));
+      })
+      .catch((error) => alert("getDataUploadSiteInfo :: Error! " + JSON.stringify(error,null,1)));
+    }
+  
 
   /**
    * Enables AB Testing. Predefined or custom user attributes are supported.
@@ -382,6 +448,9 @@ export class HomePage {
       .catch((error) => alert("setRestrictionEnabled :: Error! " + JSON.stringify(error,null,1)));
     }
   }
+
+
+  
 
   /**
    * Obtains the restriction status of HUAWEI Analytics.

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,10 +42,10 @@ import java.util.Set;
 public class HMSAnalyticsModule extends CordovaBaseModule {
     private static final String TAG = HMSAnalyticsModule.class.getSimpleName();
 
-    //Weak Context Instance
+    // Weak Context Instance
     private final WeakReference<Context> weakContext;
 
-    //ViewModel instance
+    // ViewModel instance
     private final HMSAnalyticsContract.Presenter viewModel;
 
     public HMSAnalyticsModule(Context context) {
@@ -72,9 +72,31 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
+    public void getDataUploadSiteInfo(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
+        try {
+            viewModel.getDataUploadSiteInfo(new HMSAnalyticsModule.HMSAnalyticsResultHandler<>(promise));
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting data upload site info", e);
+            promise.error(e.getMessage());
+        }
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
     public void setAnalyticsEnabled(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         JSONObject params = args.getJSONObject(0);
         viewModel.setAnalyticsEnabled(params.getBoolean("enabled"));
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void setPropertyCollection(final CorPack corPack, JSONArray args, final Promise promise)
+        throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        viewModel.setPropertyCollection(params.getString("property"), params.getBoolean("enabled"));
         promise.success();
     }
 
@@ -120,6 +142,22 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
         throws JSONException {
         JSONObject params = args.getJSONObject(0);
         viewModel.setMinActivitySessions(params.getLong("milliseconds"));
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void setCustomReferrer(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        viewModel.setCustomReferrer(params.getString("customReferrer"));
+        promise.success();
+    }
+
+    @CordovaMethod
+    @HMSLog
+    public void setChannel(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        JSONObject params = args.getJSONObject(0);
+        viewModel.setChannel(params.getString("channel"));
         promise.success();
     }
 
@@ -251,6 +289,7 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
         corPack.disableLogger();
         promise.success();
     }
+
     /* Private Inner Class */
 
     private Set<ReportPolicy> jsonToSetReportPolicy(JSONObject reportPolicies) throws JSONException {

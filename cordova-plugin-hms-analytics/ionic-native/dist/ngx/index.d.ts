@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,7 +19,10 @@ export declare class HMSAnalytics extends IonicNativePlugin {
     getInstance(routePolicy?: string): Promise<void>;
     setAnalyticsEnabled(enabled: boolean): Promise<void>;
     setUserId(userId: string): Promise<void>;
+    setCustomReferrer(customReferrer: string): Promise<void>;
+    setChannel(channel: string): Promise<void>;
     setUserProfile(name: string, value: string): Promise<void>;
+    setPropertyCollection(property: string, enabled: boolean): Promise<void>;
     deleteUserProfile(name: string): Promise<void>;
     setPushToken(token: string): Promise<void>;
     setMinActivitySessions(milliseconds: number): Promise<void>;
@@ -27,6 +30,7 @@ export declare class HMSAnalytics extends IonicNativePlugin {
     onEvent(eventId: HAEventType | string, params: HAParamType | EventParams): Promise<void>;
     clearCachedData(): Promise<void>;
     getAAID(): Promise<string>;
+    getDataUploadSiteInfo(): Promise<string>;
     getUserProfiles(predefined: boolean): Promise<UserProfiles>;
     pageStart(pageName: string, pageClassOverride: string): Promise<void>;
     pageEnd(pageName: string): Promise<void>;
@@ -109,6 +113,8 @@ export declare enum HAEventType {
     UPDATECHECKOUTOPTION = "$UpdateCheckoutOption",
     SHARECONTENT = "$ShareContent",
     REGISTERACCOUNT = "$RegisterAccount",
+    REGISTERFAILED = "$RegisterFailed",
+    PERMISSIONAPPLICATION = "$PermissionApplication",
     CONSUMEVIRTUALCOIN = "$ConsumeVirtualCoin",
     STARTTUTORIAL = "$StartTutorial",
     COMPLETETUTORIAL = "$CompleteTutorial",
@@ -123,6 +129,9 @@ export declare enum HAEventType {
     CANCELORDER = "$CancelOrder",
     COMPLETEORDER = "$CompleteOrder",
     CANCELCHECKOUT = "$CancelCheckout",
+    VIPCLICK = "$VipCclick",
+    VIPFAILED = "$VipFailed",
+    VIPSUC = "$VipSuc",
     OBTAINVOUCHER = "$ObtainVoucher",
     CONTACTCUSTOMSERVICE = "$ContactCustomService",
     RATE = "$Rate",

@@ -101,7 +101,64 @@
               ]
             }
           ],
+          "setCustomReferrer": [
+            {
+              "__symbolic": "method",
+              "decorators": [
+                {
+                  "__symbolic": "call",
+                  "expression": {
+                    "__symbolic": "reference",
+                    "name": "Cordova"
+                  },
+                  "arguments": [
+                    {
+                      "otherPromise": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "setChannel": [
+            {
+              "__symbolic": "method",
+              "decorators": [
+                {
+                  "__symbolic": "call",
+                  "expression": {
+                    "__symbolic": "reference",
+                    "name": "Cordova"
+                  },
+                  "arguments": [
+                    {
+                      "otherPromise": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
           "setUserProfile": [
+            {
+              "__symbolic": "method",
+              "decorators": [
+                {
+                  "__symbolic": "call",
+                  "expression": {
+                    "__symbolic": "reference",
+                    "name": "Cordova"
+                  },
+                  "arguments": [
+                    {
+                      "otherPromise": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "setPropertyCollection": [
             {
               "__symbolic": "method",
               "decorators": [
@@ -235,6 +292,25 @@
             }
           ],
           "getAAID": [
+            {
+              "__symbolic": "method",
+              "decorators": [
+                {
+                  "__symbolic": "call",
+                  "expression": {
+                    "__symbolic": "reference",
+                    "name": "Cordova"
+                  },
+                  "arguments": [
+                    {
+                      "otherPromise": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "getDataUploadSiteInfo": [
             {
               "__symbolic": "method",
               "decorators": [
@@ -538,6 +614,8 @@
         "UPDATECHECKOUTOPTION": "$UpdateCheckoutOption",
         "SHARECONTENT": "$ShareContent",
         "REGISTERACCOUNT": "$RegisterAccount",
+        "REGISTERFAILED": "$RegisterFailed",
+        "PERMISSIONAPPLICATION": "$PermissionApplication",
         "CONSUMEVIRTUALCOIN": "$ConsumeVirtualCoin",
         "STARTTUTORIAL": "$StartTutorial",
         "COMPLETETUTORIAL": "$CompleteTutorial",
@@ -552,6 +630,9 @@
         "CANCELORDER": "$CancelOrder",
         "COMPLETEORDER": "$CompleteOrder",
         "CANCELCHECKOUT": "$CancelCheckout",
+        "VIPCLICK": "$VipCclick",
+        "VIPFAILED": "$VipFailed",
+        "VIPSUC": "$VipSuc",
         "OBTAINVOUCHER": "$ObtainVoucher",
         "CONTACTCUSTOMSERVICE": "$ContactCustomService",
         "RATE": "$Rate",

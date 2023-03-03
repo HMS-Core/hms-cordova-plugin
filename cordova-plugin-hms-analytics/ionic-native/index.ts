@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -43,7 +43,23 @@ export class HMSAnalytics extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
+  setCustomReferrer(customReferrer: string): Promise<void> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  setChannel(channel: string): Promise<void> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
   setUserProfile(name: string, value: string): Promise<void> {
+    return;
+  }
+  
+  
+  @Cordova({ otherPromise: true })
+  setPropertyCollection(property: string, enabled: boolean): Promise<void> {
     return;
   }
 
@@ -79,6 +95,11 @@ export class HMSAnalytics extends IonicNativePlugin {
 
   @Cordova({ otherPromise: true })
   getAAID(): Promise<string> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  getDataUploadSiteInfo(): Promise<string> {
     return;
   }
 
@@ -220,6 +241,8 @@ export enum HAEventType {
   UPDATECHECKOUTOPTION = "$UpdateCheckoutOption",
   SHARECONTENT = "$ShareContent",
   REGISTERACCOUNT = "$RegisterAccount",
+  REGISTERFAILED = "$RegisterFailed",
+  PERMISSIONAPPLICATION = "$PermissionApplication",
   CONSUMEVIRTUALCOIN = "$ConsumeVirtualCoin",
   STARTTUTORIAL = "$StartTutorial",
   COMPLETETUTORIAL = "$CompleteTutorial",
@@ -234,6 +257,9 @@ export enum HAEventType {
   CANCELORDER = "$CancelOrder",
   COMPLETEORDER = "$CompleteOrder",
   CANCELCHECKOUT = "$CancelCheckout",
+  VIPCLICK = "$VipCclick",
+  VIPFAILED = "$VipFailed",
+  VIPSUC = "$VipSuc",
   OBTAINVOUCHER = "$ObtainVoucher",
   CONTACTCUSTOMSERVICE = "$ContactCustomService",
   RATE = "$Rate",

@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-analytics-demo",
   "displayName": "HMSAnalyticsDemo",
-  "version": "6.3.2-301",
+  "version": "6.9.0-302",
   "description": "A demo application which shows the usage of HMS Analytics plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENSE",
@@ -19,13 +19,11 @@
     "huawei"
   ],
   "devDependencies": {
-    "cordova-plugin-whitelist": "1.3.4"
   },
   "cordova": {
     "platforms": [
     ],
     "plugins": {
-      "cordova-plugin-whitelist": {}
     }
   },
   "files": [
