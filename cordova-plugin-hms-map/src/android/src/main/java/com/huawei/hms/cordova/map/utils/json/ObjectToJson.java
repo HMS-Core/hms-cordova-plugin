@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.utils.json;
 
@@ -28,7 +28,6 @@ import com.huawei.hms.maps.model.Circle;
 import com.huawei.hms.maps.model.CustomCap;
 import com.huawei.hms.maps.model.GroundOverlay;
 import com.huawei.hms.maps.model.IndoorBuilding;
-import com.huawei.hms.maps.model.IndoorLevel;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.LatLngBounds;
 import com.huawei.hms.maps.model.Marker;
@@ -60,6 +59,22 @@ public final class ObjectToJson {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    public static JSONObject constructJsonFromLatLngList(LatLng[] latLngArray) throws JSONException {
+        JSONObject json = new JSONObject();
+        JSONArray latLngList = new JSONArray();
+
+        for (LatLng latLng : latLngArray) {
+            JSONObject latLngObj = new JSONObject();
+            latLngObj.put("latitude", latLng.latitude);
+            latLngObj.put("longitude", latLng.longitude);
+            latLngList.put(latLngObj);
+        }
+
+        json.put("latLngList", latLngList);
+
+        return json;
     }
 
     public static JSONObject constructJsonFromHuaweiMapUiSettings(UiSettings settings) throws JSONException {
@@ -240,25 +255,14 @@ public final class ObjectToJson {
 
     public static JSONObject constructJsonFromIndoorBuilding(IndoorBuilding indoorBuilding) {
         try {
-            return new JSONObject().put("activeLevelIndex", indoorBuilding.getActiveLevelIndex())
-                .put("defaultLevelIndex", indoorBuilding.getDefaultLevelIndex())
-                .put("levels", constructJsonFromLevels(indoorBuilding.getLevels()))
-                .put("underground", indoorBuilding.isUnderground());
+            return new JSONObject().put("buildingId", indoorBuilding.getBuildingId())
+                .put("currFloorName", indoorBuilding.getCurrFloorName())
+                .put("currFloorName", indoorBuilding.getFloorNames())
+                .put("describeContents", indoorBuilding.describeContents())
+                .put("floorOrder", indoorBuilding.getFloorOrder());
         } catch (JSONException e) {
             return null;
         }
-    }
-
-    private static JSONArray constructJsonFromLevels(List<IndoorLevel> levels) throws JSONException {
-        JSONArray arr = new JSONArray();
-        for (IndoorLevel level : levels) {
-            arr.put(constructJsonFromIndoorLevel(level));
-        }
-        return arr;
-    }
-
-    private static JSONObject constructJsonFromIndoorLevel(IndoorLevel level) throws JSONException {
-        return new JSONObject().put("name", level.getName()).put("shortName", level.getShortName());
     }
 
     public static JSONObject constructJsonFromLocation(Location location) {

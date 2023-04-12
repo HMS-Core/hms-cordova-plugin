@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,77 +34,98 @@ class GroundOverlayImpl {
         this.id = componentId;
     }
     getBearing() {
-        return this.getComponentOptions('getBearing');
+        return this.getComponentOptions("getBearing");
     }
     getBounds() {
-        return this.getComponentOptions('getBounds');
+        return this.getComponentOptions("getBounds");
     }
     getHeight() {
-        return this.getComponentOptions('getHeight');
+        return this.getComponentOptions("getHeight");
     }
     getId() {
         return this.id;
     }
     getPosition() {
-        return this.getComponentOptions('getPosition');
+        return this.getComponentOptions("getPosition");
     }
     getTag() {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
     getTransparency() {
-        return this.getComponentOptions('getTransparency');
+        return this.getComponentOptions("getTransparency");
     }
     getWidth() {
-        return this.getComponentOptions('getWidth');
+        return this.getComponentOptions("getWidth");
     }
     getZIndex() {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
     isClickable() {
-        return this.getComponentOptions('isClickable');
+        return this.getComponentOptions("isClickable");
     }
     isVisible() {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
     remove() {
-        return utils_1.asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
+        return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     setBearing(bearing) {
-        return this.setComponentOptions('setBearing', { 'bearing': bearing });
+        return this.setComponentOptions("setBearing", { bearing: bearing });
     }
     setClickable(clickable) {
-        return this.setComponentOptions('setClickable', { 'clickable': clickable });
+        return this.setComponentOptions("setClickable", {
+            clickable: clickable,
+        });
     }
     setDimensions(width, height) {
-        return this.setComponentOptions("setDimensions", { "width": width, "height": height });
+        return this.setComponentOptions("setDimensions", {
+            width: width,
+            height: height,
+        });
     }
     setImage(imageDescriptor) {
-        return this.setComponentOptions("setImage", { "image": imageDescriptor });
+        return this.setComponentOptions("setImage", { image: imageDescriptor });
     }
     setPosition(position) {
-        return this.setComponentOptions("setPosition", { "position": position });
+        return this.setComponentOptions("setPosition", { position: position });
     }
     setPositionFromBounds(positionLatLngBounds) {
-        return this.setComponentOptions("setPositionFromBounds", { "bounds": positionLatLngBounds });
+        return this.setComponentOptions("setPositionFromBounds", {
+            bounds: positionLatLngBounds,
+        });
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { "tag": tag });
+        return this.setComponentOptions("setTag", { tag: tag });
     }
     setTransparency(transparency) {
-        return this.setComponentOptions('setTransparency', { "transparency": transparency });
+        return this.setComponentOptions("setTransparency", {
+            transparency: transparency,
+        });
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { "visible": visible });
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { "zIndex": zIndex });
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
     setComponentOptions(func, params) {
-        return utils_1.asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
     getComponentOptions(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+                this.mapDivId,
+                this.id,
+                "get",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }

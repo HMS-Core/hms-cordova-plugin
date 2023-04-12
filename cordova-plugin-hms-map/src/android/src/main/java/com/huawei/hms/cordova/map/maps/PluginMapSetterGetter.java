@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.maps;
 
@@ -47,14 +47,14 @@ class PluginMapSetterGetter {
 
     private final HuaweiMapGetter huaweiMapGetter = new HuaweiMapGetter();
 
-    private MapCapsule mapCapsule;
+    private final MapCapsule mapCapsule;
 
     public PluginMapSetterGetter(MapCapsule mapCapsule) {
         this.mapCapsule = mapCapsule;
     }
 
     JSONObject run(String option, String methodName, JSONObject object)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         JSONObject json;
         if (option.equals("getter")) {
             json = huaweiMapGetter.run(methodName);
@@ -83,9 +83,13 @@ class PluginMapSetterGetter {
             mapCapsule.getHuaweiMap().setBuildingsEnabled(json.getBoolean("buildingsEnabled"));
         }
 
+        void setDarkEnabled(JSONObject json) throws JSONException {
+            mapCapsule.getHuaweiMap().setDark(json.getBoolean("darkEnabled"));
+        }
+
         void setPadding(JSONObject json) throws JSONException {
             mapCapsule.getHuaweiMap()
-                    .setPadding(json.getInt("left"), json.getInt("top"), json.getInt("right"), json.getInt("bottom"));
+                .setPadding(json.getInt("left"), json.getInt("top"), json.getInt("right"), json.getInt("bottom"));
         }
 
         void setTrafficEnabled(JSONObject json) throws JSONException {
@@ -114,16 +118,15 @@ class PluginMapSetterGetter {
                 filename = filename.substring(0, filename.length() - 5);
             }
             int styleId = mapCapsule.getContext()
-                    .getResources()
-                    .getIdentifier(filename, "raw", mapCapsule.getContext().getPackageName());
+                .getResources()
+                .getIdentifier(filename, "raw", mapCapsule.getContext().getPackageName());
             mapCapsule.getHuaweiMap()
-                    .setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), styleId));
+                .setMapStyle(MapStyleOptions.loadRawResourceStyle(mapCapsule.getContext(), styleId));
         }
 
         void setLatLngBoundsForCameraTarget(JSONObject json) throws JSONException {
             mapCapsule.getHuaweiMap()
-                    .setLatLngBoundsForCameraTarget(
-                            JsonToObject.constructLatLngBounds(json.getJSONObject("latLngBounds")));
+                .setLatLngBoundsForCameraTarget(JsonToObject.constructLatLngBounds(json.getJSONObject("latLngBounds")));
         }
 
         void setLanguage(JSONObject json) throws JSONException {
@@ -154,13 +157,13 @@ class PluginMapSetterGetter {
                     JSONObject params = json.optJSONObject("infoWindowAdapter");
                     String fileName = params.optString("file");
                     int width = PxToPixelConverter.pxToPixel(
-                            params.optInt("width", ViewGroup.LayoutParams.WRAP_CONTENT));
+                        params.optInt("width", ViewGroup.LayoutParams.WRAP_CONTENT));
                     int height = PxToPixelConverter.pxToPixel(
-                            params.optInt("height", ViewGroup.LayoutParams.WRAP_CONTENT));
+                        params.optInt("height", ViewGroup.LayoutParams.WRAP_CONTENT));
                     String html = HtmlUtils.htmlFileToString(mapCapsule.getContext(), fileName);
                     String markerInfoWindowScript = String.format(Locale.ENGLISH,
-                            "<script>function getMarkerInfo(){return %s;}</script>",
-                            ObjectToJson.constructJsonFromMarker(marker));
+                        "<script>function getMarkerInfo(){return %s;}</script>",
+                        ObjectToJson.constructJsonFromMarker(marker));
                     if (!html.contains("<head>")) {
                         html += HtmlUtils.HTML_HEAD_TAG + html;
                     }
@@ -191,7 +194,7 @@ class PluginMapSetterGetter {
         }
 
         JSONObject run(String methodName, JSONObject object)
-                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName, JSONObject.class);
             return (JSONObject) m.invoke(this, object);
         }
@@ -227,10 +230,10 @@ class PluginMapSetterGetter {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     byte[] bitmapArray = stream.toByteArray();
                     String data = new StringBuilder().append("data:image/png;base64,")
-                            .append(Base64.encodeToString(bitmapArray, Base64.NO_WRAP))
-                            .toString();
+                        .append(Base64.encodeToString(bitmapArray, Base64.NO_WRAP))
+                        .toString();
                     mapCapsule.getMapListener()
-                            .snapshotReadyCallback(mapCapsule.getCapsuleId(), new JSONObject().put("data", data));
+                        .snapshotReadyCallback(mapCapsule.getCapsuleId(), new JSONObject().put("data", data));
                 } catch (JSONException e) {
                     Log.d(TAG, e.getMessage());
                 }
@@ -245,7 +248,7 @@ class PluginMapSetterGetter {
 
         public JSONObject getCameraPosition() throws JSONException {
             return new JSONObject().put("value",
-                    ObjectToJson.constructJsonFromCameraPosition(mapCapsule.getHuaweiMap().getCameraPosition()));
+                ObjectToJson.constructJsonFromCameraPosition(mapCapsule.getHuaweiMap().getCameraPosition()));
         }
 
         public JSONObject getMapType() throws JSONException {
@@ -264,6 +267,10 @@ class PluginMapSetterGetter {
             return new JSONObject().put("value", mapCapsule.getHuaweiMap().isBuildingsEnabled());
         }
 
+        public JSONObject isDark() throws JSONException {
+            return new JSONObject().put("value", mapCapsule.getHuaweiMap().isDark());
+        }
+
         public JSONObject isMyLocationEnabled() throws JSONException {
             return new JSONObject().put("value", mapCapsule.getHuaweiMap().isMyLocationEnabled());
         }
@@ -277,7 +284,7 @@ class PluginMapSetterGetter {
         }
 
         JSONObject run(String methodName)
-                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName);
             return (JSONObject) m.invoke(this);
         }

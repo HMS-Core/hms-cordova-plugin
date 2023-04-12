@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,10 +13,15 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Gravity = exports.AnimationConstant = exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = void 0;
+exports.Gravity = exports.AnimationConstant = exports.TileType = exports.CameraMoveStartedReason = exports.PatternItemType = exports.Hue = exports.MapType = exports.ErrorCodes = exports.InterpolatorType = exports.MapEvent = exports.JointType = exports.Color = exports.AnimationSet = exports.RadiusUnit = void 0;
+var RadiusUnit;
+(function (RadiusUnit) {
+    RadiusUnit["PIXEL"] = "pixel";
+    RadiusUnit["METER"] = "meter";
+})(RadiusUnit = exports.RadiusUnit || (exports.RadiusUnit = {}));
 class AnimationSet {
     constructor() {
         this.animations = new Map();
@@ -107,23 +112,27 @@ class ErrorCodes {
 exports.ErrorCodes = ErrorCodes;
 ErrorCodes.NO_DOM_ELEMENT_FOUND = {
     code: 5000,
-    message: "No DOM element found with given divId."
+    message: "No DOM element found with given divId.",
 };
 ErrorCodes.POINTS_PROPERTY_MUST_DEFINED = {
     code: 5100,
-    message: "Points property must be defined."
+    message: "Points property must be defined.",
 };
 ErrorCodes.CENTER_PROPERTY_MUST_DEFINED = {
     code: 5101,
-    message: "Center property must be defined."
+    message: "Center property must be defined.",
 };
 ErrorCodes.POSITION_PROPERTY_MUST_DEFINED = {
     code: 5102,
-    message: "Position property must be defined."
+    message: "Position property must be defined.",
 };
 ErrorCodes.NO_COMPONENT_EXISTS_GIVEN_ID = {
     code: 5102,
-    message: "No component is found with given id"
+    message: "No component is found with given id",
+};
+ErrorCodes.DATASET_PROPERTY_MUST_DEFINED = {
+    code: 5102,
+    message: "No component is found with given id",
 };
 var MapType;
 (function (MapType) {

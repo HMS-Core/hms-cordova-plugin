@@ -1,23 +1,22 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map;
 
 import android.graphics.Color;
-
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.widget.FrameLayout;
 
 import com.huawei.hms.cordova.map.components.CircleCapsule;
 import com.huawei.hms.cordova.map.components.GroundOverlayCapsule;
+import com.huawei.hms.cordova.map.components.HeatMapCapsule;
 import com.huawei.hms.cordova.map.components.MapComponent;
 import com.huawei.hms.cordova.map.components.MapComponentType;
 import com.huawei.hms.cordova.map.components.MarkerCapsule;
@@ -41,14 +41,15 @@ import com.huawei.hms.cordova.map.utils.MapKitUtils;
 import com.huawei.hms.cordova.map.utils.PluginPermissionUtils;
 import com.huawei.hms.cordova.map.utils.cordova.CordovaUtils;
 import com.huawei.hms.cordova.map.utils.json.JsonToObject;
-
+import com.huawei.hms.cordova.map.utils.json.ObjectToJson;
 import com.huawei.hms.maps.MapsInitializer;
+import com.huawei.hms.maps.common.util.CoordinateConverter;
+import com.huawei.hms.maps.model.LatLng;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,11 +58,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class HMSMap extends CordovaPlugin {
-    public Map<String, MapCapsule> maps = new HashMap<>();
+    private final String TAG = HMSMap.class.getSimpleName();
 
-    private String TAG = HMSMap.class.getSimpleName();
+    public Map<String, MapCapsule> maps = new HashMap<>();
 
     private CordovaUtils cordovaUtils;
 
@@ -70,6 +72,8 @@ public class HMSMap extends CordovaPlugin {
     private PluginLayout pluginLayout;
 
     private PluginCordovaLayout pluginCordovaLayout;
+
+    private String routePolicy;
 
     // PLUGIN
 
@@ -81,11 +85,9 @@ public class HMSMap extends CordovaPlugin {
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        MapsInitializer.initialize(cordova.getContext());
+
         hmsLogger = HMSLogger.getInstance(cordova.getContext());
         cordovaUtils = CordovaUtils.getInstance(webView);
-        Log.d(TAG, "initialize: initialized");
-
         pluginLayout = new PluginLayout(cordova.getContext());
         pluginCordovaLayout = new PluginCordovaLayout(cordova.getContext());
 
@@ -110,6 +112,18 @@ public class HMSMap extends CordovaPlugin {
                     .scrollXAndY(-webView.getView().getScrollX(), -webView.getView().getScrollY());
             }
         });
+    }
+
+    private void initialize(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        this.routePolicy = args.getString(0);
+        if (!Objects.equals(routePolicy, "null")) {
+            MapsInitializer.initialize(cordova.getContext(), routePolicy);
+            Log.d(TAG, "initialize: initialized with routePolicy");
+        } else {
+            MapsInitializer.initialize(cordova.getContext());
+            Log.d(TAG, "initialize: initialized");
+        }
+        callbackContext.success();
     }
 
     @Override
@@ -141,6 +155,7 @@ public class HMSMap extends CordovaPlugin {
         JSONArray diffToDelete = args.getJSONArray(2);
 
         MapCapsule mapCapsule = maps.get(mapDivId);
+
         if (mapCapsule == null) {
             callbackContext.error(ErrorCodes.NO_MAP_FOUND.toString());
             return;
@@ -319,6 +334,24 @@ public class HMSMap extends CordovaPlugin {
         callbackContext.success(MapKitUtils.computeDistanceBetween(args.getJSONObject(0)));
     }
 
+    private void convertCoordinate(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        hmsLogger.sendSingleEvent("convertCoordinate");
+        JSONObject jsonObject = args.getJSONObject(0);
+        LatLng latLng = JsonToObject.constructLatLng(jsonObject.getJSONObject("latLng"));
+        CoordinateConverter coordinateConverter = new CoordinateConverter();
+        LatLng latLngConverted = coordinateConverter.convert(latLng);
+        callbackContext.success(ObjectToJson.constructJsonFromLatLng(latLngConverted));
+    }
+
+    private void convertCoordinates(JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        hmsLogger.sendSingleEvent("convertCoordinates");
+        JSONObject jsonObject = args.getJSONObject(0);
+        LatLng[] latLng = JsonToObject.constructLatLngList(jsonObject.getJSONArray("latLngList"));
+        CoordinateConverter coordinateConverter = new CoordinateConverter();
+        LatLng[] latLngConverted = coordinateConverter.convert(latLng);
+        callbackContext.success(ObjectToJson.constructJsonFromLatLngList(latLngConverted));
+    }
+
     private void requestPermission(JSONArray args, final CallbackContext callbackContext) {
         PluginPermissionUtils.requestLocationPermission(this);
         callbackContext.success();
@@ -457,6 +490,10 @@ public class HMSMap extends CordovaPlugin {
                     JsonToObject.constructGroundOverlayOptions(map.getContext(), json), null);
             } else if (type == MapComponentType.POLYGON) {
                 mapComponent = new PolygonCapsule(map, JsonToObject.constructPolygonOptions(json), null);
+            } else if (type == MapComponentType.HEAT_MAP) {
+                String id = json.getString("id");
+                mapComponent = new HeatMapCapsule(id, map, JsonToObject.constructHeatMapOptions(json),
+                    null);
             } else if (type == MapComponentType.POLYLINE) {
                 mapComponent = new PolylineCapsule(map, JsonToObject.constructPolylineOptions(map.getContext(), json),
                     null);

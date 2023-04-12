@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,49 +34,49 @@ class MarkerImpl {
         this.id = componentId;
     }
     getAlpha() {
-        return this.getComponentOptions('getAlpha');
+        return this.getComponentOptions("getAlpha");
     }
     getId() {
         return this.id;
     }
     getPosition() {
-        return this.getComponentOptions('getPosition');
+        return this.getComponentOptions("getPosition");
     }
     getRotation() {
-        return this.getComponentOptions('getRotation');
+        return this.getComponentOptions("getRotation");
     }
     getSnippet() {
-        return this.getComponentOptions('getSnippet');
+        return this.getComponentOptions("getSnippet");
     }
     getTag() {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
     getTitle() {
-        return this.getComponentOptions('getTitle');
+        return this.getComponentOptions("getTitle");
     }
     getZIndex() {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
     isVisible() {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
     isClusterable() {
-        return this.getComponentOptions('isClusterable');
+        return this.getComponentOptions("isClusterable");
     }
     isDraggable() {
-        return this.getComponentOptions('isDraggable');
+        return this.getComponentOptions("isDraggable");
     }
     isFlat() {
-        return this.getComponentOptions('isFlat');
+        return this.getComponentOptions("isFlat");
     }
     isInfoWindowShown() {
-        return this.getComponentOptions('isInfoWindowShown');
+        return this.getComponentOptions("isInfoWindowShown");
     }
     startAnimation() {
-        return this.getComponentOptions('startAnimation');
+        return this.getComponentOptions("startAnimation");
     }
     remove() {
-        return utils_1.asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
+        return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     hideInfoWindow() {
         return this.getComponentOptions("hideInfoWindow");
@@ -85,22 +85,22 @@ class MarkerImpl {
         return this.getComponentOptions("showInfoWindow");
     }
     setAlpha(alpha) {
-        return this.setComponentOptions("setAlpha", { "alpha": alpha });
+        return this.setComponentOptions("setAlpha", { alpha: alpha });
     }
     setAnimation(animation) {
         const _animations = {};
-        if (animation.animations.has('Rotate'))
-            _animations['rotateAnimation'] = {};
-        if (animation.animations.has('Scale'))
-            _animations['scaleAnimation'] = {};
-        if (animation.animations.has('Translate'))
-            _animations['translateAnimation'] = {};
-        if (animation.animations.has('Alpha'))
-            _animations['alphaAnimation'] = {};
+        if (animation.animations.has("Rotate"))
+            _animations["rotateAnimation"] = {};
+        if (animation.animations.has("Scale"))
+            _animations["scaleAnimation"] = {};
+        if (animation.animations.has("Translate"))
+            _animations["translateAnimation"] = {};
+        if (animation.animations.has("Alpha"))
+            _animations["alphaAnimation"] = {};
         animation.animations.forEach((value, key) => {
             if (key === "Rotate" && _animations.rotateAnimation != undefined) {
-                _animations.rotateAnimation.fromDegree = value.fromDegree;
-                _animations.rotateAnimation.toDegree = value.toDegree;
+                _animations.rotateAnimation.fromDegree = (value).fromDegree;
+                _animations.rotateAnimation.toDegree = (value).toDegree;
                 _animations.rotateAnimation.fillMode = value.fillMode;
                 _animations.rotateAnimation.duration = value.duration;
                 _animations.rotateAnimation.repeatCount = value.repeatCount;
@@ -111,10 +111,11 @@ class MarkerImpl {
                 if (value.animationStart)
                     _animations.rotateAnimation.isAnimationStart = true;
             }
-            else if (key === "Scale" && _animations.scaleAnimation != undefined) {
-                _animations.scaleAnimation.fromX = value.fromX;
+            else if (key === "Scale" &&
+                _animations.scaleAnimation != undefined) {
+                _animations.scaleAnimation.fromX = (value).fromX;
                 _animations.scaleAnimation.toX = value.toX;
-                _animations.scaleAnimation.fromY = value.fromY;
+                _animations.scaleAnimation.fromY = (value).fromY;
                 _animations.scaleAnimation.toY = value.toY;
                 _animations.scaleAnimation.fillMode = value.fillMode;
                 _animations.scaleAnimation.duration = value.duration;
@@ -126,21 +127,24 @@ class MarkerImpl {
                 if (value.animationStart)
                     _animations.scaleAnimation.isAnimationStart = true;
             }
-            else if (key === "Translate" && _animations.translateAnimation != undefined) {
-                _animations.translateAnimation.target = value.target;
+            else if (key === "Translate" &&
+                _animations.translateAnimation != undefined) {
+                _animations.translateAnimation.target = (value).target;
                 _animations.translateAnimation.fillMode = value.fillMode;
                 _animations.translateAnimation.duration = value.duration;
                 _animations.translateAnimation.repeatCount = value.repeatCount;
                 _animations.translateAnimation.repeatMode = value.repeatMode;
-                _animations.translateAnimation.interpolator = value.interpolator;
+                _animations.translateAnimation.interpolator =
+                    value.interpolator;
                 if (value.animationEnd)
                     _animations.translateAnimation.isAnimationEnd = true;
                 if (value.animationStart)
                     _animations.translateAnimation.isAnimationStart = true;
             }
-            else if (key === "Alpha" && _animations.alphaAnimation != undefined) {
-                _animations.alphaAnimation.fromAlpha = value.fromAlpha;
-                _animations.alphaAnimation.toAlpha = value.toAlpha;
+            else if (key === "Alpha" &&
+                _animations.alphaAnimation != undefined) {
+                _animations.alphaAnimation.fromAlpha = (value).fromAlpha;
+                _animations.alphaAnimation.toAlpha = (value).toAlpha;
                 _animations.alphaAnimation.fillMode = value.fillMode;
                 _animations.alphaAnimation.duration = value.duration;
                 _animations.alphaAnimation.repeatCount = value.repeatCount;
@@ -161,50 +165,66 @@ class MarkerImpl {
                 window.subscribeHMSEvent(eventName, value.animationStart);
             }
         });
-        return this.setComponentOptions("setAnimation", { "animation": _animations });
+        return this.setComponentOptions("setAnimation", {
+            animation: _animations,
+        });
     }
     setDraggable(draggable) {
-        return this.setComponentOptions("setDraggable", { "draggable": draggable });
+        return this.setComponentOptions("setDraggable", {
+            draggable: draggable,
+        });
     }
     setFlat(flat) {
-        return this.setComponentOptions("setFlat", { "flat": flat });
+        return this.setComponentOptions("setFlat", { flat: flat });
     }
     setIcon(icon) {
-        return this.setComponentOptions("setIcon", { "icon": icon });
+        return this.setComponentOptions("setIcon", { icon: icon });
     }
     setInfoWindowAnchor(u, v) {
-        return this.setComponentOptions("setInfoWindowAnchor", { "u": u, "v": v });
+        return this.setComponentOptions("setInfoWindowAnchor", { u: u, v: v });
     }
     setMarkerAnchor(u, v) {
-        return this.setComponentOptions("setMarkerAnchor", { "u": u, "v": v });
+        return this.setComponentOptions("setMarkerAnchor", { u: u, v: v });
     }
     setPosition(latLng) {
-        return this.setComponentOptions("setPosition", { "position": latLng });
+        return this.setComponentOptions("setPosition", { position: latLng });
     }
     setRotation(rotation) {
-        return this.setComponentOptions("setRotation", { "rotation": rotation });
+        return this.setComponentOptions("setRotation", { rotation: rotation });
     }
     setSnippet(snippet) {
-        return this.setComponentOptions("setSnippet", { "snippet": snippet });
+        return this.setComponentOptions("setSnippet", { snippet: snippet });
     }
     setTitle(title) {
-        return this.setComponentOptions("setTitle", { "title": title });
+        return this.setComponentOptions("setTitle", { title: title });
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { "tag": tag });
+        return this.setComponentOptions("setTag", { tag: tag });
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { "visible": visible });
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { "zIndex": zIndex });
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
     setComponentOptions(func, params) {
-        return utils_1.asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
     getComponentOptions(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+                this.mapDivId,
+                this.id,
+                "get",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }

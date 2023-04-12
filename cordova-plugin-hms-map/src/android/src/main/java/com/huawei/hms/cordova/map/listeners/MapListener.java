@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.listeners;
 
@@ -22,7 +22,6 @@ import com.huawei.hms.cordova.map.maps.MapEvents;
 import com.huawei.hms.cordova.map.utils.cordova.CordovaUtils;
 import com.huawei.hms.cordova.map.utils.json.ObjectToJson;
 import com.huawei.hms.maps.HuaweiMap;
-import com.huawei.hms.maps.model.IndoorBuilding;
 import com.huawei.hms.maps.model.Marker;
 
 import org.json.JSONException;
@@ -37,7 +36,7 @@ public final class MapListener {
 
     private static volatile MapListener instance;
 
-    private CordovaUtils cordovaUtils;
+    private final CordovaUtils cordovaUtils;
 
     private MapListener(CordovaUtils cordovaUtils) {
         this.cordovaUtils = cordovaUtils;
@@ -172,32 +171,8 @@ public final class MapListener {
         });
     }
 
-    private void setOnCameraMoveCancelListener(HuaweiMap map, int capsuleId) {
-        map.setOnCameraMoveCanceledListener(
-            () -> cordovaUtils.evaluateJs(MapEvents.ON_CAMERA_MOVE_CANCELED, capsuleId, null));
-    }
-
-    private void setOnIndoorLevelActivated(HuaweiMap map, int capsuleId) {
-        setOnIndoorStateChangeOriginal(map, capsuleId);
-    }
-
-    private void setOnIndoorBuildingsFocused(HuaweiMap map, int capsuleId) {
-        setOnIndoorStateChangeOriginal(map, capsuleId);
-    }
-
-    private void setOnIndoorStateChangeOriginal(HuaweiMap map, int capsuleId) {
-        map.setOnIndoorStateChangeListener(new HuaweiMap.OnIndoorStateChangeListener() {
-            @Override
-            public void onIndoorBuildingFocused() {
-                cordovaUtils.evaluateJs(MapEvents.ON_INDOOR_BUILDINGS_FOCUSED, capsuleId, null);
-            }
-
-            @Override
-            public void onIndoorLevelActivated(IndoorBuilding indoorBuilding) {
-                cordovaUtils.evaluateJs(MapEvents.ON_INDOOR_LEVEL_ACTIVATED, capsuleId,
-                    ObjectToJson.constructJsonFromIndoorBuilding(indoorBuilding));
-            }
-        });
+    private void setOnCameraMoveCanceledListener(HuaweiMap map, int capsuleId) {
+        map.setOnCameraMoveCanceledListener(() -> cordovaUtils.evaluateJs(MapEvents.ON_CAMERA_MOVE_CANCELED, capsuleId, null));
     }
 
     private void setOnInfoWindowClickListener(HuaweiMap map, int capsuleId) {
@@ -226,7 +201,7 @@ public final class MapListener {
             ObjectToJson.constructJsonFromLocation(location)));
     }
 
-    private void setOnMapLoadedCallback(HuaweiMap map, int capsuleId) {
+    private void setOnMapLoadedListener(HuaweiMap map, int capsuleId) {
         map.setOnMapLoadedCallback(() -> cordovaUtils.evaluateJs(MapEvents.ON_MAP_LOADED, capsuleId, null));
     }
 

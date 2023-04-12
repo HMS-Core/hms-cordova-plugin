@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-map"
-	version="6.0.1-305" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	version="6.9.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>
 		HMS Map
 	</name>
@@ -24,6 +24,7 @@
 	<js-module name="polygon" src="www/polygon.js" />
 	<js-module name="polyline" src="www/polyline.js" />
 	<js-module name="tileOverlay" src="www/tileOverlay.js" />
+	<js-module name="heatMap" src="www/heatMap.js" />
 	<js-module name="utils" src="www/utils.js" />
 	<!-- Android configuration -->
 	<platform name="android">
@@ -45,7 +46,7 @@
 				android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
 		</config-file>
 		<!-- Android dependencies -->
-		<framework src="com.huawei.hms:maps:6.4.1.300" />
+		<framework src="com.huawei.hms:maps:6.9.0.300" />
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
 		<!-- Source files -->
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/HMSMap.java"
@@ -110,6 +111,9 @@
 			target-dir="src/com/huawei/hms/cordova/map/helpers" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/components/CircleCapsule.java"
+			target-dir="src/com/huawei/hms/cordova/map/components" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/components/HeatMapCapsule.java"
 			target-dir="src/com/huawei/hms/cordova/map/components" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/components/GroundOverlayCapsule.java"

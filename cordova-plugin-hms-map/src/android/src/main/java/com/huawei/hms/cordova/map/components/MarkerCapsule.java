@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.components;
 
@@ -48,7 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public final class MarkerCapsule extends MapComponent<Marker> {
-    private Context context;
+    private final Context context;
 
     public MarkerCapsule(MapCapsule mapCapsule, MarkerOptions options, ComponentListener listener) {
         super(mapCapsule, listener);
@@ -102,8 +102,7 @@ public final class MarkerCapsule extends MapComponent<Marker> {
         }
     }
 
-    private void setCommonAnimationPropertiesFromJson(AnimationSet animationSet, Animation animation, String type,
-        JSONObject json) {
+    private void setCommonAnimationPropertiesFromJson(AnimationSet animationSet, Animation animation, String type, JSONObject json) {
         animation.setDuration(json.optLong("duration", 250));
         animation.setRepeatCount(json.optInt("repeatCount", 0));
         animation.setFillMode(json.optInt("fillMode", Animation.FILL_MODE_FORWARDS));

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,44 +34,58 @@ class TileOverlayImpl {
         this.id = componentId;
     }
     getFadeIn() {
-        return this.getComponentOptions('getFadeIn');
+        return this.getComponentOptions("getFadeIn");
     }
     getId() {
         return this.id;
     }
     getTransparency() {
-        return this.getComponentOptions('getTransparency');
+        return this.getComponentOptions("getTransparency");
     }
     getZIndex() {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
     isVisible() {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
     remove() {
-        return utils_1.asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
+        return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     clearTileCache() {
         return this.getComponentOptions("clearTileCache");
     }
     setFadeIn(fadeIn) {
-        return this.setComponentOptions("setFadeIn", { "fadeIn": fadeIn });
+        return this.setComponentOptions("setFadeIn", { fadeIn: fadeIn });
     }
     setTransparency(transparency) {
-        return this.setComponentOptions("setTransparency", { "transparency": transparency });
+        return this.setComponentOptions("setTransparency", {
+            transparency: transparency,
+        });
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { "zIndex": zIndex });
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { "visible": visible });
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
     setComponentOptions(func, params) {
-        return utils_1.asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
     getComponentOptions(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+                this.mapDivId,
+                this.id,
+                "get",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }

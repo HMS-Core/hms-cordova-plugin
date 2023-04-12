@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -46,6 +46,16 @@ export class HMSMap extends IonicNativePlugin {
     }
 
     @Cordova({ otherPromise: true })
+    convertCoordinate(LatLngObj: LatLngObj): Promise<LatLngObj> {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
+    convertCoordinates(LatLngListObj: LatLngListObj): Promise<LatLngListObj[]> {
+        return;
+    }
+
+    @Cordova({ otherPromise: true })
     requestPermission(): Promise<void> {
         return;
     }
@@ -72,6 +82,11 @@ export class HMSMap extends IonicNativePlugin {
     enableLogger(): Promise<void> {
         return;
     }
+
+    @Cordova({ otherPromise: true })
+    initialize(routePolicy?: string): Promise<void> {
+        return;
+    }
 }
 
 @Plugin({
@@ -82,7 +97,7 @@ export class HMSMap extends IonicNativePlugin {
     platforms: ["Android"],
 })
 export class CameraUpdateFactory {
-    private constructor() {}
+    private constructor() { }
 
     static newCameraPosition(cameraPosition: CameraPosition): CameraUpdate {
         return HMSMap.getPlugin().CameraUpdateFactory.newCameraPosition(
@@ -284,6 +299,7 @@ export interface HuaweiMap {
     scroll(): void;
     syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
+    addHeatMap(heatMapOptions: HeatMapOptions): Promise<HeatMap>
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(
         groundOverlayOptions: GroundOverlayOptions
@@ -314,10 +330,12 @@ export interface HuaweiMap {
     getProjection(): Projection;
     getUiSettings(): UiSettings;
     isBuildingsEnabled(): Promise<boolean>;
+    isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
     isTrafficEnabled(): Promise<boolean>;
     isIndoorEnabled(): Promise<boolean>;
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
+    setDarkEnabled(darkEnabled: boolean): Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void>;
     setLatLngBoundsForCameraTarget(
@@ -376,6 +394,26 @@ export interface Circle {
     setClickable(clickable: boolean): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
 }
+
+export interface HeatMap {
+
+    getId(): string;
+    remove(): Promise<void>;
+    changeDataSet(jsonData: string): Promise<void>;
+    changeDataSetId(resourceId: number): Promise<void>;
+    getRadiusUnit(): Promise<RadiusUnit>;
+    setRadiusUnit(radiusUnit: RadiusUnit): Promise<void>;
+    setColor(color: Map<number, Number[]>): Promise<void>;
+    setIntensity(intensity: number): Promise<void>;
+    setIntensities(intensities: Map<number, number>): Promise<void>;
+    setOpacity(opacity: number): Promise<void>;
+    setOpacities(Opacities: Map<number, number>): Promise<void>;
+    setRadius(radius: number): Promise<void>;
+    setRadiuses(radiuses: Map<number, number>): Promise<void>;
+    setVisible(visible: boolean): Promise<void>;
+
+}
+
 
 export interface GroundOverlay {
     getBearing(): Promise<number>;
@@ -540,6 +578,7 @@ export interface HuaweiMapOptions {
     tiltGesturesEnabled?: boolean;
     zOrderOnTop?: boolean;
     liteMode?: boolean;
+    isDark?: boolean;
     ambientEnabled?: boolean;
     minZoomPreference?: number;
     maxZoomPreference?: number;
@@ -583,6 +622,14 @@ export interface LatLng {
     lng: number;
 }
 
+export interface LatLngObj {
+    latLng: LatLng;
+}
+
+export interface LatLngListObj {
+    latLngList: LatLng[];
+}
+
 export interface CircleOptions {
     center: LatLng;
     clickable?: boolean;
@@ -593,6 +640,26 @@ export interface CircleOptions {
     strokePattern?: PatternItem[];
     visible?: boolean;
     zIndex?: number;
+}
+
+export interface HeatMapOptions {
+    id?: string;
+    color?: Map<number, Number[]>;
+    dataset: String;
+    resourceId?: number;
+    jsonData?: String;
+    intensity?: number;
+    intensities?: Map<number, number> | { [key: string]: number };
+    opacity?: number;
+    opacities?: Map<number, number> | { [key: string]: number };
+    radius?: number;
+    radiuses?: Map<number, number> | { [key: string]: number };
+    radiusUnit?: RadiusUnit;
+}
+
+export enum RadiusUnit {
+    PIXEL = "pixel",
+    METER = "meter",
 }
 
 export interface POI {
@@ -771,7 +838,7 @@ export interface InfoWindowAdapter {
     height: number;
 }
 
-export interface LocationSource {}
+export interface LocationSource { }
 
 export interface ComputeDistanceResult {
     result: number;

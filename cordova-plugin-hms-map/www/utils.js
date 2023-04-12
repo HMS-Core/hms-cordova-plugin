@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,14 +13,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Rect = exports.initalPropsOf = exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
 function asyncExec(clazz, func, args = []) {
     return new Promise((resolve, reject) => {
-        cordova_1.exec(resolve, reject, clazz, func, args);
+        (0, cordova_1.exec)(resolve, reject, clazz, func, args);
     });
 }
 exports.asyncExec = asyncExec;
@@ -45,10 +45,10 @@ function initalPropsOf(element) {
     const clientRect = element.getBoundingClientRect();
     const computedStyle = window.getComputedStyle(element, null);
     let props = {};
-    props['x'] = clientRect.x;
-    props['y'] = clientRect.y;
-    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
-    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
+    props["x"] = clientRect.x;
+    props["y"] = clientRect.y;
+    props["width"] = parseInt(computedStyle.getPropertyValue("width"));
+    props["height"] = parseInt(computedStyle.getPropertyValue("height"));
     return props;
 }
 exports.initalPropsOf = initalPropsOf;
@@ -63,23 +63,23 @@ class Rect {
         return new Rect(domRect.left, domRect.top, domRect.right, domRect.bottom);
     }
     equals(rect) {
-        return rect.left == this.left
-            && rect.right == this.right
-            && rect.bottom == this.bottom
-            && rect.top == this.top;
+        return (rect.left == this.left &&
+            rect.right == this.right &&
+            rect.bottom == this.bottom &&
+            rect.top == this.top);
     }
     intersects(rect) {
-        const notIntersects = this.left > rect.right
-            || this.top > rect.bottom
-            || rect.left > this.right
-            || rect.top > this.bottom;
+        const notIntersects = this.left > rect.right ||
+            this.top > rect.bottom ||
+            rect.left > this.right ||
+            rect.top > this.bottom;
         return !notIntersects;
     }
     contains(rect) {
-        return this.left <= rect.left
-            && this.right >= rect.right
-            && this.top <= rect.top
-            && this.bottom >= rect.bottom;
+        return (this.left <= rect.left &&
+            this.right >= rect.right &&
+            this.top <= rect.top &&
+            this.bottom >= rect.bottom);
     }
     hashCode() {
         return `${this.left}-${this.top}-${this.right}-${this.bottom}`;

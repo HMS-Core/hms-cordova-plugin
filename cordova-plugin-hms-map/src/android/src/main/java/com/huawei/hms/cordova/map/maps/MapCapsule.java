@@ -1,40 +1,34 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.maps;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.util.Log;
 
-import com.huawei.hms.cordova.map.PluginCordovaLayout;
 import com.huawei.hms.cordova.map.components.MapComponent;
 import com.huawei.hms.cordova.map.listeners.MapListener;
 import com.huawei.hms.cordova.map.utils.json.JsonToObject;
-import com.huawei.hms.cordova.map.utils.json.ObjectToJson;
 import com.huawei.hms.maps.HuaweiMap;
 import com.huawei.hms.maps.TextureMapView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -48,46 +42,44 @@ public final class MapCapsule {
 
     private final String divId;
 
-    private int capsuleId;
+    private final int capsuleId;
+
+    private final TextureMapView textureMapView;
+
+    private final Context context;
+
+    private final PluginMapUISettings uiSettingsSetter;
+
+    private final PluginMapSetterGetter pluginMapSetterGetter;
+
+    private final PluginProjection pluginProjection;
+
+    private final MapListener mapListener;
+
+    private final MapCapsuleLayout capsuleLayout;
+
+    private final Map<String, MapComponent> componentMap = new ConcurrentHashMap<>();
+
+    private final Set<Rect> htmlElementOverlappingSet = new HashSet<>();
 
     private boolean isActive;
 
     private boolean isClickable;
 
-    private TextureMapView textureMapView;
-
     private HuaweiMap huaweiMap;
-
-    private Context context;
-
-    private PluginMapUISettings uiSettingsSetter;
-
-    private PluginMapSetterGetter pluginMapSetterGetter;
-
-    private PluginProjection pluginProjection;
-
-    private MapListener mapListener;
-
-    private MapCapsuleLayout capsuleLayout;
-
-    private Map<String, MapComponent> componentMap = new ConcurrentHashMap<>();
-
-    private Set<Rect> htmlElementOverlappingSet = new HashSet<>();
 
     public MapCapsule(Context mContext, MapListener mapListener, String divId, JSONObject mapOptions) {
         this.context = mContext;
         this.capsuleId = MapCapsule.getNewId();
         this.mapListener = mapListener;
         this.divId = divId;
-        this.textureMapView = new TextureMapView(mContext,
-            JsonToObject.constructMapOptions(mapOptions.optJSONObject("mapOptions")));
+        this.textureMapView = new TextureMapView(mContext, JsonToObject.constructMapOptions(mapOptions.optJSONObject("mapOptions")));
         this.textureMapView.onCreate(null);
         this.uiSettingsSetter = new PluginMapUISettings(this);
         this.pluginMapSetterGetter = new PluginMapSetterGetter(this);
         this.pluginProjection = new PluginProjection(this);
         this.isActive = true;
         this.isClickable = true;
-
         InitialProps props = json2InitialProps(mapOptions.optJSONObject("initialProps"));
         this.capsuleLayout = new MapCapsuleLayout(textureMapView, context, props);
     }
@@ -115,7 +107,9 @@ public final class MapCapsule {
     }
 
     public void addComponent(MapComponent mapComponent) {
-        componentMap.put(mapComponent.getId(), mapComponent);
+        if(mapComponent != null){
+            componentMap.put(mapComponent.getId(), mapComponent);
+        }
     }
 
     public boolean removeComponent(String componentId) {
@@ -158,6 +152,8 @@ public final class MapCapsule {
                 return setMapListener(methodName);
             case "projections":
                 return handleProjections(methodName, args);
+            default:
+                break;
         }
         return null;
     }

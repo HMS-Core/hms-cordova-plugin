@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import {
 })
 export class HomePage {
   markerId: string;
+  geojsonData: any;
   private map: HuaweiMap;
   private components = new Map<string, any>();
 
@@ -42,7 +43,26 @@ export class HomePage {
     public navCtrl: NavController,
     private hmsMap: HMSMap,
     public alertController: AlertController
-  ) {}
+  ) {
+    this.readGeoJsonFile('assets/earthquakes.geojson');
+    hmsMap.initialize(); // You can set with routePolicy parameter.
+  }
+
+  readGeoJsonFile(filePath: string) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filePath, true);
+    xhr.responseType = 'blob';
+    xhr.onload = () => {
+      const fileReader = new FileReader();
+      fileReader.readAsText(xhr.response);
+      fileReader.onload = () => {
+        const fileContent = fileReader.result as string;
+        this.geojsonData = JSON.stringify(JSON.parse(fileContent));
+        alert("value" + JSON.stringify(this.geojsonData));
+      };
+    };
+    xhr.send();
+  }
 
   scrollStart(event) {
     console.log("logScrollStart : When Scroll Starts", event);
@@ -111,7 +131,10 @@ export class HomePage {
     const mapOptions = {
       mapType: MapType.MAP_TYPE_TERRAIN,
       cameraPosition: {
-        target: { lat: 40.7587658, lng: 30.3146964 },
+        target: { 
+          lat: 40.7587658, 
+          lng: 30.3146964 
+        },
         zoom: 2,
       },
     };
@@ -141,15 +164,13 @@ export class HomePage {
 
   addDiv() {
     const div = document.createElement("div");
-    div.innerHTML =
-      "This demo DIV block was inserted into the page using JavaScript. This demonstrates how MapView reacts to dynamic page changes.";
+    div.innerHTML = "This demo DIV block was inserted into the page using JavaScript. This demonstrates how MapView reacts to dynamic page changes.";
     div.style.height = "100px";
     document.getElementById("log").insertAdjacentElement("afterbegin", div);
 
     let block;
     block = document.createElement("div");
-    block.innerHTML =
-      "This demo DIV block was inserted into the page using JavaScript. This demonstrates how MapView reacts to dynamic page changes.";
+    block.innerHTML = "This demo DIV block was inserted into the page using JavaScript. This demonstrates how MapView reacts to dynamic page changes.";
     block.style.height = "100px";
     const containerBlock = document.getElementById("wrapper");
     containerBlock.appendChild(block);
@@ -170,7 +191,12 @@ export class HomePage {
   }
 
   async addMarker() {
-    const markerOptions = { position: { lat: 36, lng: 23 } };
+    const markerOptions = { 
+      position: { 
+        lat: 36, 
+        lng: 23 
+      } 
+    };
     const marker: Marker = await this.map.addMarker(markerOptions);
     console.log("Marker's Id->", marker.getId());
     marker.getAlpha().then((value) => console.log("Marker's alpha is ", value));
@@ -179,7 +205,10 @@ export class HomePage {
 
   async addCircle() {
     const circleOptions = {
-      center: { lat: 40.7587658, lng: 30.3146964 },
+      center: { 
+        lat: 40.7587658, 
+        lng: 30.3146964 
+      },
       radius: 10000,
       fillColor: -65281,
       clickable: true,
@@ -195,8 +224,14 @@ export class HomePage {
   async addPolyline() {
     const polylineOptions = {
       points: [
-        { lat: 54.5, lng: -0.1 },
-        { lat: 42.7, lng: -72.0 },
+        { 
+          lat: 54.5, 
+          lng: -0.1 
+        },
+        { 
+          lat: 42.7, 
+          lng: -72.0 
+        },
       ],
       color: -65536,
       width: 5.0,
@@ -209,9 +244,18 @@ export class HomePage {
   async addPolygon() {
     const polygonOptions = {
       points: [
-        { lat: 25, lng: 35 },
-        { lat: 30, lng: 35 },
-        { lat: 27, lng: 45 },
+        { 
+          lat: 25, 
+          lng: 35 
+        },
+        { 
+          lat: 30, 
+          lng: 35 
+        },
+        { 
+          lat: 27, 
+          lng: 45 
+        },
       ],
       fillColor: -65536,
       clickable: true,
@@ -220,10 +264,43 @@ export class HomePage {
     this.components[polygon.getId()] = polygon;
   }
 
+  async addHeatMap() {
+
+    var heatMapOptions = {
+      "id": "HeatMap",
+      "opacities": {
+        "9.0": 0.0,
+        "13.0": 1.0
+      },
+      "radiuses": {
+        "3.0": 3.0,
+        "13.0": 20.0
+      },
+      "intensity": -0.1,
+      "intensities": {
+        "3.0": 3.0,
+        "13.0": 20.0
+      },
+      "dataset": this.geojsonData
+    }
+
+    const heatmap = await this.map.addHeatMap(heatMapOptions);
+    this.components[heatmap.getId()] = heatmap;
+  }
+
   async addGroundOverlay() {
     const groundOverlayOptions = {
-      position: { latLng: { lat: 38, lng: 27 }, width: 300000, height: 500000 },
-      image: { hue: 210 },
+      position: { 
+        latLng: { 
+          lat: 38, 
+          lng: 27 
+        }, 
+        width: 300000, 
+        height: 500000 
+      },
+      image: { 
+        hue: 210 
+      },
       transparency: 0,
       visible: true,
       zIndex: 4,
@@ -252,7 +329,10 @@ export class HomePage {
 
   async animateCamera() {
     const position = {
-      target: { lat: 38, lng: 26 },
+      target: { 
+        lat: 38, 
+        lng: 26 
+      },
       zoom: 6,
       bearing: 30,
       tilt: 0,
@@ -274,22 +354,10 @@ export class HomePage {
   addListener() {
     const log = document.getElementById("log");
     this.map.on(MapEvent.ON_MAP_CLICK, (latLng) => {
-      log.innerHTML =
-        "<br>" +
-        "Map_Click:" +
-        latLng.lat +
-        "<-->" +
-        latLng.lng +
-        log.innerHTML;
+      log.innerHTML = "<br>" + "Map_Click:" + latLng.lat + "<-->" + latLng.lng + log.innerHTML;
     });
     this.map.on(MapEvent.ON_MAP_LONG_CLICK, (latLng) => {
-      log.innerHTML =
-        "<br>" +
-        "Map_Long_Click:" +
-        latLng.lat +
-        "<-->" +
-        latLng.lng +
-        log.innerHTML;
+      log.innerHTML = "<br>" + "Map_Long_Click:" + latLng.lat + "<-->" + latLng.lng + log.innerHTML;
     });
     this.map.on(MapEvent.ON_MARKER_CLICK, (marker) => {
       if (marker.isInfoWindowShown()) {
@@ -304,18 +372,15 @@ export class HomePage {
       log.innerHTML = "<br>" + "Polygon_Click:" + polygon.id + log.innerHTML;
     });
     this.map.on(MapEvent.ON_MY_LOCATION_CLICK, (location) => {
-      log.innerHTML =
-        "<br>" +
-        "MyLocation_Click:" +
-        location.latitude +
-        "<-->" +
-        location.longitude +
-        log.innerHTML;
+      log.innerHTML = "<br>" + "MyLocation_Click:" + location.latitude + "<-->" + location.longitude + log.innerHTML;
     });
   }
 
   async newLatLng() {
-    const latLng = { lat: 64, lng: 55 };
+    const latLng = { 
+      lat: 64, 
+      lng: 55 
+    };
     await this.map.animateCamera(
       CameraUpdateFactory.newLatLng(latLng),
       {
@@ -331,7 +396,10 @@ export class HomePage {
   }
 
   async newLatLngZoom() {
-    const latLng = { lat: 15, lng: 11 };
+    const latLng = { 
+      lat: 15, 
+      lng: 11 
+    };
     const zoom = 10;
     await this.map.animateCamera(
       CameraUpdateFactory.newLatLngZoom(latLng, zoom),
@@ -378,6 +446,37 @@ export class HomePage {
       console.log("setMapPointersEnabled false");
     }
   }
+
+  async convertCoordinate() {
+    const convertlatLng = {
+      "latLng": { 
+        "lat": 39.902722, 
+        "lng": 116.391441 
+      }
+    };
+
+    let result = await this.hmsMap.convertCoordinate(convertlatLng)
+    alert(JSON.stringify(result))
+  }
+
+  async convertCoordinates() {
+    const convertlatLngList = {
+      "latLngList": [
+        { 
+          lat: 39.902722, 
+          lng: 116.391441 
+        }, 
+        { 
+          lat: 41.063984, 
+          lng: 29.033135 
+        }
+      ]
+    };
+
+    let result = await this.hmsMap.convertCoordinates(convertlatLngList)
+    alert(JSON.stringify(result))
+  }
+
 
   async presentAlert() {
     const alert = await this.alertController.create({

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,7 +42,10 @@ export class SecondPage {
   async ionViewDidEnter() {
     const mapOptions = {
       cameraPosition: {
-        target: { lat: 40.7587658, lng: 30.3146964 },
+        target: { 
+          lat: 40.7587658, 
+          lng: 30.3146964 
+        },
         zoom: 2,
       },
     };
@@ -68,7 +71,13 @@ export class SecondPage {
     const latitude = this.latInput;
     const longitude = this.lngInput;
     const duration = this.durationInput;
-    const position = { target: { lat: latitude, lng: longitude }, zoom: 6 };
+    const position = { 
+      target: { 
+        lat: latitude, 
+        lng: longitude 
+      }, 
+      zoom: 6 
+    };
     await this.map.animateCamera(
       CameraUpdateFactory.newCameraPosition(position),
       {
@@ -87,15 +96,31 @@ export class SecondPage {
   async moveCamera() {
     const latitude = this.latInput;
     const longitude = this.lngInput;
-    const position = { target: { lat: latitude, lng: longitude }, zoom: 6 };
+    const position = { 
+      target: { 
+        lat: latitude, 
+        lng: longitude 
+      }, 
+      zoom: 6 
+    };
     await this.map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
-    await this.map.addMarker({ position: { lat: latitude, lng: longitude } });
+    await this.map.addMarker({ 
+      position: { 
+        lat: latitude, 
+        lng: longitude 
+      } 
+    });
   }
 
   async addMarker() {
     const latitude = this.markerLatInput;
     const longitude = this.markerLngInput;
-    await this.map.addMarker({ position: { lat: latitude, lng: longitude } });
+    await this.map.addMarker({ 
+      position: { 
+        lat: latitude, 
+        lng: longitude 
+      } 
+    });
   }
 
   async setPointToCenter() {
@@ -109,32 +134,56 @@ export class SecondPage {
   }
 
   async addMarkersAndMove() {
-    const position = { target: { lat: 48.893478, lng: 2.334595 }, zoom: 10 };
+    const position = { 
+      target: { 
+        lat: 48.893478, 
+        lng: 2.334595 
+      }, 
+      zoom: 10 
+    };
     await this.map.moveCamera(CameraUpdateFactory.newCameraPosition(position));
 
     // Add the marker to the cluster.
     await this.map.addMarker({
-      position: { lat: 48.891478, lng: 2.334595 },
+      position: { 
+        lat: 48.891478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
     await this.map.addMarker({
-      position: { lat: 48.892478, lng: 2.334595 },
+      position: { 
+        lat: 48.892478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
     await this.map.addMarker({
-      position: { lat: 48.893478, lng: 2.334595 },
+      position: { 
+        lat: 48.893478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
     await this.map.addMarker({
-      position: { lat: 48.894478, lng: 2.334595 },
+      position: { 
+        lat: 48.894478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
     await this.map.addMarker({
-      position: { lat: 48.895478, lng: 2.334595 },
+      position: { 
+        lat: 48.895478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
     await this.map.addMarker({
-      position: { lat: 48.896478, lng: 2.334595 },
+      position: { 
+        lat: 48.896478, 
+        lng: 2.334595 
+      },
       clusterable: true,
     });
 

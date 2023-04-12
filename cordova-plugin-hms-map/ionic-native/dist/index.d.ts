@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,16 +13,20 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { IonicNativePlugin } from '@ionic-native/core';
+
+import { IonicNativePlugin } from "@ionic-native/core";
 export declare class HMSMapOriginal extends IonicNativePlugin {
     getMap(divId: string, huaweiMapOptions: HuaweiMapOptions, bounds?: MapBounds): Promise<HuaweiMap>;
     showMap(divId: string): Promise<HuaweiMap>;
     hasPermission(): Promise<boolean>;
+    convertCoordinate(LatLngObj: LatLngObj): Promise<LatLngObj>;
+    convertCoordinates(LatLngListObj: LatLngListObj): Promise<LatLngListObj[]>;
     requestPermission(): Promise<void>;
     computeDistanceBetween(from: LatLng, to: LatLng): Promise<ComputeDistanceResult>;
     setApiKey(apiKey: string): Promise<void>;
     disableLogger(): Promise<void>;
     enableLogger(): Promise<void>;
+    initialize(routePolicy?: string): Promise<void>;
 }
 export declare class CameraUpdateFactory {
     private constructor();
@@ -112,6 +116,7 @@ export interface HuaweiMap {
     scroll(): void;
     syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
+    addHeatMap(heatMapOptions: HeatMapOptions): Promise<HeatMap>;
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(groundOverlayOptions: GroundOverlayOptions): Promise<GroundOverlay>;
     addTileOverlay(tileOverlayOptions: TileOverlayOptions): Promise<TileOverlay>;
@@ -131,10 +136,12 @@ export interface HuaweiMap {
     getProjection(): Projection;
     getUiSettings(): UiSettings;
     isBuildingsEnabled(): Promise<boolean>;
+    isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
     isTrafficEnabled(): Promise<boolean>;
     isIndoorEnabled(): Promise<boolean>;
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
+    setDarkEnabled(darkEnabled: boolean): Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void>;
     setLatLngBoundsForCameraTarget(latLngBoundsForCameraTarget: LatLngBounds): Promise<void>;
@@ -180,6 +187,22 @@ export interface Circle {
     setTag(tag: any): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
+    setVisible(visible: boolean): Promise<void>;
+}
+export interface HeatMap {
+    getId(): string;
+    remove(): Promise<void>;
+    changeDataSet(jsonData: string): Promise<void>;
+    changeDataSetId(resourceId: number): Promise<void>;
+    getRadiusUnit(): Promise<RadiusUnit>;
+    setRadiusUnit(radiusUnit: RadiusUnit): Promise<void>;
+    setColor(color: Map<number, Number[]>): Promise<void>;
+    setIntensity(intensity: number): Promise<void>;
+    setIntensities(intensities: Map<number, number>): Promise<void>;
+    setOpacity(opacity: number): Promise<void>;
+    setOpacities(Opacities: Map<number, number>): Promise<void>;
+    setRadius(radius: number): Promise<void>;
+    setRadiuses(radiuses: Map<number, number>): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
 }
 export interface GroundOverlay {
@@ -328,6 +351,7 @@ export interface HuaweiMapOptions {
     tiltGesturesEnabled?: boolean;
     zOrderOnTop?: boolean;
     liteMode?: boolean;
+    isDark?: boolean;
     ambientEnabled?: boolean;
     minZoomPreference?: number;
     maxZoomPreference?: number;
@@ -366,6 +390,12 @@ export interface LatLng {
     lat: number;
     lng: number;
 }
+export interface LatLngObj {
+    latLng: LatLng;
+}
+export interface LatLngListObj {
+    latLngList: LatLng[];
+}
 export interface CircleOptions {
     center: LatLng;
     clickable?: boolean;
@@ -376,6 +406,30 @@ export interface CircleOptions {
     strokePattern?: PatternItem[];
     visible?: boolean;
     zIndex?: number;
+}
+export interface HeatMapOptions {
+    id?: string;
+    color?: Map<number, Number[]>;
+    dataset: String;
+    resourceId?: number;
+    jsonData?: String;
+    intensity?: number;
+    intensities?: Map<number, number> | {
+        [key: string]: number;
+    };
+    opacity?: number;
+    opacities?: Map<number, number> | {
+        [key: string]: number;
+    };
+    radius?: number;
+    radiuses?: Map<number, number> | {
+        [key: string]: number;
+    };
+    radiusUnit?: RadiusUnit;
+}
+export declare enum RadiusUnit {
+    PIXEL = "pixel",
+    METER = "meter"
 }
 export interface POI {
     latLng: LatLng;

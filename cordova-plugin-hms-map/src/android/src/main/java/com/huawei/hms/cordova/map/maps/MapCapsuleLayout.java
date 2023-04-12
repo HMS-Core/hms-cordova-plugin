@@ -1,48 +1,41 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.maps;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.text.style.LineHeightSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.huawei.hms.cordova.map.utils.PxToPixelConverter;
-
-import java.util.Locale;
 
 final public class MapCapsuleLayout {
 
     private static final String TAG = MapCapsuleLayout.class.getSimpleName();
 
-    private View view;
+    private final View view;
+
+    private final int marginTop;
+
+    private final int marginBottom;
 
     private int x;
 
     private int y;
-
-    private int marginTop;
-
-    private int marginBottom;
 
     private int width;
 
@@ -64,7 +57,7 @@ final public class MapCapsuleLayout {
         this.y = props.y - marginTop;
         this.height = props.height;
         this.width = props.width;
-        Log.d(TAG, "MapCapsuleLayout: " + toString());
+        Log.d(TAG, "MapCapsuleLayout: " + this);
         ViewGroup.MarginLayoutParams parentLayoutParams = new ViewGroup.MarginLayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         parentLayoutParams.setMargins(0, marginTop, 0, marginBottom);

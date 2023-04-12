@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.maps;
 
@@ -31,14 +31,14 @@ class PluginMapUISettings {
 
     private final UiSettingsGetter getter = new UiSettingsGetter();
 
-    private MapCapsule mapCapsule;
+    private final MapCapsule mapCapsule;
 
     public PluginMapUISettings(MapCapsule mapCapsule) {
         this.mapCapsule = mapCapsule;
     }
 
     JSONObject run(String option, String methodName, JSONObject object)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         JSONObject json = null;
         if (option.equals("setter")) {
             setter.run(methodName, object);
@@ -68,9 +68,8 @@ class PluginMapUISettings {
 
         void setScrollGesturesEnabledDuringRotateOrZoom(JSONObject val) {
             mapCapsule.getHuaweiMap()
-                    .getUiSettings()
-                    .setScrollGesturesEnabledDuringRotateOrZoom(
-                            val.optBoolean("scrollGesturesEnabledDuringRotateOrZoom"));
+                .getUiSettings()
+                .setScrollGesturesEnabledDuringRotateOrZoom(val.optBoolean("scrollGesturesEnabledDuringRotateOrZoom"));
         }
 
         void setScrollGesturesEnabled(JSONObject val) {
@@ -83,8 +82,8 @@ class PluginMapUISettings {
 
         void setMyLocationButtonEnabled(JSONObject val) {
             mapCapsule.getHuaweiMap()
-                    .getUiSettings()
-                    .setMyLocationButtonEnabled(val.optBoolean("myLocationButtonEnabled"));
+                .getUiSettings()
+                .setMyLocationButtonEnabled(val.optBoolean("myLocationButtonEnabled"));
         }
 
         void setAllGesturesEnabled(JSONObject val) {
@@ -97,8 +96,8 @@ class PluginMapUISettings {
 
         void setIndoorLevelPickerEnabled(JSONObject val) {
             mapCapsule.getHuaweiMap()
-                    .getUiSettings()
-                    .setIndoorLevelPickerEnabled(val.optBoolean("indoorLevelPickerEnabled"));
+                .getUiSettings()
+                .setIndoorLevelPickerEnabled(val.optBoolean("indoorLevelPickerEnabled"));
         }
 
         void setMapToolbarEnabled(JSONObject val) {
@@ -107,8 +106,8 @@ class PluginMapUISettings {
 
         void setGestureScaleByMapCenter(JSONObject val) {
             mapCapsule.getHuaweiMap()
-                    .getUiSettings()
-                    .setGestureScaleByMapCenter(val.optBoolean("gestureScaleByMapCenterEnabled"));
+                .getUiSettings()
+                .setGestureScaleByMapCenter(val.optBoolean("gestureScaleByMapCenterEnabled"));
         }
 
         void setMarkerClusterColor(JSONObject val) {
@@ -119,7 +118,7 @@ class PluginMapUISettings {
             BitmapDescriptor bitmap = null;
             if (val.optJSONObject("markerClusterIcon") != null) {
                 bitmap = JsonToObject.constructBitmapDescriptor(mapCapsule.getContext(),
-                        val.optJSONObject("markerClusterIcon"));
+                    val.optJSONObject("markerClusterIcon"));
             }
             mapCapsule.getHuaweiMap().getUiSettings().setMarkerClusterIcon(bitmap);
         }
@@ -134,13 +133,13 @@ class PluginMapUISettings {
 
         void setLogoPadding(JSONObject val) {
             mapCapsule.getHuaweiMap()
-                    .getUiSettings()
-                    .setLogoPadding(val.optInt("paddingStart"), val.optInt("paddingTop"), val.optInt("paddingEnd"),
-                            val.optInt("paddingBottom"));
+                .getUiSettings()
+                .setLogoPadding(val.optInt("paddingStart"), val.optInt("paddingTop"), val.optInt("paddingEnd"),
+                    val.optInt("paddingBottom"));
         }
 
         void run(String methodName, JSONObject args)
-                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName, JSONObject.class);
             m.invoke(setter, args);
         }
@@ -166,7 +165,7 @@ class PluginMapUISettings {
 
         JSONObject isScrollGesturesEnabledDuringRotateOrZoom() throws JSONException {
             return new JSONObject().put("value",
-                    mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabledDuringRotateOrZoom());
+                mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabledDuringRotateOrZoom());
         }
 
         JSONObject isScrollGesturesEnabled() throws JSONException {
@@ -184,11 +183,11 @@ class PluginMapUISettings {
         JSONObject isAllGesturesEnabled() throws JSONException {
             JSONObject innerJson = new JSONObject().put("rotateGesturesEnabled",
                     mapCapsule.getHuaweiMap().getUiSettings().isRotateGesturesEnabled())
-                    .put("scrollGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabled())
-                    .put("zoomGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isZoomGesturesEnabled())
-                    .put("tiltGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isTiltGesturesEnabled())
-                    .put("scrollGesturesEnabledDuringRotateOrZoom",
-                            mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabledDuringRotateOrZoom());
+                .put("scrollGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabled())
+                .put("zoomGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isZoomGesturesEnabled())
+                .put("tiltGesturesEnabled", mapCapsule.getHuaweiMap().getUiSettings().isTiltGesturesEnabled())
+                .put("scrollGesturesEnabledDuringRotateOrZoom",
+                    mapCapsule.getHuaweiMap().getUiSettings().isScrollGesturesEnabledDuringRotateOrZoom());
             return new JSONObject().put("value", innerJson);
         }
 
@@ -198,7 +197,7 @@ class PluginMapUISettings {
 
         JSONObject isIndoorLevelPickerEnabled() throws JSONException {
             return new JSONObject().put("value",
-                    mapCapsule.getHuaweiMap().getUiSettings().isIndoorLevelPickerEnabled());
+                mapCapsule.getHuaweiMap().getUiSettings().isIndoorLevelPickerEnabled());
         }
 
         JSONObject isMapToolbarEnabled() throws JSONException {
@@ -206,7 +205,7 @@ class PluginMapUISettings {
         }
 
         JSONObject run(String methodName)
-                throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             Method m = this.getClass().getDeclaredMethod(methodName);
             return (JSONObject) m.invoke(getter);
         }

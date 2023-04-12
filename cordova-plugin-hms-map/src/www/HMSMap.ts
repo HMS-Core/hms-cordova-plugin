@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,6 +45,9 @@ import {
     UiSettings,
     URLTile,
     VisibleRegion,
+    HeatMapOptions,
+    LatLngObj,
+    LatLngListObj
 } from "./interfaces";
 import { Circle, CircleImpl } from "./circle";
 import { Marker, MarkerImpl } from "./marker";
@@ -52,6 +55,7 @@ import { GroundOverlay, GroundOverlayImpl } from "./groundOverlay";
 import { TileOverlay, TileOverlayImpl } from "./tileOverlay";
 import { Polygon, PolygonImpl } from "./polygon";
 import { Polyline, PolylineImpl } from "./polyline";
+import { HeatMap, HeatMapImpl } from "./heatMap";
 
 export {
     Polyline,
@@ -89,6 +93,8 @@ export {
     TileType,
     AnimationConstant,
     Gravity,
+    LatLngObj,
+    LatLngListObj,
 } from "./interfaces";
 
 export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
@@ -120,7 +126,8 @@ export function sync(mapId: number, mapDiv: string, components: any) {
             obj = new GroundOverlayImpl(mapDiv, mapId, id);
         else if (components[i]["_type"] === "tileOverlay")
             obj = new TileOverlayImpl(mapDiv, mapId, id);
-
+        else if (components[i]["_type"] === "heatMap")
+            obj = new TileOverlayImpl(mapDiv, mapId, id);
         hashMap.set(components[i]["_id"], obj);
     }
 }
@@ -171,6 +178,14 @@ export async function requestPermission(): Promise<void> {
     return asyncExec("HMSMap", "requestPermission", []);
 }
 
+export async function convertCoordinate(latLngObj: LatLngObj): Promise<LatLngObj> {
+    return asyncExec("HMSMap", "convertCoordinate", [latLngObj]);
+}
+
+export async function convertCoordinates(LatLngListObj: LatLngListObj): Promise<LatLngListObj[]> {
+    return asyncExec("HMSMap", "convertCoordinates", [LatLngListObj]);
+}
+
 export async function computeDistanceBetween(
     from: LatLng,
     to: LatLng
@@ -184,6 +199,10 @@ export async function setApiKey(apiKey: string): Promise<void> {
     return asyncExec("HMSMap", "setApiKey", [{ apiKey: apiKey }]);
 }
 
+export function initialize(routePolicy?:string): Promise<void> {
+    return asyncExec("HMSMap", "initialize", [routePolicy]);
+}
+
 export function disableLogger(): Promise<void> {
     return asyncExec("HMSMap", "disableLogger", []);
 }
@@ -191,6 +210,8 @@ export function disableLogger(): Promise<void> {
 export function enableLogger(): Promise<void> {
     return asyncExec("HMSMap", "enableLogger", []);
 }
+
+
 
 async function forceUpdateXAndY(
     x: number,
@@ -544,6 +565,25 @@ class HuaweiMapImpl implements HuaweiMap {
         return circle;
     }
 
+    async addHeatMap(heatMapOptions: HeatMapOptions): Promise<HeatMap> {
+        if (!heatMapOptions["dataset"])
+            return Promise.reject(
+                ErrorCodes.toString(ErrorCodes.CENTER_PROPERTY_MUST_DEFINED)
+            );
+        const componentId = await asyncExec("HMSMap", "addComponent", [
+            this.divId,
+            "HEAT_MAP",
+            heatMapOptions,
+        ]);
+        const heat_map: HeatMap = new HeatMapImpl(
+            this.divId,
+            this.id,
+            componentId
+        );
+        this.components.set(heat_map.getId(), heat_map);
+        return heat_map;
+    }
+
     async addMarker(markerOptions: MarkerOptions): Promise<Marker> {
         if (!markerOptions["position"])
             return Promise.reject(
@@ -714,6 +754,10 @@ class HuaweiMapImpl implements HuaweiMap {
         return this.getHuaweiMapOptions("isBuildingsEnabled");
     }
 
+    isDark(): Promise<boolean> {
+        return this.getHuaweiMapOptions("isDark");
+    }
+
     isMyLocationEnabled(): Promise<boolean> {
         return this.getHuaweiMapOptions("isMyLocationEnabled");
     }
@@ -729,6 +773,12 @@ class HuaweiMapImpl implements HuaweiMap {
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void> {
         return this.setHuaweiMapOptions("setBuildingsEnabled", {
             buildingsEnabled: buildingsEnabled,
+        });
+    }
+
+    setDarkEnabled(darkEnabled: boolean): Promise<void> {
+        return this.setHuaweiMapOptions("darkEnabled", {
+            darkEnabled: darkEnabled,
         });
     }
 
@@ -1081,7 +1131,7 @@ class CameraUpdateImpl implements CameraUpdate {
 }
 
 export class CameraUpdateFactory {
-    private constructor() {}
+    private constructor() { }
 
     static newCameraPosition(cameraPosition: CameraPosition): CameraUpdate {
         return this.constructCameraUpdateImpl("newCameraPosition", {

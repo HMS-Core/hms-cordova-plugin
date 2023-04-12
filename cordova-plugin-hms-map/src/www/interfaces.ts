@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import { GroundOverlay } from "./groundOverlay";
 import { TileOverlay } from "./tileOverlay";
 import { Polygon } from "./polygon";
 import { MapStyleOptions } from "./HMSMap";
+import { HeatMap } from "./heatMap";
 
 export interface HuaweiMapOptions {
     mapType?: MapType;
@@ -58,6 +59,13 @@ export interface LatLng {
     lng: number;
 }
 
+export interface LatLngObj {
+    latLng: LatLng;
+  }
+
+  export interface LatLngListObj {
+    latLngList: LatLng[];
+  }
 export interface CircleOptions {
     center: LatLng;
     clickable?: boolean;
@@ -68,6 +76,28 @@ export interface CircleOptions {
     strokePattern?: PatternItem[];
     visible?: boolean;
     zIndex?: number;
+}
+
+
+export interface HeatMapOptions {
+    id ?: string;
+    color?: Map<number, Number[]>;
+    dataset: String;
+    resourceId?: number;
+    jsonData?: String;
+    intensity?: number;
+    intensities?:Map<number, number> | { [key: string]: number };
+    opacity?: number;
+    opacities?: Map<number, number> | { [key: string]: number };
+    radius?: number;
+    radiuses?: Map<number, number> | { [key: string]: number };
+    radiusUnit?: RadiusUnit;
+}
+
+
+export enum RadiusUnit {
+    PIXEL = "pixel",
+    METER = "meter",
 }
 
 export interface POI {
@@ -334,6 +364,7 @@ export interface HuaweiMap {
     scroll(): void;
     syncDimensions(): void;
     addCircle(circleOptions: CircleOptions): Promise<Circle>;
+    addHeatMap(heatMapOptions: HeatMapOptions) : Promise<HeatMap>
     addMarker(markerOptions: MarkerOptions): Promise<Marker>;
     addGroundOverlay(
         groundOverlayOptions: GroundOverlayOptions
@@ -364,10 +395,12 @@ export interface HuaweiMap {
     getProjection(): Projection;
     getUiSettings(): UiSettings;
     isBuildingsEnabled(): Promise<boolean>;
+    isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
     isTrafficEnabled(): Promise<boolean>;
     isIndoorEnabled(): Promise<boolean>;
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
+    setDarkEnabled(darkEnabled: boolean) :Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
     setInfoWindowAdapter(infoWindowAdapter: InfoWindowAdapter): Promise<void>;
     setLatLngBoundsForCameraTarget(
@@ -542,6 +575,13 @@ export class ErrorCodes {
         code: 5102,
         message: "No component is found with given id",
     };
+
+    public static readonly DATASET_PROPERTY_MUST_DEFINED: ErrorCode = {
+        code: 5102,
+        message: "No component is found with given id",
+    };
+
+    
 
     public static toString(error: ErrorCode): string {
         return `Error Code: ${error.code} - Message: ${error.message}`;

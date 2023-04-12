@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -24,7 +25,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MapStyleOptions = exports.CameraUpdateFactory = exports.enableLogger = exports.disableLogger = exports.setApiKey = exports.computeDistanceBetween = exports.requestPermission = exports.hasPermission = exports.showMap = exports.getMap = exports.sync = exports.maps = void 0;
+exports.MapStyleOptions = exports.CameraUpdateFactory = exports.enableLogger = exports.disableLogger = exports.initialize = exports.setApiKey = exports.computeDistanceBetween = exports.convertCoordinates = exports.convertCoordinate = exports.requestPermission = exports.hasPermission = exports.showMap = exports.getMap = exports.sync = exports.maps = exports.Gravity = exports.AnimationConstant = exports.TileType = exports.PatternItemType = exports.Hue = exports.JointType = exports.MapEvent = exports.MapType = exports.Color = exports.CameraMoveStartedReason = exports.ErrorCodes = exports.InterpolatorType = exports.AnimationSet = exports.Cap = exports.SquareCap = exports.RoundCap = exports.CustomCap = exports.ButtCap = void 0;
 const utils_1 = require("./utils");
 const interfaces_1 = require("./interfaces");
 const circle_1 = require("./circle");
@@ -33,6 +34,7 @@ const groundOverlay_1 = require("./groundOverlay");
 const tileOverlay_1 = require("./tileOverlay");
 const polygon_1 = require("./polygon");
 const polyline_1 = require("./polyline");
+const heatMap_1 = require("./heatMap");
 var polyline_2 = require("./polyline");
 Object.defineProperty(exports, "ButtCap", { enumerable: true, get: function () { return polyline_2.ButtCap; } });
 Object.defineProperty(exports, "CustomCap", { enumerable: true, get: function () { return polyline_2.CustomCap; } });
@@ -62,23 +64,25 @@ function sync(mapId, mapDiv, components) {
     const map = exports.maps.get(mapId);
     const hashMap = map.components;
     for (let i = 0; i < components.length; i++) {
-        if (hashMap.has(components[i]['_id']))
+        if (hashMap.has(components[i]["_id"]))
             continue;
         let obj = null;
-        let id = components[i]['_id'];
-        if (components[i]['_type'] === "circle")
+        let id = components[i]["_id"];
+        if (components[i]["_type"] === "circle")
             obj = new circle_1.CircleImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'marker')
+        else if (components[i]["_type"] === "marker")
             obj = new marker_1.MarkerImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'polygon')
+        else if (components[i]["_type"] === "polygon")
             obj = new polygon_1.PolygonImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'polyline')
+        else if (components[i]["_type"] === "polyline")
             obj = new polyline_1.PolylineImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'groundOverlay')
+        else if (components[i]["_type"] === "groundOverlay")
             obj = new groundOverlay_1.GroundOverlayImpl(mapDiv, mapId, id);
-        else if (components[i]['_type'] === 'tileOverlay')
+        else if (components[i]["_type"] === "tileOverlay")
             obj = new tileOverlay_1.TileOverlayImpl(mapDiv, mapId, id);
-        hashMap.set(components[i]['_id'], obj);
+        else if (components[i]["_type"] === "heatMap")
+            obj = new tileOverlay_1.TileOverlayImpl(mapDiv, mapId, id);
+        hashMap.set(components[i]["_id"], obj);
     }
 }
 exports.sync = sync;
@@ -87,8 +91,11 @@ function getMap(divId, huaweiMapOptions) {
         const mapElement = document.getElementById(divId);
         if (!mapElement)
             return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
-        const initialProps = utils_1.initalPropsOf(mapElement);
-        const mapId = yield utils_1.asyncExec('HMSMap', 'initMap', [divId, { 'mapOptions': huaweiMapOptions, 'initialProps': initialProps }]);
+        const initialProps = (0, utils_1.initalPropsOf)(mapElement);
+        const mapId = yield (0, utils_1.asyncExec)("HMSMap", "initMap", [
+            divId,
+            { mapOptions: huaweiMapOptions, initialProps: initialProps },
+        ]);
         const huaweiMap = new HuaweiMapImpl(divId, mapId);
         exports.maps.set(huaweiMap.getId(), huaweiMap);
         return huaweiMap;
@@ -99,7 +106,7 @@ function showMap(divId) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!document.getElementById(divId))
             return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
-        const mapId = yield utils_1.asyncExec("HMSMap", "showMap", [divId]);
+        const mapId = yield (0, utils_1.asyncExec)("HMSMap", "showMap", [divId]);
         const currentMap = exports.maps.get(mapId);
         if (currentMap == undefined)
             return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.NO_DOM_ELEMENT_FOUND));
@@ -111,45 +118,67 @@ function showMap(divId) {
 exports.showMap = showMap;
 function hasPermission() {
     return __awaiter(this, void 0, void 0, function* () {
-        const json = yield utils_1.asyncExec("HMSMap", "hasPermission", []);
+        const json = yield (0, utils_1.asyncExec)("HMSMap", "hasPermission", []);
         return json.result;
     });
 }
 exports.hasPermission = hasPermission;
 function requestPermission() {
     return __awaiter(this, void 0, void 0, function* () {
-        return utils_1.asyncExec("HMSMap", "requestPermission", []);
+        return (0, utils_1.asyncExec)("HMSMap", "requestPermission", []);
     });
 }
 exports.requestPermission = requestPermission;
+function convertCoordinate(latLngObj) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, utils_1.asyncExec)("HMSMap", "convertCoordinate", [latLngObj]);
+    });
+}
+exports.convertCoordinate = convertCoordinate;
+function convertCoordinates(LatLngListObj) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (0, utils_1.asyncExec)("HMSMap", "convertCoordinates", [LatLngListObj]);
+    });
+}
+exports.convertCoordinates = convertCoordinates;
 function computeDistanceBetween(from, to) {
     return __awaiter(this, void 0, void 0, function* () {
-        return utils_1.asyncExec("HMSMap", "computeDistanceBetween", [{ "from": from, "to": to }]);
+        return (0, utils_1.asyncExec)("HMSMap", "computeDistanceBetween", [
+            { from: from, to: to },
+        ]);
     });
 }
 exports.computeDistanceBetween = computeDistanceBetween;
 function setApiKey(apiKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        return utils_1.asyncExec("HMSMap", "setApiKey", [{ "apiKey": apiKey }]);
+        return (0, utils_1.asyncExec)("HMSMap", "setApiKey", [{ apiKey: apiKey }]);
     });
 }
 exports.setApiKey = setApiKey;
+function initialize(routePolicy) {
+    return (0, utils_1.asyncExec)("HMSMap", "initialize", [routePolicy]);
+}
+exports.initialize = initialize;
 function disableLogger() {
-    return utils_1.asyncExec('HMSMap', 'disableLogger', []);
+    return (0, utils_1.asyncExec)("HMSMap", "disableLogger", []);
 }
 exports.disableLogger = disableLogger;
 function enableLogger() {
-    return utils_1.asyncExec('HMSMap', 'enableLogger', []);
+    return (0, utils_1.asyncExec)("HMSMap", "enableLogger", []);
 }
 exports.enableLogger = enableLogger;
 function forceUpdateXAndY(x, y, mapDivId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return utils_1.asyncExec("HMSMap", "forceUpdateXAndY", [mapDivId, x, y]);
+        return (0, utils_1.asyncExec)("HMSMap", "forceUpdateXAndY", [mapDivId, x, y]);
     });
 }
 function forceUpdateWidthAndHeight(width, height, mapDivId) {
     return __awaiter(this, void 0, void 0, function* () {
-        return utils_1.asyncExec("HMSMap", "forceUpdateWidthAndHeight", [mapDivId, width, height]);
+        return (0, utils_1.asyncExec)("HMSMap", "forceUpdateWidthAndHeight", [
+            mapDivId,
+            width,
+            height,
+        ]);
     });
 }
 class MapOverlayCache {
@@ -178,7 +207,11 @@ class MapOverlayCache {
             diffToDelete.push(value.rect);
         }
         if (diffToAdd.length > 0 || diffToDelete.length > 0) {
-            utils_1.asyncExec("HMSMap", "updateOverlappingHTMLElements", [this.mapDivId, diffToAdd, diffToDelete]);
+            (0, utils_1.asyncExec)("HMSMap", "updateOverlappingHTMLElements", [
+                this.mapDivId,
+                diffToAdd,
+                diffToDelete,
+            ]);
         }
         this.lastRectsRecord.clear();
         this.lastRectsRecord = new Map(this.rects);
@@ -219,7 +252,11 @@ class MapOverlayCache {
         if (map.intersects(curr) && this.isAboveMap(element)) {
             let val = this.rects.get(curr.hashCode());
             if (val == undefined) {
-                this.rects.set(curr.hashCode(), { rect: curr, visited: true, count: 1 });
+                this.rects.set(curr.hashCode(), {
+                    rect: curr,
+                    visited: true,
+                    count: 1,
+                });
             }
             else {
                 val.count = val.visited ? val.count + 1 : 1;
@@ -229,11 +266,15 @@ class MapOverlayCache {
         }
     }
     isAboveMap(element) {
-        const isParentOfMap = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_CONTAINED_BY;
+        const isParentOfMap = element.compareDocumentPosition(this.mapElement) &
+            Node.DOCUMENT_POSITION_CONTAINED_BY;
         const elemZIndex = window.getComputedStyle(element).zIndex;
-        if (!Boolean(isParentOfMap) && !isNaN(parseInt(elemZIndex)) && parseInt(elemZIndex) > 0)
+        if (!Boolean(isParentOfMap) &&
+            !isNaN(parseInt(elemZIndex)) &&
+            parseInt(elemZIndex) > 0)
             return true;
-        const isMapCreatedBefore = element.compareDocumentPosition(this.mapElement) & Node.DOCUMENT_POSITION_PRECEDING;
+        const isMapCreatedBefore = element.compareDocumentPosition(this.mapElement) &
+            Node.DOCUMENT_POSITION_PRECEDING;
         return Boolean(isMapCreatedBefore);
     }
     startInterval() {
@@ -252,19 +293,25 @@ class MapDomChangeListener {
         this.mapDomChangeObserver = this.createObserver();
     }
     addWindowResizeListener() {
-        window.onresize = () => { this.updateWidthAndHeight(); };
+        window.onresize = () => {
+            this.updateWidthAndHeight();
+        };
     }
     removeWindowResizeListener() {
         window.onresize = null;
     }
     createObserver() {
-        return new MutationObserver(mutations => {
+        return new MutationObserver((mutations) => {
             this.updateXAndY();
             this.updateWidthAndHeight();
         });
     }
     startListener() {
-        this.mapDomChangeObserver.observe(document.body, { attributes: true, childList: true, subtree: true });
+        this.mapDomChangeObserver.observe(document.body, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+        });
         this.addWindowResizeListener();
     }
     stopListener() {
@@ -272,9 +319,14 @@ class MapDomChangeListener {
         this.removeWindowResizeListener();
     }
     updateWidthAndHeight() {
-        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
-        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
-        if (this.mapDivRectCache.width != width || this.mapDivRectCache.height != height) {
+        const width = parseInt(window
+            .getComputedStyle(this.mapElement, null)
+            .getPropertyValue("width"));
+        const height = parseInt(window
+            .getComputedStyle(this.mapElement, null)
+            .getPropertyValue("height"));
+        if (this.mapDivRectCache.width != width ||
+            this.mapDivRectCache.height != height) {
             forceUpdateWidthAndHeight(width, height, this.mapDivId).then(() => {
                 this.mapDivRectCache.width = width;
                 this.mapDivRectCache.height = height;
@@ -326,8 +378,12 @@ class HuaweiMapImpl {
     syncDimensions() {
         if (this.mapElement == null)
             return;
-        const width = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('width'));
-        const height = parseInt(window.getComputedStyle(this.mapElement, null).getPropertyValue('height'));
+        const width = parseInt(window
+            .getComputedStyle(this.mapElement, null)
+            .getPropertyValue("width"));
+        const height = parseInt(window
+            .getComputedStyle(this.mapElement, null)
+            .getPropertyValue("height"));
         forceUpdateWidthAndHeight(width, height, this.divId);
     }
     destroyMap() {
@@ -336,34 +392,45 @@ class HuaweiMapImpl {
             exports.maps.delete(this.id);
             this.overlay.stopInterval();
             this.mapListener.stopListener();
-            return utils_1.asyncExec("HMSMap", "destroyMap", [this.divId]);
+            return (0, utils_1.asyncExec)("HMSMap", "destroyMap", [this.divId]);
         });
     }
     hideMap() {
         return __awaiter(this, void 0, void 0, function* () {
             this.overlay.stopInterval();
             this.mapListener.startListener();
-            return utils_1.asyncExec("HMSMap", "hideMap", [this.divId]);
+            return (0, utils_1.asyncExec)("HMSMap", "hideMap", [this.divId]);
         });
     }
     on(event, callback) {
         return __awaiter(this, void 0, void 0, function* () {
             const fixedFunctionNameForJavaScript = `${event}_${this.id}`;
             const fixedFunctionNameForJava = `set${event[0].toUpperCase()}${event.substr(1)}Listener`;
-            return utils_1.asyncExec('HMSMap', 'mapOptions', [this.divId, 'setListener', fixedFunctionNameForJava, { 'content': callback.toString() }])
-                .then(value => {
-                    window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
-                }).catch(err => console.log(err));
+            return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+                this.divId,
+                "setListener",
+                fixedFunctionNameForJava,
+                { content: callback.toString() },
+            ])
+                .then((value) => {
+                window.subscribeHMSEvent(fixedFunctionNameForJavaScript, callback);
+            })
+                .catch((err) => console.log(err));
         });
     }
     setMapPointersEnabled(mapPointersEnabled) {
         return __awaiter(this, void 0, void 0, function* () {
-            return utils_1.asyncExec('HMSMap', 'setMapPointersEnabled', [this.divId, mapPointersEnabled]);
+            return (0, utils_1.asyncExec)("HMSMap", "setMapPointersEnabled", [
+                this.divId,
+                mapPointersEnabled,
+            ]);
         });
     }
     isMapPointersEnabled() {
         return __awaiter(this, void 0, void 0, function* () {
-            const json = yield utils_1.asyncExec('HMSMap', 'isMapPointersEnabled', [this.divId]);
+            const json = yield (0, utils_1.asyncExec)("HMSMap", "isMapPointersEnabled", [
+                this.divId,
+            ]);
             return json.result;
         });
     }
@@ -371,17 +438,39 @@ class HuaweiMapImpl {
         return __awaiter(this, void 0, void 0, function* () {
             if (!circleOptions["center"])
                 return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.CENTER_PROPERTY_MUST_DEFINED));
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "CIRCLE", circleOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "CIRCLE",
+                circleOptions,
+            ]);
             const circle = new circle_1.CircleImpl(this.divId, this.id, componentId);
             this.components.set(circle.getId(), circle);
             return circle;
+        });
+    }
+    addHeatMap(heatMapOptions) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!heatMapOptions["dataset"])
+                return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.CENTER_PROPERTY_MUST_DEFINED));
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "HEAT_MAP",
+                heatMapOptions,
+            ]);
+            const heat_map = new heatMap_1.HeatMapImpl(this.divId, this.id, componentId);
+            this.components.set(heat_map.getId(), heat_map);
+            return heat_map;
         });
     }
     addMarker(markerOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!markerOptions["position"])
                 return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "MARKER", markerOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "MARKER",
+                markerOptions,
+            ]);
             const marker = new marker_1.MarkerImpl(this.divId, this.id, componentId);
             this.components.set(marker.getId(), marker);
             return marker;
@@ -391,7 +480,11 @@ class HuaweiMapImpl {
         return __awaiter(this, void 0, void 0, function* () {
             if (!groundOverlayOptions["position"])
                 return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.POSITION_PROPERTY_MUST_DEFINED));
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "GROUND_OVERLAY", groundOverlayOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "GROUND_OVERLAY",
+                groundOverlayOptions,
+            ]);
             const groundOverlay = new groundOverlay_1.GroundOverlayImpl(this.divId, this.id, componentId);
             this.components.set(groundOverlay.getId(), groundOverlay);
             return groundOverlay;
@@ -399,7 +492,11 @@ class HuaweiMapImpl {
     }
     addTileOverlay(tileOverlayOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "TILE_OVERLAY", tileOverlayOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "TILE_OVERLAY",
+                tileOverlayOptions,
+            ]);
             const tileOverlay = new tileOverlay_1.TileOverlayImpl(this.divId, this.id, componentId);
             this.components.set(tileOverlay.getId(), tileOverlay);
             return tileOverlay;
@@ -409,7 +506,11 @@ class HuaweiMapImpl {
         return __awaiter(this, void 0, void 0, function* () {
             if (!polygonOptions["points"])
                 return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "POLYGON", polygonOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "POLYGON",
+                polygonOptions,
+            ]);
             const polygon = new polygon_1.PolygonImpl(this.divId, this.id, componentId);
             this.components.set(polygon.getId(), polygon);
             return polygon;
@@ -419,7 +520,11 @@ class HuaweiMapImpl {
         return __awaiter(this, void 0, void 0, function* () {
             if (!polylineOptions["points"])
                 return Promise.reject(interfaces_1.ErrorCodes.toString(interfaces_1.ErrorCodes.POINTS_PROPERTY_MUST_DEFINED));
-            const componentId = yield utils_1.asyncExec('HMSMap', 'addComponent', [this.divId, "POLYLINE", polylineOptions]);
+            const componentId = yield (0, utils_1.asyncExec)("HMSMap", "addComponent", [
+                this.divId,
+                "POLYLINE",
+                polylineOptions,
+            ]);
             const polyline = new polyline_1.PolylineImpl(this.divId, this.id, componentId);
             this.components.set(polyline.getId(), polyline);
             return polyline;
@@ -446,25 +551,25 @@ class HuaweiMapImpl {
     }
     clear() {
         this.components.clear();
-        return this.getHuaweiMapOptions('clear');
+        return this.getHuaweiMapOptions("clear");
     }
     resetMinMaxZoomPreference() {
-        return this.getHuaweiMapOptions('resetMinMaxZoomPreference');
+        return this.getHuaweiMapOptions("resetMinMaxZoomPreference");
     }
     stopAnimation() {
-        return this.getHuaweiMapOptions('stopAnimation');
+        return this.getHuaweiMapOptions("stopAnimation");
     }
     getCameraPosition() {
-        return this.getHuaweiMapOptions('getCameraPosition');
+        return this.getHuaweiMapOptions("getCameraPosition");
     }
     getMapType() {
-        return this.getHuaweiMapOptions('getMapType');
+        return this.getHuaweiMapOptions("getMapType");
     }
     getMaxZoomLevel() {
-        return this.getHuaweiMapOptions('getMaxZoomLevel');
+        return this.getHuaweiMapOptions("getMaxZoomLevel");
     }
     getMinZoomLevel() {
-        return this.getHuaweiMapOptions('getMinZoomLevel');
+        return this.getHuaweiMapOptions("getMinZoomLevel");
     }
     getProjection() {
         return this.projection;
@@ -473,64 +578,99 @@ class HuaweiMapImpl {
         return this.uiSettings;
     }
     isBuildingsEnabled() {
-        return this.getHuaweiMapOptions('isBuildingsEnabled');
+        return this.getHuaweiMapOptions("isBuildingsEnabled");
+    }
+    isDark() {
+        return this.getHuaweiMapOptions("isDark");
     }
     isMyLocationEnabled() {
-        return this.getHuaweiMapOptions('isMyLocationEnabled');
+        return this.getHuaweiMapOptions("isMyLocationEnabled");
     }
     isTrafficEnabled() {
-        return this.getHuaweiMapOptions('isTrafficEnabled');
+        return this.getHuaweiMapOptions("isTrafficEnabled");
     }
     isIndoorEnabled() {
-        return this.getHuaweiMapOptions('isIndoorEnabled');
+        return this.getHuaweiMapOptions("isIndoorEnabled");
     }
     setBuildingsEnabled(buildingsEnabled) {
-        return this.setHuaweiMapOptions('setBuildingsEnabled', { 'buildingsEnabled': buildingsEnabled });
+        return this.setHuaweiMapOptions("setBuildingsEnabled", {
+            buildingsEnabled: buildingsEnabled,
+        });
+    }
+    setDarkEnabled(darkEnabled) {
+        return this.setHuaweiMapOptions("darkEnabled", {
+            darkEnabled: darkEnabled,
+        });
     }
     setContentDescription(contentDescription) {
-        return this.setHuaweiMapOptions('setContentDescription', { 'contentDescription': contentDescription });
+        return this.setHuaweiMapOptions("setContentDescription", {
+            contentDescription: contentDescription,
+        });
     }
     setInfoWindowAdapter(infoWindowAdapter) {
-        return this.setHuaweiMapOptions('setInfoWindowAdapter', { 'infoWindowAdapter': infoWindowAdapter });
+        return this.setHuaweiMapOptions("setInfoWindowAdapter", {
+            infoWindowAdapter: infoWindowAdapter,
+        });
     }
     setLatLngBoundsForCameraTarget(latLngBounds) {
-        return this.setHuaweiMapOptions('setLatLngBoundsForCameraTarget', { 'latLngBounds': latLngBounds });
+        return this.setHuaweiMapOptions("setLatLngBoundsForCameraTarget", {
+            latLngBounds: latLngBounds,
+        });
     }
     setLocationSource(locationSource) {
-        return this.setHuaweiMapOptions('setLocationSource', { 'locationSource': locationSource });
+        return this.setHuaweiMapOptions("setLocationSource", {
+            locationSource: locationSource,
+        });
     }
     setMapStyle(mapStyle) {
-        return this.setHuaweiMapOptions('setMapStyle', { 'mapStyle': mapStyle.getResourceName() });
+        return this.setHuaweiMapOptions("setMapStyle", {
+            mapStyle: mapStyle.getResourceName(),
+        });
     }
     setMapType(mapType) {
-        return this.setHuaweiMapOptions('setMapType', { 'mapType': mapType });
+        return this.setHuaweiMapOptions("setMapType", { mapType: mapType });
     }
     setMarkersClustering(markersClustering) {
-        return this.setHuaweiMapOptions('setMarkersClustering', { 'markersClustering': markersClustering });
+        return this.setHuaweiMapOptions("setMarkersClustering", {
+            markersClustering: markersClustering,
+        });
     }
     setMaxZoomPreference(maxZoomPreference) {
-        return this.setHuaweiMapOptions('setMaxZoomPreference', { 'maxZoomPreference': maxZoomPreference });
+        return this.setHuaweiMapOptions("setMaxZoomPreference", {
+            maxZoomPreference: maxZoomPreference,
+        });
     }
     setMinZoomPreference(minZoomPreference) {
-        return this.setHuaweiMapOptions('setMinZoomPreference', { 'minZoomPreference': minZoomPreference });
+        return this.setHuaweiMapOptions("setMinZoomPreference", {
+            minZoomPreference: minZoomPreference,
+        });
     }
     setMyLocationEnabled(myLocationEnabled) {
-        return this.setHuaweiMapOptions('setMyLocationEnabled', { 'myLocationEnabled': myLocationEnabled });
+        return this.setHuaweiMapOptions("setMyLocationEnabled", {
+            myLocationEnabled: myLocationEnabled,
+        });
     }
     setPadding(left, top, right, bottom) {
-        return this.setHuaweiMapOptions('setPadding', { 'left': left, 'top': top, 'right': right, 'bottom': bottom });
+        return this.setHuaweiMapOptions("setPadding", {
+            left: left,
+            top: top,
+            right: right,
+            bottom: bottom,
+        });
     }
     setTrafficEnabled(trafficEnabled) {
-        return this.setHuaweiMapOptions('setTrafficEnabled', { 'trafficEnabled': trafficEnabled });
+        return this.setHuaweiMapOptions("setTrafficEnabled", {
+            trafficEnabled: trafficEnabled,
+        });
     }
     setPointToCenter(x, y) {
-        return this.setHuaweiMapOptions('setPointToCenter', { 'x': x, 'y': y });
+        return this.setHuaweiMapOptions("setPointToCenter", { x: x, y: y });
     }
     setStyleId(styleId) {
-        return this.setHuaweiMapOptions('setStyleId', { 'styleId': styleId });
+        return this.setHuaweiMapOptions("setStyleId", { styleId: styleId });
     }
     previewId(previewId) {
-        return this.setHuaweiMapOptions('previewId', { 'previewId': previewId });
+        return this.setHuaweiMapOptions("previewId", { previewId: previewId });
     }
     getComponent(key) {
         return this.components.get(key);
@@ -541,7 +681,7 @@ class HuaweiMapImpl {
     snapshot(onReadyCallback) {
         const eventName = `${interfaces_1.MapEvent.ON_SNAPSHOT_READY_CALLBACK}_${this.id}`;
         window.subscribeHMSEvent(eventName, onReadyCallback);
-        return this.getHuaweiMapOptions('snapshot');
+        return this.getHuaweiMapOptions("snapshot");
     }
     // INTERNAL INTERNAL INTERNAL
     removeComponent(key) {
@@ -554,11 +694,21 @@ class HuaweiMapImpl {
         }
     }
     setHuaweiMapOptions(func, props) {
-        return utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, 'setHuaweiMapOptions', func, props]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            this.divId,
+            "setHuaweiMapOptions",
+            func,
+            props,
+        ]);
     }
     getHuaweiMapOptions(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, 'getHuaweiMapOptions', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+                this.divId,
+                "getHuaweiMapOptions",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }
@@ -568,92 +718,139 @@ class UiSettingsImpl {
         this.mapDivId = mapDivId;
     }
     isCompassEnabled() {
-        return this.getUiSettings('isCompassEnabled');
+        return this.getUiSettings("isCompassEnabled");
     }
     isIndoorLevelPickerEnabled() {
-        return this.getUiSettings('isIndoorLevelPickerEnabled');
+        return this.getUiSettings("isIndoorLevelPickerEnabled");
     }
     isMapToolbarEnabled() {
-        return this.getUiSettings('isMapToolbarEnabled');
+        return this.getUiSettings("isMapToolbarEnabled");
     }
     isMyLocationButtonEnabled() {
-        return this.getUiSettings('isMyLocationButtonEnabled');
+        return this.getUiSettings("isMyLocationButtonEnabled");
     }
     isRotateGesturesEnabled() {
-        return this.getUiSettings('isRotateGesturesEnabled');
+        return this.getUiSettings("isRotateGesturesEnabled");
     }
     isScrollGesturesEnabled() {
-        return this.getUiSettings('isScrollGesturesEnabled');
+        return this.getUiSettings("isScrollGesturesEnabled");
     }
     isScrollGesturesEnabledDuringRotateOrZoom() {
-        return this.getUiSettings('isScrollGesturesEnabledDuringRotateOrZoom');
+        return this.getUiSettings("isScrollGesturesEnabledDuringRotateOrZoom");
     }
     isTiltGesturesEnabled() {
-        return this.getUiSettings('isTiltGesturesEnabled');
+        return this.getUiSettings("isTiltGesturesEnabled");
     }
     isZoomControlsEnabled() {
-        return this.getUiSettings('isZoomControlsEnabled');
+        return this.getUiSettings("isZoomControlsEnabled");
     }
     isZoomGesturesEnabled() {
-        return this.getUiSettings('isZoomGesturesEnabled');
+        return this.getUiSettings("isZoomGesturesEnabled");
     }
     setAllGesturesEnabled(allGesturesEnabled) {
-        return this.setUiSettings('setAllGesturesEnabled', { 'allGesturesEnabled': allGesturesEnabled });
+        return this.setUiSettings("setAllGesturesEnabled", {
+            allGesturesEnabled: allGesturesEnabled,
+        });
     }
     setCompassEnabled(compassEnabled) {
-        return this.setUiSettings('setCompassEnabled', { 'compassEnabled': compassEnabled });
+        return this.setUiSettings("setCompassEnabled", {
+            compassEnabled: compassEnabled,
+        });
     }
     setIndoorLevelPickerEnabled(indoorLevelPickerEnabled) {
-        return this.setUiSettings('setIndoorLevelPickerEnabled', { 'indoorLevelPickerEnabled': indoorLevelPickerEnabled });
+        return this.setUiSettings("setIndoorLevelPickerEnabled", {
+            indoorLevelPickerEnabled: indoorLevelPickerEnabled,
+        });
     }
     setMapToolbarEnabled(mapToolbarEnabled) {
-        return this.setUiSettings('setMapToolbarEnabled', { 'mapToolbarEnabled': mapToolbarEnabled });
+        return this.setUiSettings("setMapToolbarEnabled", {
+            mapToolbarEnabled: mapToolbarEnabled,
+        });
     }
     setMyLocationButtonEnabled(myLocationButtonEnabled) {
-        return this.setUiSettings('setMyLocationButtonEnabled', { 'myLocationButtonEnabled': myLocationButtonEnabled });
+        return this.setUiSettings("setMyLocationButtonEnabled", {
+            myLocationButtonEnabled: myLocationButtonEnabled,
+        });
     }
     setRotateGesturesEnabled(rotateGesturesEnabled) {
-        return this.setUiSettings("setRotateGesturesEnabled", { 'rotateGesturesEnabled': rotateGesturesEnabled });
+        return this.setUiSettings("setRotateGesturesEnabled", {
+            rotateGesturesEnabled: rotateGesturesEnabled,
+        });
     }
     setScrollGesturesEnabled(scrollGesturesEnabled) {
-        return this.setUiSettings('setScrollGesturesEnabled', { 'scrollGesturesEnabled': scrollGesturesEnabled });
+        return this.setUiSettings("setScrollGesturesEnabled", {
+            scrollGesturesEnabled: scrollGesturesEnabled,
+        });
     }
     setScrollGesturesEnabledDuringRotateOrZoom(scrollGesturesEnabledDuringRotateOrZoom) {
-        return this.setUiSettings('setScrollGesturesEnabledDuringRotateOrZoom', { 'scrollGesturesEnabledDuringRotateOrZoom': scrollGesturesEnabledDuringRotateOrZoom });
+        return this.setUiSettings("setScrollGesturesEnabledDuringRotateOrZoom", {
+            scrollGesturesEnabledDuringRotateOrZoom: scrollGesturesEnabledDuringRotateOrZoom,
+        });
     }
     setTiltGesturesEnabled(tiltGesturesEnabled) {
-        return this.setUiSettings('setTiltGesturesEnabled', { 'tiltGesturesEnabled': tiltGesturesEnabled });
+        return this.setUiSettings("setTiltGesturesEnabled", {
+            tiltGesturesEnabled: tiltGesturesEnabled,
+        });
     }
     setZoomControlsEnabled(zoomControlsEnabled) {
-        return this.setUiSettings('setZoomControlsEnabled', { 'zoomControlsEnabled': zoomControlsEnabled });
+        return this.setUiSettings("setZoomControlsEnabled", {
+            zoomControlsEnabled: zoomControlsEnabled,
+        });
     }
     setZoomGesturesEnabled(zoomGesturesEnabled) {
-        return this.setUiSettings('setZoomGesturesEnabled', { 'zoomGesturesEnabled': zoomGesturesEnabled });
+        return this.setUiSettings("setZoomGesturesEnabled", {
+            zoomGesturesEnabled: zoomGesturesEnabled,
+        });
     }
     setGestureScaleByMapCenter(gestureScaleByMapCenterEnabled) {
-        return this.setUiSettings('setGestureScaleByMapCenter', { 'gestureScaleByMapCenterEnabled': gestureScaleByMapCenterEnabled });
+        return this.setUiSettings("setGestureScaleByMapCenter", {
+            gestureScaleByMapCenterEnabled: gestureScaleByMapCenterEnabled,
+        });
     }
     setMarkerClusterColor(markerClusterColor) {
-        return this.setUiSettings('setMarkerClusterColor', { 'markerClusterColor': markerClusterColor });
+        return this.setUiSettings("setMarkerClusterColor", {
+            markerClusterColor: markerClusterColor,
+        });
     }
     setMarkerClusterIcon(markerClusterIcon) {
-        return this.setUiSettings('setMarkerClusterIcon', { 'markerClusterIcon': markerClusterIcon });
+        return this.setUiSettings("setMarkerClusterIcon", {
+            markerClusterIcon: markerClusterIcon,
+        });
     }
     setMarkerClusterTextColor(markerClusterTextColor) {
-        return this.setUiSettings('setMarkerClusterTextColor', { 'markerClusterTextColor': markerClusterTextColor });
+        return this.setUiSettings("setMarkerClusterTextColor", {
+            markerClusterTextColor: markerClusterTextColor,
+        });
     }
     setLogoPosition(logoPosition) {
-        return this.setUiSettings('setLogoPosition', { 'logoPosition': logoPosition });
+        return this.setUiSettings("setLogoPosition", {
+            logoPosition: logoPosition,
+        });
     }
     setLogoPadding(paddingStart, paddingTop, paddingEnd, paddingBottom) {
-        return this.setUiSettings('setLogoPadding', { 'paddingStart': paddingStart, 'paddingTop': paddingTop, 'paddingEnd': paddingEnd, 'paddingBottom': paddingBottom });
+        return this.setUiSettings("setLogoPadding", {
+            paddingStart: paddingStart,
+            paddingTop: paddingTop,
+            paddingEnd: paddingEnd,
+            paddingBottom: paddingBottom,
+        });
     }
     setUiSettings(func, props) {
-        return utils_1.asyncExec('HMSMap', 'mapOptions', [this.mapDivId, 'setUiSettings', func, props]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            this.mapDivId,
+            "setUiSettings",
+            func,
+            props,
+        ]);
     }
     getUiSettings(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "mapOptions", [this.mapDivId, 'getUiSettings', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+                this.mapDivId,
+                "getUiSettings",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }
@@ -663,42 +860,59 @@ class CameraUpdateImpl {
         this.event = "";
     }
     moveCamera(mapId) {
-        return utils_1.asyncExec('HMSMap', 'mapOptions', [mapId, "moveCamera", this.event, this.props]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            mapId,
+            "moveCamera",
+            this.event,
+            this.props,
+        ]);
     }
     animateCamera(mapId, props) {
-        return utils_1.asyncExec('HMSMap', 'mapOptions', [mapId, "animateCamera", this.event, Object.assign(Object.assign({}, this.props), props)]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            mapId,
+            "animateCamera",
+            this.event,
+            Object.assign(Object.assign({}, this.props), props),
+        ]);
     }
 }
 class CameraUpdateFactory {
-    constructor() {
-    }
+    constructor() { }
     static newCameraPosition(cameraPosition) {
-        return this.constructCameraUpdateImpl("newCameraPosition", { 'cameraPosition': cameraPosition });
+        return this.constructCameraUpdateImpl("newCameraPosition", {
+            cameraPosition: cameraPosition,
+        });
     }
     static newLatLng(latLng) {
-        return this.constructCameraUpdateImpl("newLatLng", { 'latLng': latLng });
+        return this.constructCameraUpdateImpl("newLatLng", { latLng: latLng });
     }
     static newLatLngBounds(latLngBounds, padding, width, height) {
         let props = {};
-        props['bounds'] = latLngBounds;
-        props['padding'] = padding;
+        props["bounds"] = latLngBounds;
+        props["padding"] = padding;
         if (width && height) {
-            props['width'] = width;
-            props['height'] = height;
+            props["width"] = width;
+            props["height"] = height;
         }
         return this.constructCameraUpdateImpl("newLatLngBounds", props);
     }
     static newLatLngZoom(latLng, zoom) {
-        return this.constructCameraUpdateImpl("newLatLngZoom", { "latLng": latLng, "zoom": zoom });
+        return this.constructCameraUpdateImpl("newLatLngZoom", {
+            latLng: latLng,
+            zoom: zoom,
+        });
     }
     static scrollBy(xPixel, yPixel) {
-        return this.constructCameraUpdateImpl("scrollBy", { 'xPixel': xPixel, 'yPixel': yPixel });
+        return this.constructCameraUpdateImpl("scrollBy", {
+            xPixel: xPixel,
+            yPixel: yPixel,
+        });
     }
     static zoomBy(amount, focus) {
         let props = {};
-        props['amount'] = amount;
+        props["amount"] = amount;
         if (focus)
-            props['focus'] = focus;
+            props["focus"] = focus;
         return this.constructCameraUpdateImpl("zoomBy", props);
     }
     static zoomIn() {
@@ -708,7 +922,7 @@ class CameraUpdateFactory {
         return this.constructCameraUpdateImpl("zoomOut", {});
     }
     static zoomTo(zoom) {
-        return this.constructCameraUpdateImpl("zoomTo", { "zoom": zoom });
+        return this.constructCameraUpdateImpl("zoomTo", { zoom: zoom });
     }
     static constructCameraUpdateImpl(event, props) {
         let cameraUpdate = new CameraUpdateImpl();
@@ -723,13 +937,28 @@ class ProjectionImpl {
         this.divId = divId;
     }
     fromScreenLocation(point) {
-        return utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "fromScreenLocation", { "point": point }]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "fromScreenLocation",
+            { point: point },
+        ]);
     }
     getVisibleRegion() {
-        return utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "getVisibleRegion", {}]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "getVisibleRegion",
+            {},
+        ]);
     }
     toScreenLocation(latLng) {
-        return utils_1.asyncExec("HMSMap", "mapOptions", [this.divId, "projections", "toScreenLocation", { "latLng": latLng }]);
+        return (0, utils_1.asyncExec)("HMSMap", "mapOptions", [
+            this.divId,
+            "projections",
+            "toScreenLocation",
+            { latLng: latLng },
+        ]);
     }
 }
 class MapStyleOptions {

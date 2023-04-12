@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.map.utils.json;
 
@@ -21,6 +21,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,6 +40,7 @@ import com.huawei.hms.maps.model.Cap;
 import com.huawei.hms.maps.model.CircleOptions;
 import com.huawei.hms.maps.model.CustomCap;
 import com.huawei.hms.maps.model.GroundOverlayOptions;
+import com.huawei.hms.maps.model.HeatMapOptions;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.LatLngBounds;
 import com.huawei.hms.maps.model.MarkerOptions;
@@ -70,6 +72,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -98,6 +101,7 @@ public final class JsonToObject {
             .zOrderOnTop(json.optBoolean("zOrderOnTop", false))
             .liteMode(json.optBoolean("liteMode", false))
             .ambientEnabled(json.optBoolean("ambientEnabled", false))
+            .dark(json.optBoolean("isDark", false))
             .minZoomPreference((float) json.optDouble("minZoomPreference", 0.0))
             .maxZoomPreference((float) json.optDouble("maxZoomPreference", 22.0))
             .camera(constructCameraPosition(json.optJSONObject("cameraPosition")))
@@ -120,13 +124,6 @@ public final class JsonToObject {
             .bearing((float) json.optDouble("bearing", 0.0))
             .tilt((float) json.optDouble("tilt", 0.0))
             .build();
-    }
-
-    public static LatLng constructLatLng(JSONObject json) {
-        if (json != null && json.has("lat") && json.has("lng")) {
-            return new LatLng((float) json.optDouble("lat"), (float) json.optDouble("lng"));
-        }
-        return null;
     }
 
     public static LatLngBounds constructLatLngBounds(JSONObject json) {
@@ -171,7 +168,7 @@ public final class JsonToObject {
         JSONObject anchor = optJSONObject(json, "anchorMarker", new JSONObject());
         JSONObject infoWindowAnchor = optJSONObject(json, "infoWindowAnchor", new JSONObject());
         return new MarkerOptions().anchorMarker((float) anchor.optDouble("u", 0.5F),
-            (float) anchor.optDouble("v", 1.0F))
+                (float) anchor.optDouble("v", 1.0F))
             .infoWindowAnchor((float) infoWindowAnchor.optDouble("u", 0.5F),
                 (float) infoWindowAnchor.optDouble("v", 0.0F))
             .alpha((float) json.optDouble("alpha", 1))
@@ -197,7 +194,7 @@ public final class JsonToObject {
                     if (json.has("asset")) {
                         JSONObject asset = json.optJSONObject("asset");
                         AssetManager manager = context.getAssets();
-                        try (InputStream inputStream = manager.open(asset.optString("fileName"));) {
+                        try (InputStream inputStream = manager.open(asset.optString("fileName"))) {
                             bitmap = BitmapFactory.decodeStream(inputStream);
                         } catch (final OutOfMemoryError e) {
                             Log.d(TAG, e.getLocalizedMessage());
@@ -256,6 +253,34 @@ public final class JsonToObject {
         return points;
     }
 
+    public static LatLng[] constructLatLngList(JSONArray arr) {
+
+        LatLng[] latLngArray = new LatLng[arr.length()];
+        for (int i = 0; i < arr.length(); i++) {
+            latLngArray[i] = constructLatLng(arr.optJSONObject(i));
+        }
+        return latLngArray;
+    }
+
+    public static LatLng constructLatLng(JSONObject json) {
+        if (json != null && json.has("lat") && json.has("lng")) {
+            return new LatLng((float) json.optDouble("lat"), (float) json.optDouble("lng"));
+        }
+        return null;
+    }
+
+    public static Map<Float, Float> constructObjectToMap(JSONObject json) throws JSONException{
+        Map<Float, Float> map = new HashMap<>();
+        Iterator<String> keys = json.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            float floatKey = Float.parseFloat(key);
+            float value = (float) json.getDouble(key);
+            map.put(floatKey, value);
+        }
+        return map;
+    }
+
     public static PolygonOptions constructPolygonOptions(JSONObject json) throws JSONException {
         PolygonOptions polygonOptions = new PolygonOptions().addAll(constructPoints(json.getJSONArray("points")))
             .clickable(json.optBoolean("clickable", false))
@@ -272,6 +297,85 @@ public final class JsonToObject {
             polygonOptions.addHole(holes.get(i));
         }
         return polygonOptions;
+    }
+
+    private static HeatMapOptions.RadiusUnit constructStringToRadiusUnit(String radiusUnit) {
+        if (radiusUnit.equals("meter")) {
+            return HeatMapOptions.RadiusUnit.METER;
+        }
+        return HeatMapOptions.RadiusUnit.PIXEL;
+    }
+
+    public static int[] jsonArrayToArray(JSONArray jsonArray) throws JSONException {
+        int[] array = new int[jsonArray.length()];
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Object value = jsonArray.get(i);
+            if (value instanceof JSONArray) {
+                value = jsonArrayToArray((JSONArray) value);
+            }
+            array[i] = (int) value;
+        }
+        return array;
+    }
+
+    public static int getColorFromRgbaArray(int[] array) {
+        if (array.length == 3) {
+            return Color.rgb(array[0], array[1], array[2]);
+        }
+        return Color.argb(array[0], array[1], array[2], array[3]);
+    }
+
+    public static Map<Float, Integer> constructObjectToMap2(JSONObject json) throws JSONException{
+        Map<Float, Integer> map = new HashMap<>();
+        Iterator<String> keys = json.keys();
+        while (keys.hasNext()) {
+            String key = keys.next();
+            float floatKey = Float.parseFloat(key);
+            JSONArray value = json.getJSONArray(key);
+            map.put(floatKey, getColorFromRgbaArray(jsonArrayToArray(value)));
+        }
+        return map;
+    }
+
+    public static HeatMapOptions constructHeatMapOptions(JSONObject json) throws JSONException {
+        HeatMapOptions heatMapOptions = new HeatMapOptions();
+
+        if (json.has("color")) {
+            heatMapOptions.color(constructObjectToMap2(json.getJSONObject("color")));
+        }
+        if (json.has("opacities")) {
+            heatMapOptions.opacity(constructObjectToMap(json.getJSONObject("opacities")));
+        }
+        if (json.has("radiuses")) {
+            heatMapOptions.radius(constructObjectToMap(json.getJSONObject("radiuses")));
+        }
+        if (json.has("intensities")) {
+            heatMapOptions.intensity(constructObjectToMap(json.getJSONObject("intensities")));
+        }
+        if (json.has("intensity")) {
+            heatMapOptions.intensity((float) json.getDouble("intensity"));
+        }
+        if (json.has("radius")) {
+            heatMapOptions.radius((float) json.getDouble("radius"));
+        }
+        if (json.has("radiusUnit")) {
+            heatMapOptions.radiusUnit(constructStringToRadiusUnit(json.getString("radiusUnit")));
+        }
+        if (json.has("opacity")) {
+            heatMapOptions.opacity((float) json.getDouble("opacity"));
+        }
+        if (json.has("visible")) {
+            heatMapOptions.visible(json.getBoolean("visible"));
+        }
+        if (json.has("resourceId")) {
+            heatMapOptions.setResourceId(json.getInt("resourceId"));
+        }
+        if (json.has("datasetId")) {
+            heatMapOptions.dataSet(json.getInt("datasetId"));
+        }
+        heatMapOptions.dataSet(json.getString("dataset"));
+
+        return heatMapOptions;
     }
 
     public static List<List<LatLng>> constructHoles(JSONArray arr) {
@@ -321,11 +425,10 @@ public final class JsonToObject {
             .zIndex((float) json.optDouble("zIndex", 0.0F));
     }
 
-    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json)
-        throws JSONException {
+    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json) throws JSONException {
         JSONObject anchor = optJSONObject(json, "anchor", new JSONObject());
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions().anchor(
-            (float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
+                (float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
             .bearing((float) json.optDouble("bearing", 0.0F))
             .clickable(json.optBoolean("clickable", false))
             .image(constructBitmapDescriptor(context, json.optJSONObject("image")))
@@ -427,7 +530,9 @@ public final class JsonToObject {
 
     private static byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        if(bitmap != null){
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
         return stream.toByteArray();
     }
 
@@ -457,8 +562,7 @@ public final class JsonToObject {
         return animationSet;
     }
 
-    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context)
-        throws JSONException {
+    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context) throws JSONException {
         return new TileOverlayOptions().tileProvider(constructTileProvider(json.getJSONObject("tileProvider"), context))
             .fadeIn(json.optBoolean("fadeIn", false))
             .transparency((float) json.optDouble("transparency", 0))

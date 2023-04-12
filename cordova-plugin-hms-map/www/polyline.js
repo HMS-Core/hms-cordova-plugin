@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
 
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,89 +34,105 @@ class PolylineImpl {
         this.id = componentId;
     }
     getColor() {
-        return this.getComponentOptions('getColor');
+        return this.getComponentOptions("getColor");
     }
     getEndCap() {
-        return this.parseCap(this.getComponentOptions('getEndCap'));
+        return this.parseCap(this.getComponentOptions("getEndCap"));
     }
     getStartCap() {
-        return this.parseCap(this.getComponentOptions('getStartCap'));
+        return this.parseCap(this.getComponentOptions("getStartCap"));
     }
     getId() {
         return this.id;
     }
     getJointType() {
-        return this.getComponentOptions('getJointType');
+        return this.getComponentOptions("getJointType");
     }
     getPattern() {
-        return this.getComponentOptions('getPattern');
+        return this.getComponentOptions("getPattern");
     }
     getPoints() {
-        return this.getComponentOptions('getPoints');
+        return this.getComponentOptions("getPoints");
     }
     getTag() {
-        return this.getComponentOptions('getTag');
+        return this.getComponentOptions("getTag");
     }
     getWidth() {
-        return this.getComponentOptions('getWidth');
+        return this.getComponentOptions("getWidth");
     }
     getZIndex() {
-        return this.getComponentOptions('getZIndex');
+        return this.getComponentOptions("getZIndex");
     }
     isClickable() {
-        return this.getComponentOptions('isClickable');
+        return this.getComponentOptions("isClickable");
     }
     isGeodesic() {
-        return this.getComponentOptions('isGeodesic');
+        return this.getComponentOptions("isGeodesic");
     }
     isVisible() {
-        return this.getComponentOptions('isVisible');
+        return this.getComponentOptions("isVisible");
     }
     remove() {
-        return utils_1.asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
+        return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     setClickable(clickable) {
-        return this.setComponentOptions("setClickable", { "clickable": clickable });
+        return this.setComponentOptions("setClickable", {
+            clickable: clickable,
+        });
     }
     setColor(color) {
-        return this.setComponentOptions("setColor", { "color": color });
+        return this.setComponentOptions("setColor", { color: color });
     }
     setStartCap(startCap) {
-        return this.setCap(startCap, 'setStartCap');
+        return this.setCap(startCap, "setStartCap");
     }
     setEndCap(endCap) {
-        return this.setCap(endCap, 'setEndCap');
+        return this.setCap(endCap, "setEndCap");
     }
     setGeodesic(geodesic) {
-        return this.setComponentOptions("setGeodesic", { "geodesic": geodesic });
+        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
     }
     setJointType(jointType) {
-        return this.setComponentOptions("setJointType", { "jointType": jointType });
+        return this.setComponentOptions("setJointType", {
+            jointType: jointType,
+        });
     }
     setPattern(pattern) {
-        return this.setComponentOptions("setPattern", { "pattern": pattern });
+        return this.setComponentOptions("setPattern", { pattern: pattern });
     }
     setPoints(points) {
-        return this.setComponentOptions("setPoints", { "points": points });
+        return this.setComponentOptions("setPoints", { points: points });
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { "tag": tag });
+        return this.setComponentOptions("setTag", { tag: tag });
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { "visible": visible });
+        return this.setComponentOptions("setVisible", { visible: visible });
     }
     setWidth(width) {
-        return this.setComponentOptions("setWidth", { "width": width });
+        return this.setComponentOptions("setWidth", { width: width });
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { "zIndex": zIndex });
+        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
     }
     setComponentOptions(func, params) {
-        return utils_1.asyncExec('HMSMap', 'componentOptions', [this.mapDivId, this.id, 'set', func, params]);
+        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+            this.mapDivId,
+            this.id,
+            "set",
+            func,
+            params,
+        ]);
     }
     getComponentOptions(func) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield utils_1.asyncExec("HMSMap", "componentOptions", [this.mapDivId, this.id, 'get', func, {}]);
+            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
+                this.mapDivId,
+                this.id,
+                "get",
+                func,
+                {},
+            ]);
             return result.value;
         });
     }
@@ -135,13 +151,14 @@ class PolylineImpl {
     }
     setCap(cap, methodName) {
         let props = {};
-        props['type'] = cap.getType();
-        if (cap.getType() === Cap.TYPE_CUSTOM_CAP) { // Let's say custom cap
-            props['bitmapDescriptor'] = cap.getBitmapDescriptor();
+        props["type"] = cap.getType();
+        if (cap.getType() === Cap.TYPE_CUSTOM_CAP) {
+            // Let's say custom cap
+            props["bitmapDescriptor"] = cap.getBitmapDescriptor();
             if (cap.getRefWidth() !== null)
-                props['refWidth'] = cap.getRefWidth();
+                props["refWidth"] = cap.getRefWidth();
         }
-        return this.setComponentOptions(methodName, { 'cap': props });
+        return this.setComponentOptions(methodName, { cap: props });
     }
 }
 exports.PolylineImpl = PolylineImpl;
