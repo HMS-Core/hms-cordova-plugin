@@ -1,0 +1,38 @@
+{
+    "name": "cordova-hms-adsprime-demo",
+    "displayName": "HMSAdsPrimeDemo",
+    "version": "13.4.61-302",
+    "description": "A demo application which shows the usage of HMS Ads Prime Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENSE",
+    "readmeFilename": "README.md",
+    "main": "./www/js/index.js",
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "ads",
+        "hms-adsprime",
+        "huawei-ads",
+        "hms",
+        "huawei"
+    ],
+    "devDependencies": {
+        "cordova-android": "^10.1.1"
+    },
+    "cordova": {
+        "plugins": {
+
+        },
+        "platforms": [
+           
+        ]
+    },
+    "files": [
+        "www",
+        "config.xml",
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ]
+}
