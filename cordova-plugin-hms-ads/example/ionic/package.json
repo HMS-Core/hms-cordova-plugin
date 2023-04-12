@@ -1,7 +1,7 @@
 {
     "name": "ionic-hms-ads-demo",
     "description": "A demo application which shows the usage of HMS Ads Plugin",
-    "version": "13.4.58-304",
+    "version": "13.4.61-302",
     "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENSE",
@@ -46,7 +46,7 @@
         "karma-chrome-launcher": "~3.1.0",
         "karma-coverage-istanbul-reporter": "~3.0.2",
         "karma-jasmine": "~3.3.0",
-        "karma-jasmine-html-reporter": "^1.5.0",
+        "karma-jasmine-html-reporter": "^1.7.0",
         "protractor": "~7.0.0",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",

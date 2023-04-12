@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 
 
 var FSUtils = require("./FSUtils");
-//const { require } = require("cordova");
 
 var ROOT_BUILD_GRADLE_FILE = "platforms/android/build.gradle";
 var ROOT_REPOSITORIES_GRADLE_FILE = "platforms/android/repositories.gradle";
@@ -75,7 +74,7 @@ function addAndroidManifestAttribute(param){
 }
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.7.3.300' " + COMMENT;
+    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.8.0.300' " + COMMENT;
     var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 

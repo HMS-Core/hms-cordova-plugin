@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -487,8 +487,10 @@ export interface VastSdkConfiguration{
     vastEventRetryUploadTimes:number
 }
 
-export interface InstallReferrerReq{
-    installChannel ?: String
+export interface AdvertiserInfo{
+    seq:number,
+    key:string,
+    value:string
 }
 
 
@@ -606,7 +608,7 @@ export class HMSAds extends IonicNativePlugin {
         return;
     }
     @Cordova({ otherPromise: true })
-    getInstallReferrer(reqOpt?: InstallReferrerReq): Promise<ReferrerDetails> {
+    getInstallReferrer(installChannel?:string): Promise<ReferrerDetails> {
         return;
     }
     @Cordova({ otherPromise: true })
@@ -968,6 +970,22 @@ export class HMSNativeAd extends IonicNativePlugin {
     continueDownload(): Promise<void> {
         return;
     }
+    @Cordova({ otherPromise: true })
+    showAdvertiserInfoDialog(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    hideAdvertiserInfoDialog(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    hasAdvertiserInfo(): Promise<boolean> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
+        return;
+    }
 }
 
 @Plugin({
@@ -1196,6 +1214,22 @@ export class HMSRollAd extends IonicNativePlugin {
     }
     @Cordova({ otherPromise: true })
     getCallToAction(): Promise<string> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    showAdvertiserInfoDialog(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    hideAdvertiserInfoDialog(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    hasAdvertiserInfo(): Promise<boolean> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
         return;
     }
 }

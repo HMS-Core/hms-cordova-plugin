@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { LayoutBounds, NativeAdLoadOptions, NativeAdOptions, Props, VideoOperatorAspectRatio, NativeAdConfiguration } from './interfaces';
+import { LayoutBounds, NativeAdLoadOptions, NativeAdOptions, Props, VideoOperatorAspectRatio, NativeAdConfiguration, AdvertiserInfo } from './interfaces';
 import { NativeAdEvents } from './HMSConstants';
 import { Ads } from './ads';
 export declare class NativeAlreadyDefinedError extends Error {
@@ -51,6 +51,10 @@ export declare class HMSNativeAd extends Ads {
     recordShowStartEvent(showStartData: any): Promise<boolean>;
     onAdClose(keywords: string[]): Promise<void>;
     getNativeAdConfiguration(): Promise<NativeAdConfiguration>;
+    showAdvertiserInfoDialog(): Promise<void>;
+    hideAdvertiserInfoDialog(): Promise<void>;
+    hasAdvertiserInfo(): Promise<boolean>;
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
     videoOperatorGetAspectRatio(): Promise<VideoOperatorAspectRatio>;
     videoOperatorHasVideo(): Promise<boolean>;
     videoOperatorIsCustomizeOperateEnabled(): Promise<boolean>;

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -59,11 +59,8 @@ $("startClient").onclick = async() => {
 };
 
 $("getReferrerDetails").onclick = () => {
-    var reqOpt = {
-        installChannel : "test",
-    };
-
-    HMSAds.getInstallReferrer(reqOpt)
+    const installChannel = "This is test install channel";
+    HMSAds.getInstallReferrer(installChannel)
         .then((result) => alert("getInstallReferrer :: " + JSON.stringify(result)))
         .catch((error) => alert("getInstallReferrer :: Error!" + error));
 
@@ -274,6 +271,11 @@ $("dislike").onclick = async() => {
     });
     const res = await nativeAd.dislikeAd("Do not like this ad!");
     alert("dislikeAd :: success! " + JSON.stringify(res));
+};
+
+$("hasAdvertiserInfo").onclick = async() => {
+    const result = await nativeAd.hasAdvertiserInfo();
+    alert("hasAdvertiserInfo: " + result);
 };
 
 //VAST

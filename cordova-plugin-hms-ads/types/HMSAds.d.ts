@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ export declare function getAdvertisingIdInfo(): Promise<OaidResult>;
 export declare function referrerClientStartConnection(isTest?: boolean): Promise<number>;
 export declare function referrerClientEndConnection(): Promise<void>;
 export declare function referrerClientIsReady(): Promise<boolean>;
-export declare function getInstallReferrer(reqOpt?: String): Promise<ReferrerDetails>;
+export declare function getInstallReferrer(installChannel?: string): Promise<ReferrerDetails>;
 export declare function initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
 export declare function getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
 export declare function updateSdkServerConfig(slotId: string): Promise<void>;

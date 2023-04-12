@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -77,7 +77,6 @@ export interface AdParam {
 }
 
 
-
 export interface Location {
     lat: number,
     lng: number
@@ -120,10 +119,6 @@ export interface HMSRewardVerifyConfig {
 export interface OaidResult {
     id: string,
     isLimitAdTracingEnabled: boolean
-}
-
-export interface InstallReferrerReq{
-    installChannel ?: String
 }
 
 export interface Duration {
@@ -230,7 +225,7 @@ export interface PlayerConfig {
     isIndustryIconShow?:boolean
 }
 
-export interface VastSdkConfiguration{
+export interface VastSdkConfiguration {
     httpCallTimeoutMs:number,
     httpConnectTimeoutMs:number,
     httpKeepAliveDurationMs:number,
@@ -241,4 +236,10 @@ export interface VastSdkConfiguration{
     vastEventRetryBatchSize:number,
     vastEventRetryIntervalSeconds:number,
     vastEventRetryUploadTimes:number
+}
+
+export interface AdvertiserInfo {
+    seq:number,
+    key:string,
+    value:string
 }

@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.ads.ad.instream;
 
@@ -39,6 +39,7 @@ import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
 import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
 import com.huawei.hms.cordova.ads.utils.FileUtils;
+import com.huawei.hms.cordova.ads.utils.ListToJson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,7 +82,7 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         listener = new PluginRollAdListener(pluginListenerManager, managerId);
 
         instreamAdLoader = new InstreamAdLoader.Builder(context, rollAdLoaderParams.optString("adId")).setTotalDuration(
-            rollAdLoaderParams.optInt("totalDuration"))
+                rollAdLoaderParams.optInt("totalDuration"))
             .setMaxCount(rollAdLoaderParams.optInt("maxDuration"))
             .setInstreamAdLoadListener(listener.getInstreamAdLoadListener())
             .build();
@@ -146,7 +147,7 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         instreamLayoutManager = new PluginLayoutManager(parent, frameLayout, props);
 
     }
-
+    
     public class InstreamAdJsInterface {
 
         public InstreamAdJsInterface() {
@@ -353,6 +354,20 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         promise.success();
     }
 
+    public void showAdvertiserInfoDialog(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        instreamView.showAdvertiserInfoDialog(instreamView, true);
+        promise.success();
+    }
+
+    public void hideAdvertiserInfoDialog(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        instreamView.hideAdvertiserInfoDialog();
+        promise.success();
+    }
+
     public void getAdSource(JSONObject json, final Promise promise) {
         checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
             ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
@@ -414,4 +429,15 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
         promise.success(listener.getCurrentInstreamAd().getCallToAction());
     }
 
+    public void hasAdvertiserInfo(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        promise.success(listener.getCurrentInstreamAd().hasAdvertiserInfo());
+    }
+
+    public void getAdvertiserInfo(JSONObject json, final Promise promise) throws JSONException {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        promise.success(ListToJson.advertiserInfosToJson(listener.getCurrentInstreamAd().getAdvertiserInfo()));
+    }
 }

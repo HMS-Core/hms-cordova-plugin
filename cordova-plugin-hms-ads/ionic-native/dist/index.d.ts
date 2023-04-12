@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -462,8 +462,10 @@ export interface VastSdkConfiguration {
     vastEventRetryIntervalSeconds: number;
     vastEventRetryUploadTimes: number;
 }
-export interface InstallReferrerReq {
-    installChannel?: String;
+export interface AdvertiserInfo {
+    seq: number;
+    key: string;
+    value: string;
 }
 export declare class HMSAdsOriginal extends IonicNativePlugin {
     HMSInterstitialAd: typeof HMSInterstitialAd;
@@ -496,7 +498,7 @@ export declare class HMSAdsOriginal extends IonicNativePlugin {
     referrerClientStartConnection(isTest?: boolean): Promise<number>;
     referrerClientEndConnection(): Promise<void>;
     referrerClientIsReady(): Promise<boolean>;
-    getInstallReferrer(reqOpt?: InstallReferrerReq): Promise<ReferrerDetails>;
+    getInstallReferrer(installChannel?: string): Promise<ReferrerDetails>;
     initVast(vastSdkConfiguration: VastSdkConfiguration): Promise<void>;
     getVastSdkConfiguration(): Promise<VastSdkConfiguration>;
     updateSdkServerConfig(slotId: string): Promise<void>;
@@ -583,6 +585,10 @@ export declare class HMSNativeAdOriginal extends IonicNativePlugin {
     setAllowedNonWifiNetwork(allowed: boolean): Promise<void>;
     cancel(): Promise<void>;
     continueDownload(): Promise<void>;
+    showAdvertiserInfoDialog(): Promise<void>;
+    hideAdvertiserInfoDialog(): Promise<void>;
+    hasAdvertiserInfo(): Promise<boolean>;
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
 }
 export declare class HMSRewardAdOriginal extends IonicNativePlugin {
     on(eventName: RewardAdEvents, callback: (result?: any) => void): void;
@@ -638,6 +644,10 @@ export declare class HMSRollAdOriginal extends IonicNativePlugin {
     isShown(): Promise<boolean>;
     isVideoAd(): Promise<boolean>;
     getCallToAction(): Promise<string>;
+    showAdvertiserInfoDialog(): Promise<void>;
+    hideAdvertiserInfoDialog(): Promise<void>;
+    hasAdvertiserInfo(): Promise<boolean>;
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
 }
 export declare class HMSSplashAdOriginal extends IonicNativePlugin {
     on(eventName: SplashAdEvents, callback: (result?: any) => void): void;

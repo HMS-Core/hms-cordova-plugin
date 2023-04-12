@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 
 import { asyncExec } from './utils'
-import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult,VastSdkConfiguration, InstallReferrerReq } from './interfaces'
+import { HMSRequestOptions,OaidResult, ReferrerDetails,ConsentUpdateResult,VastSdkConfiguration} from './interfaces'
 import { ConsentStatus, DebugNeedConsent, ActivateStyle } from './HMSConstants'
 
 
@@ -119,8 +119,8 @@ export function referrerClientEndConnection(): Promise<void> {
 export function referrerClientIsReady(): Promise<boolean> {
 	return asyncExec('HMSAds', 'InstallReferrerModule', ['referrerClientIsReady']);
 }
-export function getInstallReferrer(reqOpt : InstallReferrerReq): Promise<ReferrerDetails> {
-	return asyncExec('HMSAds', 'InstallReferrerModule', ['getInstallReferrer',reqOpt]);
+export function getInstallReferrer(installChannel?:string): Promise<ReferrerDetails> {
+	return asyncExec('HMSAds', 'InstallReferrerModule', ['getInstallReferrer', installChannel]);
 }
 
 ///////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { LayoutBounds, AdParam, RollAdLoaderParams, RollAdLoadOptions, Props, Duration } from './interfaces'
+import { LayoutBounds, AdParam, RollAdLoaderParams, RollAdLoadOptions, Props, Duration, AdvertiserInfo } from './interfaces'
 import { getInitialPropsOfHTMLElementFrom } from './layout'
 import { RollAdEvents } from './HMSConstants'
 import { Ads } from './ads'
@@ -149,6 +149,13 @@ export class HMSRollAd extends Ads {
         return this.run('setOnInstreamAdClickListener')
     }
 
+    showAdvertiserInfoDialog(): Promise<void> {
+        return this.run('showAdvertiserInfoDialog')
+    }
+    hideAdvertiserInfoDialog(): Promise<void> {
+        return this.run('hideAdvertiserInfoDialog')
+    }
+
     //InstreamAd
     getAdSource(): Promise<string> {
         return this.run('getAdSource')
@@ -180,5 +187,10 @@ export class HMSRollAd extends Ads {
     getCallToAction(): Promise<string> {
         return this.run('getCallToAction')
     }
-
+    hasAdvertiserInfo(): Promise<boolean> {
+        return this.run('hasAdvertiserInfo')
+    }
+    getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
+        return this.run('getAdvertiserInfo')
+    }
 }

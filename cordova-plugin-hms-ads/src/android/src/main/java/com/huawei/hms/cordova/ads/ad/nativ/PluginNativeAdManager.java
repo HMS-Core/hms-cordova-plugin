@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.ads.ad.nativ;
 
@@ -41,6 +41,7 @@ import com.huawei.hms.cordova.ads.basef.handler.Promise;
 import com.huawei.hms.cordova.ads.layout.PluginAdLayout;
 import com.huawei.hms.cordova.ads.layout.PluginLayoutManager;
 import com.huawei.hms.cordova.ads.utils.ErrorAndStateCodes;
+import com.huawei.hms.cordova.ads.utils.ListToJson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -104,7 +105,7 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         try {
             return context.getResources()
                 .getIdentifier((String) PluginNativeAdManager.class.getDeclaredField(
-                    json.optString("template", "NATIVE_AD_SMALL_TEMPLATE")).get(null), "layout",
+                        json.optString("template", "NATIVE_AD_SMALL_TEMPLATE")).get(null), "layout",
                     context.getPackageName());
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, e.getMessage());
@@ -150,7 +151,7 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
     public void loadAd(JSONObject json, final Promise promise) throws JSONException {
         nativeAdConfiguration = Converter.setNativeAdOptions(json.optJSONObject("nativeAdOptions"));
         nativeAdLoader = new NativeAdLoader.Builder(context, json.optString("adId")).setNativeAdLoadedListener(
-            listener.getNativeAdLoadedListener())
+                listener.getNativeAdLoadedListener())
             .setAdListener(listener.getAdListener())
             .setNativeAdOptions(nativeAdConfiguration)
             .build();
@@ -219,7 +220,7 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         private int getDrawableId(Context context) {
             try {
                 return context.getResources().getIdentifier((String) PluginNativeAdManager.class.getDeclaredField(
-                    "NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE").get(null), "drawable",
+                    "NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE").get(null), "drawable", 
                     context.getPackageName());
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 Log.e("PluginNativeAdManager", e.getMessage());
@@ -439,4 +440,25 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         promise.success();
     }
 
+    public void showAdvertiserInfoDialog(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        nativeView.showAdvertiserInfoDialog(nativeView, true);
+        promise.success();
+    }
+
+    public void hideAdvertiserInfoDialog(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        nativeView.hideAdvertiserInfoDialog();
+        promise.success();
+    }
+
+    public void hasAdvertiserInfo(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        promise.success(nativeAd.hasAdvertiserInfo());
+    }
+
+    public void getAdvertiserInfo(JSONObject json, final Promise promise) throws JSONException {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        promise.success(ListToJson.advertiserInfosToJson(nativeAd.getAdvertiserInfo()));
+    }
 }

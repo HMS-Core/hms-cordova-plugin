@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.ads;
 
@@ -31,7 +31,6 @@ import com.huawei.hms.cordova.ads.basef.handler.Promise;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -95,7 +94,7 @@ public class InstallReferrerModule extends CordovaBaseModule {
     @CordovaMethod
     @HMSLog
     public void getInstallReferrer(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
-        JSONObject jsonObject = args.getJSONObject(0);
+        String installChannel = args.optString(0, "This is test install channel");
         if (respCode != InstallReferrerClient.InstallReferrerResponse.OK) {
             promise.success(respCode);
             return;
@@ -103,9 +102,7 @@ public class InstallReferrerModule extends CordovaBaseModule {
         ReferrerDetails referrerDetails = null;
         try {
             referrerDetails = client.getInstallReferrer();
-            if (jsonObject.has("installChannel")){
-                referrerDetails.setInstallChannel(jsonObject.getString("installChannel"));
-            }
+            referrerDetails.setInstallChannel(installChannel);
         } catch (RemoteException | IOException e) {
             Log.e(TAG, "getInstallReferrer() :: error : " + e.getMessage());
         }

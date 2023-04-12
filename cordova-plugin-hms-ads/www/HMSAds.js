@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,6 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getEventProcessor = exports.userAcceptAdLicense = exports.updateSdkServerConfig = exports.getVastSdkConfiguration = exports.initVast = exports.getInstallReferrer = exports.referrerClientIsReady = exports.referrerClientEndConnection = exports.referrerClientStartConnection = exports.getAdvertisingIdInfo = exports.verifyAdId = exports.requestConsentUpdate = exports.setDebugNeedConsent = exports.setConsentStatus = exports.setUnderAgeOfPromise = exports.getTestDeviceId = exports.addTestDeviceId = exports.disableLogger = exports.enableLogger = exports.isAppInstalledNotify = exports.setAppInstalledNotify = exports.setAppActivateStyle = exports.getAppActivateStyle = exports.setConsent = exports.setRequestOptions = exports.getRequestOptions = exports.getSDKVersion = exports.init = exports.on = exports.HMSVast = exports.HMSNativeAd = exports.HMSRollAd = exports.HMSSplashAd = exports.HMSRewardAd = exports.HMSBannerAd = exports.HMSInterstitialAd = void 0;
 const utils_1 = require("./utils");
@@ -136,8 +137,8 @@ function referrerClientIsReady() {
     return (0, utils_1.asyncExec)('HMSAds', 'InstallReferrerModule', ['referrerClientIsReady']);
 }
 exports.referrerClientIsReady = referrerClientIsReady;
-function getInstallReferrer(reqOpt) {
-    return (0, utils_1.asyncExec)('HMSAds', 'InstallReferrerModule', ['getInstallReferrer', reqOpt]);
+function getInstallReferrer(installChannel) {
+    return (0, utils_1.asyncExec)('HMSAds', 'InstallReferrerModule', ['getInstallReferrer', installChannel]);
 }
 exports.getInstallReferrer = getInstallReferrer;
 ///////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="cordova-plugin-hms-ads" version="13.4.58.304" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="cordova-plugin-hms-ads" version="13.4.61.302" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
 	<name>HMS Ads</name>
 	<description>Cordova HMS Ads Plugin</description>
 	<license>Apache 2.0</license>
@@ -53,10 +53,10 @@
 		<framework src="com.huawei.agconnect:agconnect-core:1.7.2.300"/>
 		<framework src="com.huawei.hms:ads-identifier:3.4.58.301"/>
 		<framework src="com.huawei.hms:ads-installreferrer:3.4.58.301"/>
-		<framework src="com.huawei.hms:ads-consent:3.4.58.304"/>
+		<framework src="com.huawei.hms:ads-consent:3.4.61.302"/>
 		<framework src="com.huawei.hms:ads-vast:3.4.44.303"/>
 		<framework src="com.huawei.hms:ads-vast-player:3.4.44.303"/>
-		<framework src="com.huawei.hms:ads-lite:13.4.58.304"/>
+		<framework src="com.huawei.hms:ads-lite:13.4.61.302"/>
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
 
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/AdManagerModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
@@ -104,6 +104,7 @@
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/layout/PxToPixelConverter.java" target-dir="src/com/huawei/hms/cordova/ads/layout/"/>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/ErrorAndStateCodes.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
 		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/FileUtils.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/ListToJson.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
 		<!-- Resources -->
 		<resource-file src="src/android/src/main/res/layout/native_ad_banner_template.xml" target="res/layout/native_ad_banner_template.xml"/>
 		<resource-file src="src/android/src/main/res/layout/native_ad_full_template.xml" target="res/layout/native_ad_full_template.xml"/>
