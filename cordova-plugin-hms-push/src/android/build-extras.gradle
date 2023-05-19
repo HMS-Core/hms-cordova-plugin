@@ -37,17 +37,15 @@ try {
     // Project runtime is Cordova
     try {
         if (needAGC) {
-            cdvPluginPostBuildExtras.add({
-                afterEvaluate {
-                    rootProject.subprojects {
-                        if (name == "app") {
-                            if (!plugins.hasPlugin('com.huawei.agconnect')) {
-                                apply plugin: 'com.huawei.agconnect'
-                            }
-                        }
+            rootProject.subprojects {
+                if (name == "app") {
+                    if (!plugins.hasPlugin('com.huawei.agconnect')) {
+                        cdvPluginPostBuildExtras.add( {
+                            apply plugin: 'com.huawei.agconnect'
+                        })
                     }
                 }
-            })
+            }
         }
     } catch (e2) {
         println("WARNING: Huawei AGConnect is not set")
