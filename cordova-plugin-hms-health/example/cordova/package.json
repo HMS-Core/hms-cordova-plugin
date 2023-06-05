@@ -1,0 +1,30 @@
+{
+  "name": "cordova-hms-health-demo",
+  "displayName": "Health",
+  "version": "6.10.0-301",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "main": "./www/js/index.js",
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "devDependencies": {
+    
+  },
+  "cordova": {
+    "plugins": {   
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "files": [
+    "www",
+    "config.xml",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ]
+}
