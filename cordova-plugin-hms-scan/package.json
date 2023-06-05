@@ -1,0 +1,54 @@
+{
+    "name": "@hmscore/cordova-plugin-hms-scan",
+    "description": "Cordova HMS Scan Plugin",
+    "version": "2.10.0-301",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-scan"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENSE",
+    "readmeFilename": "README.md",
+    "cordova": {
+        "id": "cordova-plugin-hms-scan",
+        "platforms": [
+            "android"
+        ]
+    },
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "scan",
+        "hms-scan",
+        "huawei-scan",
+        "hms",
+        "huawei"
+    ],
+    "files": [
+        "hooks",
+        "ionic-native",
+        "src",
+        "types",
+        "www",
+        "LICENSE",
+        "package.json",
+        "plugin.xml",
+        "README.md"
+    ],
+    "dependencies": {
+        "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build": "node ./node_modules/typescript/bin/tsc",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
+}
