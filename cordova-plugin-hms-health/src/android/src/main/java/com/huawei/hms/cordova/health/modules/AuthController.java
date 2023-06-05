@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -78,22 +78,22 @@ public class AuthController extends CordovaBaseModule implements OnActivityResul
             authHuaweiIdTask.addOnSuccessListener(authHuaweiId -> {
 
                 try {
-                    JSONObject signinObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
+                    JSONObject signInObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId);
                     Account account = authHuaweiId.getHuaweiAccount(plugin.webView.getContext());
                     if (account != null) {
-                        signinObject.put("account", HMSAccountUtils.fromAccountToJSONObject(account));
+                        signInObject.put("account", HMSAccountUtils.fromAccountToJSONObject(account));
                     } else {
                         Log.i(TAG, "The account is null");
                     }
-                    Log.i(TAG, "Signin onSuccess");
-                    promise.success(signinObject);
+                    Log.i(TAG, "SignIn onSuccess");
+                    promise.success(signInObject);
 
                 } catch (JSONException e) {
                     Log.i(TAG, Objects.requireNonNull(e.getMessage()));
                 }
 
             }).addOnFailureListener(e -> {
-                Log.i(TAG, "Signin OnFailure");
+                Log.i(TAG, "SignIn OnFailure");
                 Log.i(TAG, Objects.requireNonNull(e.getMessage()));
                 promise.error(Error.getErrorMessage(e));
             });

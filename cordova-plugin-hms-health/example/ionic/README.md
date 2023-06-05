@@ -38,7 +38,7 @@ Creating an app in AppGallery Connect is required in order to communicate with t
 
 ### 2.2. Configuring the Signing Certificate Fingerprint
 
-A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html?ha_source=hms1#2) Codelab tutorial for the certificate generation.
+A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core (APK) through the HMS SDK. Before using the HMS Core (APK), you must locally generate a signing certificate fingerprint and configure it in the **AppGallery Connect**. You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial for the certificate generation.
 
 ### 2.3. Enabling Required Services
 
@@ -244,7 +244,7 @@ To use HUAWEI Health Kit, you first need to [apply for Huawei Health Service](ht
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.4.2.301'
+            classpath 'com.huawei.agconnect:agcp:1.8.1.300'
         }
     }
 

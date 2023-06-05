@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 import { IonicNativePlugin } from "@ionic-native/core";
 /**
  * @name HMSHealth
@@ -32,46 +31,26 @@ export declare const AppInfo: {
     getVersion: () => Promise<string>;
 };
 export declare const DeviceInfo: {
-    createDeviceInfo: (
-        createDeviceInfoReq: createDeviceInfo
-    ) => Promise<DeviceInfo>;
+    createDeviceInfo: (createDeviceInfoReq: createDeviceInfo) => Promise<DeviceInfo>;
 };
 export declare const ActivityRecordController: {
-    addActivityRecord: (
-        addActivityRecordReq: AddActivityRecordReq
-    ) => Promise<void>;
-    deleteActivityRecord: (
-        deketeActivityRecordReq: deleteActivityRecordReq
-    ) => Promise<void>;
-    beginActivityRecord: (
-        activityRecordData: BeginActivityRecordReq
-    ) => Promise<void>;
-    beginBackgroundActivityRecord: (
-        activityRecordData: BeginActivityRecordReq
-    ) => Promise<void>;
-    endActivityRecord: (
-        activityRecordId: endActivityRecord
-    ) => Promise<ActivityRecord[]>;
-    endBackgroundActivityRecord: (
-        activityRecordId: endActivityRecord
-    ) => Promise<ActivityRecord[]>;
-    getActivityRecord: (
-        activityRecordJSON: GetActivityRecordReq
-    ) => Promise<ActivityRecord[]>;
+    addActivityRecord: (addActivityRecordReq: AddActivityRecordReq) => Promise<void>;
+    deleteActivityRecord: (deleteActivityRecordReq: deleteActivityRecordReq) => Promise<void>;
+    beginActivityRecord: (activityRecordData: BeginActivityRecordReq) => Promise<void>;
+    beginBackgroundActivityRecord: (activityRecordData: BeginActivityRecordReq) => Promise<void>;
+    endActivityRecord: (activityRecordId: endActivityRecord) => Promise<ActivityRecord[]>;
+    endBackgroundActivityRecord: (activityRecordId: endActivityRecord) => Promise<ActivityRecord[]>;
+    getActivityRecord: (activityRecordJSON: GetActivityRecordReq) => Promise<ActivityRecord[]>;
 };
 export declare const AutoRecorderController: {
     startRecord: (startRecordReq: StartRecordReq) => Promise<void>;
     stopRecord: (stopRecordReq: StopRecordReq) => Promise<void>;
 };
 export declare const ConsentsController: {
-    getPermissions: (
-        getPermissionsReq: GetPermissionsReq
-    ) => Promise<ScopeLangItem>;
+    getPermissions: (getPermissionsReq: GetPermissionsReq) => Promise<ScopeLangItem>;
     revokeAll: (appId: string) => Promise<void>;
     revoke: (revokeReq: RevokeReq) => Promise<void>;
-    cancelAuthorizationAll: (
-        cancelAuthAllReq: CancelAuthAllReq
-    ) => Promise<void>;
+    cancelAuthorizationAll: (cancelAuthAllReq: CancelAuthAllReq) => Promise<void>;
     cancelAuthorization: (cancelAuthReq: CancelAuthReq) => Promise<void>;
 };
 export declare const DataController: {
@@ -81,13 +60,9 @@ export declare const DataController: {
     update: (jsonObject: UpdateReq) => Promise<void>;
     deleteData: (jsonObject: DeleteReq) => Promise<void>;
     readTodaySummation: (dataTypeStr: string) => Promise<SampleSet>;
-    readDailySummation: (
-        jsonObject: ReadDailySummationReq
-    ) => Promise<SampleSet>;
+    readDailySummation: (jsonObject: ReadDailySummationReq) => Promise<SampleSet>;
     clearAll: () => Promise<void>;
-    readLatestData: (
-        jsonObject: DataOption[]
-    ) => Promise<Map<DataType, SamplePoint>>;
+    readLatestData: (jsonObject: DataOption[]) => Promise<Map<DataType, SamplePoint>>;
 };
 export declare const SettingsController: {
     addDataType: (jsonObject: AddDataTypeReq) => Promise<void>;
@@ -98,10 +73,14 @@ export declare const SettingsController: {
     requestAuthorizationIntent: (AuthReq: authReq) => Promise<void>;
 };
 export declare const HealthRecordController: {
-    addHealthRecord: (AddHRReq: addHRReq) => Promise<String>;
+    addHealthRecord: (AddHRReq: addHRReq) => Promise<string>;
     deleteHealthRecord: (DeleteHRReq: deleteHRReq) => Promise<void>;
     getHealthRecord: (HRReq: getHRReq) => Promise<HealthRecordReply>;
     updateHealthRecord: (UpdateHRReq: updateHRReq) => Promise<void>;
+};
+export declare const HiHealthOptions: {
+    ACCESS_READ: number;
+    ACCESS_WRITE: number;
 };
 export declare const HuaweiHiHealth: {
     HEALTHKIT_HEARTHEALTH_READ: string;
@@ -167,6 +146,9 @@ export declare const HuaweiHiHealth: {
     HEALTHKIT_STRESS_WRITE: string;
     HEALTHKIT_STRESS_BOTH: string;
     HEALTHKIT_SCOPE_PREFIX: string;
+    HEALTHKIT_HISTORYDATA_OPEN_WEEK: string;
+    HEALTHKIT_HISTORYDATA_OPEN_MONTH: string;
+    HEALTHKIT_HISTORYDATA_OPEN_YEAR: string;
     ALL_SCOPES: string[];
     MAX_SCOPES: string[];
 };
@@ -208,6 +190,11 @@ export declare const HealthDataTypes: {
     DT_SKIN_STATUS: string;
     DT_APPETITE: string;
     DT_SEXUAL_ACTIVITY: string;
+    DT_HEALTH_RECORD_VENTILATOR: string;
+    DT_SLEEP_RESPIRATORY_DETAIL: string;
+    DT_SLEEP_RESPIRATORY_EVENT: string;
+    DT_CGM_BLOOD_GLUCOSE: string;
+    POLYMERIZE_CGM_BLOOD_GLUCOSE_STATISTICS: string;
 };
 export declare const DataType: {
     DT_UNUSED_DATA_TYPE: string;
@@ -368,6 +355,31 @@ export declare const HealthFields: {
     FIELD_SKIN_STATUS: string;
     FIELD_APPETITE: string;
     FIELD_CONTRACEPTIVE_MEASURES: string;
+    SYS_MODE: string;
+    SYS_SESSION_DATE: string;
+    EVENT_AHI: string;
+    SYS_DURATION: string;
+    LUMIS_TIDVOL_MEDIAN: string;
+    LUMIS_TIDVOL: string;
+    LUMIS_TIDVOL_MAX: string;
+    CLINICAL_RESPRATE_MEDIAN: string;
+    CLINICAL_RESP_RATE: string;
+    CLINICAL_RESP_RATE_MAX: string;
+    LUMIS_IERATIO_MEDIAN: string;
+    LUMIS_IERATIO_QUANTILE: string;
+    LUMIS_IERATIO_MAX: string;
+    MASK_OFF: string;
+    HYPOVENTILATION_INDEX: string;
+    OBSTRUCTIVE_APNEA_INDEX: string;
+    PRESSURE_BELOW: string;
+    HYPOVENTILATION_EVENT_TIMES: string;
+    SNORING_EVENT_TIMES: string;
+    CENTER_APNEA_EVENT_TIMES: string;
+    OBSTRUCTIVE_APNEA_EVENT_TIMES: string;
+    AIR_FLOW_LIMIT_EVENT_TIMES: string;
+    MASSIVE_LEAK_EVENT_TIMES: string;
+    UNKNOW_EVENT_TIMES: string;
+    ALL_EVENT_TIMES: string;
 };
 export declare const HiHealthActivities: {
     MIME_TYPE_PREFIX: string;
@@ -798,6 +810,9 @@ export declare const Field: {
     GOLF_SWING_TEMPO: string;
     GOLF_DOWN_SWING_TIME: string;
     GOLF_BACK_SWING_TIME: string;
+    SLEEP_RESPIRATORY_TYPE: string;
+    SLEEP_RESPIRATORY_VALUE: string;
+    EVENT_NAME: string;
 };
 export interface DataType {
     DT_UNUSED_DATA_TYPE: string;
@@ -904,28 +919,16 @@ export interface DataType {
 }
 export interface updateHRReq {
     healthRecordId: string;
-    dataCollector: DataCollector;
     options: Options;
-    healthFields: HealthField[];
-    sampleSets: SampleSets[];
+    dataCollector: DataCollector[];
+    sampleSets: SamplePoint[];
+    samplePoints: SamplePoint[];
 }
 export interface addHRReq {
-    dataCollector: DataCollector;
     options: Options;
-    healthFields: HealthField[];
-    sampleSets: SampleSets[];
-}
-export interface SampleSets {
-    dataCollector: DataCollector;
-    fields: Field[];
-    samplePoints: SamplePoints[];
-}
-export interface SamplePoints {
-    startTime: number;
-    endTime: number;
-    fields: Field[];
-    timeUnit: string;
-    dataCollector: DataCollector;
+    dataCollector: DataCollector[];
+    sampleSets: SamplePoint[];
+    samplePoints: SamplePoint[];
 }
 export interface Field {
     fieldName: string;
@@ -1001,7 +1004,6 @@ export interface MapValue {
     getFormat: string;
 }
 export interface AddActivityRecordReq {
-    dataCollector: DataCollector;
     activityRecord: ActivityRecordReq;
     sampleSet?: SampleSet[];
 }
@@ -1033,14 +1035,14 @@ export interface GetActivityRecordReq {
     dataType: string;
 }
 export interface ActivityRecordReq {
-    startTime: number;
-    endTime: number;
-    timeUnit: string;
-    timeZone: string;
     id: string;
     name: string;
     description: string;
     activityType: string;
+    startTime: number;
+    endTime: number;
+    timeUnit: string;
+    timeZone: string;
     activitySummary: ActivitySummary;
 }
 export interface ActivityRecord {
@@ -1063,20 +1065,7 @@ export interface AppInfo {
 }
 export interface ActivitySummary {
     paceSummary: PaceSummary;
-    dataSummary: SampleSet[];
-}
-export interface SampleSet {
-    metaData?: MetaData;
-    startTime: number;
-    endTime: number;
-    fieldName: string;
-    fieldValue: string;
-    timeUnit: string;
-    dataCollector: DataCollector;
-}
-export interface MetaData {
-    metaDataKey: string;
-    metaDataValue: string;
+    dataSummary: DataSummary[];
 }
 export interface PaceSummary {
     avgPace: number;
@@ -1086,6 +1075,25 @@ export interface PaceSummary {
     partTimeMap: object;
     paceMap: object;
     sportHealthPaceMap: object;
+}
+export interface DataSummary {
+    dataCollector: DataCollector;
+    samplePoints: SamplePoint[];
+}
+export interface SampleSet {
+    dataCollector: DataCollector;
+    samplePoints: SamplePoint[];
+}
+export interface SamplePoint {
+    startTime: number;
+    endTime: number;
+    samplingTime?: number;
+    fields: Field[];
+    timeUnit: string;
+}
+export interface MetaData {
+    metaDataKey: string;
+    metaDataValue: string;
 }
 interface StartRecordReq {
     dataType: string;
@@ -1136,14 +1144,14 @@ export interface HealthField {
 }
 export interface DataCollector {
     dataType: string;
-    name: string;
     dataGenerateType: number;
-    dataStreamId?: number;
+    name: string;
     dataStreamName?: string;
     deviceId?: string;
+    isLocalized?: boolean;
+    dataStreamId?: number;
     deviceInfo?: DeviceInfo;
     packageName?: string;
-    isLocalized?: boolean;
     standardByType?: string;
 }
 export interface Options {
@@ -1151,15 +1159,25 @@ export interface Options {
     endTime: number;
     timeUnit: string;
     metaData?: string;
+    fields?: Field[];
 }
 export interface InsertReq {
     dataCollector: DataCollector;
-    sampleSet: SampleSet[];
+    sampleSet: SampleSets[];
 }
 export interface UpdateReq {
     dataCollector: DataCollector;
-    sampleSet: SampleSet[];
+    sampleSet: SampleSets[];
     options: Options;
+}
+export interface SampleSets {
+    metaData?: MetaData;
+    startTime: number;
+    endTime: number;
+    fieldName: string;
+    fieldValue: string;
+    timeUnit: string;
+    dataCollector: DataCollector;
 }
 export interface DeleteReq {
     dataCollector: DataCollector;
@@ -1168,20 +1186,6 @@ export interface DeleteReq {
 export interface AddDataTypeReq {
     dataTypeName: string;
     fieldValue: string;
-}
-export interface SamplePoint {
-    dataCollector: DataCollector;
-    dataType: DataType;
-    dataTypeId: number;
-    endTime: number;
-    fieldValues: Map<string, Value>;
-    id: number;
-    insertionTime: number;
-    samplingTime: number;
-    startTime: number;
-    isMerged: Boolean;
-    nullableRawCollector: DataCollector;
-    rawDataCollector: DataCollector;
 }
 export interface AuthHuaweiId {
     accessToken: string;
@@ -1221,7 +1225,7 @@ export declare enum Gender {
     UNKNOWN = -1,
     MALE = 0,
     FEMALE = 1,
-    CONFIDENTIAL = 2,
+    CONFIDENTIAL = 2
 }
 export {};
 

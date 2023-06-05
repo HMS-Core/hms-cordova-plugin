@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -79,13 +79,11 @@ public class AppInfo extends CordovaBaseModule {
         } catch (NullPointerException e) {
             promise.error("Null object");
         }
-
     }
 
     @HMSLog
     @CordovaMethod
     public void getDomainName(final CorPack corPack, final JSONArray args, final Promise promise) {
-
         try {
             Log.i(TAG, "" + appInfo.getDomainName());
             promise.success(appInfo.getDomainName());
@@ -98,7 +96,6 @@ public class AppInfo extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void getPackageName(final CorPack corPack, final JSONArray args, final Promise promise) {
-
         try {
             Log.i(TAG, "" + appInfo.getPackageName());
             promise.success(appInfo.getPackageName());
@@ -111,7 +108,6 @@ public class AppInfo extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void getVersion(final CorPack corPack, final JSONArray args, final Promise promise) {
-
         try {
             Log.i(TAG, "" + appInfo.getVersion());
             promise.success(appInfo.getVersion());

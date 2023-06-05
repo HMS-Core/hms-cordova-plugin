@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -83,10 +83,10 @@ export const ActivityRecordController = {
         );
     },
     deleteActivityRecord: function deleteActivityRecord(
-        deketeActivityRecordReq: deleteActivityRecordReq
+        deleteActivityRecordReq: deleteActivityRecordReq
     ): Promise<void> {
         return HMSHealth.getPlugin().ActivityRecordController.deleteActivityRecord(
-            deketeActivityRecordReq
+            deleteActivityRecordReq
         );
     },
     beginActivityRecord: function beginActivityRecord(
@@ -254,7 +254,7 @@ export const SettingsController = {
 export const HealthRecordController = {
     addHealthRecord: function addHealthRecord(
         AddHRReq: addHRReq
-    ): Promise<String> {
+    ): Promise<string> {
         return HMSHealth.getPlugin().HealthRecordController.addHealthRecord(
             AddHRReq
         );
@@ -282,22 +282,17 @@ export const HealthRecordController = {
     },
 };
 
-const HiHealthOptions = {
+export const HiHealthOptions = {
     ACCESS_READ: 0,
     ACCESS_WRITE: 1,
 };
 
 export const HuaweiHiHealth = {
-    HEALTHKIT_HEARTHEALTH_READ:
-        "https://www.huawei.com/healthkit/hearthealth.read",
-    HEALTHKIT_HEARTHEALTH_WRITE:
-        "https://www.huawei.com/healthkit/hearthealth.write",
-    HEALTHKIT_HEIGHTWEIGHT_READ:
-        "https://www.huawei.com/healthkit/heightweight.read",
-    HEALTHKIT_HEIGHTWEIGHT_WRITE:
-        "https://www.huawei.com/healthkit/heightweight.write",
-    HEALTHKIT_HEIGHTWEIGHT_BOTH:
-        "https://www.huawei.com/healthkit/heightweight.both",
+    HEALTHKIT_HEARTHEALTH_READ: "https://www.huawei.com/healthkit/hearthealth.read",
+    HEALTHKIT_HEARTHEALTH_WRITE: "https://www.huawei.com/healthkit/hearthealth.write",
+    HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
+    HEALTHKIT_HEIGHTWEIGHT_WRITE: "https://www.huawei.com/healthkit/heightweight.write",
+    HEALTHKIT_HEIGHTWEIGHT_BOTH:"https://www.huawei.com/healthkit/heightweight.both",
     HEALTHKIT_STEP_READ: "https://www.huawei.com/healthkit/step.read",
     HEALTHKIT_STEP_WRITE: "https://www.huawei.com/healthkit/step.write",
     HEALTHKIT_STEP_BOTH: "https://www.huawei.com/healthkit/step.both",
@@ -305,15 +300,11 @@ export const HuaweiHiHealth = {
     HEALTHKIT_LOCATION_WRITE: "https://www.huawei.com/healthkit/location.write",
     HEALTHKIT_LOCATION_BOTH: "https://www.huawei.com/healthkit/location.both",
     HEALTHKIT_HEARTRATE_READ: "https://www.huawei.com/healthkit/heartrate.read",
-    HEALTHKIT_HEARTRATE_WRITE:
-        "https://www.huawei.com/healthkit/heartrate.write",
+    HEALTHKIT_HEARTRATE_WRITE: "https://www.huawei.com/healthkit/heartrate.write",
     HEALTHKIT_HEARTRATE_BOTH: "https://www.huawei.com/healthkit/heartrate.both",
-    HEALTHKIT_BLOODGLUCOSE_READ:
-        "https://www.huawei.com/healthkit/bloodglucose.read",
-    HEALTHKIT_BLOODGLUCOSE_WRITE:
-        "https://www.huawei.com/healthkit/bloodglucose.write",
-    HEALTHKIT_BLOODGLUCOSE_BOTH:
-        "https://www.huawei.com/healthkit/bloodglucose.both",
+    HEALTHKIT_BLOODGLUCOSE_READ: "https://www.huawei.com/healthkit/bloodglucose.read",
+    HEALTHKIT_BLOODGLUCOSE_WRITE: "https://www.huawei.com/healthkit/bloodglucose.write",
+    HEALTHKIT_BLOODGLUCOSE_BOTH: "https://www.huawei.com/healthkit/bloodglucose.both",
     HEALTHKIT_DISTANCE_READ: "https://www.huawei.com/healthkit/distance.read",
     HEALTHKIT_DISTANCE_WRITE: "https://www.huawei.com/healthkit/distance.write",
     HEALTHKIT_DISTANCE_BOTH: "https://www.huawei.com/healthkit/distance.both",
@@ -324,8 +315,7 @@ export const HuaweiHiHealth = {
     HEALTHKIT_CALORIES_WRITE: "https://www.huawei.com/healthkit/calories.write",
     HEALTHKIT_CALORIES_BOTH: "https://www.huawei.com/healthkit/calories.both",
     HEALTHKIT_PULMONARY_READ: "https://www.huawei.com/healthkit/pulmonary.read",
-    HEALTHKIT_PULMONARY_WRITE:
-        "https://www.huawei.com/healthkit/pulmonary.write",
+    HEALTHKIT_PULMONARY_WRITE: "https://www.huawei.com/healthkit/pulmonary.write",
     HEALTHKIT_PULMONARY_BOTH: "https://www.huawei.com/healthkit/pulmonary.both",
     HEALTHKIT_STRENGTH_READ: "https://www.huawei.com/healthkit/strength.read",
     HEALTHKIT_STRENGTH_WRITE: "https://www.huawei.com/healthkit/strength.write",
@@ -340,43 +330,30 @@ export const HuaweiHiHealth = {
     HEALTHKIT_SLEEP_WRITE: "https://www.huawei.com/healthkit/sleep.write",
     HEALTHKIT_SLEEP_BOTH: "https://www.huawei.com/healthkit/sleep.both",
     HEALTHKIT_NUTRITION_READ: "https://www.huawei.com/healthkit/nutrition.read",
-    HEALTHKIT_NUTRITION_WRITE:
-        "https://www.huawei.com/healthkit/nutrition.write",
+    HEALTHKIT_NUTRITION_WRITE: "https://www.huawei.com/healthkit/nutrition.write",
     HEALTHKIT_NUTRITION_BOTH: "https://www.huawei.com/healthkit/nutrition.both",
-    HEALTHKIT_BLOODPRESSURE_READ:
-        "https://www.huawei.com/healthkit/bloodpressure.read",
-    HEALTHKIT_BLOODPRESSURE_WRITE:
-        "https://www.huawei.com/healthkit/bloodpressure.write",
-    HEALTHKIT_BLOODPRESSURE_BOTH:
-        "https://www.huawei.com/healthkit/bloodpressure.both",
-    HEALTHKIT_OXYGENSTATURATION_READ:
-        "https://www.huawei.com/healthkit/oxygensaturation.read",
-    HEALTHKIT_OXYGENSTATURATION_WRITE:
-        "https://www.huawei.com/healthkit/oxygensaturation.write",
-    HEALTHKIT_OXYGENSTATURATION_BOTH:
-        "https://www.huawei.com/healthkit/oxygensaturation.both",
-    HEALTHKIT_BODYTEMPERATURE_READ:
-        "https://www.huawei.com/healthkit/bodytemperature.read",
-    HEALTHKIT_BODYTEMPERATURE_WRITE:
-        "https://www.huawei.com/healthkit/bodytemperature.write",
-    HEALTHKIT_BODYTEMPERATURE_BOTH:
-        "https://www.huawei.com/healthkit/bodytemperature.both",
-    HEALTHKIT_REPRODUCTIVE_READ:
-        "https://www.huawei.com/healthkit/reproductive.read",
-    HEALTHKIT_REPRODUCTIVE_WRITE:
-        "https://www.huawei.com/healthkit/reproductive.write",
-    HEALTHKIT_REPRODUCTIVE_BOTH:
-        "https://www.huawei.com/healthkit/reproductive.both",
-    HEALTHKIT_ACTIVITY_RECORD_READ:
-        "https://www.huawei.com/healthkit/activityrecord.read",
-    HEALTHKIT_ACTIVITY_RECORD_WRITE:
-        "https://www.huawei.com/healthkit/activityrecord.write",
-    HEALTHKIT_ACTIVITY_RECORD_BOTH:
-        "https://www.huawei.com/healthkit/activityrecord.both",
+    HEALTHKIT_BLOODPRESSURE_READ: "https://www.huawei.com/healthkit/bloodpressure.read",
+    HEALTHKIT_BLOODPRESSURE_WRITE: "https://www.huawei.com/healthkit/bloodpressure.write",
+    HEALTHKIT_BLOODPRESSURE_BOTH: "https://www.huawei.com/healthkit/bloodpressure.both",
+    HEALTHKIT_OXYGENSTATURATION_READ: "https://www.huawei.com/healthkit/oxygensaturation.read",
+    HEALTHKIT_OXYGENSTATURATION_WRITE: "https://www.huawei.com/healthkit/oxygensaturation.write",
+    HEALTHKIT_OXYGENSTATURATION_BOTH: "https://www.huawei.com/healthkit/oxygensaturation.both",
+    HEALTHKIT_BODYTEMPERATURE_READ: "https://www.huawei.com/healthkit/bodytemperature.read",
+    HEALTHKIT_BODYTEMPERATURE_WRITE: "https://www.huawei.com/healthkit/bodytemperature.write",
+    HEALTHKIT_BODYTEMPERATURE_BOTH: "https://www.huawei.com/healthkit/bodytemperature.both",
+    HEALTHKIT_REPRODUCTIVE_READ: "https://www.huawei.com/healthkit/reproductive.read",
+    HEALTHKIT_REPRODUCTIVE_WRITE: "https://www.huawei.com/healthkit/reproductive.write",
+    HEALTHKIT_REPRODUCTIVE_BOTH: "https://www.huawei.com/healthkit/reproductive.both",
+    HEALTHKIT_ACTIVITY_RECORD_READ: "https://www.huawei.com/healthkit/activityrecord.read",
+    HEALTHKIT_ACTIVITY_RECORD_WRITE: "https://www.huawei.com/healthkit/activityrecord.write",
+    HEALTHKIT_ACTIVITY_RECORD_BOTH: "https://www.huawei.com/healthkit/activityrecord.both",
     HEALTHKIT_STRESS_READ: "https://www.huawei.com/healthkit/stress.read",
     HEALTHKIT_STRESS_WRITE: "https://www.huawei.com/healthkit/stress.write",
     HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
     HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
+    HEALTHKIT_HISTORYDATA_OPEN_WEEK: "https://www.huawei.com/healthkit/historydata.open.week",
+    HEALTHKIT_HISTORYDATA_OPEN_MONTH: "https://www.huawei.com/healthkit/historydata.open.month",
+    HEALTHKIT_HISTORYDATA_OPEN_YEAR: "https://www.huawei.com/healthkit/historydata.open.year",
     ALL_SCOPES: [
         "https://www.huawei.com/healthkit/heightweight.both",
         "https://www.huawei.com/healthkit/step.both",
@@ -472,63 +449,50 @@ export const HealthDataTypes = {
     DT_INSTANTANEOUS_SPO2: "DT_INSTANTANEOUS_SPO2",
     DT_INSTANTANEOUS_BODY_TEMPERATURE: "DT_INSTANTANEOUS_BODY_TEMPERATURE",
     DT_INSTANTANEOUS_SKIN_TEMPERATURE: "DT_INSTANTANEOUS_SKIN_TEMPERATURE",
-    DT_INSTANTANEOUS_BODY_TEMPERATURE_REST:
-        "DT_INSTANTANEOUS_BODY_TEMPERATURE_REST",
+    DT_INSTANTANEOUS_BODY_TEMPERATURE_REST: "DT_INSTANTANEOUS_BODY_TEMPERATURE_REST",
     DT_INSTANTANEOUS_CERVICAL_MUCUS: "DT_INSTANTANEOUS_CERVICAL_MUCUS",
     DT_INSTANTANEOUS_CERVICAL_STATUS: "DT_INSTANTANEOUS_CERVICAL_STATUS",
     DT_CONTINUOUS_MENSTRUAL_FLOW: "DT_CONTINUOUS_MENSTRUAL_FLOW",
-    DT_INSTANTANEOUS_OVULATION_DETECTION:
-        "DT_INSTANTANEOUS_OVULATION_DETECTION",
+    DT_INSTANTANEOUS_OVULATION_DETECTION: "DT_INSTANTANEOUS_OVULATION_DETECTION",
     DT_INSTANTANEOUS_VAGINAL_SPECKLE: "DT_INSTANTANEOUS_VAGINAL_SPECKLE",
     DT_INSTANTANEOUS_URIC_ACID: "DT_INSTANTANEOUS_URIC_ACID",
-    DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE:
-        "DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE",
-    DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN:
-        "DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN",
-    DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN:
-        "DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN",
-    DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE:
-        "DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE",
+    DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE: "DT_INSTANTANEOUS_URINE_ROUTINE_NITRITE",
+    DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN: "DT_INSTANTANEOUS_URINE_ROUTINE_UROBILINOGEN",
+    DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN: "DT_INSTANTANEOUS_URINE_ROUTINE_BILIRUBIN",
+    DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE: "DT_INSTANTANEOUS_URINE_ROUTINE_GLUCOSE",
     DT_HEALTH_RECORD_TACHYCARDIA: "DT_HEALTH_RECORD_TACHYCARDIA",
     DT_HEALTH_RECORD_BRADYCARDIA: "DT_HEALTH_RECORD_BRADYCARDIA",
     DT_HEALTH_RECORD_SLEEP: "DT_HEALTH_RECORD_SLEEP",
     DT_HEALTH_RECORD_MENSTRUAL_CYCLE: "DT_HEALTH_RECORD_MENSTRUAL_CYCLE",
-    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
-    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS",
-    POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS:
-        "POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS",
-    POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS:
-        "POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS",
-    POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW:
-        "POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW",
-    POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION:
-        "POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION",
-    POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE:
-        "POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_GLUCOSE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS: "POLYMERIZE_CONTINUOUS_SKIN_TEMPERATURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_TEMPERATURE_REST_STATISTICS",
+    POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_MUCUS",
+    POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS: "POLYMERIZE_INSTANTANEOUS_CERVICAL_STATUS",
+    POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW: "POLYMERIZE_CONTINUOUS_MENSTRUAL_FLOW",
+    POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION: "POLYMERIZE_INSTANTANEOUS_OVULATION_DETECTION",
+    POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE: "POLYMERIZE_INSTANTANEOUS_VAGINAL_SPECKLE",
     DT_DYSMENORRHOEA: "DT_DYSMENORRHOEA",
     DT_PHYSICAL_SYMPTOMS: "DT_PHYSICAL_SYMPTOMS",
     DT_MOOD: "DT_MOOD",
     DT_SKIN_STATUS: "DT_SKIN_STATUS",
     DT_APPETITE: "DT_APPETITE",
     DT_SEXUAL_ACTIVITY: "DT_SEXUAL_ACTIVITY",
+    DT_HEALTH_RECORD_VENTILATOR: "DT_HEALTH_RECORD_VENTILATOR",
+    DT_SLEEP_RESPIRATORY_DETAIL: "DT_SLEEP_RESPIRATORY_DETAIL",
+    DT_SLEEP_RESPIRATORY_EVENT: "DT_SLEEP_RESPIRATORY_EVENT",
+    DT_CGM_BLOOD_GLUCOSE: "DT_CGM_BLOOD_GLUCOSE",
+    POLYMERIZE_CGM_BLOOD_GLUCOSE_STATISTICS: "POLYMERIZE_CGM_BLOOD_GLUCOSE_STATISTICS",
 };
 
 export const DataType = {
     DT_UNUSED_DATA_TYPE: "DT_UNUSED_DATA_TYPE",
     DT_CONTINUOUS_STEPS_DELTA: "DT_CONTINUOUS_STEPS_DELTA",
     DT_CONTINUOUS_STEPS_TOTAL: "DT_CONTINUOUS_STEPS_TOTAL",
-    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SPO2_STATISTICS: "POLYMERIZE_CONTINUOUS_SPO2_STATISTICS",
     DT_INSTANTANEOUS_STEPS_RATE: "DT_INSTANTANEOUS_STEPS_RATE",
     DT_CONTINUOUS_STEPS_RATE_STATISTIC: "DT_CONTINUOUS_STEPS_RATE_STATISTIC",
     DT_CONTINUOUS_ACTIVITY_SEGMENT: "DT_CONTINUOUS_ACTIVITY_SEGMENT",
@@ -545,13 +509,10 @@ export const DataType = {
     DT_CONTINUOUS_DISTANCE_TOTAL: "DT_CONTINUOUS_DISTANCE_TOTAL",
     DT_CONTINUOUS_CALORIES_BURNT_TOTAL: "DT_CONTINUOUS_CALORIES_BURNT_TOTAL",
     DT_INSTANTANEOUS_SPEED: "DT_INSTANTANEOUS_SPEED",
-    DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL:
-        "DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL",
-    DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION:
-        "DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION",
+    DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL: "DT_CONTINUOUS_BIKING_WHEEL_ROTATION_TOTAL",
+    DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION: "DT_INSTANTANEOUS_BIKING_WHEEL_ROTATION",
     DT_CONTINUOUS_BIKING_PEDALING_TOTAL: "DT_CONTINUOUS_BIKING_PEDALING_TOTAL",
-    DT_INSTANTANEOUS_BIKING_PEDALING_RATE:
-        "DT_INSTANTANEOUS_BIKING_PEDALING_RATE",
+    DT_INSTANTANEOUS_BIKING_PEDALING_RATE: "DT_INSTANTANEOUS_BIKING_PEDALING_RATE",
     DT_INSTANTANEOUS_HEIGHT: "DT_INSTANTANEOUS_HEIGHT",
     DT_INSTANTANEOUS_BODY_WEIGHT: "DT_INSTANTANEOUS_BODY_WEIGHT",
     DT_INSTANTANEOUS_BODY_FAT_RATE: "DT_INSTANTANEOUS_BODY_FAT_RATE",
@@ -570,17 +531,14 @@ export const DataType = {
     DT_RESTING_HEART_RATE_STATISTICS: "DT_RESTING_HEART_RATE_STATISTICS",
     DT_CONTINUOUS_JUMP: "DT_CONTINUOUS_JUMP",
     DT_CONTINUOUS_JUMP_STATISTICS: "DT_CONTINUOUS_JUMP_STATISTICS",
-    DT_INSTANTANEOUS_EXERCISE_HEART_RATE:
-        "DT_INSTANTANEOUS_EXERCISE_HEART_RATE",
-    DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS:
-        "DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS",
+    DT_INSTANTANEOUS_EXERCISE_HEART_RATE: "DT_INSTANTANEOUS_EXERCISE_HEART_RATE",
+    DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS: "DT_CONTINUOUS_EXERCISE_HEART_RATE_STATISTICS",
     DT_INSTANTANEOUS_ALTITUDE: "DT_INSTANTANEOUS_ALTITUDE",
     DT_INSTANTANEOUS_SKIP_SPEED: "DT_INSTANTANEOUS_SKIP_SPEED",
     DT_CONTINUOUS_SKIP_SPEED_STATISTICS: "DT_CONTINUOUS_SKIP_SPEED_STATISTICS",
     DT_CONTINUOUS_ALTITUDE_STATISTICS: "DT_CONTINUOUS_ALTITUDE_STATISTICS",
     DT_CONTINUOUS_RUN_POSTURE: "DT_CONTINUOUS_RUN_POSTURE",
-    DT_CONTINUOUS_RUN_POSTURE_STATISTICS:
-        "DT_CONTINUOUS_RUN_POSTURE_STATISTICS",
+    DT_CONTINUOUS_RUN_POSTURE_STATISTICS: "DT_CONTINUOUS_RUN_POSTURE_STATISTICS",
     DT_ACTIVITY_FEATURE_JUMPING_ROPE: "DT_ACTIVITY_FEATURE_JUMPING_ROPE",
     DT_ACTIVITY_FEATURE_BASKETBALL: "DT_ACTIVITY_FEATURE_BASKETBALL",
     DT_RESISTANCE: "DT_RESISTANCE",
@@ -588,58 +546,37 @@ export const DataType = {
     DT_ACTIVITY_FEATURE_ROWING: "DT_ACTIVITY_FEATURE_ROWING",
     DT_INSTANTANEOUS_STROKE_RATE: "DT_INSTANTANEOUS_STROKE_RATE",
     DT_INSTANTANEOUS_PEDALING_RATE: "DT_INSTANTANEOUS_PEDALING_RATE",
-    DT_CONTINUOUS_STROKE_RATE_STATISTICS:
-        "DT_CONTINUOUS_STROKE_RATE_STATISTICS",
-    DT_CONTINUOUS_PEDALING_RATE_STATISTICS:
-        "DT_CONTINUOUS_PEDALING_RATE_STATISTICS",
-    DT_INSTANTANEOUS_SWIMMING_STROKE_RATE:
-        "DT_INSTANTANEOUS_SWIMMING_STROKE_RATE",
-    DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS:
-        "DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS",
+    DT_CONTINUOUS_STROKE_RATE_STATISTICS: "DT_CONTINUOUS_STROKE_RATE_STATISTICS",
+    DT_CONTINUOUS_PEDALING_RATE_STATISTICS: "DT_CONTINUOUS_PEDALING_RATE_STATISTICS",
+    DT_INSTANTANEOUS_SWIMMING_STROKE_RATE: "DT_INSTANTANEOUS_SWIMMING_STROKE_RATE",
+    DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS: "DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS",
     DT_INSTANTANEOUS_SWIMMING_SWOLF: "DT_INSTANTANEOUS_SWIMMING_SWOLF",
-    DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS:
-        "DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS",
-    DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER:
-        "DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER",
+    DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS: "DT_CONTINUOUS_SWIMMING_SWOLF_STATISTICS",
+    DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER: "DT_ACTIVITY_FEATURE_SWIMMING_OPEN_WATER",
     DT_ACTIVITY_FEATURE_SWIMMING_POOL: "DT_ACTIVITY_FEATURE_SWIMMING_POOL",
     DT_ACTIVITY_FEATURE_SKIING: "DT_ACTIVITY_FEATURE_SKIING",
-    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN:
-        "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN",
-    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST:
-        "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
+    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TRAIN",
+    DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
     DT_VO2MAX: "DT_VO2MAX",
     DT_VO2MAX_STATISTICS: "DT_VO2MAX_STATISTICS",
-    POLYMERIZE_CONTINUOUS_WORKOUT_DURATION:
-        "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
-    POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
-    POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
+    POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
+    POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
+    POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
     POLYMERIZE_STEP_COUNT_DELTA: "POLYMERIZE_STEP_COUNT_DELTA",
     POLYMERIZE_DISTANCE_DELTA: "POLYMERIZE_DISTANCE_DELTA",
     POLYMERIZE_CALORIES_CONSUMED: "POLYMERIZE_CALORIES_CONSUMED",
     POLYMERIZE_CALORIES_EXPENDED: "POLYMERIZE_CALORIES_EXPENDED",
-    POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS",
-    POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE:
-        "POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE",
-    POLYMERIZE_CONTINUOUS_POWER_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_POWER_STATISTICS",
-    POLYMERIZE_CONTINUOUS_SPEED_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_SPEED_STATISTICS",
-    POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS",
-    POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS",
-    POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS",
-    POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS",
+    POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS: "POLYMERIZE_CONTINUOUS_EXERCISE_INTENSITY_STATISTICS",
+    POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS: "POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE: "POLYMERIZE_CONTINUOUS_LOCATION_BOUNDARY_RANGE",
+    POLYMERIZE_CONTINUOUS_POWER_STATISTICS: "POLYMERIZE_CONTINUOUS_POWER_STATISTICS",
+    POLYMERIZE_CONTINUOUS_SPEED_STATISTICS: "POLYMERIZE_CONTINUOUS_SPEED_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_FAT_RATE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_WEIGHT_STATISTICS",
+    POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS: "POLYMERIZE_CONTINUOUS_HEIGHT_STATISTICS",
+    POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS: "POLYMERIZE_CONTINUOUS_NUTRITION_FACTS_STATISTICS",
     POLYMERIZE_HYDRATION: "POLYMERIZE_HYDRATION",
-    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS:
-        "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
+    POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS: "POLYMERIZE_CONTINUOUS_BODY_BLOOD_PRESSURE_STATISTICS",
 };
 export const HealthFields = {
     FIELD_SYSTOLIC_PRESSURE: "FIELD_SYSTOLIC_PRESSURE",
@@ -658,8 +595,7 @@ export const HealthFields = {
     FIELD_SPHYGMUS_MAX: "FIELD_SPHYGMUS_MAX",
     FIELD_SPHYGMUS_LAST: "FIELD_SPHYGMUS_LAST",
     FIELD_BODY_POSTURE: "FIELD_BODY_POSTURE",
-    FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE:
-        "FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE",
+    FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE: "FIELD_MEASURE_BODY_PART_OF_BLOOD_PRESSURE",
     FIELD_MEASUREMENT_ANOMALY_FLAG: "FIELD_MEASUREMENT_ANOMALY_FLAG",
     FIELD_MEASUREMENT_REMINDER: "FIELD_MEASUREMENT_REMINDER",
     FIELD_BEFORE_MEASURE_ACTIVITY: "FIELD_BEFORE_MEASURE_ACTIVITY",
@@ -681,8 +617,7 @@ export const HealthFields = {
     FIELD_SPO2_MEASUREMENT_MECHANISM: "FIELD_SPO2_MEASUREMENT_MECHANISM",
     FIELD_SPO2_MEASUREMENT_APPROACH: "FIELD_SPO2_MEASUREMENT_APPROACH",
     FIELD_TEMPERATURE: "FIELD_TEMPERATURE",
-    FIELD_MEASURE_BODY_PART_OF_TEMPERATURE:
-        "FIELD_MEASURE_BODY_PART_OF_TEMPERATURE",
+    FIELD_MEASURE_BODY_PART_OF_TEMPERATURE: "FIELD_MEASURE_BODY_PART_OF_TEMPERATURE",
     FIELD_TEXTURE: "FIELD_TEXTURE",
     FIELD_AMOUNT: "FIELD_AMOUNT",
     FIELD_POSITION: "FIELD_POSITION",
@@ -712,7 +647,33 @@ export const HealthFields = {
     FIELD_SKIN_STATUS: "FIELD_SKIN_STATUS",
     FIELD_APPETITE: "FIELD_APPETITE",
     FIELD_CONTRACEPTIVE_MEASURES: "FIELD_CONTRACEPTIVE_MEASURES",
+    SYS_MODE: "SYS_MODE",
+    SYS_SESSION_DATE: "SYS_SESSION_DATE",
+    EVENT_AHI: "EVENT_AHI",
+    SYS_DURATION: "SYS_DURATION",
+    LUMIS_TIDVOL_MEDIAN: "LUMIS_TIDVOL_MEDIAN",
+    LUMIS_TIDVOL: "LUMIS_TIDVOL",
+    LUMIS_TIDVOL_MAX: "LUMIS_TIDVOL_MAX",
+    CLINICAL_RESPRATE_MEDIAN: "CLINICAL_RESPRATE_MEDIAN",
+    CLINICAL_RESP_RATE: "CLINICAL_RESP_RATE",
+    CLINICAL_RESP_RATE_MAX: "CLINICAL_RESP_RATE_MAX",
+    LUMIS_IERATIO_MEDIAN: "LUMIS_IERATIO_MEDIAN",
+    LUMIS_IERATIO_QUANTILE: "LUMIS_IERATIO_QUANTILE",
+    LUMIS_IERATIO_MAX: "LUMIS_IERATIO_MAX",
+    MASK_OFF: "MASK_OFF",
+    HYPOVENTILATION_INDEX: "HYPOVENTILATION_INDEX",
+    OBSTRUCTIVE_APNEA_INDEX: "OBSTRUCTIVE_APNEA_INDEX",
+    PRESSURE_BELOW: "PRESSURE_BELOW",
+    HYPOVENTILATION_EVENT_TIMES: "HYPOVENTILATION_EVENT_TIMES",
+    SNORING_EVENT_TIMES:"SNORING_EVENT_TIMES",
+    CENTER_APNEA_EVENT_TIMES: "CENTER_APNEA_EVENT_TIMES",
+    OBSTRUCTIVE_APNEA_EVENT_TIMES: "OBSTRUCTIVE_APNEA_EVENT_TIMES",
+    AIR_FLOW_LIMIT_EVENT_TIMES: "AIR_FLOW_LIMIT_EVENT_TIMES",
+    MASSIVE_LEAK_EVENT_TIMES: "MASSIVE_LEAK_EVENT_TIMES",
+    UNKNOW_EVENT_TIMES: "UNKNOW_EVENT_TIMES",
+    ALL_EVENT_TIMES: "ALL_EVENT_TIMES",
 };
+
 export const HiHealthActivities = {
     MIME_TYPE_PREFIX: "vnd.huawei.hihealth.activity/",
     EXTRA_ACTION_STATUS: "actionStatus",
@@ -1145,6 +1106,9 @@ export const Field = {
     GOLF_SWING_TEMPO: "GOLF_SWING_TEMPO",
     GOLF_DOWN_SWING_TIME: "GOLF_DOWN_SWING_TIME",
     GOLF_BACK_SWING_TIME: "GOLF_BACK_SWING_TIME",
+    SLEEP_RESPIRATORY_TYPE: "SLEEP_RESPIRATORY_TYPE",
+    SLEEP_RESPIRATORY_VALUE: "SLEEP_RESPIRATORY_VALUE",
+    EVENT_NAME: "EVENT_NAME",
 };
 
 export interface DataType {
@@ -1253,32 +1217,19 @@ export interface DataType {
 
 export interface updateHRReq {
     healthRecordId: string;
-    dataCollector: DataCollector;
     options: Options;
-    healthFields: HealthField[];
-    sampleSets: SampleSets[];
+    dataCollector: DataCollector[];
+    sampleSets: SamplePoint[];
+    samplePoints: SamplePoint[]; 
 }
 
 export interface addHRReq {
-    dataCollector: DataCollector;
     options: Options;
-    healthFields: HealthField[];
-    sampleSets: SampleSets[];
+    dataCollector: DataCollector[];
+    sampleSets: SamplePoint[];
+    samplePoints: SamplePoint[];
 }
 
-export interface SampleSets {
-    dataCollector: DataCollector;
-    fields: Field[];
-    samplePoints: SamplePoints[];
-}
-
-export interface SamplePoints {
-    startTime: number;
-    endTime: number;
-    fields: Field[];
-    timeUnit: string;
-    dataCollector: DataCollector;
-}
 export interface Field {
     fieldName: string;
     fieldValue: number;
@@ -1328,6 +1279,7 @@ export interface CreateAppReq {
     packageName: string;
     version: string;
 }
+
 export interface HealthRecord {
     dataCollector: DataCollector;
     startTime: number;
@@ -1362,7 +1314,6 @@ export interface MapValue {
 }
 
 export interface AddActivityRecordReq {
-    dataCollector: DataCollector;
     activityRecord: ActivityRecordReq;
     sampleSet?: SampleSet[];
 }
@@ -1379,6 +1330,7 @@ export interface deleteActivityRecordReq {
 export interface activityRecordIds {
     activityRecord: string;
 }
+
 export interface BeginActivityRecordReq {
     startTime: number;
     timeUnit: string;
@@ -1389,6 +1341,7 @@ export interface BeginActivityRecordReq {
     activityType: string;
     deviceInfo?: createDeviceInfo;
 }
+
 export interface GetActivityRecordReq {
     startTime: number;
     endTime: number;
@@ -1397,14 +1350,14 @@ export interface GetActivityRecordReq {
 }
 
 export interface ActivityRecordReq {
-    startTime: number;
-    endTime: number;
-    timeUnit: string;
-    timeZone: string;
     id: string;
     name: string;
     description: string;
     activityType: string;
+    startTime: number;
+    endTime: number;
+    timeUnit: string;
+    timeZone: string;
     activitySummary: ActivitySummary;
 }
 
@@ -1430,21 +1383,7 @@ export interface AppInfo {
 
 export interface ActivitySummary {
     paceSummary: PaceSummary;
-    dataSummary: SampleSet[];
-}
-export interface SampleSet {
-    metaData?: MetaData;
-    startTime: number;
-    endTime: number;
-    fieldName: string;
-    fieldValue: string;
-    timeUnit: string;
-    dataCollector: DataCollector;
-}
-
-export interface MetaData {
-    metaDataKey: string;
-    metaDataValue: string;
+    dataSummary: DataSummary[];
 }
 
 export interface PaceSummary {
@@ -1457,6 +1396,29 @@ export interface PaceSummary {
     sportHealthPaceMap: object;
 }
 
+export interface DataSummary {
+    dataCollector: DataCollector,
+    samplePoints: SamplePoint[]
+}
+
+export interface SampleSet {
+    dataCollector: DataCollector;
+    samplePoints: SamplePoint[];
+}
+
+export interface SamplePoint {
+    startTime: number;
+    endTime: number;
+    samplingTime?: number;
+    fields: Field[];
+    timeUnit: string;
+}
+
+export interface MetaData {
+    metaDataKey: string;
+    metaDataValue: string;
+}
+
 interface StartRecordReq {
     dataType: string;
 }
@@ -1465,13 +1427,16 @@ interface endActivityRecord {
     activityRecordId: string;
     timeUnit: string;
 }
+
 interface StopRecordReq {
     dataType: string;
 }
+
 interface GetPermissionsReq {
     language: string;
     appId: string;
 }
+
 interface RevokeReq {
     appId: string;
     scopes: string[];
@@ -1486,6 +1451,7 @@ interface CancelAuthReq {
     appId: string;
     scopes: string[];
 }
+
 interface CancelAuthAllReq {
     deleteData: boolean;
 }
@@ -1493,13 +1459,16 @@ interface CancelAuthAllReq {
 interface ScopeLangItem {
     label: string;
 }
+
 interface ReadReply {
     label: string;
 }
+
 export interface DataOption {
     dataType: string;
     hiHealthOption?: number;
 }
+
 export interface ReadReq {
     dataCollector: DataCollector;
     options: Options;
@@ -1509,55 +1478,57 @@ export interface HealthField {
     healthFieldName: string;
     healthFieldValue: number;
 }
+
 export interface DataCollector {
     dataType: string;
-    name: string;
     dataGenerateType: number;
-    dataStreamId?: number;
+    name: string;
     dataStreamName?: string;
     deviceId?: string;
+    isLocalized?: boolean;
+    dataStreamId?: number;
     deviceInfo?: DeviceInfo;
     packageName?: string;
-    isLocalized?: boolean;
     standardByType?: string;
 }
+
 export interface Options {
     startTime: number;
     endTime: number;
     timeUnit: string;
     metaData?: string;
+    fields?: Field[];
 }
+
 export interface InsertReq {
     dataCollector: DataCollector;
-    sampleSet: SampleSet[];
+    sampleSet: SampleSets[];
 }
+
 export interface UpdateReq {
     dataCollector: DataCollector;
-    sampleSet: SampleSet[];
+    sampleSet: SampleSets[];
     options: Options;
 }
+
+export interface SampleSets {
+    metaData?: MetaData;
+    startTime: number;
+    endTime: number;
+    fieldName: string;
+    fieldValue: string;
+    timeUnit: string;
+    dataCollector: DataCollector;
+}
+
 export interface DeleteReq {
     dataCollector: DataCollector;
     options: Options;
 }
+
 export interface AddDataTypeReq {
     dataTypeName: string;
     fieldValue: string;
-}
-
-export interface SamplePoint {
-    dataCollector: DataCollector;
-    dataType: DataType;
-    dataTypeId: number;
-    endTime: number;
-    fieldValues: Map<string, Value>;
-    id: number;
-    insertionTime: number;
-    samplingTime: number;
-    startTime: number;
-    isMerged: Boolean;
-    nullableRawCollector: DataCollector;
-    rawDataCollector: DataCollector;
 }
 
 export interface AuthHuaweiId {
@@ -1591,6 +1562,7 @@ export interface ReadDailySummationReq {
 export interface ReadLatestDataReq {
     dataTypes: DataOption[];
 }
+
 export interface Account {
     type: string;
     name: string;

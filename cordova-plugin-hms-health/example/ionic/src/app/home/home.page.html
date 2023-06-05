@@ -180,6 +180,11 @@
       </ion-item>
       <ion-item>
         <ion-label>
+          <ion-button shape="block" fill="outline" (click)="endBackgroundActivityRecord()">endBackgroundActivityRecord</ion-button>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
           <ion-button shape="block" fill="outline" (click)="getActivityRecord()">getActivityRecord</ion-button>
         </ion-label>
       </ion-item>
@@ -306,22 +311,22 @@
 
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="addNewDataType()">addHealthRecord</ion-button>
+          <ion-button shape="block" fill="outline" (click)="addHealthRecord()">addHealthRecord</ion-button>
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="disableHiHealth()">deleteHealthRecord</ion-button>
+          <ion-button shape="block" fill="outline" (click)="deleteHealthRecord()">deleteHealthRecord</ion-button>
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="readDataType()">getHealthRecord</ion-button>
+          <ion-button shape="block" fill="outline" (click)="getHealthRecord()">getHealthRecord</ion-button>
         </ion-label>
       </ion-item>
       <ion-item>
         <ion-label>
-          <ion-button shape="block" fill="outline" (click)="checkHealthAppAuthorization()">updateHealthRecord
+          <ion-button shape="block" fill="outline" (click)="updateHealthRecord()">updateHealthRecord
           </ion-button>
         </ion-label>
       </ion-item>

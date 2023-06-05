@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.HealthFields = exports.DataType = exports.HealthDataTypes = exports.HuaweiHiHealth = exports.on = exports.disableLogger = exports.enableLogger = exports.HealthRecordController = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.DeviceInfo = exports.AppInfo = exports.signIn = void 0;
+exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.HealthFields = exports.DataType = exports.HealthDataTypes = exports.HuaweiHiHealth = exports.HiHealthOptions = exports.on = exports.disableLogger = exports.enableLogger = exports.HealthRecordController = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.DeviceInfo = exports.AppInfo = exports.signIn = void 0;
 
 const utils_1 = require("./utils");
 function signIn(scopes) {
@@ -54,10 +54,10 @@ exports.ActivityRecordController = {
             addActivityRecordReq,
         ]);
     },
-    deleteActivityRecord: function deleteActivityRecord(deketeActivityRecordReq) {
+    deleteActivityRecord: function deleteActivityRecord(deleteActivityRecordReq) {
         return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
             "deleteActivityRecord",
-            deketeActivityRecordReq,
+            deleteActivityRecordReq,
         ]);
     },
     beginActivityRecord: function beginActivityRecord(activityRecordData) {
@@ -255,7 +255,7 @@ function on(event, callback) {
     window.subscribeHMSEvent(event, callback);
 }
 exports.on = on;
-const HiHealthOptions = {
+exports.HiHealthOptions = {
     ACCESS_READ: 0,
     ACCESS_WRITE: 1,
 };
@@ -323,6 +323,9 @@ exports.HuaweiHiHealth = {
     HEALTHKIT_STRESS_WRITE: "https://www.huawei.com/healthkit/stress.write",
     HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
     HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
+    HEALTHKIT_HISTORYDATA_OPEN_WEEK: "https://www.huawei.com/healthkit/historydata.open.week",
+    HEALTHKIT_HISTORYDATA_OPEN_MONTH: "https://www.huawei.com/healthkit/historydata.open.month",
+    HEALTHKIT_HISTORYDATA_OPEN_YEAR: "https://www.huawei.com/healthkit/historydata.open.year",
     ALL_SCOPES: [
         "https://www.huawei.com/healthkit/heightweight.both",
         "https://www.huawei.com/healthkit/step.both",
@@ -449,6 +452,11 @@ exports.HealthDataTypes = {
     DT_SKIN_STATUS: "DT_SKIN_STATUS",
     DT_APPETITE: "DT_APPETITE",
     DT_SEXUAL_ACTIVITY: "DT_SEXUAL_ACTIVITY",
+    DT_HEALTH_RECORD_VENTILATOR: "DT_HEALTH_RECORD_VENTILATOR",
+    DT_SLEEP_RESPIRATORY_DETAIL: "DT_SLEEP_RESPIRATORY_DETAIL",
+    DT_SLEEP_RESPIRATORY_EVENT: "DT_SLEEP_RESPIRATORY_EVENT",
+    DT_CGM_BLOOD_GLUCOSE: "DT_CGM_BLOOD_GLUCOSE",
+    POLYMERIZE_CGM_BLOOD_GLUCOSE_STATISTICS: "POLYMERIZE_CGM_BLOOD_GLUCOSE_STATISTICS",
 };
 exports.DataType = {
     DT_UNUSED_DATA_TYPE: "DT_UNUSED_DATA_TYPE",
@@ -609,6 +617,31 @@ exports.HealthFields = {
     FIELD_SKIN_STATUS: "FIELD_SKIN_STATUS",
     FIELD_APPETITE: "FIELD_APPETITE",
     FIELD_CONTRACEPTIVE_MEASURES: "FIELD_CONTRACEPTIVE_MEASURES",
+    SYS_MODE: "SYS_MODE",
+    SYS_SESSION_DATE: "SYS_SESSION_DATE",
+    EVENT_AHI: "EVENT_AHI",
+    SYS_DURATION: "SYS_DURATION",
+    LUMIS_TIDVOL_MEDIAN: "LUMIS_TIDVOL_MEDIAN",
+    LUMIS_TIDVOL: "LUMIS_TIDVOL",
+    LUMIS_TIDVOL_MAX: "LUMIS_TIDVOL_MAX",
+    CLINICAL_RESPRATE_MEDIAN: "CLINICAL_RESPRATE_MEDIAN",
+    CLINICAL_RESP_RATE: "CLINICAL_RESP_RATE",
+    CLINICAL_RESP_RATE_MAX: "CLINICAL_RESP_RATE_MAX",
+    LUMIS_IERATIO_MEDIAN: "LUMIS_IERATIO_MEDIAN",
+    LUMIS_IERATIO_QUANTILE: "LUMIS_IERATIO_QUANTILE",
+    LUMIS_IERATIO_MAX: "LUMIS_IERATIO_MAX",
+    MASK_OFF: "MASK_OFF",
+    HYPOVENTILATION_INDEX: "HYPOVENTILATION_INDEX",
+    OBSTRUCTIVE_APNEA_INDEX: "OBSTRUCTIVE_APNEA_INDEX",
+    PRESSURE_BELOW: "PRESSURE_BELOW",
+    HYPOVENTILATION_EVENT_TIMES: "HYPOVENTILATION_EVENT_TIMES",
+    SNORING_EVENT_TIMES: "SNORING_EVENT_TIMES",
+    CENTER_APNEA_EVENT_TIMES: "CENTER_APNEA_EVENT_TIMES",
+    OBSTRUCTIVE_APNEA_EVENT_TIMES: "OBSTRUCTIVE_APNEA_EVENT_TIMES",
+    AIR_FLOW_LIMIT_EVENT_TIMES: "AIR_FLOW_LIMIT_EVENT_TIMES",
+    MASSIVE_LEAK_EVENT_TIMES: "MASSIVE_LEAK_EVENT_TIMES",
+    UNKNOW_EVENT_TIMES: "UNKNOW_EVENT_TIMES",
+    ALL_EVENT_TIMES: "ALL_EVENT_TIMES",
 };
 exports.HiHealthActivities = {
     MIME_TYPE_PREFIX: "vnd.huawei.hihealth.activity/",
@@ -1039,5 +1072,8 @@ exports.Field = {
     GOLF_SWING_TEMPO: "GOLF_SWING_TEMPO",
     GOLF_DOWN_SWING_TIME: "GOLF_DOWN_SWING_TIME",
     GOLF_BACK_SWING_TIME: "GOLF_BACK_SWING_TIME",
+    SLEEP_RESPIRATORY_TYPE: "SLEEP_RESPIRATORY_TYPE",
+    SLEEP_RESPIRATORY_VALUE: "SLEEP_RESPIRATORY_VALUE",
+    EVENT_NAME: "EVENT_NAME",
 };
 //# sourceMappingURL=HMSHealth.js.map

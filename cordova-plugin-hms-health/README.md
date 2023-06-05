@@ -70,3 +70,4 @@ the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 ## License
 
 Huawei Health Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
+

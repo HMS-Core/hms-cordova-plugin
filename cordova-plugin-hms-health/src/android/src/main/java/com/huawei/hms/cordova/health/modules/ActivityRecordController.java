@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ import com.huawei.hms.hihealth.ActivityRecordsController;
 import com.huawei.hms.hihealth.HiHealthStatusCodes;
 import com.huawei.hms.hihealth.HuaweiHiHealth;
 import com.huawei.hms.hihealth.data.ActivityRecord;
-import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.data.DeviceInfo;
 import com.huawei.hms.hihealth.data.SampleSet;
@@ -73,21 +72,22 @@ public class ActivityRecordController extends CordovaBaseModule {
     public void addActivityRecord(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
         final JSONObject jsonObject = args.getJSONObject(0);
-        final JSONObject dataCollectorJSON = jsonObject.getJSONObject("dataCollector");
         final JSONArray sampleSetJSON = jsonObject.getJSONArray("sampleSet");
 
-        final DataCollector dataCollector = Utils.toDataCollector(dataCollectorJSON, context.getPackageName());
         final ActivityRecord activityRecord = Utils.getActivityRecord(jsonObject, context.getPackageName());
-        final SampleSet sampleSet = Utils.toSampleSet(sampleSetJSON, dataCollector, context.getPackageName());
+
+        final SampleSet sampleSet = Utils.toSampleSet(sampleSetJSON, context.getPackageName());
+
         final ActivityRecordInsertOptions insertRequest = new ActivityRecordInsertOptions.Builder().setActivityRecord(
             activityRecord).addSampleSet(sampleSet).build();
+
         final Task<Void> addTask = activityRecordsController.addActivityRecord(insertRequest);
         addTask.addOnSuccessListener(aVoid -> {
-            Log.i(TAG, "ActivityRecord add was successful!");
+            Log.i(TAG, "addActivityRecord success");
             promise.success();
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
-            Log.i(TAG, "addActivityRecord error:" + errorCode);
+            Log.i(TAG, "addActivityRecord error: " + errorCode);
             promise.error(errorCode);
         });
     }
@@ -95,7 +95,6 @@ public class ActivityRecordController extends CordovaBaseModule {
     @CordovaMethod
     public void deleteActivityRecord(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
-
         final JSONObject jsonObject = args.getJSONObject(0);
         final String startTime = jsonObject.getString("startTime");
         final String endTime = jsonObject.getString("endTime");
@@ -129,11 +128,11 @@ public class ActivityRecordController extends CordovaBaseModule {
 
         final Task<Void> addTask = activityRecordsController.deleteActivityRecord(deleteRequest);
         addTask.addOnSuccessListener(aVoid -> {
-            Log.i(TAG, "ActivityRecord deleteActivityRecord was successful!");
+            Log.i(TAG, "deleteActivityRecord success");
             promise.success();
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
-            Log.i(TAG, errorCode);
+            Log.i(TAG, "deleteActivityRecord error: " + errorCode);
             promise.error(errorCode);
         });
     }
@@ -169,11 +168,11 @@ public class ActivityRecordController extends CordovaBaseModule {
         final Task<Void> task = activityRecordsController.beginActivityRecord(activityRecord.build());
 
         task.addOnSuccessListener(aVoid -> {
-            Log.i(TAG, "MyActivityRecord begin success");
+            Log.i(TAG, "beginActivityRecord success");
             promise.success();
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
-            Log.i(TAG, errorCode);
+            Log.i(TAG, "beginActivityRecord error: " + errorCode);
             promise.error(errorCode);
         });
     }
@@ -221,12 +220,12 @@ public class ActivityRecordController extends CordovaBaseModule {
         Task<Void> beginTask = activityRecordsController.beginActivityRecord(activityRecord.build(), componentName,
             activityRecordListener);
         beginTask.addOnSuccessListener(aVoid -> {
-            Log.i(TAG, "beginActivityRecord begin success");
+            Log.i(TAG, "beginActivityRecord success");
             activity.startService(getForegroundServiceIntent());
             promise.success();
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
-            Log.i("Error Code:", errorCode);
+            Log.i(TAG, "beginActivityRecord error: " + errorCode);
             promise.error(errorCode);
         });
     }
@@ -235,7 +234,6 @@ public class ActivityRecordController extends CordovaBaseModule {
     @CordovaMethod
     public void endActivityRecord(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
-
         final JSONObject jsonObject = args.getJSONObject(0);
         final String activityRecordId = jsonObject.getString("activityRecordId");
         final String timeUnitParam = jsonObject.getString("timeUnit");
@@ -244,7 +242,7 @@ public class ActivityRecordController extends CordovaBaseModule {
 
         endTask.addOnSuccessListener(activityRecordReply -> {
 
-            Log.i(TAG, "Get ActivityRecord was successful!");
+            Log.i(TAG, "endActivityRecord success");
             final JSONArray activityRecords = new JSONArray();
             if (activityRecordReply.size() > 0) {
                 for (final ActivityRecord activityRecord : activityRecordReply) {
@@ -257,7 +255,7 @@ public class ActivityRecordController extends CordovaBaseModule {
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
             final String errorMsg = HiHealthStatusCodes.getStatusCodeMessage(Integer.parseInt(errorCode));
-            Log.i(TAG, errorCode + ": " + errorMsg);
+            Log.i(TAG, "endActivityRecord error: " + errorCode + ": " + errorMsg);
             promise.error(errorCode + ": " + errorMsg);
         });
 
@@ -267,7 +265,6 @@ public class ActivityRecordController extends CordovaBaseModule {
     @CordovaMethod
     public void endBackgroundActivityRecord(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
-
         final JSONObject jsonObject = args.getJSONObject(0);
         final String activityRecordId = jsonObject.getString("activityRecordId");
         final String timeUnitParam = jsonObject.getString("timeUnit");
@@ -278,7 +275,7 @@ public class ActivityRecordController extends CordovaBaseModule {
             @Override
             public void onSuccess(List<ActivityRecord> activityRecordReply) {
 
-                Log.i(TAG, "Get ActivityRecord was successful!");
+                Log.i(TAG, "endBackgroundActivityRecord success");
                 final JSONArray activityRecords = new JSONArray();
                 if (activityRecordReply.size() > 0) {
                     for (final ActivityRecord activityRecord : activityRecordReply) {
@@ -293,7 +290,7 @@ public class ActivityRecordController extends CordovaBaseModule {
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
             final String errorMsg = HiHealthStatusCodes.getStatusCodeMessage(Integer.parseInt(errorCode));
-
+            Log.i(TAG, "endBackgroundActivityRecord error: " + errorCode + ": " + errorMsg);
             promise.error(errorMsg);
         });
 
@@ -322,7 +319,7 @@ public class ActivityRecordController extends CordovaBaseModule {
 
         final Task<ActivityRecordReply> getTask = activityRecordsController.getActivityRecord(readRequest);
         getTask.addOnSuccessListener(activityRecordReply -> {
-            Log.i(TAG, "Get ActivityRecord was successful!");
+            Log.i(TAG, "getActivityRecord success");
             final JSONArray activityRecords = new JSONArray();
             final List<ActivityRecord> activityRecordList = activityRecordReply.getActivityRecords();
             for (final ActivityRecord activityRecord : activityRecordList) {
@@ -332,7 +329,7 @@ public class ActivityRecordController extends CordovaBaseModule {
         }).addOnFailureListener(e -> {
             final String errorCode = e.getMessage();
             final String errorMsg = HiHealthStatusCodes.getStatusCodeMessage(Integer.parseInt(errorCode));
-            Log.i(TAG, errorCode + ": " + errorMsg);
+            Log.i(TAG, "getActivityRecord error: " + errorCode + ": " + errorMsg);
             promise.error(errorCode + ": " + errorMsg);
         });
     }
@@ -342,7 +339,6 @@ public class ActivityRecordController extends CordovaBaseModule {
     }
 
     private Intent getForegroundServiceIntent() {
-
         Intent intent = new Intent();
         intent.setClassName(context.getPackageName(),
             "com.huawei.hms.cordova.health.modules.ActivityRecordForegroundService");

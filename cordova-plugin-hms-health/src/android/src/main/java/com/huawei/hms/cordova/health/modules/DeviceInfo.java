@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public class DeviceInfo extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void createDeviceInfo(final CorPack corPack, final JSONArray args, final Promise promise)
-            throws JSONException {
+        throws JSONException {
         com.huawei.hms.hihealth.data.DeviceInfo deviceInfo = null;
         final JSONObject appInfoJson = args.getJSONObject(0);
         String deviceManufacturer = null;
@@ -83,7 +83,7 @@ public class DeviceInfo extends CordovaBaseModule {
             if (!appInfoJson.has("isBleDevice") && !appInfoJson.has("platformType")) {
                 if (deviceType != null) {
                     deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
-                            deviceType);
+                        deviceType);
                 }
 
             }
@@ -91,7 +91,7 @@ public class DeviceInfo extends CordovaBaseModule {
                 platformType = appInfoJson.getInt("platformType");
                 if (platformType != null && deviceType != null) {
                     deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
-                            deviceType, platformType);
+                        deviceType, platformType);
                 }
             }
             if (appInfoJson.has("platformType") && appInfoJson.has("isBleDevice")) {
@@ -101,7 +101,7 @@ public class DeviceInfo extends CordovaBaseModule {
                 if (platformType != null && isBleDevice != null && deviceType != null) {
 
                     deviceInfo = new com.huawei.hms.hihealth.data.DeviceInfo(deviceManufacturer, modelName, uuid,
-                            deviceType, platformType, isBleDevice);
+                        deviceType, platformType, isBleDevice);
                 }
             }
 
@@ -113,7 +113,7 @@ public class DeviceInfo extends CordovaBaseModule {
             JSONObject deviceInfoJson = Utils.getJSONFromDeviceInfo(deviceInfo);
             promise.success(deviceInfoJson);
         } catch (IllegalArgumentException e) {
-            promise.error("Null deviInfo object");
+            promise.error("Null deviceInfo object");
         }
 
     }

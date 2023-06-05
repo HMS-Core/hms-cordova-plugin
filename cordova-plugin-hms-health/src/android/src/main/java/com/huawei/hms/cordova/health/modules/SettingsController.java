@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -153,7 +153,6 @@ public class SettingsController extends CordovaBaseModule implements OnActivityR
     @CordovaMethod
     public void requestAuthorizationIntent(final CorPack corPack, JSONArray args, final Promise promise)
         throws JSONException {
-
         JSONObject jsonObject = args.getJSONObject(0);
         JSONArray scopeJsonArray = jsonObject.getJSONArray("scopes");
         Boolean enableHealthAuth = jsonObject.getBoolean("enableHealthAuth");
@@ -173,7 +172,6 @@ public class SettingsController extends CordovaBaseModule implements OnActivityR
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
         if (requestCode == REQUEST_AUTH) {
             HealthKitAuthResult result = HuaweiHiHealth.getSettingController(activity)
                 .parseHealthKitAuthResultFromIntent(intent);

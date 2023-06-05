@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -56,7 +56,7 @@ public class AutoRecorderController extends CordovaBaseModule {
         public void onSamplePoint(final SamplePoint samplePoint) {
             if (isRecording) {
                 corPack.getEventRunner()
-                        .sendEvent("samplepoint", Utils.getJSONFromSamplePoint(samplePoint, TimeUnit.MILLISECONDS));
+                    .sendEvent("samplepoint", Utils.getJSONFromSamplePoint(samplePoint, TimeUnit.MILLISECONDS));
             }
         }
     };
@@ -78,22 +78,22 @@ public class AutoRecorderController extends CordovaBaseModule {
         controller.startRecord(dataType, onSamplePointListener).addOnCompleteListener((taskResult) -> {
             isRecording = true;
             if (taskResult.isSuccessful()) {
-                Log.i("AutoRecorder", "onComplete stopRecordByType Successful");
+                Log.i("AutoRecorder", "onComplete startRecordByType Successful");
                 final PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
                 pluginResult.setKeepCallback(false);
             } else {
-                Log.i("AutoRecorder", "onComplete stopRecordByType Failed");
+                Log.i("AutoRecorder", "onComplete startRecordByType Failed");
                 final PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR,
-                        taskResult.getException().toString());
+                    taskResult.getException().toString());
                 pluginResult.setKeepCallback(false);
             }
         }).addOnSuccessListener((result) -> {
             isRecording = true;
-            Log.i(TAG, "onSuccess stopRecordByType Successful");
+            Log.i(TAG, "onSuccess startRecordByType Successful");
             final PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
             pluginResult.setKeepCallback(true);
         }).addOnFailureListener((e) -> {
-            Log.i(TAG, "onFailure stopRecordByType Failed: " + e.getMessage());
+            Log.i(TAG, "onFailure startRecordByType Failed: " + e.getMessage());
             promise.error(e.getMessage());
         });
     }
@@ -105,8 +105,8 @@ public class AutoRecorderController extends CordovaBaseModule {
         final String dataTypeParam = jsonObject.getString("dataType");
         final DataType dataType = Utils.toDataType(dataTypeParam);
 
-        final com.huawei.hms.hihealth.AutoRecorderController autoRecorderController = HuaweiHiHealth
-                .getAutoRecorderController(activity);
+        final com.huawei.hms.hihealth.AutoRecorderController autoRecorderController
+            = HuaweiHiHealth.getAutoRecorderController(activity);
 
         final Task<Void> stopRecordTask = autoRecorderController.stopRecord(dataType, onSamplePointListener);
 
@@ -120,7 +120,7 @@ public class AutoRecorderController extends CordovaBaseModule {
             } else {
                 Log.i(TAG, "onComplete stopRecordByType Failed");
                 final PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR,
-                        taskResult.getException().toString());
+                    taskResult.getException().toString());
                 pluginResult.setKeepCallback(false);
                 promise.sendPluginResult(pluginResult);
             }

@@ -18,28 +18,29 @@ import { Component } from "@angular/core";
 import {
   HMSHealth,
   DataType,
+  HealthDataTypes,
   DataGenerateType,
+  TimeUnit,
   Field,
   HiHealthActivities,
-  TimeUnit,
+  HiHealthOptions,
+  HealthFields,
   ActivityRecordController,
   AutoRecorderController,
   ConsentsController,
   DataController,
   SettingsController,
-} from "@hmscore/ionic-native-hms-health/ngx";
-import {
+  HealthRecordController,
   AppInfo,
   DeviceInfo,
-} from "plugins/cordova-plugin-hms-health/ionic-native";
+} from "@hmscore/ionic-native-hms-health/ngx";
 
 const HuaweiHiHealth = {
-  HEALTHKIT_HEIGHTWEIGHT_READ:
-    "https://www.huawei.com/healthkit/heightweight.read",
-  HEALTHKIT_HEIGHTWEIGHT_WRITE:
-    "https://www.huawei.com/healthkit/heightweight.write",
-  HEALTHKIT_HEIGHTWEIGHT_BOTH:
-    "https://www.huawei.com/healthkit/heightweight.both",
+  HEALTHKIT_HEARTHEALTH_READ: "https://www.huawei.com/healthkit/hearthealth.read",
+  HEALTHKIT_HEARTHEALTH_WRITE: "https://www.huawei.com/healthkit/hearthealth.write",
+  HEALTHKIT_HEIGHTWEIGHT_READ: "https://www.huawei.com/healthkit/heightweight.read",
+  HEALTHKIT_HEIGHTWEIGHT_WRITE: "https://www.huawei.com/healthkit/heightweight.write",
+  HEALTHKIT_HEIGHTWEIGHT_BOTH: "https://www.huawei.com/healthkit/heightweight.both",
   HEALTHKIT_STEP_READ: "https://www.huawei.com/healthkit/step.read",
   HEALTHKIT_STEP_WRITE: "https://www.huawei.com/healthkit/step.write",
   HEALTHKIT_STEP_BOTH: "https://www.huawei.com/healthkit/step.both",
@@ -49,12 +50,9 @@ const HuaweiHiHealth = {
   HEALTHKIT_HEARTRATE_READ: "https://www.huawei.com/healthkit/heartrate.read",
   HEALTHKIT_HEARTRATE_WRITE: "https://www.huawei.com/healthkit/heartrate.write",
   HEALTHKIT_HEARTRATE_BOTH: "https://www.huawei.com/healthkit/heartrate.both",
-  HEALTHKIT_BLOODGLUCOSE_READ:
-    "https://www.huawei.com/healthkit/bloodglucose.read",
-  HEALTHKIT_BLOODGLUCOSE_WRITE:
-    "https://www.huawei.com/healthkit/bloodglucose.write",
-  HEALTHKIT_BLOODGLUCOSE_BOTH:
-    "https://www.huawei.com/healthkit/bloodglucose.both",
+  HEALTHKIT_BLOODGLUCOSE_READ: "https://www.huawei.com/healthkit/bloodglucose.read",
+  HEALTHKIT_BLOODGLUCOSE_WRITE: "https://www.huawei.com/healthkit/bloodglucose.write",
+  HEALTHKIT_BLOODGLUCOSE_BOTH: "https://www.huawei.com/healthkit/bloodglucose.both",
   HEALTHKIT_DISTANCE_READ: "https://www.huawei.com/healthkit/distance.read",
   HEALTHKIT_DISTANCE_WRITE: "https://www.huawei.com/healthkit/distance.write",
   HEALTHKIT_DISTANCE_BOTH: "https://www.huawei.com/healthkit/distance.both",
@@ -82,41 +80,29 @@ const HuaweiHiHealth = {
   HEALTHKIT_NUTRITION_READ: "https://www.huawei.com/healthkit/nutrition.read",
   HEALTHKIT_NUTRITION_WRITE: "https://www.huawei.com/healthkit/nutrition.write",
   HEALTHKIT_NUTRITION_BOTH: "https://www.huawei.com/healthkit/nutrition.both",
-  HEALTHKIT_BLOODPRESSURE_READ:
-    "https://www.huawei.com/healthkit/bloodpressure.read",
-  HEALTHKIT_BLOODPRESSURE_WRITE:
-    "https://www.huawei.com/healthkit/bloodpressure.write",
-  HEALTHKIT_BLOODPRESSURE_BOTH:
-    "https://www.huawei.com/healthkit/bloodpressure.both",
-  HEALTHKIT_OXYGENSTATURATION_READ:
-    "https://www.huawei.com/healthkit/oxygensaturation.read",
-  HEALTHKIT_OXYGENSTATURATION_WRITE:
-    "https://www.huawei.com/healthkit/oxygensaturation.write",
-  HEALTHKIT_OXYGENSTATURATION_BOTH:
-    "https://www.huawei.com/healthkit/oxygensaturation.both",
-  HEALTHKIT_BODYTEMPERATURE_READ:
-    "https://www.huawei.com/healthkit/bodytemperature.read",
-  HEALTHKIT_BODYTEMPERATURE_WRITE:
-    "https://www.huawei.com/healthkit/bodytemperature.write",
-  HEALTHKIT_BODYTEMPERATURE_BOTH:
-    "https://www.huawei.com/healthkit/bodytemperature.both",
-  HEALTHKIT_REPRODUCTIVE_READ:
-    "https://www.huawei.com/healthkit/reproductive.read",
-  HEALTHKIT_REPRODUCTIVE_WRITE:
-    "https://www.huawei.com/healthkit/reproductive.write",
-  HEALTHKIT_REPRODUCTIVE_BOTH:
-    "https://www.huawei.com/healthkit/reproductive.both",
-  HEALTHKIT_ACTIVITY_RECORD_READ:
-    "https://www.huawei.com/healthkit/activityrecord.read",
-  HEALTHKIT_ACTIVITY_RECORD_WRITE:
-    "https://www.huawei.com/healthkit/activityrecord.write",
-  HEALTHKIT_ACTIVITY_RECORD_BOTH:
-    "https://www.huawei.com/healthkit/activityrecord.both",
+  HEALTHKIT_BLOODPRESSURE_READ: "https://www.huawei.com/healthkit/bloodpressure.read",
+  HEALTHKIT_BLOODPRESSURE_WRITE: "https://www.huawei.com/healthkit/bloodpressure.write",
+  HEALTHKIT_BLOODPRESSURE_BOTH: "https://www.huawei.com/healthkit/bloodpressure.both",
+  HEALTHKIT_OXYGENSTATURATION_READ: "https://www.huawei.com/healthkit/oxygensaturation.read",
+  HEALTHKIT_OXYGENSTATURATION_WRITE: "https://www.huawei.com/healthkit/oxygensaturation.write",
+  HEALTHKIT_OXYGENSTATURATION_BOTH: "https://www.huawei.com/healthkit/oxygensaturation.both",
+  HEALTHKIT_BODYTEMPERATURE_READ: "https://www.huawei.com/healthkit/bodytemperature.read",
+  HEALTHKIT_BODYTEMPERATURE_WRITE: "https://www.huawei.com/healthkit/bodytemperature.write",
+  HEALTHKIT_BODYTEMPERATURE_BOTH: "https://www.huawei.com/healthkit/bodytemperature.both",
+  HEALTHKIT_REPRODUCTIVE_READ: "https://www.huawei.com/healthkit/reproductive.read",
+  HEALTHKIT_REPRODUCTIVE_WRITE: "https://www.huawei.com/healthkit/reproductive.write",
+  HEALTHKIT_REPRODUCTIVE_BOTH: "https://www.huawei.com/healthkit/reproductive.both",
+  HEALTHKIT_ACTIVITY_RECORD_READ: "https://www.huawei.com/healthkit/activityrecord.read",
+  HEALTHKIT_ACTIVITY_RECORD_WRITE: "https://www.huawei.com/healthkit/activityrecord.write",
+  HEALTHKIT_ACTIVITY_RECORD_BOTH: "https://www.huawei.com/healthkit/activityrecord.both",
   HEALTHKIT_STRESS_READ: "https://www.huawei.com/healthkit/stress.read",
   HEALTHKIT_STRESS_WRITE: "https://www.huawei.com/healthkit/stress.write",
   HEALTHKIT_STRESS_BOTH: "https://www.huawei.com/healthkit/stress.both",
   HEALTHKIT_SCOPE_PREFIX: "https://www.huawei.com/healthkit",
-  ALL_SCOPES: [
+  HEALTHKIT_HISTORYDATA_OPEN_WEEK: "https://www.huawei.com/healthkit/historydata.open.week",
+  HEALTHKIT_HISTORYDATA_OPEN_MONTH: "https://www.huawei.com/healthkit/historydata.open.month",
+  HEALTHKIT_HISTORYDATA_OPEN_YEAR: "https://www.huawei.com/healthkit/historydata.open.year",
+  ALL_SCOPES: [     
     "https://www.huawei.com/healthkit/heightweight.both",
     "https://www.huawei.com/healthkit/step.both",
     "https://www.huawei.com/healthkit/location.both",
@@ -142,8 +128,7 @@ const HuaweiHiHealth = {
     "https://www.huawei.com/healthkit/stress.write",
     "https://www.huawei.com/healthkit/stress.both",
   ],
-
-  MAX_SCOPES: [
+  MAX_SCOPES: [        
     "https://www.huawei.com/healthkit/heightweight.read",
     "https://www.huawei.com/healthkit/heightweight.write",
     "https://www.huawei.com/healthkit/heightweight.both",
@@ -203,8 +188,8 @@ const HuaweiHiHealth = {
     "https://www.huawei.com/healthkit/activityrecord.both",
     "https://www.huawei.com/healthkit/stress.read",
     "https://www.huawei.com/healthkit/stress.write",
-  ],
-};
+  ]
+} 
 
 @Component({
   selector: "app-home",
@@ -213,6 +198,7 @@ const HuaweiHiHealth = {
 })
 export class HomePage {
   packageName = "com.cordova.health_with_permissions";
+  resultId = "";
   constructor(private hmsHealth: HMSHealth) {}
 
   signIn() {
@@ -220,19 +206,18 @@ export class HomePage {
       .signIn(HuaweiHiHealth.ALL_SCOPES)
       .then((user) => {
         console.log("SignIn Success");
-        console.log(user);
         console.log(JSON.stringify(user));
         alert("SignIn Success: " + user.displayName);
       })
       .catch((error) => {
         console.log(error);
-        console.log(JSON.stringify(error));
+        alert("SignIn Error: " + error)
       });
   }
 
   startAutoRecorder() {
     this.hmsHealth.on("samplepoint", (e) => {
-      console.log(e);
+      console.log(JSON.stringify(e));
       alert(JSON.stringify(e));
     });
 
@@ -241,9 +226,11 @@ export class HomePage {
     })
       .then(() => {
         console.log("Start Record Success!");
+        alert("Start Record Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("Start Record error: " + error);
       });
   }
 
@@ -257,6 +244,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("Stop Record error: " + error);
       });
   }
 
@@ -265,68 +253,144 @@ export class HomePage {
     let endDate = new Date();
     startDate.setTime(startDate.getTime() - 3 * 60 * 60 * 1000);
 
-    let activityRecordData = {
-      dataCollector: {
-        dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
-        name: "DT_CONTINUOUS_STEPS_TOTAL",
-        dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
-      },
-      activityRecord: {
-        startTime: startDate.getTime(),
-        endTime: endDate.getTime(),
-        timeUnit: TimeUnit.MILLISECONDS,
-        timeZone: "+0800",
-        id: "MyBackgroundActivityRecordId",
-        name: "ActivityRecordRun",
-        description: "This is a test for ActivityRecord",
-        activityType: HiHealthActivities.RUNNING,
-        appDetailsUrl: "aa",
-        appDomainName: "string",
-        appVersion: "string",
-        appInfo: {
-          detailsUrl: "string",
-          domainName: "string",
-          packageName: "string",
-          version: "string",
-        },
-
-        activitySummary: {
-          paceSummary: {
-            avgPace: 247.27626,
-            bestPace: 212,
-            britishPaceMap: {
-              "50001893": 365.0,
-            },
-            britishPartTimeMap: {
-              "1.0": 263.0,
-            },
-            partTimeMap: {
-              "1.0": 456.0,
-            },
-            paceMap: {
-              "1.0": 263,
-            },
-            sportHealthPaceMap: {
-              "102802480": 535.0,
-            },
-          },
-          dataSummary: [
-            {
-              startTime: startDate.getTime(),
-              endTime: endDate.getTime(),
-              fieldName: Field.FIELD_STEPS,
-              fieldValue: "352",
-              timeUnit: TimeUnit.MILLISECONDS,
-              dataCollector: {
-                dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
-                name: "DT_CONTINUOUS_STEPS_TOTAL",
-                dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
-              },
-            },
-          ],
-        },
-      },
+    const dataCollector1 = {
+      dataType: DataType.DT_CONTINUOUS_DISTANCE_TOTAL,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "test1",
     };
+  
+    const dataCollector2 = {
+      dataType: DataType.POLYMERIZE_CONTINUOUS_SPEED_STATISTICS,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "test1",
+    };
+  
+    const dataCollector3 = {
+      dataType: DataType.DT_CONTINUOUS_STEPS_TOTAL,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "test1",
+    };
+  
+    const dataCollector4 = {
+      dataType: DataType.DT_INSTANTANEOUS_STEPS_RATE,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "test1",
+    };
+  
+    const samplePoint1 = {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      fields: [
+        {
+          fieldName: Field.FIELD_DISTANCE,
+          fieldValue: 400.0,
+        },
+      ],
+    };
+  
+    const samplePoint2 = {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      fields: [
+        {
+          fieldName: Field.FIELD_AVG,
+          fieldValue: 60.0,
+        },
+        {
+          fieldName: Field.FIELD_MIN,
+          fieldValue: 40.0,
+        },
+        {
+          fieldName: Field.FIELD_MAX,
+          fieldValue: 80.0,
+        },
+      ],
+    };
+  
+    const samplePoint3 = {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      fields: [
+        {
+          fieldName: Field.FIELD_STEPS,
+          fieldValue: 1024,
+        },
+      ],
+    };
+  
+    const activitySummary = {
+      dataSummary: [{
+        dataCollector: dataCollector1,
+        samplePoints: [samplePoint1],
+      }, {
+        dataCollector: dataCollector2,
+        samplePoints: [samplePoint2],
+      }, {
+        dataCollector: dataCollector3,
+        samplePoints: [samplePoint3],
+      }],
+      paceSummary: {
+        avgPace: 247.27626,
+        bestPace: 212,
+        britishPaceMap: {
+          "50001893": 365.0,
+        },
+        britishPartTimeMap: {
+          "1.0": 263.0
+        },
+        partTimeMap: {
+          "1.0": 456.0
+        },
+        paceMap: {
+          "1.0": 263
+        },
+        sportHealthPaceMap: {
+          "102802480": 535.0
+        },
+      }
+      
+    };
+  
+    // Build an ActivityRecord object
+    const activityRecord = {
+      id: "MyBackgroundActivityRecordId",
+      name: "AddActivityRecord",
+      description: "This is ActivityRecord begin test!",
+      activityType: HiHealthActivities.RUNNING,
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      timeZone: "+0800",
+      activitySummary: activitySummary,
+    }
+  
+    // You can use sampleSets to add more sampling points to the sampling dataset.
+    // Build the (DT_CONTINUOUS_STEPS_DELTA) sampling data object and add it to the sampling dataSet
+    const sampleSetObject = [{
+      dataCollector: dataCollector4,
+      samplePoints: [
+        {
+          startTime: startDate.getTime(),
+          endTime: endDate.getTime(),
+          timeUnit: TimeUnit.MILLISECONDS,
+          fields: [
+            {
+              fieldName: Field.FIELD_STEP_RATE,
+              fieldValue: 10,
+            },
+          ]
+        },
+      ]
+    }];
+  
+    let activityRecordData = {
+        activityRecord: activityRecord,
+        sampleSet: sampleSetObject
+    }
+
     ActivityRecordController.addActivityRecord(activityRecordData)
       .then(() => {
         console.log("Add Activity Record Success!");
@@ -334,6 +398,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("Add Activity Record error: " + error);
       });
   }
 
@@ -345,7 +410,7 @@ export class HomePage {
       startTime: startDate.getTime(),
       timeUnit: TimeUnit.MILLISECONDS,
       timeZone: "+0800",
-      id: "ActivityRecordRun",
+      id: "MyBackgroundActivityRecordId",
       name: "BeginActivityRecord",
       description: "This is a test for ActivityRecord",
       activityType: HiHealthActivities.RUNNING,
@@ -357,7 +422,30 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("Begin Activity Record error: " + error);
       });
+  }
+
+  beginBackgroundActivityRecord() {
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000))
+  
+    let activityRecord = {
+      startTime: startDate.getTime(),
+      timeUnit: TimeUnit.MILLISECONDS,
+      timeZone: "+0800",
+      id: 'MyBackgroundActivityRecordId',
+      name: 'ActivityRecordRun',
+      description: 'This is a test for ActivityRecord',
+      activityType: HiHealthActivities.RUNNING,
+    }
+    ActivityRecordController.beginBackgroundActivityRecord(activityRecord).then(() => {
+      console.log("Begin Activity Record Success!");
+      alert("beginBackgroundActivityRecord Success!");
+    }).catch(error => {
+      console.log(error);
+      alert("beginBackgroundActivityRecord error: " + error);
+    });
   }
 
   endActivityRecord() {
@@ -373,7 +461,24 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("End Activity Record error" + error);
       });
+  }
+
+  endBackgroundActivityRecord() {
+    let request = {
+      activityRecordId: 'MyBackgroundActivityRecordId',
+      timeUnit: TimeUnit.MILLISECONDS,
+    }
+  
+    ActivityRecordController.endBackgroundActivityRecord(request).then((res) => {
+      console.log("endBackgroundActivityRecord Record Success!");
+      alert("endBackgroundActivityRecord Record Success!" + JSON.stringify(res));
+  
+    }).catch(error => {
+      console.log(error);
+      alert("endBackgroundActivityRecord Record error" + error);
+    });
   }
 
   getActivityRecord() {
@@ -391,15 +496,50 @@ export class HomePage {
     ActivityRecordController.getActivityRecord(activityRecord)
       .then((ar) => {
         console.log("Get Activity Record Success!");
-        console.log(ar);
         console.log(JSON.stringify(ar));
-        alert("Get Activity Record Success!");
+        alert("Get Activity Record Success!" + JSON.stringify(ar));
       })
       .catch((error) => {
         console.log(error);
+        alert("Get Activity Record error" + error);
       });
   }
 
+  deleteActivityRecord() {
+    let startDate = new Date();
+    let endDate = new Date();
+    startDate.setTime(startDate.getTime() - (3 * 60 * 60 * 60 * 1000))
+  
+    let activityRecord = {
+      startTime: startDate.getTime(),
+      endTime: endDate.getTime(),
+      activityRecordIds: [{
+        activityRecord: "MyBackgroundActivityRecordId"
+      }
+      ],
+      dataTypes: [{
+        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+        hiHealthOption: HiHealthOptions.ACCESS_READ
+      },
+      {
+        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+        hiHealthOption: HiHealthOptions.ACCESS_READ
+      }
+      ],
+      timeUnit: TimeUnit.MILLISECONDS,
+      isDeleteSubData: true
+    }
+  
+    ActivityRecordController.deleteActivityRecord(activityRecord).then((ar) => {
+      console.log(" deleteActivityRecord  Success!");
+      console.log(JSON.stringify(ar));
+      alert("deleteActivityRecord Success!");
+    }).catch(error => {
+      console.log(error);
+      alert(error);
+      alert("deleteActivityRecord error: " + error);
+    });
+  }
 
   createDeviceInfo() {
     let createDeviceInfoReq = {
@@ -418,6 +558,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("createDeviceInfo error : " + error)
       });
   }
 
@@ -439,6 +580,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("initDataController error: " + error);
       });
   }
 
@@ -484,12 +626,12 @@ export class HomePage {
     DataController.read(readData)
       .then((data) => {
         console.log("read data Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("read data Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("read data error: " + error);
       });
   }
 
@@ -506,6 +648,10 @@ export class HomePage {
       },
       sampleSet: [
         {
+          metaData: {
+            metaDataKey: "metaData",
+            metaDataValue: "metaData"
+          },
           startTime: startDate.getTime(),
           endTime: endDate.getTime(),
           fieldName: Field.FIELD_STEPS_DELTA,
@@ -514,9 +660,9 @@ export class HomePage {
           dataCollector: {
             dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
             name: "DT_CONTINUOUS_STEPS_DELTA",
-            dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+            dataGenerateType: DataGenerateType.DATA_TYPE_RAW
           },
-        },
+        }
       ],
     };
 
@@ -527,6 +673,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("insert data error: " + error);
       });
   }
 
@@ -568,6 +715,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("update data error: " + error);
       });
   }
 
@@ -595,6 +743,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("delete data error: " + error);
       });
   }
 
@@ -602,12 +751,12 @@ export class HomePage {
     DataController.readTodaySummation(DataType.DT_CONTINUOUS_STEPS_DELTA)
       .then((data) => {
         console.log("readTodaySummation data Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("readTodaySummation data Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("readTodaySummation data error: " + error);
       });
   }
 
@@ -620,13 +769,12 @@ export class HomePage {
     DataController.readDailySummation(options)
       .then((data) => {
         console.log("readDailySummation data Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("readDailySummation data Success!");
       })
       .catch((error) => {
         console.log(error);
-        alert("readDailySummation data error!");
+        alert("readDailySummation data error: " + error);
       });
   }
 
@@ -634,12 +782,12 @@ export class HomePage {
     DataController.clearAll()
       .then((data) => {
         console.log("clearAll data Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("clearAll data Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("clearAll data error: " + error);
       });
   }
 
@@ -658,84 +806,93 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("createApp error : " + error)
       });
   }
 
   getDetailsUrl() {
     AppInfo.getDetailsUrl()
-      .then(() => {
+      .then((url) => {
         console.log("getDetailsUrl Success!");
-        alert("getDetailsUrl Success!");
+        alert("Detail Url Success : " + url)
       })
       .catch((error) => {
         console.log(error);
+        alert("Detail Url error : " + error)
       });
   }
+
   getDomainName() {
     AppInfo.getDomainName()
-      .then(() => {
+      .then((url) => {
         console.log("getDomainName Success!");
-        alert("getDomainName Success!");
+        alert("getDomainName Success : " + url)
       })
       .catch((error) => {
         console.log(error);
+        alert("getDomainName error : " + error)
       });
   }
 
   getPackageName() {
     AppInfo.getPackageName()
-      .then(() => {
+      .then((url) => {
         console.log("getPackageName Success!");
-        alert("getPackageName Success!");
+        console.log(JSON.stringify(url));
+        alert("Detail PackageName Success : " + url)
       })
       .catch((error) => {
         console.log(error);
+        alert("Detail PackageName error : " + error)
       });
   }
+
   getVersion() {
     AppInfo.getVersion()
-      .then(() => {
+      .then((url) => {
         console.log("getVersion Success!");
-        alert("getVersion Success!");
+        console.log(JSON.stringify(url));
+        alert("Detail Version Success : " + url)
       })
       .catch((error) => {
         console.log(error);
+        alert("Detail Version error : " + error)
       });
   }
 
   getPermissions() {
     let options = {
       language: "en-us",
-      appId: "107024979",
+      appId: "<app_id>",
     };
     ConsentsController.getPermissions(options)
       .then((data) => {
         console.log("getPermissions Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("getPermissions Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("getPermissions error: " + error);
       });
   }
 
   revokeAll() {
-    ConsentsController.revokeAll("107024979")
+    ConsentsController.revokeAll("<app_id>")
       .then((data) => {
         console.log("revokeAll Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("revokeAll Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("revokeAll error: " + error);
       });
   }
 
   revoke() {
     let options = {
-      appId: "107024979",
+      appId: "<app_id>",
       scopes: [
         HuaweiHiHealth.HEALTHKIT_STEP_READ,
         HuaweiHiHealth.HEALTHKIT_STEP_WRITE,
@@ -744,18 +901,18 @@ export class HomePage {
     ConsentsController.revoke(options)
       .then((data) => {
         console.log("revoke Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("revoke Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("revoke error: " + error);
       });
   }
 
   cancelAuthorization() {
     let options = {
-      appId: "107024979",
+      appId: "<app_id>",
       scopes: [
         HuaweiHiHealth.HEALTHKIT_STEP_READ,
         HuaweiHiHealth.HEALTHKIT_STEP_WRITE,
@@ -764,12 +921,12 @@ export class HomePage {
     ConsentsController.cancelAuthorization(options)
       .then((data) => {
         console.log("cancelAuthorization Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("cancelAuthorization Success!");
       })
       .catch((error) => {
         console.log(error);
+        alert("cancelAuthorization error: " + error);
       });
   }
 
@@ -780,12 +937,12 @@ export class HomePage {
     ConsentsController.cancelAuthorizationAll(cancelAuthAllReq)
       .then((data) => {
         console.log("cancelAuthorizationAll Success!");
-        console.log(data);
         console.log(JSON.stringify(data));
         alert("cancelAuthorizationAll Success!");
       })
       .catch((error) => {
         console.log("cancelAuthorizationAll error" + error);
+        alert("cancelAuthorizationAll error: " + error);
       });
   }
 
@@ -802,6 +959,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("addDataType Error:" + error)
       });
   }
 
@@ -813,6 +971,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("disableHiHealth error: " + error);
       });
   }
 
@@ -826,6 +985,7 @@ export class HomePage {
       })
       .catch((error) => {
         console.log(error);
+        alert("readDataType error: " + error);
       });
   }
 
@@ -833,10 +993,11 @@ export class HomePage {
     SettingsController.checkHealthAppAuthorization()
       .then((data) => {
         console.log("checkHealthAppAuthorization Success!");
-        alert("checkHealthAppAuthorization Success!");
+        alert("checkHealthAppAuthorization: " + data);
       })
       .catch((error) => {
         console.log(error);
+        alert("checkHealthAppAuthorization error : " + error);
       });
   }
 
@@ -844,10 +1005,334 @@ export class HomePage {
     SettingsController.getHealthAppAuthorization()
       .then((data) => {
         console.log("getHealthAppAuthorization Success!");
-        alert("getHealthAppAuthorization Success!");
+        alert("getHealthAppAuthorization: " + data);
       })
       .catch((error) => {
         console.log(error);
+        alert("getHealthAppAuthorization error : " + error);
       });
   }
+
+  requestAuth() {
+    let request = {
+      scopes: [
+        HuaweiHiHealth.HEALTHKIT_STEP_READ,
+        HuaweiHiHealth.HEALTHKIT_STEP_WRITE,
+        HuaweiHiHealth.HEALTHKIT_HEIGHTWEIGHT_READ,
+        HuaweiHiHealth.HEALTHKIT_HEIGHTWEIGHT_WRITE,
+        HuaweiHiHealth.HEALTHKIT_HEARTRATE_READ,
+        HuaweiHiHealth.HEALTHKIT_HEARTRATE_WRITE,
+        HuaweiHiHealth.HEALTHKIT_ACTIVITY_RECORD_READ,
+        HuaweiHiHealth.HEALTHKIT_ACTIVITY_RECORD_WRITE,
+        HuaweiHiHealth.HEALTHKIT_HEARTHEALTH_READ,
+        HuaweiHiHealth.HEALTHKIT_HEARTHEALTH_WRITE
+      ],
+      enableHealthAuth: true
+    };
+  
+    SettingsController.requestAuthorizationIntent(request).then(url => {
+      console.log("requestAuthorizationIntent Success");
+      console.log(JSON.stringify(url));
+      alert("requestAuthorizationIntent Success : " + url)
+    }).catch(error => {
+      console.log(error);
+      alert("requestAuthorizationIntent error : " + error)
+    })
+  }
+
+  addHealthRecord() {
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+    let endDate = new Date();
+
+    const samplePointField = [
+      {
+        fieldName: Field.FIELD_AVG,
+        fieldValue: 90,
+      },
+      {
+        fieldName: Field.FIELD_MAX,
+        fieldValue: 100,
+      },
+      {
+        fieldName: Field.FIELD_MIN,
+        fieldValue: 80,
+      },
+      {
+        fieldName: Field.FIELD_LAST,
+        fieldValue: 80,
+      },
+    ]
+
+    const sampleSetField = [
+      {
+        fieldName: Field.FIELD_BPM,
+        fieldValue: 42,
+      }
+    ]
+
+    const samplePointForHealthBuilder = [
+      {
+        fieldName: HealthFields.FIELD_THRESHOLD,
+        fieldValue: 42,
+      },
+      {
+        fieldName: HealthFields.FIELD_AVG_HEART_RATE,
+        fieldValue: 45,
+      },
+      {
+        fieldName: HealthFields.FIELD_MAX_HEART_RATE,
+        fieldValue: 48,
+      },
+      {
+        fieldName: HealthFields.FIELD_MIN_HEART_RATE,
+        fieldValue: 42,
+      },
+    ]
+
+    const options = 
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: samplePointForHealthBuilder,
+        metaData: "Data",
+      }
+
+    const sampleSets = [
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: sampleSetField
+      },
+    ];
+
+    const samplePoints = [
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: samplePointField
+      },
+    ];
+
+    const dataCollectorArray = [
+      {
+        dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+        name: "such as step count",
+      }, 
+      {
+        dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+        name: "such as step count",
+      }, 
+      {
+        dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+        dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+        name: "such as step count",
+      }
+    ]
+
+    let request = {
+      options: options,
+      dataCollector: dataCollectorArray,
+      sampleSets: sampleSets,
+      samplePoints: samplePoints
+    }
+
+    HealthRecordController.addHealthRecord(request).then(res => {
+      this.resultId = res;
+      alert("addHealthRecord Success: " + res)
+    }).catch(error => {
+      console.log(error);
+      alert("addHealthRecord error: " + error)
+    });
+  }
+
+  deleteHealthRecord() {
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+    let endDate = new Date();
+
+    let request = {
+      options: {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+      },
+      isDeleteSubData: true,
+      dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+      dataTypes: [
+      {
+        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
+        hiHealthOption: HiHealthOptions.ACCESS_READ
+      },
+      {
+        dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,
+        hiHealthOption: HiHealthOptions.ACCESS_READ
+      }
+      ],
+      activityRecordIds: [
+      {
+        activityRecord: this.resultId
+      },
+      {
+        activityRecord: "healthRecordId1"
+      }
+      ],
+    }
+
+    HealthRecordController.deleteHealthRecord(request).then(res => {
+      alert("deleteHealthRecord Success : " + res)
+      console.log(JSON.stringify(res));
+    }).catch(error => {
+      console.log(error);
+      alert("deleteHealthRecord error : " + error)
+    });
+
+  }
+
+  getHealthRecord() {
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 60 * 1000));
+    let endDate = new Date();
+
+    let request = {
+      options: {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+      },
+
+      dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+      dataTypes: [
+      {
+        dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,
+        hiHealthOption: HiHealthOptions.ACCESS_READ
+      },
+      ],
+    }
+
+    HealthRecordController.getHealthRecord(request)
+      .then(res => {
+        alert("getHealthRecord Success : " + JSON.stringify(res));
+        console.log(JSON.stringify(res));
+      }).catch(error => {
+        console.log(error);
+        alert("getHealthRecord error: " + error);
+      });
+  }
+
+  updateHealthRecord() {
+    let startDate = new Date();
+    startDate.setTime(startDate.getTime() - (2 * 60 * 60 * 1000));
+    let endDate = new Date();
+
+    const samplePointField = [
+      {
+        fieldName: Field.FIELD_AVG,
+        fieldValue: 91,
+      },
+      {
+        fieldName: Field.FIELD_MAX,
+        fieldValue: 101,
+      },
+      {
+        fieldName: Field.FIELD_MIN,
+        fieldValue: 81,
+      },
+      {
+        fieldName: Field.FIELD_LAST,
+        fieldValue: 81,
+      },
+    ]
+
+    const sampleSetField = [
+      {
+        fieldName: Field.FIELD_BPM,
+        fieldValue: 42,
+      }
+    ]
+
+    const samplePointForHealthBuilder = [
+      {
+        fieldName: HealthFields.FIELD_THRESHOLD,
+        fieldValue: 42,
+      },
+      {
+        fieldName: HealthFields.FIELD_AVG_HEART_RATE,
+        fieldValue: 45,
+      },
+      {
+        fieldName: HealthFields.FIELD_MAX_HEART_RATE,
+        fieldValue: 48,
+      },
+      {
+        fieldName: HealthFields.FIELD_MIN_HEART_RATE,
+        fieldValue: 42,
+      },
+    ]
+
+    const options = 
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: samplePointForHealthBuilder,
+        metaData: "Data",
+      }
+
+    const sampleSets = [
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: sampleSetField
+      },
+    ];
+
+    const samplePoints = [
+      {
+        startTime: startDate.getTime(),
+        endTime: endDate.getTime(),
+        timeUnit: TimeUnit.MILLISECONDS,
+        fields: samplePointField
+      },
+    ];
+
+    const dataCollectorArray = [{
+      dataType: DataType.DT_INSTANTANEOUS_HEART_RATE,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "such as step count",
+    }, {
+      dataType: DataType.POLYMERIZE_CONTINUOUS_HEART_RATE_STATISTICS,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "such as step count",
+    }, {
+      dataType: HealthDataTypes.DT_HEALTH_RECORD_BRADYCARDIA,
+      dataGenerateType: DataGenerateType.DATA_TYPE_RAW,
+      name: "such as step count",
+    }
+    ]
+
+    let request = {
+      healthRecordId: this.resultId,
+      options: options,
+      dataCollector: dataCollectorArray,
+      sampleSets: sampleSets,
+      samplePoints: samplePoints
+    }
+
+    HealthRecordController.updateHealthRecord(request)
+      .then(res => {
+        alert("updateHealthRecord Success : " + res)
+        console.log(JSON.stringify(res));
+      }).catch(error => {
+        console.log(error);
+        alert("updateHealthRecord error : " + error);
+      }); 
+      
+  } 
 }

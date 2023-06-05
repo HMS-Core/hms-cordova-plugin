@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ import com.huawei.hms.hihealth.HiHealthStatusCodes;
 import com.huawei.hms.hihealth.HuaweiHiHealth;
 import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
-import com.huawei.hms.hihealth.data.Field;
 import com.huawei.hms.hihealth.data.HealthRecord;
 import com.huawei.hms.hihealth.data.SamplePoint;
 import com.huawei.hms.hihealth.data.SampleSet;
@@ -71,106 +70,43 @@ public class HealthRecordController extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void addHealthRecord(final CorPack corPack, final JSONArray args, final Promise promise)
-            throws JSONException {
+        throws JSONException {
         final JSONObject jsonObject = args.getJSONObject(0);
-        final JSONObject outerDataCollectorJson = jsonObject.getJSONObject("dataCollector");
-        final JSONArray healthFieldsJson = jsonObject.getJSONArray("healthFields");
+        final JSONArray outerDataCollectorJson = jsonObject.getJSONArray("dataCollector");
+        final JSONObject options = jsonObject.getJSONObject("options");
+        final JSONArray sampleSetArray = jsonObject.getJSONArray("sampleSets");
+        final JSONArray samplePointArray = jsonObject.getJSONArray("samplePoints");
 
-        final DataCollector outerDataCollector = Utils.toHealthDataCollector(outerDataCollectorJson,
-                context.getPackageName());
+        final DataCollector dataCollector = Utils.toDataCollector(outerDataCollectorJson.getJSONObject(0),
+            context.getPackageName());
+        final SampleSet sampleSet1 = Utils.toSampleSetForHealthRecord(sampleSetArray, dataCollector);
 
-        HealthRecord.Builder builder = new HealthRecord.Builder(outerDataCollector);
+        List<SampleSet> sampleSetList1 = new ArrayList<>();
+        sampleSetList1.add(sampleSet1);
 
-        if (jsonObject.has("options")) {
-            final JSONObject readOptionsJSON = jsonObject.getJSONObject("options");
-            if (readOptionsJSON.has("startTime") && readOptionsJSON.has("endTime") && readOptionsJSON.has("timeUnit")) {
-                final String startTime = readOptionsJSON.getString("startTime");
-                final String endTime = readOptionsJSON.getString("endTime");
-                final String timeUnitParam = readOptionsJSON.getString("timeUnit");
-                final TimeUnit timeUnit = Utils.toTimeUnit(timeUnitParam);
-                builder.setStartTime(Long.parseLong(startTime), timeUnit);
-                builder.setEndTime(Long.parseLong(endTime), timeUnit);
-                if (readOptionsJSON.has("metaData")) {
-                    String metaData = readOptionsJSON.getString("metaData");
-                    builder.setMetadata(metaData);
-                }
-            }
-        }
-        builder.setDataCollector(outerDataCollector);
-
-        final JSONArray sampleSets = jsonObject.getJSONArray("sampleSets");
-        List<SampleSet> sampleSetsList = new ArrayList<>();
+        final DataCollector dataCollector1 = Utils.toDataCollector(outerDataCollectorJson.getJSONObject(1),
+            context.getPackageName());
         List<SamplePoint> samplePointList = new ArrayList<>();
+        SamplePoint samplePoint1 = null;
 
-        for (int i = 0; i < sampleSets.length(); i++) {
-
-            JSONObject sampleSetJson = sampleSets.getJSONObject(i);
-            JSONObject sampleSetDataCollectorJson = sampleSetJson.getJSONObject("dataCollector");
-
-            DataCollector sampleSetDataCollector = Utils.toDataCollector(sampleSetDataCollectorJson,
-                    context.getPackageName());
-
-            SampleSet sampleSet = SampleSet.create(sampleSetDataCollector);
-            JSONArray sampleSetPoint = sampleSetJson.getJSONArray("samplePoints");
-
-            for (int j = 0; j < sampleSetPoint.length(); j++) {
-                JSONObject innerDataCollectorJson = sampleSetPoint.getJSONObject(j).getJSONObject("dataCollector");
-                JSONObject samplePointFromJson = sampleSetPoint.getJSONObject(j);
-                DataCollector innerDataCollector = Utils.toDataCollector(innerDataCollectorJson,
-                        context.getPackageName());
-                final String startTime = samplePointFromJson.getString("startTime");
-                final String endTime = samplePointFromJson.getString("endTime");
-                final String timeUnitParam = samplePointFromJson.getString("timeUnit");
-                final TimeUnit timeUnit = Utils.toTimeUnit(timeUnitParam);
-
-                SamplePoint samplePointForSet = sampleSet.createSamplePoint()
-                        .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
-
-                for (int k = 0; k < sampleSetJson.getJSONArray("fields").length(); k++) {
-                    JSONObject innerFieldObject = sampleSetJson.getJSONArray("fields").getJSONObject(k);
-                    final String fieldName = innerFieldObject.getString("fieldName");
-                    final Object fieldValue = innerFieldObject.get("fieldValue");
-                    final Field field = Utils.toFieldType(fieldName);
-                    samplePointForSet = Utils.valueSetterSample(field, fieldValue, samplePointForSet);
-                    sampleSet.addSample(samplePointForSet);
-                }
-
-                SamplePoint.Builder samplePointForListBuilder = new SamplePoint.Builder(innerDataCollector);
-
-                for (int k = 0; k < samplePointFromJson.getJSONArray("fields").length(); k++) {
-                    JSONObject innerFieldObject = samplePointFromJson.getJSONArray("fields").getJSONObject(k);
-                    final String fieldName = innerFieldObject.getString("fieldName");
-                    final Object fieldValue = innerFieldObject.get("fieldValue");
-                    final Field field = Utils.toFieldType(fieldName);
-                    samplePointForListBuilder = Utils.valueSetter(field, fieldValue, samplePointForListBuilder);
-
-                }
-                SamplePoint samplePointForList = samplePointForListBuilder.build();
-
-                samplePointForList.setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
-                samplePointList.add(samplePointForList);
-
-            }
-            sampleSetsList.add(sampleSet);
-
+        List<JSONObject> sampleSetList = Utils.toArrayList(samplePointArray);
+        for (JSONObject samplePointObj : sampleSetList) {
+            samplePoint1 = Utils.toSamplePointWithDataCollector(dataCollector1, samplePointObj);
         }
 
-        builder.setSubDataDetails(sampleSetsList).setSubDataSummary(samplePointList);
+        samplePointList.add(samplePoint1);
 
-        HealthRecord.Builder hr = builder;
-        for (int i = 0; i < healthFieldsJson.length(); i++) {
-            String healthFieldName = healthFieldsJson.getJSONObject(i).getString("healthFieldName");
-            Field healthRecordName = Utils.toHealthFieldType(healthFieldName);
-            Object healthFieldValue = healthFieldsJson.getJSONObject(i).get("healthFieldValue");
-            Utils.valueHealthRecordSetter(healthRecordName, healthFieldValue, hr);
-        }
+        final DataCollector dataCollector2 = Utils.toHealthDataCollector(outerDataCollectorJson.getJSONObject(2),
+            context.getPackageName());
 
-        HealthRecordInsertOptions opt = new HealthRecordInsertOptions.Builder().setHealthRecord(hr.build()).build();
+        HealthRecord healthRecord = Utils.toHealthRecord(options, sampleSetList1, samplePointList, dataCollector2);
 
-        healthRecordController.addHealthRecord(opt).addOnSuccessListener(new OnSuccessListener<String>() {
+        HealthRecordInsertOptions insertOptions = new HealthRecordInsertOptions.Builder().setHealthRecord(healthRecord)
+            .build();
+
+        healthRecordController.addHealthRecord(insertOptions).addOnSuccessListener(new OnSuccessListener<String>() {
             @Override
             public void onSuccess(String healthRecordId) {
-
                 promise.success(healthRecordId);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -185,8 +121,7 @@ public class HealthRecordController extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void deleteHealthRecord(final CorPack corPack, final JSONArray args, final Promise promise)
-            throws JSONException {
-
+        throws JSONException {
         HealthRecordDeleteOptions.Builder deleteRequest = new HealthRecordDeleteOptions.Builder();
 
         final JSONObject jsonObject = args.getJSONObject(0);
@@ -205,10 +140,12 @@ public class HealthRecordController extends CordovaBaseModule {
             final DataType dataType = Utils.toDataType(dataTypeParam);
             deleteRequest.setDataType(dataType);
         }
+
         if (jsonObject.has("isDeleteSubData")) {
             final Boolean isDeleteSubData = jsonObject.getBoolean("isDeleteSubData");
             deleteRequest.isDeleteSubData(isDeleteSubData);
         }
+
         if (jsonObject.has("dataTypes")) {
             final JSONArray jsonArrayDataTypes = jsonObject.getJSONArray("dataTypes");
             final List<JSONObject> list = new ArrayList<>();
@@ -228,10 +165,13 @@ public class HealthRecordController extends CordovaBaseModule {
 
             final List<String> healthRecordIds = new ArrayList<String>();
             for (int i = 0; i < jsonArrayActivityRecordId.length(); i++) {
-                healthRecordIds.add(jsonArrayActivityRecordId.getJSONObject(i).getString("activityRecord"));
+                if (jsonArrayActivityRecordId.getJSONObject(i).has("activityRecord")) {
+                    healthRecordIds.add(jsonArrayActivityRecordId.getJSONObject(i).getString("activityRecord"));
+                } else {
+                    promise.error("Activity record id null");
+                }
             }
             deleteRequest.setHealthRecordIds(healthRecordIds);
-
         } else {
             Log.e(TAG, "activityRecordIds can not be null");
             promise.error("activityRecordIds can not be null");
@@ -259,8 +199,7 @@ public class HealthRecordController extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void getHealthRecord(final CorPack corPack, final JSONArray args, final Promise promise)
-            throws JSONException {
-
+        throws JSONException {
         final JSONObject jsonObject = args.getJSONObject(0);
 
         final JSONObject readOptionsJSON = jsonObject.getJSONObject("options");
@@ -285,10 +224,10 @@ public class HealthRecordController extends CordovaBaseModule {
 
         HealthRecordReadOptions healthRecordReadOptions = new HealthRecordReadOptions.Builder().setTimeInterval(
                 Long.parseLong(startTime), Long.parseLong(endTime), timeUnit)
-                .readHealthRecordsFromAllApps()
-                .readByDataType(dataType)
-                .setSubDataTypeList(subDataTypeList)
-                .build();
+            .readHealthRecordsFromAllApps()
+            .readByDataType(dataType)
+            .setSubDataTypeList(subDataTypeList)
+            .build();
 
         Task<HealthRecordReply> task = healthRecordController.getHealthRecord(healthRecordReadOptions);
 
@@ -312,105 +251,41 @@ public class HealthRecordController extends CordovaBaseModule {
     @HMSLog
     @CordovaMethod
     public void updateHealthRecord(final CorPack corPack, final JSONArray args, final Promise promise)
-            throws JSONException {
-
+        throws JSONException {
         final JSONObject jsonObject = args.getJSONObject(0);
-
-        final JSONObject outerDataCollectorJson = jsonObject.getJSONObject("dataCollector");
-        final JSONArray healthFieldsJson = jsonObject.getJSONArray("healthFields");
-
-        final DataCollector outerDataCollector = Utils.toHealthDataCollector(outerDataCollectorJson,
-                context.getPackageName());
-
-        HealthRecord.Builder builder = new HealthRecord.Builder(outerDataCollector);
-
-        if (jsonObject.has("options")) {
-            final JSONObject readOptionsJSON = jsonObject.getJSONObject("options");
-            if (readOptionsJSON.has("startTime") && readOptionsJSON.has("endTime") && readOptionsJSON.has("timeUnit")) {
-                final String startTime = readOptionsJSON.getString("startTime");
-                final String endTime = readOptionsJSON.getString("endTime");
-                final String timeUnitParam = readOptionsJSON.getString("timeUnit");
-                final TimeUnit timeUnit = Utils.toTimeUnit(timeUnitParam);
-                builder.setStartTime(Long.parseLong(startTime), timeUnit);
-                builder.setEndTime(Long.parseLong(endTime), timeUnit);
-                if (readOptionsJSON.has("metaData")) {
-                    String metaData = readOptionsJSON.getString("metaData");
-                    builder.setMetadata(metaData);
-                }
-            }
-        }
-        builder.setDataCollector(outerDataCollector);
-
-        final JSONArray sampleSets = jsonObject.getJSONArray("sampleSets");
-        List<SampleSet> sampleSetsList = new ArrayList<>();
-        List<SamplePoint> samplePointList = new ArrayList<>();
-
-        for (int i = 0; i < sampleSets.length(); i++) {
-
-            JSONObject sampleSetJson = sampleSets.getJSONObject(i);
-            JSONObject sampleSetDataCollectorJson = sampleSetJson.getJSONObject("dataCollector");
-
-            DataCollector sampleSetDataCollector = Utils.toDataCollector(sampleSetDataCollectorJson,
-                    context.getPackageName());
-
-            SampleSet sampleSet = SampleSet.create(sampleSetDataCollector);
-            JSONArray sampleSetPoint = sampleSetJson.getJSONArray("samplePoints");
-
-            for (int j = 0; j < sampleSetPoint.length(); j++) {
-                JSONObject innerDataCollectorJson = sampleSetPoint.getJSONObject(j).getJSONObject("dataCollector");
-                JSONObject samplePointFromJson = sampleSetPoint.getJSONObject(j);
-                DataCollector innerDataCollector = Utils.toDataCollector(innerDataCollectorJson,
-                        context.getPackageName());
-                final String startTime = samplePointFromJson.getString("startTime");
-                final String endTime = samplePointFromJson.getString("endTime");
-                final String timeUnitParam = samplePointFromJson.getString("timeUnit");
-                final TimeUnit timeUnit = Utils.toTimeUnit(timeUnitParam);
-
-                SamplePoint samplePointForSet = sampleSet.createSamplePoint()
-                        .setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
-
-                for (int k = 0; k < sampleSetJson.getJSONArray("fields").length(); k++) {
-                    JSONObject innerFieldObject = sampleSetJson.getJSONArray("fields").getJSONObject(k);
-                    final String fieldName = innerFieldObject.getString("fieldName");
-                    final Object fieldValue = innerFieldObject.get("fieldValue");
-                    final Field field = Utils.toFieldType(fieldName);
-                    samplePointForSet = Utils.valueSetterSample(field, fieldValue, samplePointForSet);
-                    sampleSet.addSample(samplePointForSet);
-                }
-
-                SamplePoint.Builder samplePointForListBuilder = new SamplePoint.Builder(innerDataCollector);
-
-                for (int k = 0; k < samplePointFromJson.getJSONArray("fields").length(); k++) {
-                    JSONObject innerFieldObject = samplePointFromJson.getJSONArray("fields").getJSONObject(k);
-                    final String fieldName = innerFieldObject.getString("fieldName");
-                    final Object fieldValue = innerFieldObject.get("fieldValue");
-                    final Field field = Utils.toFieldType(fieldName);
-                    samplePointForListBuilder = Utils.valueSetter(field, fieldValue, samplePointForListBuilder);
-
-                }
-                SamplePoint samplePointForList = samplePointForListBuilder.build();
-
-                samplePointForList.setTimeInterval(Long.parseLong(startTime), Long.parseLong(endTime), timeUnit);
-                samplePointList.add(samplePointForList);
-
-            }
-            sampleSetsList.add(sampleSet);
-        }
-
-        builder.setSubDataDetails(sampleSetsList).setSubDataSummary(samplePointList);
-
-        HealthRecord.Builder hr = builder;
-        for (int i = 0; i < healthFieldsJson.length(); i++) {
-            String healthFieldName = healthFieldsJson.getJSONObject(i).getString("healthFieldName");
-            Field healthRecordName = Utils.toHealthFieldType(healthFieldName);
-            Object healthFieldValue = healthFieldsJson.getJSONObject(i).get("healthFieldValue");
-            Utils.valueHealthRecordSetter(healthRecordName, healthFieldValue, hr);
-        }
-
         final String healthRecordId = jsonObject.getString("healthRecordId");
-        HealthRecordUpdateOptions updateOptions = new HealthRecordUpdateOptions.Builder().setHealthRecord(hr.build())
-                .setHealthRecordId(healthRecordId)
-                .build();
+        final JSONArray outerDataCollectorJson = jsonObject.getJSONArray("dataCollector");
+        final JSONObject options = jsonObject.getJSONObject("options");
+        final JSONArray sampleSetArray = jsonObject.getJSONArray("sampleSets");
+        final JSONArray samplePointArray = jsonObject.getJSONArray("samplePoints");
+
+        final DataCollector dataCollector = Utils.toDataCollector(outerDataCollectorJson.getJSONObject(0),
+            context.getPackageName());
+        final SampleSet sampleSet1 = Utils.toSampleSetForHealthRecord(sampleSetArray, dataCollector);
+
+        List<SampleSet> sampleSetList1 = new ArrayList<>();
+        sampleSetList1.add(sampleSet1);
+
+        final DataCollector dataCollector1 = Utils.toDataCollector(outerDataCollectorJson.getJSONObject(1),
+            context.getPackageName());
+        List<SamplePoint> samplePointList = new ArrayList<>();
+        SamplePoint samplePoint1 = null;
+
+        List<JSONObject> sampleSetList = Utils.toArrayList(samplePointArray);
+        for (JSONObject samplePointObj : sampleSetList) {
+            samplePoint1 = Utils.toSamplePointWithDataCollector(dataCollector1, samplePointObj);
+        }
+
+        samplePointList.add(samplePoint1);
+
+        final DataCollector dataCollector2 = Utils.toHealthDataCollector(outerDataCollectorJson.getJSONObject(2),
+            context.getPackageName());
+
+        HealthRecord healthRecord = Utils.toHealthRecord(options, sampleSetList1, samplePointList, dataCollector2);
+
+        HealthRecordUpdateOptions updateOptions = new HealthRecordUpdateOptions.Builder().setHealthRecord(healthRecord)
+            .setHealthRecordId(healthRecordId)
+            .build();
 
         healthRecordController.updateHealthRecord(updateOptions).addOnSuccessListener(result -> {
             Log.i(TAG, "updateHealthRecord success");
@@ -423,5 +298,4 @@ public class HealthRecordController extends CordovaBaseModule {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
     }
-
 }

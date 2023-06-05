@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -156,6 +156,10 @@ public class HiHealthStatusCodesConstants {
 
     public static final int HMS_CORE_VER_NOT_MATCH = 50063;
 
+    public static final int HEALTH_APP_NOT_ENABLED = 50064;
+
+    public static final int HISTORY_PERMISSIONS_INSUFFCIENT = 50065;
+
     public static final int APP_ALREADY_IN_WORKOUT = 50300;
 
     public static final int CALL_POWER_KIT_ERROR = 50301;
@@ -203,7 +207,7 @@ public class HiHealthStatusCodesConstants {
         ERROR_MSGS.put(DATA_IS_TOO_LARGE, "Data is too large,please check time range");
         ERROR_MSGS.put(SYSTEM_VERSION_IS_INVALID, "Not support current system version");
         ERROR_MSGS.put(AGGREGATION_DATA_TYPE_NOT_ALLOWED,
-                "Statistical aggregation data type, it is not allowed to directly use the inserted data");
+            "Statistical aggregation data type, it is not allowed to directly use the inserted data");
         ERROR_MSGS.put(DATA_FIELD_MUST_FILLED, "The dataType of  insert data has required field must be filled");
         ERROR_MSGS.put(UNUSED_DATA_TYPE_NOT_ALLOWED, "unused data type");
         ERROR_MSGS.put(NO_NETWORK, "no internet access, please retry later");
@@ -219,16 +223,16 @@ public class HiHealthStatusCodesConstants {
         ERROR_MSGS.put(UNTRUST_COUNTRY_CODE, "The Huawei account is not logged in.");
         ERROR_MSGS.put(ERROR_APP_PACKAGE_NAME, "The user of the beta application exceed the range.");
         ERROR_MSGS.put(NO_ACTIVITY_PERMISSION,
-                "Invalid context. Currently, the service context cannot be transferred to trigger forcible upgrade. Please use the activity context.");
+            "Invalid context. Currently, the service context cannot be transferred to trigger forcible upgrade. Please use the activity context.");
         ERROR_MSGS.put(DATA_MIGRATION_ING, "Invalid healthRecordId. Enter an existing healthRecordId and try again.");
         ERROR_MSGS.put(READ_LATEST_NOT_SUPPORTED_ERROR,
-                "Invalid DataType. The current version supports tachycardia, bradycardia, health.record.sleep and their associated data types. please check.");
+            "Invalid DataType. The current version supports tachycardia, bradycardia, health.record.sleep and their associated data types. please check.");
         ERROR_MSGS.put(HUAWEIID_NOT_LOGGED_IN,
-                "An error occurs when the data dictionary is parsed. Please contact Huawei technical support.");
+            "An error occurs when the data dictionary is parsed. Please contact Huawei technical support.");
         ERROR_MSGS.put(NO_REQUIRED_PERMISSION,
-                "The device hardware may not support the step sensor. please try another device.");
+            "The device hardware may not support the step sensor. please try another device.");
         ERROR_MSGS.put(HUAWEI_ID_SIGNIN_ERROR,
-                "invalid activityType filled in, may not support ActivityRecordsController API, please check.");
+            "invalid activityType filled in, may not support ActivityRecordsController API, please check.");
         ERROR_MSGS.put(USER_OF_BETA_APP_EXCEED_RANGE, "JS Api exception, please retry later.");
         ERROR_MSGS.put(INVALID_CONTEXT, "JS Api param error, please check the input params.");
         ERROR_MSGS.put(HEALTH_RECORDS_NOT_EXIST, "Activity summary not support this dataType");
@@ -236,28 +240,31 @@ public class HiHealthStatusCodesConstants {
         ERROR_MSGS.put(DICT_PARSE_ERROR, "The query time in this api exceed the limit 30 days, please check it");
         ERROR_MSGS.put(DEVICES_NOT_SUPPORT, "The interface you called do not support on the device");
         ERROR_MSGS.put(INVALID_ACTIVITY_TYPE_IN_ACTIVITY_RECORD,
-                "Disable data reading and writing while screen locked");
+            "Disable data reading and writing while screen locked");
         ERROR_MSGS.put(ACTIVITY_SUMMARY_DATATYPE_NOT_SUPPORT,
-                "Currently, only the following data types can be written into activity records:");
+            "Currently, only the following data types can be written into activity records:");
         ERROR_MSGS.put(INTERFACE_NOT_SUPPORT_IN_REGION,
-                "Check whether the user is in a country or region that supports only Android SDK access.");
+            "Check whether the user is in a country or region that supports only Android SDK access.");
         ERROR_MSGS.put(QUERY_TIME_EXCEED_LIMIT,
-                "Check the time range for data query. It is recommended that you set a time range within 31 days.");
+            "Check the time range for data query. It is recommended that you set a time range within 31 days.");
         ERROR_MSGS.put(DISABLE_DATA_OPERATION,
-                "Call APIs for reading or writing data when the screen is unlocked. Reading or writing data is not supported by the Health SDK when the screen is locked");
+            "Call APIs for reading or writing data when the screen is unlocked. Reading or writing data is not supported by the Health SDK when the screen is locked");
         ERROR_MSGS.put(APPLICATION_NOT_FORGROUND,
-                "The app that calls the API currently is not a frontend app. Switch the app to the frontend and then try again.");
+            "The app that calls the API currently is not a frontend app. Switch the app to the frontend and then try again.");
         ERROR_MSGS.put(HMS_CORE_VER_NOT_MATCH, "Install the latest version of HMS Core (APK) before calling the API.");
+        ERROR_MSGS.put(HEALTH_APP_NOT_ENABLED, "Start the Huawei Health app manually.");
+        ERROR_MSGS.put(HISTORY_PERMISSIONS_INSUFFCIENT,
+            "Make sure that the start time in the query parameters is not earlier than the time of the earliest available historical data.");
         ERROR_MSGS.put(APP_ALREADY_IN_WORKOUT, "End the activity record running in the background.");
         ERROR_MSGS.put(CALL_POWER_KIT_ERROR,
-                "Make sure you are using a Huawei phone running EMUI 11.0 or later, or HarmonyOS.");
+            "Make sure you are using a Huawei phone running EMUI 11.0 or later, or HarmonyOS.");
         ERROR_MSGS.put(MISS_MUST_DATA_TYPE,
-                "Check whether mandatory data types associated with activity or health records are missing by referring to the development guide.");
+            "Check whether mandatory data types associated with activity or health records are missing by referring to the development guide.");
         ERROR_MSGS.put(RECORD_NOT_SUPPORT_DATA_TYPE, "");
         ERROR_MSGS.put(WORK_OUT_TIME_OUT,
-                "By default, an activity record is allowed to run in the background for 10 minutes. If you do not renew the application after the 10-minute period ends, the activity record will be canceled.");
+            "By default, an activity record is allowed to run in the background for 10 minutes. If you do not renew the application after the 10-minute period ends, the activity record will be canceled.");
         ERROR_MSGS.put(WORK_OUT_BE_OCCUPIED,
-                "The user starts a new activity record in the background using a third-party app, and the current activity record is canceled.");
+            "The user starts a new activity record in the background using a third-party app, and the current activity record is canceled.");
     }
 
     public HiHealthStatusCodesConstants() {
