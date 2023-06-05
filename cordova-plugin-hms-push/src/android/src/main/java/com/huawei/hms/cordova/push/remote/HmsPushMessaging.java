@@ -98,8 +98,7 @@ public class HmsPushMessaging extends CordovaBaseModule {
     }
 
     @CordovaMethod
-    public void removeBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise)
-        throws JSONException {
+    public void removeBackgroundFile(final CorPack corPack, final JSONArray args, final Promise promise) {
         String appId = corPack.getCordova().getActivity().getApplicationInfo().uid + "";
         SharedPreferences sharedPref = corPack.getCordova()
             .getContext()

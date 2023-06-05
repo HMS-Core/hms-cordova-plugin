@@ -61,7 +61,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
    ```
 
    b. Or download the plugin
-   from [Plugin > Push Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin)
+   from [Plugin > Push Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1)
    page and run the following command in the root directory of your project to **install it
    manually**.
 
@@ -80,7 +80,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
 7. Add **`keystore(.jks)`** and **`build.json`** files to your project's root directory.
 
 - You can refer to 3rd and 4th steps
-  of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2)
+  of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1)
   Codelab tutorial page for generating keystore file.
 
 - Fill **`build.json`** file according to your keystore information. For example:
@@ -131,7 +131,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
    ```
 
    b. Or download the Plugin
-   from [Plugin > Push Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin)
+   from [Plugin > Push Kit > Cordova Plugin](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1)
    page and run the following command in the root directory of your project to **install it
    manually**.
 
@@ -162,7 +162,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
 8. Copy **`keystore(.jks)`** file to **`<project_root>/android/app`** directory.
 
 - You can refer to 3rd and 4th steps
-  of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2)
+  of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1)
   Codelab tutorial page for generating keystore file.
 
 9. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
@@ -219,7 +219,7 @@ This demo application demonstrates the usage of HMS Push Cordova Plugin.
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.7.3.300'
+            classpath 'com.huawei.agconnect:agcp:1.8.1.300'
         }
     }
 
@@ -258,9 +258,9 @@ If you have questions about how to use HMS samples, try the following options:
   with **`huawei-mobile-services`**.
 - [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these
   plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001)
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001&ha_source=hms1)
   HMS Core Module is great for general questions, or seeking recommendations and opinions.
-- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin) is
+- [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1) is
   place to official documentation for all HMS Core Kits, you can find detailed documentations in
   there.
 

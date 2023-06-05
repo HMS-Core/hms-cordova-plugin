@@ -29,7 +29,6 @@ import org.json.JSONObject;
 public class HmsLocalNotificationActionPublisher {
 
     public static void notifyNotificationAction(Bundle bundle) throws JSONException {
-
         String bundleString = BundleUtils.convertJSON(bundle);
 
         JSONObject params = new JSONObject();
@@ -38,5 +37,4 @@ public class HmsLocalNotificationActionPublisher {
         CordovaUtils.sendEvent(HMSPush.getCordova(), HMSPush.getWebView(), Core.Event.LOCAL_NOTIFICATION_ACTION_EVENT,
             params);
     }
-
 }

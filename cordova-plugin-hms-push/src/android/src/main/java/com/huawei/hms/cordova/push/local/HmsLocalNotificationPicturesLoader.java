@@ -36,24 +36,21 @@ import com.huawei.hms.cordova.push.constants.LocalNotification;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class HmsLocalNotificationPicturesLoader {
-
-    private volatile AtomicInteger count = new AtomicInteger(0);
+    private final AtomicInteger count = new AtomicInteger(0);
 
     private Bitmap largeIconImage;
 
     private Bitmap bigPictureImage;
 
-    private Callback callback;
+    private final Callback callback;
 
     private Promise promise;
 
     public HmsLocalNotificationPicturesLoader(Callback callback) {
-
         this.callback = callback;
     }
 
     public void setCordovaCallBack(Promise promise) {
-
         this.promise = promise;
         this.checkAllFinished();
     }
@@ -121,7 +118,6 @@ public class HmsLocalNotificationPicturesLoader {
     }
 
     private void checkAllFinished() {
-
         if (this.count.incrementAndGet() >= 3 && this.callback != null) {
             this.callback.call(this.largeIconImage, this.bigPictureImage, this.promise);
         }

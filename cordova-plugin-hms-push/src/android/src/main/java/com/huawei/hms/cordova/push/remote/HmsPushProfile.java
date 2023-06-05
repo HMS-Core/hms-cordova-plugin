@@ -29,7 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class HmsPushProfile extends CordovaBaseModule {
-    private HmsProfile hmsProfile;
+    private final HmsProfile hmsProfile;
 
     public HmsPushProfile(Context context) {
         hmsProfile = HmsProfile.getInstance(context);

@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.huawei.hms.cordova.push.utils.MapUtils.fromBundle;
 
@@ -104,16 +105,16 @@ public class ArrayUtil {
                 jsonArray.put(null);
             }
             if (value instanceof Boolean) {
-                jsonArray.put((Boolean) value);
+                jsonArray.put(value);
             }
             if (value instanceof Double) {
-                jsonArray.put((Double) value);
+                jsonArray.put(value);
             }
             if (value instanceof Integer) {
-                jsonArray.put((Integer) value);
+                jsonArray.put(value);
             }
             if (value instanceof String) {
-                jsonArray.put((String) value);
+                jsonArray.put(value);
             }
             if (value instanceof Map) {
                 try {
@@ -123,15 +124,15 @@ public class ArrayUtil {
                 }
             }
             try {
-                if (value.getClass().isArray()) {
-                    jsonArray.put(ArrayUtil.jsonArray((Object[]) value));
+                if (Objects.requireNonNull(value).getClass().isArray()) {
+                    if (value instanceof Object[]) {
+                        jsonArray.put(ArrayUtil.jsonArray((Object[]) value));
+                    }
                 }
             } catch (NullPointerException | IllegalStateException e) {
                 continue;
             }
-
         }
-
         return jsonArray;
     }
 
@@ -147,13 +148,13 @@ public class ArrayUtil {
             } else if (obj instanceof List) {
                 catalystArray.put(fromList((List) obj));
             } else if (obj instanceof String) {
-                catalystArray.put((String) obj);
+                catalystArray.put(obj);
             } else if (obj instanceof Integer) {
-                catalystArray.put((Integer) obj);
+                catalystArray.put(obj);
             } else if (obj instanceof Number) {
                 catalystArray.put(((Number) obj).doubleValue());
             } else if (obj instanceof Boolean) {
-                catalystArray.put((Boolean) obj);
+                catalystArray.put(obj);
             } else {
                 throw new IllegalArgumentException("Unknown value type " + obj.getClass());
             }

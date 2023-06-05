@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class HmsLocalNotification extends CordovaBaseModule {
-
     private final String TAG = HmsLocalNotification.class.getSimpleName();
 
     private final HmsLocalNotificationController hmsLocalNotificationController;
@@ -141,5 +140,4 @@ public class HmsLocalNotification extends CordovaBaseModule {
     public void deleteChannel(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
         hmsLocalNotificationController.deleteChannel(args.getString(0), promise);
     }
-
 }

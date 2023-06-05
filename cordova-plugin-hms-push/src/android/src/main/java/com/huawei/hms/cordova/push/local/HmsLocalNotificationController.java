@@ -16,6 +16,8 @@
 
 package com.huawei.hms.cordova.push.local;
 
+import static com.huawei.hms.cordova.push.config.NotificationAttributes.fromJson;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -38,10 +40,10 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.huawei.hms.cordova.push.basef.handler.Promise;
-import com.huawei.hms.cordova.push.constants.Core;
-import com.huawei.hms.cordova.push.constants.ResultCode;
 import com.huawei.hms.cordova.push.config.NotificationAttributes;
+import com.huawei.hms.cordova.push.constants.Core;
 import com.huawei.hms.cordova.push.constants.NotificationConstants;
+import com.huawei.hms.cordova.push.constants.ResultCode;
 import com.huawei.hms.cordova.push.receiver.HmsLocalNotificationActionsReceiver;
 import com.huawei.hms.cordova.push.receiver.HmsLocalNotificationScheduledPublisher;
 import com.huawei.hms.cordova.push.utils.ApplicationUtils;
@@ -50,7 +52,6 @@ import com.huawei.hms.cordova.push.utils.MapUtils;
 import com.huawei.hms.cordova.push.utils.NotificationConfigUtils;
 
 import org.apache.cordova.PluginResult;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,34 +61,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import static com.huawei.hms.cordova.push.config.NotificationAttributes.fromJson;
-
 public class HmsLocalNotificationController {
-
     private final String TAG = HmsLocalNotificationController.class.getSimpleName();
 
     private final SharedPreferences sharedPreferences;
 
-    private Context context;
+    private final Context context;
 
     public HmsLocalNotificationController(Context context) {
-
         this.context = context;
         this.sharedPreferences = context.getSharedPreferences(Core.PREFERENCE_NAME, Context.MODE_PRIVATE);
     }
 
     private AlarmManager getAlarmManager() {
-
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
     private NotificationManager notificationManager() {
-
         return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     public Class getMainActivityClass() {
-
         String packageName = context.getPackageName();
         Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
         String className = launchIntent.getComponent().getClassName();
@@ -100,7 +94,6 @@ public class HmsLocalNotificationController {
     }
 
     public void createDefaultChannel() {
-
         NotificationManager notificationManager = notificationManager();
 
         int importance = 4; // HIGH
@@ -152,25 +145,19 @@ public class HmsLocalNotificationController {
         }
 
         notificationManager.createNotificationChannel(notificationChannel);
-
     }
 
     public void localNotificationNow(final Bundle bundle, final Promise promise) {
-
         HmsLocalNotificationPicturesLoader notificationPicturesLoader = new HmsLocalNotificationPicturesLoader(
             (largeIconImage, bigPictureImage, cordovaCallback) -> localNotificationNowPicture(bundle, largeIconImage,
                 bigPictureImage, cordovaCallback));
 
         notificationPicturesLoader.setCordovaCallBack(promise);
-        notificationPicturesLoader.setLargeIconUrl(context,
-            BundleUtils.get(bundle, NotificationConstants.LARGE_ICON_URL));
-        notificationPicturesLoader.setBigPictureUrl(context,
-            BundleUtils.get(bundle, NotificationConstants.BIG_PICTURE_URL));
-
+        notificationPicturesLoader.setLargeIconUrl(context, BundleUtils.get(bundle, NotificationConstants.LARGE_ICON_URL));
+        notificationPicturesLoader.setBigPictureUrl(context, BundleUtils.get(bundle, NotificationConstants.BIG_PICTURE_URL));
     }
 
     public void invokeApp(Bundle bundle) {
-
         String packageName = context.getPackageName();
         Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
         if (launchIntent == null) {
@@ -196,7 +183,6 @@ public class HmsLocalNotificationController {
     }
 
     public void checkRequiredParams(Bundle bundle, Promise promise, String type) {
-
         if (getMainActivityClass() == null) {
             if (promise != null) {
                 promise.error("No activity class");
@@ -221,9 +207,7 @@ public class HmsLocalNotificationController {
         }
     }
 
-    public void localNotificationNowPicture(Bundle bundle, Bitmap largeIconBitmap, Bitmap bigPictureBitmap,
-        Promise promise) {
-
+    public void localNotificationNowPicture(Bundle bundle, Bitmap largeIconBitmap, Bitmap bigPictureBitmap, Promise promise) {
         checkRequiredParams(bundle, promise, Core.NotificationType.NOW);
         try {
 
@@ -235,7 +219,7 @@ public class HmsLocalNotificationController {
             String channelId = Core.NOTIFICATION_CHANNEL_ID + "-" + importance;
 
             NotificationCompat.Builder notification = new NotificationCompat.Builder(context, "").setChannelId(
-                channelId)
+                    channelId)
                 .setContentTitle(title)
                 .setTicker(BundleUtils.get(bundle, NotificationConstants.TICKER))
                 .setVisibility(visibility)
@@ -491,7 +475,6 @@ public class HmsLocalNotificationController {
     }
 
     private void localNotificationRepeat(Bundle bundle) {
-
         long newFireDate = NotificationConfigUtils.configNextFireDate(bundle);
 
         if (newFireDate == 0) {
@@ -500,11 +483,9 @@ public class HmsLocalNotificationController {
 
         bundle.putDouble(NotificationConstants.FIRE_DATE, newFireDate);
         this.localNotificationSchedule(bundle, null);
-
     }
 
     public void localNotificationSchedule(Bundle bundle, Promise promise) {
-
         checkRequiredParams(bundle, promise, Core.NotificationType.SCHEDULED);
 
         NotificationAttributes notificationAttributes = new NotificationAttributes(bundle);
@@ -525,11 +506,9 @@ public class HmsLocalNotificationController {
                 promise.error(e.getLocalizedMessage());
             }
         }
-
     }
 
     public void localNotificationScheduleSetAlarm(Bundle bundle) {
-
         long fireDate = BundleUtils.getL(bundle, NotificationConstants.FIRE_DATE);
         boolean allowWhileIdle = BundleUtils.getB(bundle, NotificationConstants.ALLOW_WHILE_IDLE);
         long curr = new Date().getTime();
@@ -545,16 +524,12 @@ public class HmsLocalNotificationController {
 
         if (allowWhileIdle && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getAlarmManager().setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent); // Doze Mode
-
         } else {
             getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, fireDate, pendingIntent);
-
         }
-
     }
 
     private PendingIntent buildScheduleNotificationIntent(Bundle bundle) {
-
         try {
             int id = Integer.parseInt(BundleUtils.get(bundle, NotificationConstants.ID));
 
@@ -576,7 +551,6 @@ public class HmsLocalNotificationController {
     }
 
     public void isChannelBlocked(String channelId, Promise promise) {
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             promise.error("requires API level 24");
             return;
@@ -599,7 +573,6 @@ public class HmsLocalNotificationController {
     }
 
     public void channelExists(String channelId, Promise promise) {
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             promise.error("requires API level 26");
             return;
@@ -622,7 +595,6 @@ public class HmsLocalNotificationController {
     }
 
     public void deleteChannel(String channelId, Promise promise) {
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             promise.error("requires API level 26");
             return;
@@ -639,7 +611,6 @@ public class HmsLocalNotificationController {
     }
 
     public List<String> listChannels() {
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return new ArrayList<>();
         }
@@ -660,7 +631,6 @@ public class HmsLocalNotificationController {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public JSONArray getNotifications() throws JSONException {
-
         StatusBarNotification[] activeNotifications = notificationManager().getActiveNotifications();
         JSONArray result = new JSONArray();
 
@@ -681,7 +651,6 @@ public class HmsLocalNotificationController {
     }
 
     public JSONArray getScheduledNotifications() {
-
         JSONArray result = new JSONArray();
 
         Map<String, ?> scheduledNotifications = sharedPreferences.getAll();
@@ -714,22 +683,18 @@ public class HmsLocalNotificationController {
     }
 
     public void cancelNotifications() {
-
         notificationManager().cancelAll();
     }
 
     public void cancelNotification(int id) {
-
         notificationManager().cancel(id);
     }
 
     public void cancelNotification(String tag, int id) {
-
         notificationManager().cancel(tag, id);
     }
 
     public void cancelNotificationsWithId(JSONArray ids) throws JSONException {
-
         for (int idx = 0; idx < ids.length(); idx++) {
             String id = ids.getString(idx);
             if (id != null) {
@@ -739,7 +704,6 @@ public class HmsLocalNotificationController {
     }
 
     public void cancelNotificationsWithIdTag(JSONArray idTags) throws JSONException {
-
         for (int idx = 0; idx < idTags.length(); idx++) {
             JSONObject notification = idTags.getJSONObject(idx);
             String id = notification.getString(NotificationConstants.ID);
@@ -752,7 +716,6 @@ public class HmsLocalNotificationController {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void cancelNotificationsWithTag(String tag) {
-
         StatusBarNotification[] activeNotifications = notificationManager().getActiveNotifications();
 
         for (StatusBarNotification statusBarNotification : activeNotifications) {
@@ -763,14 +726,12 @@ public class HmsLocalNotificationController {
     }
 
     public void cancelScheduledNotifications() {
-
         for (String id : sharedPreferences.getAll().keySet()) {
             cancelScheduledNotification(id);
         }
     }
 
     private void cancelScheduledNotification(String id) {
-
         if (sharedPreferences.contains(id)) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.remove(id);
@@ -793,5 +754,4 @@ public class HmsLocalNotificationController {
             Log.e(TAG, ResultCode.ERROR, e);
         }
     }
-
 }

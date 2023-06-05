@@ -25,7 +25,7 @@ import com.huawei.hms.cordova.push.local.HmsLocalNotificationActionPublisher;
 import org.json.JSONException;
 
 public class NotificationActionHandler implements Runnable {
-    private static String TAG = NotificationActionHandler.class.getSimpleName();
+    private static final String TAG = NotificationActionHandler.class.getSimpleName();
 
     Bundle bundle;
 

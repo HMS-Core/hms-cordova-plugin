@@ -40,8 +40,6 @@ public class ApplicationUtils {
                 return true;
             }
         }
-
         return false;
     }
-
 }

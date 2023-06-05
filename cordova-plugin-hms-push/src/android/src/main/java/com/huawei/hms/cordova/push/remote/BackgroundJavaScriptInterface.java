@@ -26,7 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BackgroundJavaScriptInterface {
-    private Context context;
+    private final Context context;
 
     public BackgroundJavaScriptInterface(Context context) {
         this.context = context;

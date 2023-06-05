@@ -99,10 +99,11 @@ public interface ResultCode {
     /*
      * The input parameter is incorrect. Check whether the related configuration
      * information is correct.
-     * Example= app_id in the agconnect - services.json file;
+     * Example app_id in the agconnect-services.json file;
      * Check whether the build.gradle file is configured with the certificate
      * signature.
-     */ String ERROR_ARGUMENTS_INVALID = "907135000";
+     */
+    String ERROR_ARGUMENTS_INVALID = "907135000";
 
     // Internal Push error. Contact Huawei technical support engineers.
     String ERROR_INTERNAL_ERROR = "907135001";
@@ -130,13 +131,16 @@ public interface ResultCode {
      * Check whether the current app has been created and enabled in AppGallery
      * Connect.
      * If yes; contact Huawei technical support.
-     */ String ERROR_GET_SCOPE_ERROR = "907135700";
+     */
+    String ERROR_GET_SCOPE_ERROR = "907135700";
+
     /*
      * Scope is not configured on the AppGallery Connect.
      * Check whether the current app has been created and enabled in AppGallery
      * Connect.
      * If yes; contact Huawei technical support.
-     */ String ERROR_SCOPE_LIST_EMPTY = "907135701";
+     */
+    String ERROR_SCOPE_LIST_EMPTY = "907135701";
 
     /*
      * The certificate fingerprint is not configured on the AppGallery Connect.
@@ -145,7 +149,8 @@ public interface ResultCode {
      * AppGallery Connect. For details; see AppGallery Connect configuration in
      * Development Preparations.
      * 3. If the check result is correct; contact Huawei technical support.
-     */ String ERROR_CERT_FINGERPRINT_EMPTY = "907135702";
+     */
+    String ERROR_CERT_FINGERPRINT_EMPTY = "907135702";
 
     // Permission is not configured on the AppGallery Connect.
     String ERROR_PERMISSION_LIST_EMPTY = "907135703";
@@ -158,7 +163,7 @@ public interface ResultCode {
     // details; see AppGallery Connect configuration in Development Preparations.
     String ERROR_CERT_FINGERPRINT_ERROR = "6003";
 
-    // Interface authentication= The permission does not exist and is not applied
+    // Interface authentication. The permission does not exist and is not applied
     // for in AppGallery Connect.
     String ERROR_PERMISSION_NOT_EXIST = "6004";
 

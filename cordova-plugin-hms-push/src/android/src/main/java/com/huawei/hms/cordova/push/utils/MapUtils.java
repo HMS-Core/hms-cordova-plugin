@@ -45,15 +45,15 @@ public class MapUtils {
             } else if (value.getClass().isArray()) {
                 map.put(key, fromArray(value));
             } else if (value instanceof String) {
-                map.put(key, (String) value);
+                map.put(key, value);
             } else if (value instanceof Number) {
                 if (value instanceof Integer) {
-                    map.put(key, (Integer) value);
+                    map.put(key, value);
                 } else {
                     map.put(key, ((Number) value).doubleValue());
                 }
             } else if (value instanceof Boolean) {
-                map.put(key, (Boolean) value);
+                map.put(key, value);
             } else if (value instanceof Bundle) {
                 map.put(key, fromBundle((Bundle) value));
             } else {
@@ -146,13 +146,13 @@ public class MapUtils {
             if (value == null) {
                 jsonObject.put((String) pair.getKey(), null);
             } else if (value instanceof Boolean) {
-                jsonObject.put((String) pair.getKey(), (Boolean) value);
+                jsonObject.put((String) pair.getKey(), value);
             } else if (value instanceof Double) {
-                jsonObject.put((String) pair.getKey(), (Double) value);
+                jsonObject.put((String) pair.getKey(), value);
             } else if (value instanceof Integer) {
-                jsonObject.put((String) pair.getKey(), (Integer) value);
+                jsonObject.put((String) pair.getKey(), value);
             } else if (value instanceof String) {
-                jsonObject.put((String) pair.getKey(), (String) value);
+                jsonObject.put((String) pair.getKey(), value);
             } else if (value instanceof JSONObject) {
                 jsonObject.put((String) pair.getKey(), value);
             } else if (value instanceof Map) {

@@ -21,7 +21,6 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONObject;
 
 public class CordovaUtils {
-
     private static final String TAG = CordovaUtils.class.getSimpleName();
 
     public static void sendEvent(final CordovaInterface cordova, final CordovaWebView webView, final String eventName,

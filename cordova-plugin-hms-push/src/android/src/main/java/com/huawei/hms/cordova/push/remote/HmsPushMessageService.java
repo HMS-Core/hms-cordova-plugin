@@ -39,7 +39,6 @@ import static com.huawei.hms.cordova.push.utils.HtmlUtils.readFile;
 import static com.huawei.hms.cordova.push.utils.HtmlUtils.wrapInsideScriptTag;
 
 public class HmsPushMessageService extends HmsMessageService {
-
     private final static String TAG = HmsPushMessageService.class.getSimpleName();
 
     private static Boolean isApplicationRunning = false;

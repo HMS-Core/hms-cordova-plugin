@@ -16,9 +16,9 @@
 
 package com.huawei.hms.cordova.push;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.content.Intent;
 
 import com.huawei.hms.cordova.push.basef.handler.CordovaController;
 import com.huawei.hms.cordova.push.constants.Core;
@@ -46,16 +46,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HMSPush extends CordovaPlugin {
-
     private static final String KIT = "Push";
 
-    private static final String VERSION = "6.7.0.300";
+    private static final String VERSION = "6.10.0.300";
 
     private static CordovaInterface staticCordova;
 
     private static CordovaWebView staticWebView;
 
-    private String TAG = HMSPush.class.getSimpleName();
+    private final String TAG = HMSPush.class.getSimpleName();
 
     private CordovaController cordovaController;
 

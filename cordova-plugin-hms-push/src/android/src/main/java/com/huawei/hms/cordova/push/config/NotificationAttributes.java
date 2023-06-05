@@ -97,7 +97,6 @@ public class NotificationAttributes {
     private final String data;
 
     public NotificationAttributes(Bundle bundle) {
-
         id = BundleUtils.get(bundle, NotificationConstants.ID);
         message = BundleUtils.get(bundle, NotificationConstants.MESSAGE);
         fireDate = BundleUtils.getD(bundle, NotificationConstants.FIRE_DATE);
@@ -135,7 +134,6 @@ public class NotificationAttributes {
     }
 
     private NotificationAttributes(JSONObject json) {
-
         try {
             id = json.has(NotificationConstants.ID) ? json.getString(NotificationConstants.ID) : null;
             message = json.has(NotificationConstants.MESSAGE)
@@ -204,13 +202,11 @@ public class NotificationAttributes {
     }
 
     public static NotificationAttributes fromJson(String json) throws JSONException {
-
         JSONObject jsonObject = new JSONObject(json);
         return new NotificationAttributes(jsonObject);
     }
 
     public Bundle toBundle() {
-
         Bundle bundle = new Bundle();
         BundleUtils.set(bundle, NotificationConstants.ID, id);
         BundleUtils.set(bundle, NotificationConstants.MESSAGE, message);
@@ -250,7 +246,6 @@ public class NotificationAttributes {
     }
 
     public JSONObject toJson() {
-
         JSONObject json = new JSONObject();
         try {
             json.put(NotificationConstants.ID, id);
@@ -295,42 +290,34 @@ public class NotificationAttributes {
     }
 
     public String getId() {
-
         return id;
     }
 
     public String getSound() {
-
         return sound;
     }
 
     public String getMessage() {
-
         return message;
     }
 
     public String getTitle() {
-
         return title;
     }
 
     public String getNumber() {
-
         return number;
     }
 
     public String getRepeatType() {
-
         return repeatType;
     }
 
     public double getFireDate() {
-
         return fireDate;
     }
 
     public String getTicker() {
-
         return ticker;
     }
 
@@ -339,128 +326,102 @@ public class NotificationAttributes {
     }
 
     public boolean isShowWhen() {
-
         return showWhen;
     }
 
     public boolean isAutoCancel() {
-
         return autoCancel;
     }
 
     public String getLargeIcon() {
-
         return largeIcon;
     }
 
     public String getLargeIconUrl() {
-
         return largeIconUrl;
     }
 
     public String getSmallIcon() {
-
         return smallIcon;
     }
 
     public String getBigText() {
-
         return bigText;
     }
 
     public String getSubText() {
-
         return subText;
     }
 
     public String getBigPictureUrl() {
-
         return bigPictureUrl;
     }
 
     public String getShortcutId() {
-
         return shortcutId;
     }
 
     public String getChannelId() {
-
         return channelId;
     }
 
     public String getChannelName() {
-
         return channelName;
     }
 
     public String getChannelDescription() {
-
         return channelDescription;
     }
 
     public String getColor() {
-
         return color;
     }
 
     public String getGroup() {
-
         return group;
     }
 
     public boolean isGroupSummary() {
-
         return groupSummary;
     }
 
     public boolean isPlaySound() {
-
         return playSound;
     }
 
     public boolean isVibrate() {
-
         return vibrate;
     }
 
     public double getVibrateDuration() {
-
         return vibrateDuration;
     }
 
     public String getActions() {
-
         return actions;
     }
 
     public boolean isInvokeApp() {
-
         return invokeApp;
     }
 
     public String getTag() {
-
         return tag;
     }
 
     public double getRepeatTime() {
-
         return repeatTime;
     }
 
     public boolean isOngoing() {
-
         return ongoing;
     }
 
     public boolean isAllowWhileIdle() {
-
         return allowWhileIdle;
     }
 
     public boolean isDontNotifyInForeground() {
-
         return dontNotifyInForeground;
     }
-
 }

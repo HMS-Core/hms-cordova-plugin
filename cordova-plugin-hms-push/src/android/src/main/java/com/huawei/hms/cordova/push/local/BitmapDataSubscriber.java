@@ -18,6 +18,7 @@ package com.huawei.hms.cordova.push.local;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.facebook.datasource.DataSource;
@@ -45,7 +46,7 @@ public class BitmapDataSubscriber extends BaseBitmapDataSubscriber {
     }
 
     @Override
-    public void onFailureImpl(DataSource dataSource) {
+    public void onFailureImpl(@NonNull DataSource dataSource) {
         if (bitmapType.equals(LocalNotification.Bitmap.LARGE_ICON)) {
             hmsLocalNotificationPicturesLoader.setLargeIcon(null);
         } else {

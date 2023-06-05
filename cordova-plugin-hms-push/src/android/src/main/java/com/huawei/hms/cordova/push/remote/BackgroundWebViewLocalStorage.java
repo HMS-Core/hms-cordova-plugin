@@ -31,9 +31,9 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 public class BackgroundWebViewLocalStorage {
-    private Context context;
+    private final Context context;
 
-    private WebView webView;
+    private final WebView webView;
 
     public BackgroundWebViewLocalStorage(Context context, WebView webView) {
         this.context = context;
@@ -74,7 +74,6 @@ public class BackgroundWebViewLocalStorage {
             }
         };
         mainHandler.post(myRunnable);
-
     }
 
     @JavascriptInterface
