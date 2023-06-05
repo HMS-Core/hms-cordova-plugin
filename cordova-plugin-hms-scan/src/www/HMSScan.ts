@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ export { Colors, ScanTypes, RectStyle, HMSPermission, ErrorCorrectionLevel } fro
 let HMSScanClass: string = 'HMSScan';
 let HMSScanModule: string = 'HMSScanModule';
 
-export function defaultViewMode(scanTypes: ScanKit.ScanTypes[]) {
-    return asyncExec(HMSScanClass, HMSScanModule, ['defaultViewMode', scanTypes]);
+export function defaultViewMode(scanTypes: ScanKit.ScanTypes[], viewType: number, errorCheck: boolean) {
+    return asyncExec(HMSScanClass, HMSScanModule, ['defaultViewMode', scanTypes, viewType, errorCheck]);
 };
 export function analyzInAsyn(filePath: string, scanTypes: ScanKit.ScanTypes[]) {
     return asyncExec(HMSScanClass, HMSScanModule, ['analyzInAsyn', filePath, scanTypes]);

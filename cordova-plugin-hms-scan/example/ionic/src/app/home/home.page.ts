@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,7 +27,11 @@ export class HomePage {
 
   imageResult: string = "";
   generateBarcodeImage: string = "";
-  constructor(private hmsScanKit: HMSScan, private router: Router, private fileChooser: FileChooser) { }
+  constructor(
+    private hmsScanKit: HMSScan, 
+    private router: Router, 
+    private fileChooser: FileChooser
+  ) { }
 
   customViewPage() {
     this.router.navigate(['customview']);
@@ -67,7 +71,9 @@ export class HomePage {
 
   public async defaultViewMode() {
     const scanTypes = [ScanTypes.ALL_SCAN_TYPE];
-    this.hmsScanKit.defaultViewMode(scanTypes)
+    const viewType = 1;
+    const errorCheck = true;
+    this.hmsScanKit.defaultViewMode(scanTypes, viewType, errorCheck)
       .then((res) => alert(JSON.stringify(res)))
       .catch((err) => alert(JSON.stringify(err)));
   }

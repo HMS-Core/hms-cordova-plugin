@@ -1,5 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.stopViewService = exports.on = exports.multiProcessorAsynMode = exports.multiProcessorSynMode = exports.bitmapMode = exports.RectStyle = exports.ScanTypes = exports.Colors = void 0;
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +16,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.stopViewService = exports.on = exports.multiProcessorAsynMode = exports.multiProcessorSynMode = exports.bitmapMode = exports.RectStyle = exports.ScanTypes = exports.Colors = void 0;
 const util_1 = require("./util");
 var interfaces_1 = require("./interfaces");
 Object.defineProperty(exports, "Colors", { enumerable: true, get: function () { return interfaces_1.Colors; } });
@@ -51,21 +51,21 @@ function getInitialPropsMethod(divId) {
 function bitmapMode(divId, userProps) {
     const initialProps = getInitialPropsMethod(divId);
     const customProps = userProps;
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 1]);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 1]);
 }
 exports.bitmapMode = bitmapMode;
 ;
 function multiProcessorSynMode(divId, userProps) {
     const initialProps = getInitialPropsMethod(divId);
     const customProps = userProps;
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 2]);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 2]);
 }
 exports.multiProcessorSynMode = multiProcessorSynMode;
 ;
 function multiProcessorAsynMode(divId, userProps) {
     const initialProps = getInitialPropsMethod(divId);
     const customProps = userProps;
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 3]);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['multiProcessorMode', initialProps, customProps, 3]);
 }
 exports.multiProcessorAsynMode = multiProcessorAsynMode;
 ;
@@ -74,14 +74,14 @@ function on(eventName, call) {
 }
 exports.on = on;
 function stopViewService() {
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['stopViewService']);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['stopViewService']);
 }
 exports.stopViewService = stopViewService;
 function forceUpdateXAndY() {
     if (element === null)
         return;
     const rect = element.getBoundingClientRect();
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['forceUpdateXAndY',
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['forceUpdateXAndY',
         rect.x, rect.y, window.pageXOffset, window.pageYOffset
     ]);
 }

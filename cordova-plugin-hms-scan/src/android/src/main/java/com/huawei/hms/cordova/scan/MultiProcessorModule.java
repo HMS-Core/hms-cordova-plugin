@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package com.huawei.hms.cordova.scan;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -51,9 +52,9 @@ import java.io.IOException;
 
 public class MultiProcessorModule extends CordovaBaseModule {
     private final String TAG = MultiProcessorModule.class.getName();
-    private PluginLayout pluginLayout;
+    private final PluginLayout pluginLayout;
     private PluginLayoutManager pluginLayoutManager;
-    private CordovaInterface cordova;
+    private final CordovaInterface cordova;
     private ScanResultView scanResultView;
     private SurfaceHolder surfaceHolder;
     private CameraOperation cameraOperation;
@@ -177,7 +178,9 @@ public class MultiProcessorModule extends CordovaBaseModule {
 
             if (enableScanAreaBox) {
                 imageView = new ImageView(corPack.getCordova().getContext());
-                imageView.setBackground(corPack.getCordova().getContext().getDrawable(CordovaUtils.rdraw(corPack.getCordova(), "cloors")));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    imageView.setBackground(corPack.getCordova().getContext().getDrawable(CordovaUtils.rdraw(corPack.getCordova(), "cloors")));
+                }
                 FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(scanFrameSizeWidth, scanFrameSizeHeight);
                 imageView.setLayoutParams(imageParams);
                 imageParams.setMargins(rect.left, rect.top, rect.right, rect.bottom);

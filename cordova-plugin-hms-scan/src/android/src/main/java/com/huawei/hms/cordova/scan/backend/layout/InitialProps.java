@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,10 +19,10 @@ package com.huawei.hms.cordova.scan.backend.layout;
 public class InitialProps {
     private int x;
     private int y;
-    private int width;
-    private int height;
-    private int pageXOffset;
-    private int pageYOffset;
+    private final int width;
+    private final int height;
+    private final int pageXOffset;
+    private final int pageYOffset;
     private int marginLeft;
     private int marginRight;
     private int marginTop;
@@ -38,7 +38,7 @@ public class InitialProps {
     }
 
     public static class Builder {
-        private InitialProps props;
+        private final InitialProps props;
 
         public Builder(int x, int y, int width, int height, int pageXOffset, int pageYOffset) {
             props = new InitialProps(x, y, width, height, pageXOffset, pageYOffset);

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -37,9 +37,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewBaseModule extends CordovaBaseModule implements OnViewLayoutScroll, OnViewLifecycle {
-    private Map<Integer, Object> managerMap = new HashMap<>();
+    private final Map<Integer, Object> managerMap = new HashMap<>();
     private static final String TAG = ViewBaseModule.class.getName();
-    private PluginLayout pluginLayout;
+    private final PluginLayout pluginLayout;
     private int moduleId = 0;
     private CustomViewModule customViewModule;
     private MultiProcessorModule multiProcessorModule;
@@ -146,7 +146,7 @@ public class ViewBaseModule extends CordovaBaseModule implements OnViewLayoutScr
 
     @CordovaMethod
     @HMSLog
-    public void forceUpdateXAndY(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
+    public void forceUpdateXAndY(final CorPack corPack, final JSONArray args, final Promise promise) {
         Log.i(TAG, "forceUpdateXAndY: ");
         for (Map.Entry<Integer, Object> entry : managerMap.entrySet()) {
             try {

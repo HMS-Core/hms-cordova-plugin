@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +16,8 @@
 
 package com.huawei.hms.cordova.scan;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -23,8 +25,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
 import com.huawei.hms.cordova.scan.backend.helpers.Exceptions;
-import com.huawei.hms.cordova.scan.backend.layout.OnViewLayoutScroll;
 import com.huawei.hms.cordova.scan.backend.helpers.OnViewLifecycle;
+import com.huawei.hms.cordova.scan.backend.layout.OnViewLayoutScroll;
 import com.huawei.hms.cordova.scan.backend.layout.PluginLayout;
 import com.huawei.hms.cordova.scan.backend.utils.JSONUtils;
 import com.huawei.hms.cordova.scan.basef.handler.CordovaController;
@@ -42,15 +44,19 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-import static android.app.Activity.RESULT_OK;
-
 public class HMSScan extends CordovaPlugin {
     private static final String TAG = HMSScan.class.getSimpleName();
+
     private static final int REQUEST_CODE_SCAN_ONE = 0X01;
+
     private CordovaController cordovaController;
+
     private CallbackContext callbackContext;
+
     private PluginLayout pluginLayout;
+
     private OnViewLayoutScroll onViewLayoutScroll;
+
     private OnViewLifecycle onViewLifecycle;
 
     @Override
@@ -59,24 +65,21 @@ public class HMSScan extends CordovaPlugin {
 
         pluginLayout = new PluginLayout(webView.getContext());
         pluginLayout.setLayoutParams(
-                new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         cordova.getActivity().runOnUiThread(() -> {
             pluginLayout.bringToFront();
             ((ViewGroup) webView.getView().getParent()).addView(pluginLayout);
         });
 
-
         final String kit = "Scan";
-        final String version = "1.3.1.302";
+        final String version = "2.10.0.301";
         cordovaController = new CordovaController(this, kit, version,
-                Arrays.asList(new HMSScanModule(this),
-                        new ViewBaseModule(pluginLayout, this)
-                ));
+            Arrays.asList(new HMSScanModule(this), new ViewBaseModule(pluginLayout, this)));
 
         boolean isIonicCapacitor;
         try {
             isIonicCapacitor = Objects.requireNonNull(cordova.getContext().getAssets().list("public")).length >
-                    Objects.requireNonNull(cordova.getContext().getAssets().list("www")).length;
+                Objects.requireNonNull(cordova.getContext().getAssets().list("www")).length;
         } catch (IOException e) {
             Log.e(TAG, "isIonicCapacitor -> " + e.getMessage());
             return;
@@ -137,12 +140,15 @@ public class HMSScan extends CordovaPlugin {
             return;
         }
         if (requestCode == REQUEST_CODE_SCAN_ONE) {
-            HmsScan obj = data.getParcelableExtra(ScanUtil.RESULT);
-            if (obj != null) {
-                try {
-                    callbackContext.success(JSONUtils.hmsScansToJSON(obj));
-                } catch (JSONException e) {
-                    Log.e(TAG, "onActivityResult: error -> " + e.toString());
+            int errorCode = data.getIntExtra(ScanUtil.RESULT_CODE, ScanUtil.SUCCESS);
+            if (errorCode == ScanUtil.SUCCESS) {
+                HmsScan obj = data.getParcelableExtra(ScanUtil.RESULT);
+                if (obj != null) {
+                    try {
+                        callbackContext.success(JSONUtils.hmsScansToJSON(obj));
+                    } catch (JSONException e) {
+                        Log.e(TAG, "onActivityResult: error -> " + e.toString());
+                    }
                 }
             }
         }

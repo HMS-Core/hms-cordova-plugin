@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.huawei.hms.cordova.scan;
 
 import android.graphics.Rect;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -38,16 +39,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class CustomViewModule extends CordovaBaseModule {
     private static final String TAG = CustomViewModule.class.getName();
+
+    private final CordovaInterface cordovaInterface;
+
+    private final PluginLayout pluginLayout;
+
+    private final Promise promise;
+
     private RemoteView remoteView;
-    private CordovaInterface cordovaInterface;
-    private PluginLayout pluginLayout;
+
     private PluginLayoutManager pluginLayoutManager;
+
     private FrameLayout frameLayout;
+
     private ImageView imageView;
-    private Promise promise;
 
     public CustomViewModule(CordovaInterface cordovaInterface, PluginLayout pluginLayout, Promise promise) {
         this.cordovaInterface = cordovaInterface;
@@ -55,7 +62,8 @@ public class CustomViewModule extends CordovaBaseModule {
         this.promise = promise;
     }
 
-    public void customViewMode(final CorPack corPack, final JSONArray args, final Promise promise) throws JSONException {
+    public void customViewMode(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
         final JSONObject initialPropsJSONObject = args.optJSONObject(0);
         InitialProps initialProps = CordovaUtils.constructInitialPropsFromJSON(initialPropsJSONObject);
 
@@ -76,18 +84,18 @@ public class CustomViewModule extends CordovaBaseModule {
         rect.bottom = initialProps.getHeight() / 2 + scanFrameSizeHeight / 2;
 
         if (enableReturnBitmap) {
-            remoteView = new RemoteView.Builder()
-                    .setContext(cordovaInterface.getActivity())
-                    .setBoundingBox(rect)
-                    .enableReturnBitmap()
-                    .setContinuouslyScan(isContinuouslyScan)
-                    .setFormat(scanTypes[0], scanTypes).build();
+            remoteView = new RemoteView.Builder().setContext(cordovaInterface.getActivity())
+                .setBoundingBox(rect)
+                .enableReturnBitmap()
+                .setContinuouslyScan(isContinuouslyScan)
+                .setFormat(scanTypes[0], scanTypes)
+                .build();
         } else {
-            remoteView = new RemoteView.Builder()
-                    .setContext(cordovaInterface.getActivity())
-                    .setBoundingBox(rect)
-                    .setContinuouslyScan(isContinuouslyScan)
-                    .setFormat(scanTypes[0], scanTypes).build();
+            remoteView = new RemoteView.Builder().setContext(cordovaInterface.getActivity())
+                .setBoundingBox(rect)
+                .setContinuouslyScan(isContinuouslyScan)
+                .setFormat(scanTypes[0], scanTypes)
+                .build();
         }
 
         remoteView.setOnLightVisibleCallback(visible -> {
@@ -97,12 +105,15 @@ public class CustomViewModule extends CordovaBaseModule {
         });
 
         remoteView.setOnResultCallback(result -> {
-            if (result != null && result.length > 0 && result[0] != null && !TextUtils.isEmpty(result[0].getOriginalValue())) {
+            if (result != null && result.length > 0 && result[0] != null && !TextUtils.isEmpty(
+                result[0].getOriginalValue())) {
                 try {
                     if (!isContinuouslyScan) {
                         remoteView.onStop();
                     }
-                    corPack.getEventRunner().sendEvent("scanResultClickListener", JSONUtils.hmsScansToJSON(result[0], cordovaInterface, enableReturnBitmap));
+                    corPack.getEventRunner()
+                        .sendEvent("scanResultClickListener",
+                            JSONUtils.hmsScansToJSON(result[0], cordovaInterface, enableReturnBitmap));
                 } catch (JSONException e) {
                     Log.e(TAG, "customViewModule: error -> " + e.toString());
                 }
@@ -112,24 +123,33 @@ public class CustomViewModule extends CordovaBaseModule {
             remoteView.onCreate(null);
 
             frameLayout = new FrameLayout(corPack.getCordova().getContext());
-            frameLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+            frameLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
 
             InitialProps props = CordovaUtils.constructInitialPropsFromJSON(initialPropsJSONObject);
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(props.getMarginLeft(), props.getMarginTop(), props.getMarginRight(), props.getMarginBottom());
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins(props.getMarginLeft(), props.getMarginTop(), props.getMarginRight(),
+                props.getMarginBottom());
             remoteView.setLayoutParams(layoutParams);
             frameLayout.addView(remoteView);
 
             if (enableScanAreaBox) {
                 imageView = new ImageView(cordovaInterface.getContext());
-                imageView.setBackground(corPack.getCordova().getContext().getDrawable(CordovaUtils.rdraw(corPack.getCordova(), "cloors")));
-                FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(scanFrameSizeWidth, scanFrameSizeHeight);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    imageView.setBackground(corPack.getCordova()
+                        .getContext()
+                        .getDrawable(CordovaUtils.rdraw(corPack.getCordova(), "cloors")));
+                }
+                FrameLayout.LayoutParams imageParams = new FrameLayout.LayoutParams(scanFrameSizeWidth,
+                    scanFrameSizeHeight);
                 imageView.setLayoutParams(imageParams);
                 imageParams.setMargins(rect.left, rect.top, rect.right, rect.bottom);
                 frameLayout.addView(imageView);
             }
 
-            pluginLayoutManager = new PluginLayoutManager(pluginLayout, frameLayout, CordovaUtils.constructInitialPropsFromJSON(initialPropsJSONObject));
+            pluginLayoutManager = new PluginLayoutManager(pluginLayout, frameLayout,
+                CordovaUtils.constructInitialPropsFromJSON(initialPropsJSONObject));
             remoteView.onStart();
         });
     }
@@ -199,7 +219,6 @@ public class CustomViewModule extends CordovaBaseModule {
         if (pluginLayoutManager == null) {
             return;
         }
-        pluginLayoutManager.forceUpdateXAndY(args.optInt(0), args.optInt(1),
-                args.optInt(2), args.optInt(3));
+        pluginLayoutManager.forceUpdateXAndY(args.optInt(0), args.optInt(1), args.optInt(2), args.optInt(3));
     }
 }

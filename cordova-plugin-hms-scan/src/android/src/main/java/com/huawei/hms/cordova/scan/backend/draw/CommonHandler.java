@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -46,13 +46,13 @@ import java.io.ByteArrayOutputStream;
 
 public final class CommonHandler extends Handler {
     private static final String TAG = CommonHandler.class.getName();
-    private static final double DEFAULT_ZOOM = 1.0;
-    private CameraOperation cameraOperation;
-    private HandlerThread decodeThread;
-    private Handler decodeHandle;
-    private int mode;
-    private ScanResultView scanResultView;
-    private CorPack corPack;
+    private static final double DEFAULT_ZOOM = 1.0d;
+    private final CameraOperation cameraOperation;
+    private final HandlerThread decodeThread;
+    private final Handler decodeHandle;
+    private final int mode;
+    private final ScanResultView scanResultView;
+    private final CorPack corPack;
 
     public CommonHandler(final Activity activity, CameraOperation cameraOperation, final int mode,
         ScanResultView scanResultView, int var1, int[] scanTypes, CorPack corPack) {
@@ -100,14 +100,16 @@ public final class CommonHandler extends Handler {
         final Bitmap bitmap = convertToBitmap(width, height, data);
         if (bitmap != null) {
             if (mode == Constants.BITMAP_CODE) {
-                final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator().setHmsScanTypes(var1, scanTypes)
-                        .setPhotoMode(false)
-                        .create();
+                final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator()
+                    .setHmsScanTypes(var1, scanTypes)
+                    .setPhotoMode(false)
+                    .create();
                 return ScanUtil.decodeWithBitmap(activity, bitmap, options);
             } else if (mode == Constants.MULTIPROCESSOR_SYN_CODE) {
                 final MLFrame image = MLFrame.fromBitmap(bitmap);
-                final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator().setHmsScanTypes(var1, scanTypes)
-                        .create();
+                final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator()
+                    .setHmsScanTypes(var1, scanTypes)
+                    .create();
                 final HmsScanAnalyzer analyzer = new HmsScanAnalyzer(options);
                 final SparseArray<HmsScan> result = analyzer.analyseFrame(image);
                 if (result != null && result.size() > 0 && result.valueAt(0) != null && !TextUtils.isEmpty(
@@ -119,10 +121,10 @@ public final class CommonHandler extends Handler {
                     return info;
                 }
             } else {
-                Log.e(TAG, "decodeAsyn -> Invalid mode");
+                Log.e(TAG, "decodeSyn -> Invalid mode");
             }
         }
-        Log.e(TAG, "decodeAsyn -> Bitmap is null");
+        Log.e(TAG, "decodeSyn -> Bitmap is null");
         return info;
 
     }
@@ -143,7 +145,9 @@ public final class CommonHandler extends Handler {
         final Bitmap bitmap = convertToBitmap(width, height, data);
         if (bitmap != null) {
             final MLFrame image = MLFrame.fromBitmap(bitmap);
-            final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator().setHmsScanTypes(var1, scanTypes).create();
+            final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator()
+                .setHmsScanTypes(var1, scanTypes)
+                .create();
             final HmsScanAnalyzer analyzer = new HmsScanAnalyzer(options);
             analyzer.analyzInAsyn(image).addOnSuccessListener(hmsScans -> {
                 if (hmsScans != null && hmsScans.size() > 0 && hmsScans.get(0) != null && !TextUtils.isEmpty(hmsScans.get(0).getOriginalValue())) {

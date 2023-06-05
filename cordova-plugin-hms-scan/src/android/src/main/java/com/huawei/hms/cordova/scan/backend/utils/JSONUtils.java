@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.huawei.hms.ml.scan.HmsBuildBitmapOption;
 import com.huawei.hms.ml.scan.HmsScan;
 import com.huawei.hms.mlsdk.common.MLFrame;
 
@@ -41,8 +40,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import static com.huawei.hms.cordova.scan.backend.utils.CordovaUtils.mapperWrapper;
 
 public final class JSONUtils {
     private static final String TAG = JSONUtils.class.getName();
@@ -73,8 +70,6 @@ public final class JSONUtils {
             defaultScanResult.putOpt("smsContent", smsContentInfoToJSON(hmsScan.getSmsContent()));
         } else if (typeForm == HmsScan.TEL_PHONE_NUMBER_FORM) {
             defaultScanResult.putOpt("telPhoneNumber", telPhoneNumberInfoToJSON(hmsScan.getTelPhoneNumber()));
-        } else if (typeForm == HmsScan.BOOK_MARK_FORM) {
-            defaultScanResult.putOpt("bookMarkInfo", bookMarkInfoTOJSON(hmsScan.getBookMarkInfo()));
         } else if (typeForm == HmsScan.CONTACT_DETAIL_FORM) {
             defaultScanResult.putOpt("contactDetailInfo", contactDetail(hmsScan.getContactDetail()));
         } else if (typeForm == HmsScan.EMAIL_CONTENT_FORM) {
@@ -83,8 +78,6 @@ public final class JSONUtils {
             defaultScanResult.putOpt("eventInfo", eventInfoToJSON(hmsScan.getEventInfo()));
         } else if (typeForm == HmsScan.DRIVER_INFO_FORM) {
             defaultScanResult.putOpt("driverInfo", driverInfoToJSON(hmsScan.getDriverInfo()));
-        } else if (typeForm == HmsScan.VEHICLEINFO_FORM) {
-            defaultScanResult.putOpt("vehicleInfo", vehicleInfoToJSON(hmsScan.getVehicleInfo()));
         } else if (typeForm == HmsScan.WIFI_CONNECT_INFO_FORM) {
             defaultScanResult.putOpt("wiFiConnectionInfo", wifiConnectionInfoToJSON(hmsScan.getWiFiConnectionInfo()));
         } else if (typeForm == HmsScan.LOCATION_COORDINATE_FORM) {
@@ -179,19 +172,6 @@ public final class JSONUtils {
                 .put("ssidNumber", wiFiConnectionInfo.getSsidNumber());
     }
 
-    private static JSONObject vehicleInfoToJSON(final HmsScan.VehicleInfo vehicleInfo) throws JSONException {
-        return new JSONObject()
-                .put("countryCode", vehicleInfo.getCountryCode())
-                .put("modelYear", vehicleInfo.getModelYear())
-                .put("plantCode", vehicleInfo.getPlantCode())
-                .put("sequentialNumber", vehicleInfo.getSequentialNumber())
-                .put("vehicleAttributes", vehicleInfo.getVehicleAttributes())
-                .put("vehicleDescriptorSection", vehicleInfo.getVehicleDescriptorSection())
-                .put("vehicleIdentifierSection", vehicleInfo.getVehicleIdentifierSection())
-                .put("vin", vehicleInfo.getVin())
-                .put("worldManufacturerID", vehicleInfo.getWorldManufacturerID());
-    }
-
     private static JSONObject eventInfoToJSON(final HmsScan.EventInfo eventInfo) throws JSONException {
         return new JSONObject()
                 .put("abstractInfo", eventInfo.getAbstractInfo())
@@ -250,15 +230,6 @@ public final class JSONUtils {
                 .put("theme", linkUrl.getTheme())
                 .put("linkValue", linkUrl.getLinkValue());
     }
-
-    public static JSONObject bookMarkInfoTOJSON(final HmsScan.BookMarkInfo bookMarkInfo) throws JSONException {
-        return new JSONObject()
-                .put("bookPlaceInfo", bookMarkInfo.getBookPlaceInfo())
-                .put("bookNum", bookMarkInfo.getBookNum())
-                .put("bookType", bookMarkInfo.getBookType())
-                .put("bookUri", bookMarkInfo.getBookUri());
-    }
-
 
     public static JSONObject contactDetail(final HmsScan.ContactDetail contactDetail) throws JSONException {
         final JSONObject contactDetailResult = new JSONObject();

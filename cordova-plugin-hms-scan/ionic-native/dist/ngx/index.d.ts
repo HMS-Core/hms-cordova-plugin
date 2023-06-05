@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
     limitations under the License.
 */
 import { IonicNativePlugin } from '@ionic-native/core';
-
 export declare class HMSScan extends IonicNativePlugin {
     Colors: typeof Colors;
     ScanTypes: typeof ScanTypes;
@@ -52,9 +51,11 @@ export declare class HMSScan extends IonicNativePlugin {
     /**
      * In Default View mode, Scan Kit scans barcodes using the camera or from images in the album, and also provides activities that can be directly used.
      * @param  {ScanTypes[]} scanTypes Sets the barcode scanning format..
+     * @param  {number} viewType Sets the scanning UI title.
+     * @param  {boolean} errorCheck Sets the error listener.
      * @returns Promise<any>
      */
-    defaultViewMode(scanTypes: ScanTypes[]): Promise<any>;
+    defaultViewMode(scanTypes: ScanTypes[], viewType: number, errorCheck: boolean): Promise<any>;
     /**
      * This service works asynchronously, defines the bitmap given as a parameter, and returns the Scan results.
      * @param  {string} filePath The URI of the photo requested to be scanned by the service.

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import android.Manifest;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,7 +54,7 @@ public class HMSScanModule extends CordovaBaseModule {
     private static final String TAG = HMSScanModule.class.getSimpleName();
 
     private static final int REQUEST_CODE_SCAN_ONE = 0X01;
-    private CordovaPlugin cordovaPlugin;
+    private final CordovaPlugin cordovaPlugin;
     private HmsScanAnalyzer analyzer;
 
     public HMSScanModule(CordovaPlugin cordovaPlugin) {
@@ -70,10 +69,17 @@ public class HMSScanModule extends CordovaBaseModule {
         if (!permissions) {
             return;
         }
+
         final int[] scanTypes = JSONUtils.getScanTypes(args.getJSONArray(0));
+        final int viewType = args.optInt(1,0);
+        final boolean errorCheck = args.optBoolean(2, false);
 
         final HmsScanAnalyzerOptions hmsScanAnalyzerOptions = new HmsScanAnalyzerOptions.Creator()
-                .setHmsScanTypes(scanTypes[0], scanTypes).setPhotoMode(false).create();
+            .setHmsScanTypes(scanTypes[0], scanTypes)
+            .setPhotoMode(false)
+            .setViewType(viewType)
+            .setErrorCheck(errorCheck)
+            .create();
 
         ScanUtil.startScan(corPack.getCordova().getActivity(), REQUEST_CODE_SCAN_ONE, hmsScanAnalyzerOptions);
         corPack.getCordova().setActivityResultCallback(cordovaPlugin);
@@ -154,7 +160,10 @@ public class HMSScanModule extends CordovaBaseModule {
         final int[] scanTypes = JSONUtils.getScanTypes(args.getJSONArray(1));
 
         final HmsScan[] hmsScans = ScanUtil.decodeWithBitmap(corPack.getCordova().getContext(), bitmap,
-                new HmsScanAnalyzerOptions.Creator().setHmsScanTypes(scanTypes[0], scanTypes).setPhotoMode(true).create());
+                new HmsScanAnalyzerOptions.Creator()
+                    .setHmsScanTypes(scanTypes[0], scanTypes)
+                    .setPhotoMode(true)
+                    .create());
 
         if (hmsScans != null && hmsScans.length > 0 && hmsScans[0] != null && !TextUtils.isEmpty(
                 hmsScans[0].getOriginalValue())) {
@@ -213,7 +222,8 @@ public class HMSScanModule extends CordovaBaseModule {
         final MLFrame mlFrame = JSONUtils.getFrame(corPack.getCordova().getContext(), args.getString(0));
         final int[] scanTypes = JSONUtils.getScanTypes(args.getJSONArray(1));
         HmsScanAnalyzerOptions hmsScanAnalyzerOptions = new HmsScanAnalyzerOptions.Creator()
-                .setHmsScanTypes(scanTypes[0], scanTypes).create();
+            .setHmsScanTypes(scanTypes[0], scanTypes)
+            .create();
         HmsScan[] hmsScans = ScanUtil.detectForHmsDector(corPack.getCordova().getContext(), mlFrame, hmsScanAnalyzerOptions);
         final JSONArray jsArray = new JSONArray();
         for (final HmsScan hmsScan : hmsScans) {
@@ -225,14 +235,14 @@ public class HMSScanModule extends CordovaBaseModule {
     /* HMS LOGGER */
     @HMSLog
     @CordovaMethod
-    public void enableLogger(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void enableLogger(final CorPack corPack, JSONArray args, final Promise promise) {
         corPack.enableLogger();
         promise.success();
     }
 
     @HMSLog
     @CordovaMethod
-    public void disableLogger(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+    public void disableLogger(final CorPack corPack, JSONArray args, final Promise promise) {
         corPack.disableLogger();
         promise.success();
     }

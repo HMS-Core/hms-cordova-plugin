@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,18 +19,19 @@ package com.huawei.hms.cordova.scan.basef.handler;
 import android.util.Log;
 
 public final class CorLog {
+    private static boolean enable = false;
+
     private CorLog() {
     }
-
-    private static boolean enable = false;
 
     public static void setEnable(boolean enable) {
         CorLog.enable = enable;
     }
 
     public static void log(int priority, String tag, String message) {
-        if (enable)
+        if (enable) {
             Log.println(priority, tag, message);
+        }
     }
 
     public static void info(String tag, String message) {

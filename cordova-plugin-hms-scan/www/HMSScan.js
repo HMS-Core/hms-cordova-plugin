@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,63 +25,63 @@ Object.defineProperty(exports, "HMSPermission", { enumerable: true, get: functio
 Object.defineProperty(exports, "ErrorCorrectionLevel", { enumerable: true, get: function () { return interfaces_1.ErrorCorrectionLevel; } });
 let HMSScanClass = 'HMSScan';
 let HMSScanModule = 'HMSScanModule';
-function defaultViewMode(scanTypes) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['defaultViewMode', scanTypes]);
+function defaultViewMode(scanTypes, viewType, errorCheck) {
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['defaultViewMode', scanTypes, viewType, errorCheck]);
 }
 exports.defaultViewMode = defaultViewMode;
 ;
 function analyzInAsyn(filePath, scanTypes) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['analyzInAsyn', filePath, scanTypes]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['analyzInAsyn', filePath, scanTypes]);
 }
 exports.analyzInAsyn = analyzInAsyn;
 ;
 function analyseFrame(filePath, scanTypes) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['analyseFrame', filePath, scanTypes]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['analyseFrame', filePath, scanTypes]);
 }
 exports.analyseFrame = analyseFrame;
 ;
 function decodeWithBitmap(filePath, scanTypes) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['decodeWithBitmap', filePath, scanTypes]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['decodeWithBitmap', filePath, scanTypes]);
 }
 exports.decodeWithBitmap = decodeWithBitmap;
 ;
 function buildBitmap(params) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['buildBitmap', params]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['buildBitmap', params]);
 }
 exports.buildBitmap = buildBitmap;
 ;
 function compressBitmap(path) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['compressBitmap', path]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['compressBitmap', path]);
 }
 exports.compressBitmap = compressBitmap;
 ;
 function detectForHmsDector(path, scanTypes) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['detectForHmsDector', path, scanTypes]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['detectForHmsDector', path, scanTypes]);
 }
 exports.detectForHmsDector = detectForHmsDector;
 ;
 function enableLogger() {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['enableLogger']);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['enableLogger']);
 }
 exports.enableLogger = enableLogger;
 ;
 function disableLogger() {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['disableLogger']);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['disableLogger']);
 }
 exports.disableLogger = disableLogger;
 ;
 function hasPermission(permission) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['hasPermission', permission]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['hasPermission', permission]);
 }
 exports.hasPermission = hasPermission;
 ;
 function requestPermission(permission) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['requestPermission', permission]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['requestPermission', permission]);
 }
 exports.requestPermission = requestPermission;
 ;
 function requestPermissions(permissions) {
-    return util_1.asyncExec(HMSScanClass, HMSScanModule, ['requestPermissions', permissions]);
+    return (0, util_1.asyncExec)(HMSScanClass, HMSScanModule, ['requestPermissions', permissions]);
 }
 exports.requestPermissions = requestPermissions;
 ;

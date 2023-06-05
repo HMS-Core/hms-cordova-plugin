@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 import * as ScanKit from './interfaces';
 export { Colors, ScanTypes, RectStyle, HMSPermission, ErrorCorrectionLevel } from './interfaces';
-export declare function defaultViewMode(scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function defaultViewMode(scanTypes: ScanKit.ScanTypes[], viewType: number, errorCheck: boolean): Promise<any>;
 export declare function analyzInAsyn(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
 export declare function analyseFrame(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
 export declare function decodeWithBitmap(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;

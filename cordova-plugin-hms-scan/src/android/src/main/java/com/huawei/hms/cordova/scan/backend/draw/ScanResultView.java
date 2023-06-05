@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.huawei.hms.cordova.scan.basef.handler.CorPack;
 import com.huawei.hms.ml.scan.HmsScan;
 
 import java.util.ArrayList;
@@ -115,7 +114,7 @@ public class ScanResultView extends View {
         private final Paint rectPaint;
         private final Paint hmsScanResult;
         private final HmsScan hmsScan;
-        private ScanResultView scanResultView;
+        private final ScanResultView scanResultView;
 
         public HmsScanGraphic(ScanResultView scanResultView, HmsScan hmsScan) {
             this(scanResultView, hmsScan, Color.WHITE);

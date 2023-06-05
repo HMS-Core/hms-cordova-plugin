@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ function customViewMode(divId, userProps) {
     const config = { attributes: true, childList: true, subtree: true };
     mutationObserver.observe(document.body, config);
     currentProps = initialProps;
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['customViewMode', initialProps, customProps]);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['customViewMode', initialProps, customProps]);
 }
 exports.customViewMode = customViewMode;
 ;
@@ -56,29 +56,29 @@ function on(eventName, call) {
 }
 exports.on = on;
 function openFlushLight() {
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['openFlushLight']);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['openFlushLight']);
 }
 exports.openFlushLight = openFlushLight;
 ;
 function pauseContinuouslyScan() {
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['pauseContinuouslyScan']);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['pauseContinuouslyScan']);
 }
 exports.pauseContinuouslyScan = pauseContinuouslyScan;
 ;
 function resumeContinuouslyScan() {
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['resumeContinuouslyScan']);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['resumeContinuouslyScan']);
 }
 exports.resumeContinuouslyScan = resumeContinuouslyScan;
 ;
 function stopViewService() {
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['stopViewService']);
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['stopViewService']);
 }
 exports.stopViewService = stopViewService;
 function forceUpdateXAndY() {
     if (element === null)
         return;
     const rect = element.getBoundingClientRect();
-    return util_1.asyncExec('HMSScan', 'ViewBaseModule', ['forceUpdateXAndY',
+    return (0, util_1.asyncExec)('HMSScan', 'ViewBaseModule', ['forceUpdateXAndY',
         rect.x, rect.y, window.pageXOffset, window.pageYOffset
     ]);
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ import java.util.List;
 public final class CameraOperation {
     private static final int WIDTH = 1920;
     private static final int HEIGHT = 1080;
-    private static final double DEFAULT_ZOOM = 1.0;
+    private static final double DEFAULT_ZOOM = 1.0d;
     private final FrameCallback frameCallback = new FrameCallback();
     private boolean isPreview = false;
     private Camera camera = null;
@@ -75,7 +74,7 @@ public final class CameraOperation {
         if (camera != null && isPreview) {
             frameCallback.setProperties(handler);
             if (camera.getParameters().isZoomSupported() && zoomValue != DEFAULT_ZOOM) {
-                //Auto zoom.
+                // Auto zoom.
                 parameters.setZoom(convertZoomInt(zoomValue));
                 camera.setParameters(parameters);
             }
