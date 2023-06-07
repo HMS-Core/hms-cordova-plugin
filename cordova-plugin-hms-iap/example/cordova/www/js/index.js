@@ -1,5 +1,5 @@
 /*
-Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -116,7 +116,7 @@ const createPurchaseIntent = async (product, productType) => {
 
         console.log(JSON.stringify(message, ["returnCode", "errMsg", "inAppPurchaseData", "inAppDataSignature", "signatureAlgorithm"]));
 
-        if (message.returnCode === 0) {// if successful
+        if (message.returnCode === 0) { // if successful
             createPurchasedProductOnList(product.productId, message.inAppPurchaseData, productType)
         } else {
             alert(JSON.stringify(message, null, 4))
@@ -134,7 +134,7 @@ const consumeOwnedPurchase = async (productId, purchaseData, productType) => {
             developerChallenge: DEVELOPERCHALLENGE,
         });
 
-        if (message.returnCode === 0) {// if successful
+        if (message.returnCode === 0) { // if successful
             document.getElementById(`${productType}-${productId}-purchased`).remove()
             createPurchasedRecordProductOnList(productId, productType)
         } else {
@@ -152,7 +152,7 @@ const obtainProductInfoFromType = async (pType) => {
             priceType: PRODUCTS[pType].type,
             productList: PRODUCTS[pType].products.map(p => p.id)
         });
-        console.log(message);
+        console.log(JSON.stringify(message));
         message.productInfoList.map(p => createAvailableProductOnList(p, pType))
     } catch (err) {
         defaultErrorHandler(err);
@@ -164,7 +164,7 @@ const obtainOwnedPurchasesFromType = async (pType) => {
         let message = await HMSInAppPurchases.obtainOwnedPurchases({
             priceType: PRODUCTS[pType].type
         });
-        console.log(message);
+        console.log(JSON.stringify(message));
         message.itemList.map((pId, ind) => createPurchasedProductOnList(pId, message.inAppPurchaseDataList[ind], pType))
     } catch (err) {
         defaultErrorHandler(err);
@@ -197,12 +197,12 @@ const getProductsInformation = () => {
 const checkEnvironmentReady = async () => {
     try {
         let message = await HMSInAppPurchases.isEnvReady(true);
-        console.log(message);
+        console.log(JSON.stringify(message));
         let sandbox = await HMSInAppPurchases.isSandboxActivated();
-        console.log(sandbox);
+        console.log(JSON.stringify(sandbox));
         getProductsInformation()
         alert("Success(HMSInAppPurchases.isEnvReady):" + JSON.stringify(message, null, 4));
-    } catch (errMsg) {
+    } catch(errMsg) {
         console.log(errMsg);
         alert("Error(HMSInAppPurchases.isEnvReady): " + errMsg + + JSON.stringify(errMsg, null, 4));
         checkEnvironmentReady()

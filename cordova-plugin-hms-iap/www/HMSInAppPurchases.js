@@ -1,6 +1,5 @@
-"use strict";
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,6 +14,7 @@
     limitations under the License.
 */
 
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignAlgorithmConstants = exports.enablePendingPurchase = exports.disableLogger = exports.enableLogger = exports.startIapActivity = exports.obtainOwnedPurchaseRecord = exports.consumeOwnedPurchase = exports.createPurchaseIntent = exports.obtainProductInfo = exports.obtainOwnedPurchases = exports.isSandboxActivated = exports.isEnvReady = void 0;
 const utils_1 = require("./utils");

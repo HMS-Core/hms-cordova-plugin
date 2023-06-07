@@ -27,7 +27,7 @@ functionality provided by Huawei IAP SDK.
 ## 2. Installation Guide
 
 Before you get started, you must register as a HUAWEI Developer and complete identity verification
-on the [HUAWEI Developer](https://developer.huawei.com/consumer/en/) website. For details, please
+on the [HUAWEI Developer](https://developer.huawei.com/consumer/en/?ha_source=hms1) website. For details, please
 refer to [Register a HUAWEI ID](https://developer.huawei.com/consumer/en/doc/10104?ha_source=hms1).
 
 ### 2.1. Creating a Project in AppGallery Connect
@@ -329,7 +329,7 @@ also **[set IAP parameters](https://developer.huawei.com/consumer/en/doc/distrib
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.4.2.301'
+            classpath 'com.huawei.agconnect:agcp:1.8.1.300'
         }
     }
 

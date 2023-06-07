@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.iap.utils;
 
@@ -92,6 +92,7 @@ public final class JSONUtils {
             jsonObject.put("developerChallenge", obj.getDeveloperChallenge());
             jsonObject.put("purchaseToken", obj.getPurchaseToken());
             jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
+            jsonObject.put("reservedInfor", obj.getReservedInfor());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -103,8 +104,12 @@ public final class JSONUtils {
         try {
             consumeOwnedPurchaseReq.setDeveloperChallenge(jsonObject.getString("developerChallenge"));
             consumeOwnedPurchaseReq.setPurchaseToken(getInAppPurchaseDataFromJSON(jsonObject).getPurchaseToken());
-            consumeOwnedPurchaseReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
-
+            if (jsonObject.has("signatureAlgorithm")) {
+                consumeOwnedPurchaseReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+            }
+            if (jsonObject.has("reservedInfor")) {
+                consumeOwnedPurchaseReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+            }
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -222,6 +227,7 @@ public final class JSONUtils {
             jsonObject.put("continuationToken", obj.getContinuationToken());
             jsonObject.put("priceType", obj.getPriceType());
             jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
+            jsonObject.put("reservedInfor", obj.getReservedInfor());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -233,7 +239,13 @@ public final class JSONUtils {
         try {
             ownedPurchasesReq.setPriceType(jsonObject.getInt("priceType"));
             ownedPurchasesReq.setContinuationToken(jsonObject.optString("continuationToken"));
-            ownedPurchasesReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+            if (jsonObject.has("signatureAlgorithm")) {
+                ownedPurchasesReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+            }
+            if (jsonObject.has("reservedInfor")) {
+                ownedPurchasesReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+            }
+
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -293,6 +305,7 @@ public final class JSONUtils {
         try {
             jsonObject.put("priceType", obj.getPriceType());
             jsonObject.put("productIds", new JSONArray(obj.getProductIds()));
+            jsonObject.put("reservedInfor", obj.getReservedInfor());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -304,6 +317,9 @@ public final class JSONUtils {
         try {
             productInfoReq.setPriceType(jsonObject.getInt("priceType"));
             productInfoReq.setProductIds(mapJSONArray(jsonObject.getJSONArray("productList")));
+            if (jsonObject.has("reservedInfor")) {
+                productInfoReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+            }
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -330,7 +346,7 @@ public final class JSONUtils {
             jsonObject.put("productId", obj.getProductId());
             jsonObject.put("developerPayload", obj.getDeveloperPayload());
             jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
-
+            jsonObject.put("reservedInfor", obj.getReservedInfor());
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -343,9 +359,12 @@ public final class JSONUtils {
             purchaseIntentReq.setPriceType(jsonObject.getInt("priceType"));
             purchaseIntentReq.setProductId(jsonObject.getString("productId"));
             purchaseIntentReq.setDeveloperPayload(jsonObject.getString("developerPayload"));
-            purchaseIntentReq.setReservedInfor(jsonObject.getString("reservedInfor"));
-            purchaseIntentReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
-
+            if(jsonObject.has("signatureAlgorithm")) {
+                purchaseIntentReq.setSignatureAlgorithm(jsonObject.getString("signatureAlgorithm"));
+            }
+            if(jsonObject.has("reservedInfor")) {
+                purchaseIntentReq.setReservedInfor(jsonObject.getString("reservedInfor"));
+            }
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }
@@ -361,7 +380,6 @@ public final class JSONUtils {
             jsonObject.put("paymentSignature", obj.getPaymentSignature());
             jsonObject.put("status", getJSONFromStatus(obj.getStatus()));
             jsonObject.put("signatureAlgorithm", obj.getSignatureAlgorithm());
-
         } catch (final JSONException e) {
             Log.e(TAG, e.toString());
         }

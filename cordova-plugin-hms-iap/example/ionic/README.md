@@ -146,7 +146,7 @@ generated the certificate.
    ![add_products](.docs/images/add_products.png)
 
 10. After activating these products, put ids and descriptions of products in **`PRODUCTS`** variable
-    on **`index.js`** file like below.
+    on **`home.page.ts`** file like below.
 
     ![products](.docs/images/products.png)
 
@@ -274,7 +274,7 @@ ionic cordova run android --device
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.5.2.300'
+            classpath 'com.huawei.agconnect:agcp:1.8.1.300'
         }
     }
 
@@ -305,7 +305,7 @@ ionic cordova run android --device
     ![add_products](.docs/images/add_products.png)
 
 13. After activating these products, put ids and descriptions of products in **`PRODUCTS`** variable
-    on **`index.js`** file like below.
+    on **`home.page.ts`** file like below.
 
     ![products](.docs/images/products.png)
 
@@ -361,7 +361,7 @@ If you have questions about how to use HMS samples, try the following options:
   with **`huawei-mobile-services`**.
 - [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these
   plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001)
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001?ha_source=hms1)
   HMS Core Module is great for general questions, or seeking recommendations and opinions.
 - [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1)
   is place to official documentation for all HMS Core Kits, you can find detailed documentations in

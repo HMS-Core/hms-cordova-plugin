@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -174,7 +174,7 @@ export interface IsSandboxActivatedResult {
   versionFrMarket: string;
   status: Status;
 }
-export interface OwnedPurchasesReq {
+export interface OwnedPurchasesReq extends BaseReq {
   signatureAlgorithm?: string;
   priceType: number;
   continuationToken?: string;
@@ -191,7 +191,7 @@ export interface OwnedPurchasesResult {
   returnCode: number;
   status: Status;
 }
-export interface ProductInfoReq {
+export interface ProductInfoReq extends BaseReq {
   priceType: number;
   productList: string[];
 }
@@ -223,12 +223,11 @@ export interface ProductInfo {
   subFreeTrialPeriod: string;
   subGroupId: string;
 }
-export interface PurchaseIntentReq {
+export interface PurchaseIntentReq extends BaseReq {
   signatureAlgorithm?: string;
   priceType: number;
   productId: string;
   developerPayload: string;
-  reservedInfor: string;
 }
 export interface PurchaseIntentResult {
   returnCode: number;
@@ -244,7 +243,7 @@ export interface PurchaseResultInfo {
   inAppDataSignature: string;
   signatureAlgorithm?: string;
 }
-export interface ConsumeOwnedPurchaseReq {
+export interface ConsumeOwnedPurchaseReq extends BaseReq {
   signatureAlgorithm?: string;
   inAppPurchaseData: string;
   developerChallenge: string;
@@ -259,6 +258,10 @@ export interface ConsumeOwnedPurchaseResult {
 }
 export interface StartIapActivityReq {
   productId?: string;
+}
+
+export interface BaseReq {
+  reservedInfor?: string;
 }
 
 export enum SignAlgorithmConstants {

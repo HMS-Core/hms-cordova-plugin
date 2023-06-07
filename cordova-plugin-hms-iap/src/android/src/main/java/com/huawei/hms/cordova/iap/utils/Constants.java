@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.iap.utils;
 
@@ -42,8 +42,7 @@ public final class Constants {
         CONSTANTS_MAP.put("ORDER_STATE_PRODUCT_INVALID", OrderStatusCode.ORDER_STATE_PRODUCT_INVALID);
         CONSTANTS_MAP.put("ORDER_STATE_CALLS_FREQUENT", OrderStatusCode.ORDER_STATE_CALLS_FREQUENT);
         CONSTANTS_MAP.put("ORDER_STATE_PMS_TYPE_NOT_MATCH", OrderStatusCode.ORDER_STATE_PMS_TYPE_NOT_MATCH);
-        CONSTANTS_MAP.put("ORDER_STATE_PRODUCT_COUNTRY_NOT_SUPPORTED",
-            OrderStatusCode.ORDER_STATE_PRODUCT_COUNTRY_NOT_SUPPORTED);
+        CONSTANTS_MAP.put("ORDER_STATE_PRODUCT_COUNTRY_NOT_SUPPORTED", OrderStatusCode.ORDER_STATE_PRODUCT_COUNTRY_NOT_SUPPORTED);
         CONSTANTS_MAP.put("ORDER_ACCOUNT_AREA_NOT_SUPPORTED", OrderStatusCode.ORDER_ACCOUNT_AREA_NOT_SUPPORTED);
         CONSTANTS_MAP.put("ORDER_HIGH_RISK_OPERATIONS", OrderStatusCode.ORDER_HIGH_RISK_OPERATIONS);
         CONSTANTS_MAP.put("ORDER_HWID_NOT_LOGIN", OrderStatusCode.ORDER_HWID_NOT_LOGIN);

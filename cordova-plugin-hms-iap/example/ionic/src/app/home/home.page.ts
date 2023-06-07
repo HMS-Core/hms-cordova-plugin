@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 import { Component } from "@angular/core";
 import { HMSInAppPurchases } from "@hmscore/ionic-native-hms-iap/ngx";
+import { Platform } from "@ionic/angular";
 
 const DEVELOPERPAYLOAD = "HMSCoreDeveloper";
 const DEVELOPERCHALLENGE = "HMSCoreDeveloperChallenge";
@@ -72,9 +73,13 @@ export class HomePage {
     purchased_record_subscription: [],
   };
 
-  constructor(private iap: HMSInAppPurchases) {}
+  constructor(private iap: HMSInAppPurchases, platform: Platform,) {
+    platform.ready().then(() => {
+      this.checkEnvironmentReady();
+    })
+  }
 
-  ngOnInit() {
+  checkEnvironmentReady() {
     this.iap
       .isEnvReady()
       .then((environment) => {
@@ -83,6 +88,7 @@ export class HomePage {
       .catch((err) => {
         console.log(err);
       });
+
     this.iap
       .isSandboxActivated()
       .then((sandbox) => {
@@ -143,13 +149,9 @@ export class HomePage {
         reservedInfor: null,
         developerPayload: DEVELOPERPAYLOAD,
       });
-
-      console.log(message);
-      alert(message);
-      alert(JSON.stringify(message));
-
-      if (message.returnCode === 0) {
-        // if successful
+      console.log(JSON.stringify(message));
+      
+      if (message.returnCode === 0) {  // if successful
         this.products = {
           consumable: [],
           nonconsumable: [],
@@ -160,7 +162,7 @@ export class HomePage {
           purchased_record_consumable: [],
           purchased_record_subscription: [],
         };
-        this.ngOnInit();
+        this.getProductsInformation();
       } else {
         alert("Purchase was not successful.");
       }
@@ -212,8 +214,7 @@ export class HomePage {
         developerChallenge: DEVELOPERCHALLENGE,
       });
 
-      if (message.returnCode === 0) {
-        // if successful
+      if (message.returnCode === 0) { // if successful  
         this.products = {
           consumable: [],
           nonconsumable: [],
@@ -224,7 +225,7 @@ export class HomePage {
           purchased_record_consumable: [],
           purchased_record_subscription: [],
         };
-        this.ngOnInit();
+        this.getProductsInformation();
       } else {
         alert(JSON.stringify(message, null, 4));
         console.log("Consume was not successful.");

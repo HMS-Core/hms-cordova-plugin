@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -36,9 +36,7 @@ export declare class HMSInAppPurchases extends IonicNativePlugin {
    * @param priceType
    * @return {Promise<OwnedPurchasesResult>}
    */
-  obtainOwnedPurchases(
-    obtainOwnedPurchasesReq: OwnedPurchasesReq
-  ): Promise<OwnedPurchasesResult>;
+  obtainOwnedPurchases(obtainOwnedPurchasesReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
   /**
    * Obtains in-app product details configured in AppGallery Connect.
    * @param product
@@ -50,25 +48,19 @@ export declare class HMSInAppPurchases extends IonicNativePlugin {
    * @param purchaseIntent
    * @return {Promise<PurchaseIntentResult>}
    */
-  createPurchaseIntent(
-    purchaseIntentReq: PurchaseIntentReq
-  ): Promise<PurchaseIntentResult>;
+  createPurchaseIntent(purchaseIntentReq: PurchaseIntentReq): Promise<PurchaseIntentResult>;
   /**
    * Consumes a consumable after the consumable is delivered to a user who has completed payment.
    * @param ownedPurchase
    * @return {Promise<ConsumeOwnedPurchaseResult>}
    */
-  consumeOwnedPurchase(
-    consumeOwnedPurchaseReq: ConsumeOwnedPurchaseReq
-  ): Promise<ConsumeOwnedPurchaseResult>;
+  consumeOwnedPurchase(consumeOwnedPurchaseReq: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult>;
   /**
    * Obtains the historical consumption information about a consumable or all subscription receipts of a subscription.
    * @param ownedPurchaseRecord
    * @return {Promise<OwnedPurchasesResult>}
    */
-  obtainOwnedPurchaseRecord(
-    obtainOwnedPurchaseRecordReq: OwnedPurchasesReq
-  ): Promise<OwnedPurchasesResult>;
+  obtainOwnedPurchaseRecord(obtainOwnedPurchaseRecordReq: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
   /**
    * Brings up in-app payment pages, including Subscription Editing Page and Subscription Management Page
    * @param uri
@@ -116,7 +108,7 @@ export interface IsSandboxActivatedResult {
   versionFrMarket: string;
   status: Status;
 }
-export interface OwnedPurchasesReq {
+export interface OwnedPurchasesReq extends BaseReq {
   signatureAlgorithm?: string;
   priceType: number;
   continuationToken?: string;
@@ -133,7 +125,7 @@ export interface OwnedPurchasesResult {
   returnCode: number;
   status: Status;
 }
-export interface ProductInfoReq {
+export interface ProductInfoReq extends BaseReq {
   priceType: number;
   productList: string[];
 }
@@ -165,12 +157,11 @@ export interface ProductInfo {
   subFreeTrialPeriod: string;
   subGroupId: string;
 }
-export interface PurchaseIntentReq {
+export interface PurchaseIntentReq extends BaseReq {
   signatureAlgorithm?: string;
   priceType: number;
   productId: string;
   developerPayload: string;
-  reservedInfor: string;
 }
 export interface PurchaseIntentResult {
   returnCode: number;
@@ -185,7 +176,7 @@ export interface PurchaseResultInfo {
   inAppDataSignature: string;
   signatureAlgorithm?: string;
 }
-export interface ConsumeOwnedPurchaseReq {
+export interface ConsumeOwnedPurchaseReq extends BaseReq {
   signatureAlgorithm?: string;
   inAppPurchaseData: string;
   developerChallenge: string;
@@ -201,6 +192,9 @@ export interface ConsumeOwnedPurchaseResult {
 export interface StartIapActivityReq {
   productId?: string;
 }
+export interface BaseReq {
+  reservedInfor?: string;
+}
 export declare enum SignAlgorithmConstants {
-  SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS = "SHA256WithRSA/PSS",
+  SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS = "SHA256WithRSA/PSS"
 }
