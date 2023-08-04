@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-iap" version="6.10.0-301"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0">
+    <name>
+        HMS IAP
+    </name>
+    <description>
+        Cordova HMS IAP Plugin
+    </description>
+    <license>
+        Apache 2.0
+    </license>
+    <keywords>
+        cordova,iap,hms-iap,huawei-iap,hms,huawei
+    </keywords>
+    <js-module name="HMSInAppPurchases" src="www/HMSInAppPurchases.js">
+        <clobbers target="HMSInAppPurchases" />
+    </js-module>
+    <js-module name="index" src="www/index.js" />
+    <js-module name="utils" src="www/utils.js" />
+    <platform name="android">
+        <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="HMSInAppPurchases">
+                <param name="android-package"
+                        value="com.huawei.hms.cordova.iap.HMSInAppPurchases" />
+            </feature>
+        </config-file>
+        <framework src="com.huawei.hms:iap:6.10.0.300" />
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/HMSInAppPurchases.java"
+                target-dir="src/com/huawei/hms/cordova/iap/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/iap/InAppPurchases.java"
+                target-dir="src/com/huawei/hms/cordova/iap/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/OnActivityResultCallback.java"
+                target-dir="src/com/huawei/hms/cordova/iap/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/CordovaBaseModule.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/CordovaEvent.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/CordovaMethod.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/HMSLog.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/CorPack.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/CordovaController.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/CordovaEventRunner.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/CordovaModuleGroupHandler.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/CordovaModuleHandler.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/HMSLogger.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/NoSuchCordovaModuleException.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/basef/handler/Promise.java"
+                target-dir="src/com/huawei/hms/cordova/iap/basef/handler/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/iap/utils/Constants.java"
+                target-dir="src/com/huawei/hms/cordova/iap/utils/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/iap/utils/JSONUtils.java"
+                target-dir="src/com/huawei/hms/cordova/iap/utils/" />
+        <source-file src="src/android/src/main/java/com/huawei/hms/cordova/iap/utils/Mapper.java"
+                target-dir="src/com/huawei/hms/cordova/iap/utils/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/iap/utils/ObjectUtils.java"
+                target-dir="src/com/huawei/hms/cordova/iap/utils/" />
+    </platform>
+</plugin>
