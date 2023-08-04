@@ -23,21 +23,21 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
-public final class MarkerListener implements ComponentListener {
+public final class AnimationListener implements ComponentListener {
 
-    private static volatile MarkerListener instance = null;
+    private static volatile AnimationListener instance = null;
 
     private final CordovaUtils cordovaUtils;
 
-    private MarkerListener(CordovaUtils utils) {
+    private AnimationListener(CordovaUtils utils) {
         this.cordovaUtils = utils;
     }
 
-    public static synchronized MarkerListener getInstance(CordovaUtils utils) {
+    public static synchronized AnimationListener getInstance(CordovaUtils utils) {
         if (instance == null) {
-            synchronized (MarkerListener.class) {
+            synchronized (AnimationListener.class) {
                 if (instance == null) {
-                    instance = new MarkerListener(utils);
+                    instance = new AnimationListener(utils);
                 }
             }
         }

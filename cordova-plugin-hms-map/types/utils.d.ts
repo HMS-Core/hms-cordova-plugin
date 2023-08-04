@@ -15,6 +15,8 @@
 */
 
 export declare function asyncExec(clazz: string, func: string, args?: any[]): Promise<any>;
+export declare function setComponentOptions(func: string, params: any, mapDivId: string, id: string): Promise<any>;
+export declare function getComponentOptions(func: string, mapDivId: string, id: string): Promise<any>;
 declare global {
     interface Window {
         hmsEvents: {

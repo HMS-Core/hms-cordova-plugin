@@ -31,7 +31,7 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.PathInterpolator;
 
 import com.huawei.hms.cordova.map.listeners.ComponentListener;
-import com.huawei.hms.cordova.map.listeners.MarkerListener;
+import com.huawei.hms.cordova.map.listeners.AnimationListener;
 import com.huawei.hms.cordova.map.maps.MapCapsule;
 import com.huawei.hms.cordova.map.utils.json.JsonToObject;
 import com.huawei.hms.maps.model.LatLng;
@@ -112,7 +112,7 @@ public final class MarkerCapsule extends MapComponent<Marker> {
             animation.setInterpolator(interpolator);
             animationSet.setInterpolator(interpolator);
         }
-        Animation.AnimationListener animationListener = ((MarkerListener) listener).buildAnimationListener(type,
+        Animation.AnimationListener animationListener = ((AnimationListener) listener).buildAnimationListener(type,
             getCapsuleId(), getId(), json);
         animation.setAnimationListener(animationListener);
     }
@@ -287,4 +287,13 @@ public final class MarkerCapsule extends MapComponent<Marker> {
     void setMarkerAnchor(JSONObject json) {
         component.setMarkerAnchor((float) json.optDouble("u"), (float) json.optDouble("v"));
     }
+
+    void setClickable(JSONObject json) {
+        component.setClickable(json.optBoolean("clickable"));
+    }
+
+    JSONObject isClickable() throws JSONException {
+        return new JSONObject().put("value", component.isClickable());
+    }
+
 }

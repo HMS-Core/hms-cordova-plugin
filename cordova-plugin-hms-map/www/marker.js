@@ -15,18 +15,10 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MarkerImpl = void 0;
 const utils_1 = require("./utils");
+const animationUtils_1 = require("./animationUtils");
 class MarkerImpl {
     constructor(mapDivId, mapCapsuleId, componentId) {
         this.mapDivId = mapDivId;
@@ -34,199 +26,104 @@ class MarkerImpl {
         this.id = componentId;
     }
     getAlpha() {
-        return this.getComponentOptions("getAlpha");
+        return (0, utils_1.getComponentOptions)("getAlpha", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
     }
     getPosition() {
-        return this.getComponentOptions("getPosition");
+        return (0, utils_1.getComponentOptions)("getPosition", this.mapDivId, this.id);
     }
     getRotation() {
-        return this.getComponentOptions("getRotation");
+        return (0, utils_1.getComponentOptions)("getRotation", this.mapDivId, this.id);
     }
     getSnippet() {
-        return this.getComponentOptions("getSnippet");
+        return (0, utils_1.getComponentOptions)("getSnippet", this.mapDivId, this.id);
     }
     getTag() {
-        return this.getComponentOptions("getTag");
+        return (0, utils_1.getComponentOptions)("getTag", this.mapDivId, this.id);
     }
     getTitle() {
-        return this.getComponentOptions("getTitle");
+        return (0, utils_1.getComponentOptions)("getTitle", this.mapDivId, this.id);
     }
     getZIndex() {
-        return this.getComponentOptions("getZIndex");
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
     }
     isClusterable() {
-        return this.getComponentOptions("isClusterable");
+        return (0, utils_1.getComponentOptions)("isClusterable", this.mapDivId, this.id);
     }
     isDraggable() {
-        return this.getComponentOptions("isDraggable");
+        return (0, utils_1.getComponentOptions)("isDraggable", this.mapDivId, this.id);
     }
     isFlat() {
-        return this.getComponentOptions("isFlat");
+        return (0, utils_1.getComponentOptions)("isFlat", this.mapDivId, this.id);
     }
     isInfoWindowShown() {
-        return this.getComponentOptions("isInfoWindowShown");
+        return (0, utils_1.getComponentOptions)("isInfoWindowShown", this.mapDivId, this.id);
+    }
+    isClickable() {
+        return (0, utils_1.getComponentOptions)("isClickable", this.mapDivId, this.id);
     }
     startAnimation() {
-        return this.getComponentOptions("startAnimation");
+        return (0, utils_1.getComponentOptions)("startAnimation", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     hideInfoWindow() {
-        return this.getComponentOptions("hideInfoWindow");
+        return (0, utils_1.getComponentOptions)("hideInfoWindow", this.mapDivId, this.id);
     }
     showInfoWindow() {
-        return this.getComponentOptions("showInfoWindow");
+        return (0, utils_1.getComponentOptions)("showInfoWindow", this.mapDivId, this.id);
     }
     setAlpha(alpha) {
-        return this.setComponentOptions("setAlpha", { alpha: alpha });
+        return (0, utils_1.setComponentOptions)("setAlpha", { alpha: alpha }, this.mapDivId, this.id);
     }
     setAnimation(animation) {
-        const _animations = {};
-        if (animation.animations.has("Rotate"))
-            _animations["rotateAnimation"] = {};
-        if (animation.animations.has("Scale"))
-            _animations["scaleAnimation"] = {};
-        if (animation.animations.has("Translate"))
-            _animations["translateAnimation"] = {};
-        if (animation.animations.has("Alpha"))
-            _animations["alphaAnimation"] = {};
-        animation.animations.forEach((value, key) => {
-            if (key === "Rotate" && _animations.rotateAnimation != undefined) {
-                _animations.rotateAnimation.fromDegree = (value).fromDegree;
-                _animations.rotateAnimation.toDegree = (value).toDegree;
-                _animations.rotateAnimation.fillMode = value.fillMode;
-                _animations.rotateAnimation.duration = value.duration;
-                _animations.rotateAnimation.repeatCount = value.repeatCount;
-                _animations.rotateAnimation.repeatMode = value.repeatMode;
-                _animations.rotateAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.rotateAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.rotateAnimation.isAnimationStart = true;
-            }
-            else if (key === "Scale" &&
-                _animations.scaleAnimation != undefined) {
-                _animations.scaleAnimation.fromX = (value).fromX;
-                _animations.scaleAnimation.toX = value.toX;
-                _animations.scaleAnimation.fromY = (value).fromY;
-                _animations.scaleAnimation.toY = value.toY;
-                _animations.scaleAnimation.fillMode = value.fillMode;
-                _animations.scaleAnimation.duration = value.duration;
-                _animations.scaleAnimation.repeatCount = value.repeatCount;
-                _animations.scaleAnimation.repeatMode = value.repeatMode;
-                _animations.scaleAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.scaleAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.scaleAnimation.isAnimationStart = true;
-            }
-            else if (key === "Translate" &&
-                _animations.translateAnimation != undefined) {
-                _animations.translateAnimation.target = (value).target;
-                _animations.translateAnimation.fillMode = value.fillMode;
-                _animations.translateAnimation.duration = value.duration;
-                _animations.translateAnimation.repeatCount = value.repeatCount;
-                _animations.translateAnimation.repeatMode = value.repeatMode;
-                _animations.translateAnimation.interpolator =
-                    value.interpolator;
-                if (value.animationEnd)
-                    _animations.translateAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.translateAnimation.isAnimationStart = true;
-            }
-            else if (key === "Alpha" &&
-                _animations.alphaAnimation != undefined) {
-                _animations.alphaAnimation.fromAlpha = (value).fromAlpha;
-                _animations.alphaAnimation.toAlpha = (value).toAlpha;
-                _animations.alphaAnimation.fillMode = value.fillMode;
-                _animations.alphaAnimation.duration = value.duration;
-                _animations.alphaAnimation.repeatCount = value.repeatCount;
-                _animations.alphaAnimation.repeatMode = value.repeatMode;
-                _animations.alphaAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.alphaAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.alphaAnimation.isAnimationStart = true;
-            }
-            let eventName = "";
-            if (value.animationEnd) {
-                eventName = `on${key}AnimationEnd_${this.mapCapsuleId}_${this.id}`;
-                window.subscribeHMSEvent(eventName, value.animationEnd);
-            }
-            if (value.animationStart) {
-                eventName = `on${key}AnimationStart_${this.mapCapsuleId}_${this.id}`;
-                window.subscribeHMSEvent(eventName, value.animationStart);
-            }
-        });
-        return this.setComponentOptions("setAnimation", {
-            animation: _animations,
-        });
+        const _animations = (0, animationUtils_1.setAnimations)(animation, this.mapCapsuleId, this.id);
+        return (0, utils_1.setComponentOptions)("setAnimation", { animation: _animations }, this.mapDivId, this.id);
     }
     setDraggable(draggable) {
-        return this.setComponentOptions("setDraggable", {
-            draggable: draggable,
-        });
+        return (0, utils_1.setComponentOptions)("setDraggable", { draggable: draggable }, this.mapDivId, this.id);
     }
     setFlat(flat) {
-        return this.setComponentOptions("setFlat", { flat: flat });
+        return (0, utils_1.setComponentOptions)("setFlat", { flat: flat }, this.mapDivId, this.id);
     }
     setIcon(icon) {
-        return this.setComponentOptions("setIcon", { icon: icon });
+        return (0, utils_1.setComponentOptions)("setIcon", { icon: icon }, this.mapDivId, this.id);
     }
     setInfoWindowAnchor(u, v) {
-        return this.setComponentOptions("setInfoWindowAnchor", { u: u, v: v });
+        return (0, utils_1.setComponentOptions)("setInfoWindowAnchor", { u: u, v: v }, this.mapDivId, this.id);
     }
     setMarkerAnchor(u, v) {
-        return this.setComponentOptions("setMarkerAnchor", { u: u, v: v });
+        return (0, utils_1.setComponentOptions)("setMarkerAnchor", { u: u, v: v }, this.mapDivId, this.id);
     }
     setPosition(latLng) {
-        return this.setComponentOptions("setPosition", { position: latLng });
+        return (0, utils_1.setComponentOptions)("setPosition", { position: latLng }, this.mapDivId, this.id);
     }
     setRotation(rotation) {
-        return this.setComponentOptions("setRotation", { rotation: rotation });
+        return (0, utils_1.setComponentOptions)("setRotation", { rotation: rotation }, this.mapDivId, this.id);
     }
     setSnippet(snippet) {
-        return this.setComponentOptions("setSnippet", { snippet: snippet });
+        return (0, utils_1.setComponentOptions)("setSnippet", { snippet: snippet }, this.mapDivId, this.id);
     }
     setTitle(title) {
-        return this.setComponentOptions("setTitle", { title: title });
+        return (0, utils_1.setComponentOptions)("setTitle", { title: title }, this.mapDivId, this.id);
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return (0, utils_1.setComponentOptions)("setTag", { tag: tag }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+    setClickable(clickable) {
+        return (0, utils_1.setComponentOptions)("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 }
 exports.MarkerImpl = MarkerImpl;

@@ -40,7 +40,7 @@ public final class HMSLogger {
 
     private static final String PLATFORM = "Cordova";
 
-    private static final String VERSION = "6.9.0.300";
+    private static final String VERSION = "6.11.0.304";
 
     private static final String SERVICE = "Cross-Platform";
 

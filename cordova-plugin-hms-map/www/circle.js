@@ -15,18 +15,10 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CircleImpl = void 0;
 const utils_1 = require("./utils");
+const animationUtils_1 = require("./animationUtils");
 class CircleImpl {
     constructor(mapDivId, mapCapsuleId, componentId) {
         this.mapDivId = mapDivId;
@@ -34,101 +26,81 @@ class CircleImpl {
         this.id = componentId;
     }
     getCenter() {
-        return this.getComponentOptions("getCenter");
+        return (0, utils_1.getComponentOptions)("getCenter", this.mapDivId, this.id);
+    }
+    getStrokePattern() {
+        return (0, utils_1.getComponentOptions)("getStrokePattern", this.mapDivId, this.id);
     }
     getFillColor() {
-        return this.getComponentOptions("getFillColor");
+        return (0, utils_1.getComponentOptions)("getFillColor", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
     }
-    getRadius() {
-        return this.getComponentOptions("getRadius");
-    }
-    getStrokeColor() {
-        return this.getComponentOptions("getStrokeColor");
-    }
-    getStrokePattern() {
-        return this.getComponentOptions("getStrokePattern");
-    }
     getStrokeWidth() {
-        return this.getComponentOptions("getStrokeWidth");
+        return (0, utils_1.getComponentOptions)("getStrokeWidth", this.mapDivId, this.id);
+    }
+    getRadius() {
+        return (0, utils_1.getComponentOptions)("getRadius", this.mapDivId, this.id);
     }
     getTag() {
-        return this.getComponentOptions("getTag");
+        return (0, utils_1.getComponentOptions)("getTag", this.mapDivId, this.id);
+    }
+    getStrokeColor() {
+        return (0, utils_1.getComponentOptions)("getStrokeColor", this.mapDivId, this.id);
     }
     getZIndex() {
-        return this.getComponentOptions("getZIndex");
-    }
-    isClickable() {
-        return this.getComponentOptions("isClickable");
-    }
-    isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
+    isVisible() {
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
+    }
+    isClickable() {
+        return (0, utils_1.getComponentOptions)("isClickable", this.mapDivId, this.id);
+    }
+    startAnimation() {
+        return (0, utils_1.getComponentOptions)("startAnimation", this.mapDivId, this.id);
+    }
+    clearAnimation() {
+        return (0, utils_1.getComponentOptions)("clearAnimation", this.mapDivId, this.id);
+    }
     setCenter(center) {
-        return this.setComponentOptions("setCenter", { center: center });
+        return (0, utils_1.setComponentOptions)("setCenter", { center: center }, this.mapDivId, this.id);
     }
     setFillColor(fillColor) {
-        return this.setComponentOptions("setFillColor", {
-            fillColor: fillColor,
-        });
+        return (0, utils_1.setComponentOptions)("setFillColor", { fillColor: fillColor }, this.mapDivId, this.id);
     }
     setRadius(radius) {
-        return this.setComponentOptions("setRadius", { radius: radius });
-    }
-    setStrokeColor(strokeColor) {
-        return this.setComponentOptions("setStrokeColor", {
-            strokeColor: strokeColor,
-        });
+        return (0, utils_1.setComponentOptions)("setRadius", { radius: radius }, this.mapDivId, this.id);
     }
     setStrokePattern(strokePattern) {
-        return this.setComponentOptions("setStrokePattern", {
-            strokePattern: strokePattern,
-        });
+        return (0, utils_1.setComponentOptions)("setStrokePattern", { strokePattern: strokePattern }, this.mapDivId, this.id);
+    }
+    setStrokeColor(strokeColor) {
+        return (0, utils_1.setComponentOptions)("setStrokeColor", { strokeColor: strokeColor }, this.mapDivId, this.id);
     }
     setStrokeWidth(strokeWidth) {
-        return this.setComponentOptions("setStrokeWidth", {
-            strokeWidth: strokeWidth,
-        });
-    }
-    setTag(tag) {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return (0, utils_1.setComponentOptions)("setStrokeWidth", { strokeWidth: strokeWidth }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
+    }
+    setTag(tag) {
+        return (0, utils_1.setComponentOptions)("setTag", { tag: tag }, this.mapDivId, this.id);
     }
     setClickable(clickable) {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return (0, utils_1.setComponentOptions)("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+    /// Only TranslateAnimation is supported.
+    setAnimation(animation) {
+        const _animations = (0, animationUtils_1.setAnimations)(animation, this.mapCapsuleId, this.id);
+        return (0, utils_1.setComponentOptions)("setAnimation", { animation: _animations }, this.mapDivId, this.id);
     }
 }
 exports.CircleImpl = CircleImpl;

@@ -92,7 +92,7 @@ class PluginMapSetterGetter {
                 .setPadding(json.getInt("left"), json.getInt("top"), json.getInt("right"), json.getInt("bottom"));
         }
 
-        void setTrafficEnabled(JSONObject json) throws JSONException {
+        void setTrafficEnabled(JSONObject json) {
             mapCapsule.getHuaweiMap().setTrafficEnabled(json.optBoolean("trafficEnabled"));
         }
 
@@ -175,7 +175,7 @@ class PluginMapSetterGetter {
             });
         }
 
-        void setIndoorEnabled(JSONObject json) throws JSONException {
+        void setIndoorEnabled(JSONObject json) {
             mapCapsule.getHuaweiMap().setIndoorEnabled(json.optBoolean("indoorEnabled"));
         }
 
@@ -183,14 +183,19 @@ class PluginMapSetterGetter {
             mapCapsule.getHuaweiMap().setContentDescription(json.optString("contentDescription"));
         }
 
-        void setMyLocationEnabled(JSONObject json) throws JSONException {
+        void setMyLocationEnabled(JSONObject json) {
             mapCapsule.getHuaweiMap().setMyLocationEnabled(json.optBoolean("myLocationEnabled"));
         }
 
-        void setPointToCenter(JSONObject json) throws JSONException {
+        void setPointToCenter(JSONObject json) {
             int x = PxToPixelConverter.pxToPixel(json.optInt("x"));
             int y = PxToPixelConverter.pxToPixel(json.optInt("y"));
             mapCapsule.getHuaweiMap().setPointToCenter(x, y);
+        }
+
+        void setMyLocationStyle(JSONObject json) {
+            mapCapsule.getHuaweiMap().setMyLocationStyle(JsonToObject.constructMyLocationStyle(mapCapsule.getContext(),
+                json.optJSONObject("style")));
         }
 
         JSONObject run(String methodName, JSONObject object)
@@ -281,6 +286,15 @@ class PluginMapSetterGetter {
 
         public JSONObject isIndoorEnabled() throws JSONException {
             return new JSONObject().put("value", mapCapsule.getHuaweiMap().isIndoorEnabled());
+        }
+
+        public JSONObject getScalePerPixel() throws JSONException {
+            return new JSONObject().put("value", mapCapsule.getHuaweiMap().getScalePerPixel());
+        }
+
+        public JSONObject getMyLocationStyle() throws JSONException {
+            return new JSONObject().put("value",
+                ObjectToJson.constructJsonFromMyLocationStyle(mapCapsule.getHuaweiMap().getMyLocationStyle()));
         }
 
         JSONObject run(String methodName)

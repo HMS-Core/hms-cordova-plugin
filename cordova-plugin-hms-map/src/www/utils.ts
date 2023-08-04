@@ -26,6 +26,27 @@ export function asyncExec(
     });
 }
 
+export function setComponentOptions(func: string, params: any, mapDivId: string, id: string): Promise<any> {
+    return asyncExec("HMSMap", "componentOptions", [
+        mapDivId,
+        id,
+        "set",
+        func,
+        params,
+    ]);
+}
+
+export async function getComponentOptions(func: string, mapDivId: string, id: string): Promise<any> {
+    const result = await asyncExec("HMSMap", "componentOptions", [
+        mapDivId,
+        id,
+        "get",
+        func,
+        {},
+    ]);
+    return result.value;
+}
+
 declare global {
     interface Window {
         hmsEvents: {

@@ -15,7 +15,7 @@
 */
 
 import { PatternItem, LatLng, Color, JointType } from "./interfaces";
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
 
 export interface Polygon {
     getFillColor(): Promise<Color>;
@@ -60,11 +60,11 @@ export class PolygonImpl implements Polygon {
     }
 
     getFillColor(): Promise<Color> {
-        return this.getComponentOptions("getFillColor");
+        return getComponentOptions("getFillColor", this.mapDivId, this.id);
     }
 
     getHoles(): Promise<LatLng[][]> {
-        return this.getComponentOptions("getHoles");
+        return getComponentOptions("getHoles", this.mapDivId, this.id);
     }
 
     getId(): string {
@@ -72,127 +72,94 @@ export class PolygonImpl implements Polygon {
     }
 
     getPoints(): Promise<LatLng[]> {
-        return this.getComponentOptions("getPoints");
+        return getComponentOptions("getPoints", this.mapDivId, this.id);
     }
 
     getStrokeColor(): Promise<Color> {
-        return this.getComponentOptions("getStrokeColor");
+        return getComponentOptions("getStrokeColor", this.mapDivId, this.id);
     }
 
     getStrokeJointType(): Promise<JointType> {
-        return this.getComponentOptions("getStrokeJointType");
+        return getComponentOptions("getStrokeJointType", this.mapDivId, this.id);
     }
 
     getStrokePattern(): Promise<PatternItem[]> {
-        return this.getComponentOptions("getStrokePattern");
+        return getComponentOptions("getStrokePattern", this.mapDivId, this.id);
     }
 
     getStrokeWidth(): Promise<number> {
-        return this.getComponentOptions("getStrokeWidth");
+        return getComponentOptions("getStrokeWidth", this.mapDivId, this.id);
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions("getTag");
+        return getComponentOptions("getTag", this.mapDivId, this.id);
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions("isClickable");
+        return getComponentOptions("isClickable", this.mapDivId, this.id);
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
     }
 
     isGeodesic(): Promise<boolean> {
-        return this.getComponentOptions("isGeodesic");
+        return getComponentOptions("isGeodesic", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
         return asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
 
+    setTag(tag: any): Promise<void> {
+        return setComponentOptions("setTag", { tag: tag }, this.mapDivId, this.id);
+    }
+
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return setComponentOptions("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 
     setFillColor(fillColor: Color): Promise<void> {
-        return this.setComponentOptions("setFillColor", {
-            fillColor: fillColor,
-        });
+        return setComponentOptions("setFillColor", { fillColor: fillColor }, this.mapDivId, this.id);
     }
 
     setGeodesic(geodesic: boolean): Promise<void> {
-        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
+        return setComponentOptions("setGeodesic", { geodesic: geodesic }, this.mapDivId, this.id);
     }
 
     setHoles(holes: LatLng[][]): Promise<void> {
-        return this.setComponentOptions("setHoles", { holes: holes });
-    }
-
-    setPoints(points: LatLng[]): Promise<void> {
-        return this.setComponentOptions("setPoints", { points: points });
-    }
-
-    setStrokeColor(strokeColor: Color): Promise<void> {
-        return this.setComponentOptions("setStrokeColor", {
-            strokeColor: strokeColor,
-        });
-    }
-
-    setStrokeJointType(strokeJointType: JointType): Promise<void> {
-        return this.setComponentOptions("setStrokeJointType", {
-            strokeJointType: strokeJointType,
-        });
-    }
-
-    setStrokePattern(strokePattern: PatternItem[]): Promise<void> {
-        return this.setComponentOptions("setStrokePattern", {
-            strokePattern: strokePattern,
-        });
-    }
-
-    setStrokeWidth(strokeWidth: number): Promise<void> {
-        return this.setComponentOptions("setStrokeWidth", {
-            strokeWidth: strokeWidth,
-        });
-    }
-
-    setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return setComponentOptions("setHoles", { holes: holes }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
+    }
+
+    setPoints(points: LatLng[]): Promise<void> {
+        return setComponentOptions("setPoints", { points: points }, this.mapDivId, this.id);
+    }
+
+    setStrokeColor(strokeColor: Color): Promise<void> {
+        return setComponentOptions("setStrokeColor", { strokeColor: strokeColor }, this.mapDivId, this.id);
+    }
+
+    setStrokeJointType(strokeJointType: JointType): Promise<void> {
+        return setComponentOptions("setStrokeJointType", { strokeJointType: strokeJointType }, this.mapDivId, this.id);
+    }
+
+    setStrokePattern(strokePattern: PatternItem[]): Promise<void> {
+        return setComponentOptions("setStrokePattern", { strokePattern: strokePattern }, this.mapDivId, this.id);
+    }
+
+    setStrokeWidth(strokeWidth: number): Promise<void> {
+        return setComponentOptions("setStrokeWidth", { strokeWidth: strokeWidth }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
-    }
-
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 }

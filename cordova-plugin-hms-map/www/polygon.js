@@ -15,15 +15,6 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PolygonImpl = void 0;
 const utils_1 = require("./utils");
@@ -34,115 +25,82 @@ class PolygonImpl {
         this.id = componentId;
     }
     getFillColor() {
-        return this.getComponentOptions("getFillColor");
+        return (0, utils_1.getComponentOptions)("getFillColor", this.mapDivId, this.id);
     }
     getHoles() {
-        return this.getComponentOptions("getHoles");
+        return (0, utils_1.getComponentOptions)("getHoles", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
     }
     getPoints() {
-        return this.getComponentOptions("getPoints");
+        return (0, utils_1.getComponentOptions)("getPoints", this.mapDivId, this.id);
     }
     getStrokeColor() {
-        return this.getComponentOptions("getStrokeColor");
+        return (0, utils_1.getComponentOptions)("getStrokeColor", this.mapDivId, this.id);
     }
     getStrokeJointType() {
-        return this.getComponentOptions("getStrokeJointType");
+        return (0, utils_1.getComponentOptions)("getStrokeJointType", this.mapDivId, this.id);
     }
     getStrokePattern() {
-        return this.getComponentOptions("getStrokePattern");
+        return (0, utils_1.getComponentOptions)("getStrokePattern", this.mapDivId, this.id);
     }
     getStrokeWidth() {
-        return this.getComponentOptions("getStrokeWidth");
+        return (0, utils_1.getComponentOptions)("getStrokeWidth", this.mapDivId, this.id);
     }
     getTag() {
-        return this.getComponentOptions("getTag");
+        return (0, utils_1.getComponentOptions)("getTag", this.mapDivId, this.id);
     }
     getZIndex() {
-        return this.getComponentOptions("getZIndex");
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     isClickable() {
-        return this.getComponentOptions("isClickable");
+        return (0, utils_1.getComponentOptions)("isClickable", this.mapDivId, this.id);
     }
     isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
     }
     isGeodesic() {
-        return this.getComponentOptions("isGeodesic");
+        return (0, utils_1.getComponentOptions)("isGeodesic", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
+    setTag(tag) {
+        return (0, utils_1.setComponentOptions)("setTag", { tag: tag }, this.mapDivId, this.id);
+    }
     setClickable(clickable) {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return (0, utils_1.setComponentOptions)("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
     setFillColor(fillColor) {
-        return this.setComponentOptions("setFillColor", {
-            fillColor: fillColor,
-        });
+        return (0, utils_1.setComponentOptions)("setFillColor", { fillColor: fillColor }, this.mapDivId, this.id);
     }
     setGeodesic(geodesic) {
-        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
+        return (0, utils_1.setComponentOptions)("setGeodesic", { geodesic: geodesic }, this.mapDivId, this.id);
     }
     setHoles(holes) {
-        return this.setComponentOptions("setHoles", { holes: holes });
-    }
-    setPoints(points) {
-        return this.setComponentOptions("setPoints", { points: points });
-    }
-    setStrokeColor(strokeColor) {
-        return this.setComponentOptions("setStrokeColor", {
-            strokeColor: strokeColor,
-        });
-    }
-    setStrokeJointType(strokeJointType) {
-        return this.setComponentOptions("setStrokeJointType", {
-            strokeJointType: strokeJointType,
-        });
-    }
-    setStrokePattern(strokePattern) {
-        return this.setComponentOptions("setStrokePattern", {
-            strokePattern: strokePattern,
-        });
-    }
-    setStrokeWidth(strokeWidth) {
-        return this.setComponentOptions("setStrokeWidth", {
-            strokeWidth: strokeWidth,
-        });
-    }
-    setTag(tag) {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return (0, utils_1.setComponentOptions)("setHoles", { holes: holes }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
+    }
+    setPoints(points) {
+        return (0, utils_1.setComponentOptions)("setPoints", { points: points }, this.mapDivId, this.id);
+    }
+    setStrokeColor(strokeColor) {
+        return (0, utils_1.setComponentOptions)("setStrokeColor", { strokeColor: strokeColor }, this.mapDivId, this.id);
+    }
+    setStrokeJointType(strokeJointType) {
+        return (0, utils_1.setComponentOptions)("setStrokeJointType", { strokeJointType: strokeJointType }, this.mapDivId, this.id);
+    }
+    setStrokePattern(strokePattern) {
+        return (0, utils_1.setComponentOptions)("setStrokePattern", { strokePattern: strokePattern }, this.mapDivId, this.id);
+    }
+    setStrokeWidth(strokeWidth) {
+        return (0, utils_1.setComponentOptions)("setStrokeWidth", { strokeWidth: strokeWidth }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
-    }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 }
 exports.PolygonImpl = PolygonImpl;

@@ -50,6 +50,4 @@ export declare class HeatMapImpl implements HeatMap {
     remove(): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     changeDataSet(jsonData: string): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
 }

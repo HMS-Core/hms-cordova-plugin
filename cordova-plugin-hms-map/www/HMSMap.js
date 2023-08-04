@@ -577,6 +577,12 @@ class HuaweiMapImpl {
     getUiSettings() {
         return this.uiSettings;
     }
+    getScalePerPixel() {
+        return this.getHuaweiMapOptions("getScalePerPixel");
+    }
+    getMyLocationStyle() {
+        return this.getHuaweiMapOptions("getMyLocationStyle");
+    }
     isBuildingsEnabled() {
         return this.getHuaweiMapOptions("isBuildingsEnabled");
     }
@@ -598,7 +604,7 @@ class HuaweiMapImpl {
         });
     }
     setDarkEnabled(darkEnabled) {
-        return this.setHuaweiMapOptions("darkEnabled", {
+        return this.setHuaweiMapOptions("setDarkEnabled", {
             darkEnabled: darkEnabled,
         });
     }
@@ -671,6 +677,9 @@ class HuaweiMapImpl {
     }
     previewId(previewId) {
         return this.setHuaweiMapOptions("previewId", { previewId: previewId });
+    }
+    setMyLocationStyle(style) {
+        return this.setHuaweiMapOptions("setMyLocationStyle", { style: style });
     }
     getComponent(key) {
         return this.components.get(key);

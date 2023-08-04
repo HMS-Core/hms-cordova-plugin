@@ -21,7 +21,7 @@ import {
     Color,
     BitmapDescriptor,
 } from "./interfaces";
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
 
 export interface Polyline {
     getColor(): Promise<Color>;
@@ -52,6 +52,8 @@ export interface Polyline {
     setVisible(visible: boolean): Promise<void>;
     setWidth(width: number): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setGradient(on: boolean): Promise<void>;
+    setColorValues(colors: Color[]): Promise<void>;
 }
 
 export class PolylineImpl implements Polyline {
@@ -66,15 +68,15 @@ export class PolylineImpl implements Polyline {
     }
 
     getColor(): Promise<Color> {
-        return this.getComponentOptions("getColor");
+        return getComponentOptions("getColor", this.mapDivId, this.id);
     }
 
     getEndCap(): Promise<Cap> {
-        return this.parseCap(this.getComponentOptions("getEndCap"));
+        return this.parseCap(getComponentOptions("getEndCap", this.mapDivId, this.id));
     }
 
     getStartCap(): Promise<Cap> {
-        return this.parseCap(this.getComponentOptions("getStartCap"));
+        return this.parseCap(getComponentOptions("getStartCap", this.mapDivId, this.id));
     }
 
     getId(): string {
@@ -82,39 +84,39 @@ export class PolylineImpl implements Polyline {
     }
 
     getJointType(): Promise<JointType> {
-        return this.getComponentOptions("getJointType");
+        return getComponentOptions("getJointType", this.mapDivId, this.id);
     }
 
     getPattern(): Promise<PatternItem[]> {
-        return this.getComponentOptions("getPattern");
+        return getComponentOptions("getPattern", this.mapDivId, this.id);
     }
 
     getPoints(): Promise<LatLng[]> {
-        return this.getComponentOptions("getPoints");
+        return getComponentOptions("getPoints", this.mapDivId, this.id);
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions("getTag");
+        return getComponentOptions("getTag", this.mapDivId, this.id);
     }
 
     getWidth(): Promise<number> {
-        return this.getComponentOptions("getWidth");
+        return getComponentOptions("getWidth", this.mapDivId, this.id);
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions("isClickable");
+        return getComponentOptions("isClickable", this.mapDivId, this.id);
     }
 
     isGeodesic(): Promise<boolean> {
-        return this.getComponentOptions("isGeodesic");
+        return getComponentOptions("isGeodesic", this.mapDivId, this.id);
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
@@ -122,13 +124,11 @@ export class PolylineImpl implements Polyline {
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return setComponentOptions("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 
     setColor(color: Color): Promise<void> {
-        return this.setComponentOptions("setColor", { color: color });
+        return setComponentOptions("setColor", { color: color }, this.mapDivId, this.id);
     }
 
     setStartCap(startCap: Cap): Promise<void> {
@@ -140,58 +140,43 @@ export class PolylineImpl implements Polyline {
     }
 
     setGeodesic(geodesic: boolean): Promise<void> {
-        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
+        return setComponentOptions("setGeodesic", { geodesic: geodesic }, this.mapDivId, this.id);
     }
 
     setJointType(jointType: JointType): Promise<void> {
-        return this.setComponentOptions("setJointType", {
-            jointType: jointType,
-        });
+        return setComponentOptions("setJointType", { jointType: jointType, }, this.mapDivId, this.id);
     }
 
     setPattern(pattern: PatternItem[]): Promise<void> {
-        return this.setComponentOptions("setPattern", { pattern: pattern });
+        return setComponentOptions("setPattern", { pattern: pattern }, this.mapDivId, this.id);
     }
 
     setPoints(points: LatLng[]): Promise<void> {
-        return this.setComponentOptions("setPoints", { points: points });
+        return setComponentOptions("setPoints", { points: points }, this.mapDivId, this.id);
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return setComponentOptions("setTag", { tag: tag }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 
     setWidth(width: number): Promise<void> {
-        return this.setComponentOptions("setWidth", { width: width });
+        return setComponentOptions("setWidth", { width: width }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
+    setGradient(on: boolean): Promise<void> {
+        return setComponentOptions("setGradient", { on: on }, this.mapDivId, this.id);
     }
 
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+    setColorValues(colors: Color[]): Promise<void> {
+        return setComponentOptions("setColorValues", { colors: colors }, this.mapDivId, this.id);
     }
 
     // TODO: Don't forget to parse cap when get method triggered.
@@ -212,7 +197,7 @@ export class PolylineImpl implements Polyline {
             if ((<CustomCap>cap).getRefWidth() !== null)
                 props["refWidth"] = (<CustomCap>cap).getRefWidth();
         }
-        return this.setComponentOptions(methodName, { cap: props });
+        return setComponentOptions(methodName, { cap: props }, this.mapDivId, this.id);
     }
 }
 

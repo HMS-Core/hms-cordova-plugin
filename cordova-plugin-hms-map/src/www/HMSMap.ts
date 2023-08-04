@@ -47,7 +47,8 @@ import {
     VisibleRegion,
     HeatMapOptions,
     LatLngObj,
-    LatLngListObj
+    LatLngListObj,
+    MyLocationStyle
 } from "./interfaces";
 import { Circle, CircleImpl } from "./circle";
 import { Marker, MarkerImpl } from "./marker";
@@ -95,6 +96,7 @@ export {
     Gravity,
     LatLngObj,
     LatLngListObj,
+    MyLocationStyle,
 } from "./interfaces";
 
 export const maps: Map<number, HuaweiMap> = new Map<number, HuaweiMapImpl>();
@@ -750,6 +752,14 @@ class HuaweiMapImpl implements HuaweiMap {
         return this.uiSettings;
     }
 
+    getScalePerPixel(): Promise<number> {
+        return this.getHuaweiMapOptions("getScalePerPixel");
+    }
+
+    getMyLocationStyle(): Promise<MyLocationStyle> {
+        return this.getHuaweiMapOptions("getMyLocationStyle");
+    }
+
     isBuildingsEnabled(): Promise<boolean> {
         return this.getHuaweiMapOptions("isBuildingsEnabled");
     }
@@ -777,7 +787,7 @@ class HuaweiMapImpl implements HuaweiMap {
     }
 
     setDarkEnabled(darkEnabled: boolean): Promise<void> {
-        return this.setHuaweiMapOptions("darkEnabled", {
+        return this.setHuaweiMapOptions("setDarkEnabled", {
             darkEnabled: darkEnabled,
         });
     }
@@ -870,6 +880,10 @@ class HuaweiMapImpl implements HuaweiMap {
 
     previewId(previewId: string): Promise<void> {
         return this.setHuaweiMapOptions("previewId", { previewId: previewId });
+    }
+
+    setMyLocationStyle(style: MyLocationStyle): Promise<void> {
+        return this.setHuaweiMapOptions("setMyLocationStyle", { style: style });
     }
 
     getComponent(key: string): any {

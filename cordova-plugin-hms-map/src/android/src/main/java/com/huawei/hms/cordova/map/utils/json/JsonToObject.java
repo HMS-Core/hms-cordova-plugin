@@ -44,6 +44,7 @@ import com.huawei.hms.maps.model.HeatMapOptions;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.LatLngBounds;
 import com.huawei.hms.maps.model.MarkerOptions;
+import com.huawei.hms.maps.model.MyLocationStyle;
 import com.huawei.hms.maps.model.PatternItem;
 import com.huawei.hms.maps.model.PointOfInterest;
 import com.huawei.hms.maps.model.PolygonOptions;
@@ -181,7 +182,8 @@ public final class JsonToObject {
             .snippet(json.optString("snippet"))
             .title(json.optString("title"))
             .visible(json.optBoolean("visible", true))
-            .zIndex((float) json.optDouble("zIndex", 0.0F));
+            .zIndex((float) json.optDouble("zIndex", 0.0F))
+            .clickable(json.optBoolean("clickable", true));
     }
 
     public static BitmapDescriptor constructBitmapDescriptor(Context context, JSONObject json) throws OutOfMemoryError {
@@ -269,7 +271,7 @@ public final class JsonToObject {
         return null;
     }
 
-    public static Map<Float, Float> constructObjectToMap(JSONObject json) throws JSONException{
+    public static Map<Float, Float> constructObjectToMap(JSONObject json) throws JSONException {
         Map<Float, Float> map = new HashMap<>();
         Iterator<String> keys = json.keys();
         while (keys.hasNext()) {
@@ -299,7 +301,7 @@ public final class JsonToObject {
         return polygonOptions;
     }
 
-    private static HeatMapOptions.RadiusUnit constructStringToRadiusUnit(String radiusUnit) {
+    public static HeatMapOptions.RadiusUnit constructStringToRadiusUnit(String radiusUnit) {
         if (radiusUnit.equals("meter")) {
             return HeatMapOptions.RadiusUnit.METER;
         }
@@ -325,7 +327,7 @@ public final class JsonToObject {
         return Color.argb(array[0], array[1], array[2], array[3]);
     }
 
-    public static Map<Float, Integer> constructObjectToMap2(JSONObject json) throws JSONException{
+    public static Map<Float, Integer> constructObjectToMap2(JSONObject json) throws JSONException {
         Map<Float, Integer> map = new HashMap<>();
         Iterator<String> keys = json.keys();
         while (keys.hasNext()) {
@@ -412,7 +414,7 @@ public final class JsonToObject {
         return null;
     }
 
-    public static PolylineOptions constructPolylineOptions(Context context, JSONObject json) {
+    public static PolylineOptions constructPolylineOptions(Context context, JSONObject json) throws JSONException {
         return new PolylineOptions().addAll(constructPoints(json.optJSONArray("points")))
             .clickable(json.optBoolean("clickable", false))
             .color(json.optInt("color", -16777216))
@@ -422,10 +424,13 @@ public final class JsonToObject {
             .jointType(json.optInt("jointType", 0))
             .visible(json.optBoolean("visible", true))
             .width((float) json.optDouble("width", 10.0F))
-            .zIndex((float) json.optDouble("zIndex", 0.0F));
+            .zIndex((float) json.optDouble("zIndex", 0.0F))
+            .gradient(json.optBoolean("gradient", false))
+            .colorValues(fromJsonToListInteger(json.optJSONArray("colorValues")));
     }
 
-    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json) throws JSONException {
+    public static GroundOverlayOptions constructGroundOverlayOptions(Context context, JSONObject json)
+        throws JSONException {
         JSONObject anchor = optJSONObject(json, "anchor", new JSONObject());
         GroundOverlayOptions groundOverlayOptions = new GroundOverlayOptions().anchor(
                 (float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
@@ -530,7 +535,7 @@ public final class JsonToObject {
 
     private static byte[] convertBitmapToByteArray(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if(bitmap != null){
+        if (bitmap != null) {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         }
         return stream.toByteArray();
@@ -562,7 +567,8 @@ public final class JsonToObject {
         return animationSet;
     }
 
-    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context) throws JSONException {
+    public static TileOverlayOptions constructTileOverlayOptions(JSONObject json, Context context)
+        throws JSONException {
         return new TileOverlayOptions().tileProvider(constructTileProvider(json.getJSONObject("tileProvider"), context))
             .fadeIn(json.optBoolean("fadeIn", false))
             .transparency((float) json.optDouble("transparency", 0))
@@ -571,34 +577,38 @@ public final class JsonToObject {
     }
 
     public static CameraUpdate constructCameraUpdate(String eventName, JSONObject json) throws JSONException {
-        if (eventName.equals("newCameraPosition")) {
-            return CameraUpdateFactory.newCameraPosition(constructCameraPosition(json.getJSONObject("cameraPosition")));
-        } else if (eventName.equals("newLatLng")) {
-            return CameraUpdateFactory.newLatLng(constructLatLng(json.getJSONObject("latLng")));
-        } else if (eventName.equals("newLatLngBounds")) {
-            if (!json.has("width") && !json.has("width")) {
+        switch (eventName) {
+            case "newCameraPosition":
+                return CameraUpdateFactory.newCameraPosition(
+                    constructCameraPosition(json.getJSONObject("cameraPosition")));
+            case "newLatLng":
+                return CameraUpdateFactory.newLatLng(constructLatLng(json.getJSONObject("latLng")));
+            case "newLatLngBounds":
+                if (!json.has("width") && !json.has("width")) {
+                    return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")),
+                        json.getInt("padding"));
+                }
                 return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")),
-                    json.getInt("padding"));
-            }
-            return CameraUpdateFactory.newLatLngBounds(constructLatLngBounds(json.getJSONObject("bounds")),
-                json.getInt("width"), json.getInt("height"), json.getInt("padding"));
-        } else if (eventName.equals("newLatLngZoom")) {
-            return CameraUpdateFactory.newLatLngZoom(constructLatLng(json.getJSONObject("latLng")),
-                (float) json.getDouble("zoom"));
-        } else if (eventName.equals("zoomBy")) {
-            if (json.has("focus")) {
-                return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"),
-                    constructPoint(json.getJSONObject("focus")));
-            }
-            return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"));
-        } else if (eventName.equals("zoomIn")) {
-            return CameraUpdateFactory.zoomIn();
-        } else if (eventName.equals("zoomOut")) {
-            return CameraUpdateFactory.zoomOut();
-        } else if (eventName.equals("zoomTo")) {
-            return CameraUpdateFactory.zoomTo((float) json.getDouble("zoom"));
-        } else if (eventName.equals("scrollBy")) {
-            return CameraUpdateFactory.scrollBy((float) json.getDouble("xPixel"), (float) json.getDouble("yPixel"));
+                    json.getInt("width"), json.getInt("height"), json.getInt("padding"));
+            case "newLatLngZoom":
+                return CameraUpdateFactory.newLatLngZoom(constructLatLng(json.getJSONObject("latLng")),
+                    (float) json.getDouble("zoom"));
+            case "zoomBy":
+                if (json.has("focus")) {
+                    return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"),
+                        constructPoint(json.getJSONObject("focus")));
+                }
+                return CameraUpdateFactory.zoomBy((float) json.getDouble("amount"));
+            case "zoomIn":
+                return CameraUpdateFactory.zoomIn();
+            case "zoomOut":
+                return CameraUpdateFactory.zoomOut();
+            case "zoomTo":
+                return CameraUpdateFactory.zoomTo((float) json.getDouble("zoom"));
+            case "scrollBy":
+                return CameraUpdateFactory.scrollBy((float) json.getDouble("xPixel"), (float) json.getDouble("yPixel"));
+            default:
+                break;
         }
         return null;
     }
@@ -630,5 +640,24 @@ public final class JsonToObject {
             rects.add(json2Rect(jsonArr.optJSONObject(i)));
         }
         return rects;
+    }
+
+    public static List<Integer> fromJsonToListInteger(JSONArray arr) throws JSONException {
+        List<Integer> list = new ArrayList<>();
+        if(arr == null) {
+            return list;
+        }
+
+        for (int i = 0; i < arr.length(); i++) {
+            list.add(arr.getInt(i));
+        }
+        return list;
+    }
+
+    public static MyLocationStyle constructMyLocationStyle(Context context, JSONObject json) {
+        JSONObject anchor = optJSONObject(json, "anchor", new JSONObject());
+        return new MyLocationStyle().anchor((float) anchor.optDouble("u", 0.5F), (float) anchor.optDouble("v", 0.5F))
+            .myLocationIcon(constructBitmapDescriptor(context, json.optJSONObject("myLocationIcon")))
+            .radiusFillColor(json.optInt("radiusFillColor"));
     }
 }

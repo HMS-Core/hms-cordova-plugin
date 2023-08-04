@@ -45,6 +45,7 @@ async function onDeviceReady() {
     document.getElementById("enableMapPointers").onclick = enableMapPointers;
     document.getElementById("disableMapPointers").onclick = disableMapPointers;
     document.getElementById("overlay-btn").onclick = onOverlayButtonClicked;
+    document.getElementById("addCircleAnim").onclick = addCircleAnim;
     log = document.getElementById("log");
     HMSMap.requestPermission();
 }
@@ -104,6 +105,29 @@ async function addMarkerAnim() {
 
     await marker.setAnimation(animationSet);
     await marker.startAnimation();
+}
+
+async function addCircleAnim() {
+    let circle = map.getComponent("Circle1");
+    const animationSet = new HMSMap.AnimationSet();
+    animationSet.addTranslateAnimation({
+        fillMode: HMSMap.AnimationConstant.FILL_MODE_BACKWARDS,
+        duration: 1200,
+        repeatCount: 3,
+        target: {
+            "lat": 40.193298,
+            "lng": 29.074202
+        },
+        animationStart: () => {
+            console.log("translate animation started");
+        },
+        animationEnd: () => {
+            console.log("translate animation end");
+        }
+    });
+
+    await circle.setAnimation(animationSet);
+    await circle.startAnimation();
 }
 
 async function initMap() {
@@ -209,8 +233,8 @@ async function addMarker() {
 async function addCircle() {
     const circleOptions = {
         "center": { 
-            "lat": 40.7587658, 
-            "lng": 30.3146964 
+            "lat": 40.932911, 
+            "lng": 29.533971  
         },
         "radius": 10000,
         "fillColor": -65281,

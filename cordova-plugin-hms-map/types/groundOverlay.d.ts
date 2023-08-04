@@ -53,9 +53,9 @@ export declare class GroundOverlayImpl implements GroundOverlay {
     getTag(): Promise<any>;
     getTransparency(): Promise<number>;
     getWidth(): Promise<number>;
-    getZIndex(): Promise<number>;
     isClickable(): Promise<boolean>;
     isVisible(): Promise<boolean>;
+    getZIndex(): Promise<number>;
     remove(): Promise<void>;
     setBearing(bearing: number): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
@@ -68,6 +68,4 @@ export declare class GroundOverlayImpl implements GroundOverlay {
     setTransparency(transparency: number): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
 }

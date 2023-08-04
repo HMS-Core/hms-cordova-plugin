@@ -21,7 +21,7 @@ export { Circle } from "./circle";
 export { TileOverlay } from "./tileOverlay";
 export { GroundOverlay } from "./groundOverlay";
 export { Marker } from "./marker";
-export { AnimationSet, RotateAnimation, AlphaAnimation, ScaleAnimation, TranslateAnimation, InterpolatorType, ErrorCodes, CameraMoveStartedReason, Color, MapType, MapEvent, JointType, Hue, PatternItemType, HuaweiMap, CameraUpdate, Tile, URLTile, RepetitiveTile, TileType, AnimationConstant, Gravity, LatLngObj, LatLngListObj, } from "./interfaces";
+export { AnimationSet, RotateAnimation, AlphaAnimation, ScaleAnimation, TranslateAnimation, InterpolatorType, ErrorCodes, CameraMoveStartedReason, Color, MapType, MapEvent, JointType, Hue, PatternItemType, HuaweiMap, CameraUpdate, Tile, URLTile, RepetitiveTile, TileType, AnimationConstant, Gravity, LatLngObj, LatLngListObj, MyLocationStyle, } from "./interfaces";
 export declare const maps: Map<number, HuaweiMap>;
 export declare function sync(mapId: number, mapDiv: string, components: any): void;
 export declare function getMap(divId: string, huaweiMapOptions: HuaweiMapOptions): Promise<HuaweiMap>;

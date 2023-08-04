@@ -14,8 +14,22 @@
     limitations under the License.
 */
 
-import { LatLng, PatternItem, Color } from "./interfaces";
-import { asyncExec } from "./utils";
+import { 
+    LatLng, 
+    PatternItem, 
+    Color,  
+    AnimationSet,
+    Animation,
+    RotateAnimation,
+    ScaleAnimation,
+    TranslateAnimation,
+    AlphaAnimation,
+    _rotateAnimation,
+    _scaleAnimation,
+    _translateAnimation,
+    _alphaAnimation, } from "./interfaces";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
+import { setAnimations } from "./animationUtils";
 
 export interface Circle {
     getCenter(): Promise<LatLng>;
@@ -29,7 +43,11 @@ export interface Circle {
     getZIndex(): Promise<number>;
     isClickable(): Promise<boolean>;
     isVisible(): Promise<boolean>;
+    
     remove(): Promise<void>;
+    startAnimation(): Promise<void>;
+    clearAnimation(): Promise<boolean>;
+
     setCenter(center: LatLng): Promise<void>;
     setFillColor(fillColor: Color): Promise<void>;
     setRadius(radius: number): Promise<void>;
@@ -40,6 +58,7 @@ export interface Circle {
     setZIndex(zIndex: number): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
+    setAnimation(animation: AnimationSet): Promise<void>;
 }
 
 export class CircleImpl implements Circle {
@@ -54,121 +73,104 @@ export class CircleImpl implements Circle {
     }
 
     getCenter(): Promise<LatLng> {
-        return this.getComponentOptions("getCenter");
+        return getComponentOptions("getCenter", this.mapDivId, this.id);
+    }
+
+    getStrokePattern(): Promise<PatternItem[]> {
+        return getComponentOptions("getStrokePattern", this.mapDivId, this.id);
     }
 
     getFillColor(): Promise<Color> {
-        return this.getComponentOptions("getFillColor");
+        return getComponentOptions("getFillColor", this.mapDivId, this.id);
     }
 
     getId(): string {
         return this.id;
     }
 
-    getRadius(): Promise<number> {
-        return this.getComponentOptions("getRadius");
-    }
-
-    getStrokeColor(): Promise<number> {
-        return this.getComponentOptions("getStrokeColor");
-    }
-
-    getStrokePattern(): Promise<PatternItem[]> {
-        return this.getComponentOptions("getStrokePattern");
-    }
-
     getStrokeWidth(): Promise<number> {
-        return this.getComponentOptions("getStrokeWidth");
+        return getComponentOptions("getStrokeWidth", this.mapDivId, this.id);
+    }
+
+    getRadius(): Promise<number> {
+        return getComponentOptions("getRadius", this.mapDivId, this.id);
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions("getTag");
+        return getComponentOptions("getTag", this.mapDivId, this.id);
+    }
+
+    getStrokeColor(): Promise<number> {
+        return getComponentOptions("getStrokeColor", this.mapDivId, this.id);
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
-    }
-
-    isClickable(): Promise<boolean> {
-        return this.getComponentOptions("isClickable");
-    }
-
-    isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
         return asyncExec("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
 
+    isVisible(): Promise<boolean> {
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
+    }
+
+    isClickable(): Promise<boolean> {
+        return getComponentOptions("isClickable", this.mapDivId, this.id);
+    }
+
+    startAnimation(): Promise<void> {
+        return getComponentOptions("startAnimation", this.mapDivId, this.id);
+    }
+
+    clearAnimation(): Promise<boolean> {
+        return getComponentOptions("clearAnimation", this.mapDivId, this.id);
+    }
+
     setCenter(center: LatLng): Promise<void> {
-        return this.setComponentOptions("setCenter", { center: center });
+        return setComponentOptions("setCenter", { center: center }, this.mapDivId, this.id);
     }
 
     setFillColor(fillColor: Color): Promise<void> {
-        return this.setComponentOptions("setFillColor", {
-            fillColor: fillColor,
-        });
+        return setComponentOptions("setFillColor", { fillColor: fillColor }, this.mapDivId, this.id);
     }
 
     setRadius(radius: number): Promise<void> {
-        return this.setComponentOptions("setRadius", { radius: radius });
-    }
-
-    setStrokeColor(strokeColor: number): Promise<void> {
-        return this.setComponentOptions("setStrokeColor", {
-            strokeColor: strokeColor,
-        });
+        return setComponentOptions("setRadius", { radius: radius }, this.mapDivId, this.id);
     }
 
     setStrokePattern(strokePattern: PatternItem[]): Promise<void> {
-        return this.setComponentOptions("setStrokePattern", {
-            strokePattern: strokePattern,
-        });
+        return setComponentOptions("setStrokePattern", { strokePattern: strokePattern }, this.mapDivId, this.id);
+    }
+
+    setStrokeColor(strokeColor: number): Promise<void> {
+        return setComponentOptions("setStrokeColor", { strokeColor: strokeColor }, this.mapDivId, this.id);
     }
 
     setStrokeWidth(strokeWidth: number): Promise<void> {
-        return this.setComponentOptions("setStrokeWidth", {
-            strokeWidth: strokeWidth,
-        });
-    }
-
-    setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return setComponentOptions("setStrokeWidth", { strokeWidth: strokeWidth }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
+    }
+
+    setTag(tag: any): Promise<void> {
+        return setComponentOptions("setTag", { tag: tag }, this.mapDivId, this.id);
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return setComponentOptions("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+    /// Only TranslateAnimation is supported.
+    setAnimation(animation: AnimationSet): Promise<void> {  
+        const _animations = setAnimations(animation, this.mapCapsuleId, this.id)
+        return setComponentOptions("setAnimation", { animation: _animations }, this.mapDivId, this.id);
     }
 }

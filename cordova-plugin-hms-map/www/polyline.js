@@ -34,54 +34,52 @@ class PolylineImpl {
         this.id = componentId;
     }
     getColor() {
-        return this.getComponentOptions("getColor");
+        return (0, utils_1.getComponentOptions)("getColor", this.mapDivId, this.id);
     }
     getEndCap() {
-        return this.parseCap(this.getComponentOptions("getEndCap"));
+        return this.parseCap((0, utils_1.getComponentOptions)("getEndCap", this.mapDivId, this.id));
     }
     getStartCap() {
-        return this.parseCap(this.getComponentOptions("getStartCap"));
+        return this.parseCap((0, utils_1.getComponentOptions)("getStartCap", this.mapDivId, this.id));
     }
     getId() {
         return this.id;
     }
     getJointType() {
-        return this.getComponentOptions("getJointType");
+        return (0, utils_1.getComponentOptions)("getJointType", this.mapDivId, this.id);
     }
     getPattern() {
-        return this.getComponentOptions("getPattern");
+        return (0, utils_1.getComponentOptions)("getPattern", this.mapDivId, this.id);
     }
     getPoints() {
-        return this.getComponentOptions("getPoints");
+        return (0, utils_1.getComponentOptions)("getPoints", this.mapDivId, this.id);
     }
     getTag() {
-        return this.getComponentOptions("getTag");
+        return (0, utils_1.getComponentOptions)("getTag", this.mapDivId, this.id);
     }
     getWidth() {
-        return this.getComponentOptions("getWidth");
+        return (0, utils_1.getComponentOptions)("getWidth", this.mapDivId, this.id);
     }
     getZIndex() {
-        return this.getComponentOptions("getZIndex");
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     isClickable() {
-        return this.getComponentOptions("isClickable");
+        return (0, utils_1.getComponentOptions)("isClickable", this.mapDivId, this.id);
     }
     isGeodesic() {
-        return this.getComponentOptions("isGeodesic");
+        return (0, utils_1.getComponentOptions)("isGeodesic", this.mapDivId, this.id);
     }
     isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     setClickable(clickable) {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return (0, utils_1.setComponentOptions)("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
     setColor(color) {
-        return this.setComponentOptions("setColor", { color: color });
+        return (0, utils_1.setComponentOptions)("setColor", { color: color }, this.mapDivId, this.id);
     }
     setStartCap(startCap) {
         return this.setCap(startCap, "setStartCap");
@@ -90,51 +88,34 @@ class PolylineImpl {
         return this.setCap(endCap, "setEndCap");
     }
     setGeodesic(geodesic) {
-        return this.setComponentOptions("setGeodesic", { geodesic: geodesic });
+        return (0, utils_1.setComponentOptions)("setGeodesic", { geodesic: geodesic }, this.mapDivId, this.id);
     }
     setJointType(jointType) {
-        return this.setComponentOptions("setJointType", {
-            jointType: jointType,
-        });
+        return (0, utils_1.setComponentOptions)("setJointType", { jointType: jointType, }, this.mapDivId, this.id);
     }
     setPattern(pattern) {
-        return this.setComponentOptions("setPattern", { pattern: pattern });
+        return (0, utils_1.setComponentOptions)("setPattern", { pattern: pattern }, this.mapDivId, this.id);
     }
     setPoints(points) {
-        return this.setComponentOptions("setPoints", { points: points });
+        return (0, utils_1.setComponentOptions)("setPoints", { points: points }, this.mapDivId, this.id);
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return (0, utils_1.setComponentOptions)("setTag", { tag: tag }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
     setWidth(width) {
-        return this.setComponentOptions("setWidth", { width: width });
+        return (0, utils_1.setComponentOptions)("setWidth", { width: width }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
+    setGradient(on) {
+        return (0, utils_1.setComponentOptions)("setGradient", { on: on }, this.mapDivId, this.id);
     }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+    setColorValues(colors) {
+        return (0, utils_1.setComponentOptions)("setColorValues", { colors: colors }, this.mapDivId, this.id);
     }
     // TODO: Don't forget to parse cap when get method triggered.
     parseCap(promise) {
@@ -158,7 +139,7 @@ class PolylineImpl {
             if (cap.getRefWidth() !== null)
                 props["refWidth"] = cap.getRefWidth();
         }
-        return this.setComponentOptions(methodName, { cap: props });
+        return (0, utils_1.setComponentOptions)(methodName, { cap: props }, this.mapDivId, this.id);
     }
 }
 exports.PolylineImpl = PolylineImpl;

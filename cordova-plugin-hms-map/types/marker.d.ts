@@ -29,6 +29,7 @@ export interface Marker {
     isDraggable(): Promise<boolean>;
     isFlat(): Promise<boolean>;
     isInfoWindowShown(): Promise<boolean>;
+    isClickable(): Promise<boolean>;
     remove(): Promise<void>;
     hideInfoWindow(): Promise<void>;
     showInfoWindow(): Promise<void>;
@@ -47,6 +48,7 @@ export interface Marker {
     setTag(tag: any): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setClickable(clickable: boolean): Promise<void>;
 }
 export declare class MarkerImpl implements Marker {
     private readonly mapDivId;
@@ -66,6 +68,7 @@ export declare class MarkerImpl implements Marker {
     isDraggable(): Promise<boolean>;
     isFlat(): Promise<boolean>;
     isInfoWindowShown(): Promise<boolean>;
+    isClickable(): Promise<boolean>;
     startAnimation(): Promise<void>;
     remove(): Promise<void>;
     hideInfoWindow(): Promise<void>;
@@ -84,6 +87,5 @@ export declare class MarkerImpl implements Marker {
     setTag(tag: any): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
+    setClickable(clickable: boolean): Promise<void>;
 }

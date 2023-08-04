@@ -135,6 +135,8 @@ export interface HuaweiMap {
     getMinZoomLevel(): Promise<number>;
     getProjection(): Projection;
     getUiSettings(): UiSettings;
+    getScalePerPixel(): Promise<number>;
+    getMyLocationStyle(): Promise<MyLocationStyle>;
     isBuildingsEnabled(): Promise<boolean>;
     isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
@@ -160,6 +162,7 @@ export interface HuaweiMap {
     setPointToCenter(x: number, y: number): Promise<void>;
     setStyleId(styleId: string): Promise<void>;
     previewId(previewId: string): Promise<void>;
+    setMyLocationStyle(style: MyLocationStyle): Promise<void>;
 }
 export interface CameraUpdate {
     moveCamera(mapId: string): Promise<any>;
@@ -178,6 +181,8 @@ export interface Circle {
     isClickable(): Promise<boolean>;
     isVisible(): Promise<boolean>;
     remove(): Promise<void>;
+    startAnimation(): Promise<void>;
+    clearAnimation(): Promise<boolean>;
     setCenter(center: LatLng): Promise<void>;
     setFillColor(fillColor: Color): Promise<void>;
     setRadius(radius: number): Promise<void>;
@@ -188,6 +193,7 @@ export interface Circle {
     setZIndex(zIndex: number): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
+    setAnimation(animation: AnimationSet): Promise<void>;
 }
 export interface HeatMap {
     getId(): string;
@@ -244,6 +250,7 @@ export interface Marker {
     isDraggable(): Promise<boolean>;
     isFlat(): Promise<boolean>;
     isInfoWindowShown(): Promise<boolean>;
+    isClickable(): Promise<boolean>;
     remove(): Promise<void>;
     hideInfoWindow(): Promise<void>;
     showInfoWindow(): Promise<void>;
@@ -262,6 +269,7 @@ export interface Marker {
     setTag(tag: any): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setClickable(clickable: boolean): Promise<void>;
 }
 export interface Polygon {
     getFillColor(): Promise<Color>;
@@ -318,6 +326,8 @@ export interface Polyline {
     setVisible(visible: boolean): Promise<void>;
     setWidth(width: number): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setGradient(on: boolean): Promise<void>;
+    setColorValues(colors: Color[]): Promise<void>;
 }
 export interface TileOverlay {
     getFadeIn(): Promise<boolean>;
@@ -455,6 +465,7 @@ export interface MarkerOptions {
     title?: string;
     visible?: boolean;
     zIndex?: number;
+    clickable?: boolean;
 }
 export interface ScaledSize {
     width: number;
@@ -503,6 +514,8 @@ export interface PolylineOptions {
     visible?: boolean;
     width?: number;
     zIndex?: number;
+    gradient?: boolean;
+    colorValues?: Color[];
 }
 export interface GroundOverlayOptions {
     anchor?: Anchor;
@@ -605,6 +618,11 @@ export interface VisibleRegion {
 export interface Interpolator {
     type: InterpolatorType;
     args?: any;
+}
+export interface MyLocationStyle {
+    anchor: Anchor;
+    myLocationIcon: BitmapDescriptor;
+    radiusFillColor: number;
 }
 export declare enum TileType {
     URL_TILE = 0,

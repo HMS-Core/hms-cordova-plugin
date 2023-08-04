@@ -62,18 +62,16 @@ export declare class PolygonImpl implements Polygon {
     isVisible(): Promise<boolean>;
     isGeodesic(): Promise<boolean>;
     remove(): Promise<void>;
+    setTag(tag: any): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
     setFillColor(fillColor: Color): Promise<void>;
     setGeodesic(geodesic: boolean): Promise<void>;
     setHoles(holes: LatLng[][]): Promise<void>;
+    setVisible(visible: boolean): Promise<void>;
     setPoints(points: LatLng[]): Promise<void>;
     setStrokeColor(strokeColor: Color): Promise<void>;
     setStrokeJointType(strokeJointType: JointType): Promise<void>;
     setStrokePattern(strokePattern: PatternItem[]): Promise<void>;
     setStrokeWidth(strokeWidth: number): Promise<void>;
-    setTag(tag: any): Promise<void>;
-    setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
 }

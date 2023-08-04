@@ -142,4 +142,13 @@ public class PolylineCapsule extends MapComponent<Polyline> {
     void setWidth(JSONObject json) {
         component.setWidth((float) json.optDouble("width"));
     }
+
+    void setGradient(JSONObject json) {
+        component.setGradient(json.optBoolean("on"));
+    }
+
+    void setColorValues(JSONObject json) throws JSONException {
+        component.setColorValues(JsonToObject.fromJsonToListInteger(json.optJSONArray("colors")));
+    }
+
 }

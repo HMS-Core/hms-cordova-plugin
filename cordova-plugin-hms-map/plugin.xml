@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-map"
-	version="6.9.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	version="6.11.0-304" xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>
 		HMS Map
 	</name>
@@ -26,6 +26,7 @@
 	<js-module name="tileOverlay" src="www/tileOverlay.js" />
 	<js-module name="heatMap" src="www/heatMap.js" />
 	<js-module name="utils" src="www/utils.js" />
+	<js-module name="animationUtils" src="www/animationUtils.js" />
 	<!-- Android configuration -->
 	<platform name="android">
 		<!-- Hooks -->
@@ -46,24 +47,29 @@
 				android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
 		</config-file>
 		<!-- Android dependencies -->
-		<framework src="com.huawei.hms:maps:6.9.0.300" />
+		<framework src="com.huawei.hms:maps:6.11.0.304" />
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
 		<!-- Source files -->
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/HMSMap.java"
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/HMSMap.java"
 			target-dir="src/com/huawei/hms/cordova/map" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/PluginCordovaLayout.java"
 			target-dir="src/com/huawei/hms/cordova/map" />
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/PluginLayout.java"
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/PluginLayout.java"
 			target-dir="src/com/huawei/hms/cordova/map" />
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/HMSLogger.java"
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/HMSLogger.java"
 			target-dir="src/com/huawei/hms/cordova/map" />
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/MapCapsule.java"
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/MapCapsule.java"
 			target-dir="src/com/huawei/hms/cordova/map/maps" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/MapCapsuleLayout.java"
 			target-dir="src/com/huawei/hms/cordova/map/maps" />
-		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/MapEvents.java"
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/MapEvents.java"
 			target-dir="src/com/huawei/hms/cordova/map/maps" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/maps/PluginMapSetterGetter.java"
@@ -78,7 +84,7 @@
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/listeners/MapListener.java"
 			target-dir="src/com/huawei/hms/cordova/map/listeners" />
 		<source-file
-			src="src/android/src/main/java/com/huawei/hms/cordova/map/listeners/MarkerListener.java"
+			src="src/android/src/main/java/com/huawei/hms/cordova/map/listeners/AnimationListener.java"
 			target-dir="src/com/huawei/hms/cordova/map/listeners" />
 		<source-file
 			src="src/android/src/main/java/com/huawei/hms/cordova/map/listeners/ComponentListener.java"

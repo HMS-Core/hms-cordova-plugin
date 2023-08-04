@@ -119,6 +119,7 @@ export interface MarkerOptions {
     title?: string;
     visible?: boolean;
     zIndex?: number;
+    clickable?: boolean;
 }
 export interface ScaledSize {
     width: number;
@@ -167,6 +168,8 @@ export interface PolylineOptions {
     visible?: boolean;
     width?: number;
     zIndex?: number;
+    gradient?: boolean;
+    colorValues?: Color[];
 }
 export interface GroundOverlayOptions {
     anchor?: Anchor;
@@ -334,6 +337,8 @@ export interface HuaweiMap {
     getMinZoomLevel(): Promise<number>;
     getProjection(): Projection;
     getUiSettings(): UiSettings;
+    getScalePerPixel(): Promise<number>;
+    getMyLocationStyle(): Promise<MyLocationStyle>;
     isBuildingsEnabled(): Promise<boolean>;
     isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
@@ -361,6 +366,7 @@ export interface HuaweiMap {
     setPointToCenter(x: number, y: number): Promise<void>;
     setStyleId(styleId: string): Promise<void>;
     previewId(previewId: string): Promise<void>;
+    setMyLocationStyle(style: MyLocationStyle): Promise<void>;
 }
 export interface CameraUpdate {
     moveCamera(mapId: string): Promise<any>;
@@ -399,6 +405,11 @@ export interface UiSettings {
     setMarkerClusterTextColor(markerClusterTextColor: number): Promise<void>;
     setLogoPosition(logoPosition: number): Promise<void>;
     setLogoPadding(paddingStart: number, paddingTop: number, paddingEnd: number, paddingBottom: number): Promise<void>;
+}
+export interface MyLocationStyle {
+    anchor?: Anchor;
+    myLocationIcon: BitmapDescriptor;
+    radiusFillColor?: number;
 }
 export declare enum Color {
     RED = -65536,

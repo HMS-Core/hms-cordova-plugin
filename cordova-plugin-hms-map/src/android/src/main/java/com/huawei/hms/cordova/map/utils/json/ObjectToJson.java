@@ -31,6 +31,7 @@ import com.huawei.hms.maps.model.IndoorBuilding;
 import com.huawei.hms.maps.model.LatLng;
 import com.huawei.hms.maps.model.LatLngBounds;
 import com.huawei.hms.maps.model.Marker;
+import com.huawei.hms.maps.model.MyLocationStyle;
 import com.huawei.hms.maps.model.PatternItem;
 import com.huawei.hms.maps.model.PointOfInterest;
 import com.huawei.hms.maps.model.Polygon;
@@ -300,5 +301,12 @@ public final class ObjectToJson {
 
     public static JSONObject constructJsonFromPoint(Point point) throws JSONException {
         return new JSONObject().put("x", point.x).put("y", point.y);
+    }
+
+    public static JSONObject constructJsonFromMyLocationStyle(MyLocationStyle myLocationStyle) throws JSONException {
+        return new JSONObject().put("anchor", new JSONObject().put("u", myLocationStyle.getAnchorU())
+                .put("v", myLocationStyle.getAnchorV()))
+            .put("myLocationIcon", new JSONObject().put("myLocationIcon", myLocationStyle.getMyLocationIcon()))
+            .put("radiusFillColor", myLocationStyle.getRadiusFillColor());
     }
 }

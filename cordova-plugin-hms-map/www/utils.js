@@ -15,8 +15,17 @@
 */
 
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Rect = exports.initalPropsOf = exports.asyncExec = void 0;
+exports.Rect = exports.initalPropsOf = exports.getComponentOptions = exports.setComponentOptions = exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
 function asyncExec(clazz, func, args = []) {
     return new Promise((resolve, reject) => {
@@ -24,6 +33,29 @@ function asyncExec(clazz, func, args = []) {
     });
 }
 exports.asyncExec = asyncExec;
+function setComponentOptions(func, params, mapDivId, id) {
+    return asyncExec("HMSMap", "componentOptions", [
+        mapDivId,
+        id,
+        "set",
+        func,
+        params,
+    ]);
+}
+exports.setComponentOptions = setComponentOptions;
+function getComponentOptions(func, mapDivId, id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield asyncExec("HMSMap", "componentOptions", [
+            mapDivId,
+            id,
+            "get",
+            func,
+            {},
+        ]);
+        return result.value;
+    });
+}
+exports.getComponentOptions = getComponentOptions;
 function initEventHandler() {
     if (window.hmsEvents != null)
         return;

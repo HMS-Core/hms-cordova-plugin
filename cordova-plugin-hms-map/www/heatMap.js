@@ -15,15 +15,6 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeatMapImpl = void 0;
 const utils_1 = require("./utils");
@@ -34,34 +25,34 @@ class HeatMapImpl {
         this.id = componentId;
     }
     setRadiusUnit(radiusUnit) {
-        return this.setComponentOptions("setRadiusUnit", { radiusUnit: radiusUnit });
+        return (0, utils_1.setComponentOptions)("setRadiusUnit", { radiusUnit: radiusUnit }, this.mapDivId, this.id);
     }
     setColor(color) {
-        return this.setComponentOptions("setColor", { color: color });
+        return (0, utils_1.setComponentOptions)("setColor", { color: color }, this.mapDivId, this.id);
     }
     setIntensity(intensity) {
-        return this.setComponentOptions("setIntensity", { intensity: intensity });
+        return (0, utils_1.setComponentOptions)("setIntensity", { intensity: intensity }, this.mapDivId, this.id);
     }
     setIntensities(intensities) {
-        return this.setComponentOptions("setIntensities", { intensities: intensities });
+        return (0, utils_1.setComponentOptions)("setIntensities", { intensities: intensities }, this.mapDivId, this.id);
     }
     setOpacity(opacity) {
-        return this.setComponentOptions("setOpacity", { opacity: opacity });
+        return (0, utils_1.setComponentOptions)("setOpacity", { opacity: opacity }, this.mapDivId, this.id);
     }
     setOpacities(opacities) {
-        return this.setComponentOptions("setOpacities", { opacities: opacities });
+        return (0, utils_1.setComponentOptions)("setOpacities", { opacities: opacities }, this.mapDivId, this.id);
     }
     setRadius(radius) {
-        return this.setComponentOptions("setRadius", { radius: radius });
+        return (0, utils_1.setComponentOptions)("setRadius", { radius: radius }, this.mapDivId, this.id);
     }
     setRadiuses(radiuses) {
-        return this.setComponentOptions("setRadiuses", { radiuses: radiuses });
+        return (0, utils_1.setComponentOptions)("setRadiuses", { radiuses: radiuses }, this.mapDivId, this.id);
     }
     changeDataSetId(resourceId) {
-        return this.setComponentOptions("changeDataSetId", { resourceId: resourceId });
+        return (0, utils_1.setComponentOptions)("changeDataSetId", { resourceId: resourceId }, this.mapDivId, this.id);
     }
     getRadiusUnit() {
-        return this.getComponentOptions("getRadiusUnit");
+        return (0, utils_1.getComponentOptions)("getRadiusUnit", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
@@ -70,31 +61,10 @@ class HeatMapImpl {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
     changeDataSet(jsonData) {
-        return this.setComponentOptions("changeDataSet", { jsonData: jsonData });
-    }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+        return (0, utils_1.setComponentOptions)("changeDataSet", { jsonData: jsonData }, this.mapDivId, this.id);
     }
 }
 exports.HeatMapImpl = HeatMapImpl;

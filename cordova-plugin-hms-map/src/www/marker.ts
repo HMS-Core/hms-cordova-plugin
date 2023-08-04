@@ -28,7 +28,8 @@ import {
     _translateAnimation,
     _alphaAnimation,
 } from "./interfaces";
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
+import { setAnimations } from "./animationUtils";
 
 export interface Marker {
     getAlpha(): Promise<number>;
@@ -44,6 +45,7 @@ export interface Marker {
     isDraggable(): Promise<boolean>;
     isFlat(): Promise<boolean>;
     isInfoWindowShown(): Promise<boolean>;
+    isClickable(): Promise<boolean>;
 
     remove(): Promise<void>;
     hideInfoWindow(): Promise<void>;
@@ -64,6 +66,7 @@ export interface Marker {
     setTag(tag: any): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setClickable(clickable: boolean): Promise<void>;
 }
 
 export class MarkerImpl implements Marker {
@@ -79,7 +82,7 @@ export class MarkerImpl implements Marker {
     }
 
     getAlpha(): Promise<number> {
-        return this.getComponentOptions("getAlpha");
+        return getComponentOptions("getAlpha", this.mapDivId, this.id);
     }
 
     getId(): string {
@@ -87,51 +90,55 @@ export class MarkerImpl implements Marker {
     }
 
     getPosition(): Promise<LatLng> {
-        return this.getComponentOptions("getPosition");
+        return getComponentOptions("getPosition", this.mapDivId, this.id);
     }
 
     getRotation(): Promise<number> {
-        return this.getComponentOptions("getRotation");
+        return getComponentOptions("getRotation", this.mapDivId, this.id);
     }
 
     getSnippet(): Promise<string> {
-        return this.getComponentOptions("getSnippet");
+        return getComponentOptions("getSnippet", this.mapDivId, this.id);
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions("getTag");
+        return getComponentOptions("getTag", this.mapDivId, this.id);
     }
 
     getTitle(): Promise<string> {
-        return this.getComponentOptions("getTitle");
+        return getComponentOptions("getTitle", this.mapDivId, this.id);
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
     }
 
     isClusterable(): Promise<boolean> {
-        return this.getComponentOptions("isClusterable");
+        return getComponentOptions("isClusterable", this.mapDivId, this.id);
     }
 
     isDraggable(): Promise<boolean> {
-        return this.getComponentOptions("isDraggable");
+        return getComponentOptions("isDraggable", this.mapDivId, this.id);
     }
 
     isFlat(): Promise<boolean> {
-        return this.getComponentOptions("isFlat");
+        return getComponentOptions("isFlat", this.mapDivId, this.id);
     }
 
     isInfoWindowShown(): Promise<boolean> {
-        return this.getComponentOptions("isInfoWindowShown");
+        return getComponentOptions("isInfoWindowShown", this.mapDivId, this.id);
+    }
+
+    isClickable(): Promise<boolean> {
+        return getComponentOptions("isClickable", this.mapDivId, this.id);
     }
 
     startAnimation(): Promise<void> {
-        return this.getComponentOptions("startAnimation");
+        return getComponentOptions("startAnimation", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
@@ -139,195 +146,71 @@ export class MarkerImpl implements Marker {
     }
 
     hideInfoWindow(): Promise<void> {
-        return this.getComponentOptions("hideInfoWindow");
+        return getComponentOptions("hideInfoWindow", this.mapDivId, this.id);
     }
 
     showInfoWindow(): Promise<void> {
-        return this.getComponentOptions("showInfoWindow");
+        return getComponentOptions("showInfoWindow", this.mapDivId, this.id);
     }
 
     setAlpha(alpha: number): Promise<void> {
-        return this.setComponentOptions("setAlpha", { alpha: alpha });
+        return setComponentOptions("setAlpha", { alpha: alpha }, this.mapDivId, this.id);
     }
 
     setAnimation(animation: AnimationSet): Promise<void> {
-        interface _animationSet {
-            rotateAnimation?: _rotateAnimation;
-            scaleAnimation?: _scaleAnimation;
-            translateAnimation?: _translateAnimation;
-            alphaAnimation?: _alphaAnimation;
-        }
-
-        const _animations = {} as _animationSet;
-
-        if (animation.animations.has("Rotate"))
-            _animations["rotateAnimation"] = {} as _rotateAnimation;
-        if (animation.animations.has("Scale"))
-            _animations["scaleAnimation"] = {} as _scaleAnimation;
-        if (animation.animations.has("Translate"))
-            _animations["translateAnimation"] = {} as _translateAnimation;
-        if (animation.animations.has("Alpha"))
-            _animations["alphaAnimation"] = {} as _alphaAnimation;
-
-        animation.animations.forEach((value: Animation, key: string) => {
-            if (key === "Rotate" && _animations.rotateAnimation != undefined) {
-                _animations.rotateAnimation.fromDegree = (<RotateAnimation>(
-                    value
-                )).fromDegree;
-                _animations.rotateAnimation.toDegree = (<RotateAnimation>(
-                    value
-                )).toDegree;
-                _animations.rotateAnimation.fillMode = value.fillMode;
-                _animations.rotateAnimation.duration = value.duration;
-                _animations.rotateAnimation.repeatCount = value.repeatCount;
-                _animations.rotateAnimation.repeatMode = value.repeatMode;
-                _animations.rotateAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.rotateAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.rotateAnimation.isAnimationStart = true;
-            } else if (
-                key === "Scale" &&
-                _animations.scaleAnimation != undefined
-            ) {
-                _animations.scaleAnimation.fromX = (<ScaleAnimation>(
-                    value
-                )).fromX;
-                _animations.scaleAnimation.toX = (<ScaleAnimation>value).toX;
-                _animations.scaleAnimation.fromY = (<ScaleAnimation>(
-                    value
-                )).fromY;
-                _animations.scaleAnimation.toY = (<ScaleAnimation>value).toY;
-                _animations.scaleAnimation.fillMode = value.fillMode;
-                _animations.scaleAnimation.duration = value.duration;
-                _animations.scaleAnimation.repeatCount = value.repeatCount;
-                _animations.scaleAnimation.repeatMode = value.repeatMode;
-                _animations.scaleAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.scaleAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.scaleAnimation.isAnimationStart = true;
-            } else if (
-                key === "Translate" &&
-                _animations.translateAnimation != undefined
-            ) {
-                _animations.translateAnimation.target = (<TranslateAnimation>(
-                    value
-                )).target;
-                _animations.translateAnimation.fillMode = value.fillMode;
-                _animations.translateAnimation.duration = value.duration;
-                _animations.translateAnimation.repeatCount = value.repeatCount;
-                _animations.translateAnimation.repeatMode = value.repeatMode;
-                _animations.translateAnimation.interpolator =
-                    value.interpolator;
-                if (value.animationEnd)
-                    _animations.translateAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.translateAnimation.isAnimationStart = true;
-            } else if (
-                key === "Alpha" &&
-                _animations.alphaAnimation != undefined
-            ) {
-                _animations.alphaAnimation.fromAlpha = (<AlphaAnimation>(
-                    value
-                )).fromAlpha;
-                _animations.alphaAnimation.toAlpha = (<AlphaAnimation>(
-                    value
-                )).toAlpha;
-                _animations.alphaAnimation.fillMode = value.fillMode;
-                _animations.alphaAnimation.duration = value.duration;
-                _animations.alphaAnimation.repeatCount = value.repeatCount;
-                _animations.alphaAnimation.repeatMode = value.repeatMode;
-                _animations.alphaAnimation.interpolator = value.interpolator;
-                if (value.animationEnd)
-                    _animations.alphaAnimation.isAnimationEnd = true;
-                if (value.animationStart)
-                    _animations.alphaAnimation.isAnimationStart = true;
-            }
-            let eventName = "";
-            if (value.animationEnd) {
-                eventName = `on${key}AnimationEnd_${this.mapCapsuleId}_${this.id}`;
-                window.subscribeHMSEvent(eventName, value.animationEnd);
-            }
-            if (value.animationStart) {
-                eventName = `on${key}AnimationStart_${this.mapCapsuleId}_${this.id}`;
-                window.subscribeHMSEvent(eventName, value.animationStart);
-            }
-        });
-
-        return this.setComponentOptions("setAnimation", {
-            animation: _animations,
-        });
+        const _animations = setAnimations(animation, this.mapCapsuleId, this.id)
+        return setComponentOptions("setAnimation", { animation: _animations }, this.mapDivId, this.id);
     }
 
     setDraggable(draggable: boolean): Promise<void> {
-        return this.setComponentOptions("setDraggable", {
-            draggable: draggable,
-        });
+        return setComponentOptions("setDraggable", { draggable: draggable }, this.mapDivId, this.id);
     }
 
     setFlat(flat: boolean): Promise<void> {
-        return this.setComponentOptions("setFlat", { flat: flat });
+        return setComponentOptions("setFlat", { flat: flat }, this.mapDivId, this.id);
     }
 
     setIcon(icon: BitmapDescriptor): Promise<void> {
-        return this.setComponentOptions("setIcon", { icon: icon });
+        return setComponentOptions("setIcon", { icon: icon }, this.mapDivId, this.id);
     }
 
     setInfoWindowAnchor(u: number, v: number): Promise<void> {
-        return this.setComponentOptions("setInfoWindowAnchor", { u: u, v: v });
+        return setComponentOptions("setInfoWindowAnchor", { u: u, v: v }, this.mapDivId, this.id);
     }
 
     setMarkerAnchor(u: number, v: number): Promise<void> {
-        return this.setComponentOptions("setMarkerAnchor", { u: u, v: v });
+        return setComponentOptions("setMarkerAnchor", { u: u, v: v }, this.mapDivId, this.id);
     }
 
     setPosition(latLng: LatLng): Promise<void> {
-        return this.setComponentOptions("setPosition", { position: latLng });
+        return setComponentOptions("setPosition", { position: latLng }, this.mapDivId, this.id);
     }
 
     setRotation(rotation: number): Promise<void> {
-        return this.setComponentOptions("setRotation", { rotation: rotation });
+        return setComponentOptions("setRotation", { rotation: rotation }, this.mapDivId, this.id);
     }
 
     setSnippet(snippet: String): Promise<void> {
-        return this.setComponentOptions("setSnippet", { snippet: snippet });
+        return setComponentOptions("setSnippet", { snippet: snippet }, this.mapDivId, this.id);
     }
 
     setTitle(title: string): Promise<void> {
-        return this.setComponentOptions("setTitle", { title: title });
+        return setComponentOptions("setTitle", { title: title }, this.mapDivId, this.id);
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return setComponentOptions("setTag", { tag: tag }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+    setClickable(clickable: boolean): Promise<void> {
+        return setComponentOptions("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 }

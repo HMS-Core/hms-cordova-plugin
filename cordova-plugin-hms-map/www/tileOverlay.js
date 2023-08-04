@@ -15,15 +15,6 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TileOverlayImpl = void 0;
 const utils_1 = require("./utils");
@@ -34,60 +25,37 @@ class TileOverlayImpl {
         this.id = componentId;
     }
     getFadeIn() {
-        return this.getComponentOptions("getFadeIn");
+        return (0, utils_1.getComponentOptions)("getFadeIn", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
     }
     getTransparency() {
-        return this.getComponentOptions("getTransparency");
+        return (0, utils_1.getComponentOptions)("getTransparency", this.mapDivId, this.id);
     }
     getZIndex() {
-        return this.getComponentOptions("getZIndex");
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     clearTileCache() {
-        return this.getComponentOptions("clearTileCache");
+        return (0, utils_1.getComponentOptions)("clearTileCache", this.mapDivId, this.id);
     }
     setFadeIn(fadeIn) {
-        return this.setComponentOptions("setFadeIn", { fadeIn: fadeIn });
+        return (0, utils_1.setComponentOptions)("setFadeIn", { fadeIn: fadeIn }, this.mapDivId, this.id);
     }
     setTransparency(transparency) {
-        return this.setComponentOptions("setTransparency", {
-            transparency: transparency,
-        });
+        return (0, utils_1.setComponentOptions)("setTransparency", { transparency: transparency }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
-    }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 }
 exports.TileOverlayImpl = TileOverlayImpl;

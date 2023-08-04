@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Component } from "@angular/core";
-import { NavController, AlertController } from "@ionic/angular";
+import { NavController, AlertController, Platform } from "@ionic/angular";
 import {
   AnimationSet,
   CameraUpdateFactory,
@@ -42,10 +42,13 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private hmsMap: HMSMap,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private platform: Platform
   ) {
-    this.readGeoJsonFile('assets/earthquakes.geojson');
-    hmsMap.initialize(); // You can set with routePolicy parameter.
+      platform.ready().then(() => {
+        this.hmsMap.initialize(); // You can set with routePolicy parameter.
+        this.readGeoJsonFile('assets/earthquakes.geojson');
+      }).catch(reason => alert(reason));
   }
 
   readGeoJsonFile(filePath: string) {
@@ -127,6 +130,30 @@ export class HomePage {
     await marker.startAnimation();
   }
 
+  
+  async addCircleAnim() {
+    let circle = this.map.getComponent("Circle1");
+    const animationSet = new AnimationSet();
+    animationSet.addTranslateAnimation({
+        fillMode: AnimationConstant.FILL_MODE_BACKWARDS,
+        duration: 1200,
+        repeatCount: 3,
+        target: {
+            "lat": 40.193298,
+            "lng": 29.074202
+        },
+        animationStart: () => {
+            console.log("translate animation started");
+        },
+        animationEnd: () => {
+            console.log("translate animation end");
+        }
+    });
+
+    await circle.setAnimation(animationSet);
+    await circle.startAnimation();
+  }
+
   async initMap() {
     const mapOptions = {
       mapType: MapType.MAP_TYPE_TERRAIN,
@@ -206,8 +233,8 @@ export class HomePage {
   async addCircle() {
     const circleOptions = {
       center: { 
-        lat: 40.7587658, 
-        lng: 30.3146964 
+        lat: 40.932911, 
+        lng: 29.533971 
       },
       radius: 10000,
       fillColor: -65281,

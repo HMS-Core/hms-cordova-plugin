@@ -42,6 +42,8 @@ export interface Polyline {
     setVisible(visible: boolean): Promise<void>;
     setWidth(width: number): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setGradient(on: boolean): Promise<void>;
+    setColorValues(colors: Color[]): Promise<void>;
 }
 export declare class PolylineImpl implements Polyline {
     private readonly mapDivId;
@@ -74,8 +76,8 @@ export declare class PolylineImpl implements Polyline {
     setVisible(visible: boolean): Promise<void>;
     setWidth(width: number): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
+    setGradient(on: boolean): Promise<void>;
+    setColorValues(colors: Color[]): Promise<void>;
     private parseCap;
     private setCap;
 }

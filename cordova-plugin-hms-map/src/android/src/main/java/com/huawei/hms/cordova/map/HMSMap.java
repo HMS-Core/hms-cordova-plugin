@@ -34,7 +34,7 @@ import com.huawei.hms.cordova.map.components.TileOverlayCapsule;
 import com.huawei.hms.cordova.map.helpers.PluginJSHelper;
 import com.huawei.hms.cordova.map.listeners.ComponentListener;
 import com.huawei.hms.cordova.map.listeners.MapListener;
-import com.huawei.hms.cordova.map.listeners.MarkerListener;
+import com.huawei.hms.cordova.map.listeners.AnimationListener;
 import com.huawei.hms.cordova.map.maps.MapCapsule;
 import com.huawei.hms.cordova.map.utils.ErrorCodes;
 import com.huawei.hms.cordova.map.utils.MapKitUtils;
@@ -295,7 +295,7 @@ public class HMSMap extends CordovaPlugin {
                     callbackContext.success();
                 }
             } catch (Exception e) {
-                // You can catch every error throwed from function here instead of just catching
+                // You can catch every error thrown from function here instead of just catching
                 // the exception.
                 hmsLogger.sendSingleEvent(command, e.getMessage());
                 callbackContext.error(e.getMessage());
@@ -480,11 +480,12 @@ public class HMSMap extends CordovaPlugin {
         ComponentListener componentListener;
         try {
             if (type == MapComponentType.MARKER) {
-                componentListener = MarkerListener.getInstance(cordovaUtils);
+                componentListener = AnimationListener.getInstance(cordovaUtils);
                 mapComponent = new MarkerCapsule(map, JsonToObject.constructMarkerOptions(map.getContext(), json),
                     componentListener);
             } else if (type == MapComponentType.CIRCLE) {
-                mapComponent = new CircleCapsule(map, JsonToObject.constructCircleOptions(json), null);
+                componentListener = AnimationListener.getInstance(cordovaUtils);
+                mapComponent = new CircleCapsule(map, JsonToObject.constructCircleOptions(json), componentListener);
             } else if (type == MapComponentType.GROUND_OVERLAY) {
                 mapComponent = new GroundOverlayCapsule(map,
                     JsonToObject.constructGroundOverlayOptions(map.getContext(), json), null);

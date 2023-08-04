@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
 
 export interface TileOverlay {
     getFadeIn(): Promise<boolean>;
@@ -44,7 +44,7 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     getFadeIn(): Promise<boolean> {
-        return this.getComponentOptions("getFadeIn");
+        return getComponentOptions("getFadeIn", this.mapDivId, this.id);
     }
 
     getId(): string {
@@ -52,15 +52,15 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     getTransparency(): Promise<number> {
-        return this.getComponentOptions("getTransparency");
+        return getComponentOptions("getTransparency", this.mapDivId, this.id);
     }
 
     getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
@@ -68,45 +68,22 @@ export class TileOverlayImpl implements TileOverlay {
     }
 
     clearTileCache(): Promise<void> {
-        return this.getComponentOptions("clearTileCache");
+        return getComponentOptions("clearTileCache", this.mapDivId, this.id);
     }
 
     setFadeIn(fadeIn: boolean): Promise<void> {
-        return this.setComponentOptions("setFadeIn", { fadeIn: fadeIn });
+        return setComponentOptions("setFadeIn", { fadeIn: fadeIn }, this.mapDivId, this.id);
     }
 
     setTransparency(transparency: number): Promise<void> {
-        return this.setComponentOptions("setTransparency", {
-            transparency: transparency,
-        });
+        return setComponentOptions("setTransparency", { transparency: transparency }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
-    }
-
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 }

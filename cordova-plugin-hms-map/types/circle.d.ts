@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { LatLng, PatternItem, Color } from "./interfaces";
+import { LatLng, PatternItem, Color, AnimationSet } from "./interfaces";
 export interface Circle {
     getCenter(): Promise<LatLng>;
     getFillColor(): Promise<Color>;
@@ -28,6 +28,8 @@ export interface Circle {
     isClickable(): Promise<boolean>;
     isVisible(): Promise<boolean>;
     remove(): Promise<void>;
+    startAnimation(): Promise<void>;
+    clearAnimation(): Promise<boolean>;
     setCenter(center: LatLng): Promise<void>;
     setFillColor(fillColor: Color): Promise<void>;
     setRadius(radius: number): Promise<void>;
@@ -38,6 +40,7 @@ export interface Circle {
     setZIndex(zIndex: number): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
+    setAnimation(animation: AnimationSet): Promise<void>;
 }
 export declare class CircleImpl implements Circle {
     private readonly id;
@@ -45,27 +48,28 @@ export declare class CircleImpl implements Circle {
     private readonly mapCapsuleId;
     constructor(mapDivId: string, mapCapsuleId: number, componentId: string);
     getCenter(): Promise<LatLng>;
+    getStrokePattern(): Promise<PatternItem[]>;
     getFillColor(): Promise<Color>;
     getId(): string;
-    getRadius(): Promise<number>;
-    getStrokeColor(): Promise<number>;
-    getStrokePattern(): Promise<PatternItem[]>;
     getStrokeWidth(): Promise<number>;
+    getRadius(): Promise<number>;
     getTag(): Promise<any>;
+    getStrokeColor(): Promise<number>;
     getZIndex(): Promise<number>;
-    isClickable(): Promise<boolean>;
-    isVisible(): Promise<boolean>;
     remove(): Promise<void>;
+    isVisible(): Promise<boolean>;
+    isClickable(): Promise<boolean>;
+    startAnimation(): Promise<void>;
+    clearAnimation(): Promise<boolean>;
     setCenter(center: LatLng): Promise<void>;
     setFillColor(fillColor: Color): Promise<void>;
     setRadius(radius: number): Promise<void>;
-    setStrokeColor(strokeColor: number): Promise<void>;
     setStrokePattern(strokePattern: PatternItem[]): Promise<void>;
+    setStrokeColor(strokeColor: number): Promise<void>;
     setStrokeWidth(strokeWidth: number): Promise<void>;
-    setTag(tag: any): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
+    setTag(tag: any): Promise<void>;
     setClickable(clickable: boolean): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
+    setAnimation(animation: AnimationSet): Promise<void>;
 }

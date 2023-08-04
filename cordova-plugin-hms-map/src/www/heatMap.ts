@@ -15,7 +15,7 @@
 */
 
 import { RadiusUnit } from "./interfaces";
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
 
 export interface HeatMap {
 
@@ -47,34 +47,34 @@ export class HeatMapImpl implements HeatMap {
         this.id = componentId;
     }
     setRadiusUnit(radiusUnit: RadiusUnit): Promise<void> {
-        return this.setComponentOptions("setRadiusUnit", { radiusUnit: radiusUnit });
+        return setComponentOptions("setRadiusUnit", { radiusUnit: radiusUnit }, this.mapDivId, this.id);
     }
     setColor(color: Map<number, Number[]>): Promise<void> {
-        return this.setComponentOptions("setColor", { color: color });
+        return setComponentOptions("setColor", { color: color }, this.mapDivId, this.id);
     }
     setIntensity(intensity: number): Promise<void> {
-        return this.setComponentOptions("setIntensity", { intensity: intensity });
+        return setComponentOptions("setIntensity", { intensity: intensity }, this.mapDivId, this.id);
     }
     setIntensities(intensities: Map<number, number>): Promise<void> {
-        return this.setComponentOptions("setIntensities", { intensities: intensities });
+        return setComponentOptions("setIntensities", { intensities: intensities }, this.mapDivId, this.id);
     }
     setOpacity(opacity: number): Promise<void> {
-        return this.setComponentOptions("setOpacity", { opacity: opacity });
+        return setComponentOptions("setOpacity", { opacity: opacity }, this.mapDivId, this.id);
     }
     setOpacities(opacities: Map<number, number>): Promise<void> {
-        return this.setComponentOptions("setOpacities", { opacities: opacities });
+        return setComponentOptions("setOpacities", { opacities: opacities }, this.mapDivId, this.id);
     }
     setRadius(radius: number): Promise<void> {
-        return this.setComponentOptions("setRadius", { radius: radius });
+        return setComponentOptions("setRadius", { radius: radius }, this.mapDivId, this.id);
     }
     setRadiuses(radiuses: Map<number, number>): Promise<void> {
-        return this.setComponentOptions("setRadiuses", { radiuses: radiuses });
+        return setComponentOptions("setRadiuses", { radiuses: radiuses }, this.mapDivId, this.id);
     }
     changeDataSetId(resourceId: number): Promise<void> {
-        return this.setComponentOptions("changeDataSetId", { resourceId: resourceId });
+        return setComponentOptions("changeDataSetId", { resourceId: resourceId }, this.mapDivId, this.id);
     }
     getRadiusUnit(): Promise<RadiusUnit> {
-        return this.getComponentOptions("getRadiusUnit");
+        return getComponentOptions("getRadiusUnit", this.mapDivId, this.id);
     }
 
     getId(): string {
@@ -86,33 +86,11 @@ export class HeatMapImpl implements HeatMap {
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 
     changeDataSet(jsonData: string): Promise<void> {
-        return this.setComponentOptions("changeDataSet", { jsonData: jsonData });
-    }
-
-
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+        return setComponentOptions("changeDataSet", { jsonData: jsonData }, this.mapDivId, this.id);
     }
 
 }

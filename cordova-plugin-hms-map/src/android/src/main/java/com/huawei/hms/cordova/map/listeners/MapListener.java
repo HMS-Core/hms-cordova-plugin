@@ -79,7 +79,7 @@ public final class MapListener {
      * know that
      * so instead of writing some ugly code we tried to write a better ugly code
      * here and we
-     * did set listeners seperate but also not seperate but it doesn't matter with
+     * did set listeners separate but also not separate but it doesn't matter with
      * the code
      * because the listener name is still the same.
      */

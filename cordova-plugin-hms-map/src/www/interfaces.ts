@@ -126,6 +126,7 @@ export interface MarkerOptions {
     title?: string;
     visible?: boolean;
     zIndex?: number;
+    clickable?: boolean;
 }
 
 export interface ScaledSize {
@@ -181,6 +182,8 @@ export interface PolylineOptions {
     visible?: boolean;
     width?: number;
     zIndex?: number;
+    gradient?: boolean;
+    colorValues?: Color[];
 }
 
 export interface GroundOverlayOptions {
@@ -394,11 +397,14 @@ export interface HuaweiMap {
     getMinZoomLevel(): Promise<number>;
     getProjection(): Projection;
     getUiSettings(): UiSettings;
+    getScalePerPixel(): Promise<number>;
+    getMyLocationStyle(): Promise<MyLocationStyle>;    
     isBuildingsEnabled(): Promise<boolean>;
     isDark(): Promise<boolean>;
     isMyLocationEnabled(): Promise<boolean>;
     isTrafficEnabled(): Promise<boolean>;
     isIndoorEnabled(): Promise<boolean>;
+
     setBuildingsEnabled(buildingsEnabled: boolean): Promise<void>;
     setDarkEnabled(darkEnabled: boolean) :Promise<void>;
     setContentDescription(contentDescription: string): Promise<void>;
@@ -430,6 +436,7 @@ export interface HuaweiMap {
     setPointToCenter(x: number, y: number): Promise<void>;
     setStyleId(styleId: string): Promise<void>;
     previewId(previewId: string): Promise<void>;
+    setMyLocationStyle(style: MyLocationStyle): Promise<void>;
 }
 
 export interface CameraUpdate {
@@ -482,6 +489,12 @@ export interface UiSettings {
         paddingEnd: number,
         paddingBottom: number
     ): Promise<void>;
+}
+
+export interface MyLocationStyle {
+    anchor?: Anchor;
+    myLocationIcon: BitmapDescriptor;
+    radiusFillColor?: number;
 }
 
 /*-------------------------------------------------------------ENUMS----------------------------------------------------------*/

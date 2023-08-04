@@ -18,6 +18,7 @@ package com.huawei.hms.cordova.map.components;
 
 import static com.huawei.hms.cordova.map.utils.json.JsonToObject.constructObjectToMap;
 import static com.huawei.hms.cordova.map.utils.json.JsonToObject.constructObjectToMap2;
+import static com.huawei.hms.cordova.map.utils.json.JsonToObject.constructStringToRadiusUnit;
 
 import android.content.Context;
 
@@ -51,12 +52,12 @@ public class HeatMapCapsule extends MapComponent<HeatMap> {
         return component.getId();
     }
 
-    public HeatMapOptions.RadiusUnit getRadiusUnit() {
-        return component.getRadiusUnit();
+    public JSONObject getRadiusUnit() throws JSONException {
+        return new JSONObject().put("value", component.getRadiusUnit());
     }
 
-    void setRadiusUnit(HeatMapOptions.RadiusUnit unit) {
-        this.component.setRadiusUnit(unit);
+    void setRadiusUnit(JSONObject json) throws JSONException {
+        this.component.setRadiusUnit(constructStringToRadiusUnit(json.getString("radiusUnit")));
     }
 
     @Override

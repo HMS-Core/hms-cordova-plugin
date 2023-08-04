@@ -43,6 +43,4 @@ export declare class TileOverlayImpl implements TileOverlay {
     setTransparency(transparency: number): Promise<void>;
     setZIndex(zIndex: number): Promise<void>;
     setVisible(visible: boolean): Promise<void>;
-    private setComponentOptions;
-    private getComponentOptions;
 }

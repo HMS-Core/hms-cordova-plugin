@@ -15,15 +15,6 @@
 */
 
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GroundOverlayImpl = void 0;
 const utils_1 = require("./utils");
@@ -34,100 +25,70 @@ class GroundOverlayImpl {
         this.id = componentId;
     }
     getBearing() {
-        return this.getComponentOptions("getBearing");
+        return (0, utils_1.getComponentOptions)("getBearing", this.mapDivId, this.id);
     }
     getBounds() {
-        return this.getComponentOptions("getBounds");
+        return (0, utils_1.getComponentOptions)("getBounds", this.mapDivId, this.id);
     }
     getHeight() {
-        return this.getComponentOptions("getHeight");
+        return (0, utils_1.getComponentOptions)("getHeight", this.mapDivId, this.id);
     }
     getId() {
         return this.id;
     }
     getPosition() {
-        return this.getComponentOptions("getPosition");
+        return (0, utils_1.getComponentOptions)("getPosition", this.mapDivId, this.id);
     }
     getTag() {
-        return this.getComponentOptions("getTag");
+        return (0, utils_1.getComponentOptions)("getTag", this.mapDivId, this.id);
     }
     getTransparency() {
-        return this.getComponentOptions("getTransparency");
+        return (0, utils_1.getComponentOptions)("getTransparency", this.mapDivId, this.id);
     }
     getWidth() {
-        return this.getComponentOptions("getWidth");
-    }
-    getZIndex() {
-        return this.getComponentOptions("getZIndex");
+        return (0, utils_1.getComponentOptions)("getWidth", this.mapDivId, this.id);
     }
     isClickable() {
-        return this.getComponentOptions("isClickable");
+        return (0, utils_1.getComponentOptions)("isClickable", this.mapDivId, this.id);
     }
     isVisible() {
-        return this.getComponentOptions("isVisible");
+        return (0, utils_1.getComponentOptions)("isVisible", this.mapDivId, this.id);
+    }
+    getZIndex() {
+        return (0, utils_1.getComponentOptions)("getZIndex", this.mapDivId, this.id);
     }
     remove() {
         return (0, utils_1.asyncExec)("HMSMap", "removeComponent", [this.mapDivId, this.id]);
     }
     setBearing(bearing) {
-        return this.setComponentOptions("setBearing", { bearing: bearing });
+        return (0, utils_1.setComponentOptions)("setBearing", { bearing: bearing }, this.mapDivId, this.id);
     }
     setClickable(clickable) {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return (0, utils_1.setComponentOptions)("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
     setDimensions(width, height) {
-        return this.setComponentOptions("setDimensions", {
-            width: width,
-            height: height,
-        });
+        return (0, utils_1.setComponentOptions)("setDimensions", { width: width, height: height }, this.mapDivId, this.id);
     }
     setImage(imageDescriptor) {
-        return this.setComponentOptions("setImage", { image: imageDescriptor });
+        return (0, utils_1.setComponentOptions)("setImage", { image: imageDescriptor }, this.mapDivId, this.id);
     }
     setPosition(position) {
-        return this.setComponentOptions("setPosition", { position: position });
+        return (0, utils_1.setComponentOptions)("setPosition", { position: position }, this.mapDivId, this.id);
     }
     setPositionFromBounds(positionLatLngBounds) {
-        return this.setComponentOptions("setPositionFromBounds", {
-            bounds: positionLatLngBounds,
-        });
+        return (0, utils_1.setComponentOptions)("setPositionFromBounds", { bounds: positionLatLngBounds }, this.mapDivId, this.id);
     }
     setTag(tag) {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return (0, utils_1.setComponentOptions)("setTag", { tag: tag }, this.mapDivId, this.id);
     }
     setTransparency(transparency) {
-        return this.setComponentOptions("setTransparency", {
-            transparency: transparency,
-        });
+        return (0, utils_1.setComponentOptions)("setTransparency", { transparency: transparency }, this.mapDivId, this.id);
     }
     setVisible(visible) {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return (0, utils_1.setComponentOptions)("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
     setZIndex(zIndex) {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
-    }
-    setComponentOptions(func, params) {
-        return (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-    getComponentOptions(func) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, utils_1.asyncExec)("HMSMap", "componentOptions", [
-                this.mapDivId,
-                this.id,
-                "get",
-                func,
-                {},
-            ]);
-            return result.value;
-        });
+        return (0, utils_1.setComponentOptions)("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 }
 exports.GroundOverlayImpl = GroundOverlayImpl;

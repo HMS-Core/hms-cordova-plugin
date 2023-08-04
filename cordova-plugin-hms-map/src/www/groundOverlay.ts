@@ -15,7 +15,7 @@
 */
 
 import { LatLngBounds, LatLng, BitmapDescriptor } from "./interfaces";
-import { asyncExec } from "./utils";
+import { asyncExec, setComponentOptions, getComponentOptions } from "./utils";
 
 export interface GroundOverlay {
     getBearing(): Promise<number>;
@@ -57,15 +57,15 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     getBearing(): Promise<number> {
-        return this.getComponentOptions("getBearing");
+        return getComponentOptions("getBearing", this.mapDivId, this.id);
     }
 
     getBounds(): Promise<LatLngBounds> {
-        return this.getComponentOptions("getBounds");
+        return getComponentOptions("getBounds", this.mapDivId, this.id);
     }
 
     getHeight(): Promise<number> {
-        return this.getComponentOptions("getHeight");
+        return getComponentOptions("getHeight", this.mapDivId, this.id);
     }
 
     getId(): string {
@@ -73,31 +73,31 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     getPosition(): Promise<LatLng> {
-        return this.getComponentOptions("getPosition");
+        return getComponentOptions("getPosition", this.mapDivId, this.id);
     }
 
     getTag(): Promise<any> {
-        return this.getComponentOptions("getTag");
+        return getComponentOptions("getTag", this.mapDivId, this.id);
     }
 
     getTransparency(): Promise<number> {
-        return this.getComponentOptions("getTransparency");
+        return getComponentOptions("getTransparency", this.mapDivId, this.id);
     }
 
     getWidth(): Promise<number> {
-        return this.getComponentOptions("getWidth");
-    }
-
-    getZIndex(): Promise<number> {
-        return this.getComponentOptions("getZIndex");
+        return getComponentOptions("getWidth", this.mapDivId, this.id);
     }
 
     isClickable(): Promise<boolean> {
-        return this.getComponentOptions("isClickable");
+        return getComponentOptions("isClickable", this.mapDivId, this.id);
     }
 
     isVisible(): Promise<boolean> {
-        return this.getComponentOptions("isVisible");
+        return getComponentOptions("isVisible", this.mapDivId, this.id);
+    }
+
+    getZIndex(): Promise<number> {
+        return getComponentOptions("getZIndex", this.mapDivId, this.id);
     }
 
     remove(): Promise<void> {
@@ -105,13 +105,11 @@ export class GroundOverlayImpl implements GroundOverlay {
     }
 
     setBearing(bearing: number): Promise<void> {
-        return this.setComponentOptions("setBearing", { bearing: bearing });
+        return setComponentOptions("setBearing", { bearing: bearing }, this.mapDivId, this.id);
     }
 
     setClickable(clickable: boolean): Promise<void> {
-        return this.setComponentOptions("setClickable", {
-            clickable: clickable,
-        });
+        return setComponentOptions("setClickable", { clickable: clickable }, this.mapDivId, this.id);
     }
 
     setDimensions(width: number, height?: number): Promise<void>;
@@ -119,62 +117,34 @@ export class GroundOverlayImpl implements GroundOverlay {
     setDimensions(width: number): Promise<void>;
 
     setDimensions(width: any, height?: any): Promise<void> {
-        return this.setComponentOptions("setDimensions", {
-            width: width,
-            height: height,
-        });
+        return setComponentOptions("setDimensions", { width: width, height: height }, this.mapDivId, this.id);
     }
 
     setImage(imageDescriptor: BitmapDescriptor): Promise<void> {
-        return this.setComponentOptions("setImage", { image: imageDescriptor });
+        return setComponentOptions("setImage", { image: imageDescriptor }, this.mapDivId, this.id);
     }
 
     setPosition(position: LatLng): Promise<void> {
-        return this.setComponentOptions("setPosition", { position: position });
+        return setComponentOptions("setPosition", { position: position }, this.mapDivId, this.id);
     }
 
     setPositionFromBounds(positionLatLngBounds: LatLngBounds): Promise<void> {
-        return this.setComponentOptions("setPositionFromBounds", {
-            bounds: positionLatLngBounds,
-        });
+        return setComponentOptions("setPositionFromBounds", { bounds: positionLatLngBounds }, this.mapDivId, this.id);
     }
 
     setTag(tag: any): Promise<void> {
-        return this.setComponentOptions("setTag", { tag: tag });
+        return setComponentOptions("setTag", { tag: tag }, this.mapDivId, this.id);
     }
 
     setTransparency(transparency: number): Promise<void> {
-        return this.setComponentOptions("setTransparency", {
-            transparency: transparency,
-        });
+        return setComponentOptions("setTransparency", { transparency: transparency }, this.mapDivId, this.id);
     }
 
     setVisible(visible: boolean): Promise<void> {
-        return this.setComponentOptions("setVisible", { visible: visible });
+        return setComponentOptions("setVisible", { visible: visible }, this.mapDivId, this.id);
     }
 
     setZIndex(zIndex: number): Promise<void> {
-        return this.setComponentOptions("setZIndex", { zIndex: zIndex });
-    }
-
-    private setComponentOptions(func: string, params: any): Promise<any> {
-        return asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "set",
-            func,
-            params,
-        ]);
-    }
-
-    private async getComponentOptions(func: string): Promise<any> {
-        const result = await asyncExec("HMSMap", "componentOptions", [
-            this.mapDivId,
-            this.id,
-            "get",
-            func,
-            {},
-        ]);
-        return result.value;
+        return setComponentOptions("setZIndex", { zIndex: zIndex }, this.mapDivId, this.id);
     }
 }
