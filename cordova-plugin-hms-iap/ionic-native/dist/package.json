@@ -1,8 +1,8 @@
 {
   "name": "@hmscore/ionic-native-hms-iap",
   "description": "Ionic Native wrappers for Cordova Plugin HMS IAP",
-  "version": "6.10.0-300",
-  "zipVersion": "6.10.0.300",
+  "version": "6.10.0-301",
+  "zipVersion": "6.10.0.301",
   "module": "index.js",
   "typings": "index.d.ts",
   "license": "Apache-2.0",

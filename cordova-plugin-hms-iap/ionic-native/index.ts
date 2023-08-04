@@ -74,12 +74,12 @@ export class HMSInAppPurchases extends IonicNativePlugin {
   /**
    * Creates orders for PMS products, including consumables, non-consumables, and subscriptions.
    * @param purchaseIntent
-   * @return {Promise<PurchaseIntentResult>}
+   * @return {Promise<PurchaseResultInfo>}
    */
   @Cordova({ otherPromise: true })
   createPurchaseIntent(
     purchaseIntentReq: PurchaseIntentReq
-  ): Promise<PurchaseIntentResult> {
+  ): Promise<PurchaseResultInfo> {
     return;
   }
 

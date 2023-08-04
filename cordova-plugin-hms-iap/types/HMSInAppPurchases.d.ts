@@ -18,7 +18,7 @@ export declare function isEnvReady(isSupportAppTouch?: boolean): Promise<IsEnvRe
 export declare function isSandboxActivated(): Promise<IsSandboxActivatedResult>;
 export declare function obtainOwnedPurchases(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
 export declare function obtainProductInfo(productInfoRequest: ProductInfoReq): Promise<ProductInfoResult>;
-export declare function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseIntentResult>;
+export declare function createPurchaseIntent(purchaseIntentRequest: PurchaseIntentReq): Promise<PurchaseResultInfo>;
 export declare function consumeOwnedPurchase(consumeOwnedPurchaseRequest: ConsumeOwnedPurchaseReq): Promise<ConsumeOwnedPurchaseResult>;
 export declare function obtainOwnedPurchaseRecord(ownedPurchasesRequest: OwnedPurchasesReq): Promise<OwnedPurchasesResult>;
 export declare function startIapActivity(startIapActivityRequest: StartIapActivityReq): Promise<void>;

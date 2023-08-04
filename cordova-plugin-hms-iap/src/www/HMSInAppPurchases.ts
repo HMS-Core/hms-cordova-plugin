@@ -47,7 +47,7 @@ export function obtainProductInfo(
 }
 export function createPurchaseIntent(
   purchaseIntentRequest: PurchaseIntentReq
-): Promise<PurchaseIntentResult> {
+): Promise<PurchaseResultInfo> {
   return asyncExec("HMSInAppPurchases", "InAppPurchases", [
     "createPurchaseIntent",
     purchaseIntentRequest,

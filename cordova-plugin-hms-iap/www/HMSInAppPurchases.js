@@ -90,5 +90,5 @@ exports.enablePendingPurchase = enablePendingPurchase;
 var SignAlgorithmConstants;
 (function (SignAlgorithmConstants) {
     SignAlgorithmConstants["SIGNATURE_ALGORITHM_SHA256WITHRSA_PSS"] = "SHA256WithRSA/PSS";
-})(SignAlgorithmConstants = exports.SignAlgorithmConstants || (exports.SignAlgorithmConstants = {}));
+})(SignAlgorithmConstants || (exports.SignAlgorithmConstants = SignAlgorithmConstants = {}));
 //# sourceMappingURL=HMSInAppPurchases.js.map
