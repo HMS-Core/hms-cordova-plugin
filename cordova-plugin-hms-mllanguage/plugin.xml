@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-mllanguage"
+	version="3.11.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>
+		HMS ML Language
+	</name>
+	<description>
+		Cordova HMS ML Language Plugin
+	</description>
+	<license>
+		Apache 2.0
+	</license>
+	<keywords>
+		cordova,ml,hms-mllanguage,huawei-mllanguage,hms,huawei
+	</keywords>
+	<js-module src="www/HMSMLPlugin.js" name="HMSMLPlugin">
+		<clobbers target="HMSMLPlugin" />
+	</js-module>
+	<js-module src="www/HMSMLLanguage.js" name="HMSMLLanguage">
+		<clobbers target="HMSMLLanguage" />
+	</js-module>
+	<js-module name="util" src="www/util.js" />
+	<js-module name="interfaces" src="www/interfaces.js" />
+	<js-module name="index" src="www/index.js" />
+	<!-- android -->
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+		<framework src="com.huawei.hms:ml-computer-translate:3.11.0.302" />
+		<framework src="com.huawei.hms:ml-computer-translate-model:3.11.0.302" />
+		<framework src="com.huawei.hms:ml-computer-language-detection-model:3.11.0.302" />
+		<framework src="com.huawei.hms:ml-computer-language-detection:3.11.0.302" />
+		<framework src="com.huawei.hms:ml-computer-voice-asr-plugin:3.11.0.301" />
+		<framework src="com.huawei.hms:ml-computer-voice-tts:3.11.0.301" />
+		<framework src="com.huawei.hms:ml-computer-voice-tts-model-bee:3.6.0.300" />
+		<framework src="com.huawei.hms:ml-computer-voice-tts-model-eagle:3.6.0.300" />
+		<framework src="com.huawei.hms:ml-computer-voice-aft:3.11.0.301" />
+		<framework src="com.huawei.hms:ml-computer-voice-realtimetranscription:3.11.0.301" />
+		<framework src="com.huawei.hms:ml-speech-semantics-sounddect-sdk:3.11.0.303" />
+		<framework src="com.huawei.hms:ml-speech-semantics-sounddect-model:3.11.0.303" />
+		<framework src="com.huawei.hms:stats:6.11.0.301" />
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSMLPlugin">
+				<param name="android-package" value="com.huawei.hms.cordova.mllanguage.HMSMLPlugin" />
+			</feature>
+			<feature name="HMSMLLanguage">
+				<param name="android-package"
+					value="com.huawei.hms.cordova.mllanguage.HMSMLLanguage" />
+			</feature>
+			<preference name="AndroidXEnabled" value="true" />
+		</config-file>
+		<!-- Android permission -->
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.RECORD_AUDIO" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		</config-file>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/HMSMLPlugin.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/HMSMLLanguage.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage" />
+		<source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/CordovaBaseModule.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/CordovaEvent.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/CordovaMethod.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/HMSLog.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CorLog.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CorPack.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CordovaController.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CordovaEventRunner.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CordovaModuleGroupHandler.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/CordovaModuleHandler.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/HMSLogger.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/NoSuchCordovaModuleException.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/basef/handler/Promise.java"
+            target-dir="src/com/huawei/hms/cordova/mllanguage/basef/handler/" />	
+		<!-- Common -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/common/HMSMLApplication.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/common" />
+		<!-- Helpers -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/CordovaErrors.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/CordovaHelpers.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/MLAftErrorsConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/MLAsrConstant.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/MLSpeechRttConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/MLTtsConstant.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/helpers/MLTtsErrorConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/helpers" />	
+		<!-- interfaces -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/interfaces/ActivityHolder.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/interfaces/HMSProvider.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/interfaces/JSONMapper.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/interfaces" />
+		<!-- PROVIDERS -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/aft/MLAftAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/aft" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/asr/MLAsrAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/asr" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/langdetection/MLLangDetectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/langdetection" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/rtt/MLRttAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/rtt" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/sounddect/MLSoundDetectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/sounddect" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/translate/MLTranslatorAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/translate" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/providers/tts/MLTtsAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/providers/tts" />
+		<!-- Utils -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/utils/HMSMLUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/utils" />
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/utils/Mapper.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/utils" />
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/utils/MLError.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/utils/PlatformUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/utils" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mllanguage/utils/TextUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mllanguage/utils" />
+	</platform>
+</plugin>
