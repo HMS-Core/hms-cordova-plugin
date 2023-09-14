@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-hms-adsprime" version="13.4.65.300" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+	<name>HMS Ads Prime</name>
+	<description>Cordova HMS Ads Prime Plugin</description>
+	<license>Apache 2.0</license>
+	<keywords>cordova,ads,hms-adsprime,huawei-ads,hms,huawei</keywords>
+
+	<js-module name="HMSAds" src="www/HMSAds.js">
+		<clobbers target="HMSAds"/>
+	</js-module>
+	<js-module name="HMSBannerAd" src="www/HMSBannerAd.js">
+		<clobbers target="HMSBannerAd"/>
+	</js-module>
+	<js-module name="HMSConstants" src="www/HMSConstants.js">
+		<clobbers target="HMSConstants"/>
+	</js-module>
+	<js-module name="HMSInterstitialAd" src="www/HMSInterstitialAd.js">
+		<clobbers target="HMSInterstitialAd"/>
+	</js-module>
+	<js-module name="HMSNativeAd" src="www/HMSNativeAd.js">
+		<clobbers target="HMSNativeAd"/>
+	</js-module>
+	<js-module name="HMSRewardAd" src="www/HMSRewardAd.js">
+		<clobbers target="HMSRewardAd"/>
+	</js-module>
+	<js-module name="HMSRollAd" src="www/HMSRollAd.js">
+		<clobbers target="HMSRollAd"/>
+	</js-module>
+	<js-module name="HMSSplashAd" src="www/HMSSplashAd.js">
+		<clobbers target="HMSSplashAd"/>
+	</js-module>
+	<js-module name="HMSVast" src="www/HMSVast.js">
+		<clobbers target="HMSVast"/>
+	</js-module>
+
+
+	<js-module name="ads" src="www/ads.js"/>
+	<js-module name="interfaces" src="www/interfaces.js"/>
+	<js-module name="layout" src="www/layout.js"/>
+	<js-module name="utils" src="www/utils.js"/>
+
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js"/>
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js"/>
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSAds">
+				<param name="android-package" value="com.huawei.hms.cordova.ads.HMSAds"/>
+			</feature>
+		</config-file>
+
+		<framework src="com.huawei.hms:stats:6.11.0.301"/>
+		<framework src="com.huawei.agconnect:agconnect-core:1.7.2.300"/>
+		<framework src="com.huawei.hms:ads-identifier:3.4.62.300"/>
+		<framework src="com.huawei.hms:ads-installreferrer:3.4.62.300"/>
+		<framework src="com.huawei.hms:ads-consent:3.4.65.300"/>
+		<framework src="com.huawei.hms:ads-vast:3.4.44.303"/>
+		<framework src="com.huawei.hms:ads-vast-player:3.4.44.303"/>
+		<framework src="com.huawei.hms:ads-prime:3.4.65.300"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference"/>
+
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/AdManagerModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ConsentModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/Converter.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/HMSAds.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/HwAdsModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/IdentifierModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/InstallReferrerModule.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/OnAdLayoutScroll.java" target-dir="src/com/huawei/hms/cordova/ads/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/vast/VastModule.java" target-dir="src/com/huawei/hms/cordova/ads/vast/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/vast/VastListener.java" target-dir="src/com/huawei/hms/cordova/ads/vast/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/vast/VastManager.java" target-dir="src/com/huawei/hms/cordova/ads/vast/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/vast/CustomeVideoController.java" target-dir="src/com/huawei/hms/cordova/ads/vast/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/PluginAbstractAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/PluginAbstractAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/banner/PluginBannerAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/banner/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/banner/PluginBannerAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/banner/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/banner/PluginBannerAdSize.java" target-dir="src/com/huawei/hms/cordova/ads/ad/banner/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/instream/PluginRollAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/instream/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/instream/PluginRollAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/instream/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/interstitial/PluginInterstitialAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/interstitial/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/interstitial/PluginInterstitialAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/interstitial/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/nativ/PluginNativeAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/nativ/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/nativ/PluginNativeAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/nativ/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/reward/PluginRewardAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/reward/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/reward/PluginRewardAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/reward/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/splash/PluginSplashAdListener.java" target-dir="src/com/huawei/hms/cordova/ads/ad/splash/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/ad/splash/PluginSplashAdManager.java" target-dir="src/com/huawei/hms/cordova/ads/ad/splash/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/CordovaBaseModule.java" target-dir="src/com/huawei/hms/cordova/ads/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/CordovaEvent.java" target-dir="src/com/huawei/hms/cordova/ads/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/CordovaMethod.java" target-dir="src/com/huawei/hms/cordova/ads/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/HMSLog.java" target-dir="src/com/huawei/hms/cordova/ads/basef/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/CorPack.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/CordovaController.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/CordovaEventRunner.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/CordovaModuleGroupHandler.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/CordovaModuleHandler.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/HMSLogger.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/NoSuchCordovaModuleException.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/basef/handler/Promise.java" target-dir="src/com/huawei/hms/cordova/ads/basef/handler/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/layout/InitialProps.java" target-dir="src/com/huawei/hms/cordova/ads/layout/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/layout/PluginAdLayout.java" target-dir="src/com/huawei/hms/cordova/ads/layout/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/layout/PluginLayoutManager.java" target-dir="src/com/huawei/hms/cordova/ads/layout/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/layout/PxToPixelConverter.java" target-dir="src/com/huawei/hms/cordova/ads/layout/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/ErrorAndStateCodes.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/FileUtils.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/ads/utils/ListToJson.java" target-dir="src/com/huawei/hms/cordova/ads/utils/"/>
+		<!-- Resources -->
+		<resource-file src="src/android/src/main/res/layout/native_ad_banner_template.xml" target="res/layout/native_ad_banner_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/native_ad_full_template.xml" target="res/layout/native_ad_full_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/native_ad_small_template.xml" target="res/layout/native_ad_small_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/native_ad_video_template.xml" target="res/layout/native_ad_video_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/vast_template.xml" target="res/layout/vast_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/vast_video_player_template.xml" target="res/layout/vast_video_player_template.xml"/>
+		<resource-file src="src/android/src/main/res/layout/native_ad_with_app_download_btn_template.xml" target="res/layout/native_ad_with_app_download_btn_template.xml"/>
+		<resource-file src="src/android/src/main/res/drawable/native_flag_rounded_corners_shape.xml" target="res/drawable/native_flag_rounded_corners_shape.xml"/>
+		<resource-file src="src/android/src/main/res/drawable/native_button_rounded_corners_shape.xml" target="res/drawable/native_button_rounded_corners_shape.xml"/>
+		<resource-file src="src/android/src/main/res/values/strings.xml" target="res/values/strings.xml"/>
+		<resource-file src="src/android/src/main/res/values/colors.xml" target="res/values/colors.xml"/>
+	</platform>
+</plugin>
