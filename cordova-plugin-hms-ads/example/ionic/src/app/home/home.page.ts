@@ -208,7 +208,7 @@ export class HomePage {
     };
 
     await splashAd.load({
-      adId: 'testd7c5cewoj6',
+      adId: 'testq6zq98hecj',
       orientation: HMSScreenOrientation.SCREEN_ORIENTATION_PORTRAIT,
       adParam: adParams,
       logoAnchor: Anchor.TOP,

@@ -59,6 +59,8 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
 
     private static final String APP_DOWNLOAD_NON_WIFI_DOWNLOAD = "app_download_non_wifi_download_%d";
 
+    private static final String APP_DOWNLOAD_USER_CANCELLED = "app_download_user_cancelled_%d";
+
     private NativeAd globalNativeAd = null;
 
     public NativeAd getNativeAd() {
@@ -163,6 +165,11 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
             @Override
             public void onStatusChanged(AppDownloadStatus appDownloadStatus) {
                 configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_STATUS_CHANGED, appDownloadStatus);
+            }
+
+            @Override
+            public void onUserCancel(String s, String s1) {
+                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_USER_CANCELLED,s,s1);
             }
         };
     }
