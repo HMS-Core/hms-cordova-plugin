@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="<package_name>" version="6.4.0-303" xmlns="http://www.w3.org/ns/widgets">
+<widget id="<package_name>" version="6.11.0-301" xmlns="http://www.w3.org/ns/widgets">
     <name>HMSAvailabilityDemo</name>
     <description>
         A sample application that demonstrates HMS Availability Plugin features on Cordova.
