@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -21,13 +21,15 @@ import {
     FusedLocationService,
     GeocoderService,
     GeofenceService,
-    LocationResult
+    LocationResult,
+    CoordinateConversionService
 } from "./interfaces";
 import { GeofenceServiceImpl } from "./geofenceService";
 import { FusedLocationServiceImpl } from "./fusedLocationService";
 import { ActivityIdentificationServiceImpl } from "./activityIdentificationService";
 import { Events } from './enums';
 import { GeocoderServiceImpl } from './geocoderService';
+import { CoordinateConversionServiceImpl } from './coordinateConversionService';
 
 export * from './enums'
 export * from './interfaces'
@@ -36,6 +38,7 @@ let geofenceServiceInstance: GeofenceService;
 let geocoderServiceInstance: GeocoderService;
 let fusedLocationProviderClientInstance: FusedLocationService;
 let activityIdentificationServiceInstance: ActivityIdentificationService;
+let coordinateConversionServiceInstance: CoordinateConversionService;
 
 export function getGeofenceService(): GeofenceService {
     if (geofenceServiceInstance == null) {
@@ -63,6 +66,13 @@ export function getGeocoderService(language: string, country?: string): Geocoder
         geocoderServiceInstance = new GeocoderServiceImpl(language, country);
     }
     return geocoderServiceInstance;
+}
+
+export function getCoordinateConversionService(): CoordinateConversionService {
+    if (coordinateConversionServiceInstance == null) {
+        coordinateConversionServiceInstance = new CoordinateConversionServiceImpl();
+    }
+    return coordinateConversionServiceInstance;
 }
 
 export function disableLogger(): Promise<void> {

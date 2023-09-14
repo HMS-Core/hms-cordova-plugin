@@ -1,18 +1,5 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.addListener = exports.enableLogger = exports.disableLogger = exports.getGeocoderService = exports.getActivityIdentificationService = exports.getFusedLocationProviderClient = exports.getGeofenceService = void 0;
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -26,17 +13,37 @@ exports.addListener = exports.enableLogger = exports.disableLogger = exports.get
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.addListener = exports.enableLogger = exports.disableLogger = exports.getCoordinateConversionService = exports.getGeocoderService = exports.getActivityIdentificationService = exports.getFusedLocationProviderClient = exports.getGeofenceService = void 0;
+
 const utils_1 = require("./utils");
 const geofenceService_1 = require("./geofenceService");
 const fusedLocationService_1 = require("./fusedLocationService");
 const activityIdentificationService_1 = require("./activityIdentificationService");
 const geocoderService_1 = require("./geocoderService");
+const coordinateConversionService_1 = require("./coordinateConversionService");
 __exportStar(require("./enums"), exports);
 __exportStar(require("./interfaces"), exports);
 let geofenceServiceInstance;
 let geocoderServiceInstance;
 let fusedLocationProviderClientInstance;
 let activityIdentificationServiceInstance;
+let coordinateConversionServiceInstance;
 function getGeofenceService() {
     if (geofenceServiceInstance == null) {
         geofenceServiceInstance = new geofenceService_1.GeofenceServiceImpl();
@@ -65,12 +72,19 @@ function getGeocoderService(language, country) {
     return geocoderServiceInstance;
 }
 exports.getGeocoderService = getGeocoderService;
+function getCoordinateConversionService() {
+    if (coordinateConversionServiceInstance == null) {
+        coordinateConversionServiceInstance = new coordinateConversionService_1.CoordinateConversionServiceImpl();
+    }
+    return coordinateConversionServiceInstance;
+}
+exports.getCoordinateConversionService = getCoordinateConversionService;
 function disableLogger() {
-    return utils_1.asyncExec('HMSLocation', 'PluginService', ['disableLogger']);
+    return (0, utils_1.asyncExec)('HMSLocation', 'PluginService', ['disableLogger']);
 }
 exports.disableLogger = disableLogger;
 function enableLogger() {
-    return utils_1.asyncExec('HMSLocation', 'PluginService', ['enableLogger']);
+    return (0, utils_1.asyncExec)('HMSLocation', 'PluginService', ['enableLogger']);
 }
 exports.enableLogger = enableLogger;
 function addListener(event, callback) {
@@ -78,7 +92,7 @@ function addListener(event, callback) {
 }
 exports.addListener = addListener;
 function initialize() {
-    return utils_1.asyncExec('HMSLocation', 'PluginService', ['initialize']);
+    return (0, utils_1.asyncExec)('HMSLocation', 'PluginService', ['initialize']);
 }
 initialize().then(value => console.log("Plugin is active.")).catch(reason => console.log("Error occurred while initializing plugin."));
 //# sourceMappingURL=HMSLocation.js.map

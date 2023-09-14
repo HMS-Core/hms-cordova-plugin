@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ActivityIdentificationServiceImpl = void 0;
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +13,10 @@ exports.ActivityIdentificationServiceImpl = void 0;
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ActivityIdentificationServiceImpl = void 0;
+
 const utils_1 = require("./utils");
 class ActivityIdentificationServiceImpl {
     createActivityConversionUpdates(requestCode, activityConversionRequest, callback) {
@@ -42,7 +43,7 @@ class ActivityIdentificationServiceImpl {
     }
     run(funcName, args = []) {
         args.unshift(funcName);
-        return utils_1.asyncExec('HMSLocation', "ActivityIdentificationService", args);
+        return (0, utils_1.asyncExec)('HMSLocation', "ActivityIdentificationService", args);
     }
 }
 exports.ActivityIdentificationServiceImpl = ActivityIdentificationServiceImpl;

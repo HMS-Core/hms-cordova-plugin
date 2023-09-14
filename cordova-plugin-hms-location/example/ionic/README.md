@@ -9,7 +9,7 @@
         - [2.1.2. With Capacitor Runtime](#212-with-capacitor-runtime)
 - [3. Configuration and Description](#3-configuration-and-description)
 - [4. Questions or Issues](#4-questions-or-issues)
-- [5. Licencing and Terms](#5-licencing-and-terms)
+- [5. Licensing and Terms](#5-licensing-and-terms)
 
 ---
 
@@ -138,7 +138,7 @@ This demo application demonstrates the usage of HMS Location Cordova plugin.
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.6.1.300'
+            classpath 'com.huawei.agconnect:agcp:1.9.0.300'
         }
     }
 
@@ -188,7 +188,7 @@ the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ---
 
-## 5. Licencing and Terms
+## 5. Licensing and Terms
 
 HMS Location Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
 

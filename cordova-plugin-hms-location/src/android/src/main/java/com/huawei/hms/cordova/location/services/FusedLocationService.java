@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.location.services;
 
@@ -64,13 +64,13 @@ import java.util.Objects;
 public class FusedLocationService extends CordovaBaseModule {
     private static final String TAG = FusedLocationService.class.getSimpleName();
 
-    private FusedLocationProviderClient client;
+    private final FusedLocationProviderClient client;
+
+    private final Map<Integer, PendingIntent> pendingIntentRequestMap;
+
+    private final Map<Integer, LocationCallbackHandler> locationCallbackRequestMap;
 
     private LogConfig logConfig;
-
-    private Map<Integer, PendingIntent> pendingIntentRequestMap;
-
-    private Map<Integer, LocationCallbackHandler> locationCallbackRequestMap;
 
     private Promise activityResultCb;
 
@@ -89,8 +89,7 @@ public class FusedLocationService extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void disableBackgroundLocation(final CorPack corPack, JSONArray args, final Promise cb)
-        throws JSONException {
+    public void disableBackgroundLocation(final CorPack corPack, JSONArray args, final Promise cb) {
         client.disableBackgroundLocation().addOnSuccessListener(aVoid -> {
             cb.success();
         }).addOnFailureListener(e -> {
@@ -362,6 +361,7 @@ public class FusedLocationService extends CordovaBaseModule {
         }
         settingsClient.setLogConfig(logConfig).addOnFailureListener(e -> {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
+            cb.error(e.getMessage());
         });
         cb.success();
     }

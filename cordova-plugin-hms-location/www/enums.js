@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestType = exports.NotificationImportance = exports.NotificationCategory = exports.GeofenceTriggerType = exports.GeofenceInitConversionType = exports.CoordinateType = exports.ConversionType = exports.ActivityType = exports.NavigationRequestConstants = exports.PriorityConstants = exports.Events = void 0;
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -16,6 +13,10 @@ exports.RequestType = exports.NotificationImportance = exports.NotificationCateg
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RequestType = exports.NotificationImportance = exports.NotificationCategory = exports.GeofenceTriggerType = exports.GeofenceInitConversionType = exports.CoordinateType = exports.ConversionType = exports.ActivityType = exports.NavigationRequestConstants = exports.PriorityConstants = exports.Events = void 0;
+
 var Events;
 (function (Events) {
     Events["ON_LOCATION_RESULT"] = "onLocationResult";
@@ -30,6 +31,8 @@ var PriorityConstants;
     PriorityConstants[PriorityConstants["PRIORITY_LOW_POWER"] = 104] = "PRIORITY_LOW_POWER";
     PriorityConstants[PriorityConstants["PRIORITY_NO_POWER"] = 105] = "PRIORITY_NO_POWER";
     PriorityConstants[PriorityConstants["PRIORITY_HD_ACCURACY"] = 200] = "PRIORITY_HD_ACCURACY";
+    PriorityConstants[PriorityConstants["PRIORITY_INDOOR"] = 300] = "PRIORITY_INDOOR";
+    PriorityConstants[PriorityConstants["PRIORITY_HIGH_ACCURACY_AND_INDOOR"] = 400] = "PRIORITY_HIGH_ACCURACY_AND_INDOOR";
 })(PriorityConstants = exports.PriorityConstants || (exports.PriorityConstants = {}));
 var NavigationRequestConstants;
 (function (NavigationRequestConstants) {

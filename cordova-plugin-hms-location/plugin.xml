@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-location"
-        version="6.4.0.300"
+        version="6.11.0.301"
         xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <name>HMS Location</name>
     <description>Cordova HMS Location Plugin</description>
@@ -17,6 +17,7 @@
     <js-module name="geofenceService" src="www/geofenceService.js" />
     <js-module name="interfaces" src="www/interfaces.js" />
     <js-module name="utils" src="www/utils.js" />
+    <js-module name="coordinateConversionService" src="www/coordinateConversionService.js" />
 
     <!-- ANDROID PLATFORM -->
     <platform name="android">
@@ -45,7 +46,7 @@
         </config-file>
         <!-- uses-permissions
         <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.INTERNET"/>
+                <uses-permission android:name="android.permission.INTERNET"/>
                 <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
                 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
                 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -60,7 +61,7 @@
                 <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
        </config-file> -->
         <!-- dependencies -->
-        <framework src="com.huawei.hms:location:6.4.0.300" />
+        <framework src="com.huawei.hms:location:6.11.0.301" />
         <framework src="androidx.core:core:1.3.2" />
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
         <!-- source files -->
@@ -139,6 +140,9 @@
         <source-file
                 src="src/android/src/main/java/com/huawei/hms/cordova/location/services/PluginService.java"
                 target-dir="src/com/huawei/hms/cordova/location/services/" />
+        <source-file
+                src="src/android/src/main/java/com/huawei/hms/cordova/location/services/CoordinateConversionService.java"
+                target-dir="src/com/huawei/hms/cordova/location/services/" />                
         <source-file
                 src="src/android/src/main/java/com/huawei/hms/cordova/location/utils/Constants.java"
                 target-dir="src/com/huawei/hms/cordova/location/utils/" />

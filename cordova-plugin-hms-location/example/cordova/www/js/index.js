@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ async function onDeviceReady() {
     document.getElementById("geocoderPage").onclick = geocoderPage;
     document.getElementById("activityConversionPage").onclick = activityConversionPage;
     document.getElementById("activityIdentificationPage").onclick = activityIdentificationPage;
+    document.getElementById("coordinateConversionPage").onclick = coordinateConversionPage;
 }
 
 function locationPage() {
@@ -56,4 +57,8 @@ function activityConversionPage() {
 
 function activityIdentificationPage() {
     window.location.href = "activity_identification_page.html";
+}
+
+function coordinateConversionPage() {
+    window.location.href = "coordinate_conversion_page.html";
 }

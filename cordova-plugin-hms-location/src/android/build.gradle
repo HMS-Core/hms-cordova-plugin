@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+    }
+}
+
+repositories {
+    google()
+    jcenter()
+    maven { url 'https://developer.huawei.com/repo/' }
+}
+
+android {
+    compileSdkVersion 33
+    buildToolsVersion '31.0.0'
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 33
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'org.apache.cordova:framework:8.1.0'
+    implementation 'com.huawei.hms:location:6.11.0.301'
+    implementation "androidx.core:core:1.3.2"
+
+    // Add only if you get error like 'can not find class HiAnalyticsUtils'
+    // implementation 'com.huawei.hms:stats:5.0.3.301'
+    // Add only if you get error like 'can not find class AGConnectServicesConfig'
+    // implementation 'com.huawei.agconnect:agconnect-core:1.4.2.301'
+}

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -44,6 +44,10 @@ export class HMSLocation extends IonicNativePlugin {
         return HMSLocation.getPlugin().getActivityIdentificationService();
     }
 
+    getCoordinateConversionService(): CoordinateConversionService {
+        return HMSLocation.getPlugin().getCoordinateConversionService();
+    }
+    
     addListener(event: Events, callback: (data: LocationResult | [] | ActivityConversionResponse | ActivityIdentificationResponse) => void) {
         return HMSLocation.getPlugin().addListener(event, callback);
     }
@@ -99,6 +103,11 @@ export interface GeocoderService {
     getFromLocation(getFromLocationRequest: GetFromLocationRequest): Promise<HWLocation[]>;
     getFromLocationName(getFromLocationNameRequest: GetFromLocationNameRequest): Promise<HWLocation[]>;
 }
+
+export interface CoordinateConversionService {
+    convertCoord(latitude: number, longitude: number, coordType: number): Promise<LonLat>;
+}
+
 export interface GetFromLocationRequest {
     latitude: number;
     longitude: number;
@@ -168,7 +177,8 @@ export interface HWLocation {
     extraInfo: string,
     verticalAccuracyMeters: number,
     bearingAccuracyDegrees: number,
-    speedAccuracyMetersPerSecond: number
+    speedAccuracyMetersPerSecond: number,
+    coordinateType: number,
 }
 
 export interface LocationSettingsStates {
@@ -194,6 +204,7 @@ export interface LocationRequest {
     needAddress?: boolean,
     language?: string,
     countryCode?: string,
+    coordinateType?: number,
 }
 
 export interface LocationSettingsRequest {
@@ -275,6 +286,11 @@ export interface ActivityIdentificationResponse {
     activityIdentificationDatas: ActivityIdentificationData[]
 }
 
+export interface LonLat {
+    longitude: number,
+    latitude: number
+}
+
 export enum Events {
     ON_LOCATION_RESULT = 'onLocationResult',
     ACTIVITY_CONVERSION_RESULT = 'onActivityConversionResult',
@@ -287,7 +303,9 @@ export enum PriorityConstants {
     PRIORITY_BALANCED_POWER_ACCURACY = 102,
     PRIORITY_LOW_POWER = 104,
     PRIORITY_NO_POWER = 105,
-    PRIORITY_HD_ACCURACY = 200
+    PRIORITY_HD_ACCURACY = 200,
+    PRIORITY_INDOOR = 300,
+    PRIORITY_HIGH_ACCURACY_AND_INDOOR = 400,
 }
 
 export enum NavigationRequestConstants {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,6 +45,10 @@ const routes: Routes = [
     {
         path: 'activity-identification',
         loadChildren: () => import('./activity-identification/activity-identification.module').then(m => m.ActivityIdentificationPageModule)
+    },
+    {
+        path: 'coordinate-conversion',
+        loadChildren: () => import('./coordinate-conversion/coordinate-conversion.module').then(m => m.CoordinateConversionPageModule)
     },
 ];
 

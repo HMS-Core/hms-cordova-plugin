@@ -1,18 +1,18 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.huawei.hms.cordova.location.utils.json;
 
@@ -31,6 +31,7 @@ import com.huawei.hms.location.LocationResult;
 import com.huawei.hms.location.LocationSettingsStates;
 import com.huawei.hms.location.LogConfig;
 import com.huawei.hms.location.NavigationResult;
+import com.huawei.hms.support.api.entity.location.coordinate.LonLat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -97,7 +98,8 @@ public class ObjectToJSON {
                 .put("postalCode", hwLocation.getPostalCode())
                 .put("phone", hwLocation.getPhone())
                 .put("url", hwLocation.getUrl())
-                .put("extraInfo", CordovaUtils.fromMapToJSONObject(hwLocation.getExtraInfo()));
+                .put("extraInfo", CordovaUtils.fromMapToJSONObject(hwLocation.getExtraInfo()))
+                .put("coordinateType", hwLocation.getCoordinateType());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 result.put("verticalAccuracyMeters", hwLocation.getVerticalAccuracyMeters())
                     .put("bearingAccuracyDegrees", hwLocation.getBearingAccuracyDegrees())
@@ -265,5 +267,12 @@ public class ObjectToJSON {
             args.put(convertLocationToJSON(currentLocation));
         }
         return args;
+    }
+
+    public static JSONObject convertLonLatToJSON(LonLat lonLat) throws JSONException {
+        JSONObject result = new JSONObject();
+        result.put("latitude", lonLat.getLatitude());
+        result.put("longitude", lonLat.getLongitude());
+        return result;
     }
 }
