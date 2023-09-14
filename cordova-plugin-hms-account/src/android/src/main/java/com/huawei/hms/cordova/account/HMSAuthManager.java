@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -45,9 +45,9 @@ public class HMSAuthManager extends CordovaBaseModule {
 
     public static final String TAG = HMSAuthManager.class.getSimpleName();
 
-    private CordovaInterface cordova;
+    private final CordovaInterface cordova;
 
-    private ExceptionUtils exceptions;
+    private final ExceptionUtils exceptions;
 
     private String packageName;
 
@@ -60,7 +60,7 @@ public class HMSAuthManager extends CordovaBaseModule {
     @HMSLog
     public void addAuthScopes(final CorPack corPack, JSONArray args, final Promise cb) throws JSONException {
         Log.i(TAG, "addAuthScopes start");
-        Integer reqCode = args.getInt(0);
+        int reqCode = args.getInt(0);
         JSONArray scopeList = args.getJSONArray(1);
         packageName = args.getString(2);
         List<Scope> scope = HMSAccountUtils.fromJSONArrayToScopeList(scopeList);
@@ -71,8 +71,8 @@ public class HMSAuthManager extends CordovaBaseModule {
             HuaweiIdAuthManager.addAuthScopes(cordova.getActivity(), reqCode, scope);
         }
 
-        cb.success();
         Log.i(TAG, "addAuthScopes end");
+        cb.success();
     }
 
     @CordovaMethod
@@ -95,9 +95,9 @@ public class HMSAuthManager extends CordovaBaseModule {
 
         JSONObject isContainScopes = new JSONObject();
         isContainScopes.put("containScopes", containScopes);
-        cb.success(isContainScopes);
 
         Log.i(TAG, "containScopes end");
+        cb.success(isContainScopes);
     }
 
     @CordovaMethod
@@ -143,5 +143,4 @@ public class HMSAuthManager extends CordovaBaseModule {
 
         Log.i(TAG, "getAuthResult end");
     }
-
 }

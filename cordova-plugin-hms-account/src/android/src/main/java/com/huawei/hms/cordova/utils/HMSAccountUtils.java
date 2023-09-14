@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -191,9 +191,7 @@ public class HMSAccountUtils {
             huaweiIdBuilder.setShippingAddress();
         }
 
-        HuaweiIdAuthParams huaweiIdBuildAuthParams = huaweiIdBuilder.createParams();
-
-        return huaweiIdBuildAuthParams;
+        return huaweiIdBuilder.createParams();
     }
 
     public static AccountAuthParams fromJSONObjectToAccountAuthParams(JSONArray scopes, String accountAuthParams,
@@ -260,9 +258,7 @@ public class HMSAccountUtils {
 
         accountBuilder.setIdTokenSignAlg(idTokenSignAlg);
 
-        AccountAuthParams accountBuildAuthParams = accountBuilder.createParams();
-
-        return accountBuildAuthParams;
+        return accountBuilder.createParams();
     }
 
     private static ArrayList<String> createListData(JSONArray signOption) throws JSONException {
@@ -348,8 +344,7 @@ public class HMSAccountUtils {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        String result = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        return result;
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
     public static <T extends AbstractAuthAccount> void getCallbackSuccess(T authResult, String functionName,

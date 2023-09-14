@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,22 +19,20 @@ package com.huawei.hms.cordova.account;
 import android.content.Intent;
 import android.util.Log;
 
+import com.huawei.hmf.tasks.OnFailureListener;
+import com.huawei.hmf.tasks.OnSuccessListener;
+import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.cordova.HMSAccount;
 import com.huawei.hms.cordova.OnActivityResultCallback;
+import com.huawei.hms.cordova.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.basef.CordovaMethod;
 import com.huawei.hms.cordova.basef.HMSLog;
 import com.huawei.hms.cordova.basef.handler.CorPack;
 import com.huawei.hms.cordova.basef.handler.Promise;
-import com.huawei.hms.cordova.basef.CordovaBaseModule;
-import com.huawei.hms.cordova.HMSAccount;
-
-import com.huawei.hmf.tasks.OnFailureListener;
-import com.huawei.hmf.tasks.OnSuccessListener;
-import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.cordova.exceptions.NullServiceException;
 import com.huawei.hms.cordova.helpers.Constants;
 import com.huawei.hms.cordova.utils.ExceptionUtils;
 import com.huawei.hms.cordova.utils.HMSAccountUtils;
-
 import com.huawei.hms.support.account.AccountAuthManager;
 import com.huawei.hms.support.account.request.AccountAuthParams;
 import com.huawei.hms.support.account.request.AccountAuthParamsHelper;
@@ -57,17 +55,17 @@ import org.json.JSONObject;
 public class HMSAuthService extends CordovaBaseModule implements OnActivityResultCallback {
     public static final String TAG = HMSAuthService.class.getSimpleName();
 
+    private final ExceptionUtils exceptions;
+
+    private final CordovaInterface cordova;
+
+    private final CordovaPlugin plugin;
+
     private Promise mSignInCallback;
 
     private AuthService mService;
 
     private AccountAuthService mAccountService;
-
-    private ExceptionUtils exceptions;
-
-    private CordovaInterface cordova;
-
-    private CordovaPlugin plugin;
 
     private String packageName;
 
@@ -161,12 +159,12 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
 
         OnFailureListener handleSingInFailure = e -> {
             mSignInCallback.error(exceptions.logAndGetErrorJSON("signIn", e, "single"));
-            Log.i(TAG, "Signin OnFailure");
+            Log.i(TAG, "SignIn OnFailure");
         };
 
-        OnSuccessListener<JSONObject> handler = signinObject -> {
-            Log.i(TAG, "Signin onSuccess");
-            mSignInCallback.success(signinObject);
+        OnSuccessListener<JSONObject> handler = signInObject -> {
+            Log.i(TAG, "SignIn onSuccess");
+            mSignInCallback.success(signInObject);
         };
 
         if (requestCode == Constants.SIGN_IN_REQUEST_ID) {
@@ -174,9 +172,9 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
                 Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(intent);
                 authAccountTask.addOnSuccessListener(authAccount -> {
                     try {
-                        JSONObject signinObject = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount,
+                        JSONObject signInObject = HMSAccountUtils.fromAuthAccountToJsonObject(authAccount,
                             cordova.getContext());
-                        handler.onSuccess(signinObject);
+                        handler.onSuccess(signInObject);
                     } catch (JSONException e) {
                         handleSingInFailure.onFailure(e);
                     }
@@ -185,9 +183,9 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
                 Task<AuthHuaweiId> authHuaweiIdTask = HuaweiIdAuthManager.parseAuthResultFromIntent(intent);
                 authHuaweiIdTask.addOnSuccessListener(authHuaweiId -> {
                     try {
-                        JSONObject signinObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId,
+                        JSONObject signInObject = HMSAccountUtils.fromAuthHuaweiIdToJsonObject(authHuaweiId,
                             cordova.getContext());
-                        handler.onSuccess(signinObject);
+                        handler.onSuccess(signInObject);
                     } catch (JSONException e) {
                         handleSingInFailure.onFailure(e);
                     }
@@ -205,10 +203,13 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
             signOutTask.addOnCompleteListener(task -> {
                 Log.i(TAG, "signOut complete");
                 cb.success();
-            }).addOnFailureListener(e -> cb.error(exceptions.logAndGetErrorJSON("signOut", e, "single")));
+            }).addOnFailureListener(e -> {
+                Log.i(TAG, "signOut onFailure");
+                cb.error(exceptions.logAndGetErrorJSON("signOut", e, "single"));
+            });
         } else {
+            Log.i(TAG, "mService is null");
             cb.error(exceptions.logAndGetErrorJSON("signOut", new NullServiceException(), "single"));
-            Log.i(TAG, "signOut onFailure");
         }
         Log.i(TAG, "signOut end");
     }
@@ -220,13 +221,12 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
         if (mService != null) {
             Task<Void> taskCancelAuthorization = mService.cancelAuthorization();
             taskCancelAuthorization.addOnSuccessListener(aVoid -> {
-                cb.success();
                 Log.i(TAG, "cancelAuthorization onSuccess");
+                cb.success();
             }).addOnFailureListener(e -> {
-                cb.error(exceptions.logAndGetErrorJSON("cancelAuthorization", e, "single"));
                 Log.i(TAG, "cancelAuthorization onFailure");
+                cb.error(exceptions.logAndGetErrorJSON("cancelAuthorization", e, "single"));
             });
-
             Log.i(TAG, "cancelAuthorization end");
 
         } else {
@@ -244,9 +244,9 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
             Log.i(TAG, "silentSignIn OnFailure");
         };
 
-        OnSuccessListener<JSONObject> handleSilentlySignInSuccess = signinObject -> {
+        OnSuccessListener<JSONObject> handleSilentlySignInSuccess = signInObject -> {
             Log.i(TAG, "silentSignIn onSuccess");
-            cb.success(signinObject);
+            cb.success(signInObject);
         };
 
         Log.i(TAG, "silentSignIn start");
@@ -333,10 +333,11 @@ public class HMSAuthService extends CordovaBaseModule implements OnActivityResul
                 }
                 cb.success(iconInfo);
             }).addOnFailureListener(e -> {
-                cb.error(exceptions.logAndGetErrorJSON("getChannel", e, "single"));
                 Log.i(TAG, "getChannel OnFailure");
+                cb.error(exceptions.logAndGetErrorJSON("getChannel", e, "single"));
             });
         } else {
+            Log.i(TAG, "mService is null");
             cb.error(exceptions.logAndGetErrorJSON("getChannel", new NullServiceException(), "single"));
         }
     }

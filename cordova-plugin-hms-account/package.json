@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-account",
     "description": "Huawei Account Cordova Plugin",
-    "version": "6.4.0-301",
+    "version": "6.11.0-300",
     "main": "./www/HMSAccount.js",
     "types": "types/HMSAccount.d.ts",
     "repository": {
