@@ -1,0 +1,39 @@
+{
+  "name": "cordova-hms-mlimage-demo",
+  "displayName": "HMSMLImageDemo",
+  "version": "3.11.0-300",
+  "description": "A sample application that demonstrates HMS ML Image Plugin features on Cordova.",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "main": "./www/js/index.js",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "ml",
+    "hms-mlimage",
+    "huawei-mlimage",
+    "hms",
+    "huawei"
+  ],
+  "devDependencies": {
+    "cordova-plugin-chooser": "1.3.2"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-chooser": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "files": [
+    ".docs",
+    "www",
+    "config.xml",
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "OpenSourceSoftwareNotice.html"
+  ]
+}

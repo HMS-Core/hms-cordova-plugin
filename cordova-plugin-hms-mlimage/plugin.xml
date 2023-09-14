@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-mlimage"
+	version="3.11.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>
+		HMS ML Image
+	</name>
+	<description>
+		Cordova HMS ML Image Plugin
+	</description>
+	<license>
+		Apache 2.0
+	</license>
+	<keywords>
+		cordova,ml,hms-mlimage,huawei-mlimage,hms,huawei
+	</keywords>
+	<js-module src="www/HMSMLImagePlugin.js" name="HMSMLImagePlugin">
+		<clobbers target="HMSMLImagePlugin" />
+	</js-module>
+	<js-module src="www/HMSMLImage.js" name="HMSMLImage">
+		<clobbers target="HMSMLImage" />
+	</js-module>	
+	<js-module name="util" src="www/util.js" />
+	<js-module name="interfaces" src="www/interfaces.js" />
+	<js-module name="index" src="www/index.js" />
+	<!-- android -->
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+		<framework src="com.huawei.hms:ml-computer-vision-ocr-latin-model:3.5.0.304" />
+		<framework src="com.huawei.hms:ml-computer-vision-ocr-cn-model:3.5.0.302" />
+		<framework src="com.huawei.hms:ml-computer-vision-classification:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-image-classification-model:3.7.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-object:3.7.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-object-detection-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-cloud:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-segmentation:3.7.0.302" />
+    	<framework src="com.huawei.hms:ml-computer-vision-image-segmentation-multiclass-model:3.7.0.302" />
+    	<framework src="com.huawei.hms:ml-computer-vision-image-segmentation-body-model:3.7.0.302" />
+    	<framework src="com.huawei.hms:ml-computer-vision-image-segmentation-hair-model:3.7.0.302" />
+    	<framework src="com.huawei.hms:ml-product-visual-search-plugin:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-cloud:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-imagesuperresolution:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-imagesuperresolution-model:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-documentskew:3.11.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-documentskew-model:3.7.0.301" />
+    	<framework src="com.huawei.hms:ml-computer-vision-textimagesuperresolution:3.11.0.303" />
+    	<framework src="com.huawei.hms:ml-computer-vision-textimagesuperresolution-model:3.11.0.303" />
+    	<framework src="com.huawei.hms:ml-computer-vision-scenedetection:3.11.0.302" />
+    	<framework src="com.huawei.hms:ml-computer-vision-scenedetection-model:3.11.0.302" />
+    	<framework src="com.huawei.hms:ml-computer-model-executor:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-handkeypoint:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-skeleton:3.11.0.301" />
+    	<framework src="mindspore:mindspore-lite:5.0.4.300" />
+    	<framework src="com.facebook.fresco:fresco:2.6.0" />
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSMLImagePlugin">
+				<param name="android-package" value="com.huawei.hms.cordova.mlimage.HMSMLImagePlugin" />
+			</feature>
+			<feature name="HMSMLImage">
+				<param name="android-package" value="com.huawei.hms.cordova.mlimage.HMSMLImage" />
+			</feature>
+			<preference name="AndroidXEnabled" value="true" />
+		</config-file>
+		<!-- Android permission -->
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+		</config-file>
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/HMSMLImagePlugin.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/HMSMLImage.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage" />
+		<!-- Basef -->
+		<source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/CordovaBaseModule.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/CordovaEvent.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/CordovaMethod.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/HMSLog.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CorLog.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CorPack.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CordovaController.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CordovaEventRunner.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CordovaModuleGroupHandler.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/CordovaModuleHandler.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/HMSLogger.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/NoSuchCordovaModuleException.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />
+        <source-file
+            src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/basef/handler/Promise.java"
+            target-dir="src/com/huawei/hms/cordova/mlimage/basef/handler/" />	
+		<!-- Camera -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/camera/GraphicOverlay.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/camera" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/camera/LensEnginePreview.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/camera" />
+		<!-- Common -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/common/HMSMLApplication.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/common/HMSMLCompositeAnalyzer.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/common/HMSMLFrame.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/common/HMSMLLensEngine.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/common" />
+		<!-- Helpers -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/CordovaHelpers.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/PluginLayout.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/PxToPixelConverter.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/CordovaErrors.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/DocumentSkewCorrectionConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/helpers/LensEngineConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/helpers" />			
+		<!-- interfaces -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/interfaces/JSONMapper.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/interfaces" />
+		<!-- PROVIDERS -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/classification/MLImageClassificationAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/classification" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/landmark/MLImageLandMarkAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/landmark" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/imgseg/MLImageSegmentationAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/imgseg" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/imgseg/MLSegmentGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/imgseg" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/object/MLImageObjectAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/object" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/object/MLObjectGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/object" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/documentskewcorrection/MLDocumentSkewCorrectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/documentskewcorrection" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/scenedetection/MLSceneDetectionGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/scenedetection" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/scenedetection/MLStillSceneDetectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/scenedetection" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/imagesuperresolution/MLImageSuperResolutionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/imagesuperresolution" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/textimagesuperresolution/MLTextImageSuperResolutionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/textimagesuperresolution" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/MLProductVisionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/MLProductFragment.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/MLRealProductBean.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/BottomSheetAdapter.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/BottomSheetGridView.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/imageproviders/product/BottomSheetListView.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/imageproviders/product" />
+		<!-- Custom Model -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/custommodel/MLCustomModel.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/custommodel" />
+		<!-- Composite -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/face/ML3DFaceGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/face" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/face/MLFaceGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/face" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/gesture/MLGestureGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/gesture" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/handkeypoint/MLHandKeypointGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/handkeypoint" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/skeleton/MLSkeletonGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/skeleton" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/providers/composite/skeleton/MLSkeletonUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/providers/composite/skeleton" />													
+		<!-- Utils -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/utils/TextUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/utils/HMSMLUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/utils" />
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/utils/Mapper.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/utils/PlatformUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/utils" />
+		<!-- transactors -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/ClassificationAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />		
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/CompositeAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/Face3DAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/FaceAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/GestureAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />	
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/HandAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />												
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/ImageSegmentationTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/ObjectAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/SceneAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/SkeletonAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlimage/transactors/TextAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlimage/transactors" />						
+		<!-- Layouts -->
+		<source-file 
+			src="src/android/src/main/res/layout/adapter_item_product.xml"
+			target-dir="res/layout" />
+		<source-file 
+			src="src/android/src/main/res/layout/fragment_product.xml"
+			target-dir="res/layout" />
+		<source-file 
+			src="src/android/src/main/res/layout/gridview_layout.xml"
+			target-dir="res/layout" />
+		<source-file 
+			src="src/android/src/main/res/layout/multiselectorgrid.xml"
+			target-dir="res/layout" />
+		<!-- Drawable -->
+		<source-file src="src/android/src/main/res/drawable/close.png" target-dir="res/drawable" />
+		<source-file src="src/android/src/main/res/drawable/screen.png" target-dir="res/drawable" />
+	</platform>	
+</plugin>
