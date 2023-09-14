@@ -160,7 +160,7 @@ $("load_splash").onclick = async() => {
         }
     };
     await splashAd.load({
-        adId: "testd7c5cewoj6",
+        adId: "testq6zq98hecj",
         orientation: HMSConstants.HMSScreenOrientation.SCREEN_ORIENTATION_PORTRAIT,
         logoAnchor: HMSConstants.Anchor.TOP,
         adParam: adParams,

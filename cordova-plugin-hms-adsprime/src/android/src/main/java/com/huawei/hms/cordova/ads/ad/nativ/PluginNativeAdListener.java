@@ -59,6 +59,8 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
 
     private static final String APP_DOWNLOAD_NON_WIFI_DOWNLOAD = "app_download_non_wifi_download_%d";
 
+    private static final String APP_DOWNLOAD_USER_CANCEL = "app_download_user_cancel_%d";
+
     private NativeAd globalNativeAd = null;
 
     public PluginNativeAdListener(CordovaEventRunner listenerManager, int objectId) {
@@ -164,6 +166,12 @@ public class PluginNativeAdListener extends PluginAbstractAdListener {
             public void onStatusChanged(AppDownloadStatus appDownloadStatus) {
                 configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_STATUS_CHANGED,
                     appDownloadStatus);
+            }
+
+            @Override
+            public void onUserCancel(String s, String s1) {
+                configureEventNameAndParamsThenSendEvent(PluginNativeAdListener.APP_DOWNLOAD_USER_CANCEL,
+                        s,s1);
             }
         };
     }
