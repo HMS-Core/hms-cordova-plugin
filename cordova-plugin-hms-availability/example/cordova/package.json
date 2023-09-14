@@ -1,0 +1,31 @@
+{
+  "name": "cordova-hms-availability-demo",
+  "displayName": "HMSAvailabilityDemo",
+  "version": "6.11.0-301",
+  "description": "A demo application which shows the usage of HMS Availability Plugin.",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "readmeFilename": "README.md",
+  "main": "./www/index.js",
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "availability",
+    "huawei-availability",
+    "hms-availability"
+  ],
+  "devDependencies": {
+  },
+  "cordova": {
+    "plugins": {
+    },
+    "platforms": []
+  },
+  "files": [
+    "www",
+    "config.xml",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ]
+}
