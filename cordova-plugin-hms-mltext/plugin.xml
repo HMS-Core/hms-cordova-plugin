@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-mltext"
+	version="3.12.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>
+		HMS ML Text
+	</name>
+	<description>
+		Cordova HMS ML Text Plugin
+	</description>
+	<license>
+		Apache 2.0
+	</license>
+	<keywords>
+		cordova,ml,hms-mltext,huawei-mltext,hms,huawei
+	</keywords>
+	<js-module src="www/HMSMLTextPlugin.js" name="HMSMLTextPlugin">
+		<clobbers target="HMSMLTextPlugin" />
+	</js-module>
+	<js-module src="www/HMSMLText.js" name="HMSMLText">
+		<clobbers target="HMSMLText" />
+	</js-module>
+	<js-module name="util" src="www/util.js" />
+	<js-module name="interfaces" src="www/interfaces.js" />
+	<js-module name="index" src="www/index.js" />
+	<!-- android -->
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+		<framework src="com.huawei.hms:ml-computer-vision-ocr-latin-model:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-ocr-cn-model:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-ocr-jk-model:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-ocr:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-card-gcr-plugin:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-cloud:3.11.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-card-icr-vn:3.7.0.303"/>
+    	<framework src="com.huawei.hms:ml-computer-card-icr-cn:3.5.0.300"/>
+    	<framework src="com.huawei.hms:ml-computer-card-bcr:3.7.0.302"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-formrecognition-model:3.7.0.301"/>
+    	<framework src="com.huawei.hms:ml-computer-vision-formrecognition:3.11.0.301"/>
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+		
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSMLTextPlugin">
+				<param name="android-package" value="com.huawei.hms.cordova.mltext.HMSMLTextPlugin" />
+			</feature>
+			<feature name="HMSMLText">
+				<param name="android-package"
+					value="com.huawei.hms.cordova.mltext.HMSMLText" />
+			</feature>
+			<preference name="AndroidXEnabled" value="true" />
+		</config-file>
+
+		<!-- Activity -->
+		<config-file target="AndroidManifest.xml" parent="application">
+			<activity 
+				android:name="com.huawei.hms.cordova.mltext.providers.textproviders.bankcard.CustomViewActivity" android:screenOrientation="portrait" />
+		</config-file>
+		
+		<!-- Android permission -->
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.RECORD_AUDIO" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+		</config-file>
+		
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/mltext/HMSMLTextPlugin.java"
+			target-dir="src/com/huawei/hms/cordova/mltext" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/HMSMLText.java"
+			target-dir="src/com/huawei/hms/cordova/mltext" />
+		<!-- Camera -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/camera/GraphicOverlay.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/camera" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/camera/LensEnginePreview.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/camera" />
+		<!-- Common -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/common/MLHMSAnalyzer.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/common/MLHMSApplication.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/common/MLHMSFrame.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/common" />
+		<!-- Helpers -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/helpers/CordovaHelpers.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/helpers/CordovaErrors.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/helpers" />
+		<!-- interfaces -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/interfaces/ActivityHolder.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/interfaces/HMSProvider.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/interfaces/JSONMapper.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/interfaces" />
+		<!-- logger -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/logger/HMSLogger.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/logger" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/logger/HMSMethod.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/logger" />
+		<!-- PROVIDERS -->
+		<!-- Text -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/text/MLImageTextAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/text" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard/MLBankCardAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/generalcard/MLGeneralCardAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/generalcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/formrecognition/MLFormRecognitionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/formrecognition" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/document/MLImageDocumentAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/document" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/idcard/MLIcrVnCardAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/idcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/idcard/MLIcrCnCardAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/idcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/idcard/MLIcrCardAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/idcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard/CustomViewActivity.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard/CustomViewHandler.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard/ViewfinderView.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/providers/textproviders/bankcard" />	
+		<!-- Utils -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/utils/TextUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/utils/HMSMLUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/utils" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/mltext/utils/Mapper.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/utils" />
+		<source-file src="src/android/src/main/java/com/huawei/hms/cordova/mltext/utils/MLError.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mltext/utils/PlatformUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mltext/utils" />
+		<!-- Drawable -->
+		<source-file src="src/android/src/main/res/drawable/close.png" target-dir="res/drawable" />
+		<source-file src="src/android/src/main/res/drawable/screen.png" target-dir="res/drawable" />
+		<source-file src="src/android/src/main/res/drawable/back_img.png" target-dir="res/drawable" />
+		<source-file src="src/android/src/main/res/drawable/flash_light_on.png" target-dir="res/drawable" />
+		<source-file src="src/android/src/main/res/drawable/flash_light_off.png" target-dir="res/drawable" />
+		<!-- Layout -->
+		<source-file src="src/android/src/main/res/layout/activity_custom.xml"
+			target-dir="res/layout" />	
+	</platform>
+</plugin>
