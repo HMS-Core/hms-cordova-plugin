@@ -1,0 +1,138 @@
+/*
+    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+input[type=submit] {
+    background-color: #957DAD;
+    border: none;
+    color: white;
+    width: 45%;
+    height: 44px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 2px 1px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    outline: transparent;
+}
+
+
+.options {
+    background-color: #9ab7d3;
+    border: solid #9ab7d3 1px;
+    width: 45%;
+    height: 38px;
+    margin: 2px 1px;
+    margin-left: 10px;
+    border-radius: 8px;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+    outline: transparent;
+    padding-left: 60px;
+}
+
+input[type=text] {
+    width: 39%;
+    height: 36px;
+    font-size: 10px;
+    margin: 2px 1px;
+    margin-left: 10px;
+    border-radius: 8px;
+    outline: transparent;
+    padding-left: 20px;
+    border: solid #9ab7d3 1px;
+}
+
+input[type=number] {
+    width: 39%;
+    height: 36px;
+    font-size: 10px;
+    margin: 2px 1px;
+    margin-left: 10px;
+    border-radius: 8px;
+    outline: transparent;
+    padding-left: 20px;
+    border: solid #9ab7d3 1px;
+}
+
+#user_profile_name {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+#user_profile_value {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+#delete_user_profile_name {
+    width: 80%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+#txt_start_page_name {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+#txt_start_page_class_override {
+    width: 40%;
+    height: 36px;
+    padding-left: 10px;
+}
+
+
+#txt_on_event_name {
+    width: 60px;
+    height: 36px;
+    padding-left: 5px;
+}
+
+#txt_on_event_param {
+    width: 22%;
+    height: 36px;
+    padding-left: 2px;
+    font-size: 9px;
+}
+
+#getInstance,
+#getAAID,
+#getDataUploadSiteInfo,
+#setCustomReferrer,
+#setChannel,
+#onEvent,
+#onPredefinedEvent,
+#setPushToken,
+#clearCachedData,
+#setUserProfile,
+#setPropertyCollection,
+#deleteUserProfile,
+#pageStart,
+#setReportPolicies,
+#isRestrictionEnabled,
+#addDefaultEventParams,
+#HAParamType,
+#HAEventType {
+    width: 95%;
+}
