@@ -14,19 +14,9 @@
     limitations under the License.
 */
 
-import {
-  Attr,
-  Importance,
-  Priority,
-  RepeatType,
-  Visibility,
-} from "./Interfaces";
-export declare function localNotification(
-  localNotification: LocalNotificationObject
-): Promise<any>;
-export declare function localNotificationSchedule(
-  localNotificationSchedule: LocalNotificationObject
-): Promise<any>;
+import { Attr, Importance, Priority, RepeatType, Visibility } from "./Interfaces";
+export declare function localNotification(localNotification: LocalNotificationObject): Promise<any>;
+export declare function localNotificationSchedule(localNotificationSchedule: LocalNotificationObject): Promise<any>;
 export declare function cancelAllNotifications(): Promise<boolean>;
 export declare function cancelNotifications(): Promise<boolean>;
 export declare function cancelScheduledNotifications(): Promise<boolean>;
@@ -39,7 +29,7 @@ export declare function getChannels(): Promise<any>;
 export declare function channelExists(channelId: string): Promise<boolean>;
 export declare function channelBlocked(channelId: string): Promise<boolean>;
 export declare function deleteChannel(channelId: string): Promise<boolean>;
-type LocalNotificationObject = {
+declare type LocalNotificationObject = {
     [key in Attr]?: any;
 };
 interface IdTag {

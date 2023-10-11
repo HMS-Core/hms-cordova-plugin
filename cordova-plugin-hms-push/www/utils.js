@@ -1,4 +1,3 @@
-"use strict";
 /*
     Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -14,6 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
@@ -30,14 +31,14 @@ function initEventHandler() {
     if (window.hmsEventHandlers === undefined)
         window.hmsEventHandlers = {};
     window.hmsEventHandler = (eventName, data) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].forEach((handler) => {
                 handler(data);
             });
         }
     };
     window.registerHMSEvent = (eventName, handler) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].push(handler);
         }
         else {
@@ -45,7 +46,7 @@ function initEventHandler() {
         }
     };
     window.unregisterHMSEvent = (eventName, handler) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             if (handler) {
                 const idx = window.hmsEventHandlers[eventName].indexOf(handler);
                 if (idx > -1) {

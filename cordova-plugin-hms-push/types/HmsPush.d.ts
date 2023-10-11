@@ -41,7 +41,7 @@ export declare function setItem(key: string, value: string): Promise<void>;
 export declare function removeItem(key: string): Promise<void>;
 export declare function getItem(key: string): Promise<object>;
 export declare function removeBackgroundFile(): Promise<void>;
-type RemoteMessageObject = {
+declare type RemoteMessageObject = {
     [key in RemoteMessageBuilder]?: any;
 };
 export { RemoteMessageBuilder };

@@ -14,11 +14,7 @@
     limitations under the License.
 */
 
-export declare function asyncExec(
-  clazz: string,
-  reference: string,
-  args?: any[]
-): Promise<any>;
+export declare function asyncExec(clazz: string, reference: string, args?: any[]): Promise<any>;
 declare type Handler = (data: any) => void;
 declare global {
     interface Window {

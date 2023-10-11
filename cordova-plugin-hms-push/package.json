@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-push",
     "description": "Cordova HMS Push Plugin",
-    "version": "6.10.0-300",
+    "version": "6.11.0-300",
     "main": "./www/HmsPush.js",
     "types": "./types/index.d.ts",
     "repository": {
@@ -40,14 +40,12 @@
         "package.json",
         "plugin.xml",
         "README.md",
-        "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+        "OpenSourceSoftwareNotice.html"
     ],
     "dependencies": {
-        "@types/cordova": "0.0.34",
-        "cordova": "^11.0.0"
+        "@types/cordova": "0.0.34"
     },
     "devDependencies": {
-        "@types/cordova": "0.0.34",
         "typescript": "3.9.5"
     },
     "scripts": {

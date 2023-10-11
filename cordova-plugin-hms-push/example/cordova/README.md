@@ -7,7 +7,7 @@
     - [2.1. Cordova](#21-cordova)
 - [3. Configuration and Description](#3-configuration-and-description)
 - [4. Questions or Issues](#4-questions-or-issues)
-- [5. Licencing and Terms](#5-licencing-and-terms)
+- [5. Licensing and Terms](#5-licensing-and-terms)
 
 ---
 
@@ -113,6 +113,6 @@ the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ---
 
-## 5. Licencing and Terms
+## 5. Licensing and Terms
 
 HMS Push Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).

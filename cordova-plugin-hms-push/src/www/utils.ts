@@ -47,7 +47,7 @@ function initEventHandler() {
     if (window.hmsEventHandlers === undefined) window.hmsEventHandlers = {};
 
     window.hmsEventHandler = (eventName, data) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].forEach((handler: Handler) => {
                 handler(data);
             });
@@ -55,7 +55,7 @@ function initEventHandler() {
     };
 
     window.registerHMSEvent = (eventName, handler) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             window.hmsEventHandlers[eventName].push(handler);
         } else {
             window.hmsEventHandlers[eventName] = [handler];
@@ -63,7 +63,7 @@ function initEventHandler() {
     };
 
     window.unregisterHMSEvent = (eventName, handler) => {
-        if (Object.prototype.hasOwnProperty(eventName)) {
+        if (window.hmsEventHandlers.hasOwnProperty(eventName)) {
             if (handler) {
                 const idx = window.hmsEventHandlers[eventName].indexOf(handler);
                 if (idx > -1) {

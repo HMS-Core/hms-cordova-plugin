@@ -1,4 +1,3 @@
-"use strict";
 /*
     Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
 
@@ -14,6 +13,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Visibility = exports.RepeatType = exports.Priority = exports.Importance = exports.RemoteMessageBuilder = exports.Attr = void 0;
 var Attr;
