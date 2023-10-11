@@ -1,0 +1,60 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://developer.huawei.com/repo/' }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0'
+    }
+}
+
+repositories {
+    google()
+    jcenter()
+    maven { url 'https://developer.huawei.com/repo/' }
+}
+
+android {
+    compileSdkVersion 31
+    buildToolsVersion '31.0.0'
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 31
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    aaptOptions {
+        noCompress "ms", "mnn", "cambricon"
+        cruncherEnabled false
+        useNewCruncher false
+    }
+}
+
+dependencies {
+    implementation 'org.apache.cordova:framework:8.1.0'
+    implementation "com.huawei.hms:ml-computer-vision-ocr-latin-model:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-vision-ocr-cn-model:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-vision-ocr-jk-model:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-vision-ocr:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-card-gcr-plugin:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-vision-cloud:3.11.0.301"
+    implementation "com.huawei.hms:ml-computer-card-icr-vn:3.7.0.303"
+    implementation "com.huawei.hms:ml-computer-card-icr-cn:3.5.0.300"
+    implementation "com.huawei.hms:ml-computer-card-bcr:3.7.0.302"
+    implementation "com.huawei.hms:ml-computer-vision-formrecognition-model:3.7.0.301"
+    implementation "com.huawei.hms:ml-computer-vision-formrecognition:3.11.0.301"
+
+}
