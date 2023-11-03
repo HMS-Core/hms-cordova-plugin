@@ -1,0 +1,55 @@
+{
+    "name": "@hmscore/cordova-plugin-hms-mlbody",
+    "description": "Cordova HMS ML Body Plugin",
+    "version": "3.12.0-300",
+    "main": "./www/index.js",
+    "types": "./types/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+        "directory": "cordova-plugin-hms-mlbody"
+    },
+    "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+    "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENSE",
+    "readmeFilename": "README.md",
+    "cordova": {
+        "id": "cordova-plugin-hms-mlbody",
+        "platforms": [
+            "android"
+        ]
+    },
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "cordova-android",
+        "ml",
+        "hms-mlbody",
+        "huawei-mlbody",
+        "hms",
+        "huawei"
+    ],
+    "files": [
+        "hooks",
+        "ionic-native",
+        "src",
+        "types",
+        "www",
+        "LICENSE",
+        "package.json",
+        "plugin.xml",
+        "README.md"
+    ],
+    "dependencies": {
+        "@types/cordova": "0.0.34"
+    },
+    "devDependencies": {
+        "typescript": "3.9.5"
+    },
+    "scripts": {
+        "build:core": "node ./node_modules/typescript/bin/tsc",
+        "build": "npm run build:core",
+        "watch": "node ./node_modules/typescript/bin/tsc --watch"
+    }
+}
