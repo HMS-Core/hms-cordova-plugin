@@ -25,6 +25,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Looper;
 import android.util.Log;
+import android.os.Build;
 
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.common.ResolvableApiException;
@@ -108,10 +109,12 @@ public class FusedLocationService extends CordovaBaseModule {
         }
         JSONObject json = new JSONObject(args.getString(1));
         Notification mNotification = LocationUtils.buildNotification(corPack.getCordova().getContext(), json);
-        client.enableBackgroundLocation(args.getInt(0), mNotification).addOnFailureListener(e -> {
+        client.enableBackgroundLocation(args.getInt(0), mNotification).addOnSuccessListener( s -> {
+            cb.success();
+        }).addOnFailureListener ( e -> {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));
-        });
-        cb.success();
+            cb.error(e.getMessage());
+        }); 
     }
 
     @CordovaMethod
@@ -150,8 +153,14 @@ public class FusedLocationService extends CordovaBaseModule {
             String function = args.getString(2);
             LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
                 Constants.FunctionType.LOCATION_FUNCTION, function);
-            PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+            PendingIntent pendingIntent;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+                LocationBroadcastReceiver.ACTION_PROCESS_LOCATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
+            } else {
+                pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
                 LocationBroadcastReceiver.ACTION_PROCESS_LOCATION, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
             pendingIntentRequestMap.put(requestCode, pendingIntent);
             client.requestLocationUpdates(locationRequest, pendingIntent)
                 .addOnSuccessListener(aVoid -> cb.success(true))

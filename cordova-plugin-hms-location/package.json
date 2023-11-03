@@ -1,7 +1,7 @@
 {
   "name": "@hmscore/cordova-plugin-hms-location",
   "description": "Cordova HMS Location Plugin",
-  "version": "6.11.0-301",
+  "version": "6.12.0-300",
   "main": "./www/index.js",
   "types": "./types/index.d.ts",
   "repository": {

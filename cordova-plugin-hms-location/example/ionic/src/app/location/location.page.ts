@@ -211,7 +211,7 @@ export class LocationPage {
             priority: 2,
             channelName: 'MyChannel',
             smallIcon: '<set_your_icon_folder_name_in_drawable_folder>',
-            contentText: 'Lat: ' + this.backgroundLocationResult.lastLocation.latitude + ' - Lng: ' + this.backgroundLocationResult.lastLocation.longitude
+            contentText: 'Location Notification'
         };
 
         try {

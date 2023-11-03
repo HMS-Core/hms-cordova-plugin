@@ -205,7 +205,7 @@ async function enableBackgroundLocation() {
             priority: 2,
             channelName: 'MyChannel',
             smallIcon: '<set_your_icon_folder_name_in_drawable_folder>',
-            contentText: "Lat: " + backgroundLocationResult.lastLocation.latitude + " - Lng: " + backgroundLocationResult.lastLocation.longitude
+            contentText: 'Location Notification'
         };
         await fusedClient.enableBackgroundLocation(notificationId, notification);
         log.innerHTML = "enabled";

@@ -40,7 +40,7 @@ public class HMSLocation extends CordovaPlugin {
 
     private static final String SERVICE = "HMSLocation";
 
-    private static final String VERSION = "6.11.0.301";
+    private static final String VERSION = "6.12.0.300";
 
     private CordovaController cordovaController;
 

@@ -1,7 +1,7 @@
 {
   "name": "ionic-hms-location-demo",
   "description": "A demo application which shows the usage of HMS Location Plugin",
-  "version": "6.11.0-301",
+  "version": "6.12.0-300",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "license": "Apache-2.0",
   "licenseFilename": "LICENSE",
@@ -67,6 +67,7 @@
     "tsconfig.spec.json",
     "tslint.json",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "OpenSourceSoftwareNotice.html"
   ]
 }

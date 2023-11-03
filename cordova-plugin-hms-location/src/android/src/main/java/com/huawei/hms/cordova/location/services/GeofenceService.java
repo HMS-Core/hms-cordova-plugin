@@ -18,6 +18,7 @@ package com.huawei.hms.cordova.location.services;
 
 import android.app.PendingIntent;
 import android.util.Log;
+import android.os.Build;
 
 import com.huawei.hms.cordova.location.basef.CordovaBaseModule;
 import com.huawei.hms.cordova.location.basef.CordovaMethod;
@@ -69,8 +70,14 @@ public class GeofenceService extends CordovaBaseModule {
             LocationUtils.saveBackgroundTask(corPack.getCordova().getContext(),
                 Constants.FunctionType.GEOFENCE_FUNCTION, function);
         }
-        PendingIntent pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
+            LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
+        } else {
+            pendingIntent = LocationUtils.getPendingIntent(corPack.getCordova().getContext(),
             LocationBroadcastReceiver.ACTION_PROCESS_GEOFENCE, requestCode, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         requests.put(requestCode, pendingIntent);
         geofenceService.createGeofenceList(geofenceRequest, pendingIntent)
             .addOnSuccessListener(aVoid -> cb.success(true))

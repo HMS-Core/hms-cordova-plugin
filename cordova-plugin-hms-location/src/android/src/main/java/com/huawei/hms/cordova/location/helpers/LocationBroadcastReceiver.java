@@ -74,24 +74,32 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void executeActionLocation(Context context, Intent intent) {
-        LocationResult locationResult = LocationResult.extractResult(intent);
-        JSONObject json = ObjectToJSON.convertLocationResultToJSON(locationResult);
-        if (!LocationUtils.isApplicationInForeground(context)) {
-            runBackgroundTask(Constants.FunctionType.LOCATION_FUNCTION, context, json);
-        } else {
-            Log.d(TAG, "executeActionLocation: foreground");
-            CordovaUtils.sendEvent(Constants.Event.ON_LOCATION_RESULT, json);
+        if(LocationResult.hasResult(intent)) {
+            LocationResult locationResult = LocationResult.extractResult(intent);
+            JSONObject json = ObjectToJSON.convertLocationResultToJSON(locationResult);
+            if (!LocationUtils.isApplicationInForeground(context)) {
+                runBackgroundTask(Constants.FunctionType.LOCATION_FUNCTION, context, json);
+            } else {
+                Log.d(TAG, "executeActionLocation: foreground");
+                CordovaUtils.sendEvent(Constants.Event.ON_LOCATION_RESULT, json);
+            }
+        } else{
+            Log.d(TAG, "executeActionLocation: intent result is null");
         }
     }
 
     private void executeActionConversion(Context context, Intent intent) {
-        ActivityConversionResponse activityConversionResponse = ActivityConversionResponse.getDataFromIntent(intent);
-        JSONObject result = ObjectToJSON.activityConversionResponseToJSON(activityConversionResponse);
-        if (!LocationUtils.isApplicationInForeground(context)) {
-            runBackgroundTask(Constants.FunctionType.CONVERSION_FUNCTION, context, result);
-        } else {
-            Log.d(TAG, "executeActionConversion: foreground");
-            CordovaUtils.sendEvent(Constants.Event.ON_ACTIVITY_CONVERSION_RESULT, result);
+        if(ActivityConversionResponse.containDataFromIntent(intent)) {
+            ActivityConversionResponse activityConversionResponse = ActivityConversionResponse.getDataFromIntent(intent);
+            JSONObject result = ObjectToJSON.activityConversionResponseToJSON(activityConversionResponse);
+            if (!LocationUtils.isApplicationInForeground(context)) {
+                runBackgroundTask(Constants.FunctionType.CONVERSION_FUNCTION, context, result);
+            } else {
+                Log.d(TAG, "executeActionConversion: foreground");
+                CordovaUtils.sendEvent(Constants.Event.ON_ACTIVITY_CONVERSION_RESULT, result);
+            }
+        } else{
+            Log.d(TAG, "executeActionConversion: intent result is null");
         }
     }
 
@@ -103,36 +111,44 @@ public class LocationBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void executeActionIdentification(Context context, Intent intent) {
-        ActivityIdentificationResponse response = ActivityIdentificationResponse.getDataFromIntent(intent);
-        JSONObject result = ObjectToJSON.activityIdentificationResponseToJSON(response);
-        if (!LocationUtils.isApplicationInForeground(context)) {
-            runBackgroundTask(Constants.FunctionType.IDENTIFICATION_FUNCTION, context, result);
-        } else {
-            CordovaUtils.sendEvent(Constants.Event.ON_ACTIVITY_IDENTIFICATION_RESULT, result);
+        if(ActivityIdentificationResponse.containDataFromIntent(intent)) {
+            ActivityIdentificationResponse response = ActivityIdentificationResponse.getDataFromIntent(intent);
+            JSONObject result = ObjectToJSON.activityIdentificationResponseToJSON(response);
+            if (!LocationUtils.isApplicationInForeground(context)) {
+                runBackgroundTask(Constants.FunctionType.IDENTIFICATION_FUNCTION, context, result);
+            } else {
+                CordovaUtils.sendEvent(Constants.Event.ON_ACTIVITY_IDENTIFICATION_RESULT, result);
+            }
+        } else{
+            Log.d(TAG, "executeActionIdentification: intent result is null");
         }
     }
 
     private void executeActionGeofence(Context context, Intent intent) {
-        GeofenceData geofenceData = GeofenceData.getDataFromIntent(intent);
-        if (geofenceData.isFailure()) {
-            String errorMessage = GeofenceErrorCodes.getStatusCodeString(geofenceData.getErrorCode());
-            Log.e(TAG, errorMessage);
-            return;
-        }
-        int triggerType = geofenceData.getConversion(); // Get the conversion type.
-        if (triggerType == Geofence.ENTER_GEOFENCE_CONVERSION || triggerType == Geofence.EXIT_GEOFENCE_CONVERSION
-            || triggerType == Geofence.DWELL_GEOFENCE_CONVERSION) {
-            List<Geofence> triggeringGeofences
-                = geofenceData.getConvertingGeofenceList(); // Get the geofences that were triggered. A single event can trigger
-            JSONArray geofences = ObjectToJSON.convertGeofenceListToJSONArray(triggeringGeofences);
-            if (!LocationUtils.isApplicationInForeground(context)) {
-                JSONObject json = ObjectToJSON.convertLocationToJSON(geofenceData.getConvertingLocation());
-                runBackgroundTask(Constants.FunctionType.GEOFENCE_FUNCTION, context, json);
-            } else {
-                CordovaUtils.sendEvent(Constants.Event.ON_GEOFENCE_RESULT, geofences);
+        if(intent != null) {
+            GeofenceData geofenceData = GeofenceData.getDataFromIntent(intent);
+            if (geofenceData.isFailure()) {
+                String errorMessage = GeofenceErrorCodes.getStatusCodeString(geofenceData.getErrorCode());
+                Log.e(TAG, errorMessage);
+                return;
             }
-        } else {
-            Log.e(TAG, "Invalid trigger type: " + triggerType);
+            int triggerType = geofenceData.getConversion(); // Get the conversion type.
+            if (triggerType == Geofence.ENTER_GEOFENCE_CONVERSION || triggerType == Geofence.EXIT_GEOFENCE_CONVERSION
+                    || triggerType == Geofence.DWELL_GEOFENCE_CONVERSION) {
+                List<Geofence> triggeringGeofences
+                        = geofenceData.getConvertingGeofenceList(); // Get the geofences that were triggered. A single event can trigger
+                JSONArray geofences = ObjectToJSON.convertGeofenceListToJSONArray(triggeringGeofences);
+                if (!LocationUtils.isApplicationInForeground(context)) {
+                    JSONObject json = ObjectToJSON.convertLocationToJSON(geofenceData.getConvertingLocation());
+                    runBackgroundTask(Constants.FunctionType.GEOFENCE_FUNCTION, context, json);
+                } else {
+                    CordovaUtils.sendEvent(Constants.Event.ON_GEOFENCE_RESULT, geofences);
+                }
+            } else {
+                Log.e(TAG, "Invalid trigger type: " + triggerType);
+            }
+        } else{
+            Log.d(TAG, "executeActionIdentification: intent result is null");
         }
     }
 }
