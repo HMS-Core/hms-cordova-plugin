@@ -1,0 +1,181 @@
+<!--
+    Copyright 2023. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+    <meta
+            content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"
+            http-equiv="Content-Security-Policy"
+    />
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="no" name="msapplication-tap-highlight"/>
+    <meta
+            content="initial-scale=1, width=device-width, viewport-fit=cover"
+            name="viewport"
+    />
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+
+    <title>Cordova MLBody Demo</title>
+
+    <style>
+      .mllogo {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 30px;
+      }
+
+      .imgDiv {
+        margin-bottom: 10px;
+      }
+
+      .mllogoText {
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      .servicesDiv {
+        margin-left: 20px;
+        height: 80px;
+        width: 90px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        position: relative;
+        background-color: #fff2f4ce;
+      }
+
+      .servicesImg {
+        height: 50px;
+        width: 70px;
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        margin: auto;
+        text-align: center;
+      }
+
+      .servicesImgText {
+        height: 50px;
+        width: 70px;
+        position: absolute;
+        left: 10px;
+        top: 5px;
+        margin: auto;
+        text-align: center;
+        color: black;
+      }
+
+      .newPageHref {
+        float: left;
+        margin-top: 15px;
+      }
+
+    </style>
+</head>
+
+<body>
+
+<div style="clear: both"></div>
+<div class="mllogo">
+    <label class="mllogoText" for="text">ML Live Lens Engine</label>
+</div>
+<hr/>
+<a class="newPageHref" href="javascript:(void)" id="livefaceHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Live Analyser</label>
+        </div>
+    </div>
+</a>
+
+
+<div style="clear: both"></div>
+<div class="mllogo">
+    <label class="mllogoText" for="text">ML Face-Body Related Services</label>
+</div>
+<hr/>
+
+<a class="newPageHref" href="javascript:(void)" id="faceHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Face</label>
+        </div>
+    </div>
+</a>
+
+<a
+        class="newPageHref"
+        href="javascript:(void)"
+        id="liveLivenessDetectionHref"
+>
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Liveness Detect</label>
+        </div>
+    </div>
+</a>
+<a class="newPageHref" href="javascript:(void)" id="stillHandHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Still Handey</label>
+        </div>
+    </div>
+</a>
+
+<a class="newPageHref" href="javascript:(void)" id="stillSkeletonHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Still Skeleton</label>
+        </div>
+    </div>
+</a>
+
+<a class="newPageHref" href="javascript:(void)" id="stillGestureHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Still Gesture</label>
+        </div>
+    </div>
+</a>
+
+<a class="newPageHref" href="javascript:(void)" id="stillFaceVerificationHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Face Verification</label>
+        </div>
+    </div>
+</a>
+
+<a class="newPageHref" href="javascript:(void)" id="interactiveLivenessDetectionHref">
+    <div class="servicesDiv">
+        <div>
+            <label class="servicesImgText" for="text">Interactive Liveness Detect</label>
+        </div>
+    </div>
+</a>
+
+<script src="cordova.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+</body>
+</html>

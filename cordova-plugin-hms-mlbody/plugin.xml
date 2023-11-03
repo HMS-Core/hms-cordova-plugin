@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-mlbody"
+	version="3.12.0-300" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	<name>
+		HMS ML Body
+	</name>
+	<description>
+		Cordova HMS ML Body Plugin
+	</description>
+	<license>
+		Apache 2.0
+	</license>
+	<keywords>
+		cordova,ml,hms-mlbody,huawei-mlbody,hms,huawei
+	</keywords>
+	<js-module src="www/HMSMLBodyPlugin.js" name="HMSMLBodyPlugin">
+		<clobbers target="HMSMLBodyPlugin" />
+	</js-module>
+	<js-module src="www/HMSMLBody.js" name="HMSMLBody">
+		<clobbers target="HMSMLBody" />
+	</js-module>
+	<js-module name="util" src="www/util.js" />
+	<js-module name="interfaces" src="www/interfaces.js" />
+	<js-module name="index" src="www/index.js" />
+	<!-- android -->
+	<platform name="android">
+		<hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+		<hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+        <framework src="com.huawei.hms:ml-computer-vision-face:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-face-shape-point-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-face-emotion-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-face-feature-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-face-3d-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-skeleton:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-skeleton-model:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-yoga-model:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-livenessdetection:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-interactive-livenessdetection:3.12.0.300" />
+        <framework src="com.huawei.hms:ml-computer-vision-handkeypoint:3.11.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-handkeypoint-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-gesture-model:3.7.0.301" />
+        <framework src="com.huawei.hms:ml-computer-vision-faceverify:3.11.0.302" />
+        <framework src="com.huawei.hms:ml-computer-vision-faceverify-model:3.11.0.302" />
+		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+		<config-file target="config.xml" parent="/*">
+			<feature name="HMSMLBodyPlugin">
+				<param name="android-package" value="com.huawei.hms.cordova.mlbody.HMSMLBodyPlugin" />
+			</feature>
+			<feature name="HMSMLBody">
+				<param name="android-package" value="com.huawei.hms.cordova.mlbody.HMSMLBody" />
+			</feature>
+			<preference name="AndroidXEnabled" value="true" />
+		</config-file>
+
+		<!-- Activity -->
+		<config-file target="AndroidManifest.xml" parent="application">
+			<activity 
+				android:name="com.huawei.hms.cordova.mlbody.providers.interactivelivenessdetection.MLInteractiveLivenessCustomDetectionActivity" 
+				android:screenOrientation="portrait"
+				android:theme="@android:style/Theme.NoTitleBar" 
+			/>
+		</config-file>
+
+		<!-- Android permission -->
+		<config-file parent="/manifest" target="AndroidManifest.xml">
+			<uses-permission android:name="android.permission.INTERNET" />
+			<uses-permission android:name="android.permission.CAMERA" />
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+			<uses-permission android:name="android.permission.RECORD_AUDIO" />
+			<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+		</config-file>
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/HMSMLBodyPlugin.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/HMSMLBody.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody" />
+		<!-- Camera -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/camera/GraphicOverlay.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/camera" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/camera/LensEnginePreview.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/camera" />
+		<!-- Common -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/common/HMSMLApplication.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/common" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/common/HMSMLFrame.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/common" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/common/HMSMLLensEngine.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/common" />
+		<!-- Helpers -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/CordovaHelpers.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/PluginLayout.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/PxToPixelConverter.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/CordovaErrors.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/MLLivenessCaptureErrors.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/MLInteractiveLivenessCaptureError.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/helpers/LensEngineConstants.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/helpers" />			
+		<!-- interfaces -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/interfaces/ActivityHolder.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/interfaces/HMSProvider.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/interfaces" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/interfaces/JSONMapper.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/interfaces" />
+		<!-- logger -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/logger/HMSLogger.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/logger" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/logger/HMSMethod.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/logger" />
+		<!-- PROVIDERS -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/face/MLStillFaceAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/face" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/face/ML3DFaceGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/face" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/face/MLFaceGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/face" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/faceverification/MLStillFaceVerificationAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/faceverification" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/gesture/MLStillGestureAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/gesture" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/gesture/MLGestureGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/gesture" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/handkeypoint/MLHandKeypointGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/handkeypoint" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/handkeypoint/MLStillHandKeypointAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/handkeypoint" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection/MLInteractiveLivenessCustomDetectionActivity.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection/MLInteractiveLivenessCustomDetectionHandler.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection" />							
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection/MLInteractiveLivenessDetectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/interactivelivenessdetection" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/livenessdetection/MLLivenessDetectionAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/livenessdetection" />			
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/skeleton/MLSkeletonGraphic.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/skeleton" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/skeleton/MLSkeletonUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/skeleton" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/providers/skeleton/MLStillSkeletonAnalyser.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/providers/skeleton" />
+		<!-- Utils -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/utils/TextUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/utils/HMSMLUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/utils" />
+		<source-file 
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/utils/Mapper.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/utils" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/utils/PlatformUtils.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/utils" />
+		<!-- transactors -->
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/transactors/Face3DAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/transactors/FaceAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/transactors/GestureAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/transactors/HandAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/transactors" />
+		<source-file
+			src="src/android/src/main/java/com/huawei/hms/cordova/mlbody/transactors/SkeletonAnalyzerTransactor.java"
+			target-dir="src/com/huawei/hms/cordova/mlbody/transactors" />
+		<!-- Layouts -->
+		<source-file src="src/android/src/main/res/layout/activity_liveness_custom_detection.xml"
+			target-dir="res/layout" />
+		<!-- Drawable -->
+		<source-file src="src/android/src/main/res/drawable/liveness_detection_frame_bold.9.png" target-dir="res/drawable" />
+		<!-- Values -->
+		<resource-file src="src/android/src/main/res/values/strings.xml" target="res/values/strings.xml"/>
+	</platform>
+</plugin>
