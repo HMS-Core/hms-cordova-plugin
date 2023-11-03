@@ -47,6 +47,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+@Deprecated
 public class HMSReadSMSManager extends CordovaBaseModule {
     private static final String TAG = HMSReadSMSManager.class.getSimpleName();
 

@@ -16,7 +16,7 @@ HUAWEI Account Kit enables communication between Huawei Account SDK and Cordova 
 
 [> Learn More](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001051006397?ha_source=hms1)
 
-## Installation
+## Installation 
 
 ### Cordova
 
