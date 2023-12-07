@@ -38,6 +38,8 @@ import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.ml.scan.HmsScan;
 import com.huawei.hms.ml.scan.HmsScanAnalyzer;
 import com.huawei.hms.ml.scan.HmsScanAnalyzerOptions;
+import com.huawei.hms.ml.scan.HmsScanFrame;
+import com.huawei.hms.ml.scan.HmsScanFrameOptions;
 import com.huawei.hms.mlsdk.common.MLFrame;
 
 import org.json.JSONException;
@@ -51,6 +53,10 @@ public final class CommonHandler extends Handler {
     private final HandlerThread decodeThread;
     private final Handler decodeHandle;
     private final int mode;
+    private int[] scanTypes = new int[]{};
+    private boolean multiMode = true;
+    private boolean parseResult = true;
+    private boolean photoMode = false;
     private final ScanResultView scanResultView;
     private final CorPack corPack;
 
@@ -94,10 +100,67 @@ public final class CommonHandler extends Handler {
         restart(DEFAULT_ZOOM);
     }
 
+    public CommonHandler(final Activity activity, CameraOperation cameraOperation, final int mode,
+        ScanResultView scanResultView, int var1, int[] scanTypes, boolean multiMode, boolean parseResult, boolean photoMode, CorPack corPack) {
+        this.corPack = corPack;
+        this.scanResultView = scanResultView;
+        this.cameraOperation = cameraOperation;
+        this.mode = mode;
+        this.scanTypes = scanTypes;
+        this.multiMode = multiMode;
+        this.parseResult = parseResult;
+        this.photoMode = photoMode;
+        decodeThread = new HandlerThread("DecodeThread");
+        decodeThread.start();
+        decodeHandle = new Handler(decodeThread.getLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg == null) {
+                    return;
+                }
+                if (mode == Constants.BITMAP_CODE || mode == Constants.MULTIPROCESSOR_SYN_CODE || mode == Constants.DECODE_CODE) {
+                    final HmsScan[] result = decodeSyn(msg.arg1, msg.arg2, (byte[]) msg.obj, var1, scanTypes, mode, activity);
+                    if (result == null || result.length == 0) {
+                        restart(DEFAULT_ZOOM);
+                    } else if (TextUtils.isEmpty(result[0].getOriginalValue()) && result[0].getZoomValue() != 1.0) {
+                        restart(result[0].getZoomValue());
+                    } else if (!TextUtils.isEmpty(result[0].getOriginalValue())) {
+                        final Message message = new Message();
+                        message.what = msg.what;
+                        message.obj = result;
+                        CommonHandler.this.sendMessage(message);
+                        restart(DEFAULT_ZOOM);
+                    } else {
+                        restart(DEFAULT_ZOOM);
+                    }
+                } else if (mode == Constants.MULTIPROCESSOR_ASYN_CODE) {
+                    decodeAsyn(msg.arg1, msg.arg2, (byte[]) msg.obj, var1, scanTypes);
+                } else {
+                    Log.i(TAG, "handleMessage: Invalid mode");
+                }
+            }
+        };
+        cameraOperation.startPreview();
+        restart(DEFAULT_ZOOM);
+    }
+
     private HmsScan[] decodeSyn(int width, int height, byte[] data, int var1, int[] scanTypes,
         int mode, Activity activity) {
         HmsScan[] info = new HmsScan[0];
         final Bitmap bitmap = convertToBitmap(width, height, data);
+        final YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, width, height, null);
+        if (yuvImage != null) {
+            if(mode == Constants.DECODE_CODE){
+                HmsScanFrameOptions option = new HmsScanFrameOptions.Creator()
+                    .setHmsScanTypes(this.scanTypes[0], this.scanTypes)
+                    .setMultiMode(this.multiMode)
+                    .setParseResult(this.parseResult)
+                    .setPhotoMode(this.photoMode)
+                    .create();
+                HmsScanFrame frame = new HmsScanFrame(yuvImage);
+                return ScanUtil.decode(corPack.getCordova().getContext(), frame, option).getHmsScans();
+            }
+        }
         if (bitmap != null) {
             if (mode == Constants.BITMAP_CODE) {
                 final HmsScanAnalyzerOptions options = new HmsScanAnalyzerOptions.Creator()

@@ -118,6 +118,19 @@ export class HMSScan extends IonicNativePlugin {
 
   @Cordova({ otherPromise: true })
   /**
+   * The service recognition scanning barcodes from images in Bitmap or YuvImage mode.
+   * @param  {ScanFrameOptions} scanFrameOptions Contains the settings of the barcode scanning
+   * @param  {string} filePath The URI of the photo requested to be scanned by the service.
+   * @param  {string} divId ScanArea 
+   * @param  {DecodeModeRequest} decodeModeRequest Contains the settings of the decodeMode service.
+   * @returns Promise<any>
+   */
+  decode( scanFrameOptions: ScanFrameOptions, filePath?: string, divId?: string, customProps?: DecodeModeRequest): Promise<any> {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  /**
    * The service recognition scanning barcodes from images in Bitmap mode.
    * @param  {string} filePath The URI of the photo requested to be scanned by the service.
    * @param  {ScanTypes[]} scanTypes Sets the barcode scanning format.
@@ -147,6 +160,27 @@ export class HMSScan extends IonicNativePlugin {
   detectForHmsDector(filePath: string, scanTypes: ScanTypes[]): Promise<any> {
     return;
   }
+
+  @Cordova()
+  /**
+   * The service process of using the decode
+    * @param  {string} eventName Event name. 
+    * @param  {(value: any) => void} call Method.
+    * @returns void
+   */
+  decodeOn(eventName: string, call: (value: any) => void): void {
+    return;
+  }
+
+  @Cordova({ otherPromise: true })
+  /**
+   * It stops the view mode service.
+   * @returns Promise<any>
+   */
+  decodeStopViewService(): Promise<any> {
+    return;
+  }
+
 }
 
 @Plugin({
@@ -317,12 +351,25 @@ export interface MultiProcessorModeRequest {
   enableDrawScanResult?: boolean;
   viewAttributes?: ViewAttributes;
 }
+export interface DecodeModeRequest {
+  scanTypes: ScanTypes[] | ScanTypes;
+  scanFrameSize?: number;
+  enableScanAreaBox?: boolean;
+  enableDrawScanResult?: boolean;
+  viewAttributes?: ViewAttributes;
+}
 export interface ViewAttributes {
   textColor?: Colors;
   textSize?: number;
   strokeWitdh?: number;
   rectColor?: Colors;
   rectStyle?: RectStyle;
+}
+export interface ScanFrameOptions {
+  scanTypes: ScanTypes[] | ScanTypes;
+  multiMode: boolean;
+  parseResult: boolean;
+  photoMode: boolean;
 }
 export interface BuildBitmapRequest {
   inputContent: string;
@@ -387,6 +434,7 @@ export enum ScanTypes {
   UPCCODE_E_SCAN_TYPE = 2048,
   PDF417_SCAN_TYPE = 8,
   AZTEC_SCAN_TYPE = 2,
+  MULTI_FUNCTIONAL_SCAN_TYPE = 8192,
 }
 export enum RectStyle {
   STROKE = 0,

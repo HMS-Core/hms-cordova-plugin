@@ -18,6 +18,7 @@ export { Colors, ScanTypes, RectStyle, HMSPermission, ErrorCorrectionLevel } fro
 export declare function defaultViewMode(scanTypes: ScanKit.ScanTypes[], viewType: number, errorCheck: boolean): Promise<any>;
 export declare function analyzInAsyn(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
 export declare function analyseFrame(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
+export declare function decode(scanFrameOptions: ScanKit.ScanFrameOptions, filePath?: string, divId?: string, customProps?: ScanKit.DecodeModeRequest): Promise<any>;
 export declare function decodeWithBitmap(filePath: string, scanTypes: ScanKit.ScanTypes[]): Promise<any>;
 export declare function buildBitmap(params: ScanKit.BuildBitmapRequest): Promise<any>;
 export declare function compressBitmap(path: string): Promise<any>;
@@ -27,3 +28,5 @@ export declare function disableLogger(): Promise<any>;
 export declare function hasPermission(permission: ScanKit.HMSPermission): Promise<any>;
 export declare function requestPermission(permission: ScanKit.HMSPermission): Promise<any>;
 export declare function requestPermissions(permissions: ScanKit.HMSPermission[]): Promise<any>;
+export declare function decodeOn(eventName: string, call: (value: any) => void): void;
+export declare function decodeStopViewService(): Promise<any>;

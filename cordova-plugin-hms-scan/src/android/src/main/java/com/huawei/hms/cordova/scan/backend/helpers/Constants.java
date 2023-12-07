@@ -25,6 +25,7 @@ public class Constants {
     public static final int MULTIPROCESSOR_ASYN_CODE = 3;
     public static final int CAMERA = 4;
     public static final int READ_EXTERNAL_STORAGE = 5;
+    public static final int DECODE_CODE = 6;
 
     public static final SparseArray<String> PERMISSIONS = new SparseArray<>();
 

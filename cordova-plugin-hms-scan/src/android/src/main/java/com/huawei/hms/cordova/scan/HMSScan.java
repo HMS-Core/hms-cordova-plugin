@@ -72,9 +72,9 @@ public class HMSScan extends CordovaPlugin {
         });
 
         final String kit = "Scan";
-        final String version = "2.10.0.301";
+        final String version = "2.12.0.301";
         cordovaController = new CordovaController(this, kit, version,
-            Arrays.asList(new HMSScanModule(this), new ViewBaseModule(pluginLayout, this)));
+            Arrays.asList(new HMSScanModule(this, cordova, pluginLayout), new ViewBaseModule(pluginLayout, this)));
 
         boolean isIonicCapacitor;
         try {

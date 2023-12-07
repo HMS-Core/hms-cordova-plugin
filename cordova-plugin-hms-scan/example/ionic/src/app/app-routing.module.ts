@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'multiprocessor',
     loadChildren: () => import('./multiprocessor/multiprocessor.module').then( m => m.MultiprocessorPageModule)
+  },
+  {
+    path: 'decode',
+    loadChildren: () => import('./decode/decode.module').then( m => m.DecodePageModule)
   }
 
 

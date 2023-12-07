@@ -39,6 +39,6 @@ android {
 
 dependencies {
     implementation 'org.apache.cordova:framework:8.1.0'
-    implementation 'com.huawei.hms:scan:2.10.0.301'
-    implementation 'com.huawei.hms:stats:6.5.0.300'
+    implementation 'com.huawei.hms:scan:2.12.0.301'
+    implementation 'com.huawei.hms:stats:6.12.0.300'
 }

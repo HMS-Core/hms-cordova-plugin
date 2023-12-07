@@ -1,8 +1,6 @@
 <p align="center">
   <h1 align="center">Cordova HMS Scan</h1>
 </p>
-
-
 <p align="center">
   <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-scan"><img src="https://img.shields.io/npm/dm/@hmscore/cordova-plugin-hms-scan?color=%23007EC6&style=for-the-badge" alt="downloads"></a>
   <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-scan"><img src="https://img.shields.io/npm/v/@hmscore/cordova-plugin-hms-scan?color=%23ed2a1c&style=for-the-badge" alt="NPM version"></a>
@@ -10,7 +8,6 @@
 </p>
 
 ----
-
 
 This plugin enables communication between Huawei Scan SDK and Cordova platform. It exposes all functionality provided by Huawei Scan SDK.
 
@@ -62,9 +59,6 @@ If you have questions about how to use HMS samples, try the following options:
 
 If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
----
-
-
 ## License
 
-Huawei Scan Kit Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).
+Huawei Scan Cordova Plugin is licensed under the [Apache 2.0 license](LICENSE).

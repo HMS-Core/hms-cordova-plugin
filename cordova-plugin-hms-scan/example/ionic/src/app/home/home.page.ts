@@ -42,6 +42,9 @@ export class HomePage {
   bitmapMode() {
     this.router.navigate(['bitmapmode']);
   }
+  decodePage() {
+    this.router.navigate(['decode']);
+  }
 
   public async getFile() {
     this.fileChooser.open()

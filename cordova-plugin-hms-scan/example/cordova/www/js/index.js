@@ -31,12 +31,12 @@ var app = {
         document.getElementById("analyzInAsyn").addEventListener("click", analyzInAsyn);
         document.getElementById("analyseFrame").addEventListener("click", analyseFrame);
         document.getElementById("decodeWithBitmap").addEventListener("click", decodeWithBitmap);
-        document.getElementById("decodeWithBitmap").addEventListener("click", decodeWithBitmap);
         document.getElementById("detectForHmsDector").addEventListener("click", detectForHmsDector);
         document.getElementById("buildBitmap").addEventListener("click", buildBitmap);
         
         document.getElementById("customViewPage").addEventListener("click", function () { window.location = "customView.html" });
         document.getElementById("multiProcessorPage").addEventListener("click", function () { window.location = "multiprocessor.html" });
+        document.getElementById("decodePage").addEventListener("click", function () { window.location = "decode.html" });
         document.getElementById("bitmapMode").addEventListener("click", function () { window.location = "bitmapMode.html" });
     },
 };

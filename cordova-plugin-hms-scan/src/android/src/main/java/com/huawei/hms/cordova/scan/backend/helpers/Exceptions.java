@@ -32,7 +32,8 @@ public class Exceptions {
     public static final int ERR_NO_RESULT = 503;
     public static final int ANALYSER_IS_NOT_AVAILABLE = 504;
     public static final int ERR_WRONG_IMAGEURI_PARAMETER = 505;
-
+    public static final int EER_EMPTY_SCAN_TYPES_PARAMETER = 506;
+    public static final int ERR_SCAN_NO_DETECTED = 4096;
 
     static final Map<Integer, String> ERROR_MSGS = new HashMap<>();
 
@@ -43,6 +44,8 @@ public class Exceptions {
         ERROR_MSGS.put(ERR_NO_RESULT, "Result from Scan kit is null");
         ERROR_MSGS.put(ANALYSER_IS_NOT_AVAILABLE, "Analyser is not available.");
         ERROR_MSGS.put(ERR_WRONG_IMAGEURI_PARAMETER, "The imageUri parameter is empty or incorrect.");
+        ERROR_MSGS.put(EER_EMPTY_SCAN_TYPES_PARAMETER, "The scanTypes parameter is empty or incorrect.");
+        ERROR_MSGS.put(ERR_SCAN_NO_DETECTED, "No barcode is detected.");
     }
 
     public Exceptions() {

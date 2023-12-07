@@ -27,12 +27,25 @@ export interface MultiProcessorModeRequest {
     enableDrawScanResult?: boolean;
     viewAttributes?: ViewAttributes;
 }
+export interface DecodeModeRequest {
+    scanTypes: ScanTypes[] | ScanTypes;
+    scanFrameSize?: number;
+    enableScanAreaBox?: boolean;
+    enableDrawScanResult?: boolean;
+    viewAttributes?: ViewAttributes;
+}
 export interface ViewAttributes {
     textColor?: Colors;
     textSize?: number;
     strokeWitdh?: number;
     rectColor?: Colors;
     rectStyle?: RectStyle;
+}
+export interface ScanFrameOptions {
+    scanTypes: ScanTypes[] | ScanTypes;
+    multiMode?: boolean;
+    parseResult?: boolean;
+    photoMode?: boolean;
 }
 export interface BuildBitmapRequest {
     inputContent: string;
@@ -97,6 +110,7 @@ export enum ScanTypes {
     UPCCODE_E_SCAN_TYPE = 2048,
     PDF417_SCAN_TYPE = 8,
     AZTEC_SCAN_TYPE = 2,
+    MULTI_FUNCTIONAL_SCAN_TYPE = 8192,
 }
 export enum RectStyle {
     STROKE = 0,

@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-scan-demo",
   "displayName": "HMSScanDemo",
-  "version": "2.10.0-301",
+  "version": "2.12.0-301",
   "description": "A demo application which shows the usage of HMS Scan Plugin.",
   "author": "hmscore",
   "license": "Apache-2.0",
@@ -33,6 +33,6 @@
     "LICENSE",
     "package.json",
     "README.md",
-    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+    "OpenSourceSoftwareNotice.html"
   ]
 }

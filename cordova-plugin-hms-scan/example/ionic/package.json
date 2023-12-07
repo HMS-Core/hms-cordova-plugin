@@ -1,6 +1,6 @@
 {
   "name": "ionic-hms-scan-demo",
-  "version": "2.10.0-301",
+  "version": "2.12.0-301",
   "author": "hmscore",
   "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
   "scripts": {
@@ -66,7 +66,7 @@
     "LICENSE",
     "package.json",
     "README.md",
-    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt",
+    "OpenSourceSoftwareNotice.html",
     "tsconfig.app.json",
     "tsconfig.json",
     "tsconfig.spec.json",

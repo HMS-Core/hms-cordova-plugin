@@ -19,6 +19,42 @@ export { Colors, ScanTypes, RectStyle, HMSPermission, ErrorCorrectionLevel } fro
 let HMSScanClass: string = 'HMSScan';
 let HMSScanModule: string = 'HMSScanModule';
 
+var currentProps = {};
+var element: HTMLElement | null = null;
+function getInitialProps(divId: string) {
+    element = document.getElementById(divId);
+    if (element === null) return {};
+    const clientRect = element.getBoundingClientRect();
+    const computedStyle = window.getComputedStyle(element, null);
+    let props: any = {};
+    props['x'] = clientRect.x;
+    props['y'] = clientRect.y;
+    props['width'] = parseInt(computedStyle.getPropertyValue('width'));
+    props['height'] = parseInt(computedStyle.getPropertyValue('height'));
+    return props;
+}
+
+function getInitialPropsMethod(divId: string) {
+    const initialProps = getInitialProps(divId);
+    const mutationObserver = new MutationObserver(() => {
+        if (element != null) {
+            forceUpdateXAndY();
+        }
+    });
+    const config = { attributes: true, childList: true, subtree: true };
+    mutationObserver.observe(document.body, config);
+    currentProps = initialProps;
+    return initialProps;
+}
+
+function forceUpdateXAndY() {
+    if (element === null) return;
+    const rect = element.getBoundingClientRect();
+    return asyncExec(HMSScanClass, HMSScanModule, ['forceUpdateXAndY',
+        rect.x, rect.y, window.pageXOffset, window.pageYOffset
+    ]);
+}
+
 export function defaultViewMode(scanTypes: ScanKit.ScanTypes[], viewType: number, errorCheck: boolean) {
     return asyncExec(HMSScanClass, HMSScanModule, ['defaultViewMode', scanTypes, viewType, errorCheck]);
 };
@@ -28,6 +64,10 @@ export function analyzInAsyn(filePath: string, scanTypes: ScanKit.ScanTypes[]) {
 export function analyseFrame(filePath: string, scanTypes: ScanKit.ScanTypes[]) {
     return asyncExec(HMSScanClass, HMSScanModule, ['analyseFrame', filePath, scanTypes]);
 };
+export function decode(scanFrameOptions: ScanKit.ScanFrameOptions, filePath?: string, divId?: string, customProps?: ScanKit.DecodeModeRequest) {
+    const initialProps = getInitialPropsMethod(divId);
+    return asyncExec(HMSScanClass, HMSScanModule, ['decode', scanFrameOptions, filePath, initialProps, customProps]);
+}
 export function decodeWithBitmap(filePath: string, scanTypes: ScanKit.ScanTypes[]) {
     return asyncExec(HMSScanClass, HMSScanModule, ['decodeWithBitmap', filePath, scanTypes]);
 };
@@ -55,5 +95,9 @@ export function requestPermission(permission: ScanKit.HMSPermission) {
 export function requestPermissions(permissions: ScanKit.HMSPermission[]) {
     return asyncExec(HMSScanClass, HMSScanModule, ['requestPermissions', permissions]);
 };
-
-
+export function decodeOn(eventName: string, call: (value: any) => void): void {
+    window.subscribeHMSEvent(eventName, call);
+}
+export function decodeStopViewService() {
+    return asyncExec(HMSScanClass, HMSScanModule, ['stopViewService']);
+}
