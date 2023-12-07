@@ -27,6 +27,10 @@ android {
         targetSdkVersion 33
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -35,5 +39,5 @@ android {
 
 dependencies {
     implementation 'org.apache.cordova:framework:8.1.0'
-    implementation 'com.huawei.hms:maps:6.11.0.304'
+    implementation 'com.huawei.hms:maps:6.11.2.301'
 }

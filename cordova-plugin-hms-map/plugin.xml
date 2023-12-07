@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-map"
-	version="6.11.0-304" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	version="6.11.2-301" xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>
 		HMS Map
 	</name>
@@ -47,7 +47,7 @@
 				android:name="com.huawei.appmarket.service.commondata.permission.GET_COMMON_DATA" />
 		</config-file>
 		<!-- Android dependencies -->
-		<framework src="com.huawei.hms:maps:6.11.0.304" />
+		<framework src="com.huawei.hms:maps:6.11.2.301" />
 		<framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
 		<!-- Source files -->
 		<source-file 
