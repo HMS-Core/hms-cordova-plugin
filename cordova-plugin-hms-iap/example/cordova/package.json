@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-iap-demo",
   "displayName": "HMSInAppPurchasesDemo",
-  "version": "6.10.0-301",
+  "version": "6.13.0-300",
   "description": "A demo application which shows the usage of HMS IAP plugin.",
   "license": "Apache-2.0",
   "licenseFilename": "LICENSE",

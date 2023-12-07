@@ -274,7 +274,7 @@ ionic cordova run android --device
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.8.1.300'
+            classpath 'com.huawei.agconnect:agcp:1.9.1.300'
         }
     }
 
