@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getInitialPropsOfHTMLElementFrom = void 0;

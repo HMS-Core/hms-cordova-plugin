@@ -155,6 +155,12 @@ export class HMSRollAd extends Ads {
     hideAdvertiserInfoDialog(): Promise<void> {
         return this.run('hideAdvertiserInfoDialog')
     }
+    showTransparencyDialog(): Promise<void> {
+        return this.run('showTransparencyDialog')
+    }
+    hideTransparencyDialog(): Promise<void> {
+        return this.run('hideTransparencyDialog')
+    }
 
     //InstreamAd
     getAdSource(): Promise<string> {
@@ -192,5 +198,11 @@ export class HMSRollAd extends Ads {
     }
     getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
         return this.run('getAdvertiserInfo')
+    }
+    isTransparencyOpen(): Promise<boolean> {
+        return this.run('isTransparencyOpen')
+    }
+    getTransparencyTplUrl(): Promise<string> {
+        return this.run('getTransparencyTplUrl')
     }
 }

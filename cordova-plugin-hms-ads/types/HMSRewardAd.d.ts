@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { AdParam, HMSReward, HMSRewardVerifyConfig } from './interfaces';
 import { RewardAdEvents } from './HMSConstants';
 import { Ads } from './ads';

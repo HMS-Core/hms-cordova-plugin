@@ -186,7 +186,7 @@ var rollAd;
 $("load_roll").onclick = async() => {
     if (rollAd) await rollAd.destroy();
     rollAd = new HMSAds.HMSRollAd();
-
+    alert(JSON.stringify(rollAd));
     await rollAd.create({ adId: "testy3cglm3pj0", totalDuration: 60, maxCount: 4 },
         "rollAd"
     );
@@ -195,18 +195,18 @@ $("load_roll").onclick = async() => {
     await rollAd.setMediaMuteListener();
 
     rollAd.on(HMSConstants.RollAdEvents.ROLL_AD_LOADED, async() => {
-        console.log("ROLL_AD_LOADED");
+        alert("ROLL_AD_LOADED");
         rollAd.setInstreamAds();
     });
     rollAd.on(HMSConstants.RollAdEvents.ROLL_AD_WHY_THIS_AD, async(result) => {
-        console.log("Why this ad clicked");
+        alert("Why this ad clicked");
         window.location.href = result;
     });
 
     rollAd.on(
         HMSConstants.RollAdEvents.ROLL_AD_MEDIA_COMPLETION,
         async(result) => {
-            console.log("ROLL_AD_MEDIA_COMPLETION");
+            alert("ROLL_AD_MEDIA_COMPLETION");
             rollAd.destroy();
         }
     );
@@ -277,6 +277,30 @@ $("hasAdvertiserInfo").onclick = async() => {
     const result = await nativeAd.hasAdvertiserInfo();
     alert("hasAdvertiserInfo: " + result);
 };
+
+$("isTransparencyOpenNativeAd").onclick = async() => {
+    const result = await nativeAd.isTransparencyOpen();
+    alert("isTransparencyOpenNativeAd: " + result);
+};
+$("getTransparencyTplUrlNativeAd").onclick = async() => {
+    const result = await nativeAd.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlNativeAd: " + result);
+}; 
+$("showTransparencyDialog").onclick = async() => {
+    await rollAd.showTransparencyDialog();
+};
+$("hideTransparencyDialog").onclick = async() => {
+    await rollAd.hideTransparencyDialog();
+};
+$("isTransparencyOpenRollAd").onclick = async() => {
+    const result = await rollAd.isTransparencyOpen();
+    alert("isTransparencyOpenRollAd: " + result);
+};
+$("getTransparencyTplUrlRollAd").onclick = async() => {
+    const result = await rollAd.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlRollAd: " + result);
+};
+ 
 
 //VAST
 var vast;

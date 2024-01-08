@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { LayoutBounds, RollAdLoaderParams, RollAdLoadOptions, Props, Duration, AdvertiserInfo } from './interfaces';
 import { RollAdEvents } from './HMSConstants';
 import { Ads } from './ads';
@@ -48,6 +49,8 @@ export declare class HMSRollAd extends Ads {
     setOnInstreamAdClickListener(): Promise<void>;
     showAdvertiserInfoDialog(): Promise<void>;
     hideAdvertiserInfoDialog(): Promise<void>;
+    showTransparencyDialog(): Promise<void>;
+    hideTransparencyDialog(): Promise<void>;
     getAdSource(): Promise<string>;
     getDuration(): Promise<Duration>;
     getWhyThisAd(): Promise<string>;
@@ -60,4 +63,6 @@ export declare class HMSRollAd extends Ads {
     getCallToAction(): Promise<string>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    isTransparencyOpen(): Promise<boolean>;
+    getTransparencyTplUrl(): Promise<string>;
 }

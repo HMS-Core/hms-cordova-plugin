@@ -247,6 +247,24 @@ export class HomePage {
     await this.rollAdInstance.loadAd({ file: 'public/assets/roll.html' });
     await this.rollAdInstance.setInstreamMediaStateListener();
   }
+ 
+  async showTransparencyDialog() {
+    await this.rollAdInstance.showTransparencyDialog();
+  }
+ 
+  async hideTransparencyDialog() {
+    await this.rollAdInstance.hideTransparencyDialog();
+  }
+  
+  async isTransparencyOpenRollAd() {
+    const result = await this.rollAdInstance.isTransparencyOpen();
+    alert("isTransparencyOpenRollAd: " + result);
+  }
+  async getTransparencyTplUrlRollAd() {
+    const result = await this.rollAdInstance.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlRollAd: " + result);
+  }
+
 
   async nativeAd() {
     if (this.nativeAdInstance) { await this.nativeAdInstance.destroy(); }
@@ -305,7 +323,17 @@ export class HomePage {
   async hasAdvertiserInfo() {
     const result = await this.nativeAdInstance.hasAdvertiserInfo();
     alert("hasAdvertiserInfo: " + result);
+  } 
+  
+  async isTransparencyOpenNativeAd() {
+    const result = await this.nativeAdInstance.isTransparencyOpen();
+    alert("isTransparencyOpenNativeAd: " + result);
   }
+  async getTransparencyTplUrlNativeAd() {
+    const result = await this.nativeAdInstance.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlNativeAd: " + result);
+  }
+
 
   async vastCreate() {
     if (this.vast) await this.vast.release();

@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -156,6 +157,12 @@ class HMSRollAd extends ads_1.Ads {
     hideAdvertiserInfoDialog() {
         return this.run('hideAdvertiserInfoDialog');
     }
+    showTransparencyDialog() {
+        return this.run('showTransparencyDialog');
+    }
+    hideTransparencyDialog() {
+        return this.run('hideTransparencyDialog');
+    }
     //InstreamAd
     getAdSource() {
         return this.run('getAdSource');
@@ -192,6 +199,12 @@ class HMSRollAd extends ads_1.Ads {
     }
     getAdvertiserInfo() {
         return this.run('getAdvertiserInfo');
+    }
+    isTransparencyOpen() {
+        return this.run('isTransparencyOpen');
+    }
+    getTransparencyTplUrl() {
+        return this.run('getTransparencyTplUrl');
     }
 }
 exports.HMSRollAd = HMSRollAd;

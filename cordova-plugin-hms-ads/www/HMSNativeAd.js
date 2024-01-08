@@ -12,7 +12,8 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+*/ 
+
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -174,6 +175,15 @@ class HMSNativeAd extends ads_1.Ads {
     }
     getAdvertiserInfo() {
         return this.run('getAdvertiserInfo');
+    }
+    showAppDetailPage() {
+        return this.run('showAppDetailPage');
+    }
+    isTransparencyOpen() {
+        return this.run('isTransparencyOpen');
+    }
+    getTransparencyTplUrl() {
+        return this.run('getTransparencyTplUrl');
     }
     // VideoOperator
     videoOperatorGetAspectRatio() {

@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { AdParam } from './interfaces';
 import { Ads } from './ads';
 import { InterstitialAdEvents } from './HMSConstants';

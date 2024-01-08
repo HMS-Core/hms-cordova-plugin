@@ -186,6 +186,15 @@ export class HMSNativeAd extends Ads {
     getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
         return this.run('getAdvertiserInfo')
     }
+    showAppDetailPage(): Promise<void> {
+        return this.run('showAppDetailPage')
+    }
+    isTransparencyOpen(): Promise<boolean> {
+        return this.run('isTransparencyOpen')
+    }
+    getTransparencyTplUrl(): Promise<string> {
+        return this.run('getTransparencyTplUrl')
+    }
 
     // VideoOperator
     videoOperatorGetAspectRatio(): Promise<VideoOperatorAspectRatio> {

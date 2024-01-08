@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { LayoutBounds, AdParam, Props, AdSize } from './interfaces';
 import { BannerAdSize, BannerAdEvents, Color } from './HMSConstants';
 import { Ads } from './ads';

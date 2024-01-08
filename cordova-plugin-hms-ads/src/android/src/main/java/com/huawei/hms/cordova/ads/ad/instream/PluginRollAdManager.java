@@ -440,4 +440,56 @@ public class PluginRollAdManager extends PluginAbstractAdManager {
             ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
         promise.success(ListToJson.advertiserInfosToJson(listener.getCurrentInstreamAd().getAdvertiserInfo()));
     }
+
+    public void isTransparencyOpen(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        promise.success(listener.getCurrentInstreamAd().isTransparencyOpen());
+    }
+ 
+    public void getTransparencyTplUrl(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        promise.success(listener.getCurrentInstreamAd().getTransparencyTplUrl());
+    }
+
+    
+    public void showTransparencyDialog(JSONObject json, final Promise promise) {
+    checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+        ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+
+        if (json.has("location")) {
+            try {
+                JSONArray locationArray = json.getJSONArray("location");
+
+                if (locationArray.length() == 2) {
+                    int[] location = new int[2];
+                    location[0] = locationArray.getInt(0);
+                    location[1] = locationArray.getInt(1);
+
+                    instreamView.showTransparencyDialog(instreamView, location);
+
+                    promise.success();
+                } else {
+                    promise.error("Location array must have exactly 2 elements");
+                    return;
+                }
+            } catch (JSONException e) {
+                promise.error("Invalid location format");
+                return;
+            }
+        } else {
+                instreamView.showTransparencyDialog(instreamView);
+                promise.success();
+            }
+    }
+
+public void hideTransparencyDialog(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(listener.getCurrentInstreamAd(), promise,
+            ErrorAndStateCodes.ROLL_AD_NOT_INITIALIZED);
+        instreamView.hideTransparencyDialog();
+        promise.success();
+    }
+
+
 }

@@ -935,6 +935,10 @@ export class HMSNativeAd extends IonicNativePlugin {
         return;
     }
     @Cordova({ otherPromise: true })
+    showAppDetailPage(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
     recordShowStartEvent(showStartData: any): Promise<boolean> {
         return;
     }
@@ -984,6 +988,18 @@ export class HMSNativeAd extends IonicNativePlugin {
     }
     @Cordova({ otherPromise: true })
     getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    showAppDetailPage(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    isTransparencyOpen(): Promise<boolean> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getTransparencyTplUrl(): Promise<string> {
         return;
     }
 }
@@ -1230,6 +1246,22 @@ export class HMSRollAd extends IonicNativePlugin {
     }
     @Cordova({ otherPromise: true })
     getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    isTransparencyOpen(): Promise<boolean> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getTransparencyTplUrl(): Promise<String> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    showTransparencyDialog(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    hideTransparencyDialog(): Promise<void> {
         return;
     }
 }

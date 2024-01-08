@@ -26,7 +26,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Ads = void 0;
-
 const utils_1 = require("./utils");
 class Ads {
     constructor(objectName = 'ads') {

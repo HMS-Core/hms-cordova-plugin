@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-ads",
     "description": "Cordova HMS Ads Plugin",
-    "version": "13.4.65-300",
+    "version": "13.4.67-302",
     "main": "./www/index.js",
     "types": "./types/index.d.ts",
     "repository": {
