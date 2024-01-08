@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { IonicNativePlugin } from "@ionic-native/core";
 /**
  * @name HMSHealth
@@ -54,13 +55,15 @@ export declare const ConsentsController: {
     cancelAuthorization: (cancelAuthReq: CancelAuthReq) => Promise<void>;
 };
 export declare const DataController: {
-    initDataController: (jsonArray: DataOption[]) => Promise<void>;
+    initDataController: () => Promise<void>;
     read: (readReq: ReadReq) => Promise<ReadReply>;
     insert: (insertReq: InsertReq) => Promise<void>;
     update: (jsonObject: UpdateReq) => Promise<void>;
     deleteData: (jsonObject: DeleteReq) => Promise<void>;
     readTodaySummation: (dataTypeStr: string) => Promise<SampleSet>;
+    readTodaySummationWithList: (dataTypeStrs: string[]) => Promise<SampleSet[]>;
     readDailySummation: (jsonObject: ReadDailySummationReq) => Promise<SampleSet>;
+    readDailySummationWithList: (jsonObject: ReadDailySummationWithListReq) => Promise<SampleSet[]>;
     clearAll: () => Promise<void>;
     readLatestData: (jsonObject: DataOption[]) => Promise<Map<DataType, SamplePoint>>;
 };
@@ -267,6 +270,10 @@ export declare const DataType: {
     DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST: string;
     DT_VO2MAX: string;
     DT_VO2MAX_STATISTICS: string;
+    DT_DIVING_DEPTH: string;
+    DT_DIVING_DEPTH_STATISTICS: string;
+    DT_WATER_TEMPERATURE: string;
+    DT_WATER_TEMPERATURE_STATISTICS: string;
     POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: string;
     POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: string;
     POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: string;
@@ -790,7 +797,9 @@ export declare const Field: {
     RESISTANCE_LEVEL_THREE_TIME: string;
     RESISTANCE_LEVEL_FOUR_TIME: string;
     RESISTANCE_LEVEL_FIVE_TIME: string;
-    VO2MAXS: string;
+    VO2MAX: string;
+    DEPTH: string;
+    TEMPERATURE: string;
     STROKES_NUM: string;
     SPM: string;
     RPM: string;
@@ -890,6 +899,10 @@ export interface DataType {
     DT_RESISTANCE_STATISTICS: string;
     DT_VO2MAX: string;
     DT_VO2MAX_STATISTICS: string;
+    DT_DIVING_DEPTH: string;
+    DT_DIVING_DEPTH_STATISTICS: string;
+    DT_WATER_TEMPERATURE: string;
+    DT_WATER_TEMPERATURE_STATISTICS: string;
     DT_INSTANTANEOUS_SWIMMING_STROKE_RATE: string;
     DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS: string;
     DT_INSTANTANEOUS_SWIMMING_SWOLF: string;
@@ -1213,6 +1226,11 @@ export interface ReadDailySummationReq {
     startDate: number;
     endDate: number;
     dataType: string;
+}
+export interface ReadDailySummationWithListReq {
+    startDate: number;
+    endDate: number;
+    dataTypes: string[];
 }
 export interface ReadLatestDataReq {
     dataTypes: DataOption[];

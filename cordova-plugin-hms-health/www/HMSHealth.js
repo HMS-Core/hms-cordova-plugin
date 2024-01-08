@@ -13,35 +13,36 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Field = exports.TimeUnit = exports.DataGenerateType = exports.HiHealthActivities = exports.HealthFields = exports.DataType = exports.HealthDataTypes = exports.HuaweiHiHealth = exports.HiHealthOptions = exports.on = exports.disableLogger = exports.enableLogger = exports.HealthRecordController = exports.SettingsController = exports.DataController = exports.ConsentsController = exports.AutoRecorderController = exports.ActivityRecordController = exports.DeviceInfo = exports.AppInfo = exports.signIn = void 0;
 
 const utils_1 = require("./utils");
 function signIn(scopes) {
-    return (0, utils_1.asyncExec)("HMSHealth", "AuthController", ["signIn", scopes]);
+    return utils_1.asyncExec("HMSHealth", "AuthController", ["signIn", scopes]);
 }
 exports.signIn = signIn;
 exports.AppInfo = {
     createApp: function createApp(AppInfo) {
-        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["createApp", AppInfo]);
+        return utils_1.asyncExec("HMSHealth", "AppInfo", ["createApp", AppInfo]);
     },
     getDetailsUrl: function getDetailsUrl() {
-        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getDetailsUrl"]);
+        return utils_1.asyncExec("HMSHealth", "AppInfo", ["getDetailsUrl"]);
     },
     getDomainName: function getDomainName() {
-        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getDomainName"]);
+        return utils_1.asyncExec("HMSHealth", "AppInfo", ["getDomainName"]);
     },
     getPackageName: function getPackageName() {
-        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getPackageName"]);
+        return utils_1.asyncExec("HMSHealth", "AppInfo", ["getPackageName"]);
     },
     getVersion: function getVersion() {
-        return (0, utils_1.asyncExec)("HMSHealth", "AppInfo", ["getVersion"]);
+        return utils_1.asyncExec("HMSHealth", "AppInfo", ["getVersion"]);
     },
 };
 exports.DeviceInfo = {
     createDeviceInfo: function createDeviceInfo(createDeviceInfoReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DeviceInfo", [
+        return utils_1.asyncExec("HMSHealth", "DeviceInfo", [
             "createDeviceInfo",
             createDeviceInfoReq,
         ]);
@@ -49,43 +50,43 @@ exports.DeviceInfo = {
 };
 exports.ActivityRecordController = {
     addActivityRecord: function addActivityRecord(addActivityRecordReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "addActivityRecord",
             addActivityRecordReq,
         ]);
     },
     deleteActivityRecord: function deleteActivityRecord(deleteActivityRecordReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "deleteActivityRecord",
             deleteActivityRecordReq,
         ]);
     },
     beginActivityRecord: function beginActivityRecord(activityRecordData) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "beginActivityRecord",
             activityRecordData,
         ]);
     },
     beginBackgroundActivityRecord: function beginBackgroundActivityRecord(activityRecordData) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "beginBackgroundActivityRecord",
             activityRecordData,
         ]);
     },
     endActivityRecord: function endActivityRecord(activityRecordId) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "endActivityRecord",
             activityRecordId,
         ]);
     },
     endBackgroundActivityRecord: function endBackgroundActivityRecord(activityRecordId) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "endBackgroundActivityRecord",
             activityRecordId,
         ]);
     },
     getActivityRecord: function getActivityRecord(activityRecordJSON) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ActivityRecordController", [
+        return utils_1.asyncExec("HMSHealth", "ActivityRecordController", [
             "getActivityRecord",
             activityRecordJSON,
         ]);
@@ -93,13 +94,13 @@ exports.ActivityRecordController = {
 };
 exports.AutoRecorderController = {
     startRecord: function startRecord(startRecordReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "AutoRecorderController", [
+        return utils_1.asyncExec("HMSHealth", "AutoRecorderController", [
             "startRecord",
             startRecordReq,
         ]);
     },
     stopRecord: function stopRecord(stopRecordReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "AutoRecorderController", [
+        return utils_1.asyncExec("HMSHealth", "AutoRecorderController", [
             "stopRecord",
             stopRecordReq,
         ]);
@@ -107,75 +108,84 @@ exports.AutoRecorderController = {
 };
 exports.ConsentsController = {
     getPermissions: function getPermissions(getPermissionsReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+        return utils_1.asyncExec("HMSHealth", "ConsentsController", [
             "getPermissions",
             getPermissionsReq,
         ]);
     },
     revokeAll: function revokeAll(appId) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+        return utils_1.asyncExec("HMSHealth", "ConsentsController", [
             "revokeAll",
             appId,
         ]);
     },
     revoke: function revoke(revokeReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+        return utils_1.asyncExec("HMSHealth", "ConsentsController", [
             "revoke",
             revokeReq,
         ]);
     },
     cancelAuthorizationAll: function revokeAll(cancelAuthAllReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+        return utils_1.asyncExec("HMSHealth", "ConsentsController", [
             "cancelAuthorizationAll",
             cancelAuthAllReq,
         ]);
     },
     cancelAuthorization: function cancelAuthorization(cancelAuthReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "ConsentsController", [
+        return utils_1.asyncExec("HMSHealth", "ConsentsController", [
             "cancelAuthorization",
             cancelAuthReq,
         ]);
     },
 };
 exports.DataController = {
-    initDataController: function initDataController(jsonArray) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
-            "initDataController",
-            jsonArray,
-        ]);
+    initDataController: function initDataController() {
+        return utils_1.asyncExec("HMSHealth", "DataController", ["initDataController"]);
     },
     read: function read(readReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["read", readReq]);
+        return utils_1.asyncExec("HMSHealth", "DataController", ["read", readReq]);
     },
     insert: function insert(insertReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["insert", insertReq]);
+        return utils_1.asyncExec("HMSHealth", "DataController", ["insert", insertReq]);
     },
     update: function update(jsonObject) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["update", jsonObject]);
+        return utils_1.asyncExec("HMSHealth", "DataController", ["update", jsonObject]);
     },
     deleteData: function deleteData(jsonObject) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+        return utils_1.asyncExec("HMSHealth", "DataController", [
             "deleteData",
             jsonObject,
         ]);
     },
     readTodaySummation: function readTodaySummation(dataTypeStr) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+        return utils_1.asyncExec("HMSHealth", "DataController", [
             "readTodaySummation",
             dataTypeStr,
         ]);
     },
+    readTodaySummationWithList: function readTodaySummationWithList(dataTypeStrs) {
+        return utils_1.asyncExec("HMSHealth", "DataController", [
+            "readTodaySummationWithList",
+            dataTypeStrs,
+        ]);
+    },
     readDailySummation: function readDailySummation(jsonObject) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+        return utils_1.asyncExec("HMSHealth", "DataController", [
             "readDailySummation",
             jsonObject,
         ]);
     },
+    readDailySummationWithList: function readDailySummationWithList(jsonObject) {
+        return utils_1.asyncExec("HMSHealth", "DataController", [
+            "readDailySummationWithList",
+            jsonObject,
+        ]);
+    },
     clearAll: function clearAll() {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", ["clearAll"]);
+        return utils_1.asyncExec("HMSHealth", "DataController", ["clearAll"]);
     },
     readLatestData: function readLatestData(jsonObject) {
-        return (0, utils_1.asyncExec)("HMSHealth", "DataController", [
+        return utils_1.asyncExec("HMSHealth", "DataController", [
             "readLatestData",
             jsonObject,
         ]);
@@ -183,34 +193,34 @@ exports.DataController = {
 };
 exports.SettingsController = {
     addDataType: function addDataType(jsonObject) {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "addNewDataType",
             jsonObject,
         ]);
     },
     disableHiHealth: function disableHiHealth() {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "disableHiHealth",
         ]);
     },
     readDataType: function readDataType(dataTypeName) {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "readDataType",
             dataTypeName,
         ]);
     },
     checkHealthAppAuthorization: function checkHealthAppAuthorization() {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "checkHealthAppAuthorization",
         ]);
     },
     getHealthAppAuthorization: function getHealthAppAuthorization() {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "getHealthAppAuthorization",
         ]);
     },
     requestAuthorizationIntent: function requestAuthorizationIntent(AuthReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "SettingsController", [
+        return utils_1.asyncExec("HMSHealth", "SettingsController", [
             "requestAuthorizationIntent",
             AuthReq,
         ]);
@@ -218,36 +228,36 @@ exports.SettingsController = {
 };
 exports.HealthRecordController = {
     addHealthRecord: function addHealthRecord(AddHRReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+        return utils_1.asyncExec("HMSHealth", "HealthRecordController", [
             "addHealthRecord",
             AddHRReq,
         ]);
     },
     deleteHealthRecord: function deleteHealthRecord(DeleteHRReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+        return utils_1.asyncExec("HMSHealth", "HealthRecordController", [
             "deleteHealthRecord",
             DeleteHRReq,
         ]);
     },
     getHealthRecord: function getHealthRecord(HRReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+        return utils_1.asyncExec("HMSHealth", "HealthRecordController", [
             "getHealthRecord",
             HRReq,
         ]);
     },
     updateHealthRecord: function updateHealthRecord(UpdateHRReq) {
-        return (0, utils_1.asyncExec)("HMSHealth", "HealthRecordController", [
+        return utils_1.asyncExec("HMSHealth", "HealthRecordController", [
             "updateHealthRecord",
             UpdateHRReq,
         ]);
     },
 };
 function enableLogger() {
-    return (0, utils_1.asyncExec)("HMSHealth", "HMSLogger", ["enableLogger"]);
+    return utils_1.asyncExec("HMSHealth", "HMSLogger", ["enableLogger"]);
 }
 exports.enableLogger = enableLogger;
 function disableLogger() {
-    return (0, utils_1.asyncExec)("HMSHealth", "HMSLogger", ["disableLogger"]);
+    return utils_1.asyncExec("HMSHealth", "HMSLogger", ["disableLogger"]);
 }
 exports.disableLogger = disableLogger;
 // EVENT REGISTERATION FUNCTION FOR SINGLE FILE
@@ -529,6 +539,10 @@ exports.DataType = {
     DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
     DT_VO2MAX: "DT_VO2MAX",
     DT_VO2MAX_STATISTICS: "DT_VO2MAX_STATISTICS",
+    DT_DIVING_DEPTH: "DT_DIVING_DEPTH",
+    DT_DIVING_DEPTH_STATISTICS: "DT_DIVING_DEPTH_STATISTICS",
+    DT_WATER_TEMPERATURE: "DT_WATER_TEMPERATURE",
+    DT_WATER_TEMPERATURE_STATISTICS: "DT_WATER_TEMPERATURE_STATISTICS",
     POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
     POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
     POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
@@ -1052,7 +1066,9 @@ exports.Field = {
     RESISTANCE_LEVEL_THREE_TIME: "RESISTANCE_LEVEL_THREE_TIME",
     RESISTANCE_LEVEL_FOUR_TIME: "RESISTANCE_LEVEL_FOUR_TIME",
     RESISTANCE_LEVEL_FIVE_TIME: "RESISTANCE_LEVEL_FIVE_TIME",
-    VO2MAXS: "VO2MAX",
+    VO2MAX: "VO2MAX",
+    DEPTH: "DEPTH",
+    TEMPERATURE: "TEMPERATURE",
     STROKES_NUM: "STROKES_NUM",
     SPM: "SPM",
     RPM: "RPM",

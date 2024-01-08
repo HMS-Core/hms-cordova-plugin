@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { asyncExec } from "./utils";
 
 export function signIn(scopes: string[]): Promise<AuthHuaweiId> {
@@ -165,13 +166,8 @@ export const ConsentsController = {
     },
 };
 export const DataController = {
-    initDataController: function initDataController(
-        jsonArray: DataOption[]
-    ): Promise<void> {
-        return asyncExec("HMSHealth", "DataController", [
-            "initDataController",
-            jsonArray,
-        ]);
+    initDataController: function initDataController(): Promise<void> {
+        return asyncExec("HMSHealth", "DataController", ["initDataController"]);
     },
     read: function read(readReq: ReadReq): Promise<ReadReply> {
         return asyncExec("HMSHealth", "DataController", ["read", readReq]);
@@ -196,11 +192,27 @@ export const DataController = {
             dataTypeStr,
         ]);
     },
+    readTodaySummationWithList: function readTodaySummationWithList(
+        dataTypeStrs: string[]
+    ): Promise<SampleSet[]> {
+        return asyncExec("HMSHealth", "DataController", [
+            "readTodaySummationWithList",
+            dataTypeStrs,
+        ]);
+    },
     readDailySummation: function readDailySummation(
         jsonObject: ReadDailySummationReq
     ): Promise<SampleSet> {
         return asyncExec("HMSHealth", "DataController", [
             "readDailySummation",
+            jsonObject,
+        ]);
+    },
+    readDailySummationWithList: function readDailySummationWithList(
+        jsonObject: ReadDailySummationWithListReq
+    ): Promise<SampleSet[]> {
+        return asyncExec("HMSHealth", "DataController", [
+            "readDailySummationWithList",
             jsonObject,
         ]);
     },
@@ -583,6 +595,10 @@ export const DataType = {
     DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST: "DT_ACTIVITY_FEATURE_BREATH_HOLDING_TEST",
     DT_VO2MAX: "DT_VO2MAX",
     DT_VO2MAX_STATISTICS: "DT_VO2MAX_STATISTICS",
+    DT_DIVING_DEPTH: "DT_DIVING_DEPTH",
+    DT_DIVING_DEPTH_STATISTICS: "DT_DIVING_DEPTH_STATISTICS",
+    DT_WATER_TEMPERATURE: "DT_WATER_TEMPERATURE",
+    DT_WATER_TEMPERATURE_STATISTICS: "DT_WATER_TEMPERATURE_STATISTICS",
     POLYMERIZE_CONTINUOUS_WORKOUT_DURATION: "POLYMERIZE_CONTINUOUS_WORKOUT_DURATION",
     POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS: "POLYMERIZE_CONTINUOUS_ACTIVITY_STATISTICS",
     POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS: "POLYMERIZE_CONTINUOUS_CALORIES_BMR_STATISTICS",
@@ -1110,7 +1126,9 @@ export const Field = {
     RESISTANCE_LEVEL_THREE_TIME: "RESISTANCE_LEVEL_THREE_TIME",
     RESISTANCE_LEVEL_FOUR_TIME: "RESISTANCE_LEVEL_FOUR_TIME",
     RESISTANCE_LEVEL_FIVE_TIME: "RESISTANCE_LEVEL_FIVE_TIME",
-    VO2MAXS: "VO2MAX",
+    VO2MAX: "VO2MAX",
+    DEPTH: "DEPTH",
+    TEMPERATURE: "TEMPERATURE",
     STROKES_NUM: "STROKES_NUM",
     SPM: "SPM",
     RPM: "RPM",
@@ -1211,6 +1229,10 @@ export interface DataType {
     DT_RESISTANCE_STATISTICS: string;
     DT_VO2MAX: string;
     DT_VO2MAX_STATISTICS: string;
+    DT_DIVING_DEPTH: string;
+    DT_DIVING_DEPTH_STATISTICS: string;
+    DT_WATER_TEMPERATURE: string;
+    DT_WATER_TEMPERATURE_STATISTICS: string;
     DT_INSTANTANEOUS_SWIMMING_STROKE_RATE: string;
     DT_CONTINUOUS_SWIMMING_STROKE_RATE_STATISTICS: string;
     DT_INSTANTANEOUS_SWIMMING_SWOLF: string;
@@ -1582,6 +1604,12 @@ export interface ReadDailySummationReq {
     startDate: number;
     endDate: number;
     dataType: string;
+}
+
+export interface ReadDailySummationWithListReq {
+    startDate: number;
+    endDate: number;
+    dataTypes: string[];
 }
 
 export interface ReadLatestDataReq {

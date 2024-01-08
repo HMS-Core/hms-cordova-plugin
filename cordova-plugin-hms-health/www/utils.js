@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.asyncExec = void 0;
@@ -20,7 +21,7 @@ exports.asyncExec = void 0;
 const cordova_1 = require("cordova");
 function asyncExec(clazz, reference, args = []) {
     return new Promise((resolve, reject) => {
-        (0, cordova_1.exec)(resolve, reject, clazz, reference, args);
+        cordova_1.exec(resolve, reject, clazz, reference, args);
     });
 }
 exports.asyncExec = asyncExec;

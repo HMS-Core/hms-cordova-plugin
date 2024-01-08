@@ -27,7 +27,6 @@ import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
 import com.huawei.hms.cordova.health.basef.handler.Promise;
 import com.huawei.hms.cordova.health.utils.Utils;
-import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.HuaweiHiHealth;
 import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.data.SamplePoint;
@@ -63,7 +62,6 @@ public class AutoRecorderController extends CordovaBaseModule {
 
     public AutoRecorderController(final Activity activity) {
         this.activity = activity;
-        final HiHealthOptions options = com.huawei.hms.hihealth.HiHealthOptions.builder().build();
         this.controller = HuaweiHiHealth.getAutoRecorderController(activity);
     }
 

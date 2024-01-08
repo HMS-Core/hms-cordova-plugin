@@ -43,6 +43,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class SettingsController extends CordovaBaseModule implements OnActivityResultCallback {
+
+    private static final String TAG = SettingsController.class.getSimpleName();
+
     private static final int REQUEST_AUTH = 8888;
 
     private SettingController settingController;
@@ -173,11 +176,15 @@ public class SettingsController extends CordovaBaseModule implements OnActivityR
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_AUTH) {
-            HealthKitAuthResult result = HuaweiHiHealth.getSettingController(activity)
-                .parseHealthKitAuthResultFromIntent(intent);
-            Log.i("onActivityResult:", result.toJson());
-
-            mPromise.success(result.toJson());
+            try {
+                HealthKitAuthResult result = HuaweiHiHealth.getSettingController(activity)
+                    .parseHealthKitAuthResultFromIntent(intent);
+                Log.i("onActivityResult:", result.toJson());
+                
+                mPromise.success(result.toJson());
+            } catch (JSONException e) {
+                Log.i(TAG, e.getMessage());
+            }
         } else {
             Log.i("TAG", "onActivityResult Error " + resultCode);
 

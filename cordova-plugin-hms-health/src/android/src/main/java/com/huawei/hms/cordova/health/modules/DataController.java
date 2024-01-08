@@ -27,7 +27,6 @@ import com.huawei.hms.cordova.health.basef.HMSLog;
 import com.huawei.hms.cordova.health.basef.handler.CorPack;
 import com.huawei.hms.cordova.health.basef.handler.Promise;
 import com.huawei.hms.cordova.health.utils.Utils;
-import com.huawei.hms.hihealth.HiHealthOptions;
 import com.huawei.hms.hihealth.data.DataCollector;
 import com.huawei.hms.hihealth.data.DataType;
 import com.huawei.hms.hihealth.data.SamplePoint;
@@ -35,8 +34,6 @@ import com.huawei.hms.hihealth.data.SampleSet;
 import com.huawei.hms.hihealth.options.DeleteOptions;
 import com.huawei.hms.hihealth.options.ReadOptions;
 import com.huawei.hms.hihealth.options.UpdateOptions;
-import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
-import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +42,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class DataController extends CordovaBaseModule {
@@ -63,23 +59,7 @@ public class DataController extends CordovaBaseModule {
     @CordovaMethod
     public void initDataController(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
-        final JSONArray jsonArray = args.getJSONArray(0);
-
-        final HiHealthOptions.Builder hiHealthOptions = com.huawei.hms.hihealth.HiHealthOptions.builder();
-
-        final List<JSONObject> list = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            list.add(jsonArray.getJSONObject(i));
-        }
-
-        for (final JSONObject object : list) {
-            final DataType dataType = Utils.toDataType(object.getString("dataType"));
-            final int hiHealthOption = object.getInt("hiHealthOption");
-            hiHealthOptions.addDataType(Objects.requireNonNull(dataType), hiHealthOption);
-        }
-
-        final AuthHuaweiId signInHuaweiId = HuaweiIdAuthManager.getExtendedAuthResult(hiHealthOptions.build());
-        dataController = com.huawei.hms.hihealth.HuaweiHiHealth.getDataController(context, signInHuaweiId);
+        dataController = com.huawei.hms.hihealth.HuaweiHiHealth.getDataController(context);
         promise.success();
     }
 
@@ -181,6 +161,25 @@ public class DataController extends CordovaBaseModule {
 
     @HMSLog
     @CordovaMethod
+    public void readTodaySummationWithList(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
+        final JSONArray jsonArray = args.getJSONArray(0);
+        final List<String> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getString(i));
+        }
+        final List<DataType> dataTypes = Utils.toDataTypes(list);
+
+        final Task<List<SampleSet>> todaySummationTask = dataController.readTodaySummation(dataTypes);
+        todaySummationTask.addOnSuccessListener(sampleSetList -> {
+            Log.i(TAG, "Success read today summation from HMS core");
+            promise.success(Utils.getJSONFromSampleSet(sampleSetList, TimeUnit.MILLISECONDS));
+        });
+        todaySummationTask.addOnFailureListener((e) -> promise.error(e.getMessage()));
+    }
+
+    @HMSLog
+    @CordovaMethod
     public void readTodaySummation(final CorPack corPack, final JSONArray args, final Promise promise)
         throws JSONException {
         final String dataTypeStr = args.getString(0);
@@ -192,6 +191,29 @@ public class DataController extends CordovaBaseModule {
             promise.success(Utils.getJSONFromSampleSet(sampleSet, TimeUnit.MILLISECONDS));
         });
         todaySummationTask.addOnFailureListener((e) -> promise.error(e.getMessage()));
+    }
+
+    @HMSLog
+    @CordovaMethod
+    public void readDailySummationWithList(final CorPack corPack, final JSONArray args, final Promise promise)
+        throws JSONException {
+        final JSONObject jsonObject = args.getJSONObject(0);
+
+        final int startDate = jsonObject.getInt("startDate");
+        final int endDate = jsonObject.getInt("endDate");
+
+        final JSONArray jsonArray = jsonObject.getJSONArray("dataTypes");
+        final List<String> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            list.add(jsonArray.getString(i));
+        }
+        final List<DataType> dataTypes = Utils.toDataTypes(list);
+
+        final Task<List<SampleSet>> dailySummationTask = dataController.readDailySummation(dataTypes, startDate, endDate);
+        dailySummationTask.addOnSuccessListener(sampleSetList -> {
+            Log.i(TAG, "Success read daily summation from HMS core");
+            promise.success(Utils.getJSONFromSampleSet(sampleSetList, TimeUnit.MILLISECONDS));
+        }).addOnFailureListener((e) -> promise.error(e.getMessage()));
     }
 
     @HMSLog

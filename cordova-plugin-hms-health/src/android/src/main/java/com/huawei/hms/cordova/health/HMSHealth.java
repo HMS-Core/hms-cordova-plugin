@@ -40,7 +40,7 @@ import java.util.Arrays;
 public class HMSHealth extends CordovaPlugin {
     private static final String SERVICE = "Health";
 
-    private static final String VERSION = "6.10.0.301";
+    private static final String VERSION = "6.11.0.303";
 
     private CordovaController cordovaController;
 

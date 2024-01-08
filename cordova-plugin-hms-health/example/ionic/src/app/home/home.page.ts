@@ -563,17 +563,7 @@ export class HomePage {
   }
 
   initDataController() {
-    let dataTypes = [
-      {
-        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-        hiHealthOption: 0,
-      },
-      {
-        dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
-        hiHealthOption: 1,
-      },
-    ];
-    DataController.initDataController(dataTypes)
+    DataController.initDataController()
       .then(() => {
         console.log("initDataController Success!");
         alert("initDataController Success!");
@@ -760,6 +750,20 @@ export class HomePage {
       });
   }
 
+  readTodaySummationWithList() {
+    let dataTypes = [DataType.DT_CONTINUOUS_STEPS_DELTA, DataType.DT_CONTINUOUS_CALORIES_BURNT];
+    DataController.readTodaySummationWithList(dataTypes)
+      .then((data) => {
+        console.log("readTodaySummation data Success!");
+        console.log(JSON.stringify(data));
+        alert("readTodaySummation data Success!");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("readTodaySummation data error: " + error);
+      });
+  }
+
   readDailySummation() {
     let options = {
       startDate: 20210223,
@@ -767,6 +771,24 @@ export class HomePage {
       dataType: DataType.DT_CONTINUOUS_STEPS_DELTA,
     };
     DataController.readDailySummation(options)
+      .then((data) => {
+        console.log("readDailySummation data Success!");
+        console.log(JSON.stringify(data));
+        alert("readDailySummation data Success!");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("readDailySummation data error: " + error);
+      });
+  }
+
+  readDailySummationWithList() {
+    let options = {
+      startDate: 20210223,
+      endDate: 20210225,
+      dataTypes: [DataType.DT_CONTINUOUS_STEPS_DELTA, DataType.DT_CONTINUOUS_CALORIES_BURNT]
+    };
+    DataController.readDailySummationWithList(options)
       .then((data) => {
         console.log("readDailySummation data Success!");
         console.log(JSON.stringify(data));

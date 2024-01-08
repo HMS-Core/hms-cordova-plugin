@@ -171,6 +171,20 @@ public enum Utils {
         return variable != null ? variable.getDataType() : null;
     }
 
+    public static List<DataType> toDataTypes(final List<String> dataTypeStrs) {
+        List<DataType> dataTypes = new ArrayList<>();
+        Constants.DataTypeConstants variable;
+        for (String dataTypeStr : dataTypeStrs) {
+            variable = Constants.DataTypeConstants.fromString(dataTypeStr);
+            if (variable != null) {
+                dataTypes.add(variable.getDataType());
+            } else {
+                dataTypes.add(null);
+            }
+        }
+        return dataTypes;
+    }
+
     public static DataType toHealthDataType(final String dataTypeStr) {
         final Constants.HealthDataTypesConstant variable = Constants.HealthDataTypesConstant.fromString(dataTypeStr);
         return variable != null ? variable.getDataType() : null;
@@ -556,6 +570,33 @@ public enum Utils {
             Log.e("Utils", e.toString());
         }
         return jsonObject;
+    }
+
+    public static JSONArray getJSONFromSampleSet(final List<SampleSet> sampleSetList, final TimeUnit timeUnit) {
+        JSONArray jsonArray = new JSONArray();
+        SampleSet sampleSet;
+        JSONObject jsonObject;
+        JSONArray samplePoints;
+        for (int i = 0; i < sampleSetList.size(); i++) {
+            sampleSet = sampleSetList.get(i);
+            jsonObject = new JSONObject();
+            try {
+                if (sampleSet.getDataCollector() != null) {
+                    jsonObject.put("dataCollector", Utils.getJSONFromDataCollector(sampleSet.getDataCollector()));
+                }
+                jsonObject.put("dataType", sampleSet.getDataType());
+                samplePoints = new JSONArray();
+                for (final SamplePoint samplePoint : sampleSet.getSamplePoints()) {
+                    samplePoints.put(Utils.getJSONFromSamplePoint(samplePoint, timeUnit));
+                }
+                jsonObject.put("samplePoints", samplePoints);
+                jsonObject.put("isEmpty", sampleSet.isEmpty());
+                jsonArray.put(jsonObject);
+            } catch (final JSONException e) {
+                Log.e("Utils", e.toString());
+            }
+        }
+        return jsonArray;
     }
 
     public static JSONObject getJSONFromSamplePoint(final SamplePoint samplePoint, final TimeUnit timeUnit) {

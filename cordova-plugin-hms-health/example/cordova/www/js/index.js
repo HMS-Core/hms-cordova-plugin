@@ -164,9 +164,17 @@ async function onDeviceReady() {
   readDailySummationButton.onclick = function () {
     readDailySummation()
   };
+  let readDailySummationWithListButton = document.getElementById('readDailySummationWithList');
+  readDailySummationWithListButton.onclick = function () {
+    readDailySummationWithList()
+  };
   let readTodaySummationButton = document.getElementById('readTodaySummation');
   readTodaySummationButton.onclick = function () {
     readTodaySummation()
+  };
+  let readTodaySummationWithListButton = document.getElementById('readTodaySummationWithList');
+  readTodaySummationWithListButton.onclick = function () {
+    readTodaySummationWithList()
   };
   let clearAllButton = document.getElementById('clearAll');
   clearAllButton.onclick = function () {
@@ -650,17 +658,7 @@ function getActivityRecord() {
 
 // Data Collector
 function initDataController() {
-  let dataTypes = [{
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
-    hiHealthOption: HMSHealth.HiHealthOptions.ACCESS_READ
-  },
-  {
-    dataType: HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA,
-    hiHealthOption: HMSHealth.HiHealthOptions.ACCESS_READ
-  }
-  ];
-
-  HMSHealth.DataController.initDataController(dataTypes).then(() => {
+  HMSHealth.DataController.initDataController().then(() => {
     console.log("initDataController Success!");
     alert("initDataController Success!");
   }).catch(error => {
@@ -810,6 +808,19 @@ function readTodaySummation() {
   });
 }
 
+function readTodaySummationWithList() {
+
+  dataTypeStrs = [HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA, HMSHealth.DataType.DT_CONTINUOUS_CALORIES_BURNT]
+  HMSHealth.DataController.readTodaySummationWithList(dataTypeStrs).then((data) => {
+    console.log("readTodaySummationWithList data Success!");
+    console.log(JSON.stringify(data));
+    alert("readTodaySummationWithList data Success!" + JSON.stringify(data));
+  }).catch(error => {
+    console.log(error);
+    alert("readTodaySummationWithList data error: " + error);
+  });
+}
+
 function readDailySummation() {
   let options = {
     startDate: 20201218,
@@ -823,6 +834,22 @@ function readDailySummation() {
   }).catch(error => {
     console.log(error);
     alert("readDailySummation data error: " + error);
+  });
+}
+
+function readDailySummationWithList() {
+  let options = {
+    startDate: 20201218,
+    endDate: 20201221,
+    dataTypes: [HMSHealth.DataType.DT_CONTINUOUS_STEPS_DELTA, HMSHealth.DataType.DT_CONTINUOUS_CALORIES_BURNT]
+  }
+  HMSHealth.DataController.readDailySummationWithList(options).then((data) => {
+    console.log("readDailySummationWithList data Success!");
+    console.log(JSON.stringify(data));
+    alert("readDailySummationWithList data Success!" + JSON.stringify(data));
+  }).catch(error => {
+    console.log(error);
+    alert("readDailySummationWithList data error: " + error);
   });
 }
 
