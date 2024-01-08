@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 "use strict";
 ///////////////////////////////////////////////////////////////////////////
 // Constants
@@ -31,14 +30,14 @@ var AdParamErrorCodes;
     AdParamErrorCodes[AdParamErrorCodes["AD_PARAM_BANNER_AD_EXPIRE"] = 6] = "AD_PARAM_BANNER_AD_EXPIRE";
     AdParamErrorCodes[AdParamErrorCodes["AD_PARAM_BANNER_AD_CANCEL"] = 7] = "AD_PARAM_BANNER_AD_CANCEL";
     AdParamErrorCodes[AdParamErrorCodes["AD_PARAM_HMS_NOT_SUPPORT_SET_APP"] = 8] = "AD_PARAM_HMS_NOT_SUPPORT_SET_APP";
-})(AdParamErrorCodes = exports.AdParamErrorCodes || (exports.AdParamErrorCodes = {}));
+})(AdParamErrorCodes || (exports.AdParamErrorCodes = AdParamErrorCodes = {}));
 var RewardAdStatusErrorCodes;
 (function (RewardAdStatusErrorCodes) {
     RewardAdStatusErrorCodes[RewardAdStatusErrorCodes["REWARD_AD_STATUS_INTERNAL"] = 0] = "REWARD_AD_STATUS_INTERNAL";
     RewardAdStatusErrorCodes[RewardAdStatusErrorCodes["REWARD_AD_STATUS_REUSED"] = 1] = "REWARD_AD_STATUS_REUSED";
     RewardAdStatusErrorCodes[RewardAdStatusErrorCodes["REWARD_AD_STATUS_NOT_LOADED"] = 2] = "REWARD_AD_STATUS_NOT_LOADED";
     RewardAdStatusErrorCodes[RewardAdStatusErrorCodes["REWARD_AD_STATUS_BACKGROUND"] = 3] = "REWARD_AD_STATUS_BACKGROUND";
-})(RewardAdStatusErrorCodes = exports.RewardAdStatusErrorCodes || (exports.RewardAdStatusErrorCodes = {}));
+})(RewardAdStatusErrorCodes || (exports.RewardAdStatusErrorCodes = RewardAdStatusErrorCodes = {}));
 var AdContentClassification;
 (function (AdContentClassification) {
     AdContentClassification["AD_CONTENT_CLASSIFICATION_A"] = "A";
@@ -46,30 +45,30 @@ var AdContentClassification;
     AdContentClassification["AD_CONTENT_CLASSIFICATION_UNKNOWN"] = "";
     AdContentClassification["AD_CONTENT_CLASSIFICATION_J"] = "J";
     AdContentClassification["AD_CONTENT_CLASSIFICATION_W"] = "W";
-})(AdContentClassification = exports.AdContentClassification || (exports.AdContentClassification = {}));
+})(AdContentClassification || (exports.AdContentClassification = AdContentClassification = {}));
 var Gender;
 (function (Gender) {
     Gender[Gender["FEMALE"] = 2] = "FEMALE";
     Gender[Gender["MALE"] = 1] = "MALE";
     Gender[Gender["UNKNOWN"] = 0] = "UNKNOWN";
-})(Gender = exports.Gender || (exports.Gender = {}));
+})(Gender || (exports.Gender = Gender = {}));
 var NonPersonalizedAd;
 (function (NonPersonalizedAd) {
     NonPersonalizedAd[NonPersonalizedAd["ALLOW_ALL"] = 0] = "ALLOW_ALL";
     NonPersonalizedAd[NonPersonalizedAd["ALLOW_NON_PERSONALIZED"] = 1] = "ALLOW_NON_PERSONALIZED";
-})(NonPersonalizedAd = exports.NonPersonalizedAd || (exports.NonPersonalizedAd = {}));
+})(NonPersonalizedAd || (exports.NonPersonalizedAd = NonPersonalizedAd = {}));
 var ChildProtection;
 (function (ChildProtection) {
     ChildProtection[ChildProtection["TAG_FOR_CHILD_PROTECTION_UNSPECIFIED"] = -1] = "TAG_FOR_CHILD_PROTECTION_UNSPECIFIED";
     ChildProtection[ChildProtection["TAG_FOR_CHILD_PROTECTION_FALSE"] = 0] = "TAG_FOR_CHILD_PROTECTION_FALSE";
     ChildProtection[ChildProtection["TAG_FOR_CHILD_PROTECTION_TRUE"] = 1] = "TAG_FOR_CHILD_PROTECTION_TRUE";
-})(ChildProtection = exports.ChildProtection || (exports.ChildProtection = {}));
+})(ChildProtection || (exports.ChildProtection = ChildProtection = {}));
 var UnderAgeOfPromise;
 (function (UnderAgeOfPromise) {
     UnderAgeOfPromise[UnderAgeOfPromise["PROMISE_UNSPECIFIED"] = -1] = "PROMISE_UNSPECIFIED";
     UnderAgeOfPromise[UnderAgeOfPromise["PROMISE_FALSE"] = 0] = "PROMISE_FALSE";
     UnderAgeOfPromise[UnderAgeOfPromise["PROMISE_TRUE"] = 1] = "PROMISE_TRUE";
-})(UnderAgeOfPromise = exports.UnderAgeOfPromise || (exports.UnderAgeOfPromise = {}));
+})(UnderAgeOfPromise || (exports.UnderAgeOfPromise = UnderAgeOfPromise = {}));
 var BannerAdSize;
 (function (BannerAdSize) {
     BannerAdSize["BANNER_SIZE_360_57"] = "BANNER_SIZE_360_57";
@@ -84,7 +83,7 @@ var BannerAdSize;
     BannerAdSize["BANNER_SIZE_INVALID"] = "BANNER_SIZE_INVALID";
     BannerAdSize["BANNER_SIZE_SMART"] = "BANNER_SIZE_SMART";
     BannerAdSize["BANNER_SIZE_ADVANCED"] = "BANNER_SIZE_ADVANCED";
-})(BannerAdSize = exports.BannerAdSize || (exports.BannerAdSize = {}));
+})(BannerAdSize || (exports.BannerAdSize = BannerAdSize = {}));
 var HMSScreenOrientation;
 (function (HMSScreenOrientation) {
     HMSScreenOrientation[HMSScreenOrientation["SCREEN_ORIENTATION_LANDSCAPE"] = 0] = "SCREEN_ORIENTATION_LANDSCAPE";
@@ -103,25 +102,25 @@ var HMSScreenOrientation;
     HMSScreenOrientation[HMSScreenOrientation["SCREEN_ORIENTATION_USER_PORTRAIT"] = 12] = "SCREEN_ORIENTATION_USER_PORTRAIT";
     HMSScreenOrientation[HMSScreenOrientation["SCREEN_ORIENTATION_FULL_USER"] = 13] = "SCREEN_ORIENTATION_FULL_USER";
     HMSScreenOrientation[HMSScreenOrientation["SCREEN_ORIENTATION_LOCKED"] = 14] = "SCREEN_ORIENTATION_LOCKED";
-})(HMSScreenOrientation = exports.HMSScreenOrientation || (exports.HMSScreenOrientation = {}));
+})(HMSScreenOrientation || (exports.HMSScreenOrientation = HMSScreenOrientation = {}));
 var DebugNeedConsent;
 (function (DebugNeedConsent) {
     DebugNeedConsent[DebugNeedConsent["CONSENT_DEBUG_DISABLED"] = 0] = "CONSENT_DEBUG_DISABLED";
     DebugNeedConsent[DebugNeedConsent["CONSENT_DEBUG_NEED_CONSENT"] = 1] = "CONSENT_DEBUG_NEED_CONSENT";
     DebugNeedConsent[DebugNeedConsent["CONSENT_DEBUG_NOT_NEED_CONSENT"] = 2] = "CONSENT_DEBUG_NOT_NEED_CONSENT";
-})(DebugNeedConsent = exports.DebugNeedConsent || (exports.DebugNeedConsent = {}));
+})(DebugNeedConsent || (exports.DebugNeedConsent = DebugNeedConsent = {}));
 var ConsentStatus;
 (function (ConsentStatus) {
     ConsentStatus[ConsentStatus["CONSENT_PERSONALIZED"] = 0] = "CONSENT_PERSONALIZED";
     ConsentStatus[ConsentStatus["CONSENT_NON_PERSONALIZED"] = 1] = "CONSENT_NON_PERSONALIZED";
     ConsentStatus[ConsentStatus["CONSENT_UNKNOWN"] = 2] = "CONSENT_UNKNOWN";
-})(ConsentStatus = exports.ConsentStatus || (exports.ConsentStatus = {}));
+})(ConsentStatus || (exports.ConsentStatus = ConsentStatus = {}));
 var AudioFocusType;
 (function (AudioFocusType) {
     AudioFocusType[AudioFocusType["GAIN_AUDIO_FOCUS_ALL"] = 0] = "GAIN_AUDIO_FOCUS_ALL";
     AudioFocusType[AudioFocusType["NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE"] = 1] = "NOT_GAIN_AUDIO_FOCUS_WHEN_MUTE";
     AudioFocusType[AudioFocusType["NOT_GAIN_AUDIO_FOCUS_ALL"] = 2] = "NOT_GAIN_AUDIO_FOCUS_ALL";
-})(AudioFocusType = exports.AudioFocusType || (exports.AudioFocusType = {}));
+})(AudioFocusType || (exports.AudioFocusType = AudioFocusType = {}));
 var MediaAspect;
 (function (MediaAspect) {
     MediaAspect[MediaAspect["ASPECT_ANY"] = 1] = "ASPECT_ANY";
@@ -130,7 +129,7 @@ var MediaAspect;
     MediaAspect[MediaAspect["ASPECT_PORTRAIT"] = 3] = "ASPECT_PORTRAIT";
     MediaAspect[MediaAspect["ASPECT_SQUARE"] = 4] = "ASPECT_SQUARE";
     MediaAspect[MediaAspect["ASPECT_UNKNOWN"] = 0] = "ASPECT_UNKNOWN";
-})(MediaAspect = exports.MediaAspect || (exports.MediaAspect = {}));
+})(MediaAspect || (exports.MediaAspect = MediaAspect = {}));
 var ChoicesPosition;
 (function (ChoicesPosition) {
     ChoicesPosition[ChoicesPosition["BOTTOM_LEFT"] = 3] = "BOTTOM_LEFT";
@@ -138,13 +137,13 @@ var ChoicesPosition;
     ChoicesPosition[ChoicesPosition["INVISIBLE"] = 4] = "INVISIBLE";
     ChoicesPosition[ChoicesPosition["TOP_LEFT"] = 0] = "TOP_LEFT";
     ChoicesPosition[ChoicesPosition["TOP_RIGHT"] = 1] = "TOP_RIGHT";
-})(ChoicesPosition = exports.ChoicesPosition || (exports.ChoicesPosition = {}));
+})(ChoicesPosition || (exports.ChoicesPosition = ChoicesPosition = {}));
 var MediaDirection;
 (function (MediaDirection) {
     MediaDirection[MediaDirection["ANY"] = 0] = "ANY";
     MediaDirection[MediaDirection["LANDSCAPE"] = 2] = "LANDSCAPE";
     MediaDirection[MediaDirection["PORTRAIT"] = 1] = "PORTRAIT";
-})(MediaDirection = exports.MediaDirection || (exports.MediaDirection = {}));
+})(MediaDirection || (exports.MediaDirection = MediaDirection = {}));
 var NativeAdTemplate;
 (function (NativeAdTemplate) {
     NativeAdTemplate["NATIVE_AD_SMALL_TEMPLATE"] = "NATIVE_AD_SMALL_TEMPLATE";
@@ -152,7 +151,7 @@ var NativeAdTemplate;
     NativeAdTemplate["NATIVE_AD_BANNER_TEMPLATE"] = "NATIVE_AD_BANNER_TEMPLATE";
     NativeAdTemplate["NATIVE_AD_VIDEO_TEMPLATE"] = "NATIVE_AD_VIDEO_TEMPLATE";
     NativeAdTemplate["NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE"] = "NATIVE_AD_WITH_APP_DOWNLOAD_BTN_TEMPLATE";
-})(NativeAdTemplate = exports.NativeAdTemplate || (exports.NativeAdTemplate = {}));
+})(NativeAdTemplate || (exports.NativeAdTemplate = NativeAdTemplate = {}));
 var Color;
 (function (Color) {
     Color["RED"] = "RED";
@@ -167,7 +166,7 @@ var Color;
     Color["CYAN"] = "CYAN";
     Color["GREEN"] = "GREEN";
     Color["TRANSPARENT"] = "TRANSPARENT";
-})(Color = exports.Color || (exports.Color = {}));
+})(Color || (exports.Color = Color = {}));
 var InstallReferrerResponses;
 (function (InstallReferrerResponses) {
     InstallReferrerResponses[InstallReferrerResponses["SERVICE_DISCONNECTED"] = -1] = "SERVICE_DISCONNECTED";
@@ -175,13 +174,13 @@ var InstallReferrerResponses;
     InstallReferrerResponses[InstallReferrerResponses["SERVICE_UNAVAILABLE"] = 1] = "SERVICE_UNAVAILABLE";
     InstallReferrerResponses[InstallReferrerResponses["OK"] = 0] = "OK";
     InstallReferrerResponses[InstallReferrerResponses["FEATURE_NOT_SUPPORTED"] = 2] = "FEATURE_NOT_SUPPORTED";
-})(InstallReferrerResponses = exports.InstallReferrerResponses || (exports.InstallReferrerResponses = {}));
+})(InstallReferrerResponses || (exports.InstallReferrerResponses = InstallReferrerResponses = {}));
 var Anchor;
 (function (Anchor) {
     Anchor["TOP"] = "top";
     Anchor["BOTTOM"] = "bottom";
     Anchor["INVISIBLE"] = "invisible";
-})(Anchor = exports.Anchor || (exports.Anchor = {}));
+})(Anchor || (exports.Anchor = Anchor = {}));
 ///////////////////////////////////////////////
 var BannerAdEvents;
 (function (BannerAdEvents) {
@@ -192,7 +191,7 @@ var BannerAdEvents;
     BannerAdEvents["BANNER_AD_LOADED"] = "banner_ad_loaded";
     BannerAdEvents["BANNER_AD_CLICKED"] = "banner_ad_clicked";
     BannerAdEvents["BANNER_AD_IMPRESSION"] = "banner_ad_impression";
-})(BannerAdEvents = exports.BannerAdEvents || (exports.BannerAdEvents = {}));
+})(BannerAdEvents || (exports.BannerAdEvents = BannerAdEvents = {}));
 var InterstitialAdEvents;
 (function (InterstitialAdEvents) {
     InterstitialAdEvents["INTERSTITIAL_AD_CLOSED"] = "interstitial_ad_closed";
@@ -210,7 +209,7 @@ var InterstitialAdEvents;
     InterstitialAdEvents["INTERSTITIAL_REWARD_AD_OPENED"] = "interstitial_reward_ad_opened";
     InterstitialAdEvents["INTERSTITIAL_REWARD_AD_COMPLETED"] = "interstitial_reward_ad_completed";
     InterstitialAdEvents["INTERSTITIAL_REWARD_AD_STARTED"] = "interstitial_reward_ad_started";
-})(InterstitialAdEvents = exports.InterstitialAdEvents || (exports.InterstitialAdEvents = {}));
+})(InterstitialAdEvents || (exports.InterstitialAdEvents = InterstitialAdEvents = {}));
 var SplashAdEvents;
 (function (SplashAdEvents) {
     SplashAdEvents["SPLASH_AD_FAILED_TO_LOAD"] = "splash_ad_failed_to_load";
@@ -218,7 +217,7 @@ var SplashAdEvents;
     SplashAdEvents["SPLASH_AD_DISMISSED"] = "splash_ad_dismissed";
     SplashAdEvents["SPLASH_AD_SHOWED"] = "splash_ad_showed";
     SplashAdEvents["SPLASH_AD_CLICK"] = "splash_ad_click";
-})(SplashAdEvents = exports.SplashAdEvents || (exports.SplashAdEvents = {}));
+})(SplashAdEvents || (exports.SplashAdEvents = SplashAdEvents = {}));
 var RollAdEvents;
 (function (RollAdEvents) {
     RollAdEvents["ROLL_AD_LOAD_FAILED"] = "roll_ad_load_failed";
@@ -234,7 +233,7 @@ var RollAdEvents;
     RollAdEvents["ROLL_AD_MEDIA_UNMUTE"] = "roll_ad_media_unmute";
     RollAdEvents["ROLL_AD_MEDIA_MUTE"] = "roll_ad_media_mute";
     RollAdEvents["ROLL_AD_WHY_THIS_AD"] = "roll_ad_why_this_ad";
-})(RollAdEvents = exports.RollAdEvents || (exports.RollAdEvents = {}));
+})(RollAdEvents || (exports.RollAdEvents = RollAdEvents = {}));
 var RewardAdEvents;
 (function (RewardAdEvents) {
     RewardAdEvents["REWARD_METADATA_CHANGED"] = "reward_metadata_changed";
@@ -249,7 +248,7 @@ var RewardAdEvents;
     RewardAdEvents["REWARD_AD_FAILED_TO_LOAD"] = "reward_ad_failed_to_load";
     RewardAdEvents["REWARD_AD_LOADED"] = "reward_ad_loaded";
     RewardAdEvents["REWARD_AD_OPENED"] = "reward_ad_opened";
-})(RewardAdEvents = exports.RewardAdEvents || (exports.RewardAdEvents = {}));
+})(RewardAdEvents || (exports.RewardAdEvents = RewardAdEvents = {}));
 var NativeAdEvents;
 (function (NativeAdEvents) {
     NativeAdEvents["NATIVE_AD_DISLIKED"] = "native_ad_disliked";
@@ -268,7 +267,7 @@ var NativeAdEvents;
     NativeAdEvents["VIDEO_OPERATOR_VIDEO_MUTE"] = "video_operator_video_mute";
     NativeAdEvents["APP_DOWNLOAD_STATUS_CHANGED"] = "app_download_status_changed";
     NativeAdEvents["APP_DOWNLOAD_NON_WIFI_DOWNLOAD"] = "app_download_non_wifi_download";
-})(NativeAdEvents = exports.NativeAdEvents || (exports.NativeAdEvents = {}));
+})(NativeAdEvents || (exports.NativeAdEvents = NativeAdEvents = {}));
 var VastEvents;
 (function (VastEvents) {
     VastEvents["VAST_LOAD_SUCCESS"] = "vast_load_success";
@@ -283,7 +282,7 @@ var VastEvents;
     VastEvents["VAST_AD_FINISH"] = "vast_ad_finish";
     VastEvents["VAST_BUFFER_START"] = "vast_buffer_start";
     VastEvents["VAST_BUFFER_END"] = "vast_buffer_end";
-})(VastEvents = exports.VastEvents || (exports.VastEvents = {}));
+})(VastEvents || (exports.VastEvents = VastEvents = {}));
 var DetailedCreativeType;
 (function (DetailedCreativeType) {
     DetailedCreativeType[DetailedCreativeType["BIG_IMG"] = 901] = "BIG_IMG";
@@ -293,7 +292,7 @@ var DetailedCreativeType;
     DetailedCreativeType[DetailedCreativeType["SINGLE_IMG"] = 909] = "SINGLE_IMG";
     DetailedCreativeType[DetailedCreativeType["SHORT_TEXT"] = 913] = "SHORT_TEXT";
     DetailedCreativeType[DetailedCreativeType["LONG_TEXT"] = 914] = "LONG_TEXT";
-})(DetailedCreativeType = exports.DetailedCreativeType || (exports.DetailedCreativeType = {}));
+})(DetailedCreativeType || (exports.DetailedCreativeType = DetailedCreativeType = {}));
 var CreativeMatchType;
 (function (CreativeMatchType) {
     CreativeMatchType[CreativeMatchType["EXACT"] = 0] = "EXACT";
@@ -303,12 +302,12 @@ var CreativeMatchType;
     CreativeMatchType[CreativeMatchType["LANDSCAPE"] = 4] = "LANDSCAPE";
     CreativeMatchType[CreativeMatchType["PORTRAIT"] = 5] = "PORTRAIT";
     CreativeMatchType[CreativeMatchType["SQUARE"] = 6] = "SQUARE";
-})(CreativeMatchType = exports.CreativeMatchType || (exports.CreativeMatchType = {}));
+})(CreativeMatchType || (exports.CreativeMatchType = CreativeMatchType = {}));
 var ActivateStyle;
 (function (ActivateStyle) {
     ActivateStyle[ActivateStyle["BOTTOM_BANNER"] = 1] = "BOTTOM_BANNER";
     ActivateStyle[ActivateStyle["CONFIRM_DIALOG"] = 2] = "CONFIRM_DIALOG";
-})(ActivateStyle = exports.ActivateStyle || (exports.ActivateStyle = {}));
+})(ActivateStyle || (exports.ActivateStyle = ActivateStyle = {}));
 var AppDownloadStatus;
 (function (AppDownloadStatus) {
     AppDownloadStatus["DOWNLOAD"] = "DOWNLOAD";
@@ -322,5 +321,5 @@ var AppDownloadStatus;
     AppDownloadStatus["INSTALLING"] = "INSTALLING";
     AppDownloadStatus["INSTALL"] = "INSTALL";
     AppDownloadStatus["INSTALLED"] = "INSTALLED";
-})(AppDownloadStatus = exports.AppDownloadStatus || (exports.AppDownloadStatus = {}));
+})(AppDownloadStatus || (exports.AppDownloadStatus = AppDownloadStatus = {}));
 //# sourceMappingURL=HMSConstants.js.map

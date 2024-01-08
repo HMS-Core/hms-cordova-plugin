@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-adsprime-demo",
     "displayName": "HMSAdsPrimeDemo",
-    "version": "13.4.65-300",
+    "version": "13.4.67-302",
     "description": "A demo application which shows the usage of HMS Ads Prime Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENSE",

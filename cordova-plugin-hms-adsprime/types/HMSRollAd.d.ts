@@ -49,6 +49,8 @@ export declare class HMSRollAd extends Ads {
     setOnInstreamAdClickListener(): Promise<void>;
     showAdvertiserInfoDialog(): Promise<void>;
     hideAdvertiserInfoDialog(): Promise<void>;
+    showTransparencyDialog(): Promise<void>;
+    hideTransparencyDialog(): Promise<void>;
     getAdSource(): Promise<string>;
     getDuration(): Promise<Duration>;
     getWhyThisAd(): Promise<string>;
@@ -61,4 +63,6 @@ export declare class HMSRollAd extends Ads {
     getCallToAction(): Promise<string>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    isTransparencyOpen(): Promise<boolean>;
+    getTransparencyTplUrl(): Promise<string>;
 }

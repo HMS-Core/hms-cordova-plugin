@@ -278,6 +278,29 @@ $("hasAdvertiserInfo").onclick = async() => {
     alert("hasAdvertiserInfo: " + result);
 };
 
+$("isTransparencyOpenNativeAd").onclick = async() => {
+    const result = await nativeAd.isTransparencyOpen();
+    alert("isTransparencyOpenNativeAd: " + result);
+};
+$("getTransparencyTplUrlNativeAd").onclick = async() => {
+    const result = await nativeAd.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlNativeAd: " + result);
+}; 
+$("showTransparencyDialog").onclick = async() => {
+    await rollAd.showTransparencyDialog();
+};
+$("hideTransparencyDialog").onclick = async() => {
+    await rollAd.hideTransparencyDialog();
+};
+$("isTransparencyOpenRollAd").onclick = async() => {
+    const result = await rollAd.isTransparencyOpen();
+    alert("isTransparencyOpenRollAd: " + result);
+};
+$("getTransparencyTplUrlRollAd").onclick = async() => {
+    const result = await rollAd.getTransparencyTplUrl();
+    alert("getTransparencyTplUrlRollAd: " + result);
+};
+
 //VAST
 var vast;
 

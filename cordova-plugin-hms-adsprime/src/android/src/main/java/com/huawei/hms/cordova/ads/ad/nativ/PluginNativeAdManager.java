@@ -441,6 +441,22 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         promise.success(ListToJson.advertiserInfosToJson(nativeAd.getAdvertiserInfo()));
     }
     
+    public void isTransparencyOpen(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        promise.success(nativeAd.isTransparencyOpen());
+    }
+
+    public void getTransparencyTplUrl(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        promise.success(nativeAd.getTransparencyTplUrl());
+    }
+
+    public void showAppDetailPage(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        nativeAd.showAppDetailPage(context);
+        promise.success();
+    }
+
     private static class MyAppDownloadStyle extends AppDownloadButtonStyle {
 
         public MyAppDownloadStyle(Context context) {

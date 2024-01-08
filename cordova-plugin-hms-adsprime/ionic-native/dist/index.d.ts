@@ -589,6 +589,8 @@ export declare class HMSNativeAdOriginal extends IonicNativePlugin {
     hideAdvertiserInfoDialog(): Promise<void>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    isTransparencyOpen(): Promise<boolean>;
+    getTransparencyTplUrl(): Promise<string>;
 }
 export declare class HMSRewardAdOriginal extends IonicNativePlugin {
     on(eventName: RewardAdEvents, callback: (result?: any) => void): void;
@@ -648,6 +650,10 @@ export declare class HMSRollAdOriginal extends IonicNativePlugin {
     hideAdvertiserInfoDialog(): Promise<void>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    isTransparencyOpen(): Promise<boolean>;
+    getTransparencyTplUrl(): Promise<String>;
+    showTransparencyDialog(): Promise<void>;
+    hideTransparencyDialog(): Promise<void>;
 }
 export declare class HMSSplashAdOriginal extends IonicNativePlugin {
     on(eventName: SplashAdEvents, callback: (result?: any) => void): void;

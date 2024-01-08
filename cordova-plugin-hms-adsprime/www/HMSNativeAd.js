@@ -176,6 +176,15 @@ class HMSNativeAd extends ads_1.Ads {
     getAdvertiserInfo() {
         return this.run('getAdvertiserInfo');
     }
+    showAppDetailPage() {
+        return this.run('showAppDetailPage');
+    }
+    isTransparencyOpen() {
+        return this.run('isTransparencyOpen');
+    }
+    getTransparencyTplUrl() {
+        return this.run('getTransparencyTplUrl');
+    }
     // VideoOperator
     videoOperatorGetAspectRatio() {
         return this.run('videoOperatorGetAspectRatio');

@@ -157,6 +157,12 @@ class HMSRollAd extends ads_1.Ads {
     hideAdvertiserInfoDialog() {
         return this.run('hideAdvertiserInfoDialog');
     }
+    showTransparencyDialog() {
+        return this.run('showTransparencyDialog');
+    }
+    hideTransparencyDialog() {
+        return this.run('hideTransparencyDialog');
+    }
     //InstreamAd
     getAdSource() {
         return this.run('getAdSource');
@@ -193,6 +199,12 @@ class HMSRollAd extends ads_1.Ads {
     }
     getAdvertiserInfo() {
         return this.run('getAdvertiserInfo');
+    }
+    isTransparencyOpen() {
+        return this.run('isTransparencyOpen');
+    }
+    getTransparencyTplUrl() {
+        return this.run('getTransparencyTplUrl');
     }
 }
 exports.HMSRollAd = HMSRollAd;

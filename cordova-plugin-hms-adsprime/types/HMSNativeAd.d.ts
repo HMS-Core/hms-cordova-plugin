@@ -56,6 +56,9 @@ export declare class HMSNativeAd extends Ads {
     hideAdvertiserInfoDialog(): Promise<void>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    showAppDetailPage(): Promise<void>;
+    isTransparencyOpen(): Promise<boolean>;
+    getTransparencyTplUrl(): Promise<string>;
     videoOperatorGetAspectRatio(): Promise<VideoOperatorAspectRatio>;
     videoOperatorHasVideo(): Promise<boolean>;
     videoOperatorIsCustomizeOperateEnabled(): Promise<boolean>;

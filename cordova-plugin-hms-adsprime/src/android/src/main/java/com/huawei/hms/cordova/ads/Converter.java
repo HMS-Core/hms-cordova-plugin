@@ -316,7 +316,6 @@ public class Converter {
         return new JSONObject().put("adSource", instreamAd.getAdSource())
             .put("callToAction", instreamAd.getCallToAction())
             .put("duration", instreamAd.getDuration())
-            .put("whyThisAdLink", instreamAd.getWhyThisAd())
             .put("getAdSign", instreamAd.getAdSign())
             .put("isClicked", instreamAd.isClicked())
             .put("isExpired", instreamAd.isExpired())
