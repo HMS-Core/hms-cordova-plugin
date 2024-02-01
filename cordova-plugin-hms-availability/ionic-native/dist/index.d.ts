@@ -1,5 +1,5 @@
 import { IonicNativePlugin } from '@ionic-native/core';
-export declare class HMSAvailability extends IonicNativePlugin {
+export declare class HMSAvailabilityOriginal extends IonicNativePlugin {
     /**
      * Checks whether HMS Core is installed.
      * @return {Promise<number>}
@@ -25,3 +25,5 @@ export interface ApiMap {
     'HuaweiPPSkit.API': number;
     'HuaweiPush.API': number;
 }
+
+export declare const HMSAvailability: HMSAvailabilityOriginal;

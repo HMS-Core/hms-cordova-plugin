@@ -35,7 +35,7 @@ android {
 
 dependencies {
     implementation 'org.apache.cordova:framework:8.1.0'
-    implementation 'com.huawei.hms:base:6.11.0.301'
+    implementation 'com.huawei.hms:base:6.12.0.300'
 
     // Add only if you get error like 'can not find class HiAnalyticsUtils'
     // implementation 'com.huawei.hms:stats:5.0.3.301'
