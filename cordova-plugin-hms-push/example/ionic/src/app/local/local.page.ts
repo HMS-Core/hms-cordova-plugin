@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -340,7 +340,7 @@ export class LocalPage implements OnInit {
 
   async channelExists() {
     this.hmsLocalNotification
-      .channelExists("huawei-hms-cordova-push-channel-id-4")
+      .channelExists("huawei-hms-cordova-push-channel-id-4-default")
       .then((result: any) => {
         this.defaultSuccessHandler("channelExists", result);
       })
@@ -351,7 +351,7 @@ export class LocalPage implements OnInit {
 
   async channelBlocked() {
     this.hmsLocalNotification
-      .channelBlocked("huawei-hms-cordova-push-channel-id-4")
+      .channelBlocked("huawei-hms-cordova-push-channel-id-4-default")
       .then((result: any) => {
         this.defaultSuccessHandler("channelBlocked", result);
       })
@@ -362,7 +362,7 @@ export class LocalPage implements OnInit {
 
   async deleteChannel() {
     this.hmsLocalNotification
-      .deleteChannel("huawei-hms-cordova-push-channel-id-4")
+      .deleteChannel("huawei-hms-cordova-push-channel-id-4-default")
       .then((result: any) => {
         this.defaultSuccessHandler("deleteChannel", result);
       })

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Visibility = exports.RepeatType = exports.Priority = exports.Importance = exports.RemoteMessageBuilder = exports.Attr = void 0;
@@ -56,7 +55,7 @@ var Attr;
     Attr["importance"] = "importance";
     Attr["visibility"] = "visibility";
     Attr["data"] = "data";
-})(Attr = exports.Attr || (exports.Attr = {}));
+})(Attr || (exports.Attr = Attr = {}));
 var RemoteMessageBuilder;
 (function (RemoteMessageBuilder) {
     RemoteMessageBuilder["TO"] = "to";
@@ -67,7 +66,7 @@ var RemoteMessageBuilder;
     RemoteMessageBuilder["RECEIPT_MODE"] = "receiptMode";
     RemoteMessageBuilder["SEND_MODE"] = "sendMode";
     RemoteMessageBuilder["DATA"] = "data";
-})(RemoteMessageBuilder = exports.RemoteMessageBuilder || (exports.RemoteMessageBuilder = {}));
+})(RemoteMessageBuilder || (exports.RemoteMessageBuilder = RemoteMessageBuilder = {}));
 var Importance;
 (function (Importance) {
     Importance["MAX"] = "max";
@@ -77,7 +76,7 @@ var Importance;
     Importance["MIN"] = "min";
     Importance["NONE"] = "none";
     Importance["UNSPECIFIED"] = "unspecified";
-})(Importance = exports.Importance || (exports.Importance = {}));
+})(Importance || (exports.Importance = Importance = {}));
 var Priority;
 (function (Priority) {
     Priority["MAX"] = "max";
@@ -85,7 +84,7 @@ var Priority;
     Priority["DEFAULT"] = "default";
     Priority["LOW"] = "low";
     Priority["MIN"] = "min";
-})(Priority = exports.Priority || (exports.Priority = {}));
+})(Priority || (exports.Priority = Priority = {}));
 var RepeatType;
 (function (RepeatType) {
     RepeatType["HOUR"] = "hour";
@@ -93,11 +92,11 @@ var RepeatType;
     RepeatType["DAY"] = "day";
     RepeatType["WEEK"] = "week";
     RepeatType["CUSTOM_TIME"] = "custom_time";
-})(RepeatType = exports.RepeatType || (exports.RepeatType = {}));
+})(RepeatType || (exports.RepeatType = RepeatType = {}));
 var Visibility;
 (function (Visibility) {
     Visibility["PUBLIC"] = "public";
     Visibility["SECRET"] = "secret";
     Visibility["PRIVATE"] = "private";
-})(Visibility = exports.Visibility || (exports.Visibility = {}));
+})(Visibility || (exports.Visibility = Visibility = {}));
 //# sourceMappingURL=Interfaces.js.map

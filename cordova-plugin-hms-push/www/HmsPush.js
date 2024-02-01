@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CordovaRemoteMessage = exports.RemoteMessageBuilder = exports.removeBackgroundFile = exports.getItem = exports.removeItem = exports.setItem = exports.setBackgroundFile = exports.getInitialNotification = exports.sendRemoteMessage = exports.unsubscribe = exports.subscribe = exports.turnOffPush = exports.turnOnPush = exports.setAutoInitEnabled = exports.isAutoInitEnabled = exports.getOdid = exports.deleteTokenWithSubjectId = exports.deleteToken = exports.deleteAAID = exports.getId = exports.getCreationTime = exports.getAAID = exports.getTokenWithSubjectId = exports.getToken = exports.disableLogger = exports.enableLogger = exports.init = exports.DEFAULT_TOKEN_SCOPE = void 0;

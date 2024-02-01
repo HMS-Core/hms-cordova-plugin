@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -259,19 +259,19 @@ function initiliaze() {
   };
 
   thiz("channelExists").onclick = () => {
-    HmsLocalNotification.channelExists("huawei-hms-cordova-push-channel-id-4")
+    HmsLocalNotification.channelExists("huawei-hms-cordova-push-channel-id-4-default")
       .then((result) => defaultSuccessHandler("channelExists", result))
       .catch((error) => defaultExceptionHandler("channelExists", error));
   };
 
   thiz("channelBlocked").onclick = () => {
-    HmsLocalNotification.channelBlocked("huawei-hms-cordova-push-channel-id-4")
+    HmsLocalNotification.channelBlocked("huawei-hms-cordova-push-channel-id-4-default")
       .then((result) => defaultSuccessHandler("channelBlocked", result))
       .catch((error) => defaultExceptionHandler("channelBlocked", error));
   };
 
   thiz("deleteChannel").onclick = () => {
-    HmsLocalNotification.deleteChannel("huawei-hms-cordova-push-channel-id-4")
+    HmsLocalNotification.deleteChannel("huawei-hms-cordova-push-channel-id-4-default")
       .then((result) => defaultSuccessHandler("deleteChannel", result))
       .catch((error) => defaultExceptionHandler("deleteChannel", error));
   };

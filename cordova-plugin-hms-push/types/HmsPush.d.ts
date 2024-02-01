@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ export declare function setItem(key: string, value: string): Promise<void>;
 export declare function removeItem(key: string): Promise<void>;
 export declare function getItem(key: string): Promise<object>;
 export declare function removeBackgroundFile(): Promise<void>;
-declare type RemoteMessageObject = {
+type RemoteMessageObject = {
     [key in RemoteMessageBuilder]?: any;
 };
 export { RemoteMessageBuilder };

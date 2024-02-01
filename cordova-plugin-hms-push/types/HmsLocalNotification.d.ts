@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ export declare function getChannels(): Promise<any>;
 export declare function channelExists(channelId: string): Promise<boolean>;
 export declare function channelBlocked(channelId: string): Promise<boolean>;
 export declare function deleteChannel(channelId: string): Promise<boolean>;
-declare type LocalNotificationObject = {
+type LocalNotificationObject = {
     [key in Attr]?: any;
 };
 interface IdTag {
