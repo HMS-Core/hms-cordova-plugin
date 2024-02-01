@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ export declare function getInstance(routePolicy?: string): Promise<void>;
  *
  * @param enabled : Indicates whether to enable event logging.
  */
-export declare function setAnalyticsEnabled(enabled: boolean): Promise<void>;
+export declare function setAnalyticsEnabled(enabled?: boolean): Promise<void>;
 /**
  * When the method is called, a new session is generated if the old value of id is not empty
  * and is different from the new value. If you do not want to use id to identify a user
@@ -71,7 +71,7 @@ export declare function setUserProfile(name: string, value: string): Promise<voi
  * true: yes
  * false: no
  */
-export declare function setPropertyCollection(property: string, enabled: boolean): Promise<void>;
+export declare function setPropertyCollection(property: string, enabled?: boolean): Promise<void>;
 /**
  * Delete user profile.
  *
@@ -192,7 +192,7 @@ export declare function getReportPolicyThreshold(reportPolicyType: ReportPolicyT
  *
  * @param isEnabled : Indicates whether to enable restriction of HUAWEI Analytics.
  */
-export declare function setRestrictionEnabled(isEnabled: boolean): Promise<void>;
+export declare function setRestrictionEnabled(isEnabled?: boolean): Promise<void>;
 /**
  * Obtains the restriction status of HUAWEI Analytics.
  */
@@ -202,7 +202,7 @@ export declare function isRestrictionEnabled(): Promise<boolean>;
  *
  * @param isEnabled : Indicates whether to collect advertising identifiers.
  */
-export declare function setCollectAdsIdEnabled(isEnabled: boolean): Promise<void>;
+export declare function setCollectAdsIdEnabled(isEnabled?: boolean): Promise<void>;
 /**
  * Adds default event parameters.
  * These parameters will be added to all events except the automatically collected events.
@@ -245,8 +245,8 @@ export declare function disableLogger(): Promise<void>;
 interface GenericObject {
     [key: string]: any;
 }
-export type UserProfiles = GenericObject;
-export type EventParams = GenericObject;
+export declare type UserProfiles = GenericObject;
+export declare type EventParams = GenericObject;
 /**
  * ReportPolicy types for Sets automatic event reporting policies.
  */

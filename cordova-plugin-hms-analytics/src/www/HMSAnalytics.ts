@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ export function getInstance(routePolicy?: string): Promise<void> {
  * 
  * @param enabled : Indicates whether to enable event logging.
  */
-export function setAnalyticsEnabled(enabled: boolean): Promise<void> {
+export function setAnalyticsEnabled(enabled?: boolean): Promise<void> {
     return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setAnalyticsEnabled', { 'enabled': enabled }]);
 }
 
@@ -100,7 +100,7 @@ export function setUserProfile(name: string, value: string): Promise<void> {
  * true: yes
  * false: no
  */
-export function setPropertyCollection(property: string, enabled: boolean): Promise<void> {
+export function setPropertyCollection(property: string, enabled?: boolean): Promise<void> {
     return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setPropertyCollection', { 'property': property, 'enabled': enabled }]);
 }
 
@@ -263,7 +263,7 @@ export function getReportPolicyThreshold(reportPolicyType: ReportPolicyType): Pr
  *
  * @param isEnabled : Indicates whether to enable restriction of HUAWEI Analytics.
  */
-export function setRestrictionEnabled(isEnabled: boolean): Promise<void> {
+export function setRestrictionEnabled(isEnabled?: boolean): Promise<void> {
     return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setRestrictionEnabled', { 'isEnabled': isEnabled }]);
 }
 
@@ -279,7 +279,7 @@ export function isRestrictionEnabled(): Promise<boolean> {
  * 
  * @param isEnabled : Indicates whether to collect advertising identifiers.
  */
-export function setCollectAdsIdEnabled(isEnabled: boolean): Promise<void> {
+export function setCollectAdsIdEnabled(isEnabled?: boolean): Promise<void> {
     return asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setCollectAdsIdEnabled', { 'isEnabled': isEnabled }]);
 }
 

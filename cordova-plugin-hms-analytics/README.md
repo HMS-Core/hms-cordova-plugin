@@ -1,11 +1,15 @@
-# Cordova HMS Analytics
+<p align="center">
+  <h1 align="center">Cordova HMS Analytics</h1>
+</p>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-analytics"><img src="https://img.shields.io/npm/dm/@hmscore/cordova-plugin-hms-analytics?color=%23007EC6&style=for-the-badge" alt="downloads"></a>
+  <a href="https://www.npmjs.com/package/@hmscore/cordova-plugin-hms-analytics"><img src="https://img.shields.io/npm/v/@hmscore/cordova-plugin-hms-analytics?color=%23ed2a1c&style=for-the-badge" alt="NPM version"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@hmscore/cordova-plugin-hms-analytics.svg?color=%3bcc62&style=for-the-badge" alt="License"></a>
+</p>
 
-Cordova HMS Analytics Plugin offers you a range of preset analytics models so you can gain a deeper
-insight into your users, products, and content. With this insight, you can take a data-driven
-approach to market your apps and optimize your products.
+----
 
-This plugin enables communication between Huawei Analytics SDK and Cordova platform. It exposes all
-functionality provided by Huawei Analytics SDK.
+This plugin enables communication between Huawei Analytics SDK and Cordova platform. It exposes all functionality provided by Huawei Analytics SDK.
 
 [> Learn More](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/introduction-0000001050134725?ha_source=hms1)
 
@@ -61,8 +65,7 @@ If you have questions about how to use HMS samples, try the following options:
   place to official documentation for all HMS Core Kits, you can find detailed documentations in
   there.
 
-If you run into a bug in our samples, please submit an issue to
-the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ## License
 

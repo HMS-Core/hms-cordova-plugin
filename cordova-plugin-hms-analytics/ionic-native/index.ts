@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ export class HMSAnalytics extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  setAnalyticsEnabled(enabled: boolean): Promise<void> {
+  setAnalyticsEnabled(enabled?: boolean): Promise<void> {
     return;
   }
 
@@ -59,7 +59,7 @@ export class HMSAnalytics extends IonicNativePlugin {
   
   
   @Cordova({ otherPromise: true })
-  setPropertyCollection(property: string, enabled: boolean): Promise<void> {
+  setPropertyCollection(property: string, enabled?: boolean): Promise<void> {
     return;
   }
 
@@ -129,7 +129,7 @@ export class HMSAnalytics extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  setRestrictionEnabled(isEnabled: boolean): Promise<void> {
+  setRestrictionEnabled(isEnabled?: boolean): Promise<void> {
     return;
   }
 
@@ -139,7 +139,7 @@ export class HMSAnalytics extends IonicNativePlugin {
   }
 
   @Cordova({ otherPromise: true })
-  setCollectAdsIdEnabled(isEnabled: boolean): Promise<void> {
+  setCollectAdsIdEnabled(isEnabled?: boolean): Promise<void> {
     return;
   }
 

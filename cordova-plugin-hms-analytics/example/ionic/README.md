@@ -324,7 +324,7 @@ generated the certificate.
            /*
                <Other dependencies>
            */
-           classpath 'com.huawei.agconnect:agcp:1.9.1.300'
+           classpath 'com.huawei.agconnect:agcp:1.9.1.301'
        }
    }
 

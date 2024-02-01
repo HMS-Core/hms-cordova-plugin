@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -86,17 +86,25 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
     @CordovaMethod
     @HMSLog
     public void setAnalyticsEnabled(final CorPack corPack, JSONArray args, final Promise promise) throws JSONException {
+        boolean enabled = true;
         JSONObject params = args.getJSONObject(0);
-        viewModel.setAnalyticsEnabled(params.getBoolean("enabled"));
+        if(params.has("enabled")){
+            enabled = params.getBoolean("enabled");
+        }
+        viewModel.setAnalyticsEnabled(enabled);
         promise.success();
     }
 
     @CordovaMethod
     @HMSLog
-    public void setPropertyCollection(final CorPack corPack, JSONArray args, final Promise promise)
-        throws JSONException {
+    public void setPropertyCollection(final CorPack corPack, JSONArray args, final Promise promise) 
+    throws JSONException {
+        boolean enabled = true;
         JSONObject params = args.getJSONObject(0);
-        viewModel.setPropertyCollection(params.getString("property"), params.getBoolean("enabled"));
+        if(params.has("enabled")){
+            enabled = params.getBoolean("enabled");
+        }
+        viewModel.setPropertyCollection(params.getString("property"), enabled);
         promise.success();
     }
 
@@ -233,10 +241,14 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void setRestrictionEnabled(final CorPack corPack, JSONArray args, final Promise promise)
-        throws JSONException {
+    public void setRestrictionEnabled(final CorPack corPack, JSONArray args, final Promise promise) 
+    throws JSONException {
+        boolean isEnabled = false;
         JSONObject params = args.getJSONObject(0);
-        viewModel.setRestrictionEnabled(params.getBoolean("isEnabled"));
+        if(params.has("isEnabled")){
+            isEnabled = params.getBoolean("isEnabled");
+        }
+        viewModel.setRestrictionEnabled(isEnabled);
         promise.success();
     }
 
@@ -248,10 +260,14 @@ public class HMSAnalyticsModule extends CordovaBaseModule {
 
     @CordovaMethod
     @HMSLog
-    public void setCollectAdsIdEnabled(final CorPack corPack, JSONArray args, final Promise promise)
-        throws JSONException {
+    public void setCollectAdsIdEnabled(final CorPack corPack, JSONArray args, final Promise promise) 
+    throws JSONException {
+        boolean isEnabled = true;
         JSONObject params = args.getJSONObject(0);
-        viewModel.setCollectAdsIdEnabled(params.getBoolean("isEnabled"));
+        if(params.has("isEnabled")){
+            isEnabled = params.getBoolean("isEnabled");
+        }
+        viewModel.setCollectAdsIdEnabled(isEnabled);
         promise.success();
     }
 

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 import { IonicNativePlugin } from '@ionic-native/core';
 export declare class HMSAnalytics extends IonicNativePlugin {
     getInstance(routePolicy?: string): Promise<void>;
-    setAnalyticsEnabled(enabled: boolean): Promise<void>;
+    setAnalyticsEnabled(enabled?: boolean): Promise<void>;
     setUserId(userId: string): Promise<void>;
     setCustomReferrer(customReferrer: string): Promise<void>;
     setChannel(channel: string): Promise<void>;
     setUserProfile(name: string, value: string): Promise<void>;
-    setPropertyCollection(property: string, enabled: boolean): Promise<void>;
+    setPropertyCollection(property: string, enabled?: boolean): Promise<void>;
     deleteUserProfile(name: string): Promise<void>;
     setPushToken(token: string): Promise<void>;
     setMinActivitySessions(milliseconds: number): Promise<void>;
@@ -36,9 +36,9 @@ export declare class HMSAnalytics extends IonicNativePlugin {
     pageEnd(pageName: string): Promise<void>;
     setReportPolicies(reportPolicies: ReportPolicy): Promise<void>;
     getReportPolicyThreshold(reportPolicyType: ReportPolicyType): Promise<number>;
-    setRestrictionEnabled(isEnabled: boolean): Promise<void>;
+    setRestrictionEnabled(isEnabled?: boolean): Promise<void>;
     isRestrictionEnabled(): Promise<boolean>;
-    setCollectAdsIdEnabled(isEnabled: boolean): Promise<void>;
+    setCollectAdsIdEnabled(isEnabled?: boolean): Promise<void>;
     addDefaultEventParams(params: EventParams): Promise<void>;
     enableLog(logLevel?: LogLevelType): Promise<void>;
     enableLogger(): Promise<void>;

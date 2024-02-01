@@ -1,19 +1,20 @@
-"use strict";
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License")
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-        https://www.apache.org/licenses/LICENSE-2.0
+https://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
+
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HAParamType = exports.HAEventType = exports.HAUserProfileType = exports.LogLevelType = exports.ReportPolicyType = exports.disableLogger = exports.enableLogger = exports.enableLog = exports.addDefaultEventParams = exports.setCollectAdsIdEnabled = exports.isRestrictionEnabled = exports.setRestrictionEnabled = exports.getReportPolicyThreshold = exports.setReportPolicies = exports.pageEnd = exports.pageStart = exports.getUserProfiles = exports.getDataUploadSiteInfo = exports.getAAID = exports.clearCachedData = exports.onEvent = exports.setSessionDuration = exports.setMinActivitySessions = exports.setPushToken = exports.deleteUserProfile = exports.setPropertyCollection = exports.setUserProfile = exports.setChannel = exports.setCustomReferrer = exports.setUserId = exports.setAnalyticsEnabled = exports.getInstance = void 0;
 const utils_1 = require("./utils");
@@ -30,7 +31,7 @@ const HMSAnalyticsModule = 'HMSAnalyticsModule';
  * The options are CN (China), DE (Germany), SG (Singapore), and RU (Russia).
  */
 function getInstance(routePolicy) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getInstance', { 'routePolicy': routePolicy }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getInstance', { 'routePolicy': routePolicy }]);
 }
 exports.getInstance = getInstance;
 /**
@@ -42,7 +43,7 @@ exports.getInstance = getInstance;
  * @param enabled : Indicates whether to enable event logging.
  */
 function setAnalyticsEnabled(enabled) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setAnalyticsEnabled', { 'enabled': enabled }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setAnalyticsEnabled', { 'enabled': enabled }]);
 }
 exports.setAnalyticsEnabled = setAnalyticsEnabled;
 /**
@@ -55,7 +56,7 @@ exports.setAnalyticsEnabled = setAnalyticsEnabled;
  *           {@param id} is used by Analytics Kit to associate user data.
  */
 function setUserId(userId) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setUserId', { 'userId': userId }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserId', { 'userId': userId }]);
 }
 exports.setUserId = setUserId;
 /**
@@ -64,7 +65,7 @@ exports.setUserId = setUserId;
  * @param id : Custom referrer, a string containing a maximum of 256 characters. The value cannot be    empty.
  */
 function setCustomReferrer(customReferrer) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setCustomReferrer', { 'customReferrer': customReferrer }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setCustomReferrer', { 'customReferrer': customReferrer }]);
 }
 exports.setCustomReferrer = setCustomReferrer;
 /**
@@ -73,7 +74,7 @@ exports.setCustomReferrer = setCustomReferrer;
  * The value cannot be empty. The value can consist of only letters, digits, underscores (_), hyphens (-), and spaces. It cannot start or end with a space.
  */
 function setChannel(channel) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setChannel', { 'channel': channel }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setChannel', { 'channel': channel }]);
 }
 exports.setChannel = setChannel;
 /**
@@ -87,7 +88,7 @@ exports.setChannel = setChannel;
  * @param value : User attribute value, a string containing a maximum of 256 characters.
  */
 function setUserProfile(name, value) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setUserProfile', { 'name': name, 'value': value }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setUserProfile', { 'name': name, 'value': value }]);
 }
 exports.setUserProfile = setUserProfile;
 /**
@@ -98,7 +99,7 @@ exports.setUserProfile = setUserProfile;
  * false: no
  */
 function setPropertyCollection(property, enabled) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setPropertyCollection', { 'property': property, 'enabled': enabled }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setPropertyCollection', { 'property': property, 'enabled': enabled }]);
 }
 exports.setPropertyCollection = setPropertyCollection;
 /**
@@ -107,7 +108,7 @@ exports.setPropertyCollection = setPropertyCollection;
  * @param name  :  Name of a user attribute
  */
 function deleteUserProfile(name) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['deleteUserProfile', { 'name': name }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['deleteUserProfile', { 'name': name }]);
 }
 exports.deleteUserProfile = deleteUserProfile;
 /**
@@ -121,7 +122,7 @@ exports.deleteUserProfile = deleteUserProfile;
  * @note This method is only to support on Android Platform.
  */
 function setPushToken(token) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setPushToken', { 'token': token }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setPushToken', { 'token': token }]);
 }
 exports.setPushToken = setPushToken;
 /**
@@ -136,7 +137,7 @@ exports.setPushToken = setPushToken;
  * @note This method is only to support on Android Platform.
  */
 function setMinActivitySessions(milliseconds) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setMinActivitySessions', { 'milliseconds': milliseconds }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setMinActivitySessions', { 'milliseconds': milliseconds }]);
 }
 exports.setMinActivitySessions = setMinActivitySessions;
 /**
@@ -148,7 +149,7 @@ exports.setMinActivitySessions = setMinActivitySessions;
  * @param milliseconds : Session timeout interval, in milliseconds.
  */
 function setSessionDuration(milliseconds) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setSessionDuration', { 'milliseconds': milliseconds }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setSessionDuration', { 'milliseconds': milliseconds }]);
 }
 exports.setSessionDuration = setSessionDuration;
 /**
@@ -161,28 +162,28 @@ exports.setSessionDuration = setSessionDuration;
  * @param params  :  Information carried in an event. The number of built-in key-value pairs
  */
 function onEvent(eventId, params) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['onEvent', { 'eventId': eventId, 'params': params }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['onEvent', { 'eventId': eventId, 'params': params }]);
 }
 exports.onEvent = onEvent;
 /**
  * Clears all collected data cached locally, including cached data that failed to be sent.
  */
 function clearCachedData() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['clearCachedData']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['clearCachedData']);
 }
 exports.clearCachedData = clearCachedData;
 /**
  * Obtains the AAID from AppGallery Connect.
  */
 function getAAID() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getAAID']);
 }
 exports.getAAID = getAAID;
 /**
  * Obtains the processing location of the uploaded data.
  */
 function getDataUploadSiteInfo() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getDataUploadSiteInfo']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getDataUploadSiteInfo']);
 }
 exports.getDataUploadSiteInfo = getDataUploadSiteInfo;
 /**
@@ -192,7 +193,7 @@ exports.getDataUploadSiteInfo = getDataUploadSiteInfo;
  *                   custom user attributes.
  */
 function getUserProfiles(predefined) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getUserProfiles', { 'predefined': predefined }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getUserProfiles', { 'predefined': predefined }]);
 }
 exports.getUserProfiles = getUserProfiles;
 /**
@@ -211,7 +212,7 @@ exports.getUserProfiles = getUserProfiles;
  * @note This method is only to support on Android Platform.
  */
 function pageStart(pageName, pageClassOverride) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['pageStart', { 'pageName': pageName, 'pageClassOverride': pageClassOverride }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageStart', { 'pageName': pageName, 'pageClassOverride': pageClassOverride }]);
 }
 exports.pageStart = pageStart;
 /**
@@ -229,7 +230,7 @@ exports.pageStart = pageStart;
  * @note This method is only to support on Android Platform.
  */
 function pageEnd(pageName) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['pageEnd', { 'pageName': pageName }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['pageEnd', { 'pageName': pageName }]);
 }
 exports.pageEnd = pageEnd;
 /**
@@ -239,7 +240,7 @@ exports.pageEnd = pageEnd;
  *                       One or more policies can be specified.
  */
 function setReportPolicies(reportPolicies) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setReportPolicies', { 'reportPolicies': reportPolicies }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setReportPolicies', { 'reportPolicies': reportPolicies }]);
 }
 exports.setReportPolicies = setReportPolicies;
 /**
@@ -250,7 +251,7 @@ exports.setReportPolicies = setReportPolicies;
  * @note This method is only to support on Android Platform.
  */
 function getReportPolicyThreshold(reportPolicyType) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['getReportPolicyThreshold', { 'reportPolicyType': reportPolicyType }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['getReportPolicyThreshold', { 'reportPolicyType': reportPolicyType }]);
 }
 exports.getReportPolicyThreshold = getReportPolicyThreshold;
 /**
@@ -261,14 +262,14 @@ exports.getReportPolicyThreshold = getReportPolicyThreshold;
  * @param isEnabled : Indicates whether to enable restriction of HUAWEI Analytics.
  */
 function setRestrictionEnabled(isEnabled) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setRestrictionEnabled', { 'isEnabled': isEnabled }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setRestrictionEnabled', { 'isEnabled': isEnabled }]);
 }
 exports.setRestrictionEnabled = setRestrictionEnabled;
 /**
  * Obtains the restriction status of HUAWEI Analytics.
  */
 function isRestrictionEnabled() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['isRestrictionEnabled']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['isRestrictionEnabled']);
 }
 exports.isRestrictionEnabled = isRestrictionEnabled;
 /**
@@ -277,7 +278,7 @@ exports.isRestrictionEnabled = isRestrictionEnabled;
  * @param isEnabled : Indicates whether to collect advertising identifiers.
  */
 function setCollectAdsIdEnabled(isEnabled) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['setCollectAdsIdEnabled', { 'isEnabled': isEnabled }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['setCollectAdsIdEnabled', { 'isEnabled': isEnabled }]);
 }
 exports.setCollectAdsIdEnabled = setCollectAdsIdEnabled;
 /**
@@ -290,7 +291,7 @@ exports.setCollectAdsIdEnabled = setCollectAdsIdEnabled;
  *              can consist of only digits, letters, and underscores (_), but cannot start with a digit.
  */
 function addDefaultEventParams(params) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['addDefaultEventParams', { 'params': params }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['addDefaultEventParams', { 'params': params }]);
 }
 exports.addDefaultEventParams = addDefaultEventParams;
 /**
@@ -308,7 +309,7 @@ exports.addDefaultEventParams = addDefaultEventParams;
  *          2- On the Arguments page, click + to add the -HALogLevelDebug parameter.
  */
 function enableLog(logLevel = LogLevelType.DEBUG) {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['enableLog', { 'logLevel': logLevel }]);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLog', { 'logLevel': logLevel }]);
 }
 exports.enableLog = enableLog;
 // HMSLogger
@@ -319,7 +320,7 @@ exports.enableLog = enableLog;
  * @note This method is only to support on Android Platform.
  */
 function enableLogger() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['enableLogger']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['enableLogger']);
 }
 exports.enableLogger = enableLogger;
 /**
@@ -329,7 +330,7 @@ exports.enableLogger = enableLogger;
  * @note This method is only to support on Android Platform.
  */
 function disableLogger() {
-    return (0, utils_1.asyncExec)(HMSAnalytics, HMSAnalyticsModule, ['disableLogger']);
+    return utils_1.asyncExec(HMSAnalytics, HMSAnalyticsModule, ['disableLogger']);
 }
 exports.disableLogger = disableLogger;
 ///////////////////////////////////////////////////////////////
