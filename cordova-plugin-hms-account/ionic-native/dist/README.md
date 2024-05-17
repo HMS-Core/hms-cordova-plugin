@@ -25,7 +25,7 @@ $ npm install @hmscore/cordova-plugin-hms-account
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-account
+$ npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-account
 ```
 
 ---

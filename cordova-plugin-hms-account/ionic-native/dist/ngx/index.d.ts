@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { IonicNativePlugin } from '@ionic-native/core';
+import { AwesomeCordovaNativePlugin } from '@awesome-cordova-plugins/core';
 export declare enum AuthScopeList {
     GAME = "https://www.huawei.com/auth/games",
     OPENID = "openid",
@@ -133,7 +133,7 @@ export interface SignInData {
     authScopeList?: AuthScopeList[];
     authIdTokenSignAlg?: AuthIdTokenSignAlg;
 }
-export declare class HMSAccount extends IonicNativePlugin {
+export declare class HMSAccount extends AwesomeCordovaNativePlugin {
     signIn(signInData: SignInData, packageName: string): Promise<AuthHuaweiId>;
     signOut(): Promise<void>;
     cancelAuthorization(): Promise<void>;
@@ -141,7 +141,7 @@ export declare class HMSAccount extends IonicNativePlugin {
     enableLogger(): Promise<void>;
     disableLogger(): Promise<void>;
 }
-export declare class HMSAccountAuthService extends IonicNativePlugin {
+export declare class HMSAccountAuthService extends AwesomeCordovaNativePlugin {
     signIn(signInData: SignInData, packageName: string): Promise<AuthAccount>;
     getIndependentSignIn(accessToken: string): Promise<AuthAccount>;
     signOut(): Promise<void>;
@@ -165,31 +165,31 @@ export declare enum CornerRadius {
     CORNER_RADIUS_MEDIUM = -2,
     CORNER_RADIUS_SMALL = -3
 }
-export declare class HMSHuaweiIdAuthButton extends IonicNativePlugin {
+export declare class HMSHuaweiIdAuthButton extends AwesomeCordovaNativePlugin {
     getHuaweiIdAuthButton(edittedButton: string, theme: Theme, colorPolicy: ColorPolicy, cornerRadius: CornerRadius): void;
 }
-export declare class HMSHuaweiIdAuthManager extends IonicNativePlugin {
+export declare class HMSHuaweiIdAuthManager extends AwesomeCordovaNativePlugin {
     getAuthResult(packageName: String): Promise<AuthHuaweiId>;
     getAuthResultWithScope(authHuaweiId: AuthScopeList[], packageName: string): Promise<AuthHuaweiId>;
     containScopes(authHuaweiId: AuthBuilder, authScopeList: AuthScopeList[], packageName: string): Promise<ContainScopesResult>;
     addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName: string): Promise<void>;
 }
-export declare class HMSAccountAuthManager extends IonicNativePlugin {
+export declare class HMSAccountAuthManager extends AwesomeCordovaNativePlugin {
     getAuthResult(packageName: string): Promise<AuthAccount>;
     getAuthResultWithScope(authAccount: AuthScopeList[], packageName: string): Promise<AuthAccount>;
     containScopes(authAccount: AuthBuilder, authScopeList: AuthScopeList[], packageName: string): Promise<ContainScopesResult>;
     addAuthScopes(requestCode: number, authScopeList: AuthScopeList[], packageName: string): Promise<void>;
 }
-export declare class HMSHuaweiIdAuthTool extends IonicNativePlugin {
+export declare class HMSHuaweiIdAuthTool extends AwesomeCordovaNativePlugin {
     deleteAuthInfo(accessToken: string): Promise<void>;
     requestUnionId(huaweiAccountName: string): Promise<string>;
     requestAccessToken(account: Account, authScopeList: AuthScopeList[]): Promise<string>;
 }
-export declare class HMSNetworkTool extends IonicNativePlugin {
+export declare class HMSNetworkTool extends AwesomeCordovaNativePlugin {
     buildNetworkURL(domainHttps: DomainInfo): Promise<string>;
     buildNetworkCookie(cookie: Cookie): Promise<string>;
 }
-export declare class HMSReadSMSManager extends IonicNativePlugin {
+export declare class HMSReadSMSManager extends AwesomeCordovaNativePlugin {
     smsVerificationCode(): Promise<string>;
     obtainHashCode(): Promise<string>;
     startConsent(phoneNumber: string): Promise<string>;

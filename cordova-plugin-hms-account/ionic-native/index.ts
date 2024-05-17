@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 */
 
 import { Injectable } from '@angular/core';
-import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
+import { Plugin, Cordova, AwesomeCordovaNativePlugin } from '@awesome-cordova-plugins/core';
 
 export enum AuthScopeList {
   GAME = "https://www.huawei.com/auth/games",
@@ -156,7 +156,7 @@ export interface SignInData {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSAccount extends IonicNativePlugin {
+export class HMSAccount extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   signIn(signInData: SignInData, packageName:string): Promise<AuthHuaweiId> {
     return;
@@ -195,7 +195,7 @@ export class HMSAccount extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSAccountAuthService extends IonicNativePlugin {
+export class HMSAccountAuthService extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   signIn(signInData: SignInData, packageName:string): Promise<AuthAccount> {
     return;
@@ -251,7 +251,7 @@ export enum CornerRadius {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSHuaweiIdAuthButton extends IonicNativePlugin {
+export class HMSHuaweiIdAuthButton extends AwesomeCordovaNativePlugin {
   @Cordova()
   getHuaweiIdAuthButton(edittedButton: string, theme: Theme, colorPolicy: ColorPolicy, cornerRadius: CornerRadius): void {
     return;
@@ -265,7 +265,7 @@ export class HMSHuaweiIdAuthButton extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSHuaweiIdAuthManager extends IonicNativePlugin {
+export class HMSHuaweiIdAuthManager extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   getAuthResult(packageName:String): Promise<AuthHuaweiId> {
     return;
@@ -294,7 +294,7 @@ export class HMSHuaweiIdAuthManager extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSAccountAuthManager extends IonicNativePlugin {
+export class HMSAccountAuthManager extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   getAuthResult(packageName:string): Promise<AuthAccount> {
     return;
@@ -323,7 +323,7 @@ export class HMSAccountAuthManager extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
+export class HMSHuaweiIdAuthTool extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   deleteAuthInfo(accessToken: string): Promise<void> {
     return;
@@ -347,7 +347,7 @@ export class HMSHuaweiIdAuthTool extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSNetworkTool extends IonicNativePlugin {
+export class HMSNetworkTool extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   buildNetworkURL(domainHttps: DomainInfo): Promise<string> {
   return;
@@ -366,7 +366,7 @@ export class HMSNetworkTool extends IonicNativePlugin {
   platforms: ['Android']
 })
 @Injectable()
-export class HMSReadSMSManager extends IonicNativePlugin {
+export class HMSReadSMSManager extends AwesomeCordovaNativePlugin {
   @Cordova({ otherPromise: true })
   smsVerificationCode(): Promise<string> {
   return;
