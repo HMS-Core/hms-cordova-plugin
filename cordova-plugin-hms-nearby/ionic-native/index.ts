@@ -1,21 +1,21 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
-
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import { Injectable } from "@angular/core";
-import { Plugin, Cordova, IonicNativePlugin } from "@ionic-native/core";
+import { Plugin, Cordova, AwesomeCordovaNativePlugin } from "@awesome-cordova-plugins/core";
 
 /**
  * @name HMSNearby
@@ -46,7 +46,7 @@ import { Plugin, Cordova, IonicNativePlugin } from "@ionic-native/core";
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSNearby extends IonicNativePlugin {
+export class HMSNearby extends AwesomeCordovaNativePlugin {
     //////////////////// LOGGER ////////////////////
 
     @Cordova({ otherPromise: true })
@@ -368,34 +368,32 @@ export class HMSNearby extends IonicNativePlugin {
         return;
     }
 
-    //////////////////// WIFI ////////////////////
+    //////////////////// Beacon ////////////////////
 
-    @Cordova({ otherPromise: true })
-    /**
-     * Enable the Wi-Fi sharing function. Set WifiSharePolicy based on function requirements.
-     * @param {WifiSharePolicy} wifiSharePolicy Wi-Fi sharing policy. Enable the Wi-Fi sharing mode or configuration mode as required.
-     * @returns Promise<void>
-     */
-    startWifiShare(wifiSharePolicy: WifiSharePolicy): Promise<void> {
+
+    @Cordova({ otherPromise: true }) 
+    registerScanTask(beaconOption: BeaconOption): Promise<void> {
         return;
     }
 
-    @Cordova({ otherPromise: true })
-    /**
-     * Disables the Wi-Fi sharing function.
-     * @returns Promise<void>
-     */
-    stopWifiShare(): Promise<void> {
+    @Cordova({ otherPromise: true }) 
+    unRegisterScanTask(): Promise<void> {
         return;
     }
-
-    @Cordova({ otherPromise: true })
-    /**
-     * Shares Wi-Fi with a remote device.
-     * @param {string} endpointId ID of the remote endpoint.
-     * @returns Promise<void>
-     */
-    shareWifiConfig(endpointId: string): Promise<void> {
+     
+    
+    @Cordova({ otherPromise: true }) 
+    getBeaconMsgConditions(): Promise<void> {
+        return;
+    }
+    
+    @Cordova({ otherPromise: true }) 
+    getRawBeaconConditions(): Promise<void> {
+        return;
+    }
+    
+    @Cordova({ otherPromise: true }) 
+    getRawBeaconConditionsWithBeaconType(beaconType: BeaconType): Promise<void> {
         return;
     }
 
@@ -425,22 +423,18 @@ export enum HMSNearbyEvent {
     EVENT_MESSAGE_ON_LOST = "eventMessageOnLost",
     EVENT_PUT_ON_TIMEOUT = "eventPutOnTimeout",
     EVENT_GET_ON_TIMEOUT = "eventGetOnTimeout",
-    EVENT_STATUS_ON_PERMISSION_CHANGED = "eventStatusOnPermissionChanged",
-    EVENT_WIFI_ON_FOUND = "eventWifiOnFound",
-    EVENT_WIFI_ON_LOST = "eventWifiOnLost",
-    EVENT_WIFI_ON_FETCH_AUTH_CODE = "eventWifiOnFetchAuthCode",
-    EVENT_WIFI_ON_SHARE_RESULT = "eventWifiOnShareResult",
+    EVENT_STATUS_ON_PERMISSION_CHANGED = "eventStatusOnPermissionChanged", 
 }
 
 export enum HMSPermission {
     PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH",
-    PERMISSION_BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN",
-    PERMISSION_ACCESS_WIFI_STATE = "android.permission.ACCESS_WIFI_STATE",
-    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
+    PERMISSION_BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN", 
     PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
     PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
     PERMISSION_READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE",
-    PERMISSION_WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE",
+    PERMISSION_WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE", 
+    PERMISSION_ACCESS_WIFI_STATE = "android.permission.ACCESS_WIFI_STATE",
+    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE"
 }
 
 export enum Policy {
@@ -479,11 +473,6 @@ export enum MessagePolicyTtlSeconds {
     POLICY_TTL_SECONDS_INFINITE = 2147483647,
 }
 
-export enum WifiSharePolicy {
-    POLICY_SHARE = 1,
-    POLICY_SET = 2,
-}
-
 export enum ChannelPolicy {
     CHANNEL_AUTO = 1,
     CHANNEL_HIGH_THROUGHPUT = 2,
@@ -506,11 +495,9 @@ export enum StatusCode {
     STATUS_CONNECT_IO_ERROR = 8011,
     STATUS_ENDPOINT_UNKNOWN = 8012,
     STATUS_API_OCCUPIED = 8013,
-    STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION = 8014,
-    STATUS_MISSING_PERMISSION_ACCESS_WIFI_STATE = 8015,
+    STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION = 8014, 
     STATUS_MISSING_PERMISSION_BLUETOOTH = 8016,
     STATUS_MISSING_PERMISSION_BLUETOOTH_ADMIN = 8017,
-    STATUS_MISSING_PERMISSION_CHANGE_WIFI_STATE = 8018,
     STATUS_MISSING_PERMISSION_RECORD_AUDIO = 8019,
     STATUS_MISSING_SETTING_LOCATION_ON = 8020,
     STATUS_AIRPLANE_MODE_MUST_BE_OFF = 8021,
@@ -528,10 +515,19 @@ export enum StatusCode {
     STATUS_FINDING_MODE_ERROR = 8061,
     STATUS_MESSAGE_TASK_ALREADY_IN_PROCESSING = 8062,
     STATUS_MISSING_PERMISSION_FILE_READ_WRITE = 8063,
-    STATUS_MISSING_PERMISSION_INTERNET = 8064,
-    STATUS_WIFI_SHARE_USER_AUTH_FAIL = 8065,
-    STATUS_WIFI_SHARE_WIFI_CLOSED = 8066,
-    STATUS_WIFI_CONNECT_FAIL = 8067,
+    STATUS_MISSING_PERMISSION_INTERNET = 8064, 
+}
+
+//BEACON
+export interface BeaconOption {
+    beaconId?: string;
+    beaconType?: number;
+    namespace?: string;
+    type?: string;
+} 
+
+export interface BeaconType {
+    beaconType: number; 
 }
 
 export interface Message {
@@ -681,7 +677,3 @@ export interface AuthCodeUpdate {
     authCode: string;
 }
 
-export interface WifiShareResult {
-    endpointId: string;
-    statusCode: StatusCode;
-}

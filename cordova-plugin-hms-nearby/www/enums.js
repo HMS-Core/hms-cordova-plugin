@@ -1,21 +1,23 @@
+/*
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StatusCode = exports.ChannelPolicy = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
-/*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+exports.StatusCode = exports.ChannelPolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 var HMSNearbyEvent;
 (function (HMSNearbyEvent) {
     HMSNearbyEvent["EVENT_CONNECTION_ON_ESTABLISH"] = "eventConnectionOnEstablish";
@@ -32,69 +34,60 @@ var HMSNearbyEvent;
     HMSNearbyEvent["EVENT_PUT_ON_TIMEOUT"] = "eventPutOnTimeout";
     HMSNearbyEvent["EVENT_GET_ON_TIMEOUT"] = "eventGetOnTimeout";
     HMSNearbyEvent["EVENT_STATUS_ON_PERMISSION_CHANGED"] = "eventStatusOnPermissionChanged";
-    HMSNearbyEvent["EVENT_WIFI_ON_FOUND"] = "eventWifiOnFound";
-    HMSNearbyEvent["EVENT_WIFI_ON_LOST"] = "eventWifiOnLost";
-    HMSNearbyEvent["EVENT_WIFI_ON_FETCH_AUTH_CODE"] = "eventWifiOnFetchAuthCode";
-    HMSNearbyEvent["EVENT_WIFI_ON_SHARE_RESULT"] = "eventWifiOnShareResult";
-})(HMSNearbyEvent = exports.HMSNearbyEvent || (exports.HMSNearbyEvent = {}));
+})(HMSNearbyEvent || (exports.HMSNearbyEvent = HMSNearbyEvent = {}));
 var HMSPermission;
 (function (HMSPermission) {
     HMSPermission["PERMISSION_BLUETOOTH"] = "android.permission.BLUETOOTH";
     HMSPermission["PERMISSION_BLUETOOTH_ADMIN"] = "android.permission.BLUETOOTH_ADMIN";
-    HMSPermission["PERMISSION_ACCESS_WIFI_STATE"] = "android.permission.ACCESS_WIFI_STATE";
-    HMSPermission["PERMISSION_CHANGE_WIFI_STATE"] = "android.permission.CHANGE_WIFI_STATE";
     HMSPermission["PERMISSION_ACCESS_COARSE_LOCATION"] = "android.permission.ACCESS_COARSE_LOCATION";
     HMSPermission["PERMISSION_ACCESS_FINE_LOCATION"] = "android.permission.ACCESS_FINE_LOCATION";
     HMSPermission["PERMISSION_READ_EXTERNAL_STORAGE"] = "android.permission.READ_EXTERNAL_STORAGE";
     HMSPermission["PERMISSION_WRITE_EXTERNAL_STORAGE"] = "android.permission.WRITE_EXTERNAL_STORAGE";
-})(HMSPermission = exports.HMSPermission || (exports.HMSPermission = {}));
+    HMSPermission["PERMISSION_ACCESS_WIFI_STATE"] = "android.permission.ACCESS_WIFI_STATE";
+    HMSPermission["PERMISSION_CHANGE_WIFI_STATE"] = "android.permission.CHANGE_WIFI_STATE";
+})(HMSPermission || (exports.HMSPermission = HMSPermission = {}));
 var Policy;
 (function (Policy) {
     Policy[Policy["POLICY_MESH"] = 1] = "POLICY_MESH";
     Policy[Policy["POLICY_P2P"] = 2] = "POLICY_P2P";
     Policy[Policy["POLICY_STAR"] = 3] = "POLICY_STAR";
-})(Policy = exports.Policy || (exports.Policy = {}));
+})(Policy || (exports.Policy = Policy = {}));
 var DataType;
 (function (DataType) {
     DataType[DataType["DATA_FILE"] = 1] = "DATA_FILE";
     DataType[DataType["DATA_BYTES"] = 2] = "DATA_BYTES";
     DataType[DataType["DATA_STREAM"] = 3] = "DATA_STREAM";
-})(DataType = exports.DataType || (exports.DataType = {}));
+})(DataType || (exports.DataType = DataType = {}));
 var TransferState;
 (function (TransferState) {
     TransferState[TransferState["TRANSFER_STATE_SUCCESS"] = 1] = "TRANSFER_STATE_SUCCESS";
     TransferState[TransferState["TRANSFER_STATE_FAILURE"] = 2] = "TRANSFER_STATE_FAILURE";
     TransferState[TransferState["TRANSFER_STATE_IN_PROGRESS"] = 3] = "TRANSFER_STATE_IN_PROGRESS";
     TransferState[TransferState["TRANSFER_STATE_CANCELED"] = 4] = "TRANSFER_STATE_CANCELED";
-})(TransferState = exports.TransferState || (exports.TransferState = {}));
+})(TransferState || (exports.TransferState = TransferState = {}));
 var MessagePolicyDistanceType;
 (function (MessagePolicyDistanceType) {
     MessagePolicyDistanceType[MessagePolicyDistanceType["POLICY_DISTANCE_TYPE_DEFAULT"] = 0] = "POLICY_DISTANCE_TYPE_DEFAULT";
     MessagePolicyDistanceType[MessagePolicyDistanceType["POLICY_DISTANCE_TYPE_EARSHOT"] = 1] = "POLICY_DISTANCE_TYPE_EARSHOT";
-})(MessagePolicyDistanceType = exports.MessagePolicyDistanceType || (exports.MessagePolicyDistanceType = {}));
+})(MessagePolicyDistanceType || (exports.MessagePolicyDistanceType = MessagePolicyDistanceType = {}));
 var MessagePolicyFindingMode;
 (function (MessagePolicyFindingMode) {
     MessagePolicyFindingMode[MessagePolicyFindingMode["POLICY_FINDING_MODE_DEFAULT"] = 0] = "POLICY_FINDING_MODE_DEFAULT";
     MessagePolicyFindingMode[MessagePolicyFindingMode["POLICY_FINDING_MODE_BROADCAST"] = 1] = "POLICY_FINDING_MODE_BROADCAST";
     MessagePolicyFindingMode[MessagePolicyFindingMode["POLICY_FINDING_MODE_SCAN"] = 2] = "POLICY_FINDING_MODE_SCAN";
-})(MessagePolicyFindingMode = exports.MessagePolicyFindingMode || (exports.MessagePolicyFindingMode = {}));
+})(MessagePolicyFindingMode || (exports.MessagePolicyFindingMode = MessagePolicyFindingMode = {}));
 var MessagePolicyTtlSeconds;
 (function (MessagePolicyTtlSeconds) {
     MessagePolicyTtlSeconds[MessagePolicyTtlSeconds["POLICY_TTL_SECONDS_DEFAULT"] = 240] = "POLICY_TTL_SECONDS_DEFAULT";
     MessagePolicyTtlSeconds[MessagePolicyTtlSeconds["POLICY_TTL_SECONDS_MAX"] = 86400] = "POLICY_TTL_SECONDS_MAX";
     MessagePolicyTtlSeconds[MessagePolicyTtlSeconds["POLICY_TTL_SECONDS_INFINITE"] = 2147483647] = "POLICY_TTL_SECONDS_INFINITE";
-})(MessagePolicyTtlSeconds = exports.MessagePolicyTtlSeconds || (exports.MessagePolicyTtlSeconds = {}));
-var WifiSharePolicy;
-(function (WifiSharePolicy) {
-    WifiSharePolicy[WifiSharePolicy["POLICY_SHARE"] = 1] = "POLICY_SHARE";
-    WifiSharePolicy[WifiSharePolicy["POLICY_SET"] = 2] = "POLICY_SET";
-})(WifiSharePolicy = exports.WifiSharePolicy || (exports.WifiSharePolicy = {}));
+})(MessagePolicyTtlSeconds || (exports.MessagePolicyTtlSeconds = MessagePolicyTtlSeconds = {}));
 var ChannelPolicy;
 (function (ChannelPolicy) {
     ChannelPolicy[ChannelPolicy["CHANNEL_AUTO"] = 1] = "CHANNEL_AUTO";
     ChannelPolicy[ChannelPolicy["CHANNEL_HIGH_THROUGHPUT"] = 2] = "CHANNEL_HIGH_THROUGHPUT";
     ChannelPolicy[ChannelPolicy["CHANNEL_INSTANCE"] = 3] = "CHANNEL_INSTANCE";
-})(ChannelPolicy = exports.ChannelPolicy || (exports.ChannelPolicy = {}));
+})(ChannelPolicy || (exports.ChannelPolicy = ChannelPolicy = {}));
 var StatusCode;
 (function (StatusCode) {
     StatusCode[StatusCode["STATUS_SUCCESS"] = 0] = "STATUS_SUCCESS";
@@ -113,10 +106,8 @@ var StatusCode;
     StatusCode[StatusCode["STATUS_ENDPOINT_UNKNOWN"] = 8012] = "STATUS_ENDPOINT_UNKNOWN";
     StatusCode[StatusCode["STATUS_API_OCCUPIED"] = 8013] = "STATUS_API_OCCUPIED";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION"] = 8014] = "STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION";
-    StatusCode[StatusCode["STATUS_MISSING_PERMISSION_ACCESS_WIFI_STATE"] = 8015] = "STATUS_MISSING_PERMISSION_ACCESS_WIFI_STATE";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_BLUETOOTH"] = 8016] = "STATUS_MISSING_PERMISSION_BLUETOOTH";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_BLUETOOTH_ADMIN"] = 8017] = "STATUS_MISSING_PERMISSION_BLUETOOTH_ADMIN";
-    StatusCode[StatusCode["STATUS_MISSING_PERMISSION_CHANGE_WIFI_STATE"] = 8018] = "STATUS_MISSING_PERMISSION_CHANGE_WIFI_STATE";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_RECORD_AUDIO"] = 8019] = "STATUS_MISSING_PERMISSION_RECORD_AUDIO";
     StatusCode[StatusCode["STATUS_MISSING_SETTING_LOCATION_ON"] = 8020] = "STATUS_MISSING_SETTING_LOCATION_ON";
     StatusCode[StatusCode["STATUS_AIRPLANE_MODE_MUST_BE_OFF"] = 8021] = "STATUS_AIRPLANE_MODE_MUST_BE_OFF";
@@ -135,11 +126,6 @@ var StatusCode;
     StatusCode[StatusCode["STATUS_MESSAGE_TASK_ALREADY_IN_PROCESSING"] = 8062] = "STATUS_MESSAGE_TASK_ALREADY_IN_PROCESSING";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_FILE_READ_WRITE"] = 8063] = "STATUS_MISSING_PERMISSION_FILE_READ_WRITE";
     StatusCode[StatusCode["STATUS_MISSING_PERMISSION_INTERNET"] = 8064] = "STATUS_MISSING_PERMISSION_INTERNET";
-    StatusCode[StatusCode["STATUS_WIFI_SHARE_USER_AUTH_FAIL"] = 8065] = "STATUS_WIFI_SHARE_USER_AUTH_FAIL";
-    StatusCode[StatusCode["STATUS_WIFI_SHARE_WIFI_CLOSED"] = 8066] = "STATUS_WIFI_SHARE_WIFI_CLOSED";
-    StatusCode[StatusCode["STATUS_WIFI_CONNECT_FAIL"] = 8067] = "STATUS_WIFI_CONNECT_FAIL";
-    StatusCode[StatusCode["STATUS_WIFI_NOT_SUPPORT_SHARE"] = 8068] = "STATUS_WIFI_NOT_SUPPORT_SHARE";
-    StatusCode[StatusCode["STATUS_WIFI_MUST_BE_ENABLED"] = 8069] = "STATUS_WIFI_MUST_BE_ENABLED";
     StatusCode[StatusCode["STATUS_ANDROID_HMS_RESTRICTED"] = 8070] = "STATUS_ANDROID_HMS_RESTRICTED";
-})(StatusCode = exports.StatusCode || (exports.StatusCode = {}));
+})(StatusCode || (exports.StatusCode = StatusCode = {}));
 //# sourceMappingURL=enums.js.map

@@ -1,7 +1,7 @@
 {
   "name": "cordova-hms-nearby-demo",
   "displayName": "HMSNearbyDemo",
-  "version": "6.2.0-301",
+  "version": "6.12.1-310",
   "description": "A demo application which shows the usage of HMS Nearby Plugin.",
   "license": "Apache-2.0",
   "licenseFilename": "LICENSE",
@@ -34,6 +34,6 @@
     "LICENSE",
     "package.json",
     "README.md",
-    "THIRD PARTY OPEN SOURCE SOFTWARE NOTICE.txt"
+    "OpenSourceSoftwareNotice.html"
   ]
 }

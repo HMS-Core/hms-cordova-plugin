@@ -26,7 +26,7 @@ $ ionic cordova plugin add @hmscore/cordova-plugin-hms-nearby
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-nearby
+$ npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-nearby
 ```
 
 ### 2.2 With Capacitor Runtime
@@ -36,7 +36,7 @@ $ npm install @hmscore/cordova-plugin-hms-nearby
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-nearby
+$ npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-nearby
 ```
 
 ---

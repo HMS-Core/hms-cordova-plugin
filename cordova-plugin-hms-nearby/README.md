@@ -48,7 +48,6 @@ $ npm install @hmscore/ionic-native-hms-nearby
 
 ### Additional Topics
 
-- [Nearby Wi-Fi Sharing](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/wifi-preparations-0000001070723683?ha_source=hms1)
 - [Nearby Message](https://developer.huawei.com/consumer/en/doc/development/HMS-Plugin-Guides/message-preparations-0000001063852738?ha_source=hms1)
 
 ## Questions or Issues

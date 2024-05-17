@@ -1,22 +1,23 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getInBackground = exports.get = exports.put = exports.setApiKey = exports.getApiKey = exports.cancelDataTransfer = exports.sendStream = exports.sendFile = exports.sendBytes = exports.disconnectAll = exports.disconnect = exports.rejectConnect = exports.acceptConnect = exports.requestConnectEx = exports.requestConnect = exports.stopScan = exports.startScan = exports.stopBroadcasting = exports.startBroadcasting = exports.on = exports.requestPermissions = exports.requestPermission = exports.hasPermission = exports.disableLogger = exports.enableLogger = exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = exports.ChannelPolicy = exports.StatusCode = exports.WifiSharePolicy = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
-exports.getVersion = exports.shareWifiConfig = exports.stopWifiShare = exports.startWifiShare = exports.ungetInBackground = exports.unget = exports.unput = void 0;
+exports.unput = exports.getInBackground = exports.get = exports.put = exports.setApiKey = exports.getApiKey = exports.cancelDataTransfer = exports.sendStream = exports.sendFile = exports.sendBytes = exports.disconnectAll = exports.disconnect = exports.rejectConnect = exports.acceptConnect = exports.requestConnectEx = exports.requestConnect = exports.stopScan = exports.startScan = exports.stopBroadcasting = exports.startBroadcasting = exports.on = exports.requestPermissions = exports.requestPermission = exports.hasPermission = exports.disableLogger = exports.enableLogger = exports.PUT_OPTION_DEFAULT = exports.GET_OPTION_DEFAULT = exports.MESSAGE_POLICY_BLE_ONLY = exports.MESSAGE_POLICY_DEFAULT = exports.MESSAGE_PICKER_INCLUDE_ALL_TYPES = exports.DISTANCE_UNKNOWN = exports.MESSAGE_TYPE_I_BEACON_ID = exports.MESSAGE_TYPE_EDDYSTONE_UID = exports.MESSAGE_NAMESPACE_RESERVED = exports.MAX_TYPE_LENGTH = exports.MAX_CONTENT_SIZE = exports.MAX_SIZE_DATA = exports.PRECISION_LOW = exports.BLE_UNKNOWN_TX_POWER = exports.ChannelPolicy = exports.StatusCode = exports.MessagePolicyTtlSeconds = exports.MessagePolicyFindingMode = exports.MessagePolicyDistanceType = exports.TransferState = exports.DataType = exports.Policy = exports.HMSPermission = exports.HMSNearbyEvent = void 0;
+exports.getVersion = exports.getRawBeaconConditionsWithBeaconType = exports.getRawBeaconConditions = exports.getBeaconMsgConditions = exports.unRegisterScanTask = exports.registerScanTask = exports.ungetInBackground = exports.unget = void 0;
 const utils_1 = require("./utils");
 var enums_1 = require("./enums");
 Object.defineProperty(exports, "HMSNearbyEvent", { enumerable: true, get: function () { return enums_1.HMSNearbyEvent; } });
@@ -27,7 +28,6 @@ Object.defineProperty(exports, "TransferState", { enumerable: true, get: functio
 Object.defineProperty(exports, "MessagePolicyDistanceType", { enumerable: true, get: function () { return enums_1.MessagePolicyDistanceType; } });
 Object.defineProperty(exports, "MessagePolicyFindingMode", { enumerable: true, get: function () { return enums_1.MessagePolicyFindingMode; } });
 Object.defineProperty(exports, "MessagePolicyTtlSeconds", { enumerable: true, get: function () { return enums_1.MessagePolicyTtlSeconds; } });
-Object.defineProperty(exports, "WifiSharePolicy", { enumerable: true, get: function () { return enums_1.WifiSharePolicy; } });
 Object.defineProperty(exports, "StatusCode", { enumerable: true, get: function () { return enums_1.StatusCode; } });
 Object.defineProperty(exports, "ChannelPolicy", { enumerable: true, get: function () { return enums_1.ChannelPolicy; } });
 var interfaces_1 = require("./interfaces");
@@ -45,14 +45,14 @@ Object.defineProperty(exports, "MESSAGE_POLICY_DEFAULT", { enumerable: true, get
 Object.defineProperty(exports, "MESSAGE_POLICY_BLE_ONLY", { enumerable: true, get: function () { return interfaces_1.MESSAGE_POLICY_BLE_ONLY; } });
 Object.defineProperty(exports, "GET_OPTION_DEFAULT", { enumerable: true, get: function () { return interfaces_1.GET_OPTION_DEFAULT; } });
 Object.defineProperty(exports, "PUT_OPTION_DEFAULT", { enumerable: true, get: function () { return interfaces_1.PUT_OPTION_DEFAULT; } });
-const CLASS_NAME = 'HMSNearby';
+const CLASS_NAME = "HMSNearby";
 //////////////////// LOGGER ////////////////////
 /**
  * Enables HMSLogger capability which is used for sending usage analytics of Nearby SDK's methods.
  * @returns Promise<void>
  */
 function enableLogger() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['enableLogger']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", ["enableLogger"]);
 }
 exports.enableLogger = enableLogger;
 /**
@@ -60,7 +60,7 @@ exports.enableLogger = enableLogger;
  * @returns Promise<void>
  */
 function disableLogger() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['disableLogger']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", ["disableLogger"]);
 }
 exports.disableLogger = disableLogger;
 //////////////////// PERMISSIONS ////////////////////
@@ -70,7 +70,10 @@ exports.disableLogger = disableLogger;
  * @returns Promise<boolean>
  */
 function hasPermission(permission) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['hasPermission', permission]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", [
+        "hasPermission",
+        permission,
+    ]);
 }
 exports.hasPermission = hasPermission;
 /**
@@ -79,7 +82,10 @@ exports.hasPermission = hasPermission;
  * @returns Promise<void>
  */
 function requestPermission(permission) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['requestPermission', permission]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", [
+        "requestPermission",
+        permission,
+    ]);
 }
 exports.requestPermission = requestPermission;
 /**
@@ -88,7 +94,10 @@ exports.requestPermission = requestPermission;
  * @returns Promise<void>
  */
 function requestPermissions(permissions) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['requestPermissions', permissions]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", [
+        "requestPermissions",
+        permissions,
+    ]);
 }
 exports.requestPermissions = requestPermissions;
 //////////////////// EVENT REGISTERATION ////////////////////
@@ -110,7 +119,12 @@ exports.on = on;
  * @returns Promise<void>
  */
 function startBroadcasting(name, serviceId, policy) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['startBroadcasting', name, serviceId, policy]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", [
+        "startBroadcasting",
+        name,
+        serviceId,
+        policy,
+    ]);
 }
 exports.startBroadcasting = startBroadcasting;
 /**
@@ -118,7 +132,7 @@ exports.startBroadcasting = startBroadcasting;
  * @returns Promise<void>
  */
 function stopBroadcasting() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['stopBroadcasting']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["stopBroadcasting"]);
 }
 exports.stopBroadcasting = stopBroadcasting;
 /**
@@ -128,7 +142,11 @@ exports.stopBroadcasting = stopBroadcasting;
  * @returns Promise<void>
  */
 function startScan(serviceId, policy) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['startScan', serviceId, policy]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", [
+        "startScan",
+        serviceId,
+        policy,
+    ]);
 }
 exports.startScan = startScan;
 /**
@@ -136,7 +154,7 @@ exports.startScan = startScan;
  * @returns Promise<void>
  */
 function stopScan() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['stopScan']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["stopScan"]);
 }
 exports.stopScan = stopScan;
 /**
@@ -146,7 +164,11 @@ exports.stopScan = stopScan;
  * @returns Promise<void>
  */
 function requestConnect(name, endpointId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnect', name, endpointId]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", [
+        "requestConnect",
+        name,
+        endpointId,
+    ]);
 }
 exports.requestConnect = requestConnect;
 /**
@@ -157,7 +179,12 @@ exports.requestConnect = requestConnect;
  * @returns Promise<void>
  */
 function requestConnectEx(name, endpointId, channelPolicy) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['requestConnectEx', name, endpointId, channelPolicy]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", [
+        "requestConnectEx",
+        name,
+        endpointId,
+        channelPolicy,
+    ]);
 }
 exports.requestConnectEx = requestConnectEx;
 /**
@@ -166,7 +193,7 @@ exports.requestConnectEx = requestConnectEx;
  * @returns Promise<void>
  */
 function acceptConnect(endpointId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['acceptConnect', endpointId]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["acceptConnect", endpointId]);
 }
 exports.acceptConnect = acceptConnect;
 /**
@@ -175,7 +202,7 @@ exports.acceptConnect = acceptConnect;
  * @returns Promise<void>
  */
 function rejectConnect(endpointId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['rejectConnect', endpointId]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["rejectConnect", endpointId]);
 }
 exports.rejectConnect = rejectConnect;
 /**
@@ -184,7 +211,7 @@ exports.rejectConnect = rejectConnect;
  * @returns Promise<void>
  */
 function disconnect(endpointId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['disconnect', endpointId]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["disconnect", endpointId]);
 }
 exports.disconnect = disconnect;
 /**
@@ -192,7 +219,7 @@ exports.disconnect = disconnect;
  * @returns Promise<void>
  */
 function disconnectAll() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSDiscovery', ['disconnectAll']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSDiscovery", ["disconnectAll"]);
 }
 exports.disconnectAll = disconnectAll;
 //////////////////// TRANSFER ////////////////////
@@ -203,7 +230,11 @@ exports.disconnectAll = disconnectAll;
  * @returns Promise<void>
  */
 function sendBytes(bytes, endpointIds) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSTransfer', ['sendBytes', bytes, endpointIds]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSTransfer", [
+        "sendBytes",
+        bytes,
+        endpointIds,
+    ]);
 }
 exports.sendBytes = sendBytes;
 /**
@@ -213,7 +244,11 @@ exports.sendBytes = sendBytes;
  * @returns Promise<void>
  */
 function sendFile(fileUri, endpointIds) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSTransfer', ['sendFile', fileUri, endpointIds]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSTransfer", [
+        "sendFile",
+        fileUri,
+        endpointIds,
+    ]);
 }
 exports.sendFile = sendFile;
 /**
@@ -223,7 +258,11 @@ exports.sendFile = sendFile;
  * @returns Promise<void>
  */
 function sendStream(streamUrl, endpointIds) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSTransfer', ['sendStream', streamUrl, endpointIds]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSTransfer", [
+        "sendStream",
+        streamUrl,
+        endpointIds,
+    ]);
 }
 exports.sendStream = sendStream;
 /**
@@ -232,7 +271,7 @@ exports.sendStream = sendStream;
  * @returns Promise<void>
  */
 function cancelDataTransfer(dataId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSTransfer', ['cancelDataTransfer', dataId]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSTransfer", ["cancelDataTransfer", dataId]);
 }
 exports.cancelDataTransfer = cancelDataTransfer;
 //////////////////// MESSAGE ////////////////////
@@ -241,7 +280,7 @@ exports.cancelDataTransfer = cancelDataTransfer;
  * @returns Promise<string> Promise result of an execution that returns the current API credential.
  */
 function getApiKey() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['getApiKey']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", ["getApiKey"]);
 }
 exports.getApiKey = getApiKey;
 /**
@@ -250,19 +289,19 @@ exports.getApiKey = getApiKey;
  * @returns Promise<void>
  */
 function setApiKey(apiKey) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['setApiKey', apiKey]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", ["setApiKey", apiKey]);
 }
 exports.setApiKey = setApiKey;
 function put(message, putOption) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['put', message, putOption]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["put", message, putOption]);
 }
 exports.put = put;
 function get(getOption) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['get', getOption]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["get", getOption]);
 }
 exports.get = get;
 function getInBackground(getOption) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['getInBackground', getOption]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["getInBackground", getOption]);
 }
 exports.getInBackground = getInBackground;
 /**
@@ -271,7 +310,7 @@ exports.getInBackground = getInBackground;
  * @returns Promise<void>
  */
 function unput(message) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['unput', message]);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["unput", message]);
 }
 exports.unput = unput;
 /**
@@ -279,7 +318,7 @@ exports.unput = unput;
  * @returns Promise<void>
  */
 function unget() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['unget']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["unget"]);
 }
 exports.unget = unget;
 /**
@@ -287,43 +326,43 @@ exports.unget = unget;
  * @returns Promise<void>
  */
 function ungetInBackground() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSMessage', ['ungetInBackground']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSMessage", ["ungetInBackground"]);
 }
 exports.ungetInBackground = ungetInBackground;
-//////////////////// WIFI ////////////////////
-/**
- * Enable the Wi-Fi sharing function. Set WifiSharePolicy based on function requirements.
- * @param {WifiSharePolicy} wifiSharePolicy Wi-Fi sharing policy. Enable the Wi-Fi sharing mode or configuration mode as required.
- * @returns Promise<void>
- */
-function startWifiShare(wifiSharePolicy) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSWifi', ['startWifiShare', wifiSharePolicy]);
+//////////////////// Beacon ////////////////////
+function registerScanTask(beaconOption) {
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSBeacon", [
+        "registerScanTask", beaconOption
+    ]);
 }
-exports.startWifiShare = startWifiShare;
+exports.registerScanTask = registerScanTask;
 /**
  * Disables the Wi-Fi sharing function.
  * @returns Promise<void>
  */
-function stopWifiShare() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSWifi', ['stopWifiShare']);
+function unRegisterScanTask() {
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSBeacon", ["unRegisterScanTask"]);
 }
-exports.stopWifiShare = stopWifiShare;
-/**
- * Shares Wi-Fi with a remote device.
- * @param {string} endpointId ID of the remote endpoint.
- * @returns Promise<void>
- */
-function shareWifiConfig(endpointId) {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSWifi', ['shareWifiConfig', endpointId]);
+exports.unRegisterScanTask = unRegisterScanTask;
+function getBeaconMsgConditions() {
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSBeacon", ["getBeaconMsgConditions"]);
 }
-exports.shareWifiConfig = shareWifiConfig;
+exports.getBeaconMsgConditions = getBeaconMsgConditions;
+function getRawBeaconConditions() {
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSBeacon", ["getRawBeaconConditions",]);
+}
+exports.getRawBeaconConditions = getRawBeaconConditions;
+function getRawBeaconConditionsWithBeaconType(beaconType) {
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSBeacon", ["getRawBeaconConditionsWithBeaconType", beaconType]);
+}
+exports.getRawBeaconConditionsWithBeaconType = getRawBeaconConditionsWithBeaconType;
 //////////////////// VERSION ////////////////////
 /**
  * Obtains the Nearby Service SDK version number.
  * @returns Promise<string> Version number of the Nearby Service SDK.
  */
 function getVersion() {
-    return utils_1.asyncExec(CLASS_NAME, 'HMSNearbyBase', ['getVersion']);
+    return (0, utils_1.asyncExec)(CLASS_NAME, "HMSNearbyBase", ["getVersion"]);
 }
 exports.getVersion = getVersion;
 //# sourceMappingURL=HMSNearby.js.map

@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,44 +13,55 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-title> Nearby Wifi</ion-title>
+        <ion-title> Nearby Beacon</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
     <div class="ion-padding">
-        <ion-label><strong>Wifi Share Policy</strong></ion-label>
-        <ion-select
-                [(ngModel)]="currentPolicy"
-                interface="popover"
-                placeholder="Wifi Share Policy"
-        >
-            <ion-select-option
-                    *ngFor="let opt of wifiSharePolicies"
-                    [value]="opt.value"
-            >{{opt.name}}
-            </ion-select-option
-            >
-        </ion-select>
+        <ion-label><strong>Nearby Beacon</strong></ion-label>
+         
         <ion-button
-                (click)="startWifiShare()"
-                [hidden]="currentStatus != Status.IDLE"
+                (click)="registerScanTask()" 
                 expand="block"
                 size="small"
-        >Start Wifi Share
+        >registerScanTask
         </ion-button
         >
         <ion-button
-                (click)="stopWifiShare()"
-                [hidden]="currentStatus != Status.SEARCHING"
+                (click)="unRegisterScanTask()" 
                 color="danger"
                 expand="block"
                 size="small"
-        >Stop Wifi Share
+        >unRegisterScanTask
         </ion-button
         >
-    </div>
-    <ion-label style="margin: 10px">Status: {{currentStatus}}</ion-label>
+        <ion-button
+                (click)="getBeaconMsgConditions()" 
+                color="danger"
+                expand="block"
+                size="small"
+        >getBeaconMsgConditions
+        </ion-button
+        >
+        <ion-button
+                (click)="getRawBeaconConditions()" 
+                color="danger"
+                expand="block"
+                size="small"
+        >getRawBeaconConditions
+        </ion-button
+        >
+        <ion-button
+                (click)="getRawBeaconConditionsWithBeaconType()" 
+                color="danger"
+                expand="block"
+                size="small"
+        >getRawBeaconConditionsWithBeaconType
+        </ion-button
+        >
+    </div> 
 </ion-content>

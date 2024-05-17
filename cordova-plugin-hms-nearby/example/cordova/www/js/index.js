@@ -1,18 +1,19 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 var app = {
   initialize: function () {
     document.addEventListener(
@@ -24,6 +25,12 @@ var app = {
 
   onDeviceReady: function () {
     this.receivedEvent("deviceready");
+    const apiKey = 'apiKey';
+    HMSNearby.setApiKey(apiKey).then(() => {
+        alert("setApiKey: success");
+    }).catch((e) => {
+       alert(JSON.stringify(e));
+    });
   },
 
   receivedEvent: function (id) {
@@ -41,9 +48,9 @@ var app = {
           .getElementById("page-message")
           .setAttribute("style", "display:none;");
 
-      if (pageName !== "page-wifi")
+      if (pageName !== "page-beacon")
         document
-          .getElementById("page-wifi")
+          .getElementById("page-beacon")
           .setAttribute("style", "display:none;");
     }
 
@@ -68,9 +75,9 @@ var app = {
       openPage("page-message");
     });
 
-    document.getElementById("btn-wifi").addEventListener("click", () => {
-      console.log("index :: btn-wifi clicked!");
-      openPage("page-wifi");
+    document.getElementById("btn-beacon").addEventListener("click", () => {
+      console.log("index :: btn-beacon clicked!");
+      openPage("page-beacon");
     });
 
     HMSNearby.enableLogger();
@@ -78,12 +85,12 @@ var app = {
     HMSNearby.requestPermissions([
       HMSNearby.HMSPermission.PERMISSION_BLUETOOTH,
       HMSNearby.HMSPermission.PERMISSION_BLUETOOTH_ADMIN,
-      HMSNearby.HMSPermission.PERMISSION_ACCESS_WIFI_STATE,
-      HMSNearby.HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
       HMSNearby.HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
       HMSNearby.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
       HMSNearby.HMSPermission.PERMISSION_READ_EXTERNAL_STORAGE,
       HMSNearby.HMSPermission.PERMISSION_WRITE_EXTERNAL_STORAGE,
+      HMSNearby.HMSPermission.PERMISSION_ACCESS_WIFI_STATE,
+      HMSNearby.HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
     ]).then((res) => {
       console.log("index :: request permissions result: " + res);
     });

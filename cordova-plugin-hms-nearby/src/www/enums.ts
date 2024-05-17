@@ -1,18 +1,19 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 export enum HMSNearbyEvent {
     EVENT_CONNECTION_ON_ESTABLISH = "eventConnectionOnEstablish",
     EVENT_CONNECTION_ON_RESULT = "eventConnectionOnResult",
@@ -28,21 +29,17 @@ export enum HMSNearbyEvent {
     EVENT_PUT_ON_TIMEOUT = "eventPutOnTimeout",
     EVENT_GET_ON_TIMEOUT = "eventGetOnTimeout",
     EVENT_STATUS_ON_PERMISSION_CHANGED = "eventStatusOnPermissionChanged",
-    EVENT_WIFI_ON_FOUND = "eventWifiOnFound",
-    EVENT_WIFI_ON_LOST = "eventWifiOnLost",
-    EVENT_WIFI_ON_FETCH_AUTH_CODE = "eventWifiOnFetchAuthCode",
-    EVENT_WIFI_ON_SHARE_RESULT = "eventWifiOnShareResult",
 }
 
 export enum HMSPermission {
     PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH",
-    PERMISSION_BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN",
-    PERMISSION_ACCESS_WIFI_STATE = "android.permission.ACCESS_WIFI_STATE",
-    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
+    PERMISSION_BLUETOOTH_ADMIN = "android.permission.BLUETOOTH_ADMIN", 
     PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
     PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
     PERMISSION_READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE",
     PERMISSION_WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE",
+    PERMISSION_ACCESS_WIFI_STATE = "android.permission.ACCESS_WIFI_STATE",
+    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
 }
 
 export enum Policy {
@@ -81,10 +78,6 @@ export enum MessagePolicyTtlSeconds {
     POLICY_TTL_SECONDS_INFINITE = 2147483647,
 }
 
-export enum WifiSharePolicy {
-    POLICY_SHARE = 1,
-    POLICY_SET = 2,
-}
 
 export enum ChannelPolicy {
     CHANNEL_AUTO = 1,
@@ -108,11 +101,9 @@ export enum StatusCode {
     STATUS_CONNECT_IO_ERROR = 8011,
     STATUS_ENDPOINT_UNKNOWN = 8012,
     STATUS_API_OCCUPIED = 8013,
-    STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION = 8014,
-    STATUS_MISSING_PERMISSION_ACCESS_WIFI_STATE = 8015,
+    STATUS_MISSING_PERMISSION_ACCESS_COARSE_LOCATION = 8014, 
     STATUS_MISSING_PERMISSION_BLUETOOTH = 8016,
-    STATUS_MISSING_PERMISSION_BLUETOOTH_ADMIN = 8017,
-    STATUS_MISSING_PERMISSION_CHANGE_WIFI_STATE = 8018,
+    STATUS_MISSING_PERMISSION_BLUETOOTH_ADMIN = 8017, 
     STATUS_MISSING_PERMISSION_RECORD_AUDIO = 8019,
     STATUS_MISSING_SETTING_LOCATION_ON = 8020,
     STATUS_AIRPLANE_MODE_MUST_BE_OFF = 8021,
@@ -131,10 +122,5 @@ export enum StatusCode {
     STATUS_MESSAGE_TASK_ALREADY_IN_PROCESSING = 8062,
     STATUS_MISSING_PERMISSION_FILE_READ_WRITE = 8063,
     STATUS_MISSING_PERMISSION_INTERNET = 8064,
-    STATUS_WIFI_SHARE_USER_AUTH_FAIL = 8065,
-    STATUS_WIFI_SHARE_WIFI_CLOSED = 8066,
-    STATUS_WIFI_CONNECT_FAIL = 8067,
-    STATUS_WIFI_NOT_SUPPORT_SHARE = 8068,
-    STATUS_WIFI_MUST_BE_ENABLED = 8069,
     STATUS_ANDROID_HMS_RESTRICTED = 8070,
 }

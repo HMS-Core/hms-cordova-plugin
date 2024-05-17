@@ -1,26 +1,26 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
 import {
     ChannelPolicy,
     HMSNearbyEvent,
     HMSPermission,
     Policy,
-    WifiSharePolicy,
 } from "./enums";
-import { GetOption, Message, PutOption } from "./interfaces";
+import { GetOption, Message, PutOption, BeaconType, BeaconOption } from "./interfaces";
 import { asyncExec } from "./utils";
 
 export {
@@ -32,9 +32,8 @@ export {
     MessagePolicyDistanceType,
     MessagePolicyFindingMode,
     MessagePolicyTtlSeconds,
-    WifiSharePolicy,
     StatusCode,
-    ChannelPolicy,
+    ChannelPolicy, 
 } from "./enums";
 export {
     Message,
@@ -58,7 +57,8 @@ export {
     MessageTimeout,
     PermissionUpdate,
     AuthCodeUpdate,
-    WifiShareResult,
+    BeaconType,
+    BeaconOption
 } from "./interfaces";
 export {
     BLE_UNKNOWN_TX_POWER,
@@ -425,19 +425,11 @@ export function ungetInBackground(): Promise<void> {
     return asyncExec(CLASS_NAME, "HMSMessage", ["ungetInBackground"]);
 }
 
-//////////////////// WIFI ////////////////////
+//////////////////// Beacon ////////////////////
 
-/**
- * Enable the Wi-Fi sharing function. Set WifiSharePolicy based on function requirements.
- * @param {WifiSharePolicy} wifiSharePolicy Wi-Fi sharing policy. Enable the Wi-Fi sharing mode or configuration mode as required.
- * @returns Promise<void>
- */
-export function startWifiShare(
-    wifiSharePolicy: WifiSharePolicy
-): Promise<void> {
-    return asyncExec(CLASS_NAME, "HMSWifi", [
-        "startWifiShare",
-        wifiSharePolicy,
+export function registerScanTask(beaconOption: BeaconOption): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSBeacon", [
+        "registerScanTask", beaconOption
     ]);
 }
 
@@ -445,17 +437,20 @@ export function startWifiShare(
  * Disables the Wi-Fi sharing function.
  * @returns Promise<void>
  */
-export function stopWifiShare(): Promise<void> {
-    return asyncExec(CLASS_NAME, "HMSWifi", ["stopWifiShare"]);
+export function unRegisterScanTask(): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSBeacon", ["unRegisterScanTask"]);
 }
 
-/**
- * Shares Wi-Fi with a remote device.
- * @param {string} endpointId ID of the remote endpoint.
- * @returns Promise<void>
- */
-export function shareWifiConfig(endpointId: string): Promise<void> {
-    return asyncExec(CLASS_NAME, "HMSWifi", ["shareWifiConfig", endpointId]);
+export function getBeaconMsgConditions(): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSBeacon", ["getBeaconMsgConditions"]);
+}
+
+export function getRawBeaconConditions(): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSBeacon", ["getRawBeaconConditions",]);
+}
+
+export function getRawBeaconConditionsWithBeaconType(beaconType: BeaconType): Promise<void> {
+    return asyncExec(CLASS_NAME, "HMSBeacon", ["getRawBeaconConditionsWithBeaconType",beaconType]);
 }
 
 //////////////////// VERSION ////////////////////

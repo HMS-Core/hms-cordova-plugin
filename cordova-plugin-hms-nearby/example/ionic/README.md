@@ -103,7 +103,7 @@ generated the certificate.
 5. Install HMS Nearby Ionic Native wrappers.
 
    ```bash
-   npm install @ionic-native/core @hmscore/ionic-native-hms-nearby
+   npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-nearby
    ```
 
 6. Copy **`agconnect-services.json`** file to **`<project_root>/platforms/android/app`** directory.
@@ -175,7 +175,7 @@ generated the certificate.
 4. Install HMS Nearby Ionic Native wrappers.
 
    ```bash
-   npm install @ionic-native/core @hmscore/ionic-native-hms-nearby
+   npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-nearby
    ```
 
 5. Build Ionic app to generate resource files.
@@ -250,7 +250,7 @@ generated the certificate.
            /*
                <Other dependencies>
            */
-           classpath 'com.huawei.agconnect:agcp:1.4.2.301'
+           classpath 'com.huawei.agconnect:agcp:1.9.1.301'
        }
    }
 

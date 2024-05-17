@@ -1,23 +1,24 @@
 /*
-    Copyright 2020-2022. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-    Licensed under the Apache License, Version 2.0 (the "License")
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-        https://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-*/
-import { ChannelPolicy, HMSNearbyEvent, HMSPermission, Policy, WifiSharePolicy } from './enums';
-import { GetOption, Message, PutOption } from './interfaces';
-export { HMSNearbyEvent, HMSPermission, Policy, DataType, TransferState, MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds, WifiSharePolicy, StatusCode, ChannelPolicy } from "./enums";
-export { Message, EddystoneUid, IBeaconId, NamespaceType, MessagePicker, MessagePolicy, PutOption, GetOption, BleSignal, Distance, EndpointId, ConnectInfo, ConnectResult, ScanEndpointInfo, Data, TransferStateUpdate, BleSignalUpdate, DistanceUpdate, MessageTimeout, PermissionUpdate, AuthCodeUpdate, WifiShareResult } from "./interfaces";
-export { BLE_UNKNOWN_TX_POWER, PRECISION_LOW, MAX_SIZE_DATA, MAX_CONTENT_SIZE, MAX_TYPE_LENGTH, MESSAGE_NAMESPACE_RESERVED, MESSAGE_TYPE_EDDYSTONE_UID, MESSAGE_TYPE_I_BEACON_ID, DISTANCE_UNKNOWN, MESSAGE_PICKER_INCLUDE_ALL_TYPES, MESSAGE_POLICY_DEFAULT, MESSAGE_POLICY_BLE_ONLY, GET_OPTION_DEFAULT, PUT_OPTION_DEFAULT } from './interfaces';
+import { ChannelPolicy, HMSNearbyEvent, HMSPermission, Policy } from "./enums";
+import { GetOption, Message, PutOption, BeaconType, BeaconOption } from "./interfaces";
+export { HMSNearbyEvent, HMSPermission, Policy, DataType, TransferState, MessagePolicyDistanceType, MessagePolicyFindingMode, MessagePolicyTtlSeconds, StatusCode, ChannelPolicy, } from "./enums";
+export { Message, EddystoneUid, IBeaconId, NamespaceType, MessagePicker, MessagePolicy, PutOption, GetOption, BleSignal, Distance, EndpointId, ConnectInfo, ConnectResult, ScanEndpointInfo, Data, TransferStateUpdate, BleSignalUpdate, DistanceUpdate, MessageTimeout, PermissionUpdate, AuthCodeUpdate, BeaconType, BeaconOption } from "./interfaces";
+export { BLE_UNKNOWN_TX_POWER, PRECISION_LOW, MAX_SIZE_DATA, MAX_CONTENT_SIZE, MAX_TYPE_LENGTH, MESSAGE_NAMESPACE_RESERVED, MESSAGE_TYPE_EDDYSTONE_UID, MESSAGE_TYPE_I_BEACON_ID, DISTANCE_UNKNOWN, MESSAGE_PICKER_INCLUDE_ALL_TYPES, MESSAGE_POLICY_DEFAULT, MESSAGE_POLICY_BLE_ONLY, GET_OPTION_DEFAULT, PUT_OPTION_DEFAULT, } from "./interfaces";
 /**
  * Enables HMSLogger capability which is used for sending usage analytics of Nearby SDK's methods.
  * @returns Promise<void>
@@ -204,23 +205,15 @@ export declare function unget(): Promise<void>;
  * @returns Promise<void>
  */
 export declare function ungetInBackground(): Promise<void>;
-/**
- * Enable the Wi-Fi sharing function. Set WifiSharePolicy based on function requirements.
- * @param {WifiSharePolicy} wifiSharePolicy Wi-Fi sharing policy. Enable the Wi-Fi sharing mode or configuration mode as required.
- * @returns Promise<void>
- */
-export declare function startWifiShare(wifiSharePolicy: WifiSharePolicy): Promise<void>;
+export declare function registerScanTask(beaconOption: BeaconOption): Promise<void>;
 /**
  * Disables the Wi-Fi sharing function.
  * @returns Promise<void>
  */
-export declare function stopWifiShare(): Promise<void>;
-/**
- * Shares Wi-Fi with a remote device.
- * @param {string} endpointId ID of the remote endpoint.
- * @returns Promise<void>
- */
-export declare function shareWifiConfig(endpointId: string): Promise<void>;
+export declare function unRegisterScanTask(): Promise<void>;
+export declare function getBeaconMsgConditions(): Promise<void>;
+export declare function getRawBeaconConditions(): Promise<void>;
+export declare function getRawBeaconConditionsWithBeaconType(beaconType: BeaconType): Promise<void>;
 /**
  * Obtains the Nearby Service SDK version number.
  * @returns Promise<string> Version number of the Nearby Service SDK.
