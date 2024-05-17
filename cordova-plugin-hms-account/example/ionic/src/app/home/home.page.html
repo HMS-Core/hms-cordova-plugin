@@ -1,0 +1,109 @@
+<!--
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License")
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        https://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Ionic Account Kit
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+        <ion-text>
+            <h2> HMSAccount</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="signInWithIdToken()" class="submit-button" expand="block">Sign-In With Id Token </ion-button>
+        <hr>
+        <ion-button (click)="signOut()" class="submit-button" expand="block">Sign Out</ion-button>
+        <hr>
+        <ion-button (click)="silentSignIn()" class="submit-button" expand="block">Silent Sign-In</ion-button>
+        <hr>
+        <ion-button (click)="cancelAuthorization()" class="submit-button" expand="block">Cancel Authorization </ion-button>
+        <hr>
+        <hr>
+        <ion-text>
+            <h2> HuaweiIdAuthButton</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="getHuaweiIdAuthButton()" class="submit-button" expand="block">Get Huawei Id Auth Button </ion-button>
+        <hr>
+        <hr>
+        <div id="btn_auth_button"></div>
+        <ion-text>
+            <h2> HMSAccountAuthService</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="accountSignInWithIdToken()" class="submit-button" expand="block">Account Sign-In With Id Token</ion-button>
+        <hr>
+        <ion-button (click)="accountSignOut()" class="submit-button" expand="block">Account Sign Out</ion-button>
+        <hr>
+        <ion-button (click)="accountSilentSignIn()" class="submit-button" expand="block">Account Silent Sign-In </ion-button>
+        <hr>
+        <ion-button (click)="accountCancelAuthorization()" class="submit-button" expand="block">Account Cancel Authorization</ion-button>
+        <hr>
+        <ion-button (click)="accountGetChannel()" class="submit-button" expand="block">Get Channel</ion-button>
+        <hr>
+        <ion-button (click)="getIndependentSignIn()" class="submit-button" expand="block">Get Independent Sign In</ion-button>
+        <hr>
+        <hr>
+        <ion-img id="img_bitmap" style="width: 80px; height: 80px;"></ion-img>
+        <ion-text>
+            <h2> HMSHuaweiIdAuthManager</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="containScopes()" class="submit-button" expand="block">Contain Scopes</ion-button>
+        <hr>
+        <ion-button (click)="getAuthResult()" class="submit-button" expand="block">Get Auth Result</ion-button>
+        <hr>
+        <ion-button (click)="getAuthResultWithScopes()" class="submit-button" expand="block">Get Auth Result With Scope</ion-button>
+        <hr>
+        <ion-button (click)="addAuthScopes()" class="submit-button" expand="block">Add Auth Scopes</ion-button>
+        <hr>
+        <hr>
+        <ion-text>
+            <h2> HMSAccountAuthManager</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="accountContainScopes()" class="submit-button" expand="block">Account Contain Scopes </ion-button>
+        <hr>
+        <ion-button (click)="accountGetAuthResult()" class="submit-button" expand="block">Account Get Auth Result </ion-button>
+        <hr>
+        <ion-button (click)="accountGetAuthResultWithScopes()" class="submit-button" expand="block">Account Auth Result With Scopes</ion-button>
+        <hr>
+        <ion-button (click)="accountAddAuthScopes()" class="submit-button" expand="block">Account Add Auth Scopes </ion-button>
+        <hr>
+        <ion-text>
+            <h2> HMSHuaweiIdAuthTool</h2>
+        </ion-text>
+        <hr>
+        <hr>
+        <ion-button (click)="requestUnionId()" class="submit-button" expand="block">Request Union Id </ion-button>
+        <hr>
+        <ion-button (click)="requestAccessToken()" class="submit-button" expand="block">Request Access Token </ion-button>
+        <hr>
+        <ion-button (click)="deleteAuthInfo()" class="submit-button" expand="block">Delete Auth Info </ion-button>
+        <hr>
+        <hr>
+        <ion-text>
+            <h2> HMSNetworkTool</h2>
+        </ion-text>
+        <hr>
+        <ion-button (click)="buildNetworkURL()" class="submit-button" expand="block">Build Network URL </ion-button>
+        <hr>
+        <ion-button (click)="buildNetworkCookie()" class="submit-button" expand="block">Build Network Cookie </ion-button>
+        <hr>
+</ion-content>

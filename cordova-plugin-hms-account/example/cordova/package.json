@@ -1,0 +1,32 @@
+{
+    "name": "cordova-hms-account-demo",
+    "displayName": "HMSAccountDemo",
+    "version": "6.12.0-301",
+    "description": "A demo application which shows the usage of HMS Account Plugin",
+    "license": "Apache-2.0",
+    "licenseFilename": "LICENSE",
+    "readmeFilename": "README.md",
+    "main": "index.js",
+    "keywords": [
+        "cordova",
+        "ecosystem:cordova",
+        "account",
+        "huawei-account",
+        "hms-account"
+    ],
+    "devDependencies": {
+    },
+    "cordova": {
+        "plugins": {
+        },
+        "platforms": []
+    },
+    "files": [
+        "./.docs",
+        "./www",
+        "config.xml",
+        "LICENSE",
+        "package.json",
+        "README.md"
+    ]
+}
