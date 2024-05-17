@@ -1,0 +1,28 @@
+{
+  "name": "@hmscore/ionic-native-hms-location",
+  "description": "Ionic Native wrappers for Cordova Plugin HMS Location",
+  "version": "6.12.0-301",
+  "zipVersion": "6.12.0.301",
+  "module": "index.js",
+  "typings": "index.d.ts",
+  "license": "Apache-2.0",
+  "licenseFilename": "LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HMS-Core/hms-cordova-plugin.git",
+    "directory": "cordova-plugin-hms-location"
+  },
+  "bugs": "https://github.com/HMS-Core/hms-cordova-plugin/issues",
+  "homepage": "https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin",
+  "dependencies": {
+    "@types/cordova": "latest",
+    "rxjs": "^5.5.0 || ^6.5.0",
+    "@ionic-native/core": "^5.0.0",
+    "tslib": "^2.0.0",
+    "@angular/core": "~10.0.0"
+  },
+  "peerDependencies": {
+    "@awesome-cordova-plugins/core": "6.4.0",
+    "rxjs": "^7.5.0"
+  }
+}
