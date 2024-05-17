@@ -1,5 +1,5 @@
 <!--
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,20 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
@@ -40,8 +32,6 @@
 <body>
     <div class="app">
         <img src="./img/logoh.png" style="width: 40%;height: 40;" />
-        <input type="button" id="hasPermission" value="hasPermission" class="btn">
-        <input type="button" id="requestPermissions" value="requestPermissions" class="btn">
         <input type="button" id="goCaptureSample" value="Capture Sample" class="btn">
         <input type="button" id="goBarrierSample" value="Barrier Sample" class="btn">
     </div>

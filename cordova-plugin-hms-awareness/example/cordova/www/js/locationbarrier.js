@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,25 +14,27 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addLocationBarrierEnter").addEventListener("click", addLocationBarrierEnter);
     document.getElementById("addLocationBarrierStay").addEventListener("click", addLocationBarrierStay);
     document.getElementById("addLocationBarrierExit").addEventListener("click", addLocationBarrierExit);
 }, false);
 
-function addLocationBarrierEnter() {
+const addLocationBarrierEnter = () => {
     let barrierlLabel = "LocationBarrierEnter";
     let latitude = 40.909520;
     let longitude = 29.169720;
     let radius = 1000.0;
     AwarenessBarrier.LocationBarrier.enter(latitude, longitude, radius)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addLocationBarrierStay() {
+const addLocationBarrierStay = () => {
     let barrierlLabel = "LocationBarrierStay";
     let latitude = 40.909520;
     let longitude = 29.169720;
@@ -40,20 +42,24 @@ function addLocationBarrierStay() {
     let mTimeOfDuration = 1000;
     AwarenessBarrier.LocationBarrier.stay(latitude, longitude, radius, mTimeOfDuration)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addLocationBarrierExit() {
+const addLocationBarrierExit = () => {
     let barrierlLabel = "LocationBarrierExit";
     let latitude = 40.909520;
     let longitude = 29.169720;
     let radius = 1000.0;
     AwarenessBarrier.LocationBarrier.exit(latitude, longitude, radius)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }

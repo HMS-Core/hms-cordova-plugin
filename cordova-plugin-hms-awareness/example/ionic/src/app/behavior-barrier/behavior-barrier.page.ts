@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { BehaviorBarrier, BehaviorBarrierConstant } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 
 @Component({
   selector: 'app-behavior-barrier',
@@ -29,28 +30,34 @@ export class BehaviorBarrierPage implements OnInit {
   }
   public addBehaviorBarrierKeeping() {
     let barrierlLabel = "BehaviorBarrierKeeping";
-    BehaviorBarrier.keeping(BehaviorBarrierConstant.BEHAVIOR_WALKING, BehaviorBarrierConstant.BEHAVIOR_STILL)
+    AwarenessBarrier.BehaviorBarrier.keeping(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
   public addBehaviorBarrierBeginning() {
     let barrierlLabel = "BehaviorBarrierBeginning";
-    BehaviorBarrier.beginning(BehaviorBarrierConstant.BEHAVIOR_WALKING, BehaviorBarrierConstant.BEHAVIOR_STILL)
+    AwarenessBarrier.BehaviorBarrier.beginning(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
   public addBehaviorBarrierEnding() {
     let barrierlLabel = "BehaviorBarrierEnding";
-    BehaviorBarrier.ending(BehaviorBarrierConstant.BEHAVIOR_WALKING, BehaviorBarrierConstant.BEHAVIOR_STILL)
+    AwarenessBarrier.BehaviorBarrier.ending(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }

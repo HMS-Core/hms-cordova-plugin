@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BarrierManager } from '@hmscore/ionic-native-hms-awareness/ngx';
+import { BarrierManager } from '@hmscore/ionic-native-hms-awareness';
 @Component({
   selector: 'app-barrier-sample',
   templateUrl: './barrier-sample.page.html',
@@ -60,15 +61,23 @@ export class BarrierSamplePage implements OnInit {
   public deleteAllBarriersfunc() {
     BarrierManager.deleteAllBarriers(
       function (res) {
-        console.log(JSON.stringify(res))
-      }, function (err) { console.log(JSON.stringify(err)); }
+        alert(JSON.stringify(res));
+        console.log(JSON.stringify(res));
+      }, function (err) {
+        alert(JSON.stringify(err));
+        console.log(JSON.stringify(err));
+      }
     );
   }
   public unRegisterReceiverfunc() {
     BarrierManager.unRegisterReceiver(
       function (res) {
-        console.log(JSON.stringify(res))
-      }, function (err) { console.log(JSON.stringify(err)); }
+        alert(JSON.stringify(res));
+        console.log(JSON.stringify(res));
+      }, function (err) {
+        alert(JSON.stringify(err));
+        console.log(JSON.stringify(err));
+      }
     );
   }
 
@@ -76,8 +85,10 @@ export class BarrierSamplePage implements OnInit {
     let barrierLabels = ["WifiBarrierKeeping", "WifiBarrierConnecting"];
     BarrierManager.deleteBarrierWithLabels(
       function (res) {
+        alert(JSON.stringify(res));
         console.log(JSON.stringify(res))
       }, function (err) {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }, barrierLabels
     );

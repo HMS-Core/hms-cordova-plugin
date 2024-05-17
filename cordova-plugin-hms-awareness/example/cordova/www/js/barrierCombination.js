@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,17 +14,19 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("barrierCombination").addEventListener("click", barrierCombination);
 }, false);
 
-function barrierCombination() {
+const barrierCombination = () => {
     let barrierCombinationLabel = "barrierCombinationLabelCustom";
     AwarenessBarrier.CombinationBarrier.and(AwarenessBarrier.HeadsetBarrier.disconnecting(),
         AwarenessBarrier.WifiBarrier.keeping(1), AwarenessBarrier.CombinationBarrier.not(AwarenessBarrier.ScreenBarrier.screenOff()))
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch(err => {
+            aler(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierCombinationLabel);
 }

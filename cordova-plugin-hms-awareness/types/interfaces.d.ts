@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -239,13 +239,4 @@ export declare enum TimeBarrierConstants {
     THURSDAY_CODE = 5,
     FRIDAY_CODE = 6,
     SATURDAY_CODE = 7
-}
-export declare enum HMSPermission {
-    PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
-    PERMISSION_HUAWEI_ACTIVITY_RECOGNITION = "com.huawei.hms.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_ACTIVITY_RECOGNITION = "android.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH",
-    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
-    PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
-    PERMISSION_ACCESS_BACKGROUND_LOCATION = "android.permission.ACCESS_BACKGROUND_LOCATION"
 }

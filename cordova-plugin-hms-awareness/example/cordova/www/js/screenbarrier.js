@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addScreenBarrierKeeping").addEventListener("click", addScreenBarrierKeeping);
     document.getElementById("addScreenBarrierOn").addEventListener("click", addScreenBarrierOn);
     document.getElementById("addScreenBarrierOff").addEventListener("click", addScreenBarrierOff);
@@ -22,40 +22,46 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("stopBackgroundService").addEventListener("click", stopBackgroundService);
 }, false);
 
-function stopBackgroundService(){
+const stopBackgroundService = () => {
 	AwarenessBarrier.stopBackgroundService();
 }
 
-function addScreenBarrierKeeping() {
+const addScreenBarrierKeeping = () => {
     let barrierlLabel = "ScreenBarrierKeeping";
     let screenStatus = AwarenessBarrier.ScreenStatus.SCREENON;
 	AwarenessBarrier.setBackgroundFile('www/background.js');
     AwarenessBarrier.ScreenBarrier.keeping(screenStatus).runInBackground(barrierlLabel);
 }
-function addScreenBarrierOn() {
+const addScreenBarrierOn = () => {
     let barrierlLabel = "ScreenBarrierOn";
     AwarenessBarrier.ScreenBarrier.screenOn()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addScreenBarrierOff() {
+const addScreenBarrierOff = () => {
     let barrierlLabel = "ScreenBarrierOff";
     AwarenessBarrier.ScreenBarrier.screenOff()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addScreenBarrierUnlock() {
+const addScreenBarrierUnlock = () => {
     let barrierlLabel = "ScreenBarrierUnlock";
     AwarenessBarrier.ScreenBarrier.screenUnlock()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }

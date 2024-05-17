@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HMSPermission = exports.TimeBarrierConstants = exports.BluetoothDevice = exports.BehaviorBarrierConstant = exports.ScreenStatus = exports.BluetoothStatus = exports.WifiStatus = exports.HeadsetStatus = void 0;
+exports.TimeBarrierConstants = exports.BluetoothDevice = exports.BehaviorBarrierConstant = exports.ScreenStatus = exports.BluetoothStatus = exports.WifiStatus = exports.HeadsetStatus = void 0;
 //Enum value
 var HeadsetStatus;
 (function (HeadsetStatus) {
@@ -73,14 +74,4 @@ var TimeBarrierConstants;
     TimeBarrierConstants[TimeBarrierConstants["FRIDAY_CODE"] = 6] = "FRIDAY_CODE";
     TimeBarrierConstants[TimeBarrierConstants["SATURDAY_CODE"] = 7] = "SATURDAY_CODE";
 })(TimeBarrierConstants = exports.TimeBarrierConstants || (exports.TimeBarrierConstants = {}));
-var HMSPermission;
-(function (HMSPermission) {
-    HMSPermission["PERMISSION_ACCESS_FINE_LOCATION"] = "android.permission.ACCESS_FINE_LOCATION";
-    HMSPermission["PERMISSION_HUAWEI_ACTIVITY_RECOGNITION"] = "com.huawei.hms.permission.ACTIVITY_RECOGNITION";
-    HMSPermission["PERMISSION_ACTIVITY_RECOGNITION"] = "android.permission.ACTIVITY_RECOGNITION";
-    HMSPermission["PERMISSION_BLUETOOTH"] = "android.permission.BLUETOOTH";
-    HMSPermission["PERMISSION_CHANGE_WIFI_STATE"] = "android.permission.CHANGE_WIFI_STATE";
-    HMSPermission["PERMISSION_ACCESS_COARSE_LOCATION"] = "android.permission.ACCESS_COARSE_LOCATION";
-    HMSPermission["PERMISSION_ACCESS_BACKGROUND_LOCATION"] = "android.permission.ACCESS_BACKGROUND_LOCATION";
-})(HMSPermission = exports.HMSPermission || (exports.HMSPermission = {}));
 //# sourceMappingURL=interfaces.js.map

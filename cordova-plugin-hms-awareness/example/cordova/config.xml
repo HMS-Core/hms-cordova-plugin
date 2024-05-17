@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="<package_name>" version="1.0.8-302"
+<widget id="<package_name>" version="3.8.0-300"
     xmlns="http://www.w3.org/ns/widgets"
     xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Awareness Demo</name>

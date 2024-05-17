@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,45 +14,50 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addHeadsetBarrierKeeping").addEventListener("click", addHeadsetBarrierKeeping);
     document.getElementById("addHeadsetBarrierKeepingCustom").addEventListener("click", addHeadsetBarrierKeepingCustom);
     document.getElementById("addHeadsetBarrierConnecting").addEventListener("click", addHeadsetBarrierConnecting);
     document.getElementById("addHeadsetBarrierDisconnecting").addEventListener("click", addHeadsetBarrierDisconnecting);
-    document.getElementById("deleteBarrierWithLabels").addEventListener("click", deleteBarrierWithLabels);
 }, false);
 
-function addHeadsetBarrierKeeping() {
+const addHeadsetBarrierKeeping = () => {
     let headsetStatus = AwarenessBarrier.HeadsetStatus.CONNECTED;
     AwarenessBarrier.setBackgroundFile('www/background.js');
     let barrierLabel = "headsetBarrierKeeping";
     AwarenessBarrier.HeadsetBarrier.keeping(headsetStatus).runInBackground(barrierLabel);
 }
-function addHeadsetBarrierKeepingCustom() {
+const addHeadsetBarrierKeepingCustom = () => {
     let headsetStatus = AwarenessBarrier.HeadsetStatus.DISCONNECTED;
     let barrierLabel = "headsetBarrierKeepingCustom";
     AwarenessBarrier.HeadsetBarrier.keeping(headsetStatus)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }
-function addHeadsetBarrierConnecting() {
+const addHeadsetBarrierConnecting = () => {
     let barrierLabel = "headsetBarrierConnecting";
     AwarenessBarrier.HeadsetBarrier.connecting()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }
-function addHeadsetBarrierDisconnecting() {
+const addHeadsetBarrierDisconnecting = () => {
     let barrierLabel = "headsetBarrierDisconnecting";
     AwarenessBarrier.HeadsetBarrier.disconnecting()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }

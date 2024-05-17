@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ public class HMSAwareness extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         final String kit = "Awareness";
-        final String version = "1.0.8.302";
+        final String version = "3.8.0.300";
         cordovaController = new CordovaController(this, kit, version,
                 Arrays.asList(new HMSAwarenessModule(),
                         new AwarenessBarriers(webView.getContext()),

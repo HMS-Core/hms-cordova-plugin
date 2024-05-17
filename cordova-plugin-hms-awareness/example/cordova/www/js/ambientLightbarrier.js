@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,40 +14,46 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addAmbientLightBarrierRange").addEventListener("click", addAmbientLightBarrierRange);
     document.getElementById("addAmbientLightBarrierAbove").addEventListener("click", addAmbientLightBarrierAbove);
     document.getElementById("addAmbientLightBarrierBelow").addEventListener("click", addAmbientLightBarrierBelow);
 }, false);
 
-function addAmbientLightBarrierRange() {
+const addAmbientLightBarrierRange = () => {
     let barrierLabel = "AmbientLightBarrierRange";
     let lowLuxValue = 500.0;
     let highLuxValue = 2500.0;
     AwarenessBarrier.AmbientLightBarrier.range(lowLuxValue, highLuxValue)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }
-function addAmbientLightBarrierAbove() {
+const addAmbientLightBarrierAbove = () => {
     let barrierLabel = "AmbientLightBarrierAbove";
     let highLuxValue = 2500.0;
     AwarenessBarrier.AmbientLightBarrier.above(highLuxValue)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }
-function addAmbientLightBarrierBelow() {
+const addAmbientLightBarrierBelow = () => {
     let barrierLabel = "AmbientLightBarrierBelow";
     let lowLuxValue = 500.0;
     AwarenessBarrier.AmbientLightBarrier.below(lowLuxValue)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierLabel);
 }

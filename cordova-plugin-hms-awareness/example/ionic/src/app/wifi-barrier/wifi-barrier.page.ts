@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { WifiBarrier, WifiStatus } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 @Component({
     selector: 'app-wifi-barrier',
     templateUrl: './wifi-barrier.page.html',
@@ -28,13 +29,15 @@ export class WifiBarrierPage implements OnInit {
     }
     public addWifiBarrierKeeping() {
         let barrierlLabel = "WifiBarrierKeeping";
-        let wifiStatus = WifiStatus.CONNECTED;
+        let wifiStatus = AwarenessBarrier.WifiStatus.CONNECTED;
         let bssid = "";
         let ssid = "";
-        WifiBarrier.keeping(wifiStatus, bssid, ssid)
+        AwarenessBarrier.WifiBarrier.keeping(wifiStatus, bssid, ssid)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
@@ -42,10 +45,12 @@ export class WifiBarrierPage implements OnInit {
         let barrierlLabel = "WifiBarrierConnecting";
         let bssid = "";
         let ssid = "";
-        WifiBarrier.connecting(bssid, ssid)
+        AwarenessBarrier.WifiBarrier.connecting(bssid, ssid)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
@@ -53,28 +58,34 @@ export class WifiBarrierPage implements OnInit {
         let barrierlLabel = "WifiBarrierDisconnecting";
         let bssid = "";
         let ssid = "";
-        WifiBarrier.disconnecting(bssid, ssid)
+        AwarenessBarrier.WifiBarrier.disconnecting(bssid, ssid)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
     public addWifiBarrierEnabling() {
         let barrierlLabel = "WifiBarrierEnabling";
-        WifiBarrier.enabling()
+        AwarenessBarrier.WifiBarrier.enabling()
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
     public addWifiBarrierDisabling() {
         let barrierlLabel = "WifiBarrierDisabling";
-        WifiBarrier.disabling()
+        AwarenessBarrier.WifiBarrier.disabling()
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }

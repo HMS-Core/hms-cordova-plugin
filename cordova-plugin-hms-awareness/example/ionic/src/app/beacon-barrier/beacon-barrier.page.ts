@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { BeaconBarrier } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 @Component({
   selector: 'app-beacon-barrier',
   templateUrl: './beacon-barrier.page.html',
@@ -31,10 +32,12 @@ export class BeaconBarrierPage implements OnInit {
     let namespace = "sample namespace";
     let type = "sample type";
     let content = ["c", "o", "n", "t", "e", "n", "t"];
-    BeaconBarrier.keep(namespace, type, content)
+    AwarenessBarrier.BeaconBarrier.keep(namespace, type, content)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -43,10 +46,12 @@ export class BeaconBarrierPage implements OnInit {
     let namespace = "sample namespace";
     let type = "sample type";
     let content = ["c", "o", "n", "t", "e", "n", "t"];
-    BeaconBarrier.discover(namespace, type, content)
+    AwarenessBarrier.BeaconBarrier.discover(namespace, type, content)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -55,10 +60,12 @@ export class BeaconBarrierPage implements OnInit {
     let namespace = "sample namespace";
     let type = "sample type";
     let content = ["c", "o", "n", "t", "e", "n", "t"];
-    BeaconBarrier.missed(namespace, type, content)
+    AwarenessBarrier.BeaconBarrier.missed(namespace, type, content)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }

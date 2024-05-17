@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,9 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Component, OnInit } from '@angular/core';
-import { BluetoothBarrier, BluetoothStatus, BluetoothDevice } from '@hmscore/ionic-native-hms-awareness/ngx';
 
+import { Component, OnInit } from '@angular/core';
+declare var AwarenessBarrier;
 @Component({
     selector: 'app-bluetooth-barrier',
     templateUrl: './bluetooth-barrier.page.html',
@@ -29,32 +29,38 @@ export class BluetoothBarrierPage implements OnInit {
     }
     public addBluetoothBarrierKeep() {
         let barrierlLabel = "BluetoothBarrierKeep";
-        let bluetoothStatus = BluetoothStatus.CONNECTED;
-        let deviceType = BluetoothDevice.DEVICE_CAR;
-        BluetoothBarrier.keep(deviceType, bluetoothStatus)
+        let bluetoothStatus = AwarenessBarrier.BluetoothStatus.CONNECTED;
+        let deviceType = AwarenessBarrier.BluetoothDevice.DEVICE_CAR;
+        AwarenessBarrier.BluetoothBarrier.keep(deviceType, bluetoothStatus)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
     public addBluetoothBarrierConnecting() {
         let barrierlLabel = "BluetoothBarrierConnecting";
-        let deviceType = BluetoothDevice.DEVICE_CAR;
-        BluetoothBarrier.connecting(deviceType)
+        let deviceType = AwarenessBarrier.BluetoothDevice.DEVICE_CAR;
+        AwarenessBarrier.BluetoothBarrier.connecting(deviceType)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }
     public addBluetoothBarrierDisconnecting() {
         let barrierlLabel = "BluetoothBarrierDisconnecting";
-        let deviceType = BluetoothDevice.DEVICE_CAR;
-        BluetoothBarrier.disconnecting(deviceType)
+        let deviceType = AwarenessBarrier.BluetoothDevice.DEVICE_CAR;
+        AwarenessBarrier.BluetoothBarrier.disconnecting(deviceType)
             .subscribe((data) => {
+                alert(JSON.stringify(data));
                 console.log(JSON.stringify(data));
             }).catch((err) => {
+                alert(JSON.stringify(err));
                 console.log(JSON.stringify(err));
             }).run(barrierlLabel);
     }

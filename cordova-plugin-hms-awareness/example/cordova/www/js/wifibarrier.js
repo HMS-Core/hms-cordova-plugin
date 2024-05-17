@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addWifiBarrierKeeping").addEventListener("click", addWifiBarrierKeeping);
     document.getElementById("addWifiBarrierConnecting").addEventListener("click", addWifiBarrierConnecting);
     document.getElementById("addWifiBarrierDisconnecting").addEventListener("click", addWifiBarrierDisconnecting);
@@ -22,55 +22,65 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("addWifiBarrierDisabling").addEventListener("click", addWifiBarrierDisabling);
 }, false);
 
-function addWifiBarrierKeeping() {
+const addWifiBarrierKeeping = () => {
     let barrierlLabel = "WifiBarrierKeeping";
     let wifiStatus = AwarenessBarrier.WifiStatus.CONNECTED;
     let bssid = "";
     let ssid = "";
     AwarenessBarrier.WifiBarrier.keeping(wifiStatus, bssid, ssid)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addWifiBarrierConnecting() {
+const addWifiBarrierConnecting = () => {
     let barrierlLabel = "WifiBarrierConnecting";
     let bssid = "";
     let ssid = "";
     AwarenessBarrier.WifiBarrier.connecting(bssid, ssid)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addWifiBarrierDisconnecting() {
+const addWifiBarrierDisconnecting = () => {
     let barrierlLabel = "WifiBarrierDisconnecting";
     let bssid = "";
     let ssid = "";
     AwarenessBarrier.WifiBarrier.disconnecting(bssid, ssid)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addWifiBarrierEnabling() {
+const addWifiBarrierEnabling = () => {
     let barrierlLabel = "WifiBarrierEnabling";
     AwarenessBarrier.WifiBarrier.enabling()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addWifiBarrierDisabling() {
+const addWifiBarrierDisabling = () => {
     let barrierlLabel = "WifiBarrierDisabling";
     AwarenessBarrier.WifiBarrier.disabling()
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ public class Exceptions {
     public static final int ERR_NULL_ARRAY = 813;
     public static final int ERR_NO_EXISTENT_REQUEST_ID = 814;
     public static final int ERR_NO_BEACON_MATCHES = 815;
-    public static final int ERR_ALREADY_HAVE_PERMISSIONS = 816;
 
     static final Map<Integer, String> ERROR_MSGS = new HashMap<>();
 
@@ -43,7 +42,6 @@ public class Exceptions {
         ERROR_MSGS.put(ERR_NULL_ARRAY, "The array length must be at least 1");
         ERROR_MSGS.put(ERR_NO_EXISTENT_REQUEST_ID, "RequestId does not in Status list");
         ERROR_MSGS.put(ERR_NO_BEACON_MATCHES, "No beacon matches filters nearby");
-        ERROR_MSGS.put(ERR_ALREADY_HAVE_PERMISSIONS, "already have the permissions");
     }
 
     public Exceptions() {

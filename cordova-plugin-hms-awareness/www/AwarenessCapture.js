@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.querySupportingCapabilities = exports.enableUpdateWindow = exports.getTimeCategoriesForFuture = exports.getTimeCategoriesByUser = exports.getTimeCategoriesByIP = exports.getTimeCategoriesByCountryCode = exports.getTimeCategories = exports.getWeatherByPosition = exports.getWeatherByDevice = exports.getWifiStatus = exports.getDarkModeStatus = exports.getCurrentLocation = exports.getScreenStatus = exports.getLightIntensity = exports.getApplicationStatus = exports.getBeaconStatus = exports.getBluetoothStatus = exports.getBehaviorStatus = exports.getLocation = exports.getHeadsetStatus = void 0;

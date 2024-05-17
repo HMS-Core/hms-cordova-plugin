@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { IonicNativePlugin } from '@ionic-native/core';
 /**
  * @name HMSAwareness
@@ -20,24 +21,6 @@ import { IonicNativePlugin } from '@ionic-native/core';
  * Cordova Awareness Plugin enables communication between the HMS Core Awareness SDK and Cordova platform. This plugin demonstrates wide-ranging functionality of the HMS Core Awareness SDK.
  */
 export declare class HMSAwareness extends IonicNativePlugin {
-    /**
-     * It checks the permissions required to use this Kit.
-     * @param  {HMSPermission} permission Represents the list in which permission names are kept.
-     * @returns Promise<any>
-     */
-    hasPermission(permission: HMSPermission): Promise<any>;
-    /**
-     * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission} permission Represents the list in which permission names are kept.
-     * @returns Promise<any>
-     */
-    requestPermission(permission: HMSPermission): Promise<any>;
-    /**
-     * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission[]} permissions Represents the list in which permission names are kept.
-     * @returns Promise<any>
-     */
-    requestPermissions(permissions: HMSPermission[]): Promise<any>;
     /**
      * This method enables HMSLogger capability which is used for sending usage analytics of Awareness SDK's methods to improve the service quality.
      * @returns Promise<any>
@@ -66,7 +49,7 @@ export declare class AwarenessCapture extends IonicNativePlugin {
      */
     getBehaviorStatus(): Promise<BehaviorResponse>;
     /**
-     * @param  {BluetoothDevice} blueoothDevice Indicates bluetooth device.
+     * @param  {BluetoothDevice} bluetoothDevice Indicates bluetooth device.
      * Obtain the status of the phone, for example, whether Bluetooth is connected or not.
      * @returns Promise<any>
      */
@@ -112,11 +95,6 @@ export declare class AwarenessCapture extends IonicNativePlugin {
      * @returns Promise<any>
      */
     getWeatherByDevice(): Promise<WeatherStatusResponse>;
-    /**
-     * Queries the weather information of the device location or a specified location. Weather of the current day (24 hours) and the next seven days (including the current day) can be queried.
-     * @returns Promise<any>
-     */
-    getWeatherByIP(): Promise<WeatherStatusResponse>;
     /**
      * Queries the weather information of the device location or a specified location. Weather of the current day (24 hours) and the next seven days (including the current day) can be queried.
      * @param  {WeatherPosition} weatherByPositionRequest Weather by Position.
@@ -388,15 +366,6 @@ export declare enum TimeBarrierConstants {
     THURSDAY_CODE = 5,
     FRIDAY_CODE = 6,
     SATURDAY_CODE = 7
-}
-export declare enum HMSPermission {
-    PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
-    PERMISSION_HUAWEI_ACTIVITY_RECOGNITION = "com.huawei.hms.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_ACTIVITY_RECOGNITION = "android.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH",
-    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
-    PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
-    PERMISSION_ACCESS_BACKGROUND_LOCATION = "android.permission.ACCESS_BACKGROUND_LOCATION"
 }
 export declare class AwarenessBarrier {
     private cordovaBarrier;

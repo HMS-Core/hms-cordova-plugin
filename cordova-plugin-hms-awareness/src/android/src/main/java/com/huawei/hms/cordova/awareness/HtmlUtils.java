@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -49,10 +49,9 @@ public class HtmlUtils {
     }
 
     public static String addInitialBarrierListener() {
-        String barrierListener = "function addBarrierListener(event, callback) {" +
+        return "function addBarrierListener(event, callback) {" +
                 "window[event] = callback;" +
                 "}";
-        return barrierListener;
     }
 
     public static String wrapInsideScriptTag(String data) {

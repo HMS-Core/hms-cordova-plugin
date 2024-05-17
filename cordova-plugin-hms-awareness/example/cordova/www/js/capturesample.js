@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 const $ = (x) => document.getElementById(x);
 $('getHeadsetStatus').onclick = async () => {
     AwarenessCapture.getHeadsetStatus()
@@ -126,13 +127,13 @@ $('getTimeCategoriesByUser').onclick = async () => {
         .catch((err) => alert(JSON.stringify(err)));
 }
 $('getTimeCategoriesForFuture').onclick = async () => {
-    const timeStamp = 1607990400;
+    const timeStamp = 1733743189000;
     AwarenessCapture.getTimeCategoriesForFuture(timeStamp)
     .then((res) => alert(JSON.stringify(res)))
     .catch((err) => alert(JSON.stringify(err)));
 }
 $('enableUpdateWindow').onclick = async () => {
-    AwarenessCapture.enableUpdateWindow()
+    AwarenessCapture.enableUpdateWindow(true)
     .then((res) => alert(JSON.stringify(res)))
     .catch((err) => alert(JSON.stringify(err)));
 }

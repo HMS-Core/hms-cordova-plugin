@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { LocationBarrier } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 @Component({
   selector: 'app-location-barrier',
   templateUrl: './location-barrier.page.html',
@@ -31,10 +32,12 @@ export class LocationBarrierPage implements OnInit {
     let latitude = 40.909520;
     let longitude = 29.169720;
     let radius = 1000.0;
-    LocationBarrier.enter(latitude, longitude, radius)
+    AwarenessBarrier.LocationBarrier.enter(latitude, longitude, radius)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -44,10 +47,12 @@ export class LocationBarrierPage implements OnInit {
     let longitude = 29.169720;
     let radius = 1000.0;
     let mTimeOfDuration = 1000;
-    LocationBarrier.stay(latitude, longitude, radius, mTimeOfDuration)
+    AwarenessBarrier.LocationBarrier.stay(latitude, longitude, radius, mTimeOfDuration)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -56,10 +61,12 @@ export class LocationBarrierPage implements OnInit {
     let latitude = 40.909520;
     let longitude = 29.169720;
     let radius = 1000.0;
-    LocationBarrier.exit(latitude, longitude, radius)
+    AwarenessBarrier.LocationBarrier.exit(latitude, longitude, radius)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }

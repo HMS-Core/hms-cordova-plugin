@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { TimeBarrier, TimeBarrierConstants } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 @Component({
   selector: 'app-time-barrier',
   templateUrl: './time-barrier.page.html',
@@ -33,10 +34,12 @@ export class TimeBarrierPage implements OnInit {
     let timeZone;
     let startTimeOfDay = 11 * oneHourMilliSecond;
     let stopTimeOfDay = 12 * oneHourMilliSecond;
-    TimeBarrier.duringPeriodOfDay(timeZone, startTimeOfDay, stopTimeOfDay)
+    AwarenessBarrier.TimeBarrier.duringPeriodOfDay(timeZone, startTimeOfDay, stopTimeOfDay)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -44,14 +47,16 @@ export class TimeBarrierPage implements OnInit {
   public addTimeBarrierDuringPeriodOfWeek() {
     const oneHourMilliSecond = 60 * 60 * 1000;
     let barrierlLabel = "TimeBarrierDuringPeriodOfWeek";
-    let dayCode = TimeBarrierConstants.THURSDAY_CODE;
+    let dayCode = AwarenessBarrier.TimeBarrierConstants.THURSDAY_CODE;
     let timeZone;
     let startTimeOfSpecifiedDay = 11 * oneHourMilliSecond;
     let stopTimeOfSpecifiedDay = 12 * oneHourMilliSecond;
-    TimeBarrier.duringPeriodOfWeek(dayCode, timeZone, startTimeOfSpecifiedDay, stopTimeOfSpecifiedDay)
+    AwarenessBarrier.TimeBarrier.duringPeriodOfWeek(dayCode, timeZone, startTimeOfSpecifiedDay, stopTimeOfSpecifiedDay)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
@@ -60,33 +65,39 @@ export class TimeBarrierPage implements OnInit {
     const tenSecondsMillis = 10 * 1000;
     let startTimeStamp = Date.now();
     let stopTimeStamp = startTimeStamp + tenSecondsMillis;
-    TimeBarrier.duringTimePeriod(startTimeStamp, stopTimeStamp)
+    AwarenessBarrier.TimeBarrier.duringTimePeriod(startTimeStamp, stopTimeStamp)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
   public addTimeBarrierInTimeCategory() {
     let barrierlLabel = "TimeBarrierInTimeCategory";
-    let timeCategory = TimeBarrierConstants.TIME_CATEGORY_WEEKEND;
-    TimeBarrier.inTimeCategory(timeCategory)
+    let timeCategory = AwarenessBarrier.TimeBarrierConstants.TIME_CATEGORY_WEEKEND;
+    AwarenessBarrier.TimeBarrier.inTimeCategory(timeCategory)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }
   public addTimeBarrierInSunriseOrSunsetPeriod() {
     const oneHourMilliSecond = 60 * 60 * 1000;
     let barrierlLabel = "TimeBarrierInSunriseOrSunsetPeriod";
-    let timeInstant = TimeBarrierConstants.SUNSET_CODE;
+    let timeInstant = AwarenessBarrier.TimeBarrierConstants.SUNSET_CODE;
     let startTimeOffset = -oneHourMilliSecond;
     let stopTimeOffset = oneHourMilliSecond;
-    TimeBarrier.inSunriseOrSunsetPeriod(timeInstant, startTimeOffset, stopTimeOffset)
+    AwarenessBarrier.TimeBarrier.inSunriseOrSunsetPeriod(timeInstant, startTimeOffset, stopTimeOffset)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierlLabel);
   }

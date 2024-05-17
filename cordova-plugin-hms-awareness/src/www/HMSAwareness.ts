@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,20 +14,9 @@
     limitations under the License.
 */
 
-import { asyncExec } from './util'
-import * as HMSAwarenessAPI from './interfaces';
-export {HMSPermission} from './interfaces';
+import { asyncExec } from './util';
 let HMSAwarenessClass = 'HMSAwareness';
 
-export function hasPermission(permission: HMSAwarenessAPI.HMSPermission): Promise<any> {
-    return asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['hasPermission', permission]);
-};
-export function requestPermission(permission: HMSAwarenessAPI.HMSPermission): Promise<any> {
-    return asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['requestPermission', permission]);
-};
-export function requestPermissions(permissions: HMSAwarenessAPI.HMSPermission[]): Promise<any> {
-    return asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['requestPermissions', permissions]);
-};
 export function enableLogger(): Promise<void> {
     return asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['enableLogger']);
 };

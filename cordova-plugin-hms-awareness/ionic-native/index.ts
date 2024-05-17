@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -30,35 +30,6 @@ import { Plugin, Cordova, IonicNativePlugin } from '@ionic-native/core';
 })
 @Injectable()
 export class HMSAwareness extends IonicNativePlugin {
-
-    @Cordova({ otherPromise: true })
-    /**
-     * It checks the permissions required to use this Kit.
-     * @param  {HMSPermission} permission Represents the list in which permission names are kept.
-     * @returns Promise<any> 
-     */
-    hasPermission(permission: HMSPermission): Promise<any> {
-        return;
-    };
-
-    @Cordova({ otherPromise: true })
-    /**
-     * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission} permission Represents the list in which permission names are kept.
-     * @returns Promise<any>
-     */
-    requestPermission(permission: HMSPermission): Promise<any> {
-        return;
-    };
-    @Cordova({ otherPromise: true })
-    /**
-     * Obtains the necessary permissions to use the services.
-     * @param  {HMSPermission[]} permissions Represents the list in which permission names are kept.
-     * @returns Promise<any>
-     */
-    requestPermissions(permissions: HMSPermission[]): Promise<any> {
-        return;
-    };
 
     @Cordova({ otherPromise: true })
     /**
@@ -114,7 +85,7 @@ export class AwarenessCapture extends IonicNativePlugin {
     };
     @Cordova({ otherPromise: true })
     /**
-     * @param  {BluetoothDevice} blueoothDevice Indicates bluetooth device.
+     * @param  {BluetoothDevice} bluetoothDevice Indicates bluetooth device.
      * Obtain the status of the phone, for example, whether Bluetooth is connected or not.
      * @returns Promise<any> 
      */
@@ -184,14 +155,6 @@ export class AwarenessCapture extends IonicNativePlugin {
      * @returns Promise<any> 
      */
     getWeatherByDevice(): Promise<WeatherStatusResponse> {
-        return;
-    };
-    @Cordova({ otherPromise: true })
-    /**
-     * Queries the weather information of the device location or a specified location. Weather of the current day (24 hours) and the next seven days (including the current day) can be queried. 
-     * @returns Promise<any> 
-     */
-    getWeatherByIP(): Promise<WeatherStatusResponse> {
         return;
     };
     @Cordova({ otherPromise: true })
@@ -506,16 +469,6 @@ export enum TimeBarrierConstants {
     FRIDAY_CODE = 6,
     SATURDAY_CODE = 7,
 }
-export enum HMSPermission {
-    PERMISSION_ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION",
-    PERMISSION_HUAWEI_ACTIVITY_RECOGNITION = "com.huawei.hms.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_ACTIVITY_RECOGNITION = "android.permission.ACTIVITY_RECOGNITION",
-    PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH",
-    PERMISSION_CHANGE_WIFI_STATE = "android.permission.CHANGE_WIFI_STATE",
-    PERMISSION_ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION",
-    PERMISSION_ACCESS_BACKGROUND_LOCATION = "android.permission.ACCESS_BACKGROUND_LOCATION"
-}
-
 
 export class AwarenessBarrier {
     private cordovaBarrier: any;
@@ -540,9 +493,6 @@ export class AwarenessBarrier {
 }
 
 export class BarrierManager {
-    private constructor() {
-
-    }
 
     static deleteAllBarriers(success: any, error: any): any {
         (<any>window).AwarenessBarrier.deleteAllBarriers(success, error);
@@ -662,15 +612,15 @@ export class BehaviorBarrier extends AwarenessBarrier {
 export class LocationBarrier extends AwarenessBarrier {
 
     static enter(v: number, v1: number, v2: number): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(LocationBarrier.name, "enter", [v, v1, v2]);
+        const capsule = new (<any>window).AwarenessBarrier.LocationBarrier(LocationBarrier.name, "enter", [v, v1, v2]);
         return new AwarenessBarrier(capsule);
     }
     static exit(v: number, v1: number, v2: number): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(LocationBarrier.name, "exit", [v, v1, v2]);
+        const capsule = new (<any>window).AwarenessBarrier.LocationBarrier(LocationBarrier.name, "exit", [v, v1, v2]);
         return new AwarenessBarrier(capsule);
     }
     static stay(v: number, v1: number, v2: number, l: number): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(LocationBarrier.name, "stay", [v, v1, v2, l]);
+        const capsule = new (<any>window).AwarenessBarrier.LocationBarrier(LocationBarrier.name, "stay", [v, v1, v2, l]);
         return new AwarenessBarrier(capsule);
     }
 }
@@ -678,19 +628,19 @@ export class LocationBarrier extends AwarenessBarrier {
 export class ScreenBarrier extends AwarenessBarrier {
 
     static screenOn(): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(ScreenBarrier.name, "screenOn", []);
+        const capsule = new (<any>window).AwarenessBarrier.ScreenBarrier(ScreenBarrier.name, "screenOn", []);
         return new AwarenessBarrier(capsule);
     }
     static screenOff(): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(ScreenBarrier.name, "screenOff", []);
+        const capsule = new (<any>window).AwarenessBarrier.ScreenBarrier(ScreenBarrier.name, "screenOff", []);
         return new AwarenessBarrier(capsule);
     }
     static screenUnlock(): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(ScreenBarrier.name, "screenUnlock", []);
+        const capsule = new (<any>window).AwarenessBarrier.ScreenBarrier(ScreenBarrier.name, "screenUnlock", []);
         return new AwarenessBarrier(capsule);
     }
     static keeping(i: number): AwarenessBarrier {
-        const capsule = new (<any>window).AwarenessBarrier.BehaviorBarrier(ScreenBarrier.name, "keeping", [i]);
+        const capsule = new (<any>window).AwarenessBarrier.ScreenBarrier(ScreenBarrier.name, "keeping", [i]);
         return new AwarenessBarrier(capsule);
     }
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,24 +13,35 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-function sendBarrierInfoToRemoteServer(barrierInfo){
-    const url = "https://endpoint.endpoint";
+
+const sendBarrierInfoToRemoteServer = (barrierInfo) => {
+    const url = "<YOUR_URL>";
     const options = {
-        headers:{
-            "content-type":"application/json; charset=UTF-8"
+        headers: {
+            "content-type": "application/json; charset=UTF-8"
         },
         body: barrierInfo,
         method: "POST"
     };
-    fetch(url, options).then(data => {return data.json()}).then(res => console.log(res)).catch(error => console.log(error));
+    fetch(url, options)
+        .then(res => {
+            alert(JSON.stringify(res));
+            console.log(JSON.stringify(res));
+        })
+        .catch(error => {
+            alert(JSON.stringify(error));
+            console.log(JSON.stringify(error));
+        });
 }
 
 addBarrierListener('ScreenBarrierKeeping', (barrierInfo) => {
+    alert(JSON.stringify(barrierInfo));
     console.log(JSON.stringify(barrierInfo));
     sendBarrierInfoToRemoteServer(barrierInfo);
 });
 
 addBarrierListener('headsetBarrierKeeping', (barrierInfo) => {
+    alert(JSON.stringify(barrierInfo));
     console.log(JSON.stringify(barrierInfo));
 });
 

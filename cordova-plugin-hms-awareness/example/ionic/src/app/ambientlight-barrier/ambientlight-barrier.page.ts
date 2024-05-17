@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,8 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
-import { AmbientLightBarrier } from '@hmscore/ionic-native-hms-awareness/ngx';
+declare var AwarenessBarrier;
 @Component({
   selector: 'app-ambientlight-barrier',
   templateUrl: './ambientlight-barrier.page.html',
@@ -30,30 +31,36 @@ export class AmbientlightBarrierPage implements OnInit {
     let barrierLabel = "AmbientLightBarrierRange";
     let lowLuxValue = 500.0;
     let highLuxValue = 2500.0;
-    AmbientLightBarrier.range(lowLuxValue, highLuxValue)
+    AwarenessBarrier.AmbientLightBarrier.range(lowLuxValue, highLuxValue)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierLabel);
   }
   public addAmbientLightBarrierAbove() {
     let barrierLabel = "AmbientLightBarrierAbove";
     let highLuxValue = 2500.0;
-    AmbientLightBarrier.above(highLuxValue)
+    AwarenessBarrier.AmbientLightBarrier.above(highLuxValue)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierLabel);
   }
   public addAmbientLightBarrierBelow() {
     let barrierLabel = "AmbientLightBarrierBelow";
     let lowLuxValue = 500.0;
-    AmbientLightBarrier.below(lowLuxValue)
+    AwarenessBarrier.AmbientLightBarrier.below(lowLuxValue)
       .subscribe((data) => {
+        alert(JSON.stringify(data));
         console.log(JSON.stringify(data));
       }).catch((err) => {
+        alert(JSON.stringify(err));
         console.log(JSON.stringify(err));
       }).run(barrierLabel);
   }

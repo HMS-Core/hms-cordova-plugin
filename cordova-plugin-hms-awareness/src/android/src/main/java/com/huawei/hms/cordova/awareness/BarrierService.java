@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -97,7 +97,11 @@ public class BarrierService extends Service {
         if (barrierReceiver == null) {
             String filename = intent.getStringExtra("filename");
             String intentUuid = getApplication().getPackageName() + "BARRIER_RECEIVER_ACTION";
-            pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(intentUuid), PendingIntent.FLAG_UPDATE_CURRENT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(intentUuid), PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_MUTABLE);
+            } else {
+                pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(intentUuid), PendingIntent.FLAG_UPDATE_CURRENT);
+            }
             barrierReceiver = new BarrierReceiver(initializeWebViewForBackgroundProcessing(filename));
             registerReceiver(barrierReceiver, new IntentFilter(intentUuid));
         }

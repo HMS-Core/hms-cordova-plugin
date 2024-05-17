@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -33,18 +33,6 @@ public class CorPack {
         this.webView = cordovaPlugin.webView;
         this.cordova = cordovaPlugin.cordova;
         this.eventRunner = eventRunner;
-    }
-
-    public void requestPermission(int requestCode, String permission) {
-        cordova.requestPermission(cordovaPlugin, requestCode, permission);
-    }
-
-    public void requestPermissions(int requestCode, String[] permissions) {
-        cordova.requestPermissions(cordovaPlugin, requestCode, permissions);
-    }
-
-    public boolean hasPermission(String permission) {
-        return cordova.hasPermission(permission);
     }
 
     public void enableLogger() {

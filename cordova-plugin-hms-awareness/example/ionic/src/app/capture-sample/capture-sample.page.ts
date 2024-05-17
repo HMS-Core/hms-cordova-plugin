@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 import { Component, OnInit } from '@angular/core';
 import { AwarenessCapture, BluetoothDevice } from '@hmscore/ionic-native-hms-awareness/ngx';
 @Component({
@@ -137,7 +138,7 @@ export class CaptureSamplePage implements OnInit {
       .catch((err) => alert(JSON.stringify(err)));
   }
   public async getTimeCategoriesForFuture() {
-    const timeStamp = 1607990400;
+    const timeStamp = 1733743189000;
     this.hmsAwarenessKit.getTimeCategoriesForFuture(timeStamp)
       .then((res) => alert(JSON.stringify(res)))
       .catch((err) => alert(JSON.stringify(err)));

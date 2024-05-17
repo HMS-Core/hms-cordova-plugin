@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,37 +13,43 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("addBehaviorBarrierKeeping").addEventListener("click", addBehaviorBarrierKeeping);
     document.getElementById("addBehaviorBarrierBeginning").addEventListener("click", addBehaviorBarrierBeginning);
     document.getElementById("addBehaviorBarrierEnding").addEventListener("click", addBehaviorBarrierEnding);
 }, false);
 
-
-function addBehaviorBarrierKeeping() {
+const addBehaviorBarrierKeeping = () => {
     let barrierlLabel = "BehaviorBarrierKeeping";
     AwarenessBarrier.BehaviorBarrier.keeping(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addBehaviorBarrierBeginning() {
+const addBehaviorBarrierBeginning = () => {
     let barrierlLabel = "BehaviorBarrierBeginning";
     AwarenessBarrier.BehaviorBarrier.beginning(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }
-function addBehaviorBarrierEnding() {
+const addBehaviorBarrierEnding = () => {
     let barrierlLabel = "BehaviorBarrierEnding";
     AwarenessBarrier.BehaviorBarrier.ending(AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_WALKING, AwarenessBarrier.BehaviorBarrierConstant.BEHAVIOR_STILL)
         .subscribe((data) => {
+            alert(JSON.stringify(data));
             console.log(JSON.stringify(data));
         }).catch((err) => {
+            alert(JSON.stringify(err));
             console.log(JSON.stringify(err));
         }).run(barrierlLabel);
 }

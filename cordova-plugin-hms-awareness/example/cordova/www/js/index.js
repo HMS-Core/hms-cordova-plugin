@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
 var app = {
     // Application Constructor
     initialize: function () {
@@ -24,10 +25,8 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
-        document.getElementById("goCaptureSample").addEventListener("click", function () { window.location = "capturesample.html" });
-        document.getElementById("goBarrierSample").addEventListener("click", function () { window.location = "barriersample.html" });
-        document.getElementById("hasPermission").addEventListener("click", hasPermission);
-        document.getElementById("requestPermissions").addEventListener("click", requestPermissions);
+        document.getElementById("goCaptureSample").addEventListener("click", () => { window.location = "capturesample.html" });
+        document.getElementById("goBarrierSample").addEventListener("click", () => { window.location = "barriersample.html" });
     },
 
     // Update DOM on a Received Event
@@ -40,21 +39,4 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-async function hasPermission() {
-    HMSAwareness.hasPermission(HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION)
-    .then((res) => alert(JSON.stringify(res)))
-    .catch((err) => alert(JSON.stringify(err)));
-}
-async function requestPermissions() {
-    HMSAwareness.requestPermissions([HMSAwareness.HMSPermission.PERMISSION_ACCESS_FINE_LOCATION,
-        HMSAwareness.HMSPermission.PERMISSION_HUAWEI_ACTIVITY_RECOGNITION,
-        HMSAwareness.HMSPermission.PERMISSION_ACTIVITY_RECOGNITION,
-        HMSAwareness.HMSPermission.PERMISSION_BLUETOOTH,
-        HMSAwareness.HMSPermission.PERMISSION_CHANGE_WIFI_STATE,
-        HMSAwareness.HMSPermission.PERMISSION_ACCESS_COARSE_LOCATION,
-        HMSAwareness.HMSPermission.PERMISSION_ACCESS_BACKGROUND_LOCATION
-    ])
-    .then((res) => alert(JSON.stringify(res)))
-    .catch((err) => alert(JSON.stringify(err)));
-}
 app.initialize();

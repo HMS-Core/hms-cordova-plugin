@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2021. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -12,29 +12,13 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+    */
+
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.disableLogger = exports.enableLogger = exports.requestPermissions = exports.requestPermission = exports.hasPermission = void 0;
+exports.disableLogger = exports.enableLogger = void 0;
 const util_1 = require("./util");
-var interfaces_1 = require("./interfaces");
-Object.defineProperty(exports, "HMSPermission", { enumerable: true, get: function () { return interfaces_1.HMSPermission; } });
 let HMSAwarenessClass = 'HMSAwareness';
-function hasPermission(permission) {
-    return util_1.asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['hasPermission', permission]);
-}
-exports.hasPermission = hasPermission;
-;
-function requestPermission(permission) {
-    return util_1.asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['requestPermission', permission]);
-}
-exports.requestPermission = requestPermission;
-;
-function requestPermissions(permissions) {
-    return util_1.asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['requestPermissions', permissions]);
-}
-exports.requestPermissions = requestPermissions;
-;
 function enableLogger() {
     return util_1.asyncExec(HMSAwarenessClass, 'HMSAwarenessModule', ['enableLogger']);
 }
