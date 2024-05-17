@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-map"
-	version="6.11.2-301" xmlns="http://apache.org/cordova/ns/plugins/1.0">
+	version="6.11.2-302" xmlns="http://apache.org/cordova/ns/plugins/1.0">
 	<name>
 		HMS Map
 	</name>

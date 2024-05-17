@@ -1,7 +1,7 @@
 {
     "name": "@hmscore/cordova-plugin-hms-map",
     "description": "Cordova HMS Map Plugin",
-    "version": "6.11.2-301",
+    "version": "6.11.2-302",
     "main": "./www/HMSMap.js",
     "types": "./types/HMSMap.d.ts",
     "repository": {

@@ -250,7 +250,7 @@ generated the certificate.
            /*
                <Other dependencies>
            */
-           classpath 'com.huawei.agconnect:agcp:1.9.1.300'
+           classpath 'com.huawei.agconnect:agcp:1.9.1.301'
        }
    }
 
@@ -328,8 +328,7 @@ to be added to your project. These rules are as follows:
 
 If you have questions about how to use HMS samples, try the following options:
 
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best
-  place for any programming questions. Be sure to tag your question
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question
   with **`huawei-mobile-services`**.
 - [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these
   plugins, You can open an issue or submit your ideas.
@@ -339,8 +338,7 @@ If you have questions about how to use HMS samples, try the following options:
   is place to official documentation for all HMS Core Kits, you can find detailed documentations in
   there.
 
-If you run into a bug in our samples, please submit an issue to
-the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ---
 
