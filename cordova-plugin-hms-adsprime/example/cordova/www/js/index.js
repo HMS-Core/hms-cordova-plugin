@@ -1,5 +1,5 @@
 /*
-    Copyright 2022-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2022-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -186,7 +186,7 @@ var rollAd;
 $("load_roll").onclick = async() => {
     if (rollAd) await rollAd.destroy();
     rollAd = new HMSAds.HMSRollAd();
-
+    alert(JSON.stringify(rollAd));
     await rollAd.create({ adId: "testy3cglm3pj0", totalDuration: 60, maxCount: 4 },
         "rollAd"
     );
@@ -195,18 +195,18 @@ $("load_roll").onclick = async() => {
     await rollAd.setMediaMuteListener();
 
     rollAd.on(HMSConstants.RollAdEvents.ROLL_AD_LOADED, async() => {
-        console.log("ROLL_AD_LOADED");
+        alert("ROLL_AD_LOADED");
         rollAd.setInstreamAds();
     });
     rollAd.on(HMSConstants.RollAdEvents.ROLL_AD_WHY_THIS_AD, async(result) => {
-        console.log("Why this ad clicked");
+        alert("Why this ad clicked");
         window.location.href = result;
     });
 
     rollAd.on(
         HMSConstants.RollAdEvents.ROLL_AD_MEDIA_COMPLETION,
         async(result) => {
-            console.log("ROLL_AD_MEDIA_COMPLETION");
+            alert("ROLL_AD_MEDIA_COMPLETION");
             rollAd.destroy();
         }
     );
@@ -276,6 +276,27 @@ $("dislike").onclick = async() => {
 $("hasAdvertiserInfo").onclick = async() => {
     const result = await nativeAd.hasAdvertiserInfo();
     alert("hasAdvertiserInfo: " + result);
+};
+$("getAppInfo").onclick = async() => {
+    const result = await nativeAd.getAppInfo();
+    alert("getAppInfo: " + JSON.stringify(result));
+};
+$("getPromoteInfo").onclick = async() => {
+    const result = await nativeAd.getPromoteInfo();
+    alert("getPromoteInfo: " + JSON.stringify(result));
+};
+
+$("getInterActionType").onclick = async() => {
+    const result = await nativeAd.getInterActionType();
+    alert("getInterActionType: " + result);
+};
+$("showPermissionPage").onclick = async() => {
+    const result = await nativeAd.showPermissionPage();
+    alert("showPermissionPage: " + result);
+};
+$("showPrivacyPolicy").onclick = async() => {
+    const result = await nativeAd.showPrivacyPolicy();
+    alert("showPrivacyPolicy: " + result);
 };
 
 $("isTransparencyOpenNativeAd").onclick = async() => {

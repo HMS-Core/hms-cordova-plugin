@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-    Copyright 2022-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2022-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -25,10 +25,19 @@
   <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
   <link rel="stylesheet" href="css/index.css">
-  <title>Cordova Ads Prime Demo</title>
+  <title>Cordova Ads Demo</title>
 </head>
 
 <body>
+  <h1>HMSAds</h1>
+  <button id="getSdkVersion" class="buttons">Get SDK Version</button>
+  <button id="getRequestOptions" class="buttons">Get Request Options</button>
+  <button id="setRequestOptions" class="buttons">Set Request Options</button>
+  <button id="startClient" class="buttons">Start Install Referrer Client</button>
+  <button id="getReferrerDetails" class="buttons">Get Referrer Details</button>
+  <button id="getAdvertisingIdInfo" class="buttons">OAID Info</button>
+
+  <h1>HMS Banner Ad</h1>
   <div>
     <select id="bannerAdSize" class="buttons">
       <option>BANNER_SIZE_320_50</option>
@@ -57,17 +66,8 @@
     <button id="create_banner" class="buttons">Bannner Ad</button>
     <div id="bannerAd"></div>
   </div>
-  <button id="create_interstitial" class="buttons">Interstitial Ad</button>
-  <button id="load_splash" class="buttons">Splash Ad</button>
-  <button id="load_reward" class="buttons">Reward Ad</button>
-  <div id="rollAd" style="width: 100%; height: 200px; background-color: black;">
-    <p style="color: aliceblue;">Video Content</p>
-  </div>
-  <button id="load_roll" class="buttons">Roll Ad</button>
-  <button id="showTransparencyDialog" class="buttons">showTransparencyDialog</button>
-  <button id="hideTransparencyDialog" class="buttons">hideTransparencyDialog</button>
-  <button id="isTransparencyOpenRollAd" class="buttons">isTransparencyOpenRollAd</button>
-  <button id="getTransparencyTplUrlRollAd" class="buttons">getTransparencyTplUrlRollAd</button>
+
+  <h1>HMS Native Ad</h1>
   <select id="nativeAdTemplate" class="buttons">
     <option value='NATIVE_AD_SMALL_TEMPLATE' selected>Small</option>
     <option value='NATIVE_AD_FULL_TEMPLATE'>Full</option>
@@ -82,15 +82,34 @@
   <button id="why" class="buttons">Why This Ad</button>
   <button id="dislike" class="buttons">Dislike Native Ad</button>
   <button id="hasAdvertiserInfo" class="buttons">Has Advertiser Info</button>
-  <button id="getSdkVersion" class="buttons">Get SDK Version</button>
-  <button id="getAdvertisingIdInfo" class="buttons">OAID Info</button>
-  <button id="setRequestOptions" class="buttons">Set Request Options</button>
-  <button id="getRequestOptions" class="buttons">Get Request Options</button>
-  <button id="startClient" class="buttons">Start Install Referrer Client</button>
-  <button id="getReferrerDetails" class="buttons">Get Referrer Details</button>
+  <button id="getAppInfo" class="buttons">Get App Info</button>
+  <button id="getPromoteInfo" class="buttons">Get Promote Info</button>
+  <button id="getInterActionType" class="buttons">Get Inter Action Type</button>
+  <button id="showPermissionPage" class="buttons">Show Permission Page</button>
+  <button id="showPrivacyPolicy" class="buttons">Show Privacy Policy</button>
 
+  <h1>Reward Ad</h1>
+  <button id="load_reward" class="buttons">Reward Ad</button>
+
+  <h1>Interstitial Ad</h1>
+  <button id="create_interstitial" class="buttons">Interstitial Ad</button>
+
+  <h1>Splash Ad</h1>
+  <button id="load_splash" class="buttons">Splash Ad</button>
+
+  <h1>Roll Ad</h1>
+  <div id="rollAd" style="width: 100%; height: 200px; background-color: black;">
+    <p style="color: aliceblue;">Video Content</p>
+  </div>
+  <button id="load_roll" class="buttons">Roll Ad</button>
+  <button id="showTransparencyDialog" class="buttons">showTransparencyDialog</button>
+  <button id="hideTransparencyDialog" class="buttons">hideTransparencyDialog</button>
+  <button id="isTransparencyOpenRollAd" class="buttons">isTransparencyOpenRollAd</button>
+  <button id="getTransparencyTplUrlRollAd" class="buttons">getTransparencyTplUrlRollAd</button>
+
+  <h1>Vast</h1>
   <button id="vast" class="buttons">VAST</button>
-  <div id="vast-element" style="width: 100%; height: 250px; background-color: transparent" >
+  <div id="vast-element" style="width: 100%; height: 250px; background-color: transparent" ;>
     <p style="color: aliceblue;">Vast Content</p>
   </div>
   <button id="init_vast" class="buttons">Init Vast</button>

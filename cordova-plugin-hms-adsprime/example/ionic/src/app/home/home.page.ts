@@ -1,5 +1,5 @@
 /*
-    Copyright 2022-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2022-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -266,9 +266,7 @@ export class HomePage {
   }
 
   async nativeAd() {
-    if (this.nativeAdInstance) { 
-      await this.nativeAdInstance.destroy();
-    }
+    if (this.nativeAdInstance) { await this.nativeAdInstance.destroy(); }
 
     const nativeElem = document.getElementById('native-ad-element');
 
@@ -324,6 +322,31 @@ export class HomePage {
   async hasAdvertiserInfo() {
     const result = await this.nativeAdInstance.hasAdvertiserInfo();
     alert("hasAdvertiserInfo: " + result);
+  } 
+
+  async getAppInfo() {
+    const result = await this.nativeAdInstance.getAppInfo();
+    alert("getAppInfo: " + JSON.stringify(result));
+  }
+
+  async getPromoteInfo() {
+    const result = await this.nativeAdInstance.getPromoteInfo();
+    alert("getPromoteInfo: " + JSON.stringify(result));
+  }
+
+  async getInterActionType() {
+    const result = await this.nativeAdInstance.getInterActionType();
+    alert("getInterActionType: " + result)
+  }
+
+  async showPrivacyPolicy() {
+    const result = await this.nativeAdInstance.showPrivacyPolicy();
+    alert("showPrivacyPolicy: " + result)
+  }
+
+  async showPermissionPage() {
+    const result = await this.nativeAdInstance.showPermissionPage();
+    alert("showPermissionPage: " + result)
   }
   
   async isTransparencyOpenNativeAd() {

@@ -1,5 +1,5 @@
 /*
-    Copyright 2022-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2022-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ import {
     Props,
     VideoOperatorAspectRatio,
     NativeAdConfiguration,
-    AdvertiserInfo
+    AdvertiserInfo,
+    AppInfo,
+    PromoteInfo
 } from './interfaces'
 import { getInitialPropsOfHTMLElementFrom } from './layout'
 import { NativeAdEvents } from './HMSConstants'
@@ -186,15 +188,30 @@ export class HMSNativeAd extends Ads {
     getAdvertiserInfo(): Promise<AdvertiserInfo[]> {
         return this.run('getAdvertiserInfo')
     }
+    getAppInfo(): Promise<AppInfo> {
+        return this.run('getAppInfo');
+    }
+    getPromoteInfo(): Promise<PromoteInfo> {
+        return this.run('getPromoteInfo');
+    }
 
     showAppDetailPage(): Promise<void> {
         return this.run('showAppDetailPage')
+    }
+    showPermissionPage(): Promise<void> {
+        return this.run('showPermissionPage')
+    }
+    showPrivacyPolicy(): Promise<void> {
+        return this.run('showPrivacyPolicy')
     }
     isTransparencyOpen(): Promise<boolean> {
         return this.run('isTransparencyOpen')
     }
     getTransparencyTplUrl(): Promise<string> {
         return this.run('getTransparencyTplUrl')
+    }
+    getInterActionType(): Promise<number> {
+        return this.run('getInterActionType');
     }
 
     // VideoOperator

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2022-2024. Huawei Technologies Co., Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class HMSAds extends CordovaPlugin {
         super.initialize(cordova, webView);
 
         final String kit = "Ads Prime";
-        final String version = "13.4.67.302";
+        final String version = "13.4.69.302";
 
         pluginAdLayout = new PluginAdLayout(webView.getContext());
         pluginAdLayout.setLayoutParams(
