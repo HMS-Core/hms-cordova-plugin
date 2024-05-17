@@ -180,9 +180,7 @@ ionic cordova run android --device
       follow [Initialize Capacitor with your app information](https://capacitorjs.com/docs/getting-started/with-ionic#initialize-capacitor-with-your-app-information)
       .
 
-3. Update the **`appId`** property which is specified in the **`capacitor.config.json`** file
-   according to your project. It must be same with **client > package_name** value of
-   the **`agconnect-services.json`** file.
+3. Update the **`appId`** property which is specified in the **`capacitor.config.json`** file according to your project. It must be same with **client > package_name** value of the **`agconnect-services.json`** file.
 
 4. Install `HMS IAP plugin` to the project.
 
@@ -208,12 +206,9 @@ ionic cordova run android --device
    npx cap add android
    ```
 
-8. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files
-   to **`<project_root>/android/app`** directory.
+8. Copy **`keystore(.jks)`** and **`agconnect-services.json`** files to **`<project_root>/android/app`** directory.
 
-    - You can refer to 3rd and 4th steps
-      of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1)
-      Codelab tutorial page for generating keystore file.
+    - You can refer to 3rd and 4th steps of [Generating a Signing Certificate](https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#2?ha_source=hms1) Codelab tutorial page for generating keystore file.
 
 9. Open the **`build.gradle`** file in the **`<project_root>/android/app`** directory.
 
@@ -274,7 +269,7 @@ ionic cordova run android --device
             /*
                 <Other dependencies>
             */
-            classpath 'com.huawei.agconnect:agcp:1.9.1.300'
+            classpath 'com.huawei.agconnect:agcp:1.9.1.301'
         }
     }
 
@@ -356,19 +351,15 @@ to be added to your project. These rules are as follows:
 
 If you have questions about how to use HMS samples, try the following options:
 
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best
-  place for any programming questions. Be sure to tag your question
+- [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services) is the best place for any programming questions. Be sure to tag your question
   with **`huawei-mobile-services`**.
-- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these
-  plugins, You can open an issue or submit your ideas.
-- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001?ha_source=hms1)
-  HMS Core Module is great for general questions, or seeking recommendations and opinions.
+- [GitHub](https://github.com/HMS-Core/hms-cordova-plugin) is the official repository for these plugins, You can open an issue or submit your ideas.
+- [Huawei Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001?ha_source=hms1) HMS Core Module is great for general questions, or seeking recommendations and opinions.
 - [Huawei Developer Docs](https://developer.huawei.com/consumer/en/doc/overview/HMS-Core-Plugin?ha_source=hms1)
   is place to official documentation for all HMS Core Kits, you can find detailed documentations in
   there.
 
-If you run into a bug in our samples, please submit an issue to
-the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
+If you run into a bug in our samples, please submit an issue to the [GitHub repository](https://github.com/HMS-Core/hms-cordova-plugin).
 
 ---
 

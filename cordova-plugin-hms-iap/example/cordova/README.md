@@ -140,16 +140,11 @@ generated the certificate.
 
 ### Configuring Obfuscation Scripts
 
-Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK
-from being obfuscated.
+Before building the APK, configure the obfuscation configuration file to prevent the HMS Core SDK from being obfuscated.
 
-**NOTE**: This step is required only if you want to minify and obfuscate your app. By default
-obfuscation is disabled in Cordova and Ionic apps.
+**NOTE**: This step is required only if you want to minify and obfuscate your app. By default obfuscation is disabled in Cordova and Ionic apps.
 
-The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled.
-Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard
-plugins. If ProGuard is enabled in your project, the Huawei IAP plugin's ProGuard rules need to be
-added to your project. These rules are as follows:
+The obfuscation is done by **ProGuard.** By default, in Cordova and Ionic apps ProGuard is disabled. Even though ProGuard is not available, ProGuard support can be added through 3rd party ProGuard plugins. If ProGuard is enabled in your project, the Huawei IAP plugin's ProGuard rules need to be added to your project. These rules are as follows:
 
 ```text
 -ignorewarnings

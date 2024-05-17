@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ module.exports = function (context) {
 };
 
 function addAGConnectDependency(lines) {
-    var AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.9.1.300' " + COMMENT;
+    let AG_CONNECT_DEPENDENCY = "classpath 'com.huawei.agconnect:agcp:1.9.1.301' " + COMMENT;
     var pattern = /(\s*)classpath(\s+)[\',\"]com.android.tools.build:gradle.*[^\]\n]/m;
     var index;
 
