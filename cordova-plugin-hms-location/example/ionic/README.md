@@ -60,7 +60,7 @@ This demo application demonstrates the usage of HMS Location Cordova plugin.
 4. Install HMS Location Ionic Native wrappers
 
     ```bash
-    npm install @ionic-native/core @hmscore/ionic-native-hms-location
+    npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-location
     ```
 
 5. Build Ionic app to generate resource files.
@@ -102,7 +102,7 @@ This demo application demonstrates the usage of HMS Location Cordova plugin.
 4. Install HMS Location Ionic Native wrappers.
 
     ```bash
-    npm install @ionic-native/core @hmscore/ionic-native-hms-location
+    npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-location
     ```
 
 5. Build Ionic app to generate resource files.

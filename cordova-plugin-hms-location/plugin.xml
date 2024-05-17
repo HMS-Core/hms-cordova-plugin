@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-hms-location"
-        version="6.12.0.300"
+        version="6.12.0.301"
         xmlns="http://apache.org/cordova/ns/plugins/1.0">
     <name>HMS Location</name>
     <description>Cordova HMS Location Plugin</description>

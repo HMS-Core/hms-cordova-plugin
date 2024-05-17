@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 import { Injectable } from '@angular/core';
-import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
+import { Cordova, AwesomeCordovaNativePlugin, Plugin } from '@awesome-cordova-plugins/core';
 
 @Plugin({
     pluginName: 'HMSLocation',
@@ -26,7 +26,7 @@ import { Cordova, IonicNativePlugin, Plugin } from '@ionic-native/core';
     platforms: ['Android'],
 })
 @Injectable()
-export class HMSLocation extends IonicNativePlugin {
+export class HMSLocation extends AwesomeCordovaNativePlugin {
 
     getGeofenceService(): GeofenceService {
         return HMSLocation.getPlugin().getGeofenceService();

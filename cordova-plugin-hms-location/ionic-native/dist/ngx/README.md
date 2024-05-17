@@ -28,7 +28,7 @@ $ ionic cordova plugin add @hmscore/cordova-plugin-hms-location
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-location
+$ npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-location
 ```
 
 ### 2.2 With Capacitor Runtime
@@ -38,7 +38,7 @@ $ npm install @hmscore/cordova-plugin-hms-location
 ```
 
 ```bash
-$ npm install @ionic-native/core @hmscore/ionic-native-hms-location
+$ npm install @awesome-cordova-plugins/core @hmscore/ionic-native-hms-location
 ```
 
 ---

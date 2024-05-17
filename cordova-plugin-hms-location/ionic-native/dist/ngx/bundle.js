@@ -13,18 +13,89 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RequestType = exports.NotificationImportance = exports.NotificationCategory = exports.GeofenceTriggerType = exports.GeofenceInitConversionType = exports.CoordinateType = exports.ConversionType = exports.ActivityType = exports.NavigationRequestConstants = exports.PriorityConstants = exports.Events = void 0;
 
-var Events;
+'use strict';
+
+var tslib = require('tslib');
+var i0 = require('@angular/core');
+var core = require('@awesome-cordova-plugins/core');
+
+function _interopNamespaceDefault(e) {
+    var n = Object.create(null);
+    if (e) {
+        Object.keys(e).forEach(function (k) {
+            if (k !== 'default') {
+                var d = Object.getOwnPropertyDescriptor(e, k);
+                Object.defineProperty(n, k, d.get ? d : {
+                    enumerable: true,
+                    get: function () { return e[k]; }
+                });
+            }
+        });
+    }
+    n.default = e;
+    return Object.freeze(n);
+}
+
+var i0__namespace = /*#__PURE__*/_interopNamespaceDefault(i0);
+
+var HMSLocation = /** @class */ (function (_super) {
+    tslib.__extends(HMSLocation, _super);
+    function HMSLocation() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    HMSLocation.prototype.getGeofenceService = function () {
+        return HMSLocation.getPlugin().getGeofenceService();
+    };
+    HMSLocation.prototype.getGeocoderService = function (language, country) {
+        return HMSLocation.getPlugin().getGeocoderService(language, country);
+    };
+    HMSLocation.prototype.getFusedLocationProviderClient = function () {
+        return HMSLocation.getPlugin().getFusedLocationProviderClient();
+    };
+    HMSLocation.prototype.getActivityIdentificationService = function () {
+        return HMSLocation.getPlugin().getActivityIdentificationService();
+    };
+    HMSLocation.prototype.getCoordinateConversionService = function () {
+        return HMSLocation.getPlugin().getCoordinateConversionService();
+    };
+    HMSLocation.prototype.addListener = function (event, callback) {
+        return HMSLocation.getPlugin().addListener(event, callback);
+    };
+    HMSLocation.prototype.disableLogger = function () { return core.cordova(this, "disableLogger", { "otherPromise": true }, arguments); };
+    HMSLocation.prototype.enableLogger = function () { return core.cordova(this, "enableLogger", { "otherPromise": true }, arguments); };
+    HMSLocation.ɵfac = i0__namespace.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "12.2.16", ngImport: i0__namespace, type: HMSLocation, deps: null, target: i0__namespace.ɵɵFactoryTarget.Injectable });
+    HMSLocation.ɵprov = i0__namespace.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "12.2.16", ngImport: i0__namespace, type: HMSLocation });
+    HMSLocation.pluginName = "HMSLocation";
+    HMSLocation.plugin = "cordova-plugin-hms-location";
+    HMSLocation.pluginRef = "HMSLocation";
+    HMSLocation.repo = "";
+    HMSLocation.install = "";
+    HMSLocation.installVariables = [];
+    HMSLocation.platforms = ["Android"];
+    HMSLocation = tslib.__decorate([], HMSLocation);
+    return HMSLocation;
+}(core.AwesomeCordovaNativePlugin));
+i0__namespace.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "12.2.16", ngImport: i0__namespace, type: HMSLocation, decorators: [{
+            type: i0.Injectable
+        }], propDecorators: { disableLogger: [], enableLogger: [] } });
+var BackgroundManager = /** @class */ (function () {
+    function BackgroundManager() {
+    }
+    BackgroundManager.notify = function (notificationId, notification) {
+    };
+    BackgroundManager.makeToast = function (text, duration) {
+    };
+    return BackgroundManager;
+}());
+exports.Events = void 0;
 (function (Events) {
     Events["ON_LOCATION_RESULT"] = "onLocationResult";
     Events["ACTIVITY_CONVERSION_RESULT"] = "onActivityConversionResult";
     Events["ACTIVITY_IDENTIFICATION_RESULT"] = "onActivityIdentificationResult";
     Events["GEOFENCE_RESULT"] = "onGeofenceResult";
-})(Events = exports.Events || (exports.Events = {}));
-var PriorityConstants;
+})(exports.Events || (exports.Events = {}));
+exports.PriorityConstants = void 0;
 (function (PriorityConstants) {
     PriorityConstants[PriorityConstants["PRIORITY_HIGH_ACCURACY"] = 100] = "PRIORITY_HIGH_ACCURACY";
     PriorityConstants[PriorityConstants["PRIORITY_BALANCED_POWER_ACCURACY"] = 102] = "PRIORITY_BALANCED_POWER_ACCURACY";
@@ -33,13 +104,13 @@ var PriorityConstants;
     PriorityConstants[PriorityConstants["PRIORITY_HD_ACCURACY"] = 200] = "PRIORITY_HD_ACCURACY";
     PriorityConstants[PriorityConstants["PRIORITY_INDOOR"] = 300] = "PRIORITY_INDOOR";
     PriorityConstants[PriorityConstants["PRIORITY_HIGH_ACCURACY_AND_INDOOR"] = 400] = "PRIORITY_HIGH_ACCURACY_AND_INDOOR";
-})(PriorityConstants = exports.PriorityConstants || (exports.PriorityConstants = {}));
-var NavigationRequestConstants;
+})(exports.PriorityConstants || (exports.PriorityConstants = {}));
+exports.NavigationRequestConstants = void 0;
 (function (NavigationRequestConstants) {
     NavigationRequestConstants[NavigationRequestConstants["OVERPASS"] = 1] = "OVERPASS";
     NavigationRequestConstants[NavigationRequestConstants["IS_SUPPORT_EX"] = 2] = "IS_SUPPORT_EX";
-})(NavigationRequestConstants = exports.NavigationRequestConstants || (exports.NavigationRequestConstants = {}));
-var ActivityType;
+})(exports.NavigationRequestConstants || (exports.NavigationRequestConstants = {}));
+exports.ActivityType = void 0;
 (function (ActivityType) {
     ActivityType[ActivityType["VEHICLE"] = 100] = "VEHICLE";
     ActivityType[ActivityType["BIKE"] = 101] = "BIKE";
@@ -48,31 +119,31 @@ var ActivityType;
     ActivityType[ActivityType["OTHERS"] = 104] = "OTHERS";
     ActivityType[ActivityType["WALKING"] = 107] = "WALKING";
     ActivityType[ActivityType["RUNNING"] = 108] = "RUNNING";
-})(ActivityType = exports.ActivityType || (exports.ActivityType = {}));
-var ConversionType;
+})(exports.ActivityType || (exports.ActivityType = {}));
+exports.ConversionType = void 0;
 (function (ConversionType) {
     ConversionType[ConversionType["ENTER_ACTIVITY_CONVERSION"] = 0] = "ENTER_ACTIVITY_CONVERSION";
     ConversionType[ConversionType["EXIT_ACTIVITY_CONVERSION"] = 1] = "EXIT_ACTIVITY_CONVERSION";
-})(ConversionType = exports.ConversionType || (exports.ConversionType = {}));
-var CoordinateType;
+})(exports.ConversionType || (exports.ConversionType = {}));
+exports.CoordinateType = void 0;
 (function (CoordinateType) {
     CoordinateType[CoordinateType["COORDINATE_TYPE_WGS_84"] = 1] = "COORDINATE_TYPE_WGS_84";
     CoordinateType[CoordinateType["COORDINATE_TYPE_GCJ_02"] = 0] = "COORDINATE_TYPE_GCJ_02";
-})(CoordinateType = exports.CoordinateType || (exports.CoordinateType = {}));
-var GeofenceInitConversionType;
+})(exports.CoordinateType || (exports.CoordinateType = {}));
+exports.GeofenceInitConversionType = void 0;
 (function (GeofenceInitConversionType) {
     GeofenceInitConversionType[GeofenceInitConversionType["ENTER_INIT_CONVERSION"] = 1] = "ENTER_INIT_CONVERSION";
     GeofenceInitConversionType[GeofenceInitConversionType["EXIT_INIT_CONVERSION"] = 2] = "EXIT_INIT_CONVERSION";
     GeofenceInitConversionType[GeofenceInitConversionType["DWELL_INIT_CONVERSION"] = 4] = "DWELL_INIT_CONVERSION";
-})(GeofenceInitConversionType = exports.GeofenceInitConversionType || (exports.GeofenceInitConversionType = {}));
-var GeofenceTriggerType;
+})(exports.GeofenceInitConversionType || (exports.GeofenceInitConversionType = {}));
+exports.GeofenceTriggerType = void 0;
 (function (GeofenceTriggerType) {
     GeofenceTriggerType[GeofenceTriggerType["ENTER_GEOFENCE_CONVERSION"] = 1] = "ENTER_GEOFENCE_CONVERSION";
     GeofenceTriggerType[GeofenceTriggerType["EXIT_GEOFENCE_CONVERSION"] = 2] = "EXIT_GEOFENCE_CONVERSION";
     GeofenceTriggerType[GeofenceTriggerType["DWELL_GEOFENCE_CONVERSION"] = 4] = "DWELL_GEOFENCE_CONVERSION";
     GeofenceTriggerType[GeofenceTriggerType["GEOFENCE_NEVER_EXPIRE"] = -1] = "GEOFENCE_NEVER_EXPIRE";
-})(GeofenceTriggerType = exports.GeofenceTriggerType || (exports.GeofenceTriggerType = {}));
-var NotificationCategory;
+})(exports.GeofenceTriggerType || (exports.GeofenceTriggerType = {}));
+exports.NotificationCategory = void 0;
 (function (NotificationCategory) {
     NotificationCategory["ALARM"] = "alarm";
     NotificationCategory["CALL"] = "call";
@@ -90,8 +161,8 @@ var NotificationCategory;
     NotificationCategory["STATUS"] = "status";
     NotificationCategory["SYSTEM"] = "sys";
     NotificationCategory["TRANSPORT"] = "transport";
-})(NotificationCategory = exports.NotificationCategory || (exports.NotificationCategory = {}));
-var NotificationImportance;
+})(exports.NotificationCategory || (exports.NotificationCategory = {}));
+exports.NotificationImportance = void 0;
 (function (NotificationImportance) {
     NotificationImportance[NotificationImportance["DEFAULT"] = 3] = "DEFAULT";
     NotificationImportance[NotificationImportance["HIGH"] = 4] = "HIGH";
@@ -100,10 +171,12 @@ var NotificationImportance;
     NotificationImportance[NotificationImportance["MIN"] = 1] = "MIN";
     NotificationImportance[NotificationImportance["NONE"] = 0] = "NONE";
     NotificationImportance[NotificationImportance["UNSPECIFIED"] = -100] = "UNSPECIFIED";
-})(NotificationImportance = exports.NotificationImportance || (exports.NotificationImportance = {}));
-var RequestType;
+})(exports.NotificationImportance || (exports.NotificationImportance = {}));
+exports.RequestType = void 0;
 (function (RequestType) {
     RequestType["LOCATION_CALLBACK"] = "locationCallback";
     RequestType["PENDING_INTENT"] = "pendingIntent";
-})(RequestType = exports.RequestType || (exports.RequestType = {}));
-//# sourceMappingURL=enums.js.map
+})(exports.RequestType || (exports.RequestType = {}));
+
+exports.BackgroundManager = BackgroundManager;
+exports.HMSLocation = HMSLocation;
