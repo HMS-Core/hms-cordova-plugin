@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -194,4 +194,13 @@ export interface AdvertiserInfo {
     seq: number;
     key: string;
     value: string;
+}
+export interface AppInfo {
+    name: string;
+    versionName: string;
+    developerName: string;
+}
+export interface PromoteInfo {
+    type: number;
+    name: string;
 }

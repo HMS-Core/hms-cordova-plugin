@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+ * Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ import com.huawei.hms.ads.nativead.NativeAd;
 import com.huawei.hms.ads.nativead.NativeAdConfiguration;
 import com.huawei.hms.ads.nativead.NativeAdLoader;
 import com.huawei.hms.ads.nativead.NativeView;
+import com.huawei.hms.ads.AppInfo;
+import com.huawei.openalliance.ad.beans.metadata.PromoteInfo;
 import com.huawei.hms.cordova.ads.Converter;
 import com.huawei.hms.cordova.ads.ad.PluginAbstractAdManager;
 import com.huawei.hms.cordova.ads.basef.handler.CordovaEventRunner;
@@ -60,6 +62,10 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
     public static final String NATIVE_BUTTON_ROUNDED_CORNERS_SHAPE = "native_button_rounded_corners_shape";
 
     private NativeAd nativeAd;
+
+    private AppInfo appInfo;
+
+    private PromoteInfo promoteInfo;
 
     private NativeView nativeView;
 
@@ -462,6 +468,29 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         promise.success(ListToJson.advertiserInfosToJson(nativeAd.getAdvertiserInfo()));
     }
 
+    public void getAppInfo(JSONObject json, final Promise promise) throws JSONException {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        JSONObject result = new JSONObject();
+        appInfo = nativeAd.getAppInfo();
+        if (appInfo != null) {
+            result.put("appName", appInfo.getAppName());
+            result.put("versionName", appInfo.getVersionName());
+            result.put("developerName", appInfo.getDeveloperName());
+        }
+        promise.success(result);
+    }
+
+    public void getPromoteInfo(JSONObject json, final Promise promise) throws JSONException {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        JSONObject result = new JSONObject();
+        promoteInfo = nativeAd.getPromoteInfo();
+        if (promoteInfo != null) {
+            result.put("type", promoteInfo.getType());
+            result.put("name", promoteInfo.getName());
+        }
+        promise.success(result);
+    }
+
     public void isTransparencyOpen(JSONObject json, final Promise promise) {
         checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
         promise.success(nativeAd.isTransparencyOpen());
@@ -472,9 +501,26 @@ public class PluginNativeAdManager extends PluginAbstractAdManager {
         promise.success(nativeAd.getTransparencyTplUrl());
     }
 
+    public void getInterActionType(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        promise.success(nativeAd.getInteractionType());
+    }
+
     public void showAppDetailPage(JSONObject json, final Promise promise) {
         checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
         nativeAd.showAppDetailPage(context);
+        promise.success();
+    }
+
+    public void showPermissionPage(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        nativeAd.getAppInfo().showPermissionPage(context);
+        promise.success();
+    }
+
+    public void showPrivacyPolicy(JSONObject json, final Promise promise) {
+        checkIfObjectNullOrThrowError(nativeAd, promise, ErrorAndStateCodes.NATIVE_AD_NOT_INITIALIZED);
+        nativeAd.getAppInfo().showPrivacyPolicy(context);
         promise.success();
     }
 }

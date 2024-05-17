@@ -1,8 +1,8 @@
 {
     "name": "@hmscore/ionic-native-hms-ads",
     "description": "Ionic Native wrappers for Cordova Plugin HMS Ads",
-    "version": "13.4.67-302",
-    "zipVersion": "13.4.67.302",
+    "version": "13.4.69-302",
+    "zipVersion": "13.4.69.302",
     "module": "index.js",
     "typings": "index.d.ts",
     "license": "Apache-2.0",
@@ -18,7 +18,7 @@
         "@types/cordova": "latest"
     },
     "peerDependencies": {
-        "rxjs": "^5.5.0 || ^6.5.0",
-        "@ionic-native/core": "^5.1.0"
+        "@awesome-cordova-plugins/core": "6.4.0",
+        "rxjs": "^7.5.0"
     }
 }

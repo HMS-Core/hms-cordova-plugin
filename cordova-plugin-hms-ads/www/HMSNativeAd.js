@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/ 
+*/
 
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -176,14 +176,29 @@ class HMSNativeAd extends ads_1.Ads {
     getAdvertiserInfo() {
         return this.run('getAdvertiserInfo');
     }
+    getAppInfo() {
+        return this.run('getAppInfo');
+    }
+    getPromoteInfo() {
+        return this.run('getPromoteInfo');
+    }
     showAppDetailPage() {
         return this.run('showAppDetailPage');
+    }
+    showPermissionPage() {
+        return this.run('showPermissionPage');
+    }
+    showPrivacyPolicy() {
+        return this.run('showPrivacyPolicy');
     }
     isTransparencyOpen() {
         return this.run('isTransparencyOpen');
     }
     getTransparencyTplUrl() {
         return this.run('getTransparencyTplUrl');
+    }
+    getInterActionType() {
+        return this.run('getInterActionType');
     }
     // VideoOperator
     videoOperatorGetAspectRatio() {

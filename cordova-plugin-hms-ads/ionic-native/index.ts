@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import {
     Plugin,
     Cordova,
     CordovaProperty,
-    IonicNativePlugin,
-} from "@ionic-native/core";
+    AwesomeCordovaNativePlugin
+} from "@awesome-cordova-plugins/core";
 
 ///////////////////////////////////////////////////////////////
 // Constants
@@ -493,6 +493,16 @@ export interface AdvertiserInfo{
     value:string
 }
 
+export interface AppInfo {
+    name: string,
+    versionName: string,
+    developerName: string
+}
+
+export interface PromoteInfo {
+    type: number,
+    name: string
+}
 
 ///////////////////////////////////////////////////////////////
 // Modules
@@ -506,7 +516,7 @@ export interface AdvertiserInfo{
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSAds extends IonicNativePlugin {
+export class HMSAds extends AwesomeCordovaNativePlugin {
     @CordovaProperty() HMSInterstitialAd = HMSInterstitialAd;
     @CordovaProperty() HMSBannerAd = HMSBannerAd;
     @CordovaProperty() HMSSplashAd = HMSSplashAd;
@@ -641,7 +651,7 @@ export class HMSAds extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSBannerAd extends IonicNativePlugin {
+export class HMSBannerAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: BannerAdEvents, callback: (result?: any) => void): void {
         return;
@@ -752,7 +762,7 @@ export class HMSBannerAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSInterstitialAd extends IonicNativePlugin {
+export class HMSInterstitialAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(
         eventName: InterstitialAdEvents,
@@ -842,7 +852,7 @@ export class HMSInterstitialAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSNativeAd extends IonicNativePlugin {
+export class HMSNativeAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: NativeAdEvents, callback: (result?: any) => void): void {
         return;
@@ -935,10 +945,6 @@ export class HMSNativeAd extends IonicNativePlugin {
         return;
     }
     @Cordova({ otherPromise: true })
-    showAppDetailPage(): Promise<void> {
-        return;
-    }
-    @Cordova({ otherPromise: true })
     recordShowStartEvent(showStartData: any): Promise<boolean> {
         return;
     }
@@ -991,7 +997,23 @@ export class HMSNativeAd extends IonicNativePlugin {
         return;
     }
     @Cordova({ otherPromise: true })
+    getAppInfo(): Promise<AppInfo> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getPromoteInfo(): Promise<PromoteInfo> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
     showAppDetailPage(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    showPrivacyPolicy(): Promise<void> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    showPermissionPage(): Promise<void> {
         return;
     }
     @Cordova({ otherPromise: true })
@@ -1000,6 +1022,10 @@ export class HMSNativeAd extends IonicNativePlugin {
     }
     @Cordova({ otherPromise: true })
     getTransparencyTplUrl(): Promise<string> {
+        return;
+    }
+    @Cordova({ otherPromise: true })
+    getInterActionType(): Promise<number> {
         return;
     }
 }
@@ -1012,7 +1038,7 @@ export class HMSNativeAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSRewardAd extends IonicNativePlugin {
+export class HMSRewardAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: RewardAdEvents, callback: (result?: any) => void): void {
         return;
@@ -1103,7 +1129,7 @@ export class HMSRewardAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSRollAd extends IonicNativePlugin {
+export class HMSRollAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: RollAdEvents, callback: (result?: any) => void): void {
         return;
@@ -1274,7 +1300,7 @@ export class HMSRollAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSSplashAd extends IonicNativePlugin {
+export class HMSSplashAd extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: SplashAdEvents, callback: (result?: any) => void): void {
         return;
@@ -1341,7 +1367,7 @@ export class HMSSplashAd extends IonicNativePlugin {
     platforms: ["Android"],
 })
 @Injectable()
-export class HMSVast extends IonicNativePlugin {
+export class HMSVast extends AwesomeCordovaNativePlugin {
     @Cordova({ otherPromise: true })
     on(eventName: VastEvents, callback: (result?: any) => void): void {
         return;

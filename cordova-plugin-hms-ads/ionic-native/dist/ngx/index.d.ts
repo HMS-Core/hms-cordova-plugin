@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
     limitations under the License.
 */
 
-import { IonicNativePlugin } from "@ionic-native/core";
+import { AwesomeCordovaNativePlugin } from "@awesome-cordova-plugins/core";
 export declare enum AdParamErrorCodes {
     AD_PARAM_INNER = 0,
     AD_PARAM_INVALID_REQUEST = 1,
@@ -467,7 +467,16 @@ export interface AdvertiserInfo {
     key: string;
     value: string;
 }
-export declare class HMSAds extends IonicNativePlugin {
+export interface AppInfo {
+    name: string;
+    versionName: string;
+    developerName: string;
+}
+export interface PromoteInfo {
+    type: number;
+    name: string;
+}
+export declare class HMSAds extends AwesomeCordovaNativePlugin {
     HMSInterstitialAd: typeof HMSInterstitialAd;
     HMSBannerAd: typeof HMSBannerAd;
     HMSSplashAd: typeof HMSSplashAd;
@@ -505,7 +514,7 @@ export declare class HMSAds extends IonicNativePlugin {
     userAcceptAdLicense(isAcceptLicense: boolean): Promise<void>;
     getEventProcessor(): Promise<void>;
 }
-export declare class HMSBannerAd extends IonicNativePlugin {
+export declare class HMSBannerAd extends AwesomeCordovaNativePlugin {
     on(eventName: BannerAdEvents, callback: (result?: any) => void): void;
     create(divId: string, bounds?: LayoutBounds): Promise<HMSBannerAd>;
     scroll(): void;
@@ -532,7 +541,7 @@ export declare class HMSBannerAd extends IonicNativePlugin {
     getLandscapeBannerSize(width: number): Promise<AdSize>;
     getPortraitBannerSize(width: number): Promise<AdSize>;
 }
-export declare class HMSInterstitialAd extends IonicNativePlugin {
+export declare class HMSInterstitialAd extends AwesomeCordovaNativePlugin {
     on(eventName: InterstitialAdEvents, callback: (result?: any) => void): void;
     create(useActivity: boolean): Promise<HMSInterstitialAd>;
     scroll(): void;
@@ -553,7 +562,7 @@ export declare class HMSInterstitialAd extends IonicNativePlugin {
     videoOperatorPlay(): Promise<void>;
     videoOperatorStop(): Promise<void>;
 }
-export declare class HMSNativeAd extends IonicNativePlugin {
+export declare class HMSNativeAd extends AwesomeCordovaNativePlugin {
     on(eventName: NativeAdEvents, callback: (result?: any) => void): void;
     create(options: NativeAdOptions, bounds?: LayoutBounds): Promise<HMSNativeAd>;
     loadAd(options?: NativeAdLoadOptions): Promise<void>;
@@ -589,11 +598,16 @@ export declare class HMSNativeAd extends IonicNativePlugin {
     hideAdvertiserInfoDialog(): Promise<void>;
     hasAdvertiserInfo(): Promise<boolean>;
     getAdvertiserInfo(): Promise<AdvertiserInfo[]>;
+    getAppInfo(): Promise<AppInfo>;
+    getPromoteInfo(): Promise<PromoteInfo>;
     showAppDetailPage(): Promise<void>;
+    showPrivacyPolicy(): Promise<void>;
+    showPermissionPage(): Promise<void>;
     isTransparencyOpen(): Promise<boolean>;
     getTransparencyTplUrl(): Promise<string>;
+    getInterActionType(): Promise<number>;
 }
-export declare class HMSRewardAd extends IonicNativePlugin {
+export declare class HMSRewardAd extends AwesomeCordovaNativePlugin {
     on(eventName: RewardAdEvents, callback: (result?: any) => void): void;
     create(adId: string): Promise<HMSRewardAd>;
     show(useActivity: boolean): Promise<void>;
@@ -615,7 +629,7 @@ export declare class HMSRewardAd extends IonicNativePlugin {
     setRewardAdListener(): Promise<void>;
     setMobileDataAlertSwitch(alertSwitch: boolean): Promise<void>;
 }
-export declare class HMSRollAd extends IonicNativePlugin {
+export declare class HMSRollAd extends AwesomeCordovaNativePlugin {
     on(eventName: RollAdEvents, callback: (result?: any) => void): void;
     create(params: RollAdLoaderParams, divId: string, bounds?: LayoutBounds): Promise<HMSRollAd>;
     scroll(): void;
@@ -656,7 +670,7 @@ export declare class HMSRollAd extends IonicNativePlugin {
     showTransparencyDialog(): Promise<void>;
     hideTransparencyDialog(): Promise<void>;
 }
-export declare class HMSSplashAd extends IonicNativePlugin {
+export declare class HMSSplashAd extends AwesomeCordovaNativePlugin {
     on(eventName: SplashAdEvents, callback: (result?: any) => void): void;
     create(): Promise<HMSSplashAd>;
     setLogo(file: string): Promise<void>;
@@ -672,7 +686,7 @@ export declare class HMSSplashAd extends IonicNativePlugin {
     setAdDisplayListener(): Promise<void>;
     setAudioFocusType(audioFocusType: AudioFocusType): Promise<void>;
 }
-export declare class HMSVast extends IonicNativePlugin {
+export declare class HMSVast extends AwesomeCordovaNativePlugin {
     on(eventName: VastEvents, callback: (result?: any) => void): void;
     create(divId: string, bounds?: LayoutBounds): Promise<HMSVast>;
     scroll(): void;

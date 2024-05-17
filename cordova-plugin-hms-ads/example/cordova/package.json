@@ -1,7 +1,7 @@
 {
     "name": "cordova-hms-ads-demo",
     "displayName": "HMSAdsDemo",
-    "version": "13.4.65-300",
+    "version": "13.4.69-302",
     "description": "A demo application which shows the usage of HMS Ads Plugin",
     "license": "Apache-2.0",
     "licenseFilename": "LICENSE",

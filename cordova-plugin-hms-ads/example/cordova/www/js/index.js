@@ -1,5 +1,5 @@
 /*
-    Copyright 2020-2023. Huawei Technologies Co., Ltd. All rights reserved.
+    Copyright 2020-2024. Huawei Technologies Co., Ltd. All rights reserved.
 
     Licensed under the Apache License, Version 2.0 (the "License")
     you may not use this file except in compliance with the License.
@@ -277,6 +277,27 @@ $("hasAdvertiserInfo").onclick = async() => {
     const result = await nativeAd.hasAdvertiserInfo();
     alert("hasAdvertiserInfo: " + result);
 };
+$("getAppInfo").onclick = async() => {
+    const result = await nativeAd.getAppInfo();
+    alert("getAppInfo: " + JSON.stringify(result));
+};
+$("getPromoteInfo").onclick = async() => {
+    const result = await nativeAd.getPromoteInfo();
+    alert("getPromoteInfo: " + JSON.stringify(result));
+};
+
+$("getInterActionType").onclick = async() => {
+    const result = await nativeAd.getInterActionType();
+    alert("getInterActionType: " + result);
+};
+$("showPermissionPage").onclick = async() => {
+    const result = await nativeAd.showPermissionPage();
+    alert("showPermissionPage: " + result);
+};
+$("showPrivacyPolicy").onclick = async() => {
+    const result = await nativeAd.showPrivacyPolicy();
+    alert("showPrivacyPolicy: " + result);
+};
 
 $("isTransparencyOpenNativeAd").onclick = async() => {
     const result = await nativeAd.isTransparencyOpen();
@@ -300,7 +321,6 @@ $("getTransparencyTplUrlRollAd").onclick = async() => {
     const result = await rollAd.getTransparencyTplUrl();
     alert("getTransparencyTplUrlRollAd: " + result);
 };
- 
 
 //VAST
 var vast;
