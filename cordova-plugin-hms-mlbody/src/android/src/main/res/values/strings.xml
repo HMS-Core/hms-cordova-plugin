@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HMSMLBodyDemo</string>
+    <string name="launcher_name">@string/app_name</string>
+    <string name="activity_name">@string/launcher_name</string>
+	<string name="custom_tips">Put your face in the frame</string>
+	<string name="custom_ui">Face Detection</string>
+    <string name="status_code">In Progress</string>
+</resources>
