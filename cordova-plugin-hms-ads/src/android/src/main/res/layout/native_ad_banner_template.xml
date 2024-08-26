@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.huawei.hms.ads.nativead.NativeView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ad_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+        <com.huawei.hms.ads.nativead.MediaView
+            android:id="@+id/ad_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+</com.huawei.hms.ads.nativead.NativeView>
