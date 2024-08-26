@@ -1,3 +1,0 @@
-cdvPluginPostBuildExtras.add({
-    apply plugin: 'com.huawei.agconnect'
-})
