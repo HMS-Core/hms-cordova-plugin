@@ -56,6 +56,8 @@ public class MapUtils {
                 map.put(key, value);
             } else if (value instanceof Bundle) {
                 map.put(key, fromBundle((Bundle) value));
+            } else if (value instanceof Uri) {
+                map.put(key, value.toString());
             } else {
                 throw new IllegalArgumentException("Could not convert " + value.getClass());
             }
